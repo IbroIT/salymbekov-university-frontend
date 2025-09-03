@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import Logo from '../assets/logo-salymbekov-university-site.png';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -153,19 +154,16 @@ const Navbar = () => {
   };
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 w-full ${
       isScrolled ? 'bg-white shadow-lg' : 'bg-white/95 backdrop-blur-sm'
     }`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           {/* Логотип */}
           <div className="flex items-center">
             <a href="/" className="flex-shrink-0 flex items-center">
-              <div className="h-10 w-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold">
-                <span className="text-lg">S</span>
-              </div>
               <span className="ml-3 text-xl font-bold text-blue-800 hidden md:block">
-                Salymbekov <span className="text-blue-600">University</span>
+                <img src={Logo} alt="" className='w-[150px] h-[35]'/>
               </span>
             </a>
           </div>
@@ -298,7 +296,7 @@ const Navbar = () => {
 
       {/* Мобильное меню с аккордеоном */}
       {isMenuOpen && (
-        <div className="lg:hidden bg-white shadow-lg">
+        <div className="lg:hidden bg-white shadow-lg w-full">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             {Object.entries(menuData).map(([key, menu]) => (
               <div key={key} className="border-b border-gray-100 last:border-b-0">
