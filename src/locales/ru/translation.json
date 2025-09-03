@@ -1,0 +1,50 @@
+{
+  "nav": {
+    "about": "О нас",
+    "academics": "Академики",
+    "admission": "Поступление",
+    "research": "Исследования",
+    "campus_life": "Студ. жизнь",
+    "news": "Новости",
+    "contacts": "Контакты",
+    "apply": "Подать заявку",
+    
+    "about_university": "Об университете",
+    "management": "Руководство",
+    "documents": "Документы",
+    "vacancies": "Вакансии",
+    "partners": "Партнеры",
+    
+    "programs": "Образовательные программы",
+    "faculties": "Факультеты",
+    "departments": "Кафедры",
+    "calendar": "Академический календарь",
+    "resources": "Ресурсы",
+    
+    "admission_process": "Процесс поступления",
+    "requirements": "Требования",
+    "tuition": "Стоимость обучения",
+    "scholarships": "Стипендии",
+    "apply_online": "Онлайн-заявка",
+    
+    "research_areas": "Направления исследований",
+    "research_centers": "Научные центры",
+    "publications": "Публикации",
+    "conferences": "Конференции",
+    "grants": "Гранты",
+    
+    "student_life": "Студенческая жизнь",
+    "events": "Мероприятия",
+    "clubs": "Клубы и сообщества",
+    "gallery": "Галерея",
+    "international": "Иностранным студентам",
+    
+    "all_news": "Все новости",
+    "announcements": "Объявления",
+    "articles": "Статьи",
+    
+    "admission_office": "Приемная комиссия",
+    "map": "Карта кампуса",
+    "feedback": "Обратная связь"
+  }
+}

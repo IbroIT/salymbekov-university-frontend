@@ -1,0 +1,50 @@
+{
+  "nav": {
+    "about": "About",
+    "academics": "Academics",
+    "admission": "Admission",
+    "research": "Research",
+    "campus_life": "Campus Life",
+    "news": "News",
+    "contacts": "Contacts",
+    "apply": "Apply Now",
+    
+    "about_university": "About University",
+    "management": "Management",
+    "documents": "Documents",
+    "vacancies": "Vacancies",
+    "partners": "Partners",
+    
+    "programs": "Educational Programs",
+    "faculties": "Faculties",
+    "departments": "Departments",
+    "calendar": "Academic Calendar",
+    "resources": "Resources",
+    
+    "admission_process": "Admission Process",
+    "requirements": "Requirements",
+    "tuition": "Tuition Fees",
+    "scholarships": "Scholarships",
+    "apply_online": "Online Application",
+    
+    "research_areas": "Research Areas",
+    "research_centers": "Research Centers",
+    "publications": "Publications",
+    "conferences": "Conferences",
+    "grants": "Grants",
+    
+    "student_life": "Student Life",
+    "events": "Events",
+    "clubs": "Clubs & Communities",
+    "gallery": "Gallery",
+    "international": "International Students",
+    
+    "all_news": "All News",
+    "announcements": "Announcements",
+    "articles": "Articles",
+    
+    "admission_office": "Admission Office",
+    "map": "Campus Map",
+    "feedback": "Feedback"
+  }
+}

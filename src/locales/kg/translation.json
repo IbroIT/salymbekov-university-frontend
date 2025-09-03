@@ -1,0 +1,50 @@
+{
+  "nav": {
+    "about": "Биз жөнүндө",
+    "academics": "Академия",
+    "admission": "Кабыл алуу",
+    "research": "Изилдөөлөр",
+    "campus_life": "Студенттик жашоо",
+    "news": "Жаңылыктар",
+    "contacts": "Байланыш",
+    "apply": "Арыз берүү",
+    
+    "about_university": "Университет жөнүндө",
+    "management": "Жетекчилик",
+    "documents": "Документтер",
+    "vacancies": "Бош орундар",
+    "partners": "Өнөктөштөр",
+    
+    "programs": "Билим берүү программалары",
+    "faculties": "Факультеттер",
+    "departments": "Кафедралар",
+    "calendar": "Академиялык календарь",
+    "resources": "Ресурстар",
+    
+    "admission_process": "Кабыл алуу процесси",
+    "requirements": "Талаптар",
+    "tuition": "Окуу баасы",
+    "scholarships": "Стипендиялар",
+    "apply_online": "Онлайн-арыз",
+    
+    "research_areas": "Изилдөө багыттары",
+    "research_centers": "Илимий борборлор",
+    "publications": "Басылмалар",
+    "conferences": "Конференциялар",
+    "grants": "Гранттар",
+    
+    "student_life": "Студенттик жашоо",
+    "events": "Иш-чаралар",
+    "clubs": "Клубдар жана коомдор",
+    "gallery": "Галерея",
+    "international": "Чет элдик студенттер үчүн",
+    
+    "all_news": "Бардык жаңылыктар",
+    "announcements": "Жарнамалар",
+    "articles": "Макалалар",
+    
+    "admission_office": "Кабыл алуу комиссиясы",
+    "map": "Кампус картасы",
+    "feedback": "К geri байланыш"
+  }
+}
