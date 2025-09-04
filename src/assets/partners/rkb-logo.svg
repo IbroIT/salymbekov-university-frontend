@@ -1,0 +1,11 @@
+<svg width="120" height="60" viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg">
+  <rect width="120" height="60" fill="#E53E3E" rx="8"/>
+  <g fill="white">
+    <circle cx="30" cy="20" r="8"/>
+    <path d="M22 35 h16 v8 h-16 z"/>
+    <path d="M26 28 h8 v15 h-8 z"/>
+  </g>
+  <text x="50" y="25" fill="white" font-family="Arial, sans-serif" font-size="10" font-weight="bold">РКБ</text>
+  <text x="50" y="38" fill="white" font-family="Arial, sans-serif" font-size="6">Республиканская</text>
+  <text x="50" y="47" fill="white" font-family="Arial, sans-serif" font-size="6">клиническая больница</text>
+</svg>

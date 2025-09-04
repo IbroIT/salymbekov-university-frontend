@@ -1,0 +1,11 @@
+<svg width="120" height="60" viewBox="0 0 120 60" xmlns="http://www.w3.org/2000/svg">
+  <rect width="120" height="60" fill="#16A34A" rx="8"/>
+  <g fill="white">
+    <polygon points="20,15 30,10 30,25 20,30"/>
+    <rect x="15" y="35" width="20" height="8"/>
+  </g>
+  <text x="40" y="20" fill="white" font-family="Arial, sans-serif" font-size="9" font-weight="bold">ТМА</text>
+  <text x="40" y="32" fill="white" font-family="Arial, sans-serif" font-size="5">Ташкентская</text>
+  <text x="40" y="39" fill="white" font-family="Arial, sans-serif" font-size="5">медицинская</text>
+  <text x="40" y="46" fill="white" font-family="Arial, sans-serif" font-size="5">академия</text>
+</svg>
