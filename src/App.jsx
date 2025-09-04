@@ -8,6 +8,7 @@ import Programs from './components/Home/ProgramCards';
 import Reviews from './components/Home/Reviews';
 import Partners from "./components/Home/Partners";
 import Footer from "./components/Footer";
+
 import Academics from './components/academics/academics'
 import Faculties from './components/academics/faculties'
 import Deparments from './components/academics/departments'
