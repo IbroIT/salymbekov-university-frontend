@@ -5,11 +5,13 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import interactionPlugin from '@fullcalendar/interaction';
-import ky from 'ky';
 import './Calendar.css';
 
 const Calendar = () => {
   const [calendarView, setCalendarView] = useState('dayGridMonth');
+  const [showLegend, setShowLegend] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Моковые данные академического календаря
   const calendarEvents = [
@@ -137,111 +139,9 @@ END:VCALENDAR`;
     document.body.removeChild(link);
   };
 
-  // Кастомный рендер событий
-  const eventContent = (eventInfo) => {
-    return (
-      <div className="flex items-center p-1">
-        <div className="w-2 h-2 rounded-full mr-2" style={{ backgroundColor: eventInfo.event.backgroundColor }}></div>
-        <div className="flex-1 min-w-0">
-          <div className="text-sm font-medium truncate">{eventInfo.event.title}</div>
-          <div className="text-xs opacity-75 truncate">{eventInfo.timeText}</div>
-        </div>
-      </div>
-    );
-  };
-
-  // Кастомный рендер заголовка события в списке
-  const eventContentList = (eventInfo) => {
-    return (
-      <div className="flex items-center p-2">
-        <div className="w-3 h-3 rounded-full mr-3" style={{ backgroundColor: eventInfo.event.backgroundColor }}></div>
-        <div className="flex-1">
-          <div className="font-medium">{eventInfo.event.title}</div>
-          <div className="text-sm text-gray-600">{eventInfo.event.extendedProps.description}</div>
-        </div>
-        <div className="text-sm text-gray-500 ml-4">{eventInfo.timeText}</div>
-      </div>
-    );
-  };
-
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-8">
-        {/* Хлебные крошки */}
-        <nav className="text-sm text-gray-600 mb-8">
-          <Link to="/" className="hover:text-blue-600">Главная</Link>
-          <span className="mx-2">→</span>
-          <Link to="/academics" className="hover:text-blue-600">Академики</Link>
-          <span className="mx-2">→</span>
-          <span className="text-gray-800">Академический календарь</span>
-        </nav>
-
-        <h1 className="text-3xl font-bold text-gray-800 mb-8">Академический календарь</h1>
-
-        {/* Легенда событий */}
-        <div className="bg-white rounded-2xl shadow-md p-6 mb-6">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">Легенда событий</h2>
-          <div className="flex flex-wrap gap-4">
-            {eventTypes.map((type, index) => (
-              <div key={index} className="flex items-center">
-                <span className="text-lg mr-2">{type.icon}</span>
-                <div className="w-4 h-4 rounded-full mr-2" style={{ backgroundColor: type.color }}></div>
-                <span className="text-sm text-gray-700">{type.label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Переключение видов и экспорт */}
-        <div className="flex flex-wrap justify-between items-center mb-6 gap-4">
-          <div className="flex gap-2">
-            <button
-              onClick={() => setCalendarView('dayGridMonth')}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                calendarView === 'dayGridMonth'
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-white text-gray-700 hover:bg-gray-100'
-              }`}
-            >
-              Месяц
-            </button>
-            <button
-              onClick={() => setCalendarView('timeGridWeek')}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                calendarView === 'timeGridWeek'
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-white text-gray-700 hover:bg-gray-100'
-              }`}
-            >
-              Неделя
-            </button>
-            <button
-              onClick={() => setCalendarView('timeGridDay')}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                calendarView === 'timeGridDay'
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-white text-gray-700 hover:bg-gray-100'
-              }`}
-            >
-              День
-            </button>
-            <button
-              onClick={() => setCalendarView('listMonth')}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                calendarView === 'listMonth'
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-white text-gray-700 hover:bg-gray-100'
-              }`}
-            >
-              Список
-            </button>
-          </div>
-
-          <div className="flex gap-2">
-            <button
-              onClick={() => {
-                // Экспорт всего календаря
-                const icsContent = `BEGIN:VCALENDAR
+  // Экспорт всего календаря
+  const exportAllToICS = () => {
+    const icsContent = `BEGIN:VCALENDAR
 VERSION:2.0
 ${calendarEvents.map(event => `
 BEGIN:VEVENT
@@ -253,31 +153,129 @@ END:VEVENT
 `).join('')}
 END:VCALENDAR`;
 
-                const blob = new Blob([icsContent], { type: 'text/calendar' });
-                const url = URL.createObjectURL(blob);
-                const link = document.createElement('a');
-                link.href = url;
-                link.download = 'academic_calendar.ics';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-              }}
-              className="px-4 py-2 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors"
+    const blob = new Blob([icsContent], { type: 'text/calendar' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'academic_calendar.ics';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  // Кастомный рендер событий
+  const eventContent = (eventInfo) => {
+    return (
+      <div className="flex items-center p-1">
+        <div className="w-2 h-2 rounded-full mr-2 flex-shrink-0" style={{ backgroundColor: eventInfo.event.backgroundColor }}></div>
+        <div className="flex-1 min-w-0">
+          <div className="text-sm font-medium truncate">{eventInfo.event.title}</div>
+          <div className="text-xs opacity-75 truncate">{eventInfo.timeText}</div>
+        </div>
+      </div>
+    );
+  };
+
+  // Обработчик клика по событию
+  const handleEventClick = (info) => {
+    info.jsEvent.preventDefault();
+    setSelectedEvent(info.event);
+    setIsModalOpen(true);
+  };
+
+  // Закрытие модального окна
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedEvent(null);
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <div className="container mx-auto px-3 py-4 sm:px-4 sm:py-8">
+        {/* Хлебные крошки */}
+        <nav className="text-xs sm:text-sm text-gray-600 mb-4 sm:mb-8">
+          <Link to="/" className="hover:text-blue-600">Главная</Link>
+          <span className="mx-1 sm:mx-2">→</span>
+          <Link to="/academics" className="hover:text-blue-600">Академики</Link>
+          <span className="mx-1 sm:mx-2">→</span>
+          <span className="text-gray-800">Академический календарь</span>
+        </nav>
+
+        <h1 className="text-xl sm:text-3xl font-bold text-gray-800 mb-4 sm:mb-8">Академический календарь</h1>
+
+        {/* Кнопка показа/скрытия легенды на мобильных */}
+        <div className="block sm:hidden mb-4">
+          <button
+            onClick={() => setShowLegend(!showLegend)}
+            className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors flex items-center justify-center"
+          >
+            {showLegend ? 'Скрыть легенду' : 'Показать легенду'}
+            <span className="ml-2">{showLegend ? '▲' : '▼'}</span>
+          </button>
+        </div>
+
+        {/* Легенда событий */}
+        <div className={`bg-white rounded-xl sm:rounded-2xl shadow-md p-4 sm:p-6 mb-4 sm:mb-6 ${showLegend ? 'block' : 'hidden sm:block'}`}>
+          <h2 className="text-lg sm:text-xl font-semibold text-gray-800 mb-3 sm:mb-4">Легенда событий</h2>
+          <div className="grid grid-cols-1 sm:flex sm:flex-wrap gap-3 sm:gap-4">
+            {eventTypes.map((type, index) => (
+              <div key={index} className="flex items-center">
+                <span className="text-base sm:text-lg mr-1 sm:mr-2">{type.icon}</span>
+                <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full mr-1 sm:mr-2 flex-shrink-0" style={{ backgroundColor: type.color }}></div>
+                <span className="text-xs sm:text-sm text-gray-700">{type.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Переключение видов и экспорт */}
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 sm:mb-6 gap-3">
+          <div className="order-2 sm:order-1">
+            <button
+              onClick={exportAllToICS}
+              className="w-full sm:w-auto px-4 py-2 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors text-sm sm:text-base"
             >
               Экспорт всего календаря
+            </button>
+          </div>
+          
+          <div className="order-1 sm:order-2 grid grid-cols-2 gap-2 sm:flex sm:gap-2">
+            <button
+              onClick={() => setCalendarView('dayGridMonth')}
+              className={`px-3 py-2 rounded-lg font-medium text-xs sm:text-sm ${calendarView === 'dayGridMonth' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'}`}
+            >
+              Месяц
+            </button>
+            <button
+              onClick={() => setCalendarView('timeGridWeek')}
+              className={`px-3 py-2 rounded-lg font-medium text-xs sm:text-sm ${calendarView === 'timeGridWeek' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'}`}
+            >
+              Неделя
+            </button>
+            <button
+              onClick={() => setCalendarView('timeGridDay')}
+              className={`px-3 py-2 rounded-lg font-medium text-xs sm:text-sm ${calendarView === 'timeGridDay' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'}`}
+            >
+              День
+            </button>
+            <button
+              onClick={() => setCalendarView('listMonth')}
+              className={`px-3 py-2 rounded-lg font-medium text-xs sm:text-sm ${calendarView === 'listMonth' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'}`}
+            >
+              Список
             </button>
           </div>
         </div>
 
         {/* Календарь */}
-        <div className="bg-white rounded-2xl shadow-md p-6">
+        <div className="bg-white rounded-xl sm:rounded-2xl shadow-md p-3 sm:p-6">
           <FullCalendar
             plugins={[dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin]}
-            initialView="dayGridMonth"
+            initialView={calendarView}
             headerToolbar={{
-              left: 'prev,next today',
+              left: 'prev,next',
               center: 'title',
-              right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+              right: 'today'
             }}
             views={{
               dayGridMonth: { buttonText: 'Месяц' },
@@ -287,61 +285,7 @@ END:VCALENDAR`;
             }}
             events={calendarEvents}
             eventContent={eventContent}
-            eventClick={(info) => {
-              info.jsEvent.preventDefault();
-              
-              // Модальное окно с деталями события
-              if (info.event) {
-                const event = info.event;
-                const modal = document.createElement('div');
-                modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
-                modal.innerHTML = `
-                  <div class="bg-white rounded-2xl p-6 max-w-md w-full mx-4">
-                    <div class="flex justify-between items-center mb-4">
-                      <h3 class="text-xl font-bold">${event.title}</h3>
-                      <button class="text-gray-400 hover:text-gray-600" onclick="this.closest('.fixed').remove()">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
-                      </button>
-                    </div>
-                    <div class="mb-4">
-                      <div class="flex items-center mb-2">
-                        <div class="w-4 h-4 rounded-full mr-2" style="background-color: ${event.backgroundColor}"></div>
-                        <span class="text-sm text-gray-600">${event.extendedProps.type}</span>
-                      </div>
-                      <p class="text-gray-700">${event.extendedProps.description}</p>
-                    </div>
-                    <div class="flex gap-2">
-                      <button class="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700" onclick="window.open('https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.title)}&dates=${event.startStr.replace(/-/g, '')}/${event.endStr ? event.endStr.replace(/-/g, '') : event.startStr.replace(/-/g, '')}&details=${encodeURIComponent(event.extendedProps.description)}', '_blank')">
-                        Google Calendar
-                      </button>
-                      <button class="flex-1 border border-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-50" onclick="
-                        const icsContent = 'BEGIN:VCALENDAR\\nVERSION:2.0\\nBEGIN:VEVENT\\nSUMMARY:${event.title}\\nDTSTART:${event.startStr.replace(/-/g, '').replace(/:/g, '')}\\nDTEND:${event.endStr ? event.endStr.replace(/-/g, '').replace(/:/g, '') : event.startStr.replace(/-/g, '').replace(/:/g, '')}\\nDESCRIPTION:${event.extendedProps.description}\\nEND:VEVENT\\nEND:VCALENDAR';
-                        const blob = new Blob([icsContent], { type: 'text/calendar' });
-                        const url = URL.createObjectURL(blob);
-                        const link = document.createElement('a');
-                        link.href = url;
-                        link.download = '${event.title}.ics';
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
-                      ">
-                        Скачать .ics
-                      </button>
-                    </div>
-                  </div>
-                `;
-                document.body.appendChild(modal);
-                
-                // Обработчик закрытия модального окна
-                modal.addEventListener('click', (e) => {
-                  if (e.target === modal) {
-                    modal.remove();
-                  }
-                });
-              }
-            }}
+            eventClick={handleEventClick}
             locale="ru"
             buttonText={{
               today: 'Сегодня',
@@ -358,9 +302,55 @@ END:VCALENDAR`;
               minute: '2-digit',
               meridiem: false
             }}
+            windowResize={function(arg) {
+              if (window.innerWidth < 640) {
+                arg.view.calendar.changeView('listMonth');
+                setCalendarView('listMonth');
+              }
+            }}
           />
         </div>
       </div>
+
+      {/* Модальное окно для события */}
+      {isModalOpen && selectedEvent && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-3 sm:p-4">
+          <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 max-w-md w-full max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg sm:text-xl font-bold">{selectedEvent.title}</h3>
+              <button 
+                onClick={closeModal}
+                className="text-gray-400 hover:text-gray-600"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+              </button>
+            </div>
+            <div className="mb-4">
+              <div className="flex items-center mb-2">
+                <div className="w-4 h-4 rounded-full mr-2" style={{backgroundColor: selectedEvent.backgroundColor}}></div>
+                <span className="text-sm text-gray-600">{selectedEvent.extendedProps.type}</span>
+              </div>
+              <p className="text-gray-700 text-sm sm:text-base">{selectedEvent.extendedProps.description}</p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-2">
+              <button 
+                onClick={() => exportToGoogleCalendar(selectedEvent)}
+                className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 text-sm sm:text-base"
+              >
+                Google Calendar
+              </button>
+              <button 
+                onClick={() => exportToICS(selectedEvent)}
+                className="flex-1 border border-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-50 text-sm sm:text-base"
+              >
+                Скачать .ics
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
