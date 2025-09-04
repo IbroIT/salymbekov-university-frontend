@@ -1,0 +1,261 @@
+import { useState, useEffect } from 'react';
+
+const MedicalUniversityReviews = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [direction, setDirection] = useState('next');
+
+  const reviews = [
+    {
+      id: 1,
+      name: "Анна Иванова",
+      faculty: "Лечебное дело",
+      course: "4 курс",
+      text: "Обучение на медицинском факультете дало мне бесценные знания и практические навыки. Преподаватели - опытные практикующие врачи, которые делятся реальным опытом.",
+      rating: 4.9,
+      image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80"
+    },
+    {
+      id: 2,
+      name: "Максим Петров",
+      faculty: "Педиатрия",
+      course: "5 курс",
+      text: "Отличное сочетание теории и практики! Уже на 3 курсе начались занятия в клиниках, что позволяет применять знания в реальных условиях.",
+      rating: 4.8,
+      image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80"
+    },
+    {
+      id: 3,
+      name: "Елена Смирнова",
+      faculty: "Стоматология",
+      course: "3 курс",
+      text: "Современное оборудование и подход к обучению. Особенно ценю симуляционный центр, где можно отрабатывать навыки до клинической практики.",
+      rating: 4.7,
+      image: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80"
+    },
+    {
+      id: 4,
+      name: "Дмитрий Козлов",
+      faculty: "Фармация",
+      course: "2 курс",
+      text: "Интересная программа, глубокое погружение в биохимию и фармакологию. Преподаватели поддерживают научные инициативы студентов.",
+      rating: 4.6,
+      image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80"
+    },
+    {
+      id: 5,
+      name: "Ольга Новикова",
+      faculty: "Медико-профилактическое дело",
+      course: "1 курс",
+      text: "Поступила в этом году и уже в восторге! Атмосфера способствует learning, много практических занятий и современные лаборатории.",
+      rating: 4.9,
+      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80"
+    }
+  ];
+
+  // Функция для отображения звезд рейтинга
+  const renderStars = (rating) => {
+    return (
+      <div className="flex">
+        {[...Array(5)].map((_, i) => {
+          const ratingValue = i + 1;
+          return (
+            <svg
+              key={i}
+              className={`w-5 h-5 ${ratingValue <= rating ? 'text-yellow-400' : 'text-gray-300'}`}
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+            </svg>
+          );
+        })}
+        <span className="ml-2 text-blue-800 font-semibold">{rating}</span>
+      </div>
+    );
+  };
+
+  // Автопрокрутка
+  useEffect(() => {
+    if (isPaused) return;
+
+    const interval = setInterval(() => {
+      setDirection('next');
+      setCurrentIndex((prevIndex) => 
+        prevIndex === reviews.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [isPaused, reviews.length]);
+
+  const goToNext = () => {
+    setDirection('next');
+    setCurrentIndex(currentIndex === reviews.length - 1 ? 0 : currentIndex + 1);
+  };
+
+  const goToPrevious = () => {
+    setDirection('prev');
+    setCurrentIndex(currentIndex === 0 ? reviews.length - 1 : currentIndex - 1);
+  };
+
+  const goToSlide = (slideIndex) => {
+    setDirection(slideIndex > currentIndex ? 'next' : 'prev');
+    setCurrentIndex(slideIndex);
+  };
+
+  // Анимация появления
+  const getSlideAnimation = (index) => {
+    if (index === currentIndex) {
+      return direction === 'next' 
+        ? 'animate-fade-in-right' 
+        : 'animate-fade-in-left';
+    }
+    return 'opacity-0 absolute';
+  };
+
+  return (
+    <section className="py-16 bg-gradient-to-br from-blue-50 to-indigo-50 relative overflow-hidden">
+      {/* Декоративные элементы */}
+      <div className="absolute top-0 left-0 w-32 h-32 bg-blue-100 rounded-full -translate-x-16 -translate-y-16 opacity-50"></div>
+      <div className="absolute bottom-0 right-0 w-40 h-40 bg-blue-200 rounded-full translate-x-20 translate-y-20 opacity-30"></div>
+      <div className="absolute top-1/2 left-1/4 w-24 h-24 bg-blue-100 rounded-full opacity-20"></div>
+      
+      <div className="container mx-auto px-4 relative z-10">
+        <h2 className="text-4xl font-bold text-center text-blue-900 mb-4">Отзывы наших студентов</h2>
+        <p className="text-lg text-center text-blue-700 mb-12 max-w-2xl mx-auto">
+          Узнайте, что говорят студенты о качестве образования и атмосфере в нашем медицинском университете
+        </p>
+        
+        <div 
+          className="relative max-w-6xl mx-auto"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          <div className="relative h-96 overflow-visible">
+            {reviews.map((review, index) => (
+              <div 
+                key={review.id}
+                className={`transition-all duration-700 ease-in-out ${getSlideAnimation(index)}`}
+                style={{
+                  transform: `translateX(${(index - currentIndex) * 100}%)`,
+                  zIndex: index === currentIndex ? 10 : 0
+                }}
+              >
+                <div className="bg-white rounded-2xl shadow-xl p-8 flex flex-col md:flex-row items-center h-full mx-4 transform transition-transform duration-300 hover:scale-105">
+                  <div className="md:w-1/3 flex flex-col items-center mb-6 md:mb-0">
+                    <div className="relative">
+                      <img 
+                        src={review.image} 
+                        alt={review.name}
+                        className="w-32 h-32 rounded-full object-cover border-4 border-blue-100 shadow-md"
+                      />
+                      <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white text-xs font-bold py-1 px-3 rounded-full">
+                        {review.course}
+                      </div>
+                    </div>
+                    <h3 className="font-bold text-blue-900 mt-4 text-xl">{review.name}</h3>
+                    <p className="text-blue-700 text-center">{review.faculty}</p>
+                  </div>
+                  
+                  <div className="md:w-2/3 md:pl-8 flex flex-col justify-center">
+                    <div className="flex justify-center md:justify-start mb-4">
+                      {renderStars(review.rating)}
+                    </div>
+                    
+                    <div className="relative">
+                      <svg className="w-8 h-8 text-blue-100 absolute -left-4 -top-2" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                      </svg>
+                      <p className="text-gray-700 text-lg leading-relaxed pl-6">
+                        {review.text}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          {/* Кнопки навигации */}
+          <button 
+            onClick={goToPrevious}
+            className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-4 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition-all duration-300 hover:scale-110"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          
+          <button 
+            onClick={goToNext}
+            className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-4 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition-all duration-300 hover:scale-110"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+        
+        {/* Индикаторы */}
+        <div className="flex justify-center mt-10">
+          {reviews.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => goToSlide(index)}
+              className={`h-3 w-3 rounded-full mx-2 transition-all duration-300 ${currentIndex === index ? 'bg-blue-600 scale-125' : 'bg-blue-300 hover:bg-blue-400'}`}
+              aria-label={`Перейти к отзыву ${index + 1}`}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Медицинские иконки */}
+      <div className="absolute bottom-10 left-10 opacity-10">
+        <svg className="w-24 h-24 text-blue-400" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M19.649 5.286l-7.65-3.428-7.65 3.428c-.641.287-.641 1.497 0 1.784l7.65 3.428 7.65-3.428c.641-.287.641-1.497 0-1.784zm-7.65 11.428l-7.65-3.428v6.856c0 .947.756 1.714 1.688 1.714h11.924c.932 0 1.688-.767 1.688-1.714v-6.856l-7.65 3.428z"/>
+        </svg>
+      </div>
+      
+      <div className="absolute top-10 right-10 opacity-10">
+        <svg className="w-20 h-20 text-blue-400" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+      </div>
+
+      <style jsx>{`
+        @keyframes fade-in-right {
+          from {
+            opacity: 0;
+            transform: translateX(50px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+        
+        @keyframes fade-in-left {
+          from {
+            opacity: 0;
+            transform: translateX(-50px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+        
+        .animate-fade-in-right {
+          animation: fade-in-right 0.7s ease-out forwards;
+        }
+        
+        .animate-fade-in-left {
+          animation: fade-in-left 0.7s ease-out forwards;
+        }
+      `}</style>
+    </section>
+  );
+};
+
+export default MedicalUniversityReviews;

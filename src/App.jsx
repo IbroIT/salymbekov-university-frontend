@@ -2,6 +2,12 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import './i18n';
 import Navbar from './components/Navbar';
 import './App.css';
+import Home from './components/Home/Home';
+import Facts from './components/Home/FactsSection';
+import Programs from './components/Home/ProgramCards';
+import Reviews from './components/Home/Reviews';
+import Partners from "./components/Home/Partners";
+import Footer from "./components/Footer";
 import Academics from './components/academics/academics'
 import Faculties from './components/academics/faculties'
 import Deparments from './components/academics/departments'
@@ -16,6 +22,11 @@ function App() {
     <Router>
       <div className="App">
         <Navbar />
+        <Home  />
+        <Facts />
+        <Programs />
+        <Reviews />
+        <Partners />
         <div className="pt-16">
           <Routes>
             {/* About */}
@@ -65,11 +76,10 @@ function App() {
             <Route path="/contacts/map" element={<Page title="Map" />} />
             <Route path="/contacts/feedback" element={<Page title="Feedback" />} />
 
-            {/* Default */}
-            <Route path="*" element={<Page title="404 Not Found" />} />
           </Routes>
         </div>
       </div>
+      <Footer />
     </Router>
   );
 }

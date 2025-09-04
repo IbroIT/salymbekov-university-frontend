@@ -1,0 +1,99 @@
+/* HeroSlider.css */
+
+.hero-slider {
+  width: 100%;
+}
+
+.slider-container {
+  width: 100%;
+}
+
+.slide {
+  width: 100%;
+}
+
+.slide-bg {
+  width: 100%;
+  height: 100%;
+}
+
+.slide-content {
+  width: 100%;
+}
+
+/* Анимации для контента слайдов */
+.slide-title {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s ease forwards 0.3s;
+}
+
+.slide-subtitle {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s ease forwards 0.6s;
+}
+
+.slide-button {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s ease forwards 0.9s;
+}
+
+/* Анимация появления */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Анимация индикатора прогресса */
+.slider-progress {
+  width: 0%;
+}
+
+.slider-progress.active {
+  width: 100%;
+  transition: width 6s linear;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+  .slide-title {
+    font-size: 2rem;
+  }
+  
+  .slide-subtitle {
+    font-size: 1.2rem;
+  }
+  
+  .slider-nav {
+    padding: 0.5rem;
+  }
+  
+  .slider-nav svg {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+  
+  .slider-indicator {
+    width: 8px;
+    height: 8px;
+  }
+}
+
+/* Эффекты при наведении для десктопов */
+@media (min-width: 1024px) {
+  .slider-nav:hover {
+    transform: translateY(-50%) scale(1.1);
+  }
+  
+  .slide-button:hover {
+    transform: scale(1.05);
+  }
+}
