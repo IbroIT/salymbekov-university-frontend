@@ -5,11 +5,16 @@ import './App.css';
 import Footer from "./components/Footer";
 import Hero from "./components/Home/hero";
 
+import LifeOverview from "./components/Life/LifeOverview";
+import ClubsSection from "./components/Life/ClubsSection";
+import InternationalStudents from "./components/Life/InternationalStudents";
+
 import Academics from './components/academics/academics'
 import Faculties from './components/academics/faculties'
 import Deparments from './components/academics/departments'
 import Calendar from './components/academics/calendar'
 import Resources from "./components/academics/resources";
+import Gallery from "./components/Life/Gallery";
 
 // Страницы-заглушки
 const Page = ({ title }) => <h1 className="text-2xl font-bold p-8">{title}</h1>;
@@ -51,11 +56,11 @@ function App() {
             <Route path="/research/grants" element={<Page title="Grants" />} />
 
             {/* Campus Life */}
-            <Route path="/campus-life" element={<Page title="Student Life" />} />
+            <Route path="/campus-life" element={<LifeOverview />} />
             <Route path="/campus-life/events" element={<Page title="Campus Events" />} />
-            <Route path="/campus-life/clubs" element={<Page title="Clubs" />} />
-            <Route path="/campus-life/gallery" element={<Page title="Gallery" />} />
-            <Route path="/campus-life/international" element={<Page title="International" />} />
+            <Route path="/campus-life/clubs" element={<ClubsSection/>} />
+            <Route path="/campus-life/gallery" element={<Gallery/>} />
+            <Route path="/campus-life/international" element={<InternationalStudents/>} />
 
             {/* News */}
             <Route path="/news" element={<Page title="All News" />} />
