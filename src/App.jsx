@@ -2,12 +2,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import './i18n';
 import Navbar from './components/Navbar';
 import './App.css';
-import Home from './components/Home/Home';
-import Facts from './components/Home/FactsSection';
-import Programs from './components/Home/ProgramCards';
-import Reviews from './components/Home/Reviews';
-import Partners from "./components/Home/Partners";
 import Footer from "./components/Footer";
+import Hero from "./components/Home/hero";
 
 import Academics from './components/academics/academics'
 import Faculties from './components/academics/faculties'
@@ -23,14 +19,10 @@ function App() {
     <Router>
       <div className="App">
         <Navbar />
-        <Home  />
-        <Facts />
-        <Programs />
-        <Reviews />
-        <Partners />
         <div className="pt-16">
           <Routes>
             {/* About */}
+            <Route path="/" element={<Hero />} />
             <Route path="/about" element={<Page title="About University" />} />
             <Route path="/about/management" element={<Page title="Management" />} />
             <Route path="/about/documents" element={<Page title="Documents" />} />
