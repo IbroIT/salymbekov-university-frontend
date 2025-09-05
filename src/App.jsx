@@ -22,6 +22,12 @@ import ClubsSection from "./components/Life/ClubsSection";
 import InternationalStudents from "./components/Life/InternationalStudents";
 import Gallery from "./components/Life/Gallery";
 
+import Research from "./components/Research/research";
+import Centers from "./components/Research/centers";
+import Publications from "./components/Research/publications";
+import Conferences from "./components/Research/conferences";
+import Grants from "./components/Research/grants";
+
 // Страницы-заглушки
 const Page = ({ title }) => <h1 className="text-2xl font-bold p-8">{title}</h1>;
 
@@ -55,11 +61,11 @@ function App() {
             <Route path="/admission/apply" element={<Page title="Apply Online" />} />
 
             {/* Research */}
-            <Route path="/research" element={<Page title="Research Areas" />} />
-            <Route path="/research/centers" element={<Page title="Research Centers" />} />
-            <Route path="/research/publications" element={<Page title="Publications" />} />
-            <Route path="/research/conferences" element={<Page title="Conferences" />} />
-            <Route path="/research/grants" element={<Page title="Grants" />} />
+            <Route path="/research" element={<Research />} />
+            <Route path="/research/centers" element={<Centers />} />
+            <Route path="/research/publications" element={<Publications />} />
+            <Route path="/research/conferences" element={<Conferences />} />
+            <Route path="/research/grants" element={<Grants />} />
 
             {/* Campus Life */}
             <Route path="/campus-life" element={<LifeOverview />} />
