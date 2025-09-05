@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import './Facts.css'
 const CounterItem = ({ end, icon, label, duration = 2000, delay = 0 }) => {
   const [count, setCount] = useState(0);
@@ -80,11 +82,13 @@ const CounterItem = ({ end, icon, label, duration = 2000, delay = 0 }) => {
 };
 
 const AnimatedFactsSection = () => {
+  const { t } = useTranslation();
+
   const facts = [
-    { end: 5000, icon: "👨‍🎓", label: "студентов", delay: 0 },
-    { end: 2500, icon: "🎓", label: "выпускников", delay: 200 },
-    { end: 25, icon: "📚", label: "образовательных программ", delay: 400 },
-    { end: 50, icon: "🏥", label: "партнерских клиник", delay: 600 },
+    { end: 5000, icon: "👨‍🎓", label: t("facts.students"), delay: 0 },
+    { end: 2500, icon: "🎓", label: t("facts.graduates"), delay: 200 },
+    { end: 25, icon: "📚", label: t("facts.programs"), delay: 400 },
+    { end: 50, icon: "🏥", label: t("facts.clinics"), delay: 600 }
   ];
 
   return (
@@ -92,14 +96,15 @@ const AnimatedFactsSection = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-blue-800 mb-6 relative inline-block">
-            Цифры и факты
+            {t("facts.title")}
             <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full"></div>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Наши достижения за годы работы в сфере образования
+            {t("facts.subtitle")}
           </p>
         </div>
         
+        {/* counters */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {facts.map((fact, index) => (
             <CounterItem
@@ -118,11 +123,12 @@ const AnimatedFactsSection = () => {
             <div className="w-2 h-2 bg-blue-600 rounded-full animation-delay-200"></div>
             <div className="w-2 h-2 bg-blue-600 rounded-full animation-delay-400"></div>
           </div>
-          <p className="text-gray-500 mt-2">Прокрутите вниз, чтобы увидеть больше</p>
+          <p className="text-gray-500 mt-2">{t("facts.scrollHint")}</p>
         </div>
       </div>
     </section>
   );
 };
+
 
 export default AnimatedFactsSection;
