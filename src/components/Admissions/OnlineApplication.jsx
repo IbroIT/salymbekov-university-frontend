@@ -46,6 +46,7 @@ const OnlineApplication = () => {
   });
 
   const [isDraftSaved, setIsDraftSaved] = useState(false);
+  const [isDraftLoaded, setIsDraftLoaded] = useState(false);
   const [errors, setErrors] = useState({});
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -95,13 +96,17 @@ const OnlineApplication = () => {
   // Auto-save draft
   useEffect(() => {
     const timer = setTimeout(() => {
-      localStorage.setItem('applicationDraft', JSON.stringify(formData));
+      const draftData = {
+        formData: formData,
+        currentStep: currentStep
+      };
+      localStorage.setItem('applicationDraft', JSON.stringify(draftData));
       setIsDraftSaved(true);
       setTimeout(() => setIsDraftSaved(false), 2000);
     }, 1000);
 
     return () => clearTimeout(timer);
-  }, [formData]);
+  }, [formData, currentStep]);
 
   // Load draft on component mount
   useEffect(() => {
@@ -109,9 +114,21 @@ const OnlineApplication = () => {
     if (draft) {
       try {
         const parsedDraft = JSON.parse(draft);
-        setFormData(parsedDraft);
+        // Check if it's the new format with currentStep
+        if (parsedDraft.formData && parsedDraft.currentStep) {
+          setFormData(parsedDraft.formData);
+          setCurrentStep(parsedDraft.currentStep);
+          setIsDraftLoaded(true);
+          setTimeout(() => setIsDraftLoaded(false), 5000);
+        } else {
+          // Old format - just formData
+          setFormData(parsedDraft);
+          setIsDraftLoaded(true);
+          setTimeout(() => setIsDraftLoaded(false), 5000);
+        }
       } catch (error) {
         console.error('Error loading draft:', error);
+        localStorage.removeItem('applicationDraft');
       }
     }
   }, []);
@@ -226,46 +243,53 @@ const OnlineApplication = () => {
   };
 
   const saveDraft = () => {
-    localStorage.setItem('applicationDraft', JSON.stringify(formData));
+    const draftData = {
+      formData: formData,
+      currentStep: currentStep
+    };
+    localStorage.setItem('applicationDraft', JSON.stringify(draftData));
     setIsDraftSaved(true);
     setTimeout(() => setIsDraftSaved(false), 3000);
   };
 
   const clearDraft = () => {
-    localStorage.removeItem('applicationDraft');
-    setFormData({
-      program: '',
-      programDetails: null,
-      firstName: '',
-      lastName: '',
-      middleName: '',
-      birthDate: '',
-      gender: '',
-      phone: '',
-      email: '',
-      address: '',
-      schoolName: '',
-      graduationYear: '',
-      certificateNumber: '',
-      ortScore: '',
-      subjects: {
-        biology: '',
-        chemistry: '',
-        physics: '',
-        mathematics: ''
-      },
-      documents: {
-        certificate: null,
-        passport: null,
-        medical: null,
-        photos: null,
-        ortCertificate: null
-      },
-      agreeTerms: false,
-      agreePrivacy: false
-    });
-    setCurrentStep(1);
-    setErrors({});
+    if (window.confirm('Вы уверены, что хотите очистить форму? Все введенные данные будут потеряны.')) {
+      localStorage.removeItem('applicationDraft');
+      setFormData({
+        program: '',
+        programDetails: null,
+        firstName: '',
+        lastName: '',
+        middleName: '',
+        birthDate: '',
+        gender: '',
+        phone: '',
+        email: '',
+        address: '',
+        schoolName: '',
+        graduationYear: '',
+        certificateNumber: '',
+        ortScore: '',
+        subjects: {
+          biology: '',
+          chemistry: '',
+          physics: '',
+          mathematics: ''
+        },
+        documents: {
+          certificate: null,
+          passport: null,
+          medical: null,
+          photos: null,
+          ortCertificate: null
+        },
+        agreeTerms: false,
+        agreePrivacy: false
+      });
+      setCurrentStep(1);
+      setErrors({});
+      alert('Форма очищена. Вы вернулись на первый этап.');
+    }
   };
 
   const renderStep1 = () => {
@@ -908,8 +932,11 @@ const OnlineApplication = () => {
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
               Онлайн заявка
             </h1>
-            <p className="text-xl opacity-90">
+            <p className="text-xl opacity-90 mb-2">
               Подайте заявку на поступление в Салымбеков Университет
+            </p>
+            <p className="text-sm opacity-75">
+              💾 Ваши данные автоматически сохраняются каждую секунду
             </p>
           </div>
         </div>
@@ -994,6 +1021,11 @@ const OnlineApplication = () => {
           </div>
           
           <div className="flex items-center space-x-4">
+            {isDraftLoaded && (
+              <span className="text-sm text-blue-600 font-medium animate-pulse">
+                📂 Черновик загружен
+              </span>
+            )}
             {isDraftSaved && (
               <span className="text-sm text-green-600 font-medium animate-pulse">
                 ✓ Черновик сохранен

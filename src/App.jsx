@@ -7,7 +7,6 @@ import Hero from "./components/Home/hero";
 
 import About from "./components/About/About";
 import Management from "./components/About/Management";
-import Documents from "./components/About/Documents";
 import Careers from "./components/About/Careers";
 import Partners from "./components/About/Partners";
 
@@ -30,7 +29,6 @@ import OnlineApplication from "./components/Admissions/OnlineApplication";
 
 import News from "./components/News/News";
 import NewsDetail from "./components/News/NewsDetail";
-import NewsDetailTest from "./components/News/NewsDetailTest";
 import NewsEvents from "./components/News/NewsEvents";
 import NewsAnnouncements from "./components/News/NewsAnnouncements";
 
@@ -54,7 +52,6 @@ function App() {
             <Route path="/" element={<Hero />} />
             <Route path="/about" element={<About />} />
             <Route path="/about/management" element={<Management />} />
-            <Route path="/about/documents" element={<Documents />} />
             <Route path="/about/vacancies" element={<Careers />} />
             <Route path="/about/partners" element={<Partners />} />
 

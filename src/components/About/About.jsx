@@ -66,7 +66,7 @@ const About = () => {
     { 
       number: "6", 
       label: t('about.departments_count'),
-      icon: "�",
+      icon: "🏫",
       color: "blue"
     },
     { 
@@ -95,7 +95,7 @@ const About = () => {
   const researchCenters = [
     { name: t('about.clinical_center'), focus: t('about.patient_care'), icon: "🏥" },
     { name: t('about.research_lab'), focus: t('about.medical_research'), icon: "🔬" },
-    { name: t('about.simulation_center'), focus: t('about.practical_training'), icon: "�" },
+    { name: t('about.simulation_center'), focus: t('about.practical_training'), icon: "🩺" },
     { name: t('about.telemedicine_center'), focus: t('about.remote_care'), icon: "💻" }
   ];
 

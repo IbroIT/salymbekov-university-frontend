@@ -490,9 +490,9 @@ const Management = () => {
       <div className="pyramid-structure">
         {levels.map((levelData, levelIndex) => (
           levelData.staff.length > 0 && (
-            <div key={levelIndex} className="w-full">
+            <div key={levelIndex} className="w-full flex flex-col items-center">
               <h3 className="pyramid-level-title">{levelData.title}</h3>
-              <div className={`pyramid-level pyramid-level-${levelData.level}`}>
+              <div className={`pyramid-level pyramid-level-${levelData.level} `}>
                 <div className="pyramid-connections">
                   {/* Connection lines можно добавить позже */}
                 </div>
@@ -754,7 +754,7 @@ const Management = () => {
             </div>
           </div>
           
-          <div className="p-8 space-y-6">
+          <div className="p-1 space-y-6">
             {person.bio && (
               <div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">О специалисте</h3>
@@ -916,7 +916,7 @@ const Management = () => {
         {/* Pyramid View */}
         <div className="bg-white rounded-2xl shadow-xl p-8" id="org-chart">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-2">Иерархия университета</h2>
+            <h2 className="text-4xl font-bold text-gray-900 mb-2">Руководство университета</h2>
               <p className="text-gray-600 text-lg">Пирамидальная иерархия университета</p>
             </div>
             
@@ -924,28 +924,7 @@ const Management = () => {
           </div>
         </div>
 
-        {/* Legend */}
-        <div className="bg-white rounded-2xl shadow-xl p-8 mt-8">
-          <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Условные обозначения</h3>
-          <div className="grid md:grid-cols-4 gap-6">
-            <div className="flex items-center space-x-3">
-              <div className="w-6 h-6 bg-gradient-to-r from-red-500 to-red-600 rounded-full shadow-md"></div>
-              <span className="text-gray-700 font-medium">👔 Администрация</span>
-            </div>
-            <div className="flex items-center space-x-3">
-              <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full shadow-md"></div>
-              <span className="text-gray-700 font-medium">🎓 Факультеты</span>
-            </div>
-            <div className="flex items-center space-x-3">
-              <div className="w-6 h-6 bg-gradient-to-r from-green-500 to-green-600 rounded-full shadow-md"></div>
-              <span className="text-gray-700 font-medium">📚 Кафедры</span>
-            </div>
-            <div className="flex items-center space-x-3">
-              <div className="w-6 h-6 bg-gradient-to-r from-gray-500 to-gray-600 rounded-full shadow-md"></div>
-              <span className="text-gray-700 font-medium">👥 Сотрудники</span>
-            </div>
-          </div>
-        </div>
+     
 
       {/* Person Details Modal */}
       {isModalOpen && selectedPerson && (

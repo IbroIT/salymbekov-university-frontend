@@ -50,7 +50,6 @@ const Navbar = () => {
       submenu: [
         { title: t('nav.about_university'), link: '/about' },
         { title: t('nav.management'), link: '/about/management' },
-        { title: t('nav.documents'), link: '/about/documents' },
         { title: t('nav.vacancies'), link: '/about/vacancies' },
         { title: t('nav.partners'), link: '/about/partners' },
       ]
