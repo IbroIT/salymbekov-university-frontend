@@ -28,7 +28,10 @@ import Tuition from "./components/Admissions/Tuition";
 import FAQ from "./components/Admissions/FAQ";
 import OnlineApplication from "./components/Admissions/OnlineApplication";
 
-
+import News from "./components/News/News";
+import NewsDetail from "./components/News/NewsDetail";
+import NewsEvents from "./components/News/NewsEvents";
+import NewsAnnouncements from "./components/News/NewsAnnouncements";
 
 // Страницы-заглушки
 const Page = ({ title }) => <h1 className="text-2xl font-bold p-8">{title}</h1>;
@@ -84,10 +87,10 @@ function App() {
             <Route path="/campus-life/international" element={<InternationalStudents/>} />
 
             {/* News */}
-            <Route path="/news" element={<Page title='news' />} />
-            <Route path="/news/detail/:id" element={<Page title='news detail' />} />
-            <Route path="/news/events" element={<Page title='news events' />} />
-            <Route path="/news/announcements" element={<Page title='news announcements' />} />
+            <Route path="/news" element={<News />} />
+            <Route path="/news/detail/:id" element={<NewsDetail />} />
+            <Route path="/news/events" element={<NewsEvents />} />
+            <Route path="/news/announcements" element={<NewsAnnouncements />} />
 
             {/* Contacts */}
             <Route path="/contacts" element={<Page title="Contacts" />} />

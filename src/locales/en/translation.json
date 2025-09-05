@@ -72,6 +72,31 @@
       "contact": "Contact",
       "pressService": "Press Service:",
       "phone": "Phone:"
+    },
+    "detail": {
+      "notFound": "News not found",
+      "loadError": "Error loading news",
+      "backToNews": "Back to News",
+      "readingTime": "reading time",
+      "minutes": "min",
+      "share": "Share",
+      "relatedNews": "Related News"
+    },
+    "events": {
+      "title": "Events",
+      "loadError": "Error loading events",
+      "upcoming": "Upcoming",
+      "ongoing": "Ongoing",
+      "past": "Past",
+      "noEvents": "No events found"
+    },
+    "announcements": {
+      "title": "Announcements",
+      "loadError": "Error loading announcements",
+      "urgent": "Urgent",
+      "academic": "Academic",
+      "scholarship": "Scholarships",
+      "noAnnouncements": "No announcements found"
     }
   },
   "common": {

@@ -72,6 +72,31 @@
       "contact": "Байланыштар",
       "pressService": "Пресс-кызмат:",
       "phone": "Телефон:"
+    },
+    "detail": {
+      "notFound": "Жаңылык табылган жок",
+      "loadError": "Жаңылыкты жүктөөдө ката",
+      "backToNews": "Жаңылыктарга кайтуу",
+      "readingTime": "окуу убактысы",
+      "minutes": "мүн.",
+      "share": "Бөлүшүү",
+      "relatedNews": "Окшош жаңылыктар"
+    },
+    "events": {
+      "title": "Окуялар",
+      "loadError": "Окуяларды жүктөөдө ката",
+      "upcoming": "Келечектегилер",
+      "ongoing": "Азыркылар",
+      "past": "Өткөндөр",
+      "noEvents": "Окуялар табылган жок"
+    },
+    "announcements": {
+      "title": "Жарнамалар",
+      "loadError": "Жарнамаларды жүктөөдө ката",
+      "urgent": "Шашылыш",
+      "academic": "Окуу",
+      "scholarship": "Стипендиялар",
+      "noAnnouncements": "Жарнамалар табылган жок"
     }
   },
   "common": {

@@ -90,6 +90,32 @@
       "contact": "Контакты",
       "pressService": "Пресс-служба:",
       "phone": "Телефон:"
+    },
+    "detail": {
+      "notFound": "Новость не найдена",
+      "loadError": "Ошибка при загрузке новости",
+      "backToNews": "Назад к новостям",
+      "readingTime": "время чтения",
+      "minutes": "мин.",
+      "share": "Поделиться",
+      "relatedNews": "Похожие новости",
+      "noRelatedNews": "Похожих новостей не найдено"
+    },
+    "events": {
+      "title": "События",
+      "loadError": "Ошибка при загрузке событий",
+      "upcoming": "Предстоящие",
+      "ongoing": "Текущие",
+      "past": "Прошедшие",
+      "noEvents": "События не найдены"
+    },
+    "announcements": {
+      "title": "Объявления",
+      "loadError": "Ошибка при загрузке объявлений",
+      "urgent": "Срочные",
+      "academic": "Учебные",
+      "scholarship": "Стипендии",
+      "noAnnouncements": "Объявления не найдены"
     }
   },
   "events": {
