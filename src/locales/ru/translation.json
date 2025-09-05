@@ -47,6 +47,127 @@
     "map": "Карта кампуса",
     "feedback": "Обратная связь"
   },
+  "news": {
+    "title": "Новости и события",
+    "subtitle": "Актуальная информация, события и статьи из жизни университета",
+    "categories": {
+      "all": "Все",
+      "allDesc": "Все новости и материалы",
+      "news": "Новости",
+      "newsDesc": "Последние новости университета",
+      "events": "События",
+      "eventsDesc": "Календарь и афиша событий",
+      "announcements": "Объявления",
+      "announcementsDesc": "Официальные объявления и уведомления",
+      "articles": "Статьи",
+      "articlesDesc": "Экспертные статьи и исследования"
+    },
+    "readMore": "Подробнее",
+    "loadMore": "Загрузить ещё",
+    "featured": "Избранное",
+    "author": "Автор",
+    "searchPlaceholder": "Поиск по новостям...",
+    "searchResults": "Найдено результатов",
+    "noResults": "Новости не найдены",
+    "noResultsSubtitle": "Попробуйте изменить критерии поиска или фильтры",
+    "notFound": "Новость не найдена",
+    "backToNews": "Вернуться к новостям",
+    "readTime": "Время чтения",
+    "views": "Просмотров",
+    "tags": "Теги",
+    "relatedNews": "Похожие новости",
+    "eventsDescription": "Предстоящие и прошедшие события университета",
+    "announcementsDescription": "Важные объявления и уведомления для студентов и сотрудников",
+    "articlesDescription": "Научные статьи, исследования и экспертные мнения",
+    "sidebar": {
+      "popularTopics": "Популярные темы",
+      "archive": "Архив",
+      "newsletter": "Подписка на рассылку",
+      "newsletterDescription": "Будьте в курсе всех новостей и событий университета",
+      "emailPlaceholder": "Ваш email",
+      "subscribe": "Подписаться",
+      "subscriptionSuccess": "Спасибо! Вы успешно подписались на рассылку.",
+      "contact": "Контакты",
+      "pressService": "Пресс-служба:",
+      "phone": "Телефон:"
+    }
+  },
+  "events": {
+    "upcomingTitle": "Ближайшие события",
+    "registered": "зарегистрировано",
+    "addToGoogleCalendar": "Добавить в Google Calendar",
+    "addToOutlookCalendar": "Добавить в Outlook",
+    "noEvents": "События не найдены",
+    "noEventsSubtitle": "Попробуйте изменить фильтры поиска",
+    "types": {
+      "all": "Все",
+      "conference": "Конференции",
+      "meeting": "Встречи",
+      "concert": "Концерты",
+      "sport": "Спорт",
+      "workshop": "Мастер-классы",
+      "seminar": "Семинары"
+    },
+    "filters": {
+      "timeFilter": "Показать",
+      "upcoming": "Предстоящие",
+      "all": "Все события",
+      "typeFilter": "Тип события"
+    }
+  },
+  "announcements": {
+    "title": "Объявления",
+    "subtitle": "Официальные объявления и уведомления университета",
+    "pinned": "Важные объявления",
+    "regular": "Все объявления",
+    "noAnnouncements": "Объявления не найдены",
+    "noAnnouncementsSubtitle": "Попробуйте изменить критерии поиска или фильтры",
+    "searchPlaceholder": "Поиск объявлений...",
+    "share": "Поделиться",
+    "downloadPDF": "Скачать PDF",
+    "attachments": "Вложения",
+    "daysLeft": "дн. осталось",
+    "expired": "Истекло",
+    "types": {
+      "urgent": "Срочное",
+      "important": "Важное",
+      "info": "Информация",
+      "event": "Мероприятие"
+    },
+    "departments": {
+      "all": "Все",
+      "medical": "Медицинский факультет",
+      "pharmacy": "Фармацевтический факультет",
+      "dentistry": "Стоматологический факультет",
+      "admin": "Администрация",
+      "library": "Библиотека",
+      "studentoffice": "Студенческий отдел"
+    },
+    "filters": {
+      "department": "Отдел",
+      "activeOnly": "Только актуальные"
+    }
+  },
+  "articles": {
+    "featured": "Избранная статья",
+    "allArticles": "Все статьи",
+    "minRead": "мин чтения",
+    "views": "просмотров",
+    "sortBy": "Сортировка",
+    "filterByTags": "Фильтр по тегам",
+    "clearTags": "Очистить фильтры",
+    "searchPlaceholder": "Поиск статей по заголовку, автору или тегам...",
+    "noArticles": "Статьи не найдены",
+    "noArticlesSubtitle": "Попробуйте изменить критерии поиска или фильтры",
+    "sort": {
+      "newest": "Сначала новые",
+      "popular": "По популярности",
+      "readTime": "По времени чтения"
+    }
+  },
+  "common": {
+    "loading": "Загрузка..."
+  },
   "about": {
     "breadcrumb_home": "Главная",
     "breadcrumb_about": "О нас",

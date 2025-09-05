@@ -1,0 +1,441 @@
+/* Admissions Section Styles */
+
+/* Interactive Timeline Styles */
+.admissions-timeline {
+  position: relative;
+}
+
+.timeline-step {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.timeline-step:hover {
+  transform: translateY(-4px);
+}
+
+.timeline-step.active {
+  transform: scale(1.05);
+}
+
+.timeline-step .step-icon {
+  position: relative;
+  overflow: hidden;
+}
+
+.timeline-step .step-icon::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+  transform: rotate(45deg);
+  transition: all 0.6s ease;
+}
+
+.timeline-step:hover .step-icon::before {
+  animation: shimmer 0.6s ease-in-out;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+  100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+/* Progress Line Animation */
+.progress-line {
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ef4444);
+  background-size: 200% 100%;
+  animation: gradientMove 3s ease-in-out infinite;
+}
+
+@keyframes gradientMove {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Date Cards with Calendar Design */
+.date-card {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.date-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.date-card:hover::before {
+  opacity: 1;
+}
+
+.date-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+/* Calendar Style Numbers */
+.calendar-date {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.date-card:hover .calendar-date {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+/* Status Badges */
+.status-badge {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+/* Hero Section Improvements */
+.hero-gradient {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-gradient::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23ffffff" fill-opacity="0.1"><circle cx="9" cy="9" r="2"/><circle cx="30" cy="30" r="2"/><circle cx="51" cy="51" r="2"/></g></g></svg>');
+  animation: float 20s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Call to Action Button Effects */
+.cta-button {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.cta-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.cta-button:hover::before {
+  left: 100%;
+}
+
+.cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive Timeline */
+@media (max-width: 1024px) {
+  .desktop-timeline {
+    display: none;
+  }
+  
+  .mobile-timeline {
+    display: block;
+  }
+}
+
+@media (min-width: 1025px) {
+  .desktop-timeline {
+    display: block;
+  }
+  
+  .mobile-timeline {
+    display: none;
+  }
+}
+
+/* Mobile Timeline Styles */
+.mobile-timeline .timeline-item {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.mobile-timeline .timeline-item::before {
+  content: '';
+  position: absolute;
+  left: 24px;
+  top: 60px;
+  width: 2px;
+  height: calc(100% - 60px);
+  background: linear-gradient(to bottom, #3b82f6, transparent);
+}
+
+.mobile-timeline .timeline-item:last-child::before {
+  display: none;
+}
+
+/* Accessibility Improvements */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Focus States */
+.timeline-step:focus,
+.date-card:focus,
+.cta-button:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Loading States */
+.loading-shimmer {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmerLoading 2s infinite;
+}
+
+@keyframes shimmerLoading {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .date-card {
+    box-shadow: 0 4px 6px -1px rgba(255, 255, 255, 0.1);
+  }
+  
+  .timeline-step .step-icon::before {
+    background: linear-gradient(45deg, transparent, rgba(0,0,0,0.3), transparent);
+  }
+}
+
+/* Print Styles */
+@media print {
+  .timeline-step:hover,
+  .date-card:hover,
+  .cta-button:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+  
+  .progress-line,
+  .status-badge {
+    animation: none !important;
+  }
+  
+  .hero-gradient::before {
+    display: none;
+  }
+}
+
+/* Program Selection Cards */
+.program-card {
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.program-card:hover {
+  border-color: #e5e7eb;
+  box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1);
+}
+
+.program-card.selected {
+  border-color: #3b82f6;
+  background: #eff6ff;
+}
+
+/* Step Form Progress */
+.step-progress {
+  position: relative;
+}
+
+.step-progress::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #e5e7eb;
+  z-index: 1;
+}
+
+.step-progress-fill {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(to right, #10b981, #059669);
+  z-index: 2;
+  transition: width 0.5s ease;
+}
+
+.step-indicator {
+  position: relative;
+  z-index: 3;
+  background: white;
+  border: 3px solid #e5e7eb;
+  transition: all 0.3s ease;
+}
+
+.step-indicator.completed {
+  background: #10b981;
+  border-color: #10b981;
+  color: white;
+}
+
+.step-indicator.active {
+  border-color: #3b82f6;
+  background: #3b82f6;
+  color: white;
+}
+
+/* FAQ Accordion */
+.faq-item {
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.faq-item:hover {
+  border-color: #d1d5db;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.faq-question {
+  padding: 1rem 1.5rem;
+  background: white;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.faq-question:hover {
+  background: #f9fafb;
+}
+
+.faq-answer {
+  padding: 0 1.5rem 1rem;
+  background: #f8fafc;
+  border-top: 1px solid #e5e7eb;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Cost Calculator */
+.cost-calculator {
+  background: linear-gradient(135deg, #f3e8ff, #e9d5ff);
+  border: 1px solid #c4b5fd;
+}
+
+.cost-highlight {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
+}
+
+/* File Upload Areas */
+.file-upload {
+  position: relative;
+  border: 2px dashed #d1d5db;
+  border-radius: 0.5rem;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.file-upload:hover {
+  border-color: #3b82f6;
+  background: #f8fafc;
+}
+
+.file-upload.dragover {
+  border-color: #10b981;
+  background: #ecfdf5;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .timeline-line {
+    left: 2rem;
+  }
+  
+  .timeline-icon {
+    left: 2rem;
+    width: 3rem;
+    height: 3rem;
+    font-size: 1.25rem;
+  }
+  
+  .timeline-content {
+    width: calc(100% - 5rem);
+    margin-left: 5rem;
+  }
+  
+  .timeline-step:nth-child(even) .timeline-content {
+    margin-left: 5rem;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .step-progress,
+  .navigation-buttons,
+  .draft-save-indicator {
+    display: none !important;
+  }
+  
+  .timeline-content {
+    box-shadow: none;
+    border: 1px solid #d1d5db;
+  }
+  
+  .program-card {
+    break-inside: avoid;
+  }
+}

@@ -46,5 +46,35 @@
     "admission_office": "Admission Office",
     "map": "Campus Map",
     "feedback": "Feedback"
+  },
+  "news": {
+    "title": "News Feed",
+    "categories": {
+      "all": "All",
+      "news": "News",
+      "events": "Events",
+      "announcements": "Announcements",
+      "articles": "Articles"
+    },
+    "readMore": "Read More",
+    "loadMore": "Load More",
+    "eventsDescription": "Upcoming and past university events",
+    "announcementsDescription": "Important announcements and notifications for students and staff",
+    "articlesDescription": "Scientific articles, research, and expert opinions",
+    "sidebar": {
+      "popularTopics": "Popular Topics",
+      "archive": "Archive",
+      "newsletter": "Newsletter",
+      "newsletterDescription": "Stay updated with all university news and events",
+      "emailPlaceholder": "Your email",
+      "subscribe": "Subscribe",
+      "subscriptionSuccess": "Thank you! You have successfully subscribed to our newsletter.",
+      "contact": "Contact",
+      "pressService": "Press Service:",
+      "phone": "Phone:"
+    }
+  },
+  "common": {
+    "loading": "Loading..."
   }
 }

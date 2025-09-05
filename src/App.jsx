@@ -22,6 +22,14 @@ import ClubsSection from "./components/Life/ClubsSection";
 import InternationalStudents from "./components/Life/InternationalStudents";
 import Gallery from "./components/Life/Gallery";
 
+import AdmissionsOverview from "./components/Admissions/AdmissionsOverview";
+import Requirements from "./components/Admissions/Requirements";
+import Tuition from "./components/Admissions/Tuition";
+import FAQ from "./components/Admissions/FAQ";
+import OnlineApplication from "./components/Admissions/OnlineApplication";
+
+
+
 import Research from "./components/Research/research";
 import Centers from "./components/Research/centers";
 import Publications from "./components/Research/publications";
@@ -54,11 +62,18 @@ function App() {
             <Route path="/academics/resources" element={<Resources />} />
 
             {/* Admission */}
-            <Route path="/admission" element={<Page title="Admission Process" />} />
-            <Route path="/admission/requirements" element={<Page title="Requirements" />} />
-            <Route path="/admission/tuition" element={<Page title="Tuition" />} />
+            <Route path="/admissions" element={<AdmissionsOverview />} />
+            <Route path="/admissions/requirements" element={<Requirements />} />
+            <Route path="/admissions/tuition" element={<Tuition />} />
+            <Route path="/admissions/faq" element={<FAQ />} />
+            <Route path="/admissions/apply" element={<OnlineApplication />} />
+
+            {/* Legacy admission routes for compatibility */}
+            <Route path="/admission" element={<AdmissionsOverview />} />
+            <Route path="/admission/requirements" element={<Requirements />} />
+            <Route path="/admission/tuition" element={<Tuition />} />
             <Route path="/admission/scholarships" element={<Page title="Scholarships" />} />
-            <Route path="/admission/apply" element={<Page title="Apply Online" />} />
+            <Route path="/admission/apply" element={<OnlineApplication />} />
 
             {/* Research */}
             <Route path="/research" element={<Research />} />
@@ -75,10 +90,10 @@ function App() {
             <Route path="/campus-life/international" element={<InternationalStudents/>} />
 
             {/* News */}
-            <Route path="/news" element={<Page title="All News" />} />
-            <Route path="/news/events" element={<Page title="News Events" />} />
-            <Route path="/news/announcements" element={<Page title="Announcements" />} />
-            <Route path="/news/articles" element={<Page title="Articles" />} />
+            <Route path="/news" element={<Page title='news' />} />
+            <Route path="/news/detail/:id" element={<Page title='news detail' />} />
+            <Route path="/news/events" element={<Page title='news events' />} />
+            <Route path="/news/announcements" element={<Page title='news announcements' />} />
 
             {/* Contacts */}
             <Route path="/contacts" element={<Page title="Contacts" />} />
