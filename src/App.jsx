@@ -38,6 +38,8 @@ import Publications from "./components/Research/publications";
 import Conferences from "./components/Research/conferences";
 import Grants from "./components/Research/grants";
 
+import Contacts from "./components/Contacts/contacts";
+
 // Страницы-заглушки
 const Page = ({ title }) => <h1 className="text-2xl font-bold p-8">{title}</h1>;
 
@@ -97,10 +99,7 @@ function App() {
             <Route path="/news/announcements" element={<NewsAnnouncements />} />
 
             {/* Contacts */}
-            <Route path="/contacts" element={<Page title="Contacts" />} />
-            <Route path="/contacts/admission" element={<Page title="Admission Office" />} />
-            <Route path="/contacts/map" element={<Page title="Map" />} />
-            <Route path="/contacts/feedback" element={<Page title="Feedback" />} />
+            <Route path="/contacts" element={<Contacts />} />
           </Routes>
         </div>
         <Footer />

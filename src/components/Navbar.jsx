@@ -105,10 +105,7 @@ const Navbar = () => {
     contacts: {
       title: t('nav.contacts'),
       submenu: [
-        { title: t('nav.contacts'), link: '/contacts' },
-        { title: t('nav.admission_office'), link: '/contacts/admission' },
-        { title: t('nav.map'), link: '/contacts/map' },
-        { title: t('nav.feedback'), link: '/contacts/feedback' },
+        { title: t('nav.contacts'), link: '/contacts' }
       ]
     }
   };
