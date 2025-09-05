@@ -47,15 +47,60 @@
     "map": "Campus Map",
     "feedback": "Feedback"
   },
-  
-  "facts": {
-    "title": "Numbers and Facts",
-    "subtitle": "Our achievements over the years in the field of education",
-    "scrollHint": "Scroll down to see more",
-    "students": "students",
-    "graduates": "graduates",
-    "programs": "educational programs",
-    "clinics": "partner clinics"
+  "news": {
+    "title": "News Feed",
+    "categories": {
+      "all": "All",
+      "news": "News",
+      "events": "Events",
+      "announcements": "Announcements",
+      "articles": "Articles"
+    },
+    "readMore": "Read More",
+    "loadMore": "Load More",
+    "eventsDescription": "Upcoming and past university events",
+    "announcementsDescription": "Important announcements and notifications for students and staff",
+    "articlesDescription": "Scientific articles, research, and expert opinions",
+    "sidebar": {
+      "popularTopics": "Popular Topics",
+      "archive": "Archive",
+      "newsletter": "Newsletter",
+      "newsletterDescription": "Stay updated with all university news and events",
+      "emailPlaceholder": "Your email",
+      "subscribe": "Subscribe",
+      "subscriptionSuccess": "Thank you! You have successfully subscribed to our newsletter.",
+      "contact": "Contact",
+      "pressService": "Press Service:",
+      "phone": "Phone:"
+    },
+    "detail": {
+      "notFound": "News not found",
+      "loadError": "Error loading news",
+      "backToNews": "Back to News",
+      "readingTime": "reading time",
+      "minutes": "min",
+      "share": "Share",
+      "relatedNews": "Related News"
+    },
+    "events": {
+      "title": "Events",
+      "loadError": "Error loading events",
+      "upcoming": "Upcoming",
+      "ongoing": "Ongoing",
+      "past": "Past",
+      "noEvents": "No events found"
+    },
+    "announcements": {
+      "title": "Announcements",
+      "loadError": "Error loading announcements",
+      "urgent": "Urgent",
+      "academic": "Academic",
+      "scholarship": "Scholarships",
+      "noAnnouncements": "No announcements found"
+    }
+  },
+  "common": {
+    "loading": "Loading..."
   }
 }
 

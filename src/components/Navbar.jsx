@@ -101,7 +101,6 @@ const Navbar = () => {
         { title: t('nav.all_news'), link: '/news' },
         { title: t('nav.events'), link: '/news/events' },
         { title: t('nav.announcements'), link: '/news/announcements' },
-        { title: t('nav.articles'), link: '/news/articles' },
       ]
     },
     contacts: {
