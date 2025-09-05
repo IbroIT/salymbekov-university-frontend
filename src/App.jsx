@@ -30,6 +30,7 @@ import OnlineApplication from "./components/Admissions/OnlineApplication";
 
 import News from "./components/News/News";
 import NewsDetail from "./components/News/NewsDetail";
+import NewsDetailTest from "./components/News/NewsDetailTest";
 import NewsEvents from "./components/News/NewsEvents";
 import NewsAnnouncements from "./components/News/NewsAnnouncements";
 

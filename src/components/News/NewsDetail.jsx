@@ -14,24 +14,19 @@ const NewsDetail = () => {
 
   useEffect(() => {
     fetchArticle();
-  }, [id, i18n.language]); // Перезагружаем при смене языка
+  }, [id, i18n.language]);
 
   const fetchArticle = async () => {
     try {
       setLoading(true);
       const currentLanguage = i18n.language === 'kg' ? 'ky' : i18n.language;
       
-      // Определяем, это ID (число) или slug (строка)
-      const isNumericId = /^\d+$/.test(id);
-      let apiUrl;
-      
-      if (isNumericId) {
-        // Если это число, используем прямой ID
-        apiUrl = `${API_BASE_URL}/news/${id}/`;
-      } else {
-        // Если это строка, ищем по slug
-        apiUrl = `${API_BASE_URL}/news/?slug=${id}`;
-      }
+      // Всегда используем прямое обращение к объекту (и по ID, и по slug)
+      const apiUrl = `${API_BASE_URL}/news/${id}/`;
+
+      console.log('Fetching article from:', apiUrl);
+      console.log('Current language:', currentLanguage);
+      console.log('ID/slug:', id);
 
       const response = await fetch(apiUrl, {
         headers: {
@@ -40,32 +35,28 @@ const NewsDetail = () => {
         }
       });
 
+      console.log('Response status:', response.status);
+
       if (!response.ok) {
         throw new Error(t('news.detail.notFound', 'Новость не найдена'));
       }
 
       const data = await response.json();
       
-      // Если поиск по slug вернул массив, берем первый элемент
-      const newsItem = Array.isArray(data) ? data[0] : data;
+      console.log('Raw API response:', data);
+      console.log('Is array:', Array.isArray(data));
       
-      if (!newsItem) {
+      // API должен возвращать объект напрямую, не массив
+      if (!data || typeof data !== 'object' || Array.isArray(data)) {
         throw new Error(t('news.detail.notFound', 'Новость не найдена'));
       }
       
-      setArticle(newsItem);
+      console.log('Setting article:', data);
+      setArticle(data);
       
     } catch (err) {
+      console.error('Error fetching article:', err);
       setError(err.message);
-      // Fallback данные
-      setArticle({
-        title: t('news.detail.notFound', "Новость не найдена"),
-        published_at: new Date().toISOString(),
-        category: { name: "news" },
-        author: "Неизвестно",
-        image_url: "https://images.unsplash.com/photo-1495020689067-958852a7765e?w=800&h=400&fit=crop",
-        content: "<p>К сожалению, запрашиваемая новость не найдена.</p>"
-      });
     } finally {
       setLoading(false);
     }
@@ -125,7 +116,16 @@ const NewsDetail = () => {
   }
 
   if (!article) {
-    return null;
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-gray-600 mb-4">Новость не найдена</p>
+          <Link to="/news" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+            Вернуться к новостям
+          </Link>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -160,7 +160,7 @@ const NewsDetail = () => {
             <div className="flex flex-wrap items-center gap-6 text-gray-600 mb-8">
               <div className="flex items-center">
                 <Calendar className="w-5 h-5 mr-2" />
-                {formatDate(article.published_at || article.date)}
+                {formatDate(article.published_at || article.created_at)}
               </div>
               <div className="flex items-center">
                 <Tag className="w-5 h-5 mr-2" />
@@ -172,13 +172,19 @@ const NewsDetail = () => {
               </button>
             </div>
             
-            <div className="aspect-w-16 aspect-h-9 mb-8">
-              <img 
-                src={article.image_url || article.image} 
-                alt={article.title}
-                className="w-full h-96 object-cover rounded-xl shadow-lg"
-              />
-            </div>
+            {/* Only show image if it exists */}
+            {article.image_url && (
+              <div className="aspect-w-16 aspect-h-9 mb-8">
+                <img 
+                  src={article.image_url} 
+                  alt={article.title}
+                  className="w-full h-96 object-cover rounded-xl shadow-lg"
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                  }}
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -187,10 +193,59 @@ const NewsDetail = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           <div className="bg-white rounded-xl shadow-sm p-8">
-            <div 
-              className="prose prose-lg max-w-none text-gray-700 leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: article.content }}
-            />
+            
+            {/* Summary if exists */}
+            {article.summary && (
+              <div className="mb-6 p-4 bg-gray-50 rounded-lg">
+                <p className="text-lg text-gray-700 font-medium">{article.summary}</p>
+              </div>
+            )}
+            
+            {/* Main Content */}
+            <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
+              {article.content ? (
+                <div dangerouslySetInnerHTML={{ __html: article.content }} />
+              ) : (
+                <p>{article.summary || 'Содержимое недоступно'}</p>
+              )}
+            </div>
+            
+            {/* Event details if it's an event */}
+            {article.event_details && (
+              <div className="mt-8 p-6 bg-green-50 rounded-lg border border-green-200">
+                <h3 className="text-lg font-semibold text-green-800 mb-4">Детали мероприятия</h3>
+                <div className="space-y-2 text-green-700">
+                  {article.event_details.event_date && (
+                    <p><strong>Дата:</strong> {formatDate(article.event_details.event_date)}</p>
+                  )}
+                  {article.event_details.event_time && (
+                    <p><strong>Время:</strong> {article.event_details.event_time}</p>
+                  )}
+                  {article.event_details.end_time && (
+                    <p><strong>Окончание:</strong> {article.event_details.end_time}</p>
+                  )}
+                  {article.event_details.location && (
+                    <p><strong>Место:</strong> {article.event_details.location}</p>
+                  )}
+                </div>
+              </div>
+            )}
+            
+            {/* Announcement details if it's an announcement */}
+            {article.announcement_details && (
+              <div className="mt-8 p-6 bg-yellow-50 rounded-lg border border-yellow-200">
+                <h3 className="text-lg font-semibold text-yellow-800 mb-4">Важная информация</h3>
+                <div className="space-y-2 text-yellow-700">
+                  {article.announcement_details.deadline && (
+                    <p><strong>Крайний срок:</strong> {formatDate(article.announcement_details.deadline)}</p>
+                  )}
+                  {article.announcement_details.contact_info && (
+                    <p><strong>Контакты:</strong> {article.announcement_details.contact_info}</p>
+                  )}
+                </div>
+              </div>
+            )}
+            
           </div>
         </div>
       </div>
