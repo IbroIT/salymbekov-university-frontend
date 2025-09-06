@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const MedicalUniversityReviews = () => {
+  const { t, i18n } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [direction, setDirection] = useState('next');
@@ -8,46 +10,46 @@ const MedicalUniversityReviews = () => {
   const reviews = [
     {
       id: 1,
-      name: "Анна Иванова",
-      faculty: "Лечебное дело",
-      course: "4 курс",
-      text: "Обучение на медицинском факультете дало мне бесценные знания и практические навыки. Преподаватели - опытные практикующие врачи, которые делятся реальным опытом.",
+      nameKey: 'reviews.student1.name',
+      facultyKey: 'reviews.student1.faculty',
+      courseKey: 'reviews.student1.course',
+      textKey: 'reviews.student1.text',
       rating: 4.9,
       image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80"
     },
     {
       id: 2,
-      name: "Максим Петров",
-      faculty: "Педиатрия",
-      course: "5 курс",
-      text: "Отличное сочетание теории и практики! Уже на 3 курсе начались занятия в клиниках, что позволяет применять знания в реальных условиях.",
+      nameKey: 'reviews.student2.name',
+      facultyKey: 'reviews.student2.faculty',
+      courseKey: 'reviews.student2.course',
+      textKey: 'reviews.student2.text',
       rating: 4.8,
       image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80"
     },
     {
       id: 3,
-      name: "Елена Смирнова",
-      faculty: "Стоматология",
-      course: "3 курс",
-      text: "Современное оборудование и подход к обучению. Особенно ценю симуляционный центр, где можно отрабатывать навыки до клинической практики.",
+      nameKey: 'reviews.student3.name',
+      facultyKey: 'reviews.student3.faculty',
+      courseKey: 'reviews.student3.course',
+      textKey: 'reviews.student3.text',
       rating: 4.7,
       image: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80"
     },
     {
       id: 4,
-      name: "Дмитрий Козлов",
-      faculty: "Фармация",
-      course: "2 курс",
-      text: "Интересная программа, глубокое погружение в биохимию и фармакологию. Преподаватели поддерживают научные инициативы студентов.",
+      nameKey: 'reviews.student4.name',
+      facultyKey: 'reviews.student4.faculty',
+      courseKey: 'reviews.student4.course',
+      textKey: 'reviews.student4.text',
       rating: 4.6,
       image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80"
     },
     {
       id: 5,
-      name: "Ольга Новикова",
-      faculty: "Медико-профилактическое дело",
-      course: "1 курс",
-      text: "Поступила в этом году и уже в восторге! Атмосфера способствует learning, много практических занятий и современные лаборатории.",
+      nameKey: 'reviews.student5.name',
+      facultyKey: 'reviews.student5.faculty',
+      courseKey: 'reviews.student5.course',
+      textKey: 'reviews.student5.text',
       rating: 4.9,
       image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80"
     }
@@ -115,16 +117,16 @@ const MedicalUniversityReviews = () => {
   };
 
   return (
-    <section className="py-16 bg-gradient-to-br from-blue-50 to-indigo-50 relative overflow-hidden">
+    <section className="py-16 relative overflow-hidden">
       {/* Декоративные элементы */}
       <div className="absolute top-0 left-0 w-32 h-32 bg-blue-100 rounded-full -translate-x-16 -translate-y-16 opacity-50"></div>
       <div className="absolute bottom-0 right-0 w-40 h-40 bg-blue-200 rounded-full translate-x-20 translate-y-20 opacity-30"></div>
       <div className="absolute top-1/2 left-1/4 w-24 h-24 bg-blue-100 rounded-full opacity-20"></div>
       
       <div className="container mx-auto px-4 relative z-10">
-        <h2 className="text-4xl font-bold text-center text-blue-900 mb-4">Отзывы наших студентов</h2>
+        <h2 className="text-4xl font-bold text-center text-blue-900 mb-4">{t('reviews.title')}</h2>
         <p className="text-lg text-center text-blue-700 mb-12 max-w-2xl mx-auto">
-          Узнайте, что говорят студенты о качестве образования и атмосфере в нашем медицинском университете
+          {t('reviews.subtitle')}
         </p>
         
         <div 
@@ -147,15 +149,15 @@ const MedicalUniversityReviews = () => {
                     <div className="relative">
                       <img 
                         src={review.image} 
-                        alt={review.name}
+                        alt={t(review.nameKey)}
                         className="w-32 h-32 rounded-full object-cover border-4 border-blue-100 shadow-md"
                       />
                       <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white text-xs font-bold py-1 px-3 rounded-full">
-                        {review.course}
+                        {t(review.courseKey)}
                       </div>
                     </div>
-                    <h3 className="font-bold text-blue-900 mt-4 text-xl">{review.name}</h3>
-                    <p className="text-blue-700 text-center">{review.faculty}</p>
+                    <h3 className="font-bold text-blue-900 mt-4 text-xl">{t(review.nameKey)}</h3>
+                    <p className="text-blue-700 text-center">{t(review.facultyKey)}</p>
                   </div>
                   
                   <div className="md:w-2/3 md:pl-8 flex flex-col justify-center">
@@ -168,7 +170,7 @@ const MedicalUniversityReviews = () => {
                         <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
                       </svg>
                       <p className="text-gray-700 text-lg leading-relaxed pl-6">
-                        {review.text}
+                        {t(review.textKey)}
                       </p>
                     </div>
                   </div>
@@ -181,6 +183,7 @@ const MedicalUniversityReviews = () => {
           <button 
             onClick={goToPrevious}
             className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-4 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition-all duration-300 hover:scale-110"
+            aria-label={t('reviews.previousButton')}
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -190,6 +193,7 @@ const MedicalUniversityReviews = () => {
           <button 
             onClick={goToNext}
             className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-4 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition-all duration-300 hover:scale-110"
+            aria-label={t('reviews.nextButton')}
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -204,7 +208,7 @@ const MedicalUniversityReviews = () => {
               key={index}
               onClick={() => goToSlide(index)}
               className={`h-3 w-3 rounded-full mx-2 transition-all duration-300 ${currentIndex === index ? 'bg-blue-600 scale-125' : 'bg-blue-300 hover:bg-blue-400'}`}
-              aria-label={`Перейти к отзыву ${index + 1}`}
+              aria-label={`${t('reviews.goToReview')} ${index + 1}`}
             />
           ))}
         </div>

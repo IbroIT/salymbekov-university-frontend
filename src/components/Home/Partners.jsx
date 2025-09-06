@@ -1,76 +1,160 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const Partners = () => {
-  const [isPaused, setIsPaused] = useState(false);
+  const { t } = useTranslation();
+  const [hoveredPartner, setHoveredPartner] = useState(null);
+  const scrollerRef = useRef(null);
   
-  // Данные партнеров
+  // Данные партнеров с улучшенным дизайном
   const partners = [
-    { id: 1, name: 'Национальный госпиталь', icon: '🏥' },
-    { id: 2, name: 'Городская клиническая больница', icon: '🏨' },
-    { id: 3, name: 'Частные медицинские центры', icon: '⛑️' },
-    { id: 4, name: 'ВОЗ', icon: '🌐' },
-    { id: 5, name: 'Красный Крест', icon: '➕' },
-    { id: 6, name: 'Медицинская ассоциация', icon: '⚕️' },
-    { id: 7, name: 'Институт здоровья', icon: '🔬' },
-    { id: 8, name: 'Фонд медицинских исследований', icon: '💉' },
+    { 
+      id: 1, 
+      nameKey: 'partners.nationalHospital', 
+      icon: '🏥', 
+      color: 'from-blue-500 to-indigo-600',
+      glow: 'hover:shadow-blue-500/50'
+    },
+    { 
+      id: 2, 
+      nameKey: 'partners.cityHospital', 
+      icon: '🏨', 
+      color: 'from-purple-500 to-pink-600',
+      glow: 'hover:shadow-purple-500/50'
+    },
+    { 
+      id: 3, 
+      nameKey: 'partners.medicalCenters', 
+      icon: '⛑️', 
+      color: 'from-green-500 to-teal-600',
+      glow: 'hover:shadow-green-500/50'
+    },
+    { 
+      id: 4, 
+      nameKey: 'partners.who', 
+      icon: '🌐', 
+      color: 'from-amber-500 to-orange-600',
+      glow: 'hover:shadow-amber-500/50'
+    },
+    { 
+      id: 5, 
+      nameKey: 'partners.redCross', 
+      icon: '➕', 
+      color: 'from-red-500 to-rose-600',
+      glow: 'hover:shadow-red-500/50'
+    },
+    { 
+      id: 6, 
+      nameKey: 'partners.medicalAssociation', 
+      icon: '⚕️', 
+      color: 'from-indigo-500 to-blue-600',
+      glow: 'hover:shadow-indigo-500/50'
+    },
+    { 
+      id: 7, 
+      nameKey: 'partners.healthInstitute', 
+      icon: '🔬', 
+      color: 'from-pink-500 to-rose-600',
+      glow: 'hover:shadow-pink-500/50'
+    },
+    { 
+      id: 8, 
+      nameKey: 'partners.researchFoundation', 
+      icon: '💉', 
+      color: 'from-teal-500 to-emerald-600',
+      glow: 'hover:shadow-teal-500/50'
+    },
   ];
 
   // Удваиваем массив для бесшовной анимации
   const duplicatedPartners = [...partners, ...partners];
 
+  // Эффект для плавного скролла с requestAnimationFrame
+  useEffect(() => {
+    const scroller = scrollerRef.current;
+    if (!scroller) return;
+    
+    let animationId;
+    let position = 0;
+    const speed = 0.5; // px per frame
+    
+    const animate = () => {
+      position -= speed;
+      
+      // Reset position when scrolled halfway
+      if (Math.abs(position) > scroller.scrollWidth / 2) {
+        position = 0;
+      }
+      
+      scroller.style.transform = `translateX(${position}px)`;
+      animationId = requestAnimationFrame(animate);
+    };
+    
+    animationId = requestAnimationFrame(animate);
+    
+    return () => {
+      cancelAnimationFrame(animationId);
+    };
+  }, []);
+
   return (
-    <section className="py-12 bg-blue-600 text-white overflow-hidden">
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-10">Наши партнеры</h2>
+    <section className="py-16 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white overflow-hidden relative">
+      {/* Анимированный фон */}
+      <div className="absolute inset-0 overflow-hidden">
+        {[...Array(10)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute rounded-full bg-blue-500/10 animate-pulse"
+            style={{
+              width: `${Math.random() * 100 + 50}px`,
+              height: `${Math.random() * 100 + 50}px`,
+              top: `${Math.random() * 100}%`,
+              left: `${Math.random() * 100}%`,
+              animationDuration: `${Math.random() * 10 + 10}s`,
+              animationDelay: `${Math.random() * 5}s`
+            }}
+          />
+        ))}
+      </div>
+      
+      <div className="container mx-auto relative z-10">
+        <h2 className="text-4xl md:text-5xl font-bold text-center mb-12">
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-300 via-indigo-200 to-cyan-300">
+            {t('partners.title')}
+          </span>
+        </h2>
         
-        <div 
-          className="relative flex overflow-hidden"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-        >
+        <div className="relative py-6">
           <div 
-            className={`flex whitespace-nowrap ${isPaused ? 'animate-pause' : 'animate-scroll'}`}
-            style={{ animationDuration: '30s' }}
+            ref={scrollerRef}
+            className="flex whitespace-nowrap"
           >
             {duplicatedPartners.map((partner, index) => (
               <div 
                 key={`${partner.id}-${index}`} 
-                className="inline-flex flex-col items-center mx-8 p-6 bg-blue-500 rounded-xl transition-all duration-300 hover:bg-blue-400 hover:scale-105"
+                className={`inline-flex flex-col items-center mx-4 p-6 rounded-2xl bg-gradient-to-r ${partner.color} transition-all duration-500 transform hover:-translate-y-2 ${partner.glow} hover:shadow-2xl`}
+                style={{ minWidth: '220px' }}
+                onMouseEnter={() => setHoveredPartner(partner.id)}
+                onMouseLeave={() => setHoveredPartner(null)}
               >
-                <span className="text-5xl mb-3">{partner.icon}</span>
-                <span className="text-lg font-medium text-center">{partner.name}</span>
+                <span className={`text-5xl mb-3 transition-transform duration-700 ${hoveredPartner === partner.id ? 'scale-125 rotate-12' : ''}`}>
+                  {partner.icon}
+                </span>
+                <span className="text-lg font-medium text-center bg-white/10 px-4 py-2 rounded-full backdrop-blur-sm">
+                  {t(partner.nameKey)}
+                </span>
+                {/* Индикатор наведения */}
+                <div className={`absolute -bottom-2 w-10 h-1 bg-white rounded-full transition-all duration-300 ${hoveredPartner === partner.id ? 'scale-125 opacity-100' : 'scale-0 opacity-0'}`} />
               </div>
             ))}
           </div>
           
           {/* Градиентные затемнения по краям */}
-          <div className="absolute top-0 left-0 w-20 h-full bg-gradient-to-r from-blue-600 to-transparent z-10"></div>
-          <div className="absolute top-0 right-0 w-20 h-full bg-gradient-to-l from-blue-600 to-transparent z-10"></div>
+          <div className="absolute top-0 left-0 w-32 h-full bg-gradient-to-r from-slate-900 to-transparent z-10 pointer-events-none"></div>
+          <div className="absolute top-0 right-0 w-32 h-full bg-gradient-to-l from-indigo-900 to-transparent z-10 pointer-events-none"></div>
         </div>
         
-        <p className="text-center mt-8 text-blue-200 text-sm">
-          Наведите курсор на бегущую строку, чтобы приостановить анимацию
-        </p>
       </div>
-      
-      <style>
-        {`
-          @keyframes scroll {
-            0% {
-              transform: translateX(0%);
-            }
-            100% {
-              transform: translateX(-50%);
-            }
-          }
-          .animate-scroll {
-            animation: scroll 30s linear infinite;
-          }
-          .animate-pause {
-            animation-play-state: paused;
-          }
-        `}
-      </style>
     </section>
   );
 };
