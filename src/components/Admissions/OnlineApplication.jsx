@@ -233,11 +233,73 @@ const OnlineApplication = () => {
     });
   };
 
+  // Функция для создания mailto ссылки с данными заявки
+  const generateApplicationEmail = (data) => {
+    const subject = encodeURIComponent('Заявка на поступление в Салымбеков Университет');
+    const body = encodeURIComponent(`
+ЗАЯВКА НА ПОСТУПЛЕНИЕ
+Салымбеков Университет
+
+=== ЛИЧНЫЕ ДАННЫЕ ===
+ФИО: ${data.lastName} ${data.firstName} ${data.middleName || ''}
+Дата рождения: ${data.birthDate}
+Пол: ${data.gender}
+Телефон: ${data.phone}
+Email: ${data.email}
+Адрес: ${data.address}
+
+=== ПРОГРАММА ОБУЧЕНИЯ ===
+Выбранная программа: ${data.program}
+${data.programDetails ? `Детали программы: ${JSON.stringify(data.programDetails, null, 2)}` : ''}
+
+=== ОБРАЗОВАНИЕ ===
+Название школы: ${data.schoolName}
+Год окончания: ${data.graduationYear}
+Номер аттестата: ${data.certificateNumber}
+Балл ОРТ: ${data.ortScore}
+
+=== ОЦЕНКИ ПО ПРЕДМЕТАМ ===
+Биология: ${data.subjects?.biology || 'не указано'}
+Химия: ${data.subjects?.chemistry || 'не указано'}
+Физика: ${data.subjects?.physics || 'не указано'}
+Математика: ${data.subjects?.mathematics || 'не указано'}
+
+=== ДОКУМЕНТЫ ===
+${Object.keys(data.documents).filter(key => data.documents[key]).length > 0 
+  ? 'Приложены документы: ' + Object.keys(data.documents).filter(key => data.documents[key]).join(', ')
+  : 'Документы будут предоставлены отдельно'}
+
+=== СОГЛАСИЯ ===
+Согласие с условиями: ${data.agreeTerms ? 'Да' : 'Нет'}
+Согласие на обработку данных: ${data.agreePrivacy ? 'Да' : 'Нет'}
+
+Дата подачи заявки: ${new Date().toLocaleString('ru-RU')}
+
+--
+С уважением,
+${data.firstName} ${data.lastName}
+    `.trim());
+    
+    return `mailto:admissions@salymbekov.edu.kg?subject=${subject}&body=${body}`;
+  };
+
   const submitApplication = () => {
     if (validateStep(5)) {
-      // Here you would send the application to your backend
-      console.log('Application submitted:', formData);
-      alert('Заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.');
+      // Создаем mailto ссылку с данными заявки
+      const mailtoLink = generateApplicationEmail(formData);
+      
+      // Открываем почтовый клиент
+      window.location.href = mailtoLink;
+      
+      // Показываем сообщение пользователю
+      alert(`✉️ Открывается ваш почтовый клиент...
+
+📋 Ваша заявка готова к отправке!
+📧 Адрес: admissions@salymbekov.edu.kg
+
+После отправки письма мы свяжемся с вами в ближайшее время.`);
+      
+      // Сохраняем факт отправки
       localStorage.removeItem('applicationDraft');
     }
   };

@@ -7,6 +7,74 @@ const AdmissionsOverview = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [isAutoPlay, setIsAutoPlay] = useState(true);
 
+  // Функция для создания mailto ссылки с данными заявки
+  const generateMailtoLink = () => {
+    const subject = encodeURIComponent('Заявка на поступление в Салымбеков Университет');
+    const body = encodeURIComponent(`
+Здравствуйте!
+
+Хочу подать заявку на поступление в Салымбеков Университет.
+
+КОНТАКТНАЯ ИНФОРМАЦИЯ:
+ФИО: [Введите ваше полное ФИО]
+Телефон: [Введите ваш телефон]
+Email: [Введите ваш email]
+Дата рождения: [дд.мм.гггг]
+Адрес: [Ваш адрес проживания]
+
+ЖЕЛАЕМАЯ ПРОГРАММА ОБУЧЕНИЯ:
+☐ Лечебное дело (6 лет, 170,000 сом/год)
+☐ Стоматология (5 лет, 190,000 сом/год)
+☐ Фармация (5 лет, 150,000 сом/год)
+☐ Сестринское дело (4 года, 130,000 сом/год)
+
+ОБРАЗОВАНИЕ:
+Школа/лицей: [Название учебного заведения]
+Год окончания: [Год]
+Средний балл аттестата: [Балл]
+Балл ОРТ: [Если есть]
+
+ДОПОЛНИТЕЛЬНАЯ ИНФОРМАЦИЯ:
+[Укажите любую дополнительную информацию]
+
+Пожалуйста, вышлите мне:
+✓ Подробную информацию о выбранной программе
+✓ Требования к поступлению  
+✓ Список необходимых документов
+✓ Расписание вступительных экзаменов
+✓ Информацию о стипендиях и льготах
+
+С уважением,
+[Ваше имя]
+
+Дата: ${new Date().toLocaleDateString('ru-RU')}
+    `.trim());
+    
+    return `mailto:admissions@salymbekov.edu.kg?subject=${subject}&body=${body}`;
+  };
+
+  // Функция для быстрого контакта
+  const generateQuickContactEmail = () => {
+    const subject = encodeURIComponent('Вопрос по поступлению - Салымбеков Университет');
+    const body = encodeURIComponent(`
+Здравствуйте!
+
+У меня есть вопрос по поступлению в Салымбеков Университет.
+
+Мой вопрос: [Опишите ваш вопрос]
+
+Контакты для связи:
+Имя: [Ваше имя]
+Телефон: [Ваш телефон]
+Email: [Ваш email]
+
+С уважением,
+[Ваше имя]
+    `.trim());
+    
+    return `mailto:info@salymbekov.edu.kg?subject=${subject}&body=${body}`;
+  };
+
   const timelineSteps = [
     {
       id: 1,
@@ -342,11 +410,29 @@ const AdmissionsOverview = () => {
                   </span>
                 </a>
                 <a 
+                  href={generateMailtoLink()}
+                  className="group bg-green-500 text-white px-8 py-4 rounded-xl font-bold hover:bg-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+                  title="Отправить заявку по email"
+                >
+                  <span className="flex items-center justify-center">
+                    📧 Отправить на Gmail
+                  </span>
+                </a>
+                <a 
                   href="/contacts/admission"
-                  className="group border-2 border-white text-white px-8 py-4 rounded-xl font-bold hover:bg-white hover:text-blue-600 transition-all duration-300 transform hover:scale-105"
+                  className="group border-2 border-white text-white px-6 py-4 rounded-xl font-bold hover:bg-white hover:text-blue-600 transition-all duration-300 transform hover:scale-105"
                 >
                   <span className="flex items-center justify-center">
                     📞 Связаться с нами
+                  </span>
+                </a>
+                <a 
+                  href={generateQuickContactEmail()}
+                  className="group bg-orange-500 text-white px-6 py-4 rounded-xl font-bold hover:bg-orange-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+                  title="Задать быстрый вопрос по email"
+                >
+                  <span className="flex items-center justify-center">
+                    ❓ Задать вопрос
                   </span>
                 </a>
               </div>
