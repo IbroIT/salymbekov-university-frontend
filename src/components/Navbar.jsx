@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import Logo from '../assets/logo-salymbekov-university-site.png';
+import './Navbar.css';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -50,7 +51,6 @@ const Navbar = () => {
       submenu: [
         { title: t('nav.about_university'), link: '/about' },
         { title: t('nav.management'), link: '/about/management' },
-        { title: t('nav.documents'), link: '/about/documents' },
         { title: t('nav.vacancies'), link: '/about/vacancies' },
         { title: t('nav.partners'), link: '/about/partners' },
       ]
@@ -150,22 +150,20 @@ const Navbar = () => {
   };
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 w-full ${
+    <nav className={`fixed top-0 left-0 right-0 z-50 navbar-transition navbar-fixed w-full ${
       isScrolled ? 'bg-white shadow-lg' : 'bg-white/95 backdrop-blur-sm'
     }`}>
-      <div className="w-full px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
+      <div className="w-full navbar-container px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 min-h-[64px] navbar-container">
           {/* Логотип */}
-          <div className="flex items-center">
-            <a href="/" className="flex-shrink-0 flex items-center">
-              <span className="ml-3 text-xl font-bold text-blue-800 hidden md:block">
-                <img src={Logo} alt="" className='w-[150px] h-[35]'/>
-              </span>
+          <div className="flex items-center flex-shrink-0">
+            <a href="/" className="flex items-center">
+              <img src={Logo} alt="Salymbekov University" className='navbar-logo h-8 w-auto sm:h-9 md:h-10 xl:w-[150px] xl:h-[35px]'/>
             </a>
           </div>
 
           {/* Основное меню для десктопа */}
-          <div className="hidden lg:flex lg:items-center lg:space-x-1">
+          <div className="navbar-desktop-menu hidden xl:flex xl:items-center xl:space-x-1 flex-1 justify-center max-w-4xl mx-8">
             {Object.entries(menuData).map(([key, menu]) => (
               <div 
                 key={key}
@@ -173,16 +171,16 @@ const Navbar = () => {
                 onMouseEnter={() => handleMenuEnter(key)}
                 onMouseLeave={handleMenuLeave}
               >
-                <button className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors flex items-center">
+                <button className="navbar-menu-item px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors flex items-center whitespace-nowrap">
                   {menu.title}
-                  <svg className="ml-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="ml-1 h-4 w-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
                   </svg>
                 </button>
 
                 {(activeMenu === key || closingMenu === key) && (
                   <div 
-                    className="absolute left-0 mt-0 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
+                    className="navbar-menu-dropdown absolute left-0 mt-0 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
                     onMouseEnter={handleSubmenuEnter}
                     onMouseLeave={handleSubmenuLeave}
                     style={{ 
@@ -211,15 +209,15 @@ const Navbar = () => {
           </div>
 
           {/* Правая часть: языки и кнопка подать заявку */}
-          <div className="flex items-center">
+          <div className="flex items-center space-x-2 flex-shrink-0">
             {/* Переключатель языков */}
-            <div className="relative mr-3">
+            <div className="relative">
               <button
                 onClick={() => setIsLangOpen(!isLangOpen)}
-                className="flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-md px-2 py-1"
+                className="navbar-lang-button flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-md px-2 py-1"
               >
                 <span className="mr-1 text-lg">{languages.find(lang => lang.code === currentLanguage)?.flag || '🇷🇺'}</span>
-                <span className="hidden sm:inline">{currentLanguage.toUpperCase()}</span>
+                <span className="navbar-lang-text hidden sm:inline">{currentLanguage.toUpperCase()}</span>
                 <svg 
                   className={`ml-1 h-4 w-4 transition-transform ${isLangOpen ? 'rotate-180' : ''}`} 
                   fill="currentColor" 
@@ -253,17 +251,17 @@ const Navbar = () => {
             </div>
 
             {/* Кнопка Подать заявку */}
-            <div className="hidden md:block">
+            <div className="hidden lg:block">
               <a
                 href="/admissions/apply"
-                className="ml-2 px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+                className="navbar-apply-button px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors whitespace-nowrap"
               >
                 {t('nav.apply')}
               </a>
             </div>
 
-            {/* Бургер меню для мобильных */}
-            <div className="lg:hidden flex items-center ml-2">
+            {/* Бургер меню для мобильных и планшетов */}
+            <div className="navbar-mobile-trigger xl:hidden flex items-center">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-blue-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
@@ -292,7 +290,7 @@ const Navbar = () => {
 
       {/* Мобильное меню с аккордеоном */}
       {isMenuOpen && (
-        <div className="lg:hidden bg-white shadow-lg w-full">
+        <div className="xl:hidden bg-white shadow-lg w-full border-t border-gray-100">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             {Object.entries(menuData).map(([key, menu]) => (
               <div key={key} className="border-b border-gray-100 last:border-b-0">

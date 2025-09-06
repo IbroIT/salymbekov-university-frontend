@@ -7,73 +7,91 @@ const AdmissionsOverview = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [isAutoPlay, setIsAutoPlay] = useState(true);
 
+  // Функция для создания mailto ссылки с данными заявки
+  const generateMailtoLink = () => {
+    const subject = encodeURIComponent(t('admissions.email.subject'));
+    const body = encodeURIComponent(t('admissions.email.body', {
+      date: new Date().toLocaleDateString('ru-RU')
+    }));
+    
+    return `mailto:admissions@salymbekov.edu.kg?subject=${subject}&body=${body}`;
+  };
+
+  // Функция для быстрого контакта
+  const generateQuickContactEmail = () => {
+    const subject = encodeURIComponent(t('admissions.quickContact.subject'));
+    const body = encodeURIComponent(t('admissions.quickContact.body'));
+    
+    return `mailto:info@salymbekov.edu.kg?subject=${subject}&body=${body}`;
+  };
+
   const timelineSteps = [
     {
       id: 1,
       icon: '📋',
-      title: 'Выбор программы',
-      description: 'Изучите доступные программы и выберите подходящую',
-      details: 'Ознакомьтесь с требованиями, стоимостью и особенностями каждой программы',
+      titleKey: 'admissions.timeline.step1.title',
+      descriptionKey: 'admissions.timeline.step1.description',
+      detailsKey: 'admissions.timeline.step1.details',
       color: 'from-blue-500 to-purple-600'
     },
     {
       id: 2,
       icon: '📄',
-      title: 'Подача документов',
-      description: 'Подготовьте и подайте необходимые документы',
-      details: 'Аттестат, паспорт, медсправка, фотографии и сертификат ОРТ',
+      titleKey: 'admissions.timeline.step2.title',
+      descriptionKey: 'admissions.timeline.step2.description',
+      detailsKey: 'admissions.timeline.step2.details',
       color: 'from-purple-500 to-pink-600'
     },
     {
       id: 3,
       icon: '✍️',
-      title: 'Вступительные испытания',
-      description: 'Пройдите тестирование и собеседование',
-      details: 'Экзамены по профильным предметам: биология, химия',
+      titleKey: 'admissions.timeline.step3.title',
+      descriptionKey: 'admissions.timeline.step3.description',
+      detailsKey: 'admissions.timeline.step3.details',
       color: 'from-pink-500 to-red-600'
     },
     {
       id: 4,
       icon: '✅',
-      title: 'Зачисление',
-      description: 'Получите уведомление о зачислении',
-      details: 'Публикация списков зачисленных и подписание договора',
+      titleKey: 'admissions.timeline.step4.title',
+      descriptionKey: 'admissions.timeline.step4.description',
+      detailsKey: 'admissions.timeline.step4.details',
       color: 'from-red-500 to-orange-600'
     },
     {
       id: 5,
       icon: '🎓',
-      title: 'Начало обучения',
-      description: 'Приступите к обучению в университете',
-      details: 'Торжественное начало учебного года и первые занятия',
+      titleKey: 'admissions.timeline.step5.title',
+      descriptionKey: 'admissions.timeline.step5.description',
+      detailsKey: 'admissions.timeline.step5.details',
       color: 'from-orange-500 to-yellow-600'
     }
   ];
 
   const importantDates = [
     {
-      event: 'Начало приёма документов',
+      eventKey: 'admissions.dates.start',
       date: '1 июня',
       dateNum: '01',
-      month: 'ИЮН',
+      monthKey: 'common.months.jun',
       highlight: true,
       icon: '📅',
       color: 'bg-gradient-to-br from-green-400 to-green-600'
     },
     {
-      event: 'Крайний срок подачи документов',
+      eventKey: 'admissions.dates.deadline',
       date: '15 августа',
       dateNum: '15',
-      month: 'АВГ',
+      monthKey: 'common.months.aug',
       highlight: true,
       icon: '⏰',
       color: 'bg-gradient-to-br from-red-400 to-red-600'
     },
     {
-      event: 'Вступительные экзамены',
+      eventKey: 'admissions.dates.exams',
       date: '20-25 августа',
       dateNum: '20-25',
-      month: 'АВГ',
+      monthKey: 'common.months.aug',
       highlight: true,
       icon: '📝',
       color: 'bg-gradient-to-br from-purple-400 to-purple-600'
@@ -98,10 +116,10 @@ const AdmissionsOverview = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Процесс поступления
+              {t('admissions.hero.title')}
             </h1>
             <p className="text-xl md:text-2xl opacity-90">
-              Узнайте, как поступить в Салымбеков Университет
+              {t('admissions.hero.subtitle')}
             </p>
           </div>
         </div>
@@ -111,13 +129,13 @@ const AdmissionsOverview = () => {
         {/* Roadmap Introduction */}
         <div className="text-center mb-16">
           <div className="inline-block bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium mb-4">
-            🗺️ Дорожная карта поступающего
+            🗺️ {t('admissions.roadmap.title')}
           </div>
           <h2 className="text-4xl font-bold mb-4 text-gray-800">
-            Ваш путь к успеху в медицине
+            {t('admissions.roadmap.heading')}
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Следуйте нашему пошаговому руководству для успешного поступления в Салымбеков Университет
+            {t('admissions.roadmap.description')}
           </p>
         </div>
 
@@ -133,24 +151,24 @@ const AdmissionsOverview = () => {
                   className={`p-2 rounded-full transition-colors ${
                     isAutoPlay ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-600'
                   }`}
-                  title={isAutoPlay ? 'Остановить автопрогресс' : 'Запустить автопрогресс'}
+                  title={isAutoPlay ? t('common.pause') : t('common.play')}
                 >
                   {isAutoPlay ? '⏸️' : '▶️'}
                 </button>
                 <div className="text-sm text-gray-600 px-2">
-                  Шаг {activeStep + 1} из {timelineSteps.length}
+                  {t('common.step')} {activeStep + 1} {t('common.of')} {timelineSteps.length}
                 </div>
                 <button
                   onClick={() => setActiveStep((prev) => (prev - 1 + timelineSteps.length) % timelineSteps.length)}
                   className="p-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors"
-                  title="Предыдущий шаг"
+                  title={t('common.previous')}
                 >
                   ⬅️
                 </button>
                 <button
                   onClick={() => setActiveStep((prev) => (prev + 1) % timelineSteps.length)}
                   className="p-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors"
-                  title="Следующий шаг"
+                  title={t('common.next')}
                 >
                   ➡️
                 </button>
@@ -193,10 +211,10 @@ const AdmissionsOverview = () => {
                       index === activeStep ? 'transform scale-105' : ''
                     }`}>
                       <h3 className="text-lg font-bold text-gray-800 mb-2">
-                        {step.title}
+                        {t(step.titleKey)}
                       </h3>
                       <p className="text-sm text-gray-600 max-w-xs">
-                        {index === activeStep ? step.details : step.description}
+                        {index === activeStep ? t(step.detailsKey) : t(step.descriptionKey)}
                       </p>
                     </div>
                   </div>
@@ -225,14 +243,14 @@ const AdmissionsOverview = () => {
                 </div>
                 <div className="flex-1">
                   <h3 className="text-lg font-bold text-gray-800 mb-2">
-                    {step.title}
+                    {t(step.titleKey)}
                   </h3>
                   <p className="text-gray-600">
-                    {step.description}
+                    {t(step.descriptionKey)}
                   </p>
                   {index === activeStep && (
                     <p className="text-sm text-gray-500 mt-2 italic">
-                      {step.details}
+                      {t(step.detailsKey)}
                     </p>
                   )}
                 </div>
@@ -248,13 +266,13 @@ const AdmissionsOverview = () => {
         <div className="bg-white rounded-2xl shadow-xl p-8 mb-16">
           <div className="text-center mb-8">
             <div className="inline-block bg-red-100 text-red-800 px-4 py-2 rounded-full text-sm font-medium mb-4">
-              📅 Календарь поступления
+              📅 {t('admissions.dates.title')}
             </div>
             <h2 className="text-3xl font-bold text-gray-800 mb-2">
-              Важные даты
+              {t('admissions.dates.heading')}
             </h2>
             <p className="text-gray-600">
-              Не пропустите ключевые сроки подачи документов
+              {t('admissions.dates.description')}
             </p>
           </div>
           
@@ -265,7 +283,7 @@ const AdmissionsOverview = () => {
                 className={`group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 ${item.color}`}
               >
                 <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
-                <div className="relative p-8 text-white text-center">
+                <div className="relative p-8 text-gray-700 text-center">
                   {/* Date Icon */}
                   <div className="text-4xl mb-4">
                     {item.icon}
@@ -274,7 +292,7 @@ const AdmissionsOverview = () => {
                   {/* Calendar Style Date */}
                   <div className="bg-white bg-opacity-20 rounded-lg p-4 mb-4 backdrop-blur-sm">
                     <div className="text-sm font-medium opacity-90 mb-1">
-                      {item.month}
+                      {t(item.monthKey)}
                     </div>
                     <div className="text-3xl font-bold">
                       {item.dateNum}
@@ -282,14 +300,14 @@ const AdmissionsOverview = () => {
                   </div>
                   
                   <h3 className="text-lg font-bold mb-2">
-                    {item.event}
+                    {t(item.eventKey)}
                   </h3>
                   
                   {/* Countdown or Status */}
                   <div className="text-sm bg-white bg-opacity-20 rounded-full px-3 py-1 inline-block backdrop-blur-sm">
-                    {index === 0 && '⏳ Подача открыта'}
-                    {index === 1 && '🚨 Последний шанс'}
-                    {index === 2 && '📝 Время экзаменов'}
+                    {index === 0 && t('admissions.dates.status.open')}
+                    {index === 1 && t('admissions.dates.status.deadline')}
+                    {index === 2 && t('admissions.dates.status.exams')}
                   </div>
                 </div>
                 
@@ -299,16 +317,6 @@ const AdmissionsOverview = () => {
                 </div>
               </div>
             ))}
-          </div>
-          
-          {/* Timeline connector for dates */}
-          <div className="hidden md:block relative mt-8">
-            <div className="absolute top-1/2 left-0 right-0 h-1 bg-gray-200 transform -translate-y-1/2"></div>
-            <div className="flex justify-between">
-              {importantDates.map((_, index) => (
-                <div key={index} className="w-4 h-4 bg-gray-400 rounded-full"></div>
-              ))}
-            </div>
           </div>
         </div>
 
@@ -324,10 +332,10 @@ const AdmissionsOverview = () => {
             <div className="relative z-10">
               <div className="text-6xl mb-6">🏥</div>
               <h3 className="text-3xl font-bold mb-4">
-                Готовы начать свой путь в медицине?
+                {t('admissions.cta.title')}
               </h3>
               <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
-                Присоединяйтесь к новому поколению врачей и станьте частью медицинского сообщества Салымбеков Университета
+                {t('admissions.cta.description')}
               </p>
               <div className="flex flex-col sm:flex-row justify-center gap-4">
                 <a 
@@ -335,18 +343,36 @@ const AdmissionsOverview = () => {
                   className="group bg-white text-blue-600 px-8 py-4 rounded-xl font-bold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg"
                 >
                   <span className="flex items-center justify-center">
-                    🚀 Подать заявку онлайн
+                    🚀 {t('admissions.cta.applyOnline')}
                     <svg className="ml-2 w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
                     </svg>
                   </span>
                 </a>
                 <a 
-                  href="/contacts/admission"
-                  className="group border-2 border-white text-white px-8 py-4 rounded-xl font-bold hover:bg-white hover:text-blue-600 transition-all duration-300 transform hover:scale-105"
+                  href={generateMailtoLink()}
+                  className="group bg-green-500 text-white px-8 py-4 rounded-xl font-bold hover:bg-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+                  title={t('admissions.cta.emailTitle')}
                 >
                   <span className="flex items-center justify-center">
-                    📞 Связаться с нами
+                    📧 {t('admissions.cta.sendEmail')}
+                  </span>
+                </a>
+                <a 
+                  href="/contacts/admission"
+                  className="group border-2 border-white text-white px-6 py-4 rounded-xl font-bold hover:bg-white hover:text-blue-600 transition-all duration-300 transform hover:scale-105"
+                >
+                  <span className="flex items-center justify-center">
+                    📞 {t('admissions.cta.contactUs')}
+                  </span>
+                </a>
+                <a 
+                  href={generateQuickContactEmail()}
+                  className="group bg-orange-500 text-white px-6 py-4 rounded-xl font-bold hover:bg-orange-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+                  title={t('admissions.cta.quickQuestion')}
+                >
+                  <span className="flex items-center justify-center">
+                    ❓ {t('admissions.cta.askQuestion')}
                   </span>
                 </a>
               </div>
@@ -355,15 +381,15 @@ const AdmissionsOverview = () => {
               <div className="mt-10 grid grid-cols-3 gap-6 max-w-lg mx-auto">
                 <div className="text-center">
                   <div className="text-2xl font-bold">500+</div>
-                  <div className="text-sm opacity-80">Выпускников</div>
+                  <div className="text-sm opacity-80">{t('admissions.stats.graduates')}</div>
                 </div>
                 <div className="text-center">
                   <div className="text-2xl font-bold">95%</div>
-                  <div className="text-sm opacity-80">Трудоустройство</div>
+                  <div className="text-sm opacity-80">{t('admissions.stats.employment')}</div>
                 </div>
                 <div className="text-center">
                   <div className="text-2xl font-bold">15+</div>
-                  <div className="text-sm opacity-80">Лет опыта</div>
+                  <div className="text-sm opacity-80">{t('admissions.stats.experience')}</div>
                 </div>
               </div>
             </div>
@@ -374,23 +400,23 @@ const AdmissionsOverview = () => {
         <div className="mt-16 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           <div className="bg-white p-6 rounded-xl shadow-lg text-center hover:shadow-xl transition-shadow">
             <div className="text-3xl mb-2">📚</div>
-            <h4 className="font-bold text-gray-800 mb-1">Программы</h4>
-            <p className="text-sm text-gray-600">4 направления обучения</p>
+            <h4 className="font-bold text-gray-800 mb-1">{t('admissions.info.programs')}</h4>
+            <p className="text-sm text-gray-600">{t('admissions.info.programsDesc')}</p>
           </div>
           <div className="bg-white p-6 rounded-xl shadow-lg text-center hover:shadow-xl transition-shadow">
             <div className="text-3xl mb-2">🏆</div>
-            <h4 className="font-bold text-gray-800 mb-1">Качество</h4>
-            <p className="text-sm text-gray-600">Аккредитованные программы</p>
+            <h4 className="font-bold text-gray-800 mb-1">{t('admissions.info.quality')}</h4>
+            <p className="text-sm text-gray-600">{t('admissions.info.qualityDesc')}</p>
           </div>
           <div className="bg-white p-6 rounded-xl shadow-lg text-center hover:shadow-xl transition-shadow">
             <div className="text-3xl mb-2">👨‍⚕️</div>
-            <h4 className="font-bold text-gray-800 mb-1">Преподаватели</h4>
-            <p className="text-sm text-gray-600">Опытные специалисты</p>
+            <h4 className="font-bold text-gray-800 mb-1">{t('admissions.info.teachers')}</h4>
+            <p className="text-sm text-gray-600">{t('admissions.info.teachersDesc')}</p>
           </div>
           <div className="bg-white p-6 rounded-xl shadow-lg text-center hover:shadow-xl transition-shadow">
             <div className="text-3xl mb-2">🎯</div>
-            <h4 className="font-bold text-gray-800 mb-1">Практика</h4>
-            <p className="text-sm text-gray-600">Современные лаборатории</p>
+            <h4 className="font-bold text-gray-800 mb-1">{t('admissions.info.practice')}</h4>
+            <p className="text-sm text-gray-600">{t('admissions.info.practiceDesc')}</p>
           </div>
         </div>
       </div>

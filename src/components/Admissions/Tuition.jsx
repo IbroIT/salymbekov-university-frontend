@@ -2,53 +2,53 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const Tuition = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [selectedProgram, setSelectedProgram] = useState('medicine');
   const [selectedDiscount, setSelectedDiscount] = useState('none');
 
   const programs = [
     {
       id: 'medicine',
-      name: 'Лечебное дело',
+      name: t('tuition.programs.medicine'),
       semesterCost: 85000,
       yearCost: 170000,
       duration: 6,
       discounts: [
-        { id: 'excellent', name: '10% отличникам', percent: 10 },
-        { id: 'early', name: '5% при ранней оплате', percent: 5 }
+        { id: 'excellent', name: t('tuition.discounts.excellent'), percent: 10 },
+        { id: 'early', name: t('tuition.discounts.early'), percent: 5 }
       ]
     },
     {
       id: 'dentistry',
-      name: 'Стоматология',
+      name: t('tuition.programs.dentistry'),
       semesterCost: 95000,
       yearCost: 190000,
       duration: 5,
       discounts: [
-        { id: 'excellent', name: '8% отличникам', percent: 8 },
-        { id: 'early', name: '5% при ранней оплате', percent: 5 }
+        { id: 'excellent', name: t('tuition.discounts.excellentDentistry'), percent: 8 },
+        { id: 'early', name: t('tuition.discounts.early'), percent: 5 }
       ]
     },
     {
       id: 'pharmacy',
-      name: 'Фармация',
+      name: t('tuition.programs.pharmacy'),
       semesterCost: 75000,
       yearCost: 150000,
       duration: 5,
       discounts: [
-        { id: 'excellent', name: '10% отличникам', percent: 10 },
-        { id: 'early', name: '5% при ранней оплате', percent: 5 }
+        { id: 'excellent', name: t('tuition.discounts.excellent'), percent: 10 },
+        { id: 'early', name: t('tuition.discounts.early'), percent: 5 }
       ]
     },
     {
       id: 'nursing',
-      name: 'Сестринское дело',
+      name: t('tuition.programs.nursing'),
       semesterCost: 65000,
       yearCost: 130000,
       duration: 4,
       discounts: [
-        { id: 'excellent', name: '10% отличникам', percent: 10 },
-        { id: 'early', name: '3% при ранней оплате', percent: 3 }
+        { id: 'excellent', name: t('tuition.discounts.excellent'), percent: 10 },
+        { id: 'early', name: t('tuition.discounts.earlyNursing'), percent: 3 }
       ]
     }
   ];
@@ -63,37 +63,37 @@ const Tuition = () => {
   };
 
   const formatCurrency = (amount) => {
-    return new Intl.NumberFormat('ru-RU').format(amount) + ' сом';
+    return new Intl.NumberFormat(i18n.language === 'kg' ? 'ru-RU' : i18n.language).format(amount) + ' ' + t('common.currency');
   };
 
   const paymentMethods = [
     {
-      title: 'Банковский перевод',
-      description: 'Переводы через банковские отделения',
+      title: t('tuition.paymentMethods.bankTransfer.title'),
+      description: t('tuition.paymentMethods.bankTransfer.description'),
       details: [
-        'Получатель: ОсОО "Салымбеков Университет"',
-        'ИНН: 12345678901234',
-        'Расчетный счет: 1234567890123456789',
-        'Банк: КИКБ'
+        t('tuition.paymentMethods.bankTransfer.details.recipient'),
+        t('tuition.paymentMethods.bankTransfer.details.inn'),
+        t('tuition.paymentMethods.bankTransfer.details.account'),
+        t('tuition.paymentMethods.bankTransfer.details.bank')
       ]
     },
     {
-      title: 'Онлайн оплата',
-      description: 'Оплата через интернет-банкинг',
+      title: t('tuition.paymentMethods.online.title'),
+      description: t('tuition.paymentMethods.online.description'),
       details: [
-        'Элсом',
-        'Balance.kg',
-        'О! Деньги',
-        'МегаПэй'
+        t('tuition.paymentMethods.online.details.elsom'),
+        t('tuition.paymentMethods.online.details.balance'),
+        t('tuition.paymentMethods.online.details.omoney'),
+        t('tuition.paymentMethods.online.details.megapay')
       ]
     },
     {
-      title: 'Наличный расчет',
-      description: 'Оплата в кассе университета',
+      title: t('tuition.paymentMethods.cash.title'),
+      description: t('tuition.paymentMethods.cash.description'),
       details: [
-        'Адрес: г. Бишкек, ул. Ахунбаева 92',
-        'Время работы: 09:00 - 18:00',
-        'Выходные: суббота, воскресенье'
+        t('tuition.paymentMethods.cash.details.address'),
+        t('tuition.paymentMethods.cash.details.hours'),
+        t('tuition.paymentMethods.cash.details.weekends')
       ]
     }
   ];
@@ -105,10 +105,10 @@ const Tuition = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              Стоимость обучения
+              {t('tuition.title')}
             </h1>
             <p className="text-xl opacity-90">
-              Узнайте стоимость обучения и доступные скидки
+              {t('tuition.subtitle')}
             </p>
           </div>
         </div>
@@ -119,7 +119,7 @@ const Tuition = () => {
         <div className="bg-white rounded-lg shadow-lg overflow-hidden mb-12">
           <div className="px-6 py-4 bg-gray-50 border-b">
             <h2 className="text-2xl font-bold text-gray-800">
-              Сравнительная таблица стоимости
+              {t('tuition.comparisonTable.title')}
             </h2>
           </div>
           
@@ -127,11 +127,11 @@ const Tuition = () => {
             <table className="w-full">
               <thead className="bg-gray-100">
                 <tr>
-                  <th className="px-6 py-4 text-left font-semibold text-gray-700">Программа</th>
-                  <th className="px-6 py-4 text-left font-semibold text-gray-700">Семестр</th>
-                  <th className="px-6 py-4 text-left font-semibold text-gray-700">Учебный год</th>
-                  <th className="px-6 py-4 text-left font-semibold text-gray-700">Общая стоимость</th>
-                  <th className="px-6 py-4 text-left font-semibold text-gray-700">Доступные скидки</th>
+                  <th className="px-6 py-4 text-left font-semibold text-gray-700">{t('tuition.comparisonTable.program')}</th>
+                  <th className="px-6 py-4 text-left font-semibold text-gray-700">{t('tuition.comparisonTable.semester')}</th>
+                  <th className="px-6 py-4 text-left font-semibold text-gray-700">{t('tuition.comparisonTable.year')}</th>
+                  <th className="px-6 py-4 text-left font-semibold text-gray-700">{t('tuition.comparisonTable.totalCost')}</th>
+                  <th className="px-6 py-4 text-left font-semibold text-gray-700">{t('tuition.comparisonTable.availableDiscounts')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -164,14 +164,14 @@ const Tuition = () => {
         {/* Cost Calculator */}
         <div className="bg-white rounded-lg shadow-lg p-8 mb-12">
           <h2 className="text-2xl font-bold mb-6 text-gray-800">
-            Калькулятор стоимости
+            {t('tuition.calculator.title')}
           </h2>
           
           <div className="grid md:grid-cols-2 gap-8">
             <div>
               <div className="mb-6">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Выберите программу
+                  {t('tuition.calculator.selectProgram')}
                 </label>
                 <select
                   value={selectedProgram}
@@ -188,14 +188,14 @@ const Tuition = () => {
 
               <div className="mb-6">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Выберите скидку
+                  {t('tuition.calculator.selectDiscount')}
                 </label>
                 <select
                   value={selectedDiscount}
                   onChange={(e) => setSelectedDiscount(e.target.value)}
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 >
-                  <option value="none">Без скидки</option>
+                  <option value="none">{t('tuition.calculator.noDiscount')}</option>
                   {currentProgram.discounts.map(discount => (
                     <option key={discount.id} value={discount.id}>
                       {discount.name}
@@ -207,17 +207,17 @@ const Tuition = () => {
 
             <div className="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-lg">
               <h3 className="text-lg font-semibold mb-4 text-purple-800">
-                Расчет стоимости
+                {t('tuition.calculator.calculation')}
               </h3>
               
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-700">Программа:</span>
+                  <span className="text-gray-700">{t('tuition.calculator.program')}:</span>
                   <span className="font-medium">{currentProgram.name}</span>
                 </div>
                 
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-700">Стоимость за семестр:</span>
+                  <span className="text-gray-700">{t('tuition.calculator.semesterCost')}:</span>
                   <span className={selectedDiscount !== 'none' ? 'line-through text-gray-500' : 'font-medium'}>
                     {formatCurrency(currentProgram.semesterCost)}
                   </span>
@@ -225,7 +225,7 @@ const Tuition = () => {
                 
                 {selectedDiscount !== 'none' && (
                   <div className="flex justify-between items-center">
-                    <span className="text-green-700">Со скидкой за семестр:</span>
+                    <span className="text-green-700">{t('tuition.calculator.withDiscountSemester')}:</span>
                     <span className="font-bold text-green-600">
                       {formatCurrency(calculateCost(currentProgram.semesterCost, currentDiscount.percent))}
                     </span>
@@ -233,7 +233,7 @@ const Tuition = () => {
                 )}
                 
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-700">Стоимость за год:</span>
+                  <span className="text-gray-700">{t('tuition.calculator.yearCost')}:</span>
                   <span className={selectedDiscount !== 'none' ? 'line-through text-gray-500' : 'font-medium'}>
                     {formatCurrency(currentProgram.yearCost)}
                   </span>
@@ -241,7 +241,7 @@ const Tuition = () => {
                 
                 {selectedDiscount !== 'none' && (
                   <div className="flex justify-between items-center">
-                    <span className="text-green-700">Со скидкой за год:</span>
+                    <span className="text-green-700">{t('tuition.calculator.withDiscountYear')}:</span>
                     <span className="font-bold text-green-600">
                       {formatCurrency(calculateCost(currentProgram.yearCost, currentDiscount.percent))}
                     </span>
@@ -251,7 +251,9 @@ const Tuition = () => {
                 <hr className="my-4" />
                 
                 <div className="flex justify-between items-center text-lg">
-                  <span className="text-gray-700">Общая стоимость ({currentProgram.duration} лет):</span>
+                  <span className="text-gray-700">
+                    {t('tuition.calculator.totalCost', { years: currentProgram.duration })}:
+                  </span>
                   <span className="font-bold text-purple-600">
                     {formatCurrency(calculateCost(currentProgram.yearCost * currentProgram.duration, currentDiscount.percent))}
                   </span>
@@ -259,7 +261,7 @@ const Tuition = () => {
                 
                 {selectedDiscount !== 'none' && (
                   <div className="text-center text-sm text-green-600 font-medium">
-                    Экономия: {formatCurrency((currentProgram.yearCost * currentProgram.duration) - calculateCost(currentProgram.yearCost * currentProgram.duration, currentDiscount.percent))}
+                    {t('tuition.calculator.savings')}: {formatCurrency((currentProgram.yearCost * currentProgram.duration) - calculateCost(currentProgram.yearCost * currentProgram.duration, currentDiscount.percent))}
                   </div>
                 )}
               </div>
@@ -270,7 +272,7 @@ const Tuition = () => {
         {/* Payment Methods */}
         <div className="bg-white rounded-lg shadow-lg p-8">
           <h2 className="text-2xl font-bold mb-6 text-gray-800">
-            Способы оплаты
+            {t('tuition.paymentMethods.title')}
           </h2>
           
           <div className="grid md:grid-cols-3 gap-6">
@@ -298,27 +300,27 @@ const Tuition = () => {
         <div className="mt-12 grid md:grid-cols-2 gap-8">
           <div className="bg-blue-50 p-6 rounded-lg">
             <h4 className="text-lg font-semibold mb-3 text-blue-800">
-              💡 Полезные советы
+              💡 {t('tuition.tips.title')}
             </h4>
             <ul className="space-y-2 text-sm text-blue-700">
-              <li>• Оплачивайте обучение заранее и получите скидку</li>
-              <li>• Отличная успеваемость дает право на скидку</li>
-              <li>• Возможна рассрочка платежа по семестрам</li>
-              <li>• Скидки не суммируются между собой</li>
+              <li>• {t('tuition.tips.earlyPayment')}</li>
+              <li>• {t('tuition.tips.excellentGrades')}</li>
+              <li>• {t('tuition.tips.installment')}</li>
+              <li>• {t('tuition.tips.discountsNotCombined')}</li>
             </ul>
           </div>
           
           <div className="bg-green-50 p-6 rounded-lg">
             <h4 className="text-lg font-semibold mb-3 text-green-800">
-              📞 Вопросы по оплате?
+              📞 {t('tuition.contact.title')}
             </h4>
             <p className="text-sm text-green-700 mb-3">
-              Обратитесь в отдел по работе со студентами
+              {t('tuition.contact.description')}
             </p>
             <div className="space-y-1 text-sm text-green-700">
-              <p>Телефон: +996 312 123 456</p>
-              <p>Email: cashier@salymbekov.edu.kg</p>
-              <p>Часы работы: 09:00 - 18:00</p>
+              <p>{t('tuition.contact.phone')}: +996 312 123 456</p>
+              <p>{t('tuition.contact.email')}: cashier@salymbekov.edu.kg</p>
+              <p>{t('tuition.contact.hours')}: 09:00 - 18:00</p>
             </div>
           </div>
         </div>

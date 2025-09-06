@@ -414,6 +414,357 @@
     "subscribeButton": "Subscribe",
     "subscriptionAlert": "Thank you for subscribing to email: {{email}}",
     "copyright": "Salymbekov University. All rights reserved."
+  },
+  "breadcrumbs": {
+    "home": "Home",
+    "about": "About",
+    "management": "Management Structure"
+  },
+  "management": {
+    "title": "Management Structure",
+    "description": "The organizational structure of Salymbekov University includes governing bodies, faculties, departments and administrative services that ensure the effective operation of the educational institution",
+    "organization": {
+      "title": "University Leadership",
+      "subtitle": "University pyramid hierarchy"
+    },
+    "university": {
+      "name": "Salymbekov University"
+    },
+    "rector": {
+      "name": "Salymbekov Adilkhan",
+      "position": "Rector",
+      "bio": "Founder of the university, leading cardiologist of Kyrgyzstan",
+      "achievements": [
+        "Author of more than 150 scientific publications",
+        "Honored Scientist of the Kyrgyz Republic",
+        "Founder of 3 medical centers"
+      ]
+    },
+    "departments": {
+      "academic": {
+        "name": "Academic Affairs",
+        "head": "Petrov Petr Petrovich",
+        "position": "Vice-Rector for Academic Affairs",
+        "bio": "Specialist in medical education"
+      },
+      "therapy": {
+        "name": "Therapy Department",
+        "head": "Orlov Oleg Olegovich",
+        "position": "Head of Department",
+        "bio": "Highest category physician-therapist"
+      }
+    },
+    "faculties": {
+      "medical": {
+        "name": "Medical Faculty",
+        "head": "Sidorov Sergey Sergeevich",
+        "position": "Dean",
+        "bio": "Specialist in internal diseases"
+      }
+    },
+    "staff": {
+      "volkov": {
+        "name": "Volkov Vladimir Vladimirovich"
+      }
+    },
+    "positions": {
+      "professor": "Professor"
+    },
+    "specializations": {
+      "cardiology": "Cardiology"
+    },
+    "experience": {
+      "label": "Experience",
+      "years": "25 years"
+    },
+    "education": {
+      "doctor": "Doctor of Medical Sciences",
+      "pedagogy": "Doctor of Pedagogical Sciences",
+      "professor": "Doctor of Medical Sciences, Professor",
+      "candidate": "Candidate of Medical Sciences"
+    },
+    "students": {
+      "count": "Students"
+    },
+    "details": {
+      "button": "Details"
+    },
+    "staff": {
+      "title": "Department Staff"
+    },
+    "specialization": {
+      "label": "Specialization"
+    },
+    "modal": {
+      "about": "About Specialist",
+      "info": "Basic Information",
+      "education": "Education",
+      "experience": "Work Experience",
+      "specialization": "Specialization",
+      "contacts": "Contact Information",
+      "statistics": "Statistics",
+      "students": "Students",
+      "teachers": "Teachers",
+      "achievements": "Achievements"
+    },
+    "statistics": {
+      "teachers": "Teachers",
+      "departments": "Departments",
+      "faculties": "Faculties",
+      "students": "Students"
+    }
+  },
+  "requirements": {
+    "title": "Admission Requirements",
+    "subtitle": "Learn the requirements for admission to various programs",
+    "selectProgram": "Select Program",
+    "programRequirements": "Program Requirements",
+    "requiredDocuments": "Required Documents",
+    "generalRequirements": "General requirements for all programs:",
+    "additionalDocuments": "Additional documents:",
+    "importantInfo": {
+      "title": "Important Information",
+      "translation": "All documents must be translated into the state language",
+      "nostrification": "Foreign documents require nostrification",
+      "medicalValidity": "Medical certificate is valid for 6 months"
+    },
+    "help": {
+      "title": "Need help?",
+      "description": "Contact the admissions office for consultation",
+      "phone": "Phone",
+      "email": "Email"
+    },
+    "programs": {
+      "all": "All programs",
+      "medicine": "General Medicine",
+      "dentistry": "Dentistry",
+      "pharmacy": "Pharmacy",
+      "nursing": "Nursing"
+    },
+    "subjects": {
+      "biology": "Biology",
+      "chemistry": "Chemistry",
+      "physics": "Physics"
+    },
+    "documents": {
+      "highSchoolDiploma": "High school diploma",
+      "medicalCertificate": "Medical certificate",
+      "passport": "Passport",
+      "photos": "Photos 3x4 (6 pcs)",
+      "ortCertificate": "ORT certificate",
+      "shortList": "Diploma, Medical certificate",
+      "standardPackage": "standard package",
+      "fullList": {
+        "diploma": "High school diploma (original + copy)",
+        "passport": "Passport (copy of all pages)",
+        "medicalCertificate": "Medical certificate form 086U",
+        "photos": "Photos 3x4 cm (6 pieces)",
+        "ortCertificate": "ORT certificate"
+      },
+      "additional": {
+        "parentsIncome": "Parents' income statement (for discount)",
+        "benefits": "Benefit documents (if any)",
+        "reference": "School reference",
+        "portfolio": "Achievement portfolio (recommended)"
+      }
+    },
+    "duration": {
+      "6years": "6 years",
+      "5years": "5 years",
+      "4years": "4 years"
+    },
+    "language": {
+      "ru_kg": "Russian/Kyrgyz"
+    },
+    "table": {
+      "program": "Program",
+      "ortScore": "ORT Score",
+      "entranceExams": "Entrance Exams",
+      "documents": "Documents"
+    }
+  },
+  "admissions": {
+    "hero": {
+      "title": "Admission Process",
+      "subtitle": "Learn how to apply to Salymbekov University"
+    },
+    "roadmap": {
+      "title": "Applicant’s Roadmap",
+      "heading": "Your Path to Success in Medicine",
+      "description": "Follow our step-by-step guide to successfully enroll at Salymbekov University"
+    },
+    "timeline": {
+      "step1": {
+        "title": "Program Selection",
+        "description": "Explore available programs and choose the right one",
+        "details": "Check the requirements, tuition fees, and features of each program"
+      },
+      "step2": {
+        "title": "Document Submission",
+        "description": "Prepare and submit the required documents",
+        "details": "High school diploma, passport, medical certificate, photos, and ORT certificate"
+      },
+      "step3": {
+        "title": "Entrance Exams",
+        "description": "Take the tests and interview",
+        "details": "Exams in core subjects: Biology, Chemistry"
+      },
+      "step4": {
+        "title": "Enrollment",
+        "description": "Receive your admission notification",
+        "details": "Publication of admitted students list and signing of the contract"
+      },
+      "step5": {
+        "title": "Start of Studies",
+        "description": "Begin your academic journey at the university",
+        "details": "Official start of the academic year and first classes"
+      }
+    },
+    "dates": {
+      "title": "Admission Calendar",
+      "heading": "Important Dates",
+      "description": "Don’t miss the key deadlines for application submission",
+      "start": "Start of document submission",
+      "deadline": "Final application deadline",
+      "exams": "Entrance exams",
+      "status": {
+        "open": "⏳ Applications are open",
+        "deadline": "🚨 Last chance",
+        "exams": "📝 Exam time"
+      }
+    },
+    "email": {
+      "subject": "Application for Admission to Salymbekov University",
+      "body": "Hello! I would like to apply for admission to Salymbekov University. Please send me detailed information about the programs and admission requirements. Best regards, [Your Name]"
+    },
+    "quickContact": {
+      "subject": "Admission Inquiry - Salymbekov University",
+      "body": "Hello! I have a question about admission to Salymbekov University. My question is: [Describe your question] Contact details: Name: [Your Name] Phone: [Your Phone] Email: [Your Email]"
+    },
+    "cta": {
+      "title": "Ready to start your journey in medicine?",
+      "description": "Join the new generation of doctors and become part of the medical community at Salymbekov University",
+      "applyOnline": "Apply Online",
+      "sendEmail": "Send via Gmail",
+      "emailTitle": "Send application by email",
+      "contactUs": "Contact Us",
+      "quickQuestion": "Ask a quick question via email",
+      "askQuestion": "Ask a question"
+    },
+    "stats": {
+      "graduates": "Graduates",
+      "employment": "Employment",
+      "experience": "Years of experience"
+    },
+    "info": {
+      "programs": "Programs",
+      "programsDesc": "4 study areas",
+      "quality": "Quality",
+      "qualityDesc": "Accredited programs",
+      "teachers": "Faculty",
+      "teachersDesc": "Experienced specialists",
+      "practice": "Practice",
+      "practiceDesc": "Modern laboratories"
+    }
+  },
+  "common": {
+    "pause": "Pause autoplay",
+    "play": "Start autoplay",
+    "step": "Step",
+    "of": "of",
+    "previous": "Previous step",
+    "next": "Next step",
+    "months": {
+      "jun": "JUN",
+      "aug": "AUG"
+    }
+  },
+   "tuition": {
+    "title": "Tuition Fees",
+    "subtitle": "Learn about tuition costs and available discounts",
+    "comparisonTable": {
+      "title": "Cost Comparison Table",
+      "program": "Program",
+      "semester": "Semester",
+      "year": "Academic Year",
+      "totalCost": "Total Cost",
+      "availableDiscounts": "Available Discounts"
+    },
+    "calculator": {
+      "title": "Cost Calculator",
+      "selectProgram": "Select Program",
+      "selectDiscount": "Select Discount",
+      "noDiscount": "No discount",
+      "calculation": "Cost Calculation",
+      "program": "Program",
+      "semesterCost": "Cost per semester",
+      "withDiscountSemester": "With discount per semester",
+      "yearCost": "Cost per year",
+      "withDiscountYear": "With discount per year",
+      "totalCost": "Total cost ({years} years)",
+      "savings": "Savings"
+    },
+    "paymentMethods": {
+      "title": "Payment Methods",
+      "bankTransfer": {
+        "title": "Bank Transfer",
+        "description": "Transfers through bank branches",
+        "details": {
+          "recipient": "Recipient: Salymbekov University LLC",
+          "inn": "TIN: 12345678901234",
+          "account": "Account: 1234567890123456789",
+          "bank": "Bank: KICB"
+        }
+      },
+      "online": {
+        "title": "Online Payment",
+        "description": "Payment via internet banking",
+        "details": {
+          "elsom": "Elsom",
+          "balance": "Balance.kg",
+          "omoney": "O! Money",
+          "megapay": "MegaPay"
+        }
+      },
+      "cash": {
+        "title": "Cash Payment",
+        "description": "Payment at university cash desk",
+        "details": {
+          "address": "Address: Bishkek, Akhunbaeva St. 92",
+          "hours": "Working hours: 09:00 - 18:00",
+          "weekends": "Weekends: Saturday, Sunday"
+        }
+      }
+    },
+    "programs": {
+      "medicine": "General Medicine",
+      "dentistry": "Dentistry",
+      "pharmacy": "Pharmacy",
+      "nursing": "Nursing"
+    },
+    "discounts": {
+      "excellent": "10% for excellent students",
+      "excellentDentistry": "8% for excellent students",
+      "early": "5% for early payment",
+      "earlyNursing": "3% for early payment"
+    },
+    "tips": {
+      "title": "Useful Tips",
+      "earlyPayment": "Pay tuition in advance and get a discount",
+      "excellentGrades": "Excellent academic performance gives right to discount",
+      "installment": "Installment payment by semesters is available",
+      "discountsNotCombined": "Discounts cannot be combined"
+    },
+    "contact": {
+      "title": "Payment Questions?",
+      "description": "Contact the student affairs department",
+      "phone": "Phone",
+      "email": "Email",
+      "hours": "Working hours"
+    }
+  },
+  "common": {
+    "currency": "KGS"
   }
 }
 

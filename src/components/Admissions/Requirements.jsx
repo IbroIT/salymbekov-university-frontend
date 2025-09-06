@@ -6,49 +6,69 @@ const Requirements = () => {
   const [selectedProgram, setSelectedProgram] = useState('all');
 
   const programs = [
-    { id: 'all', name: 'Все программы' },
-    { id: 'medicine', name: 'Лечебное дело' },
-    { id: 'dentistry', name: 'Стоматология' },
-    { id: 'pharmacy', name: 'Фармация' },
-    { id: 'nursing', name: 'Медсестринское дело' }
+    { id: 'all', name: t('requirements.programs.all') },
+    { id: 'medicine', name: t('requirements.programs.medicine') },
+    { id: 'dentistry', name: t('requirements.programs.dentistry') },
+    { id: 'pharmacy', name: t('requirements.programs.pharmacy') },
+    { id: 'nursing', name: t('requirements.programs.nursing') }
   ];
 
   const requirements = [
     {
-      program: 'Лечебное дело',
+      program: t('requirements.programs.medicine'),
       programId: 'medicine',
       ortScore: '120+',
-      examinations: ['Биология', 'Химия'],
-      documents: ['Аттестат о среднем образовании', 'Медицинская справка', 'Паспорт', 'Фотографии 3x4 (6 шт.)'],
-      duration: '6 лет',
-      language: 'Русский/Кыргызский'
+      examinations: [t('requirements.subjects.biology'), t('requirements.subjects.chemistry')],
+      documents: [
+        t('requirements.documents.highSchoolDiploma'),
+        t('requirements.documents.medicalCertificate'),
+        t('requirements.documents.passport'),
+        t('requirements.documents.photos')
+      ],
+      duration: t('requirements.duration.6years'),
+      language: t('requirements.language.ru_kg')
     },
     {
-      program: 'Стоматология',
+      program: t('requirements.programs.dentistry'),
       programId: 'dentistry',
       ortScore: '110+',
-      examinations: ['Биология', 'Химия'],
-      documents: ['Аттестат о среднем образовании', 'Медицинская справка', 'Паспорт', 'Фотографии 3x4 (6 шт.)'],
-      duration: '5 лет',
-      language: 'Русский/Кыргызский'
+      examinations: [t('requirements.subjects.biology'), t('requirements.subjects.chemistry')],
+      documents: [
+        t('requirements.documents.highSchoolDiploma'),
+        t('requirements.documents.medicalCertificate'),
+        t('requirements.documents.passport'),
+        t('requirements.documents.photos')
+      ],
+      duration: t('requirements.duration.5years'),
+      language: t('requirements.language.ru_kg')
     },
     {
-      program: 'Фармация',
+      program: t('requirements.programs.pharmacy'),
       programId: 'pharmacy',
       ortScore: '100+',
-      examinations: ['Химия', 'Биология'],
-      documents: ['Аттестат о среднем образовании', 'Медицинская справка', 'Паспорт', 'Фотографии 3x4 (6 шт.)'],
-      duration: '5 лет',
-      language: 'Русский/Кыргызский'
+      examinations: [t('requirements.subjects.chemistry'), t('requirements.subjects.biology')],
+      documents: [
+        t('requirements.documents.highSchoolDiploma'),
+        t('requirements.documents.medicalCertificate'),
+        t('requirements.documents.passport'),
+        t('requirements.documents.photos')
+      ],
+      duration: t('requirements.duration.5years'),
+      language: t('requirements.language.ru_kg')
     },
     {
-      program: 'Медсестринское дело',
+      program: t('requirements.programs.nursing'),
       programId: 'nursing',
       ortScore: '90+',
-      examinations: ['Биология'],
-      documents: ['Аттестат о среднем образовании', 'Медицинская справка', 'Паспорт', 'Фотографии 3x4 (6 шт.)'],
-      duration: '4 года',
-      language: 'Русский/Кыргызский'
+      examinations: [t('requirements.subjects.biology')],
+      documents: [
+        t('requirements.documents.highSchoolDiploma'),
+        t('requirements.documents.medicalCertificate'),
+        t('requirements.documents.passport'),
+        t('requirements.documents.photos')
+      ],
+      duration: t('requirements.duration.4years'),
+      language: t('requirements.language.ru_kg')
     }
   ];
 
@@ -63,10 +83,10 @@ const Requirements = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              Требования к поступлению
+              {t('requirements.title')}
             </h1>
             <p className="text-xl opacity-90">
-              Узнайте требования для поступления на различные программы
+              {t('requirements.subtitle')}
             </p>
           </div>
         </div>
@@ -75,7 +95,7 @@ const Requirements = () => {
       <div className="container mx-auto px-4 py-12">
         {/* Program Selector */}
         <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-          <h2 className="text-2xl font-bold mb-4 text-gray-800">Выберите программу</h2>
+          <h2 className="text-2xl font-bold mb-4 text-gray-800">{t('requirements.selectProgram')}</h2>
           <div className="flex flex-wrap gap-3">
             {programs.map(program => (
               <button
@@ -97,7 +117,7 @@ const Requirements = () => {
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
           <div className="px-6 py-4 bg-gray-50 border-b">
             <h3 className="text-xl font-bold text-gray-800">
-              Требования по программам
+              {t('requirements.programRequirements')}
             </h3>
           </div>
           
@@ -105,10 +125,10 @@ const Requirements = () => {
             <table className="w-full">
               <thead className="bg-gray-100">
                 <tr>
-                  <th className="px-6 py-4 text-left font-semibold text-gray-700">Программа</th>
-                  <th className="px-6 py-4 text-left font-semibold text-gray-700">Балл ОРТ</th>
-                  <th className="px-6 py-4 text-left font-semibold text-gray-700">Вступительные</th>
-                  <th className="px-6 py-4 text-left font-semibold text-gray-700">Документы</th>
+                  <th className="px-6 py-4 text-left font-semibold text-gray-700">{t('requirements.table.program')}</th>
+                  <th className="px-6 py-4 text-left font-semibold text-gray-700">{t('requirements.table.ortScore')}</th>
+                  <th className="px-6 py-4 text-left font-semibold text-gray-700">{t('requirements.table.entranceExams')}</th>
+                  <th className="px-6 py-4 text-left font-semibold text-gray-700">{t('requirements.table.documents')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -131,8 +151,12 @@ const Requirements = () => {
                     </td>
                     <td className="px-6 py-4">
                       <div className="space-y-1">
-                        <div className="text-sm text-gray-600">Аттестат, Медсправка</div>
-                        <div className="text-xs text-gray-500">+ стандартный пакет</div>
+                        <div className="text-sm text-gray-600">
+                          {t('requirements.documents.shortList')}
+                        </div>
+                        <div className="text-xs text-gray-500">
+                          + {t('requirements.documents.standardPackage')}
+                        </div>
                       </div>
                     </td>
                   </tr>
@@ -146,58 +170,58 @@ const Requirements = () => {
         <div className="mt-12">
           <div className="bg-white rounded-lg shadow-lg p-8">
             <h3 className="text-2xl font-bold mb-6 text-gray-800">
-              Необходимые документы
+              {t('requirements.requiredDocuments')}
             </h3>
             
             <div className="grid md:grid-cols-2 gap-8">
               <div>
                 <h4 className="text-lg font-semibold mb-4 text-gray-700">
-                  Общие требования для всех программ:
+                  {t('requirements.generalRequirements')}
                 </h4>
                 <ul className="space-y-3">
                   <li className="flex items-start">
                     <span className="text-green-600 mr-2">✓</span>
-                    <span>Аттестат о среднем образовании (оригинал + копия)</span>
+                    <span>{t('requirements.documents.fullList.diploma')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-green-600 mr-2">✓</span>
-                    <span>Паспорт (копия всех страниц)</span>
+                    <span>{t('requirements.documents.fullList.passport')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-green-600 mr-2">✓</span>
-                    <span>Медицинская справка формы 086У</span>
+                    <span>{t('requirements.documents.fullList.medicalCertificate')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-green-600 mr-2">✓</span>
-                    <span>Фотографии 3x4 см (6 штук)</span>
+                    <span>{t('requirements.documents.fullList.photos')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-green-600 mr-2">✓</span>
-                    <span>Сертификат ОРТ</span>
+                    <span>{t('requirements.documents.fullList.ortCertificate')}</span>
                   </li>
                 </ul>
               </div>
               
               <div>
                 <h4 className="text-lg font-semibold mb-4 text-gray-700">
-                  Дополнительные документы:
+                  {t('requirements.additionalDocuments')}
                 </h4>
                 <ul className="space-y-3">
                   <li className="flex items-start">
                     <span className="text-blue-600 mr-2">•</span>
-                    <span>Справка о доходах родителей (для получения скидки)</span>
+                    <span>{t('requirements.documents.additional.parentsIncome')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-blue-600 mr-2">•</span>
-                    <span>Документы о льготах (если имеются)</span>
+                    <span>{t('requirements.documents.additional.benefits')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-blue-600 mr-2">•</span>
-                    <span>Характеристика из школы</span>
+                    <span>{t('requirements.documents.additional.reference')}</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-blue-600 mr-2">•</span>
-                    <span>Портфолио достижений (рекомендуется)</span>
+                    <span>{t('requirements.documents.additional.portfolio')}</span>
                   </li>
                 </ul>
               </div>
@@ -209,25 +233,25 @@ const Requirements = () => {
         <div className="mt-12 grid md:grid-cols-2 gap-8">
           <div className="bg-blue-50 p-6 rounded-lg">
             <h4 className="text-lg font-semibold mb-3 text-blue-800">
-              📋 Важная информация
+              📋 {t('requirements.importantInfo.title')}
             </h4>
             <ul className="space-y-2 text-sm text-blue-700">
-              <li>• Все документы должны быть переведены на государственный язык</li>
-              <li>• Иностранные документы требуют нострификации</li>
-              <li>• Медицинская справка действительна 6 месяцев</li>
+              <li>• {t('requirements.importantInfo.translation')}</li>
+              <li>• {t('requirements.importantInfo.nostrification')}</li>
+              <li>• {t('requirements.importantInfo.medicalValidity')}</li>
             </ul>
           </div>
           
           <div className="bg-green-50 p-6 rounded-lg">
             <h4 className="text-lg font-semibold mb-3 text-green-800">
-              📞 Нужна помощь?
+              📞 {t('requirements.help.title')}
             </h4>
             <p className="text-sm text-green-700 mb-3">
-              Свяжитесь с приемной комиссией для получения консультации
+              {t('requirements.help.description')}
             </p>
             <div className="space-y-1 text-sm text-green-700">
-              <p>Телефон: +996 312 123 456</p>
-              <p>Email: admission@salymbekov.edu.kg</p>
+              <p>{t('requirements.help.phone')}: +996 312 123 456</p>
+              <p>{t('requirements.help.email')}: admission@salymbekov.edu.kg</p>
             </div>
           </div>
         </div>
