@@ -1,15 +1,50 @@
 import React, { useState, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const LifeOverview = () => {
+  const { t } = useTranslation();
   const [activeVideo, setActiveVideo] = useState(null);
   const videoRefs = [useRef(null), useRef(null), useRef(null)];
 
   // Данные для демонстрации (в реальном приложении будут приходить из пропсов или API)
   const photoUrls = Array(12).fill(null).map((_, i) => `https://picsum.photos/300/200?random=${i+1}`);
   const videoData = [
-    { id: 1, title: "Студенческий фестиваль", thumbnail: "https://picsum.photos/400/250?random=13", url: "#" },
-    { id: 2, title: "Научная конференция", thumbnail: "https://picsum.photos/400/250?random=14", url: "#" },
-    { id: 3, title: "Спортивные достижения", thumbnail: "https://picsum.photos/400/250?random=15", url: "#" }
+    { 
+      id: 1, 
+      titleKey: 'life.videos.festival.title',
+      thumbnail: "https://picsum.photos/400/250?random=13", 
+      url: "#",
+      durationKey: 'life.videos.duration'
+    },
+    { 
+      id: 2, 
+      titleKey: 'life.videos.conference.title',
+      thumbnail: "https://picsum.photos/400/250?random=14", 
+      url: "#",
+      durationKey: 'life.videos.duration'
+    },
+    { 
+      id: 3, 
+      titleKey: 'life.videos.sports.title',
+      thumbnail: "https://picsum.photos/400/250?random=15", 
+      url: "#",
+      durationKey: 'life.videos.duration'
+    }
+  ];
+
+  const stats = [
+    { 
+      value: '15+', 
+      labelKey: 'life.stats.clubs.label'
+    },
+    { 
+      value: '15', 
+      labelKey: 'life.stats.events.label'
+    },
+    { 
+      value: '1000+', 
+      labelKey: 'life.stats.photos.label'
+    }
   ];
 
   const handleVideoPlay = (index) => {
@@ -30,11 +65,15 @@ const LifeOverview = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-4xl font-bold text-center text-blue-800 mb-12">Студенческая жизнь</h2>
+        <h2 className="text-4xl font-bold text-center text-blue-800 mb-12">
+          {t('life.title')}
+        </h2>
         
         {/* Фото-коллаж */}
         <div className="mb-16">
-          <h3 className="text-2xl font-semibold text-blue-700 mb-6 text-center">Фото-коллаж</h3>
+          <h3 className="text-2xl font-semibold text-blue-700 mb-6 text-center">
+            {t('life.photoCollage.title')}
+          </h3>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {photoUrls.map((url, index) => (
               <div 
@@ -43,7 +82,7 @@ const LifeOverview = () => {
               >
                 <img 
                   src={url} 
-                  alt={`Студенческая жизнь ${index + 1}`} 
+                  alt={t('life.photoCollage.alt', { number: index + 1 })} 
                   className="w-full h-48 object-cover"
                 />
                 <div className="absolute inset-0 bg-blue-900 bg-opacity-0 hover:bg-opacity-20 transition-all duration-300 cursor-pointer"></div>
@@ -54,7 +93,9 @@ const LifeOverview = () => {
         
         {/* Видео-репортажи */}
         <div className="mb-16">
-          <h3 className="text-2xl font-semibold text-blue-700 mb-6 text-center">Видео-репортажи</h3>
+          <h3 className="text-2xl font-semibold text-blue-700 mb-6 text-center">
+            {t('life.videos.title')}
+          </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {videoData.map((video, index) => (
               <div 
@@ -64,7 +105,7 @@ const LifeOverview = () => {
                 <div className="relative">
                   <img 
                     src={video.thumbnail} 
-                    alt={video.title} 
+                    alt={t(video.titleKey)} 
                     className="w-full h-48 object-cover"
                   />
                   <div 
@@ -83,12 +124,16 @@ const LifeOverview = () => {
                     controls={activeVideo === index}
                   >
                     <source src={video.url} type="video/mp4" />
-                    Ваш браузер не поддерживает видео тег.
+                    {t('life.videos.browserSupport')}
                   </video>
                 </div>
                 <div className="p-4">
-                  <h4 className="text-lg font-medium text-blue-900">{video.title}</h4>
-                  <p className="text-blue-600">до 2 минут</p>
+                  <h4 className="text-lg font-medium text-blue-900">
+                    {t(video.titleKey)}
+                  </h4>
+                  <p className="text-blue-600">
+                    {t(video.durationKey)}
+                  </p>
                 </div>
               </div>
             ))}
@@ -97,20 +142,16 @@ const LifeOverview = () => {
         
         {/* Цифры и статистика */}
         <div className="bg-blue-800 text-white rounded-2xl p-8 shadow-xl">
-          <h3 className="text-2xl font-semibold mb-8 text-center">В цифрах</h3>
+          <h3 className="text-2xl font-semibold mb-8 text-center">
+            {t('life.stats.title')}
+          </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="text-center p-6 bg-blue-700 rounded-xl transition-transform duration-300 hover:scale-105">
-              <div className="text-5xl font-bold mb-2">15+</div>
-              <div className="text-xl">студенческих клубов</div>
-            </div>
-            <div className="text-center p-6 bg-blue-700 rounded-xl transition-transform duration-300 hover:scale-105">
-              <div className="text-5xl font-bold mb-2">15</div>
-              <div className="text-xl">мероприятий в месяц</div>
-            </div>
-            <div className="text-center p-6 bg-blue-700 rounded-xl transition-transform duration-300 hover:scale-105">
-              <div className="text-5xl font-bold mb-2">1000+</div>
-              <div className="text-xl">фото в галерее</div>
-            </div>
+            {stats.map((stat, index) => (
+              <div key={index} className="text-center p-6 bg-blue-700 rounded-xl transition-transform duration-300 hover:scale-105">
+                <div className="text-5xl font-bold mb-2">{stat.value}</div>
+                <div className="text-xl">{t(stat.labelKey)}</div>
+              </div>
+            ))}
           </div>
         </div>
       </div>

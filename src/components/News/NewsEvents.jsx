@@ -26,7 +26,7 @@ const NewsEvents = () => {
         }
       });
       if (!response.ok) {
-        throw new Error(t('news.events.loadError', 'Ошибка при загрузке событий'));
+        throw new Error(t('newsanon.loadError'));
       }
       const data = await response.json();
       setEvents(data.results || data);
@@ -36,25 +36,25 @@ const NewsEvents = () => {
       setEvents([
         {
           id: 1,
-          title: "Международная конференция по кардиологии",
+          title: t('newsanon.fallbackEvent1.title'),
           date: "2025-01-25",
           time: "09:00",
-          location: "Главный корпус, Актовый зал",
+          location: t('newsanon.fallbackEvent1.location'),
           category: "conference",
           participants: "200+",
-          description: "Конференция с участием ведущих кардиологов региона. Будут рассмотрены современные методы диагностики и лечения.",
+          description: t('newsanon.fallbackEvent1.description'),
           image: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=400&h=250&fit=crop",
           status: "upcoming"
         },
         {
           id: 2,
-          title: "День открытых дверей",
+          title: t('newsanon.fallbackEvent2.title'),
           date: "2025-02-15",
           time: "10:00",
-          location: "Все корпуса университета",
+          location: t('newsanon.fallbackEvent2.location'),
           category: "open-day",
           participants: "500+",
-          description: "Приглашаем абитуриентов и их родителей познакомиться с университетом, факультетами и программами обучения.",
+          description: t('newsanon.fallbackEvent2.description'),
           image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&h=250&fit=crop",
           status: "upcoming"
         }
@@ -69,7 +69,7 @@ const NewsEvents = () => {
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('ru-RU', {
+    return date.toLocaleDateString(i18n.language === 'kg' ? 'ky-KG' : i18n.language, {
       day: 'numeric',
       month: 'long',
       year: 'numeric'
@@ -77,14 +77,7 @@ const NewsEvents = () => {
   };
 
   const getCategoryName = (category) => {
-    switch(category) {
-      case 'conference': return 'Конференция';
-      case 'open-day': return 'День открытых дверей';
-      case 'competition': return 'Конкурс';
-      case 'ceremony': return 'Церемония';
-      case 'workshop': return 'Мастер-класс';
-      default: return 'Событие';
-    }
+    return t(`newsanon.categories.${category}`, { defaultValue: t('newsanon.categories.default') });
   };
 
   const getCategoryColor = (category) => {
@@ -105,10 +98,10 @@ const NewsEvents = () => {
         <div className="container mx-auto px-4">
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              События университета
+              {t('newsanon.title')}
             </h1>
             <p className="text-xl text-green-100 max-w-2xl mx-auto">
-              Конференции, семинары, дни открытых дверей и другие мероприятия
+              {t('newsanon.subtitle')}
             </p>
           </div>
         </div>
@@ -125,7 +118,7 @@ const NewsEvents = () => {
                 : 'bg-white text-gray-600 hover:bg-green-50'
             }`}
           >
-            Предстоящие
+            {t('newsanon.filters.upcoming')}
           </button>
           <button
             onClick={() => setFilter('past')}
@@ -135,7 +128,7 @@ const NewsEvents = () => {
                 : 'bg-white text-gray-600 hover:bg-green-50'
             }`}
           >
-            Прошедшие
+            {t('newsanon.filters.past')}
           </button>
           <button
             onClick={() => setFilter('all')}
@@ -145,7 +138,7 @@ const NewsEvents = () => {
                 : 'bg-white text-gray-600 hover:bg-green-50'
             }`}
           >
-            Все события
+            {t('newsanon.filters.all')}
           </button>
         </div>
 
@@ -167,7 +160,7 @@ const NewsEvents = () => {
                 {event.status === 'upcoming' && (
                   <div className="absolute top-4 right-4">
                     <span className="bg-red-500 text-white px-2 py-1 rounded text-xs font-semibold">
-                      Скоро
+                      {t('newsanon.soon')}
                     </span>
                   </div>
                 )}
@@ -193,7 +186,7 @@ const NewsEvents = () => {
                   </div>
                   <div className="flex items-center text-sm text-gray-600">
                     <Users className="w-4 h-4 mr-2" />
-                    {event.participants} участников
+                    {t('newsanon.participantsCount', { count: event.participants })}
                   </div>
                 </div>
                 
@@ -206,11 +199,11 @@ const NewsEvents = () => {
                     to={`/news/detail/${event.id}`}
                     className="text-green-600 hover:text-green-800 font-semibold text-sm transition-colors"
                   >
-                    Подробнее →
+                    {t('newsanon.readMore')} →
                   </Link>
                   {event.status === 'upcoming' && (
                     <button className="bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-green-700 transition-colors">
-                      Участвовать
+                      {t('newsanon.participate')}
                     </button>
                   )}
                 </div>
@@ -222,7 +215,7 @@ const NewsEvents = () => {
         {filteredEvents.length === 0 && (
           <div className="text-center py-12">
             <div className="text-gray-500 text-lg">
-              В данной категории событий пока нет
+              {t('newsanon.noEvents')}
             </div>
           </div>
         )}
@@ -231,17 +224,17 @@ const NewsEvents = () => {
         <div className="mt-16 bg-white rounded-xl shadow-sm p-8">
           <div className="text-center">
             <h2 className="text-2xl font-bold text-gray-800 mb-4">
-              Не пропустите важные события
+              {t('newsanon.calendar.title')}
             </h2>
             <p className="text-gray-600 mb-6">
-              Подпишитесь на календарь событий университета
+              {t('newsanon.calendar.subtitle')}
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <button className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
-                Добавить в Google Calendar
+                {t('newsanon.calendar.googleButton')}
               </button>
               <button className="bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-700 transition-colors">
-                Скачать .ics файл
+                {t('newsanon.calendar.downloadButton')}
               </button>
             </div>
           </div>

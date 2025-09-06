@@ -1,24 +1,26 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const InternationalStudents = () => {
+  const { t } = useTranslation();
   const [activeStep, setActiveStep] = useState(0);
   
   const steps = [
     {
-      title: "Получение визы",
-      content: "Список необходимых документов: загранпаспорт, приглашение от вуза, финансовые гарантии, медицинская справка, фотографии, заполненная анкета."
+      title: t('internationalStudents.steps.visa.title'),
+      content: t('internationalStudents.steps.visa.content')
     },
     {
-      title: "Проживание",
-      content: "Предоставляем комфортабельные общежития с различными вариантами размещения. Стоимость: от 1500 до 3500 руб./мес в зависимости от условий."
+      title: t('internationalStudents.steps.accommodation.title'),
+      content: t('internationalStudents.steps.accommodation.content')
     },
     {
-      title: "Адаптация",
-      content: "Каждому студенту назначается куратор. Регулярно проводятся экскурсии, межкультурные мероприятия и языковые клубы."
+      title: t('internationalStudents.steps.adaptation.title'),
+      content: t('internationalStudents.steps.adaptation.content')
     },
     {
-      title: "Медицинская страховка",
-      content: "Обязательная медицинская страховка на весь период обучения. Стоимость: около 5000 руб./год. Покрывает основные медицинские услуги."
+      title: t('internationalStudents.steps.insurance.title'),
+      content: t('internationalStudents.steps.insurance.content')
     }
   ];
 
@@ -29,20 +31,24 @@ const InternationalStudents = () => {
   ];
 
   const contacts = {
-    email: "international@university.ru",
-    phone: "+7 (XXX) XXX-XX-XX",
-    address: "ул. Университетская, д. 1, каб. 105",
-    hours: "Пн-Пт: 9:00-18:00"
+    email: t('internationalStudents.contacts.email'),
+    phone: t('internationalStudents.contacts.phone'),
+    address: t('internationalStudents.contacts.address'),
+    hours: t('internationalStudents.contacts.hours')
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-5xl mx-auto">
-        <h1 className="text-4xl font-bold text-blue-800 text-center mb-8">Для иностранных студентов</h1>
+        <h1 className="text-4xl font-bold text-blue-800 text-center mb-8">
+          {t('internationalStudents.title')}
+        </h1>
         
         {/* Пошаговый гайд */}
         <section className="mb-16">
-          <h2 className="text-2xl font-semibold text-blue-700 mb-6">Пошаговый гайд</h2>
+          <h2 className="text-2xl font-semibold text-blue-700 mb-6">
+            {t('internationalStudents.guideTitle')}
+          </h2>
           
           {/* Навигация по шагам */}
           <div className="flex flex-wrap justify-center mb-8">
@@ -70,20 +76,24 @@ const InternationalStudents = () => {
           {/* Дополнительный контент для шага "Проживание" */}
           {activeStep === 1 && (
             <div className="mt-8">
-              <h4 className="text-lg font-semibold text-blue-700 mb-4">Фотографии общежитий</h4>
+              <h4 className="text-lg font-semibold text-blue-700 mb-4">
+                {t('internationalStudents.dormPhotos')}
+              </h4>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {dormImages.map((img, index) => (
                   <div key={index} className="overflow-hidden rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
-                    <img src={img} alt={`Общежитие ${index + 1}`} className="w-full h-48 object-cover" />
+                    <img src={img} alt={t('internationalStudents.dormAlt', { number: index + 1 })} className="w-full h-48 object-cover" />
                   </div>
                 ))}
               </div>
               <div className="mt-6 bg-blue-100 p-4 rounded-lg">
-                <h4 className="text-lg font-semibold text-blue-800 mb-2">Стоимость проживания</h4>
+                <h4 className="text-lg font-semibold text-blue-800 mb-2">
+                  {t('internationalStudents.accommodationCost')}
+                </h4>
                 <ul className="list-disc list-inside text-blue-900">
-                  <li>Стандартная комната (2-3 человека): 1500 руб./мес</li>
-                  <li>Улучшенная комната (2 человека): 2500 руб./мес</li>
-                  <li>Комната повышенной комфортности (1 человек): 3500 руб./мес</li>
+                  <li>{t('internationalStudents.roomTypes.standard')}</li>
+                  <li>{t('internationalStudents.roomTypes.improved')}</li>
+                  <li>{t('internationalStudents.roomTypes.comfort')}</li>
                 </ul>
               </div>
             </div>
@@ -92,11 +102,15 @@ const InternationalStudents = () => {
         
         {/* Контакты международного отдела */}
         <section className="bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:shadow-lg">
-          <h2 className="text-2xl font-semibold text-blue-700 mb-6">Контакты международного отдела</h2>
+          <h2 className="text-2xl font-semibold text-blue-700 mb-6">
+            {t('internationalStudents.contactsTitle')}
+          </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <h3 className="text-lg font-medium text-blue-800 mb-3">Контактная информация</h3>
+              <h3 className="text-lg font-medium text-blue-800 mb-3">
+                {t('internationalStudents.contactInfo')}
+              </h3>
               <ul className="space-y-2">
                 <li className="flex items-start">
                   <svg className="w-5 h-5 text-blue-600 mt-1 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -127,25 +141,27 @@ const InternationalStudents = () => {
             </div>
             
             <div>
-              <h3 className="text-lg font-medium text-blue-800 mb-3">Форма обратной связи</h3>
+              <h3 className="text-lg font-medium text-blue-800 mb-3">
+                {t('internationalStudents.feedbackForm')}
+              </h3>
               <form className="space-y-4">
                 <div>
                   <input 
                     type="text" 
-                    placeholder="Ваше имя" 
+                    placeholder={t('internationalStudents.form.name')}
                     className="w-full px-4 py-2 border border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
                 <div>
                   <input 
                     type="email" 
-                    placeholder="Ваш email" 
+                    placeholder={t('internationalStudents.form.email')}
                     className="w-full px-4 py-2 border border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
                 <div>
                   <textarea 
-                    placeholder="Ваше сообщение" 
+                    placeholder={t('internationalStudents.form.message')}
                     rows="4"
                     className="w-full px-4 py-2 border border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   ></textarea>
@@ -154,7 +170,7 @@ const InternationalStudents = () => {
                   type="submit" 
                   className="px-6 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors duration-300"
                 >
-                  Отправить
+                  {t('internationalStudents.form.submit')}
                 </button>
               </form>
             </div>
