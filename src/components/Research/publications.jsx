@@ -1,71 +1,18 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { 
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   LineChart, Line, PieChart, Pie, Cell 
 } from 'recharts';
-
-// Моковые данные
-const publicationsData = [
-  {
-    id: 1,
-    title: "Новые подходы в лечении сердечно-сосудистых заболеваний",
-    authors: ["Алиев А.К.", "Смагулова Г.М.", "Жанузаков Т.Р."],
-    journal: "Cardiology Research",
-    year: 2024,
-    citationIndex: 45,
-    doi: "10.1234/cardio.2024.001",
-    abstract: "Исследование современных методов лечения...",
-    center: "Центр молекулярной медицины"
-  },
-  {
-    id: 2,
-    title: "Нейропластичность и когнитивные функции",
-    authors: ["Смагулова Г.М.", "Алиев А.К."],
-    journal: "Neuroscience Letters",
-    year: 2023,
-    citationIndex: 32,
-    doi: "10.1234/neuro.2023.002",
-    abstract: "Изучение механизмов нейропластичности...",
-    center: "Центр нейронаук"
-  },
-  {
-    id: 3,
-    title: "Биоматериалы нового поколения",
-    authors: ["Жанузаков Т.Р.", "Смагулова Г.М."],
-    journal: "Biomaterials Science",
-    year: 2023,
-    citationIndex: 28,
-    doi: "10.1234/bio.2023.003",
-    abstract: "Разработка инновационных биоматериалов...",
-    center: "Центр биомедицинских технологий"
-  },
-  {
-    id: 4,
-    title: "Генная терапия наследственных заболеваний",
-    authors: ["Алиев А.К.", "Жанузаков Т.Р."],
-    journal: "Gene Therapy",
-    year: 2022,
-    citationIndex: 67,
-    doi: "10.1234/gene.2022.004",
-    abstract: "Перспективы генной терапии...",
-    center: "Центр молекулярной медицины"
-  },
-  {
-    id: 5,
-    title: "ИИ в диагностике неврологических расстройств",
-    authors: ["Смагулова Г.М."],
-    journal: "AI in Medicine",
-    year: 2022,
-    citationIndex: 41,
-    doi: "10.1234/ai.2022.005",
-    abstract: "Применение искусственного интеллекта...",
-    center: "Центр нейронаук"
-  }
-];
+import { publicationsApi, researchCentersApi } from './api';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8'];
 
 const Publications = () => {
+  const [publicationsData, setPublicationsData] = useState([]);
+  const [researchCenters, setResearchCenters] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   const [filters, setFilters] = useState({
     yearRange: [2018, 2024],
     author: '',
@@ -80,13 +27,66 @@ const Publications = () => {
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [expandedPublication, setExpandedPublication] = useState(null);
 
+  // Загрузка данных
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const [publicationsResponse, centersResponse] = await Promise.all([
+          publicationsApi.getPublications(),
+          researchCentersApi.getResearchCenters()
+        ]);
+        
+        setPublicationsData(publicationsResponse.data.results || publicationsResponse.data);
+        setResearchCenters(centersResponse.data.results || centersResponse.data);
+      } catch (err) {
+        setError('Ошибка загрузки данных');
+        console.error('Error fetching data:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // Загрузка данных с фильтрами
+  useEffect(() => {
+    const fetchFilteredData = async () => {
+      try {
+        setLoading(true);
+        const params = {
+          year__gte: filters.yearRange[0],
+          year__lte: filters.yearRange[1],
+          citation_index__gte: filters.minCitations,
+          ...(filters.author && { author: filters.author }),
+          ...(filters.journal && { journal: filters.journal }),
+          ...(filters.center && { center: filters.center }),
+          ordering: sortConfig.direction === 'asc' ? sortConfig.key : `-${sortConfig.key}`
+        };
+
+        const response = await publicationsApi.getPublications(params);
+        setPublicationsData(response.data.results || response.data);
+      } catch (err) {
+        setError('Ошибка загрузки данных');
+        console.error('Error fetching filtered data:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFilteredData();
+  }, [filters, sortConfig]);
+
   // Уникальные значения для фильтров
   const uniqueValues = useMemo(() => ({
-    authors: [...new Set(publicationsData.flatMap(pub => pub.authors))],
+    authors: [...new Set(publicationsData.flatMap(pub => 
+      pub.authors.map(author => `${author.last_name} ${author.first_name}`)
+    ))],
     journals: [...new Set(publicationsData.map(pub => pub.journal))],
-    centers: [...new Set(publicationsData.map(pub => pub.center))],
+    centers: researchCenters.map(center => center.name),
     years: [...new Set(publicationsData.map(pub => pub.year))].sort()
-  }), []);
+  }), [publicationsData, researchCenters]);
 
   // Статистика для графиков
   const chartData = useMemo(() => {
@@ -99,11 +99,14 @@ const Publications = () => {
       year: parseInt(year),
       publications: count
     })).sort((a, b) => a.year - b.year);
-  }, []);
+  }, [publicationsData]);
 
   const centerData = useMemo(() => {
     const centerCounts = publicationsData.reduce((acc, pub) => {
-      acc[pub.center] = (acc[pub.center] || 0) + 1;
+      const centerName = pub.center_name || pub.center?.name;
+      if (centerName) {
+        acc[centerName] = (acc[centerName] || 0) + 1;
+      }
       return acc;
     }, {});
 
@@ -111,33 +114,7 @@ const Publications = () => {
       center,
       count
     }));
-  }, []);
-
-  // Фильтрация и сортировка
-  const filteredPublications = useMemo(() => {
-    let filtered = publicationsData.filter(pub => 
-      pub.year >= filters.yearRange[0] &&
-      pub.year <= filters.yearRange[1] &&
-      pub.citationIndex >= filters.minCitations &&
-      (filters.author === '' || pub.authors.includes(filters.author)) &&
-      (filters.journal === '' || pub.journal === filters.journal) &&
-      (filters.center === '' || pub.center === filters.center)
-    );
-
-    if (sortConfig.key) {
-      filtered.sort((a, b) => {
-        if (a[sortConfig.key] < b[sortConfig.key]) {
-          return sortConfig.direction === 'asc' ? -1 : 1;
-        }
-        if (a[sortConfig.key] > b[sortConfig.key]) {
-          return sortConfig.direction === 'asc' ? 1 : -1;
-        }
-        return 0;
-      });
-    }
-
-    return filtered;
-  }, [filters, sortConfig]);
+  }, [publicationsData]);
 
   const handleSort = (key) => {
     setSortConfig(prev => ({
@@ -146,28 +123,36 @@ const Publications = () => {
     }));
   };
 
-  const handleExport = (format) => {
-    const data = filteredPublications.map(pub => ({
-      Title: pub.title,
-      Authors: pub.authors.join(', '),
-      Journal: pub.journal,
-      Year: pub.year,
-      Citations: pub.citationIndex,
-      DOI: pub.doi
-    }));
+  const handleExport = async (format) => {
+    try {
+      const params = {
+        year__gte: filters.yearRange[0],
+        year__lte: filters.yearRange[1],
+        citation_index__gte: filters.minCitations,
+        ...(filters.author && { author: filters.author }),
+        ...(filters.journal && { journal: filters.journal }),
+        ...(filters.center && { center: filters.center })
+      };
 
-    if (format === 'csv') {
-      const csvContent = [
-        Object.keys(data[0]).join(','),
-        ...data.map(row => Object.values(row).join(','))
-      ].join('\n');
+      const response = await publicationsApi.getPublications(params);
+      const data = response.data.results || response.data;
 
-      const blob = new Blob([csvContent], { type: 'text/csv' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = 'publications.csv';
-      link.click();
+      if (format === 'csv') {
+        const csvContent = [
+          'Title,Authors,Journal,Year,Citations,DOI,Center',
+          ...data.map(pub => `"${pub.title}","${pub.authors.map(a => `${a.last_name} ${a.first_name}`).join(', ')}","${pub.journal}",${pub.year},${pub.citation_index},"${pub.doi}","${pub.center_name || pub.center?.name}"`)
+        ].join('\n');
+
+        const blob = new Blob([csvContent], { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'publications.csv';
+        link.click();
+      }
+    } catch (err) {
+      console.error('Export error:', err);
+      alert('Ошибка при экспорте данных');
     }
   };
 
@@ -207,7 +192,7 @@ const Publications = () => {
       </h3>
 
       <div className="text-xs text-gray-600 mb-2">
-        <strong>Авторы:</strong> {pub.authors.join(', ')}
+        <strong>Авторы:</strong> {pub.authors.map(a => `${a.last_name} ${a.first_name}`).join(', ')}
       </div>
 
       <div className="text-xs text-gray-600 mb-2">
@@ -217,14 +202,14 @@ const Publications = () => {
       <div className="flex justify-between items-center">
         <span className="text-xs text-gray-600">{pub.year}</span>
         <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-full">
-          {pub.citationIndex} цитат
+          {pub.citation_index} цитат
         </span>
       </div>
 
       {expandedPublication === pub.id && (
         <div className="mt-3 pt-3 border-t">
           <div className="text-xs text-gray-600 mb-2">
-            <strong>Центр:</strong> {pub.center}
+            <strong>Центр:</strong> {pub.center_name || pub.center?.name}
           </div>
           <div className="text-xs text-gray-600 mb-2">
             <strong>DOI:</strong> {pub.doi}
@@ -234,6 +219,27 @@ const Publications = () => {
       )}
     </div>
   );
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Загрузка данных...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 flex items-center justify-center">
+        <div className="text-center text-red-600">
+          <p>{error}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 py-4 md:py-8 px-3 md:px-4">

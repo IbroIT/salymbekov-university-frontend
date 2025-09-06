@@ -1,105 +1,73 @@
 import React, { useState } from 'react';
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn, FaTelegramPlane } from 'react-icons/fa';
+import { useTranslation } from 'react-i18next';
 
 const Footer = () => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   
   const handleSubscribe = (e) => {
     e.preventDefault();
-    alert(`Спасибо за подписку на email: ${email}`);
+    alert(t('footer.subscriptionAlert', { email }));
     setEmail('');
   };
 
   return (
     <footer className="bg-blue-800 text-white pt-12 pb-6">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           
           {/* Колонка 1: О вузе */}
           <div className="lg:col-span-1">
-            <h3 className="text-xl font-bold mb-4">О нашем вузе</h3>
+            <h3 className="text-xl font-bold mb-4">{t('footer.aboutTitle')}</h3>
             <p className="text-blue-100 text-sm leading-relaxed">
-              Мы являемся ведущим образовательным учреждением, стремящимся к excellence в обучении, 
-              исследованиях и инновациях. Наша миссия - подготовить будущих лидеров к вызовам современного мира.
+              {t('footer.aboutDescription')}
             </p>
           </div>
           
-          {/* Колонка 2: Программы */}
+          {/* Колонка 2: Контакты */}
           <div className="lg:col-span-1">
-            <h3 className="text-xl font-bold mb-4">Образовательные программы</h3>
-            <ul className="space-y-2">
-              {['Бакалавриат', 'Магистратура', 'Аспирантура', 'MBA', 'Курсы повышения квалификации'].map((program) => (
-                <li key={program}>
-                  <a href="#" className="text-blue-100 hover:text-white transition-colors text-sm">
-                    {program}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-          
-          {/* Колонка 3: Быстрые ссылки */}
-          <div className="lg:col-span-1">
-            <h3 className="text-xl font-bold mb-4">Быстрые ссылки</h3>
-            <ul className="space-y-2">
-              {[
-                { name: 'Расписание', url: '#' },
-                { name: 'Библиотека', url: '#' },
-                { name: 'Личный кабинет', url: '#' },
-                { name: 'ЭИОС', url: '#' },
-                { name: 'Поддержка', url: '#' }
-              ].map((link) => (
-                <li key={link.name}>
-                  <a href={link.url} className="text-blue-100 hover:text-white transition-colors text-sm">
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-          
-          {/* Колонка 4: Контакты */}
-          <div className="lg:col-span-1">
-            <h3 className="text-xl font-bold mb-4">Контакты</h3>
+            <h3 className="text-xl font-bold mb-4">{t('footer.contactsTitle')}</h3>
             <address className="text-blue-100 not-italic text-sm">
-              <p className="mb-2">г. Москва, ул. Образования, д. 1</p>
+              <p className="mb-2">{t('footer.address')}</p>
               <p className="mb-2">
-                Тел: <a href="tel:+74951234567" className="hover:text-white">+7 (495) 123-45-67</a>
+                {t('footer.phone')}: <a href="tel:+996312123456" className="hover:text-white">+996 (312) 123-456</a>
               </p>
               <p className="mb-2">
-                Email: <a href="mailto:info@university.ru" className="hover:text-white">info@university.ru</a>
+                Email: <a href="mailto:info@salymbekov-university.kg" className="hover:text-white">info@salymbekov-university.kg</a>
               </p>
             </address>
           </div>
           
-          {/* Колонка 5: Соцсети и подписка */}
+          {/* Колонка 3: Соцсети и подписка */}
           <div className="lg:col-span-1">
-            <h3 className="text-xl font-bold mb-4">Мы в соцсетях</h3>
+            <h3 className="text-xl font-bold mb-4">{t('footer.socialTitle')}</h3>
             <div className="flex space-x-3 mb-6">
               {[
-                { icon: <FaFacebookF />, url: '#' },
-                { icon: <FaTwitter />, url: '#' },
-                { icon: <FaInstagram />, url: '#' },
-                { icon: <FaLinkedinIn />, url: '#' },
-                { icon: <FaTelegramPlane />, url: '#' }
+                { icon: <FaFacebookF />, url: '#', name: 'Facebook' },
+                { icon: <FaTwitter />, url: '#', name: 'Twitter' },
+                { icon: <FaInstagram />, url: '#', name: 'Instagram' },
+                { icon: <FaLinkedinIn />, url: '#', name: 'LinkedIn' },
+                { icon: <FaTelegramPlane />, url: '#', name: 'Telegram' }
               ].map((social, index) => (
                 <a
                   key={index}
                   href={social.url}
                   className="bg-blue-700 hover:bg-blue-600 transition-colors h-10 w-10 rounded-full flex items-center justify-center"
+                  aria-label={social.name}
                 >
                   {social.icon}
                 </a>
               ))}
             </div>
             
-            <h3 className="text-xl font-bold mb-4">Подписка на рассылку</h3>
+            <h3 className="text-xl font-bold mb-4">{t('footer.subscriptionTitle')}</h3>
             <form onSubmit={handleSubscribe} className="flex flex-col space-y-2">
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Ваш email"
+                placeholder={t('footer.emailPlaceholder')}
                 required
                 className="bg-blue-700 border border-blue-600 rounded px-3 py-2 text-white placeholder-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
@@ -107,7 +75,7 @@ const Footer = () => {
                 type="submit"
                 className="bg-white text-blue-800 font-semibold py-2 px-4 rounded hover:bg-blue-100 transition-colors"
               >
-                Подписаться
+                {t('footer.subscribeButton')}
               </button>
             </form>
           </div>
@@ -115,7 +83,7 @@ const Footer = () => {
         
         {/* Нижняя часть футера */}
         <div className="border-t border-blue-700 mt-8 pt-6 text-center text-sm text-blue-200">
-          <p>© {new Date().getFullYear()} Название Университета. Все права защищены.</p>
+          <p>© {new Date().getFullYear()} {t('footer.copyright')}</p>
         </div>
       </div>
     </footer>

@@ -1,21 +1,19 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const ProgramCards = () => {
+  const { t, i18n } = useTranslation();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(null);
   
-  // Данные программ
+  // Данные программ с использованием переводов
   const programs = [
     {
       id: 1,
       icon: '💉',
-      title: {
-        ru: 'Лечебное дело',
-        en: 'General Medicine',
-        kz: 'Емдеу ісі'
-      },
-      level: 'Бакалавриат',
-      duration: '4 года',
+      titleKey: 'programs.generalMedicine.title',
+      levelKey: 'programs.levels.bachelor',
+      durationKey: 'programs.durations.fourYears',
       link: '#',
       color: 'from-blue-500 to-cyan-500',
       bgColor: 'bg-gradient-to-br from-blue-50 to-cyan-50'
@@ -23,13 +21,9 @@ const ProgramCards = () => {
     {
       id: 2,
       icon: '🦷',
-      title: {
-        ru: 'Стоматология',
-        en: 'Dentistry',
-        kz: 'Стоматология'
-      },
-      level: 'Бакалавриат',
-      duration: '5 лет',
+      titleKey: 'programs.dentistry.title',
+      levelKey: 'programs.levels.bachelor',
+      durationKey: 'programs.durations.fiveYears',
       link: '#',
       color: 'from-teal-500 to-emerald-500',
       bgColor: 'bg-gradient-to-br from-teal-50 to-emerald-50'
@@ -37,13 +31,9 @@ const ProgramCards = () => {
     {
       id: 3,
       icon: '💊',
-      title: {
-        ru: 'Фармация',
-        en: 'Pharmacy',
-        kz: 'Фармация'
-      },
-      level: 'Бакалавриат',
-      duration: '4 года',
+      titleKey: 'programs.pharmacy.title',
+      levelKey: 'programs.levels.bachelor',
+      durationKey: 'programs.durations.fourYears',
       link: '#',
       color: 'from-indigo-500 to-purple-500',
       bgColor: 'bg-gradient-to-br from-indigo-50 to-purple-50'
@@ -51,13 +41,9 @@ const ProgramCards = () => {
     {
       id: 4,
       icon: '👁️',
-      title: {
-        ru: 'Медицинская оптика',
-        en: 'Medical Optics',
-        kz: 'Медициналық оптика'
-      },
-      level: 'Магистратура',
-      duration: '2 года',
+      titleKey: 'programs.medicalOptics.title',
+      levelKey: 'programs.levels.master',
+      durationKey: 'programs.durations.twoYears',
       link: '#',
       color: 'from-violet-500 to-fuchsia-500',
       bgColor: 'bg-gradient-to-br from-violet-50 to-fuchsia-50'
@@ -100,11 +86,11 @@ const ProgramCards = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-14">
           <h2 className="text-4xl md:text-5xl font-bold text-blue-900 mb-4">
-            Ключевые программы
+            {t('programs.title')}
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 mx-auto"></div>
           <p className="text-blue-700 mt-4 max-w-2xl mx-auto">
-            Выберите программу обучения, которая соответствует вашим профессиональным целям
+            {t('programs.subtitle')}
           </p>
         </div>
         
@@ -127,23 +113,19 @@ const ProgramCards = () => {
                 </div>
                 
                 <h3 className="text-2xl font-bold text-gray-800 mb-3 relative">
-                  {program.title.ru}
+                  {t(program.titleKey)}
                   <span className={`absolute -bottom-2 left-0 h-1 w-12 ${isHovered === program.id ? 'w-20' : ''} bg-gradient-to-r ${program.color} transition-all duration-500`}></span>
                 </h3>
                 
-                <p className="text-sm text-gray-600 mb-4">
-                  {program.title.en} / {program.title.kz}
-                </p>
-                
                 <div className="flex justify-between items-center mt-6 mb-7">
                   <span className={`bg-gradient-to-r ${program.color} text-white text-xs font-semibold px-3 py-1.5 rounded-full`}>
-                    {program.level}
+                    {t(program.levelKey)}
                   </span>
                   <span className="text-gray-700 font-medium flex items-center">
                     <svg className="w-4 h-4 mr-1 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    {program.duration}
+                    {t(program.durationKey)}
                   </span>
                 </div>
                 
@@ -151,7 +133,7 @@ const ProgramCards = () => {
                   href={program.link} 
                   className={`block w-full bg-gradient-to-r ${program.color} hover:shadow-lg text-white text-center font-medium py-3 px-6 rounded-xl transition-all duration-300 transform hover:-translate-y-0.5 relative overflow-hidden group`}
                 >
-                  <span className="relative z-10">Подробнее</span>
+                  <span className="relative z-10">{t('programs.learnMore')}</span>
                   <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
                 </a>
               </div>
@@ -174,22 +156,18 @@ const ProgramCards = () => {
                     </div>
                     
                     <h3 className="text-xl font-bold text-gray-800 mb-3 text-center">
-                      {program.title.ru}
+                      {t(program.titleKey)}
                     </h3>
-                    
-                    <p className="text-sm text-gray-600 mb-4 text-center">
-                      {program.title.en} / {program.title.kz}
-                    </p>
                     
                     <div className="flex justify-between items-center mt-6 mb-7">
                       <span className={`bg-gradient-to-r ${program.color} text-white text-xs font-semibold px-3 py-1.5 rounded-full`}>
-                        {program.level}
+                        {t(program.levelKey)}
                       </span>
                       <span className="text-gray-700 font-medium flex items-center">
                         <svg className="w-4 h-4 mr-1 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        {program.duration}
+                        {t(program.durationKey)}
                       </span>
                     </div>
                     
@@ -197,7 +175,7 @@ const ProgramCards = () => {
                       href={program.link} 
                       className={`block w-full bg-gradient-to-r ${program.color} text-white text-center font-medium py-3 px-6 rounded-xl transition-colors duration-300`}
                     >
-                      Подробнее
+                      {t('programs.learnMore')}
                     </a>
                   </div>
                 </div>
@@ -209,7 +187,7 @@ const ProgramCards = () => {
           <button 
             onClick={prevSlide}
             className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-blue-600 p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-sm"
-            aria-label="Предыдущая программа"
+            aria-label={t('programs.previousProgram')}
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -219,7 +197,7 @@ const ProgramCards = () => {
           <button 
             onClick={nextSlide}
             className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-blue-600 p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-sm"
-            aria-label="Следующая программа"
+            aria-label={t('programs.nextProgram')}
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -233,7 +211,7 @@ const ProgramCards = () => {
                 key={index}
                 onClick={() => setActiveIndex(index)}
                 className={`w-3 h-3 rounded-full transition-all duration-300 ${index === activeIndex ? 'bg-blue-600 scale-125' : 'bg-blue-200'}`}
-                aria-label={`Перейти к программе ${index + 1}`}
+                aria-label={`${t('programs.goToProgram')} ${index + 1}`}
               />
             ))}
           </div>
@@ -242,7 +220,7 @@ const ProgramCards = () => {
         {/* Декоративный элемент внизу */}
         <div className="text-center mt-16">
           <div className="inline-flex items-center justify-center px-6 py-3 bg-white rounded-full shadow-md text-blue-600 font-medium group cursor-pointer">
-            <span>Все программы обучения</span>
+            <span>{t('programs.allPrograms')}</span>
             <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
