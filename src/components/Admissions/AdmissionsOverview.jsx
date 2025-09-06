@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { emailConfig, openGmailCompose, createMailtoLink } from '../../config/emailConfig';
 import './Admissions.css';
 
 const AdmissionsOverview = () => {
@@ -7,10 +8,10 @@ const AdmissionsOverview = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [isAutoPlay, setIsAutoPlay] = useState(true);
 
-  // Функция для создания mailto ссылки с данными заявки
-  const generateMailtoLink = () => {
-    const subject = encodeURIComponent('Заявка на поступление в Салымбеков Университет');
-    const body = encodeURIComponent(`
+  // Функция для быстрой заявки через Gmail
+  const handleQuickApplication = () => {
+    const subject = 'Заявка на поступление в Салымбеков Университет';
+    const body = `
 Здравствуйте!
 
 Хочу подать заявку на поступление в Салымбеков Университет.
@@ -48,15 +49,21 @@ Email: [Введите ваш email]
 [Ваше имя]
 
 Дата: ${new Date().toLocaleDateString('ru-RU')}
-    `.trim());
+    `.trim();
     
-    return `mailto:admissions@salymbekov.edu.kg?subject=${subject}&body=${body}`;
+    try {
+      openGmailCompose(emailConfig.admissions, subject, body);
+    } catch (error) {
+      // Резервный вариант
+      const mailtoLink = createMailtoLink(emailConfig.admissions, subject, body);
+      window.location.href = mailtoLink;
+    }
   };
 
-  // Функция для быстрого контакта
-  const generateQuickContactEmail = () => {
-    const subject = encodeURIComponent('Вопрос по поступлению - Салымбеков Университет');
-    const body = encodeURIComponent(`
+  // Функция для быстрого вопроса
+  const handleQuickQuestion = () => {
+    const subject = 'Вопрос по поступлению - Салымбеков Университет';
+    const body = `
 Здравствуйте!
 
 У меня есть вопрос по поступлению в Салымбеков Университет.
@@ -70,9 +77,15 @@ Email: [Ваш email]
 
 С уважением,
 [Ваше имя]
-    `.trim());
+    `.trim();
     
-    return `mailto:info@salymbekov.edu.kg?subject=${subject}&body=${body}`;
+    try {
+      openGmailCompose(emailConfig.info, subject, body);
+    } catch (error) {
+      // Резервный вариант
+      const mailtoLink = createMailtoLink(emailConfig.info, subject, body);
+      window.location.href = mailtoLink;
+    }
   };
 
   const timelineSteps = [
@@ -409,15 +422,15 @@ Email: [Ваш email]
                     </svg>
                   </span>
                 </a>
-                <a 
-                  href={generateMailtoLink()}
+                <button 
+                  onClick={handleQuickApplication}
                   className="group bg-green-500 text-white px-8 py-4 rounded-xl font-bold hover:bg-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
-                  title="Отправить заявку по email"
+                  title="Отправить заявку через Gmail"
                 >
                   <span className="flex items-center justify-center">
                     📧 Отправить на Gmail
                   </span>
-                </a>
+                </button>
                 <a 
                   href="/contacts/admission"
                   className="group border-2 border-white text-white px-6 py-4 rounded-xl font-bold hover:bg-white hover:text-blue-600 transition-all duration-300 transform hover:scale-105"
@@ -426,15 +439,15 @@ Email: [Ваш email]
                     📞 Связаться с нами
                   </span>
                 </a>
-                <a 
-                  href={generateQuickContactEmail()}
+                <button 
+                  onClick={handleQuickQuestion}
                   className="group bg-orange-500 text-white px-6 py-4 rounded-xl font-bold hover:bg-orange-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
-                  title="Задать быстрый вопрос по email"
+                  title="Задать быстрый вопрос через Gmail"
                 >
                   <span className="flex items-center justify-center">
                     ❓ Задать вопрос
                   </span>
-                </a>
+                </button>
               </div>
               
               {/* Quick stats */}

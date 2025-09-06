@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { emailConfig, openGmailCompose, createMailtoLink } from '../../config/emailConfig';
 
 const OnlineApplication = () => {
   const { t } = useTranslation();
@@ -233,10 +234,9 @@ const OnlineApplication = () => {
     });
   };
 
-  // Функция для создания mailto ссылки с данными заявки
-  const generateApplicationEmail = (data) => {
-    const subject = encodeURIComponent('Заявка на поступление в Салымбеков Университет');
-    const body = encodeURIComponent(`
+  // Функция для создания тела письма с данными заявки
+  const generateApplicationEmailBody = (data) => {
+    return `
 ЗАЯВКА НА ПОСТУПЛЕНИЕ
 Салымбеков Университет
 
@@ -278,29 +278,41 @@ ${Object.keys(data.documents).filter(key => data.documents[key]).length > 0
 --
 С уважением,
 ${data.firstName} ${data.lastName}
-    `.trim());
-    
-    return `mailto:admissions@salymbekov.edu.kg?subject=${subject}&body=${body}`;
+    `.trim();
   };
 
   const submitApplication = () => {
     if (validateStep(5)) {
-      // Создаем mailto ссылку с данными заявки
-      const mailtoLink = generateApplicationEmail(formData);
+      const subject = 'Заявка на поступление в Салымбеков Университет';
+      const body = generateApplicationEmailBody(formData);
       
-      // Открываем почтовый клиент
-      window.location.href = mailtoLink;
-      
-      // Показываем сообщение пользователю
-      alert(`✉️ Открывается ваш почтовый клиент...
+      try {
+        // Сначала пытаемся открыть Gmail напрямую
+        openGmailCompose(emailConfig.mainAdmissions, subject, body);
+        
+        // Показываем сообщение пользователю
+        alert(`✅ Gmail открыт в новом окне!
 
-📋 Ваша заявка готова к отправке!
-📧 Адрес: admissions@salymbekov.edu.kg
+� Получатель: ${emailConfig.mainAdmissions}
+�📋 Ваша заявка готова к отправке
 
-После отправки письма мы свяжемся с вами в ближайшее время.`);
-      
-      // Сохраняем факт отправки
-      localStorage.removeItem('applicationDraft');
+Если Gmail не открылся, нажмите OK для резервного способа.`);
+        
+        // Сохраняем факт отправки
+        localStorage.removeItem('applicationDraft');
+        
+      } catch (error) {
+        console.error('Error opening Gmail:', error);
+        
+        // Резервный вариант - обычный mailto
+        const mailtoLink = createMailtoLink(emailConfig.mainAdmissions, subject, body);
+        window.location.href = mailtoLink;
+        
+        alert(`📧 Открывается почтовый клиент...
+        
+Получатель: ${emailConfig.mainAdmissions}
+Ваша заявка готова к отправке!`);
+      }
     }
   };
 

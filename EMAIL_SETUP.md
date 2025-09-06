@@ -22,9 +22,9 @@
 
 ### Email адреса университета:
 
-- **Приемная комиссия**: `admissions@salymbekov.edu.kg`
-- **Общие вопросы**: `info@salymbekov.edu.kg`
-- **Техподдержка**: `support@salymbekov.edu.kg`
+- **Приемная комиссия**: `salymbekov.admissions@gmail.com`
+- **Общие вопросы**: `salymbekov.info@gmail.com`
+- **Техподдержка**: `salymbekov.support@gmail.com`
 
 ### Что получает университет:
 
