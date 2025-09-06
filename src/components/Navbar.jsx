@@ -16,6 +16,8 @@ const Navbar = () => {
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
+    // Принудительно сохраняем в localStorage
+    localStorage.setItem('i18nextLng', lng);
     setIsLangOpen(false);
   };
 
@@ -27,6 +29,14 @@ const Navbar = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Проверяем сохраненный язык при загрузке
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem('i18nextLng');
+    if (savedLanguage && savedLanguage !== i18n.language) {
+      i18n.changeLanguage(savedLanguage);
+    }
+  }, [i18n]);
 
   // Очищаем таймер при размонтировании
   useEffect(() => {

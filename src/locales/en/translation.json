@@ -47,471 +47,32 @@
     "admission_office": "Admission Office",
     "map": "Campus Map",
     "feedback": "Feedback"
-  },"news": {
-    "title": "News and Events",
-    "subtitle": "Relevant information, events, and articles from university life",
+  },
+  "news": {
+    "title": "News Feed",
     "categories": {
       "all": "All",
-      "allDesc": "All news and materials",
       "news": "News",
-      "newsDesc": "Latest university news",
       "events": "Events",
-      "eventsDesc": "Event calendar and schedule",
       "announcements": "Announcements",
-      "announcementsDesc": "Official announcements and notifications",
-      "articles": "Articles",
-      "articlesDesc": "Expert articles and research"
+      "articles": "Articles"
     },
     "readMore": "Read More",
     "loadMore": "Load More",
-    "featured": "Featured",
-    "author": "Author",
-    "searchPlaceholder": "Search news...",
-    "searchResults": "Results found",
-    "noResults": "No news found",
-    "noResultsSubtitle": "Try changing your search criteria or filters",
-    "notFound": "News not found",
-    "backToNews": "Back to News",
-    "readTime": "Reading time",
-    "views": "Views",
-    "tags": "Tags",
-    "relatedNews": "Related News",
     "eventsDescription": "Upcoming and past university events",
     "announcementsDescription": "Important announcements and notifications for students and staff",
     "articlesDescription": "Scientific articles, research, and expert opinions",
     "sidebar": {
       "popularTopics": "Popular Topics",
       "archive": "Archive",
-      "newsletter": "Newsletter Subscription",
-      "newsletterDescription": "Stay updated on all university news and events",
+      "newsletter": "Newsletter",
+      "newsletterDescription": "Stay updated with all university news and events",
       "emailPlaceholder": "Your email",
       "subscribe": "Subscribe",
-      "subscriptionSuccess": "Thank you! You have successfully subscribed to the newsletter.",
-      "contact": "Contacts",
+      "subscriptionSuccess": "Thank you! You have successfully subscribed to our newsletter.",
+      "contact": "Contact",
       "pressService": "Press Service:",
       "phone": "Phone:"
-    },
-    "detail": {
-      "notFound": "News not found",
-      "loadError": "Error loading news",
-      "backToNews": "Back to News",
-      "readingTime": "reading time",
-      "minutes": "min.",
-      "share": "Share",
-      "relatedNews": "Related News",
-      "noRelatedNews": "No related news found"
-    },
-    "events": {
-      "title": "Events",
-      "loadError": "Error loading events",
-      "upcoming": "Upcoming",
-      "ongoing": "Ongoing",
-      "past": "Past",
-      "noEvents": "No events found"
-    },
-    "announcements": {
-      "title": "Announcements",
-      "loadError": "Error loading announcements",
-      "urgent": "Urgent",
-      "academic": "Academic",
-      "scholarship": "Scholarships",
-      "noAnnouncements": "No announcements found"
-    }
-  },
-  "events": {
-    "upcomingTitle": "Upcoming Events",
-    "registered": "registered",
-    "addToGoogleCalendar": "Add to Google Calendar",
-    "addToOutlookCalendar": "Add to Outlook",
-    "noEvents": "No events found",
-    "noEventsSubtitle": "Try changing the search filters",
-    "types": {
-      "all": "All",
-      "conference": "Conferences",
-      "meeting": "Meetings",
-      "concert": "Concerts",
-      "sport": "Sports",
-      "workshop": "Workshops",
-      "seminar": "Seminars"
-    },
-    "filters": {
-      "timeFilter": "Show",
-      "upcoming": "Upcoming",
-      "all": "All events",
-      "typeFilter": "Event type"
-    }
-  },
-  "announcements": {
-    "title": "Announcements",
-    "subtitle": "Official university announcements and notifications",
-    "pinned": "Important Announcements",
-    "regular": "All Announcements",
-    "noAnnouncements": "No announcements found",
-    "noAnnouncementsSubtitle": "Try changing the search criteria or filters",
-    "searchPlaceholder": "Search announcements...",
-    "share": "Share",
-    "downloadPDF": "Download PDF",
-    "attachments": "Attachments",
-    "daysLeft": "days left",
-    "expired": "Expired",
-    "types": {
-      "urgent": "Urgent",
-      "important": "Important",
-      "info": "Information",
-      "event": "Event"
-    },
-    "departments": {
-      "all": "All",
-      "medical": "Medical Faculty",
-      "pharmacy": "Pharmacy Faculty",
-      "dentistry": "Dentistry Faculty",
-      "admin": "Administration",
-      "library": "Library",
-      "studentoffice": "Student Office"
-    },
-    "filters": {
-      "department": "Department",
-      "activeOnly": "Active only"
-    }
-  },
-  "articles": {
-    "featured": "Featured Article",
-    "allArticles": "All Articles",
-    "minRead": "min read",
-    "views": "views",
-    "sortBy": "Sort by",
-    "filterByTags": "Filter by tags",
-    "clearTags": "Clear filters",
-    "searchPlaceholder": "Search articles by title, author, or tags...",
-    "noArticles": "No articles found",
-    "noArticlesSubtitle": "Try changing the search criteria or filters",
-    "sort": {
-      "newest": "Newest first",
-      "popular": "By popularity",
-      "readTime": "By reading time"
-    }
-  },
-  "common": {
-    "loading": "Loading..."
-  },
-  "about": {
-    "breadcrumb_home": "Home",
-    "breadcrumb_about": "About Us",
-    "hero_title": "Salymbekov University",
-    "hero_subtitle": "The leading medical university in Kyrgyzstan, training highly qualified healthcare specialists since 1995",
-    
-    "achievements_title": "Our Achievements",
-    "faculty_count": "Faculty",
-    "departments_count": "Departments",
-    "students_count": "Students",
-    "years_count": "Years of experience",
-    
-    "mission_values": "Mission and Values",
-    "value_1_title": "Mission",
-    "value_1_desc": "Training highly qualified medical specialists",
-    "value_2_title": "Vision",
-    "value_2_desc": "A leader in medical education in Central Asia",
-    "value_3_title": "Quality",
-    "value_3_desc": "High standards of education and practical training",
-    "value_4_title": "Innovation",
-    "value_4_desc": "Modern technologies in medical education",
-    
-    "university_history": "University History",
-    "timeline_1995": "University Foundation",
-    "timeline_1995_desc": "Establishment of a private higher education institution in the field of medicine",
-    "timeline_2000": "Medical Faculty Opening",
-    "timeline_2000_desc": "Launch of the first general practitioner training programs",
-    "timeline_2010": "International Program Accreditation",
-    "timeline_2010_desc": "Gaining international recognition for educational standards",
-    "timeline_2020": "New Campus Opening",
-    "timeline_2020_desc": "Modern medical campus with advanced equipment",
-    
-    "leadership": "Leadership",
-    "rector_name": "Adilkhan Salymbekov",
-    "rector_title": "University Rector, Doctor of Medical Sciences",
-    "rector_bio": "An experienced medical professional and educator with over 25 years of experience. Author of multiple scientific publications in the field of cardiology. Founder and visionary of the university.",
-    
-    "medical_departments": "Medical Faculties",
-    "general_medicine": "General Medicine",
-    "dentistry": "Dentistry",
-    "pharmacy": "Pharmacy",
-    "nursing": "Nursing",
-    "public_health": "Public Health",
-    "medical_psychology": "Medical Psychology",
-    "established": "Established",
-    
-    "medical_centers": "Medical Centers",
-    "clinical_center": "Clinical Center",
-    "patient_care": "Patient treatment and diagnosis",
-    "research_lab": "Research Laboratory",
-    "medical_research": "Medical research and development",
-    "simulation_center": "Simulation Center",
-    "practical_training": "Practical student training",
-    "telemedicine_center": "Telemedicine Center",
-    "remote_care": "Remote medical care",
-    
-    "video_presentation": "Video Presentation",
-    "watch_video": "Watch Video",
-    "video_duration": "Duration: 2-3 minutes",
-    "subtitles_available": "Subtitles available",
-    
-    "medical_resources": "Medical Resources",
-    "university_hospital": "University Hospital",
-    "hospital_desc": "Modern clinic for practical student training",
-    "medical_labs": "Medical Laboratories",
-    "labs_desc": "Equipped laboratories for research and education",
-    "student_dormitory": "Student Dormitory",
-    "dormitory_desc": "Comfortable living conditions for students",
-    
-    "quick_links": "Quick Links",
-    "management": "Management",
-    "charter_documents": "Charter Documents",
-    "careers": "Careers",
-    "partners_link": "Partners",
-    
-    "org_structure": "Management Structure",
-    "org_structure_subtitle": "The organizational structure of Salymbekov University includes governing bodies, faculties, departments, and administrative services",
-    "interactive_tree": "Interactive Management Structure Tree",
-    "staff_list": "Staff List",
-    "search_placeholder": "Enter name, position, or department...",
-    "filter_by_type": "Filter by type",
-    "tree_view": "Tree",
-    "list_view": "List",
-    "expand_all": "Expand all",
-    "collapse_all": "Collapse all",
-    "export_pdf": "Export to PDF",
-    "detailed_info": "Detailed Information",
-    "about_specialist": "About the Specialist",
-    "basic_info": "Basic Information",
-    "contact_info": "Contact Information",
-    "education_label": "Education",
-    "experience_label": "Work Experience",
-    "specialization_label": "Specialization",
-    "achievements_label": "Achievements",
-    "statistics": "Statistics",
-    "students_total": "Students",
-    "teachers_count": "Teachers",
-    "department_staff": "Department Staff",
-    "found_staff": "Staff found",
-    "no_staff_found": "No staff found",
-    "try_different_criteria": "Try changing the search criteria or filter",
-    "legend": "Legend",
-    "administration": "Administration",
-    "faculties": "Faculties", 
-    "departments": "Departments",
-    "staff": "Staff"
-  },
-  "facts": {
-    "title": "Numbers and Facts",
-    "subtitle": "Our achievements over the years in the field of education",
-    "scrollHint": "Scroll down to see more",
-    "students": "students",
-    "graduates": "graduates",
-    "programs": "educational programs",
-    "clinics": "partner clinics"
-  },
-    "programs": {
-    "title": "Key Programs",
-    "subtitle": "Choose an educational program that matches your professional goals",
-    "learnMore": "Learn More",
-    "allPrograms": "All Educational Programs",
-    "previousProgram": "Previous program",
-    "nextProgram": "Next program",
-    "goToProgram": "Go to program",
-    "levels": {
-      "bachelor": "Bachelor's Degree",
-      "master": "Master's Degree"
-    },
-    "durations": {
-      "fourYears": "4 years",
-      "fiveYears": "5 years",
-      "twoYears": "2 years"
-    },
-    "generalMedicine": {
-      "title": "General Medicine"
-    },
-    "dentistry": {
-      "title": "Dentistry"
-    },
-    "pharmacy": {
-      "title": "Pharmacy"
-    },
-    "medicalOptics": {
-      "title": "Medical Optics"
-    }
-  },
-  "news": {
-    "title": "Latest News",
-    "subtitle": "Stay updated with the latest events and achievements of our university",
-    "readMore": "Read more",
-    "allNews": "All news",
-    "loading": "Loading news...",
-    "fetchError": "Error loading news",
-    "errorMessage": "An error occurred while loading data. Demo data is shown.",
-    "categories": {
-      "news": "News",
-      "events": "Events",
-      "announcements": "Announcements"
-    }
-  },
-  "reviews": {
-    "title": "Student Reviews",
-    "subtitle": "What our students say about studying at the university",
-    "previousButton": "Previous review",
-    "nextButton": "Next review",
-    "goToReview": "Go to review",
-    "student1": {
-      "name": "Anna Ivanova",
-      "faculty": "General Medicine",
-      "course": "4th year",
-      "text": "Studying at the medical faculty gave me invaluable knowledge and practical skills. The teachers are experienced practicing doctors who share real experience."
-    },
-    "student2": {
-      "name": "Maxim Petrov",
-      "faculty": "Pediatrics",
-      "course": "5th year",
-      "text": "Excellent combination of theory and practice! Already in the 3rd year, classes began in clinics, which allows applying knowledge in real conditions."
-    },
-    "student3": {
-      "name": "Elena Smirnova",
-      "faculty": "Dentistry",
-      "course": "3rd year",
-      "text": "Modern equipment and approach to learning. I especially appreciate the simulation center where you can practice skills before clinical practice."
-    },
-    "student4": {
-      "name": "Dmitry Kozlov",
-      "faculty": "Pharmacy",
-      "course": "2nd year",
-      "text": "Interesting program, deep immersion in biochemistry and pharmacology. Teachers support students' scientific initiatives."
-    },
-    "student5": {
-      "name": "Olga Novikova",
-      "faculty": "Medical Preventive Care",
-      "course": "1st year",
-      "text": "I entered this year and I'm already delighted! The atmosphere promotes learning, there are many practical classes and modern laboratories."
-    }
-  },
-  "partners": {
-    "title": "Our Partners",
-    "nationalHospital": "National Hospital",
-    "cityHospital": "City Clinical Hospital",
-    "medicalCenters": "Private Medical Centers",
-    "who": "WHO",
-    "redCross": "Red Cross",
-    "medicalAssociation": "Medical Association",
-    "healthInstitute": "Health Institute",
-    "researchFoundation": "Medical Research Foundation"
-  },
-  "footer": {
-    "aboutTitle": "About Our University",
-    "aboutDescription": "We are a leading educational institution striving for excellence in teaching, research and innovation. Our mission is to prepare future leaders for the challenges of the modern world.",
-    "contactsTitle": "Contacts",
-    "address": "Bishkek, Fuchika str. 3",
-    "phone": "Phone",
-    "socialTitle": "Follow Us",
-    "subscriptionTitle": "Newsletter Subscription",
-    "emailPlaceholder": "Your email",
-    "subscribeButton": "Subscribe",
-    "subscriptionAlert": "Thank you for subscribing to email: {{email}}",
-    "copyright": "Salymbekov University. All rights reserved."
-  },
-  "breadcrumbs": {
-    "home": "Home",
-    "about": "About",
-    "management": "Management Structure"
-  },
-  "management": {
-    "title": "Management Structure",
-    "description": "The organizational structure of Salymbekov University includes governing bodies, faculties, departments and administrative services that ensure the effective operation of the educational institution",
-    "organization": {
-      "title": "University Leadership",
-      "subtitle": "University pyramid hierarchy"
-    },
-    "university": {
-      "name": "Salymbekov University"
-    },
-    "rector": {
-      "name": "Salymbekov Adilkhan",
-      "position": "Rector",
-      "bio": "Founder of the university, leading cardiologist of Kyrgyzstan",
-      "achievements": [
-        "Author of more than 150 scientific publications",
-        "Honored Scientist of the Kyrgyz Republic",
-        "Founder of 3 medical centers"
-      ]
-    },
-    "departments": {
-      "academic": {
-        "name": "Academic Affairs",
-        "head": "Petrov Petr Petrovich",
-        "position": "Vice-Rector for Academic Affairs",
-        "bio": "Specialist in medical education"
-      },
-      "therapy": {
-        "name": "Therapy Department",
-        "head": "Orlov Oleg Olegovich",
-        "position": "Head of Department",
-        "bio": "Highest category physician-therapist"
-      }
-    },
-    "faculties": {
-      "medical": {
-        "name": "Medical Faculty",
-        "head": "Sidorov Sergey Sergeevich",
-        "position": "Dean",
-        "bio": "Specialist in internal diseases"
-      }
-    },
-    "staff": {
-      "volkov": {
-        "name": "Volkov Vladimir Vladimirovich"
-      }
-    },
-    "positions": {
-      "professor": "Professor"
-    },
-    "specializations": {
-      "cardiology": "Cardiology"
-    },
-    "experience": {
-      "label": "Experience",
-      "years": "25 years"
-    },
-    "education": {
-      "doctor": "Doctor of Medical Sciences",
-      "pedagogy": "Doctor of Pedagogical Sciences",
-      "professor": "Doctor of Medical Sciences, Professor",
-      "candidate": "Candidate of Medical Sciences"
-    },
-    "students": {
-      "count": "Students"
-    },
-    "details": {
-      "button": "Details"
-    },
-    "staff": {
-      "title": "Department Staff"
-    },
-    "specialization": {
-      "label": "Specialization"
-    },
-    "modal": {
-      "about": "About Specialist",
-      "info": "Basic Information",
-      "education": "Education",
-      "experience": "Work Experience",
-      "specialization": "Specialization",
-      "contacts": "Contact Information",
-      "statistics": "Statistics",
-      "students": "Students",
-      "teachers": "Teachers",
-      "achievements": "Achievements"
-    },
-    "statistics": {
-      "teachers": "Teachers",
-      "departments": "Departments",
-      "faculties": "Faculties",
-      "students": "Students"
     }
   },
   "requirements": {
@@ -552,20 +113,20 @@
       "passport": "Passport",
       "photos": "Photos 3x4 (6 pcs)",
       "ortCertificate": "ORT certificate",
-      "shortList": "Diploma, Medical certificate",
-      "standardPackage": "standard package",
+      "shortList": "Short List",
+      "standardPackage": "standard document package",
       "fullList": {
-        "diploma": "High school diploma (original + copy)",
-        "passport": "Passport (copy of all pages)",
-        "medicalCertificate": "Medical certificate form 086U",
+        "diploma": "High school diploma with grades",
+        "passport": "Passport copy (all pages)",
+        "medicalCertificate": "Medical certificate form 086/U",
         "photos": "Photos 3x4 cm (6 pieces)",
-        "ortCertificate": "ORT certificate"
+        "ortCertificate": "ORT certificate with results"
       },
       "additional": {
-        "parentsIncome": "Parents' income statement (for discount)",
-        "benefits": "Benefit documents (if any)",
-        "reference": "School reference",
-        "portfolio": "Achievement portfolio (recommended)"
+        "parentsIncome": "Parents' income certificate",
+        "benefits": "Benefits documents",
+        "reference": "School reference letter",
+        "portfolio": "Achievement portfolio"
       }
     },
     "duration": {
@@ -589,7 +150,7 @@
       "subtitle": "Learn how to apply to Salymbekov University"
     },
     "roadmap": {
-      "title": "Applicant’s Roadmap",
+      "title": "Applicant's Roadmap",
       "heading": "Your Path to Success in Medicine",
       "description": "Follow our step-by-step guide to successfully enroll at Salymbekov University"
     },
@@ -620,10 +181,344 @@
         "details": "Official start of the academic year and first classes"
       }
     },
+    "requirements": {
+      "title": "Admission Requirements",
+      "subtitle": "Requirements for different medical programs",
+      "filterByProgram": "Filter by Program",
+      "allPrograms": "All Programs",
+      "ortScore": "ORT Score",
+      "exams": "Entrance Exams",
+      "documents": "Required Documents",
+      "duration": "Duration",
+      "language": "Language of Instruction"
+    },
+    "tuition": {
+      "title": "Tuition Fees",
+      "subtitle": "Transparent pricing for quality medical education",
+      "programs": {
+        "medicine": "General Medicine",
+        "dentistry": "Dentistry", 
+        "pharmacy": "Pharmacy",
+        "nursing": "Nursing"
+      },
+      "discounts": {
+        "title": "Available Discounts",
+        "excellent": "Academic Excellence (10%)",
+        "excellentDentistry": "Academic Excellence (8%)",
+        "early": "Early Payment (5%)",
+        "social": "Social Support (15%)"
+      },
+      "calculator": {
+        "title": "Cost Calculator",
+        "selectProgram": "Select Program",
+        "selectDiscount": "Select Discount",
+        "none": "No Discount",
+        "semesterCost": "Semester Cost",
+        "yearCost": "Annual Cost", 
+        "totalCost": "Total Program Cost",
+        "withDiscount": "With Discount"
+      }
+    },
+    "faq": {
+      "title": "Frequently Asked Questions", 
+      "subtitle": "Get answers to common questions about admission",
+      "categories": {
+        "general": "General Questions",
+        "documents": "Documents",
+        "exams": "Exams", 
+        "payment": "Payment",
+        "hostel": "Dormitory"
+      },
+      "search": "Enter keyword to search (e.g.: exam, certificate, cost)...",
+      "categoriesTitle": "Categories",
+      "noQuestionsInCategory": "No questions in this category yet",
+      "contactTitle": "Didn't find an answer to your question?",
+      "admissionsOffice": "Admissions Office",
+      "schedule": "Mon-Fri: 09:00 - 18:00",
+      "saturdaySchedule": "Sat: 09:00 - 14:00",
+      "email": "Email",
+      "whatsapp": "WhatsApp",
+      "responseTime24": "We will respond within 24 hours",
+      "quickResponse": "Quick response during business hours",
+      "officeTitle": "Admissions Office",
+      "showOnMap": "Show on map",
+      "askQuestion": "Ask a Question",
+      "submitQuestion": "Submit Question",
+      "yourName": "Your Name",
+      "yourEmail": "Your Email",
+      "yourQuestion": "Your Question",
+      "questions": {
+        "general": {
+          "q1": "When does document submission begin?",
+          "a1": "Document submission at Salymbekov University begins on July 1 and continues until August 15 each year. Documents can be submitted both in person at the admissions office and online through our website.",
+          "q2": "What educational programs does the university offer?",
+          "a2": "Salymbekov University offers programs in: General Medicine, Dentistry, Pharmacy, Nursing. All programs are accredited by the Ministry of Education and Science of the KR.",
+          "q3": "How long does the education last?",
+          "a3": "The duration of education depends on the program: General Medicine - 6 years, Dentistry and Pharmacy - 5 years, Nursing - 4 years.",
+          "q4": "In what languages is education conducted?",
+          "a4": "Education is conducted in Russian and Kyrgyz languages. Students can choose their preferred language of instruction upon admission.",
+          "q5": "Is there practice in foreign clinics?",
+          "a5": "Yes, the university cooperates with leading medical centers in Germany, Turkey and other countries. The best students can do internships abroad.",
+          "q6": "Is the diploma recognized outside Kyrgyzstan?",
+          "a6": "Salymbekov University diploma is recognized in CIS countries. For work in other countries, additional certification may be required according to local legislation."
+        }
+      }
+    },
+    "application": {
+      "title": "Online Application",
+      "subtitle": "Apply for admission to Salymbekov University",
+      "autosave": "Your data is automatically saved every second",
+      "selectProgram": "Select the program you wish to apply for",
+      "programs": {
+        "medicine": "General Medicine",
+        "dentistry": "Dentistry",
+        "pharmacy": "Pharmacy", 
+        "nursing": "Nursing"
+      },
+      "programDetails": {
+        "duration": "Duration",
+        "cost": "Cost",
+        "requirements": "Requirements",
+        "description": "Description"
+      },
+      "steps": {
+        "program": "Program Selection",
+        "personal": "Personal Information",
+        "education": "Education Background", 
+        "documents": "Documents Upload",
+        "confirmation": "Confirmation"
+      },
+      "stepTitles": {
+        "step1": "Program Selection",
+        "step2": "Personal Information",
+        "step3": "Education Background",
+        "step4": "Documents Upload", 
+        "step5": "Application Confirmation"
+      },
+      "stepDescriptions": {
+        "step1": "Select your study program",
+        "step2": "Fill in your personal information",
+        "step3": "Information about your education",
+        "step4": "Attach required documents",
+        "step5": "Review data before submission"
+      },
+      "search": {
+        "placeholder": "Enter program name...",
+        "noResults": "No programs found for query"
+      },
+      "navigation": {
+        "previous": "Previous",
+        "next": "Next", 
+        "submit": "Submit Application",
+        "saveDraft": "Save Draft",
+        "clearForm": "Clear Form"
+      },
+      "personalInfo": {
+        "title": "Personal Information",
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "middleName": "Middle Name",
+        "birthDate": "Date of Birth",
+        "gender": "Gender", 
+        "male": "Male",
+        "female": "Female",
+        "phone": "Phone",
+        "email": "Email",
+        "address": "Address",
+        "selectGender": "Select gender",
+        "phonePlaceholder": "+996 XXX XXX XXX"
+      },
+      "education": {
+        "title": "Education",
+        "schoolName": "School/Institution Name", 
+        "graduationYear": "Graduation Year",
+        "certificateNumber": "Certificate Number",
+        "ortScore": "ORT Score",
+        "subjects": "Subject Grades",
+        "subjectsOptional": "Subject Grades (optional)",
+        "selectYear": "Select year",
+        "biology": "Biology",
+        "chemistry": "Chemistry",
+        "physics": "Physics",
+        "mathematics": "Mathematics"
+      },
+      "documents": {
+        "title": "Document Upload",
+        "description": "Attach required documents", 
+        "certificate": "High School Diploma",
+        "passport": "Passport (all pages)",
+        "medical": "Medical Certificate 086U",
+        "photos": "Photos 3x4 cm",
+        "ortCertificate": "ORT Certificate",
+        "fileUploaded": "File uploaded",
+        "photosUploaded": "Photos uploaded",
+        "requirements": {
+          "title": "Document Requirements",
+          "format": "Documents must be in PDF, JPG or PNG format",
+          "size": "Maximum file size - 5 MB", 
+          "quality": "Documents must be clear and readable",
+          "passport": "All passport pages must be in one file",
+          "photos": "Photos must be 3x4 cm size"
+        }
+      },
+      "confirmation": {
+        "title": "Application Confirmation",
+        "description": "Review data before submission",
+        "selectedProgram": "Selected Program",
+        "personalData": "Personal Data",
+        "education": "Education",
+        "uploadedDocuments": "Uploaded Documents",
+        "editSections": "Need to change something?",
+        "editProgram": "Program",
+        "editPersonal": "Personal Data",
+        "editEducation": "Education", 
+        "editDocuments": "Documents",
+        "agreeTerms": "I agree with admission rules and study conditions",
+        "agreePrivacy": "I consent to personal data processing",
+        "rulesLink": "admission rules",
+        "conditionsLink": "study conditions",
+        "privacyLink": "personal data processing"
+      },
+      "progress": {
+        "step": "Step",
+        "of": "of",
+        "progress": "Progress"
+      },
+      "status": {
+        "draftLoaded": "Draft loaded",
+        "draftSaved": "Draft saved"
+      },
+      "help": {
+        "title": "Need help filling out?",
+        "phone": "Phone: +996 312 123 456",
+        "email": "Email: admission@salymbekov.edu.kg",
+        "hours": "Working hours: Mon-Fri 09:00-18:00",
+        "autosave": "Your data is automatically saved"
+      },
+      "validation": {
+        "required": "Required field",
+        "selectProgram": "Select a study program",
+        "minLength": "Minimum 2 characters",
+        "age": "Age must be between 16 and 35 years",
+        "phoneFormat": "Enter phone in format +996 XXX XXX XXX",
+        "emailInvalid": "Invalid email",
+        "ortRange": "ORT score must be between 0 and 240", 
+        "fileFormat": "File must be PDF, JPG or PNG up to 5 MB",
+        "agreeTerms": "Agree to terms",
+        "agreePrivacy": "Agree to data processing"
+      },
+      "dialogs": {
+        "clearForm": "Are you sure you want to clear the form? All entered data will be lost.",
+        "formCleared": "Form cleared. You returned to the first step.",
+        "gmailOpened": "Gmail opened in new window!",
+        "recipient": "Recipient",
+        "applicationReady": "Your application is ready to send",
+        "backupMethod": "If Gmail didn't open, click OK for backup method.",
+        "emailClient": "Opening email client..."
+      }
+    }
+  },
+  "footer": {
+    "aboutTitle": "About University",
+    "aboutDescription": "Salymbekov University is a leading medical education institution in Kyrgyzstan, providing quality education and training future healthcare professionals",
+    "contactsTitle": "Contacts",
+    "address": "Bishkek, Kyrgyzstan",
+    "phone": "Phone",
+    "socialTitle": "Follow Us",
+    "subscriptionTitle": "Newsletter",
+    "emailPlaceholder": "Your email address",
+    "subscribeButton": "Subscribe",
+    "copyright": "© 2025 Salymbekov University. All rights reserved.",
+    "subscriptionAlert": "Thank you for subscribing with email: {email}"
+  },
+  "tuition": {
+    "title": "Tuition Fees",
+    "subtitle": "Transparent pricing for quality medical education",
+    "comparisonTable": {
+      "title": "Tuition Comparison Table",
+      "program": "Program",
+      "semester": "Per Semester", 
+      "year": "Per Year",
+      "totalCost": "Total Program Cost",
+      "availableDiscounts": "Available Discounts"
+    },
+    "programs": {
+      "medicine": "General Medicine",
+      "dentistry": "Dentistry", 
+      "pharmacy": "Pharmacy",
+      "nursing": "Nursing"
+    },
+    "discounts": {
+      "excellent": "Academic Excellence (10%)",
+      "excellentDentistry": "Academic Excellence (8%)",
+      "early": "Early Payment (5%)",
+      "earlyNursing": "Early Payment (3%)",
+      "social": "Social Support (15%)"
+    },
+    "calculator": {
+      "title": "Cost Calculator",
+      "selectProgram": "Select Program",
+      "selectDiscount": "Select Discount",
+      "noDiscount": "No Discount",
+      "calculation": "Cost Calculation",
+      "program": "Program:",
+      "semesterCost": "Semester Cost",
+      "yearCost": "Annual Cost",
+      "totalCost": "Total Program Cost",
+      "withDiscountSemester": "With discount per semester",
+      "withDiscountYear": "With discount per year",
+      "savings": "Savings"
+    },
+    "paymentMethods": {
+      "title": "Payment Methods",
+      "bankTransfer": {
+        "title": "Bank Transfer",
+        "description": "Transfer funds directly to the university bank account",
+        "details": {
+          "recipient": "Recipient: Salymbekov University",
+          "inn": "TIN: 12345678901234",
+          "account": "Account: 1234567890123456789",
+          "bank": "Bank: Demir Bank OJSC"
+        }
+      },
+      "online": {
+        "title": "Online Payment",
+        "description": "Pay conveniently online",
+        "details": {
+          "elsom": "Elsom",
+          "balance": "Balance", 
+          "omoney": "O!Money",
+          "megapay": "MegaPay"
+        }
+      },
+      "cash": {
+        "title": "Cash Payment",
+        "description": "Pay at the university cashier",
+        "details": {
+          "address": "Address: Bishkek, Akhunbaeva str. 92",
+          "hours": "Working hours: 09:00 - 18:00",
+          "weekends": "Weekends: Saturday, Sunday"
+        }
+      }
+    },
+    "tips": {
+      "title": "Useful Tips",
+      "earlyPayment": "Early payment saves 5%",
+      "excellentGrades": "Excellent grades give up to 10% discount",
+      "installment": "Interest-free installments available",
+      "discountsNotCombined": "Discounts cannot be combined"
+    },
+    "contact": {
+      "title": "Need Help?",
+      "description": "Contact the financial department for consultation",
+      "phone": "+996 312 123 456",
+      "email": "cashier@salymbekov.edu.kg", 
+      "hours": "09:00 - 18:00"
+    },
     "dates": {
       "title": "Admission Calendar",
       "heading": "Important Dates",
-      "description": "Don’t miss the key deadlines for application submission",
+      "description": "Don't miss the key deadlines for application submission",
       "start": "Start of document submission",
       "deadline": "Final application deadline",
       "exams": "Entrance exams",
@@ -633,28 +528,18 @@
         "exams": "📝 Exam time"
       }
     },
-    "email": {
-      "subject": "Application for Admission to Salymbekov University",
-      "body": "Hello! I would like to apply for admission to Salymbekov University. Please send me detailed information about the programs and admission requirements. Best regards, [Your Name]"
-    },
-    "quickContact": {
-      "subject": "Admission Inquiry - Salymbekov University",
-      "body": "Hello! I have a question about admission to Salymbekov University. My question is: [Describe your question] Contact details: Name: [Your Name] Phone: [Your Phone] Email: [Your Email]"
-    },
     "cta": {
       "title": "Ready to start your journey in medicine?",
       "description": "Join the new generation of doctors and become part of the medical community at Salymbekov University",
       "applyOnline": "Apply Online",
       "sendEmail": "Send via Gmail",
-      "emailTitle": "Send application by email",
       "contactUs": "Contact Us",
-      "quickQuestion": "Ask a quick question via email",
-      "askQuestion": "Ask a question"
+      "askQuestion": "Ask a Question"
     },
     "stats": {
       "graduates": "Graduates",
       "employment": "Employment",
-      "experience": "Years of experience"
+      "experience": "Years of Experience"
     },
     "info": {
       "programs": "Programs",
@@ -668,103 +553,17 @@
     }
   },
   "common": {
-    "pause": "Pause autoplay",
-    "play": "Start autoplay",
+    "currency": "som",
+    "pause": "Pause",
+    "play": "Play",
     "step": "Step",
     "of": "of",
-    "previous": "Previous step",
-    "next": "Next step",
+    "previous": "Previous",
+    "next": "Next",
+    "submitting": "Submitting",
     "months": {
-      "jun": "JUN",
-      "aug": "AUG"
+      "jun": "JUNE",
+      "aug": "AUGUST"
     }
-  },
-   "tuition": {
-    "title": "Tuition Fees",
-    "subtitle": "Learn about tuition costs and available discounts",
-    "comparisonTable": {
-      "title": "Cost Comparison Table",
-      "program": "Program",
-      "semester": "Semester",
-      "year": "Academic Year",
-      "totalCost": "Total Cost",
-      "availableDiscounts": "Available Discounts"
-    },
-    "calculator": {
-      "title": "Cost Calculator",
-      "selectProgram": "Select Program",
-      "selectDiscount": "Select Discount",
-      "noDiscount": "No discount",
-      "calculation": "Cost Calculation",
-      "program": "Program",
-      "semesterCost": "Cost per semester",
-      "withDiscountSemester": "With discount per semester",
-      "yearCost": "Cost per year",
-      "withDiscountYear": "With discount per year",
-      "totalCost": "Total cost ({years} years)",
-      "savings": "Savings"
-    },
-    "paymentMethods": {
-      "title": "Payment Methods",
-      "bankTransfer": {
-        "title": "Bank Transfer",
-        "description": "Transfers through bank branches",
-        "details": {
-          "recipient": "Recipient: Salymbekov University LLC",
-          "inn": "TIN: 12345678901234",
-          "account": "Account: 1234567890123456789",
-          "bank": "Bank: KICB"
-        }
-      },
-      "online": {
-        "title": "Online Payment",
-        "description": "Payment via internet banking",
-        "details": {
-          "elsom": "Elsom",
-          "balance": "Balance.kg",
-          "omoney": "O! Money",
-          "megapay": "MegaPay"
-        }
-      },
-      "cash": {
-        "title": "Cash Payment",
-        "description": "Payment at university cash desk",
-        "details": {
-          "address": "Address: Bishkek, Akhunbaeva St. 92",
-          "hours": "Working hours: 09:00 - 18:00",
-          "weekends": "Weekends: Saturday, Sunday"
-        }
-      }
-    },
-    "programs": {
-      "medicine": "General Medicine",
-      "dentistry": "Dentistry",
-      "pharmacy": "Pharmacy",
-      "nursing": "Nursing"
-    },
-    "discounts": {
-      "excellent": "10% for excellent students",
-      "excellentDentistry": "8% for excellent students",
-      "early": "5% for early payment",
-      "earlyNursing": "3% for early payment"
-    },
-    "tips": {
-      "title": "Useful Tips",
-      "earlyPayment": "Pay tuition in advance and get a discount",
-      "excellentGrades": "Excellent academic performance gives right to discount",
-      "installment": "Installment payment by semesters is available",
-      "discountsNotCombined": "Discounts cannot be combined"
-    },
-    "contact": {
-      "title": "Payment Questions?",
-      "description": "Contact the student affairs department",
-      "phone": "Phone",
-      "email": "Email",
-      "hours": "Working hours"
-    }
-  },
-  "common": {
-    "currency": "KGS"
   }
 }
-

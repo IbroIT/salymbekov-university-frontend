@@ -54,7 +54,7 @@ const OnlineApplication = () => {
   const programs = [
     {
       id: 'medicine',
-      name: 'Лечебное дело',
+      name: t('application.programs.medicine'),
       duration: '6 лет',
       cost: '170,000 сом/год',
       requirements: 'ОРТ: 120+, Биология, Химия',
@@ -62,7 +62,7 @@ const OnlineApplication = () => {
     },
     {
       id: 'dentistry',
-      name: 'Стоматология',
+      name: t('application.programs.dentistry'),
       duration: '5 лет',
       cost: '190,000 сом/год',
       requirements: 'ОРТ: 110+, Биология, Химия',
@@ -70,7 +70,7 @@ const OnlineApplication = () => {
     },
     {
       id: 'pharmacy',
-      name: 'Фармация',
+      name: t('application.programs.pharmacy'),
       duration: '5 лет',
       cost: '150,000 сом/год',
       requirements: 'ОРТ: 100+, Химия, Биология',
@@ -78,7 +78,7 @@ const OnlineApplication = () => {
     },
     {
       id: 'nursing',
-      name: 'Сестринское дело',
+      name: t('application.programs.nursing'),
       duration: '4 года',
       cost: '130,000 сом/год',
       requirements: 'ОРТ: 90+, Биология',
@@ -87,11 +87,11 @@ const OnlineApplication = () => {
   ];
 
   const steps = [
-    { id: 1, title: 'Выбор программы', icon: '📋' },
-    { id: 2, title: 'Личные данные', icon: '👤' },
-    { id: 3, title: 'Образование', icon: '🎓' },
-    { id: 4, title: 'Документы', icon: '📄' },
-    { id: 5, title: 'Подтверждение', icon: '✅' }
+    { id: 1, title: t('application.steps.program'), icon: '📋' },
+    { id: 2, title: t('application.steps.personal'), icon: '👤' },
+    { id: 3, title: t('application.steps.education'), icon: '🎓' },
+    { id: 4, title: t('application.steps.documents'), icon: '📄' },
+    { id: 5, title: t('application.steps.confirmation'), icon: '✅' }
   ];
 
   // Auto-save draft
@@ -143,62 +143,62 @@ const OnlineApplication = () => {
 
     switch (step) {
       case 1:
-        if (!formData.program) newErrors.program = 'Выберите программу обучения';
+        if (!formData.program) newErrors.program = t('application.validation.selectProgram');
         break;
       
       case 2:
-        if (!formData.firstName) newErrors.firstName = 'Введите имя';
-        else if (formData.firstName.length < 2) newErrors.firstName = 'Имя должно содержать минимум 2 символа';
+        if (!formData.firstName) newErrors.firstName = t('application.validation.required');
+        else if (formData.firstName.length < 2) newErrors.firstName = t('application.validation.minLength');
         
-        if (!formData.lastName) newErrors.lastName = 'Введите фамилию';
-        else if (formData.lastName.length < 2) newErrors.lastName = 'Фамилия должна содержать минимум 2 символа';
+        if (!formData.lastName) newErrors.lastName = t('application.validation.required');
+        else if (formData.lastName.length < 2) newErrors.lastName = t('application.validation.minLength');
         
-        if (!formData.birthDate) newErrors.birthDate = 'Введите дату рождения';
+        if (!formData.birthDate) newErrors.birthDate = t('application.validation.required');
         else {
           const birthYear = new Date(formData.birthDate).getFullYear();
           const currentYear = new Date().getFullYear();
           const age = currentYear - birthYear;
-          if (age < 16 || age > 35) newErrors.birthDate = 'Возраст должен быть от 16 до 35 лет';
+          if (age < 16 || age > 35) newErrors.birthDate = t('application.validation.age');
         }
         
-        if (!formData.phone) newErrors.phone = 'Введите номер телефона';
+        if (!formData.phone) newErrors.phone = t('application.validation.required');
         else if (!/^\+996\s?\d{3}\s?\d{3}\s?\d{3}$/.test(formData.phone)) {
-          newErrors.phone = 'Введите телефон в формате +996 XXX XXX XXX';
+          newErrors.phone = t('application.validation.phoneFormat');
         }
         
-        if (!formData.email) newErrors.email = 'Введите email';
-        else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Некорректный email';
+        if (!formData.email) newErrors.email = t('application.validation.required');
+        else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = t('application.validation.emailInvalid');
         break;
       
       case 3:
-        if (!formData.schoolName) newErrors.schoolName = 'Введите название школы';
-        if (!formData.graduationYear) newErrors.graduationYear = 'Введите год окончания';
-        if (!formData.ortScore) newErrors.ortScore = 'Введите балл ОРТ';
+        if (!formData.schoolName) newErrors.schoolName = t('application.validation.required');
+        if (!formData.graduationYear) newErrors.graduationYear = t('application.validation.required');
+        if (!formData.ortScore) newErrors.ortScore = t('application.validation.required');
         else if (formData.ortScore < 0 || formData.ortScore > 240) {
-          newErrors.ortScore = 'Балл ОРТ должен быть от 0 до 240';
+          newErrors.ortScore = t('application.validation.ortRange');
         }
         break;
       
       case 4:
-        if (!formData.documents.certificate) newErrors.certificate = 'Загрузите аттестат';
+        if (!formData.documents.certificate) newErrors.certificate = t('application.validation.required');
         else if (!validateFile(formData.documents.certificate, ['pdf', 'jpg', 'jpeg', 'png'], 5)) {
-          newErrors.certificate = 'Файл должен быть PDF, JPG или PNG размером до 5 МБ';
+          newErrors.certificate = t('application.validation.fileFormat');
         }
         
-        if (!formData.documents.passport) newErrors.passport = 'Загрузите паспорт';
+        if (!formData.documents.passport) newErrors.passport = t('application.validation.required');
         else if (!validateFile(formData.documents.passport, ['pdf', 'jpg', 'jpeg', 'png'], 5)) {
-          newErrors.passport = 'Файл должен быть PDF, JPG или PNG размером до 5 МБ';
+          newErrors.passport = t('application.validation.fileFormat');
         }
         
-        if (!formData.documents.medical) newErrors.medical = 'Загрузите медсправку';
+        if (!formData.documents.medical) newErrors.medical = t('application.validation.required');
         else if (!validateFile(formData.documents.medical, ['pdf', 'jpg', 'jpeg', 'png'], 5)) {
-          newErrors.medical = 'Файл должен быть PDF, JPG или PNG размером до 5 МБ';
+          newErrors.medical = t('application.validation.fileFormat');
         }
         break;
       
       case 5:
-        if (!formData.agreeTerms) newErrors.agreeTerms = 'Согласитесь с условиями';
-        if (!formData.agreePrivacy) newErrors.agreePrivacy = 'Согласитесь с обработкой данных';
+        if (!formData.agreeTerms) newErrors.agreeTerms = t('application.validation.agreeTerms');
+        if (!formData.agreePrivacy) newErrors.agreePrivacy = t('application.validation.agreePrivacy');
         break;
     }
 
@@ -291,7 +291,7 @@ ${data.firstName} ${data.lastName}
         openGmailCompose(emailConfig.mainAdmissions, subject, body);
         
         // Показываем сообщение пользователю
-        alert(`✅ Gmail открыт в новом окне!
+        alert(`✅ ${t('application.dialogs.gmailOpened')}
 
 � Получатель: ${emailConfig.mainAdmissions}
 �📋 Ваша заявка готова к отправке
@@ -308,10 +308,10 @@ ${data.firstName} ${data.lastName}
         const mailtoLink = createMailtoLink(emailConfig.mainAdmissions, subject, body);
         window.location.href = mailtoLink;
         
-        alert(`📧 Открывается почтовый клиент...
+        alert(`📧 ${t('application.dialogs.emailClient')}
         
-Получатель: ${emailConfig.mainAdmissions}
-Ваша заявка готова к отправке!`);
+${t('application.dialogs.recipient')}: ${emailConfig.mainAdmissions}
+${t('application.dialogs.applicationReady')}!`);
       }
     }
   };
@@ -327,7 +327,7 @@ ${data.firstName} ${data.lastName}
   };
 
   const clearDraft = () => {
-    if (window.confirm('Вы уверены, что хотите очистить форму? Все введенные данные будут потеряны.')) {
+    if (window.confirm(t('application.dialogs.clearForm'))) {
       localStorage.removeItem('applicationDraft');
       setFormData({
         program: '',
@@ -362,7 +362,7 @@ ${data.firstName} ${data.lastName}
       });
       setCurrentStep(1);
       setErrors({});
-      alert('Форма очищена. Вы вернулись на первый этап.');
+      alert(t('application.dialogs.formCleared'));
     }
   };
 
@@ -375,8 +375,8 @@ ${data.firstName} ${data.lastName}
     return (
       <div className="space-y-6">
         <div className="text-center mb-8">
-          <h3 className="text-2xl font-bold text-gray-800 mb-2">Выберите программу обучения</h3>
-          <p className="text-gray-600">Выберите специальность, на которую хотите поступить</p>
+          <h3 className="text-2xl font-bold text-gray-800 mb-2">{t('application.stepTitles.step1')}</h3>
+          <p className="text-gray-600">{t('application.selectProgram')}</p>
         </div>
         
         {/* Search input */}
@@ -388,7 +388,7 @@ ${data.firstName} ${data.lastName}
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Введите название программы..."
+            placeholder={t('application.search.placeholder')}
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
@@ -419,7 +419,7 @@ ${data.firstName} ${data.lastName}
             </div>
           )) : (
             <div className="text-center py-8 text-gray-500">
-              <p>Программы не найдены по запросу "{searchTerm}"</p>
+              <p>{t('application.search.noResults')}</p>
             </div>
           )}
         </div>
@@ -434,14 +434,14 @@ ${data.firstName} ${data.lastName}
   const renderStep2 = () => (
     <div className="space-y-6">
       <div className="text-center mb-8">
-        <h3 className="text-2xl font-bold text-gray-800 mb-2">Личные данные</h3>
-        <p className="text-gray-600">Заполните информацию о себе</p>
+        <h3 className="text-2xl font-bold text-gray-800 mb-2">{t('application.stepTitles.step2')}</h3>
+        <p className="text-gray-600">{t('application.personalInfo.title')}</p>
       </div>
       
       <div className="grid md:grid-cols-2 gap-6">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Фамилия *
+            {t('application.personalInfo.lastName')} *
           </label>
           <input
             type="text"
@@ -454,7 +454,7 @@ ${data.firstName} ${data.lastName}
         
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Имя *
+            {t('application.personalInfo.firstName')} *
           </label>
           <input
             type="text"
@@ -467,7 +467,7 @@ ${data.firstName} ${data.lastName}
         
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Отчество
+            {t('application.personalInfo.middleName')}
           </label>
           <input
             type="text"
@@ -479,7 +479,7 @@ ${data.firstName} ${data.lastName}
         
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Дата рождения *
+            {t('application.personalInfo.birthDate')} *
           </label>
           <input
             type="date"
@@ -494,22 +494,22 @@ ${data.firstName} ${data.lastName}
         
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Пол
+            {t('application.personalInfo.gender')}
           </label>
           <select
             value={formData.gender}
             onChange={(e) => updateFormData({ gender: e.target.value })}
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
-            <option value="">Выберите пол</option>
-            <option value="male">Мужской</option>
-            <option value="female">Женский</option>
+            <option value="">{t('application.personalInfo.selectGender')}</option>
+            <option value="male">{t('application.personalInfo.male')}</option>
+            <option value="female">{t('application.personalInfo.female')}</option>
           </select>
         </div>
         
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Телефон *
+            {t('application.personalInfo.phone')} *
           </label>
           <input
             type="tel"
@@ -522,7 +522,7 @@ ${data.firstName} ${data.lastName}
               }
               updateFormData({ phone: value });
             }}
-            placeholder="+996 XXX XXX XXX"
+            placeholder={t('application.personalInfo.phonePlaceholder')}
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
           {errors.phone && <div className="text-red-600 text-sm mt-1">{errors.phone}</div>}
@@ -530,7 +530,7 @@ ${data.firstName} ${data.lastName}
         
         <div className="md:col-span-2">
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Email *
+            {t('application.personalInfo.email')} *
           </label>
           <input
             type="email"
@@ -543,7 +543,7 @@ ${data.firstName} ${data.lastName}
         
         <div className="md:col-span-2">
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Адрес
+            {t('application.personalInfo.address')}
           </label>
           <textarea
             value={formData.address}
@@ -559,14 +559,14 @@ ${data.firstName} ${data.lastName}
   const renderStep3 = () => (
     <div className="space-y-6">
       <div className="text-center mb-8">
-        <h3 className="text-2xl font-bold text-gray-800 mb-2">Образование</h3>
-        <p className="text-gray-600">Информация о вашем образовании</p>
+        <h3 className="text-2xl font-bold text-gray-800 mb-2">{t('application.stepTitles.step3')}</h3>
+        <p className="text-gray-600">{t('application.education.title')}</p>
       </div>
       
       <div className="grid md:grid-cols-2 gap-6">
         <div className="md:col-span-2">
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Название школы/лицея *
+            {t('application.education.schoolName')} *
           </label>
           <input
             type="text"
@@ -579,14 +579,14 @@ ${data.firstName} ${data.lastName}
         
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Год окончания *
+            {t('application.education.graduationYear')} *
           </label>
           <select
             value={formData.graduationYear}
             onChange={(e) => updateFormData({ graduationYear: e.target.value })}
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
-            <option value="">Выберите год</option>
+            <option value="">{t('application.education.selectYear')}</option>
             {Array.from({ length: 10 }, (_, i) => new Date().getFullYear() - i).map(year => (
               <option key={year} value={year}>{year}</option>
             ))}
@@ -596,7 +596,7 @@ ${data.firstName} ${data.lastName}
         
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Номер аттестата
+            {t('application.education.certificateNumber')}
           </label>
           <input
             type="text"
@@ -608,7 +608,7 @@ ${data.firstName} ${data.lastName}
         
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Балл ОРТ *
+            {t('application.education.ortScore')} *
           </label>
           <input
             type="number"
@@ -623,11 +623,11 @@ ${data.firstName} ${data.lastName}
       </div>
       
       <div className="bg-gray-50 p-6 rounded-lg">
-        <h4 className="font-semibold text-gray-800 mb-4">Оценки по предметам (необязательно)</h4>
+        <h4 className="font-semibold text-gray-800 mb-4">{t('application.education.subjectsOptional')}</h4>
         <div className="grid md:grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Биология
+              {t('application.education.biology')}
             </label>
             <input
               type="number"
@@ -643,7 +643,7 @@ ${data.firstName} ${data.lastName}
           
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Химия
+              {t('application.education.chemistry')}
             </label>
             <input
               type="number"
@@ -659,7 +659,7 @@ ${data.firstName} ${data.lastName}
           
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Физика
+              {t('application.education.physics')}
             </label>
             <input
               type="number"
@@ -675,7 +675,7 @@ ${data.firstName} ${data.lastName}
           
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Математика
+              {t('application.education.mathematics')}
             </label>
             <input
               type="number"
@@ -696,14 +696,14 @@ ${data.firstName} ${data.lastName}
   const renderStep4 = () => (
     <div className="space-y-6">
       <div className="text-center mb-8">
-        <h3 className="text-2xl font-bold text-gray-800 mb-2">Загрузка документов</h3>
-        <p className="text-gray-600">Прикрепите необходимые документы</p>
+        <h3 className="text-2xl font-bold text-gray-800 mb-2">{t('application.stepTitles.step4')}</h3>
+        <p className="text-gray-600">{t('application.documents.description')}</p>
       </div>
       
       <div className="space-y-6">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Аттестат о среднем образовании *
+            {t('application.documents.certificate')} *
           </label>
           <input
             type="file"
@@ -713,7 +713,7 @@ ${data.firstName} ${data.lastName}
           />
           {formData.documents.certificate && (
             <div className="text-green-600 text-sm mt-1 flex items-center">
-              ✓ Файл загружен: {formData.documents.certificate.name}
+              ✓ {t('application.documents.fileUploaded')}: {formData.documents.certificate.name}
             </div>
           )}
           {errors.certificate && <div className="text-red-600 text-sm mt-1">{errors.certificate}</div>}
@@ -721,7 +721,7 @@ ${data.firstName} ${data.lastName}
         
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Паспорт (все страницы) *
+            {t('application.documents.passport')} *
           </label>
           <input
             type="file"
@@ -731,7 +731,7 @@ ${data.firstName} ${data.lastName}
           />
           {formData.documents.passport && (
             <div className="text-green-600 text-sm mt-1 flex items-center">
-              ✓ Файл загружен: {formData.documents.passport.name}
+              ✓ {t('application.documents.fileUploaded')}: {formData.documents.passport.name}
             </div>
           )}
           {errors.passport && <div className="text-red-600 text-sm mt-1">{errors.passport}</div>}
@@ -739,7 +739,7 @@ ${data.firstName} ${data.lastName}
         
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Медицинская справка 086У *
+            {t('application.documents.medical')} *
           </label>
           <input
             type="file"
@@ -749,7 +749,7 @@ ${data.firstName} ${data.lastName}
           />
           {formData.documents.medical && (
             <div className="text-green-600 text-sm mt-1 flex items-center">
-              ✓ Файл загружен: {formData.documents.medical.name}
+              ✓ {t('application.documents.fileUploaded')}: {formData.documents.medical.name}
             </div>
           )}
           {errors.medical && <div className="text-red-600 text-sm mt-1">{errors.medical}</div>}
@@ -757,7 +757,7 @@ ${data.firstName} ${data.lastName}
         
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Фотографии 3x4 см
+            {t('application.documents.photos')}
           </label>
           <input
             type="file"
@@ -768,14 +768,14 @@ ${data.firstName} ${data.lastName}
           />
           {formData.documents.photos && formData.documents.photos.length > 0 && (
             <div className="text-green-600 text-sm mt-1 flex items-center">
-              ✓ Загружено фото: {formData.documents.photos.length} шт.
+              ✓ {t('application.documents.photosUploaded')}: {formData.documents.photos.length} шт.
             </div>
           )}
         </div>
         
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Сертификат ОРТ
+            {t('application.documents.ortCertificate')}
           </label>
           <input
             type="file"
@@ -785,20 +785,20 @@ ${data.firstName} ${data.lastName}
           />
           {formData.documents.ortCertificate && (
             <div className="text-green-600 text-sm mt-1 flex items-center">
-              ✓ Файл загружен: {formData.documents.ortCertificate.name}
+              ✓ {t('application.documents.fileUploaded')}: {formData.documents.ortCertificate.name}
             </div>
           )}
         </div>
       </div>
       
       <div className="bg-blue-50 p-4 rounded-lg">
-        <h4 className="font-semibold text-blue-800 mb-2">📋 Требования к документам</h4>
+        <h4 className="font-semibold text-blue-800 mb-2">📋 {t('application.documents.requirements.title')}</h4>
         <ul className="text-sm text-blue-700 space-y-1">
-          <li>• Документы должны быть в формате PDF, JPG или PNG</li>
-          <li>• Максимальный размер файла - 5 МБ</li>
-          <li>• Документы должны быть четкими и читаемыми</li>
-          <li>• Все страницы паспорта должны быть в одном файле</li>
-          <li>• Фотографии должны быть размером 3x4 см</li>
+          <li>• {t('application.documents.requirements.format')}</li>
+          <li>• {t('application.documents.requirements.size')}</li>
+          <li>• {t('application.documents.requirements.quality')}</li>
+          <li>• {t('application.documents.requirements.passport')}</li>
+          <li>• {t('application.documents.requirements.photos')}</li>
         </ul>
       </div>
     </div>
@@ -807,8 +807,8 @@ ${data.firstName} ${data.lastName}
   const renderStep5 = () => (
     <div className="space-y-6">
       <div className="text-center mb-8">
-        <h3 className="text-2xl font-bold text-gray-800 mb-2">Подтверждение заявки</h3>
-        <p className="text-gray-600">Проверьте данные перед отправкой</p>
+        <h3 className="text-2xl font-bold text-gray-800 mb-2">{t('application.stepTitles.step5')}</h3>
+        <p className="text-gray-600">{t('application.confirmation.description')}</p>
       </div>
       
       <div className="space-y-6">
@@ -816,7 +816,7 @@ ${data.firstName} ${data.lastName}
         <div className="bg-green-50 p-6 rounded-lg border-l-4 border-green-600">
           <div className="flex items-center mb-3">
             <span className="text-2xl mr-3">📋</span>
-            <h4 className="font-semibold text-gray-800 text-lg">Выбранная программа</h4>
+            <h4 className="font-semibold text-gray-800 text-lg">{t('application.confirmation.selectedProgram')}</h4>
           </div>
           <div className="grid md:grid-cols-2 gap-4">
             <div>
@@ -835,15 +835,15 @@ ${data.firstName} ${data.lastName}
         <div className="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-600">
           <div className="flex items-center mb-3">
             <span className="text-2xl mr-3">👤</span>
-            <h4 className="font-semibold text-gray-800 text-lg">Личные данные</h4>
+            <h4 className="font-semibold text-gray-800 text-lg">{t('application.confirmation.personalData')}</h4>
           </div>
           <div className="grid md:grid-cols-2 gap-4">
             <div>
               <p className="font-medium text-gray-800">
                 {formData.lastName} {formData.firstName} {formData.middleName}
               </p>
-              <p className="text-gray-600 text-sm">Дата рождения: {formData.birthDate}</p>
-              {formData.gender && <p className="text-gray-600 text-sm">Пол: {formData.gender === 'male' ? 'Мужской' : 'Женский'}</p>}
+              <p className="text-gray-600 text-sm">{t('application.personalInfo.birthDate')}: {formData.birthDate}</p>
+              {formData.gender && <p className="text-gray-600 text-sm">{t('application.personalInfo.gender')}: {formData.gender === 'male' ? t('application.personalInfo.male') : t('application.personalInfo.female')}</p>}
             </div>
             <div className="text-sm text-gray-600">
               <p>📞 {formData.phone}</p>
@@ -857,26 +857,26 @@ ${data.firstName} ${data.lastName}
         <div className="bg-yellow-50 p-6 rounded-lg border-l-4 border-yellow-600">
           <div className="flex items-center mb-3">
             <span className="text-2xl mr-3">🎓</span>
-            <h4 className="font-semibold text-gray-800 text-lg">Образование</h4>
+            <h4 className="font-semibold text-gray-800 text-lg">{t('application.confirmation.education')}</h4>
           </div>
           <div className="grid md:grid-cols-2 gap-4">
             <div>
               <p className="font-medium text-gray-800">{formData.schoolName}</p>
-              <p className="text-gray-600 text-sm">Год окончания: {formData.graduationYear}</p>
-              {formData.certificateNumber && <p className="text-gray-600 text-sm">Аттестат №: {formData.certificateNumber}</p>}
+              <p className="text-gray-600 text-sm">{t('application.education.graduationYear')}: {formData.graduationYear}</p>
+              {formData.certificateNumber && <p className="text-gray-600 text-sm">{t('application.education.certificateNumber')} №: {formData.certificateNumber}</p>}
             </div>
             <div className="text-sm text-gray-600">
-              <p>ОРТ: {formData.ortScore} баллов</p>
+              <p>{t('application.education.ortScore')}: {formData.ortScore} баллов</p>
               {Object.entries(formData.subjects).some(([, value]) => value) && (
                 <div className="mt-2">
-                  <p className="font-medium">Оценки по предметам:</p>
+                  <p className="font-medium">{t('application.education.subjects')}:</p>
                   {Object.entries(formData.subjects).map(([subject, grade]) => 
                     grade && (
                       <span key={subject} className="inline-block mr-3">
-                        {subject === 'biology' && 'Биология'} 
-                        {subject === 'chemistry' && 'Химия'} 
-                        {subject === 'physics' && 'Физика'} 
-                        {subject === 'mathematics' && 'Математика'}: {grade}
+                        {subject === 'biology' && t('application.education.biology')} 
+                        {subject === 'chemistry' && t('application.education.chemistry')} 
+                        {subject === 'physics' && t('application.education.physics')} 
+                        {subject === 'mathematics' && t('application.education.mathematics')}: {grade}
                       </span>
                     )
                   )}
@@ -890,31 +890,31 @@ ${data.firstName} ${data.lastName}
         <div className="bg-purple-50 p-6 rounded-lg border-l-4 border-purple-600">
           <div className="flex items-center mb-3">
             <span className="text-2xl mr-3">📄</span>
-            <h4 className="font-semibold text-gray-800 text-lg">Загруженные документы</h4>
+            <h4 className="font-semibold text-gray-800 text-lg">{t('application.confirmation.uploadedDocuments')}</h4>
           </div>
           <div className="grid md:grid-cols-2 gap-4 text-sm text-gray-600">
             <div>
               <p className="flex items-center">
                 {formData.documents.certificate ? '✅' : '❌'} 
-                <span className="ml-2">Аттестат</span>
+                <span className="ml-2">{t('application.documents.certificate')}</span>
               </p>
               <p className="flex items-center">
                 {formData.documents.passport ? '✅' : '❌'} 
-                <span className="ml-2">Паспорт</span>
+                <span className="ml-2">{t('application.documents.passport')}</span>
               </p>
               <p className="flex items-center">
                 {formData.documents.medical ? '✅' : '❌'} 
-                <span className="ml-2">Медицинская справка</span>
+                <span className="ml-2">{t('application.documents.medical')}</span>
               </p>
             </div>
             <div>
               <p className="flex items-center">
                 {formData.documents.photos?.length > 0 ? '✅' : '⚪'} 
-                <span className="ml-2">Фотографии (необязательно)</span>
+                <span className="ml-2">{t('application.documents.photos')} (необязательно)</span>
               </p>
               <p className="flex items-center">
                 {formData.documents.ortCertificate ? '✅' : '⚪'} 
-                <span className="ml-2">Сертификат ОРТ (необязательно)</span>
+                <span className="ml-2">{t('application.documents.ortCertificate')} (необязательно)</span>
               </p>
             </div>
           </div>
@@ -923,31 +923,31 @@ ${data.firstName} ${data.lastName}
       
       {/* Edit buttons */}
       <div className="bg-gray-50 p-4 rounded-lg">
-        <h4 className="font-semibold text-gray-800 mb-3">Нужно что-то изменить?</h4>
+        <h4 className="font-semibold text-gray-800 mb-3">{t('application.confirmation.editSections')}</h4>
         <div className="flex flex-wrap gap-2">
           <button 
             onClick={() => setCurrentStep(1)}
             className="px-3 py-1 bg-green-100 text-green-700 rounded text-sm hover:bg-green-200"
           >
-            ✏️ Программа
+            ✏️ {t('application.confirmation.editProgram')}
           </button>
           <button 
             onClick={() => setCurrentStep(2)}
             className="px-3 py-1 bg-blue-100 text-blue-700 rounded text-sm hover:bg-blue-200"
           >
-            ✏️ Личные данные
+            ✏️ {t('application.confirmation.editPersonal')}
           </button>
           <button 
             onClick={() => setCurrentStep(3)}
             className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded text-sm hover:bg-yellow-200"
           >
-            ✏️ Образование
+            ✏️ {t('application.confirmation.editEducation')}
           </button>
           <button 
             onClick={() => setCurrentStep(4)}
             className="px-3 py-1 bg-purple-100 text-purple-700 rounded text-sm hover:bg-purple-200"
           >
-            ✏️ Документы
+            ✏️ {t('application.confirmation.editDocuments')}
           </button>
         </div>
       </div>
@@ -961,10 +961,10 @@ ${data.firstName} ${data.lastName}
             className="mt-1 mr-3"
           />
           <span className="text-sm text-gray-700">
-            Я согласен(а) с{' '}
-            <a href="#" className="text-blue-600 underline">правилами поступления</a>
-            {' '}и{' '}
-            <a href="#" className="text-blue-600 underline">условиями обучения</a>
+            {t('application.confirmation.agreeTerms')}{' '}
+            <a href="#" className="text-blue-600 underline">{t('application.confirmation.rulesLink')}</a>
+            {' '} и {' '}
+            <a href="#" className="text-blue-600 underline">{t('application.confirmation.conditionsLink')}</a>
           </span>
         </label>
         {errors.agreeTerms && <div className="text-red-600 text-sm">{errors.agreeTerms}</div>}
@@ -977,8 +977,8 @@ ${data.firstName} ${data.lastName}
             className="mt-1 mr-3"
           />
           <span className="text-sm text-gray-700">
-            Я даю согласие на{' '}
-            <a href="#" className="text-blue-600 underline">обработку персональных данных</a>
+            {t('application.confirmation.agreePrivacy')}{' '}
+            <a href="#" className="text-blue-600 underline">{t('application.confirmation.privacyLink')}</a>
           </span>
         </label>
         {errors.agreePrivacy && <div className="text-red-600 text-sm">{errors.agreePrivacy}</div>}
@@ -1004,13 +1004,13 @@ ${data.firstName} ${data.lastName}
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              Онлайн заявка
+              {t('application.title')}
             </h1>
             <p className="text-xl opacity-90 mb-2">
-              Подайте заявку на поступление в Салымбеков Университет
+              {t('application.subtitle')}
             </p>
             <p className="text-sm opacity-75">
-              💾 Ваши данные автоматически сохраняются каждую секунду
+              💾 {t('application.autosave')}
             </p>
           </div>
         </div>
@@ -1045,7 +1045,7 @@ ${data.firstName} ${data.lastName}
           
           <div className="text-center">
             <h2 className="text-xl font-semibold text-gray-800 mb-2">
-              Шаг {currentStep} из {steps.length}: {steps[currentStep - 1].title}
+              {t('application.progress.step')} {currentStep} {t('application.progress.of')} {steps.length}: {steps[currentStep - 1].title}
             </h2>
             <div className="w-full bg-gray-200 rounded-full h-2 mt-4">
               <div 
@@ -1054,7 +1054,7 @@ ${data.firstName} ${data.lastName}
               ></div>
             </div>
             <p className="text-sm text-gray-500 mt-2">
-              Прогресс: {Math.round((currentStep / steps.length) * 100)}%
+              {t('application.progress.progress')}: {Math.round((currentStep / steps.length) * 100)}%
             </p>
           </div>
         </div>
@@ -1076,33 +1076,33 @@ ${data.firstName} ${data.lastName}
                   : 'bg-gray-600 text-white hover:bg-gray-700 shadow-md'
               }`}
             >
-              ← Назад
+              ← {t('application.navigation.previous')}
             </button>
             
             <button
               onClick={saveDraft}
               className="px-4 py-2 bg-yellow-500 text-white rounded-lg font-medium hover:bg-yellow-600 text-sm shadow-md"
             >
-              💾 Сохранить черновик
+              💾 {t('application.navigation.saveDraft')}
             </button>
             
             <button
               onClick={clearDraft}
               className="px-4 py-2 bg-red-500 text-white rounded-lg font-medium hover:bg-red-600 text-sm shadow-md"
             >
-              🗑️ Очистить форму
+              🗑️ {t('application.navigation.clearForm')}
             </button>
           </div>
           
           <div className="flex items-center space-x-4">
             {isDraftLoaded && (
               <span className="text-sm text-blue-600 font-medium animate-pulse">
-                📂 Черновик загружен
+                📂 {t('application.status.draftLoaded')}
               </span>
             )}
             {isDraftSaved && (
               <span className="text-sm text-green-600 font-medium animate-pulse">
-                ✓ Черновик сохранен
+                ✓ {t('application.status.draftSaved')}
               </span>
             )}
             
@@ -1111,14 +1111,14 @@ ${data.firstName} ${data.lastName}
                 onClick={nextStep}
                 className="px-8 py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 shadow-md transition-all"
               >
-                Далее →
+                {t('application.navigation.next')} →
               </button>
             ) : (
               <button
                 onClick={submitApplication}
                 className="px-10 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 shadow-lg transition-all"
               >
-                📤 Отправить заявку
+                📤 {t('application.navigation.submit')}
               </button>
             )}
           </div>
@@ -1127,16 +1127,16 @@ ${data.firstName} ${data.lastName}
         {/* Help Information */}
         <div className="mt-12 bg-blue-50 p-6 rounded-lg">
           <h4 className="font-semibold text-blue-800 mb-3">
-            🆘 Нужна помощь при заполнении?
+            🆘 {t('application.help.title')}
           </h4>
           <div className="grid md:grid-cols-2 gap-4 text-sm text-blue-700">
             <div>
-              <p>📞 Телефон: +996 312 123 456</p>
-              <p>✉️ Email: admission@salymbekov.edu.kg</p>
+              <p>📞 {t('application.help.phone')}</p>
+              <p>✉️ {t('application.help.email')}</p>
             </div>
             <div>
-              <p>🕐 Часы работы: Пн-Пт 09:00-18:00</p>
-              <p>💾 Ваши данные автоматически сохраняются</p>
+              <p>🕐 {t('application.help.hours')}</p>
+              <p>💾 {t('application.help.autosave')}</p>
             </div>
           </div>
         </div>

@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import './i18n';
+import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import Navbar from './components/Navbar';
 import './App.css';
 import Footer from "./components/Footer";
@@ -44,6 +45,16 @@ import Contacts from "./components/Contacts/contacts";
 const Page = ({ title }) => <h1 className="text-2xl font-bold p-8">{title}</h1>;
 
 function App() {
+  const { i18n } = useTranslation();
+
+  // Инициализация сохраненного языка при загрузке приложения
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem('i18nextLng');
+    if (savedLanguage && ['ru', 'kg', 'en'].includes(savedLanguage)) {
+      i18n.changeLanguage(savedLanguage);
+    }
+  }, [i18n]);
+
   return (
     <Router>
       <div className="App">

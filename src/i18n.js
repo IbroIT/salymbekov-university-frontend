@@ -26,6 +26,13 @@ i18n
     resources,
     fallbackLng: 'ru',
     debug: false,
+    detection: {
+      order: ['localStorage', 'sessionStorage', 'navigator', 'htmlTag'],
+      lookupLocalStorage: 'i18nextLng',
+      lookupSessionStorage: 'i18nextLng',
+      caches: ['localStorage', 'sessionStorage'],
+      excludeCacheFor: ['cimode'] // не кешировать язык при тестировании
+    },
     interpolation: {
       escapeValue: false
     }

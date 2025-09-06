@@ -12,38 +12,38 @@ const FAQ = () => {
   const [submitStatus, setSubmitStatus] = useState(null);
 
   const categories = [
-    { id: 'general', name: 'Общие вопросы', icon: '❓', count: 8 },
-    { id: 'documents', name: 'Документы', icon: '📄', count: 6 },
-    { id: 'exams', name: 'Экзамены', icon: '✍️', count: 7 },
-    { id: 'payment', name: 'Оплата', icon: '💰', count: 5 },
-    { id: 'hostel', name: 'Общежитие', icon: '🏠', count: 4 }
+    { id: 'general', name: t('admissions.faq.categories.general'), icon: '❓', count: 8 },
+    { id: 'documents', name: t('admissions.faq.categories.documents'), icon: '📄', count: 6 },
+    { id: 'exams', name: t('admissions.faq.categories.exams'), icon: '✍️', count: 7 },
+    { id: 'payment', name: t('admissions.faq.categories.payment'), icon: '💰', count: 5 },
+    { id: 'hostel', name: t('admissions.faq.categories.hostel'), icon: '🏠', count: 4 }
   ];
 
   const faqs = {
     general: [
       {
-        question: 'Когда начинается прием документов?',
-        answer: 'Прием документов в Салымбеков Университет начинается 1 июля и продолжается до 15 августа каждого года. Документы можно подавать как лично в приемной комиссии, так и онлайн через наш сайт.'
+        question: t('admissions.faq.questions.general.q1'),
+        answer: t('admissions.faq.questions.general.a1')
       },
       {
-        question: 'Какие программы обучения предлагает университет?',
-        answer: 'Салымбеков Университет предлагает программы по направлениям: Лечебное дело, Стоматология, Фармация, Сестринское дело. Все программы аккредитованы Министерством образования и науки КР.'
+        question: t('admissions.faq.questions.general.q2'),
+        answer: t('admissions.faq.questions.general.a2')
       },
       {
-        question: 'Сколько лет длится обучение?',
-        answer: 'Продолжительность обучения зависит от программы: Лечебное дело - 6 лет, Стоматология и Фармация - 5 лет, Сестринское дело - 4 года.'
+        question: t('admissions.faq.questions.general.q3'),
+        answer: t('admissions.faq.questions.general.a3')
       },
       {
-        question: 'На каких языках ведется обучение?',
-        answer: 'Обучение ведется на русском и кыргызском языках. Студент может выбрать предпочтительный язык обучения при поступлении.'
+        question: t('admissions.faq.questions.general.q4'),
+        answer: t('admissions.faq.questions.general.a4')
       },
       {
-        question: 'Есть ли практика в зарубежных клиниках?',
-        answer: 'Да, университет сотрудничает с ведущими медицинскими центрами Германии, Турции и других стран. Лучшие студенты могут пройти стажировку за рубежом.'
+        question: t('admissions.faq.questions.general.q5'),
+        answer: t('admissions.faq.questions.general.a5')
       },
       {
-        question: 'Признается ли диплом за пределами Кыргызстана?',
-        answer: 'Диплом Салымбеков Университета признается в странах СНГ. Для работы в других странах может потребоваться дополнительная сертификация согласно местному законодательству.'
+        question: t('admissions.faq.questions.general.q6'),
+        answer: t('admissions.faq.questions.general.a6')
       },
       {
         question: 'Есть ли программы обмена студентами?',
@@ -229,10 +229,10 @@ const FAQ = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              Часто задаваемые вопросы
+              {t('admissions.faq.title')}
             </h1>
             <p className="text-xl opacity-90">
-              Найдите ответы на популярные вопросы о поступлении
+              {t('admissions.faq.subtitle')}
             </p>
           </div>
         </div>
@@ -243,12 +243,12 @@ const FAQ = () => {
         <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
           <div className="max-w-2xl mx-auto">
             <h2 className="text-xl font-semibold mb-4 text-center text-gray-800">
-              Поиск по вопросам
+              {t('admissions.faq.search')}
             </h2>
             <div className="relative">
               <input
                 type="text"
-                placeholder="Введите ключевое слово для поиска (например: экзамен, справка, стоимость)..."
+                placeholder={t('admissions.faq.search')}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full p-4 pl-12 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
@@ -278,7 +278,7 @@ const FAQ = () => {
           <div className="lg:col-span-1">
             <div className="bg-white rounded-lg shadow-lg p-6 sticky top-4">
               <h3 className="text-lg font-semibold mb-4 text-gray-800">
-                Категории
+                {t('admissions.faq.categoriesTitle')}
               </h3>
               <div className="space-y-2">
                 {categories.map(category => (
@@ -306,7 +306,7 @@ const FAQ = () => {
                 onClick={() => setShowQuestionForm(true)}
                 className="w-full mt-6 bg-indigo-600 text-white p-3 rounded-lg hover:bg-indigo-700 transition-colors font-medium"
               >
-                Задать вопрос
+                {t('admissions.faq.askQuestion')}
               </button>
             </div>
           </div>
@@ -332,7 +332,7 @@ const FAQ = () => {
                   ) : (
                     <>
                       <div className="text-4xl mb-4">📝</div>
-                      <p>В этой категории пока нет вопросов</p>
+                      <p>{t('admissions.faq.noQuestionsInCategory')}</p>
                     </>
                   )}
                 </div>
@@ -415,7 +415,7 @@ const FAQ = () => {
                     value={newQuestion.name}
                     onChange={(e) => setNewQuestion({...newQuestion, name: e.target.value})}
                     className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                    placeholder="Введите ваше имя"
+                    placeholder={t('admissions.faq.yourName')}
                     disabled={isSubmitting}
                   />
                 </div>
@@ -430,7 +430,7 @@ const FAQ = () => {
                     value={newQuestion.email}
                     onChange={(e) => setNewQuestion({...newQuestion, email: e.target.value})}
                     className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                    placeholder="your.email@example.com"
+                    placeholder={t('admissions.faq.yourEmail')}
                     disabled={isSubmitting}
                   />
                 </div>
@@ -445,7 +445,7 @@ const FAQ = () => {
                     value={newQuestion.question}
                     onChange={(e) => setNewQuestion({...newQuestion, question: e.target.value})}
                     className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                    placeholder="Подробно опишите ваш вопрос..."
+                    placeholder={t('admissions.faq.yourQuestion')}
                     disabled={isSubmitting}
                   />
                 </div>
@@ -504,41 +504,41 @@ const FAQ = () => {
         {/* Contact Information */}
         <div className="mt-12 bg-white rounded-lg shadow-lg p-8">
           <h3 className="text-2xl font-bold mb-8 text-gray-800 text-center">
-            Не нашли ответ на свой вопрос?
+            {t('admissions.faq.contactTitle')}
           </h3>
           
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center">
               <div className="text-4xl mb-3">📞</div>
-              <h4 className="font-semibold text-gray-800 mb-2">Приемная комиссия</h4>
+              <h4 className="font-semibold text-gray-800 mb-2">{t('admissions.faq.admissionsOffice')}</h4>
               <p className="text-indigo-600 font-medium text-lg">+996 312 123 456</p>
-              <p className="text-gray-600 mt-1">Пн-Пт: 09:00 - 18:00</p>
-              <p className="text-gray-600">Сб: 09:00 - 14:00</p>
+              <p className="text-gray-600 mt-1">{t('admissions.faq.schedule')}</p>
+              <p className="text-gray-600">{t('admissions.faq.saturdaySchedule')}</p>
             </div>
             
             <div className="text-center">
               <div className="text-4xl mb-3">✉️</div>
-              <h4 className="font-semibold text-gray-800 mb-2">Email</h4>
+              <h4 className="font-semibold text-gray-800 mb-2">{t('admissions.faq.email')}</h4>
               <p className="text-indigo-600 font-medium">admission@salymbekov.edu.kg</p>
-              <p className="text-gray-600 mt-1">Ответим в течение 24 часов</p>
+              <p className="text-gray-600 mt-1">{t('admissions.faq.responseTime24')}</p>
             </div>
             
             <div className="text-center">
               <div className="text-4xl mb-3">💬</div>
-              <h4 className="font-semibold text-gray-800 mb-2">WhatsApp</h4>
+              <h4 className="font-semibold text-gray-800 mb-2">{t('admissions.faq.whatsapp')}</h4>
               <p className="text-indigo-600 font-medium">+996 700 123 456</p>
-              <p className="text-gray-600 mt-1">Быстрый ответ в рабочее время</p>
+              <p className="text-gray-600 mt-1">{t('admissions.faq.quickResponse')}</p>
             </div>
           </div>
 
           <div className="mt-8 pt-6 border-t border-gray-200">
             <div className="text-center">
-              <h4 className="font-semibold text-gray-800 mb-4">Офис приемной комиссии</h4>
+              <h4 className="font-semibold text-gray-800 mb-4">{t('admissions.faq.officeTitle')}</h4>
               <p className="text-gray-600">
                 г. Бишкек, ул. Ахунбаева 92/1, 1 этаж, каб. 101
               </p>
               <p className="text-gray-600 mt-2">
-                📍 <span className="text-indigo-600 hover:underline cursor-pointer">Показать на карте</span>
+                📍 <span className="text-indigo-600 hover:underline cursor-pointer">{t('admissions.faq.showOnMap')}</span>
               </p>
             </div>
           </div>
