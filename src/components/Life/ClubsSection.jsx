@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const ClubsSection = () => {
+  const { t } = useTranslation();
   const [clubs, setClubs] = useState([]);
   const [hoveredClub, setHoveredClub] = useState(null);
 
@@ -9,45 +11,45 @@ const ClubsSection = () => {
     const loadedClubs = [
       {
         id: 1,
-        name: "Медицинский волонтерский отряд",
+        name: t('clubs.medical.name'),
         members: 50,
-        description: "Помощь медицинским учреждениям и проведение health-check мероприятий",
+        description: t('clubs.medical.description'),
         icon: "🩺"
       },
       {
         id: 2,
-        name: "Научное студенческое общество",
+        name: t('clubs.science.name'),
         members: 35,
-        description: "Исследования, конференции и научные публикации для студентов",
+        description: t('clubs.science.description'),
         icon: "🔬"
       },
       {
         id: 3,
-        name: "Спортивный клуб",
+        name: t('clubs.sports.name'),
         members: 120,
-        description: "Тренировки, соревнования и пропаганда здорового образа жизни",
+        description: t('clubs.sports.description'),
         icon: "⚽"
       },
       {
         id: 4,
-        name: "Культурный центр",
+        name: t('clubs.cultural.name'),
         members: 45,
-        description: "Организация мероприятий, выставок и творческих вечеров",
+        description: t('clubs.cultural.description'),
         icon: "🎭"
       }
     ];
     setClubs(loadedClubs);
-  }, []);
+  }, [t]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-extrabold text-blue-900 sm:text-4xl">
-            Студенческие клубы
+            {t('clubs.title')}
           </h2>
           <p className="mt-3 text-xl text-blue-700">
-            Присоединяйтесь к сообществам по интересам и развивайтесь вместе с нами
+            {t('clubs.subtitle')}
           </p>
         </div>
         
@@ -69,7 +71,7 @@ const ClubsSection = () => {
                     {club.icon}
                   </div>
                   <div className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">
-                    {club.members} участников
+                    {club.members} {t('clubs.members')}
                   </div>
                 </div>
                 
@@ -87,7 +89,7 @@ const ClubsSection = () => {
                   </div>
                   
                   <button className="mt-4 w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-300">
-                    Подробнее
+                    {t('clubs.detailsButton')}
                     <svg className="ml-2 -mr-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                       <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd"></path>
                     </svg>
@@ -105,7 +107,7 @@ const ClubsSection = () => {
         
         <div className="text-center mt-12">
           <button className="inline-flex items-center px-6 py-3 border border-blue-600 text-base font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300 transform hover:-translate-y-1">
-            Все клубы кампуса
+            {t('clubs.allClubsButton')}
             <svg className="ml-2 -mr-1 h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
               <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd"></path>
             </svg>

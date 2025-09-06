@@ -562,8 +562,496 @@
     "next": "Next",
     "submitting": "Submitting",
     "months": {
-      "jun": "JUNE",
-      "aug": "AUGUST"
+      "jun": "JUN",
+      "aug": "AUG"
+    }
+  },
+   "tuition": {
+    "title": "Tuition Fees",
+    "subtitle": "Learn about tuition costs and available discounts",
+    "comparisonTable": {
+      "title": "Cost Comparison Table",
+      "program": "Program",
+      "semester": "Semester",
+      "year": "Academic Year",
+      "totalCost": "Total Cost",
+      "availableDiscounts": "Available Discounts"
+    },
+    "calculator": {
+      "title": "Cost Calculator",
+      "selectProgram": "Select Program",
+      "selectDiscount": "Select Discount",
+      "noDiscount": "No discount",
+      "calculation": "Cost Calculation",
+      "program": "Program",
+      "semesterCost": "Cost per semester",
+      "withDiscountSemester": "With discount per semester",
+      "yearCost": "Cost per year",
+      "withDiscountYear": "With discount per year",
+      "totalCost": "Total cost ({years} years)",
+      "savings": "Savings"
+    },
+    "paymentMethods": {
+      "title": "Payment Methods",
+      "bankTransfer": {
+        "title": "Bank Transfer",
+        "description": "Transfers through bank branches",
+        "details": {
+          "recipient": "Recipient: Salymbekov University LLC",
+          "inn": "TIN: 12345678901234",
+          "account": "Account: 1234567890123456789",
+          "bank": "Bank: KICB"
+        }
+      },
+      "online": {
+        "title": "Online Payment",
+        "description": "Payment via internet banking",
+        "details": {
+          "elsom": "Elsom",
+          "balance": "Balance.kg",
+          "omoney": "O! Money",
+          "megapay": "MegaPay"
+        }
+      },
+      "cash": {
+        "title": "Cash Payment",
+        "description": "Payment at university cash desk",
+        "details": {
+          "address": "Address: Bishkek, Akhunbaeva St. 92",
+          "hours": "Working hours: 09:00 - 18:00",
+          "weekends": "Weekends: Saturday, Sunday"
+        }
+      }
+    },
+    "programs": {
+      "medicine": "General Medicine",
+      "dentistry": "Dentistry",
+      "pharmacy": "Pharmacy",
+      "nursing": "Nursing"
+    },
+    "discounts": {
+      "excellent": "10% for excellent students",
+      "excellentDentistry": "8% for excellent students",
+      "early": "5% for early payment",
+      "earlyNursing": "3% for early payment"
+    },
+    "tips": {
+      "title": "Useful Tips",
+      "earlyPayment": "Pay tuition in advance and get a discount",
+      "excellentGrades": "Excellent academic performance gives right to discount",
+      "installment": "Installment payment by semesters is available",
+      "discountsNotCombined": "Discounts cannot be combined"
+    },
+    "contact": {
+      "title": "Payment Questions?",
+      "description": "Contact the student affairs department",
+      "phone": "Phone",
+      "email": "Email",
+      "hours": "Working hours"
+    }
+  },
+  "common": {
+    "currency": "KGS"
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Find answers to common questions about admission",
+    "categories": {
+      "title": "Categories",
+      "general": "General Questions",
+      "documents": "Documents",
+      "exams": "Exams",
+      "payment": "Payment",
+      "hostel": "Dormitory"
+    },
+    "search": {
+      "title": "Search Questions",
+      "placeholder": "Enter keyword to search (e.g.: exam, certificate, cost)...",
+      "results": "Found {count} result(s) for \"{term}\"",
+      "resultsTitle": "Search results: \"{term}\"",
+      "noResults": "No results found for your query",
+      "tryDifferent": "Try different keywords or select a category"
+    },
+    "askQuestion": "Ask a Question",
+    "category": "Category",
+    "noQuestions": "No questions in this category yet",
+    "form": {
+      "name": "Your Name",
+      "namePlaceholder": "Enter your name",
+      "email": "Email",
+      "emailPlaceholder": "your.email@example.com",
+      "question": "Your Question",
+      "questionPlaceholder": "Please describe your question in detail...",
+      "submit": "Submit",
+      "submitting": "Submitting...",
+      "cancel": "Cancel",
+      "success": "Your question has been sent successfully! We will respond shortly.",
+      "error": "An error occurred while submitting. Please try again."
+    },
+    "contact": {
+      "title": "Didn't find an answer to your question?",
+      "admissionOffice": "Admission Office",
+      "hours": {
+        "weekdays": "Mon-Fri: 09:00 - 18:00",
+        "saturday": "Sat: 09:00 - 14:00"
+      },
+      "responseTime": "Response within 24 hours",
+      "whatsapp": "Quick response during working hours",
+      "officeAddress": "Admission Office Address",
+      "address": "Bishkek, Akhunbaeva St. 92/1, 1st floor, room 101",
+      "showMap": "Show on map"
+    },
+    "questions": {
+      "general": {
+        "admissionStart": "When does the document submission start?",
+        "programs": "What study programs does the university offer?",
+        "duration": "How many years does the study last?",
+        "languages": "In which languages is teaching conducted?",
+        "internship": "Is there practice in foreign clinics?",
+        "diplomaRecognition": "Is the diploma recognized outside Kyrgyzstan?",
+        "exchangePrograms": "Are there student exchange programs?",
+        "militaryDeferment": "Is military service deferment provided?"
+      },
+      "documents": {
+        "required": "What documents are required for admission?",
+        "nostrification": "Do I need to nostrify a diploma obtained in another country?",
+        "medicalValidity": "What is the validity period of the medical certificate?",
+        "onlineSubmission": "Can I submit documents online?",
+        "translation": "Are translations of documents into Kyrgyz language needed?",
+        "lostDocuments": "What to do if I lost my documents?"
+      },
+      "exams": {
+        "subjects": "What subjects are included in entrance exams?",
+        "dates": "When do entrance exams take place?",
+        "minimumScore": "Minimum score for admission?",
+        "retake": "Can I retake exams?",
+        "preparation": "How to prepare for entrance exams?",
+        "format": "In what format are exams conducted?",
+        "benefits": "Are there benefits for admission?"
+      },
+      "payment": {
+        "cost": "What is the tuition fee for 2024-2025?",
+        "discounts": "Are there tuition discounts?",
+        "installment": "Can I pay tuition in installments?",
+        "methods": "What payment methods are available?",
+        "included": "What is included in the tuition fee?"
+      },
+      "hostel": {
+        "availability": "Is there a dormitory for students?",
+        "cost": "What is the cost of living in the dormitory?",
+        "conditions": "What are the conditions in the dormitory?",
+        "application": "How to apply for the dormitory?"
+      }
+    },
+    "answers": {
+      "general": {
+        "admissionStart": "Document submission at Salymbekov University starts on July 1 and continues until August 15 each year. Documents can be submitted in person at the admission office or online through our website.",
+        "programs": "Salymbekov University offers programs in: General Medicine, Dentistry, Pharmacy, Nursing. All programs are accredited by the Ministry of Education and Science of the Kyrgyz Republic.",
+        "duration": "Study duration depends on the program: General Medicine - 6 years, Dentistry and Pharmacy - 5 years, Nursing - 4 years.",
+        "languages": "Teaching is conducted in Russian and Kyrgyz languages. Students can choose their preferred language of instruction upon admission.",
+        "internship": "Yes, the university cooperates with leading medical centers in Germany, Turkey and other countries. The best students can do internships abroad.",
+        "diplomaRecognition": "Salymbekov University diploma is recognized in CIS countries. For work in other countries, additional certification according to local legislation may be required.",
+        "exchangePrograms": "Yes, the university participates in academic mobility programs with partner universities in Russia, Kazakhstan, Turkey and other countries.",
+        "militaryDeferment": "Yes, full-time students receive deferment from military service for the entire study period according to the legislation of the Kyrgyz Republic."
+      },
+      "documents": {
+        "required": "Required documents: high school diploma, passport, medical certificate form 086U, ORT certificate, photos 3x4 (6 pcs), family composition certificate, income certificate (for benefits).",
+        "nostrification": "Yes, education documents obtained outside the Kyrgyz Republic are subject to mandatory nostrification in relevant state authorities.",
+        "medicalValidity": "Medical certificate form 086U is valid for 6 months from the date of issue. The certificate must contain all necessary medical examinations.",
+        "onlineSubmission": "Yes, you can apply online through our website. After application approval, you will need to provide original documents within 3 days.",
+        "translation": "Documents in Russian language do not require translation. Documents in other languages must be translated into Kyrgyz or Russian and notarized.",
+        "lostDocuments": "If documents are lost, they must be restored in the relevant authorities. For diploma contact your school, for passport - Ministry of Internal Affairs of the Kyrgyz Republic. The procedure may take up to 30 days."
+      },
+      "exams": {
+        "subjects": "For medical specialties (General Medicine, Dentistry): biology and chemistry. For Pharmacy: chemistry and biology. For Nursing: only biology. ORT certificate is also required.",
+        "dates": "Entrance exams are held from August 20 to 25. The exact schedule is published on the university website and in the admission office by August 15.",
+        "minimumScore": "Minimum ORT scores: General Medicine - 120, Dentistry - 110, Pharmacy - 100, Nursing - 90 points. For profile subjects - minimum 60% correct answers.",
+        "retake": "Retaking entrance exams is possible only in the next academic year. Only one attempt is given in the current year.",
+        "preparation": "The university conducts preparatory courses from May to July. Also recommend using textbooks for grades 10-11 in biology and chemistry, ORT tests from previous years.",
+        "format": "Exams are conducted in test form. Each test contains 40 questions, time limit - 90 minutes. Forms for computer processing of results are used.",
+        "benefits": "Benefits are provided to orphans, disabled people of groups I-II, combat veterans. Winners of republican olympiads are enrolled without exams."
+      },
+      "payment": {
+        "cost": "Tuition fees: General Medicine - 180,000 KGS/year, Dentistry - 200,000 KGS/year, Pharmacy - 160,000 KGS/year, Nursing - 140,000 KGS/year. Prices may change annually.",
+        "discounts": "Yes, discounts are provided: 15% for excellent students (GPA 4.5+), 10% for full year payment, 5% for large families, benefits for socially vulnerable categories.",
+        "installment": "Yes, payment by semesters is possible (50% by September 1, 50% by February 1) or monthly (10 equal payments from September to June). Additional fee for installment - 5%.",
+        "methods": "Payment is possible by: bank transfer, online banking (Elsom, Balance.kg, MBank), cash at university cash desk, through payment terminals, bank card.",
+        "included": "The fee includes: lectures, practical classes, access to library, laboratory work, internet on campus. Additional payment for: textbooks, dormitory, meals."
+      },
+      "hostel": {
+        "availability": "Yes, the university provides a modern dormitory for 200 places. Placement is by application in order of priority. Priority is given to non-resident students and orphans.",
+        "cost": "The cost of accommodation is 3000 KGS per month per place in a room for 2-3 people. The price includes: utilities, internet, cleaning of common areas.",
+        "conditions": "The dormitory is equipped with: furniture, refrigerators, washing machines, kitchens on each floor, study rooms, Wi-Fi, video surveillance system, 24/7 security.",
+        "application": "The application is submitted simultaneously with admission documents. You need to fill out a questionnaire, provide family income certificates, medical certificate, registration documents."
+      }
+    }
+  },
+  "life": {
+    "title": "Student Life",
+    "photoCollage": {
+      "title": "Photo Collage",
+      "alt": "Student life {{number}}"
+    },
+    "videos": {
+      "title": "Video Reports",
+      "festival": {
+        "title": "Student Festival"
+      },
+      "conference": {
+        "title": "Scientific Conference"
+      },
+      "sports": {
+        "title": "Sports Achievements"
+      },
+      "duration": "up to 2 minutes",
+      "browserSupport": "Your browser does not support the video tag."
+    },
+    "stats": {
+      "title": "In Numbers",
+      "clubs": {
+        "label": "student clubs"
+      },
+      "events": {
+        "label": "events per month"
+      },
+      "photos": {
+        "label": "photos in gallery"
+      }
+    }
+  },
+  "clubs": {
+    "title": "Student Clubs",
+    "subtitle": "Join interest-based communities and grow with us",
+    "members": "members",
+    "detailsButton": "Details",
+    "allClubsButton": "All campus clubs",
+    "medical": {
+      "name": "Medical Volunteer Corps",
+      "description": "Assisting medical institutions and conducting health-check events"
+    },
+    "science": {
+      "name": "Scientific Student Society",
+      "description": "Research, conferences and scientific publications for students"
+    },
+    "sports": {
+      "name": "Sports Club",
+      "description": "Trainings, competitions and promotion of healthy lifestyle"
+    },
+    "cultural": {
+      "name": "Cultural Center",
+      "description": "Organization of events, exhibitions and creative evenings"
+    }
+  },
+    "internationalStudents": {
+    "title": "For International Students",
+    "guideTitle": "Step-by-step Guide",
+    "dormPhotos": "Dormitory Photos",
+    "dormAlt": "Dormitory {{number}}",
+    "accommodationCost": "Accommodation Cost",
+    "contactsTitle": "International Department Contacts",
+    "contactInfo": "Contact Information",
+    "feedbackForm": "Feedback Form",
+    "steps": {
+      "visa": {
+        "title": "Visa Obtaining",
+        "content": "List of required documents: passport, university invitation, financial guarantees, medical certificate, photos, completed application form."
+      },
+      "accommodation": {
+        "title": "Accommodation",
+        "content": "We provide comfortable dormitories with various accommodation options. Cost: from 1500 to 3500 rubles/month depending on conditions."
+      },
+      "adaptation": {
+        "title": "Adaptation",
+        "content": "Each student is assigned a curator. Regular excursions, intercultural events and language clubs are held."
+      },
+      "insurance": {
+        "title": "Medical Insurance",
+        "content": "Mandatory medical insurance for the entire period of study. Cost: about 5000 rubles/year. Covers basic medical services."
+      }
+    },
+    "roomTypes": {
+      "standard": "Standard room (2-3 people): 1500 rubles/month",
+      "improved": "Improved room (2 people): 2500 rubles/month",
+      "comfort": "Comfort room (1 person): 3500 rubles/month"
+    },
+    "contacts": {
+      "email": "international@university.edu",
+      "phone": "+7 (XXX) XXX-XX-XX",
+      "address": "Universitetskaya St., 1, office 105",
+      "hours": "Mon-Fri: 9:00-18:00"
+    },
+    "form": {
+      "name": "Your Name",
+      "email": "Your Email",
+      "message": "Your Message",
+      "submit": "Send"
+    }
+  },
+  "gallery": {
+    "title": "Photo Gallery",
+    "subtitle": "Captured moments of university life",
+    "photoCount": "{{count}} photos",
+    "backToAlbums": "Back to albums",
+    "searchPlaceholder": "Search by tags or title...",
+    "noResults": "Nothing found for your request",
+    "download": "Download",
+    "downloadError": "Error downloading:",
+    "albums": {
+      "orientation2023": {
+        "title": "Orientation 2023",
+        "tags": ["students", "event", "acquaintance"]
+      },
+      "graduation2023": {
+        "title": "Graduation 2023",
+        "tags": ["graduation", "celebration", "graduates"]
+      },
+      "symposium": {
+        "title": "Scientific Symposium",
+        "tags": ["science", "conference", "reports"]
+      }
+    },
+    "photos": {
+      "orientation101": {
+        "title": "Introduction to the university",
+        "tags": ["students", "event", "acquaintance"]
+      },
+      "orientation102": {
+        "title": "Campus tour",
+        "tags": ["campus", "excursion", "students"]
+      },
+      "orientation103": {
+        "title": "Meeting with teachers",
+        "tags": ["teachers", "acquaintance", "communication"]
+      },
+      "graduation201": {
+        "title": "Diploma awarding",
+        "tags": ["graduation", "diplomas", "ceremony"]
+      },
+      "graduation202": {
+        "title": "Graduation ball",
+        "tags": ["celebration", "ball", "graduates"]
+      },
+      "graduation203": {
+        "title": "Photo with classmates",
+        "tags": ["friends", "group", "memory"]
+      },
+      "symposium301": {
+        "title": "Report at the symposium",
+        "tags": ["science", "report", "conference"]
+      },
+      "symposium302": {
+        "title": "Discussion of research",
+        "tags": ["discussion", "science", "research"]
+      },
+      "symposium303": {
+        "title": "Poster session",
+        "tags": ["posters", "research", "session"]
+      }
+    }
+  },
+  "news": {
+    "announcements": {
+      "title": "Announcements",
+      "subtitle": "Important information for university students and staff",
+      "pinned": "Pinned Announcements",
+      "urgent": "Urgent",
+      "deadline": "Until",
+      "download": "Download",
+      "details": "Details",
+      "loadError": "Error loading announcements",
+      "noAnnouncements": "No announcements in this category yet",
+      "types": {
+        "academic": "Academic",
+        "scholarship": "Scholarship",
+        "schedule": "Schedule",
+        "competition": "Competition",
+        "health": "Health",
+        "technical": "Technical"
+      },
+      "filters": {
+        "all": "All",
+        "academic": "Academic",
+        "scholarship": "Scholarships",
+        "competition": "Competitions"
+      },
+      "newsletter": {
+        "title": "Don't Miss Important Announcements",
+        "subtitle": "Subscribe to notifications to receive important announcements by email",
+        "placeholder": "Your email address",
+        "button": "Subscribe"
+      },
+      "fallback": {
+        "winterSession": {
+          "title": "Announcement about Winter Exam Session 2024-2025",
+          "description": "Information about exam schedule, admission requirements and rules for conducting the winter session.",
+          "content": "The winter examination session for students of all courses will begin on December 20, 2024. The detailed schedule will be published by December 15."
+        },
+        "scholarship": {
+          "title": "Scholarship Program for Excellent Students",
+          "description": "Applications are open for receiving increased scholarships for students with high academic performance.",
+          "content": "Students with an average score of at least 4.5 can apply for an increased scholarship. The scholarship amount is 15,000 KGS."
+        },
+        "scheduleChanges": {
+          "title": "Changes to Class Schedule for December",
+          "description": "Notification of changes to the class schedule due to holidays in December.",
+          "content": "Due to public holidays, the class schedule from December 30 to January 8 will be changed. Details in the attached file."
+        },
+        "researchCompetition": {
+          "title": "Student Research Papers Competition",
+          "description": "The annual competition of research papers for medical faculty students is announced.",
+          "content": "Research papers in all areas of medicine are accepted. The best papers will be presented at the international student conference."
+        },
+        "vaccination": {
+          "title": "Vaccination of Students and Staff",
+          "description": "Information about planned flu vaccination for all university students and staff.",
+          "content": "Vaccination is carried out free of charge in the university medical office by appointment."
+        },
+        "systemUpdate": {
+          "title": "E-Learning System Update",
+          "description": "Scheduled technical work to update the distance learning platform.",
+          "content": "The system will be unavailable on November 15 from 02:00 to 06:00. All materials will be saved."
+        }
+      }
+    }
+  },
+  "newsanon": {
+    "title": "University Events",
+    "subtitle": "Conferences, seminars, open days and other events",
+    "filters": {
+      "upcoming": "Upcoming",
+      "past": "Past",
+      "all": "All Events"
+    },
+    "categories": {
+      "conference": "Conference",
+      "open-day": "Open Day",
+      "competition": "Competition",
+      "ceremony": "Ceremony",
+      "workshop": "Workshop",
+      "default": "Event"
+    },
+    "soon": "Soon",
+    "participantsCount": "{{count}} participants",
+    "readMore": "Read more",
+    "participate": "Participate",
+    "noEvents": "There are no events in this category yet",
+    "loadError": "Error loading events",
+    "fallbackEvent1": {
+      "title": "International Conference on Cardiology",
+      "location": "Main Building, Assembly Hall",
+      "description": "Conference with participation of leading cardiologists of the region. Modern methods of diagnosis and treatment will be considered."
+    },
+    "fallbackEvent2": {
+      "title": "Open Day",
+      "location": "All university buildings",
+      "description": "We invite applicants and their parents to get acquainted with the university, faculties and study programs."
+    },
+    "calendar": {
+      "title": "Don't miss important events",
+      "subtitle": "Subscribe to the university events calendar",
+      "googleButton": "Add to Google Calendar",
+      "downloadButton": "Download .ics file"
     }
   }
 }
+
