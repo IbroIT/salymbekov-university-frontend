@@ -4,10 +4,74 @@ import { Link } from 'react-router-dom';
 import { Calendar, FileText, Users, Award, ArrowRight, Clock, MapPin, ChevronRight, ExternalLink, BookOpen, Mic2 } from 'lucide-react';
 
 const Research = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const currentLang = i18n.language; // 'ru', 'en', или 'kg'
   const [activeTab, setActiveTab] = useState('publications');
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef(null);
+  
+  // State для данных из API
+  const [publications, setPublications] = useState([]);
+  const [conferences, setConferences] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Функции для получения данных на текущем языке
+  const getPublicationTitle = (publication) => {
+    return publication[`title_${currentLang}`] || publication.title_ru || publication.title;
+  };
+
+  const getConferenceTitle = (conference) => {
+    return conference[`title_${currentLang}`] || conference.title_ru || conference.title;
+  };
+
+  const getConferenceDescription = (conference) => {
+    return conference[`description_${currentLang}`] || conference.description_ru || conference.description;
+  };
+
+  // Функции для получения данных из API
+  const fetchPublications = async () => {
+    try {
+      const response = await fetch('http://127.0.0.1:8000/research/api/publications/');
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      // Берем только первые 5 публикаций для главной страницы
+      const publicationsData = data.results || data;
+      setPublications(publicationsData.slice(0, 5));
+    } catch (err) {
+      console.error('Error fetching publications:', err);
+      setError(t('research.publications.errorLoading') || 'Ошибка загрузки публикаций');
+    }
+  };
+
+  const fetchConferences = async () => {
+    try {
+      const response = await fetch('http://127.0.0.1:8000/research/api/conferences/upcoming/');
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      // Берем только первые 3 конференции для главной страницы
+      const conferencesData = data.results || data;
+      setConferences(conferencesData.slice(0, 3));
+    } catch (err) {
+      console.error('Error fetching conferences:', err);
+      setError(t('research.conferences.errorLoading') || 'Ошибка загрузки конференций');
+    }
+  };
+
+  // Загрузка данных при монтировании компонента
+  useEffect(() => {
+    const loadData = async () => {
+      setLoading(true);
+      await Promise.all([fetchPublications(), fetchConferences()]);
+      setLoading(false);
+    };
+    
+    loadData();
+  }, [currentLang]); // Перезагружаем данные при смене языка
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -85,7 +149,7 @@ const Research = () => {
     },
     {
       id: 6,
-      icon: '�',
+      icon: '💊',
       title: t('research.researchAreas.pharmacology.title'),
       projects: 7,
       publications: 24,
@@ -96,104 +160,21 @@ const Research = () => {
     }
   ];
 
-  // Последние публикации
-  const recentPublications = [
-    {
-      id: 1,
-      title: 'Инновационные подходы к лечению ишемической болезни сердца',
-      authors: 'Петров А.В., Сидорова М.К., Иванов С.П.',
-      journal: 'Кардиология сегодня',
-      date: '2024-01-15',
-      impactFactor: 4.2,
-      link: '#',
-      area: 'cardiology'
-    },
-    {
-      id: 2,
-      title: 'Нейровизуализация при болезни Альцгеймера: новые горизонты',
-      authors: 'Козлова Е.И., Смирнов Д.А., Орлова Т.М.',
-      journal: 'Нейронауки и клиническая практика',
-      date: '2024-01-10',
-      impactFactor: 3.8,
-      link: '#',
-      area: 'neuroscience'
-    },
-    {
-      id: 3,
-      title: 'Эпидемиология сердечно-сосудистых заболеваний в Кыргызстане',
-      authors: 'Ибраимов К.Ж., Алиева М.Р., Токтосунов Б.К.',
-      journal: 'Общественное здоровье Центральной Азии',
-      date: '2024-01-08',
-      impactFactor: 2.9,
-      link: '#',
-      area: 'publicHealth'
-    },
-    {
-      id: 4,
-      title: 'Генетические маркеры предрасположенности к диабету 2 типа',
-      authors: 'Волкова С.П., Николаев А.Б., Захарова И.В.',
-      journal: 'Молекулярная медицина',
-      date: '2024-01-05',
-      impactFactor: 3.5,
-      link: '#',
-      area: 'genetics'
-    },
-    {
-      id: 5,
-      title: 'Современные подходы к эндопротезированию тазобедренного сустава',
-      authors: 'Абдыкадыров М.К., Омурзаков Б.Т., Садыкова А.Р.',
-      journal: 'Ортопедия и травматология',
-      date: '2024-01-03',
-      impactFactor: 2.7,
-      link: '#',
-      area: 'orthopedics'
-    }
-  ];
-
-  // Ближайшие конференции
-  const upcomingConferences = [
-    {
-      id: 1,
-      title: 'Международная конференция по кардиологии',
-      date: '2024-02-15',
-      time: '09:00 - 18:00',
-      location: 'Бишкек, Главный корпус Университета',
-      speakers: 12,
-      registrationLink: '#',
-      deadline: '2024-02-10'
-    },
-    {
-      id: 2,
-      title: 'Семинар по нейронаукам и искусственному интеллекту',
-      date: '2024-03-01',
-      time: '10:00 - 16:00',
-      location: 'Онлайн',
-      speakers: 8,
-      registrationLink: '#',
-      deadline: '2024-02-25'
-    },
-    {
-      id: 3,
-      title: 'Конференция по общественному здоровью Центральной Азии',
-      date: '2024-03-20',
-      time: '09:30 - 17:00',
-      location: 'Алматы, Казахстан',
-      speakers: 15,
-      registrationLink: '#',
-      deadline: '2024-03-10'
-    }
-  ];
-
   // Статистика исследований
   const researchStats = [
-    { value: '65+', label: 'Исследовательских проектов', icon: FileText, color: 'text-blue-600', bg: 'bg-blue-100' },
-    { value: '180+', label: 'Научных публикаций', icon: Award, color: 'text-green-600', bg: 'bg-green-100' },
-    { value: '120+', label: 'Исследователей', icon: Users, color: 'text-purple-600', bg: 'bg-purple-100' },
-    { value: '15+', label: 'Международных коллабораций', icon: Users, color: 'text-orange-600', bg: 'bg-orange-100' }
+    { value: '65+', label: t('research.stats.projects'), icon: FileText, color: 'text-blue-600', bg: 'bg-blue-100' },
+    { value: '180+', label: t('research.stats.publications'), icon: Award, color: 'text-green-600', bg: 'bg-green-100' },
+    { value: '120+', label: t('research.stats.researchers'), icon: Users, color: 'text-purple-600', bg: 'bg-purple-100' },
+    { value: '15+', label: t('research.stats.collaborations'), icon: Users, color: 'text-orange-600', bg: 'bg-orange-100' }
   ];
 
   const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('ru-RU', {
+    if (!dateString) return t('research.common.noDate') || 'Дата не указана';
+    
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return t('research.common.invalidDate') || 'Неверная дата';
+    
+    return date.toLocaleDateString(currentLang === 'kg' ? 'ky-KG' : currentLang === 'en' ? 'en-US' : 'ru-RU', {
       day: 'numeric',
       month: 'long',
       year: 'numeric'
@@ -201,8 +182,10 @@ const Research = () => {
   };
 
   const getDaysUntil = (dateString) => {
+    if (!dateString) return 0;
     const today = new Date();
     const targetDate = new Date(dateString);
+    if (isNaN(targetDate.getTime())) return 0;
     const diffTime = targetDate - today;
     return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
   };
@@ -354,36 +337,55 @@ const Research = () => {
             </div>
 
             <div className="space-y-4">
-              {recentPublications.map((pub) => (
-                <div 
-                  key={pub.id} 
-                  className="p-4 border border-gray-100 rounded-xl hover:border-blue-200 hover:bg-blue-50/30 transition-all duration-300 group"
-                >
-                  <div className="flex justify-between items-start mb-2">
-                    <span className="text-xs font-medium text-blue-600 bg-blue-100 px-2 py-1 rounded-full">
-                      {t(`research.publicationAreas.${pub.area}`)}
-                    </span>
-                    <span className="text-xs text-gray-500">{formatDate(pub.date)}</span>
-                  </div>
-                  
-                  <h3 className="font-semibold text-gray-800 mb-2 line-clamp-2 group-hover:text-blue-700 transition-colors">
-                    {pub.title}
-                  </h3>
-                  <p className="text-sm text-gray-600 mb-2">{pub.authors}</p>
-                  
-                  <div className="flex justify-between items-center">
-                    <span className="text-xs text-gray-500">{pub.journal}</span>
-                    <div className="flex items-center">
-                      <span className="text-xs font-medium text-green-600 bg-green-100 px-2 py-1 rounded-full mr-2">
-                        IF: {pub.impactFactor}
+              {loading ? (
+                <div className="text-center py-8">
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+                  <p className="text-gray-600 mt-4">{t('research.common.loading')}</p>
+                </div>
+              ) : error ? (
+                <div className="text-center py-8">
+                  <p className="text-red-600">{error}</p>
+                </div>
+              ) : publications.length === 0 ? (
+                <div className="text-center py-8">
+                  <p className="text-gray-600">{t('research.publications.noPublications')}</p>
+                </div>
+              ) : (
+                publications.map((pub) => (
+                  <div 
+                    key={pub.id} 
+                    className="p-4 border border-gray-100 rounded-xl hover:border-blue-200 hover:bg-blue-50/30 transition-all duration-300 group"
+                  >
+                    <div className="flex justify-between items-start mb-2">
+                      <span className="text-xs font-medium text-blue-600 bg-blue-100 px-2 py-1 rounded-full">
+                        {pub.research_center?.name || t('research.publications.general')}
                       </span>
-                      <a href={pub.link} className="text-blue-500 hover:text-blue-700">
-                        <ExternalLink className="w-4 h-4" />
-                      </a>
+                      <span className="text-xs text-gray-500">{formatDate(pub.publication_date)}</span>
+                    </div>
+                    
+                    <h3 className="font-semibold text-gray-800 mb-2 line-clamp-2 group-hover:text-blue-700 transition-colors">
+                      {getPublicationTitle(pub)}
+                    </h3>
+                    <p className="text-sm text-gray-600 mb-2">{pub.authors}</p>
+                    
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs text-gray-500">{pub.journal}</span>
+                      <div className="flex items-center">
+                        {pub.citations_count && (
+                          <span className="text-xs font-medium text-green-600 bg-green-100 px-2 py-1 rounded-full mr-2">
+                            {t('research.publications.citations')}: {pub.citations_count}
+                          </span>
+                        )}
+                        {pub.doi && (
+                          <a href={`https://doi.org/${pub.doi}`} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-700">
+                            <ExternalLink className="w-4 h-4" />
+                          </a>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))
+              )}
             </div>
           </section>
 
@@ -400,55 +402,81 @@ const Research = () => {
             </div>
 
             <div className="space-y-4">
-              {upcomingConferences.map((conf) => {
-                const daysUntil = getDaysUntil(conf.date);
-                return (
-                  <div 
-                    key={conf.id} 
-                    className="p-4 border border-gray-100 rounded-xl hover:border-orange-200 hover:bg-orange-50/30 transition-all duration-300 group"
-                  >
-                    <div className="flex justify-between items-start mb-3">
-                      <h3 className="font-semibold text-gray-800 flex-1 mr-4 group-hover:text-orange-700 transition-colors">
-                        {conf.title}
-                      </h3>
-                      {daysUntil > 0 && (
-                        <span className="text-xs font-medium text-orange-600 bg-orange-100 px-2 py-1 rounded-full whitespace-nowrap">
-                          Через {daysUntil} дн.
-                        </span>
-                      )}
-                    </div>
+              {loading ? (
+                <div className="text-center py-8">
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600 mx-auto"></div>
+                  <p className="text-gray-600 mt-4">{t('research.common.loading')}</p>
+                </div>
+              ) : error ? (
+                <div className="text-center py-8">
+                  <p className="text-red-600">{error}</p>
+                </div>
+              ) : conferences.length === 0 ? (
+                <div className="text-center py-8">
+                  <p className="text-gray-600">{t('research.conferences.noUpcoming')}</p>
+                </div>
+              ) : (
+                conferences.map((conf) => {
+                  const daysUntil = getDaysUntil(conf.start_date);
+                  return (
+                    <div 
+                      key={conf.id} 
+                      className="p-4 border border-gray-100 rounded-xl hover:border-orange-200 hover:bg-orange-50/30 transition-all duration-300 group"
+                    >
+                      <div className="flex justify-between items-start mb-3">
+                        <h3 className="font-semibold text-gray-800 flex-1 mr-4 group-hover:text-orange-700 transition-colors">
+                          {getConferenceTitle(conf)}
+                        </h3>
+                        {daysUntil > 0 && (
+                          <span className="text-xs font-medium text-orange-600 bg-orange-100 px-2 py-1 rounded-full whitespace-nowrap">
+                            {t('research.conferences.daysUntil', { days: daysUntil })}
+                          </span>
+                        )}
+                      </div>
 
-                    <div className="space-y-2 text-sm">
-                      <div className="flex items-center text-gray-600">
-                        <Calendar className="w-4 h-4 mr-2 text-blue-500" />
-                        {formatDate(conf.date)}, {conf.time}
+                      <div className="space-y-2 text-sm">
+                        <div className="flex items-center text-gray-600">
+                          <Calendar className="w-4 h-4 mr-2 text-blue-500" />
+                          {conf.start_date && conf.end_date ? 
+                            `${formatDate(conf.start_date)} - ${formatDate(conf.end_date)}` :
+                            conf.start_date ? formatDate(conf.start_date) : t('research.common.noDate')
+                          }{conf.time && `, ${conf.time}`}
+                        </div>
+                        
+                        <div className="flex items-center text-gray-600">
+                          <MapPin className="w-4 h-4 mr-2 text-red-500" />
+                          {conf.location}
+                        </div>
+                        
+                        {conf.speaker_count > 0 && (
+                          <div className="flex items-center text-gray-600">
+                            <Users className="w-4 h-4 mr-2 text-purple-500" />
+                            {conf.speaker_count} {t('research.conferences.speakers')}
+                          </div>
+                        )}
                       </div>
-                      
-                      <div className="flex items-center text-gray-600">
-                        <MapPin className="w-4 h-4 mr-2 text-red-500" />
-                        {conf.location}
-                      </div>
-                      
-                      <div className="flex items-center text-gray-600">
-                        <Users className="w-4 h-4 mr-2 text-purple-500" />
-                        {conf.speakers} {t('research.conferences.speakers')}
-                      </div>
-                    </div>
 
-                    <div className="flex justify-between items-center mt-4 pt-3 border-t border-gray-100">
-                      <span className="text-xs text-gray-500">
-                        {t('research.conferences.registrationDeadline')}: {formatDate(conf.deadline)}
-                      </span>
-                      <a
-                        href={conf.registrationLink}
-                        className="text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center group/link"
-                      >
-                        {t('research.conferences.register')} <ArrowRight className="w-4 h-4 ml-1 group-hover/link:translate-x-1 transition-transform" />
-                      </a>
+                      <div className="flex justify-between items-center mt-4 pt-3 border-t border-gray-100">
+                        {conf.registration_deadline && (
+                          <span className="text-xs text-gray-500">
+                            {t('research.conferences.registrationDeadline')}: {formatDate(conf.registration_deadline)}
+                          </span>
+                        )}
+                        {conf.registration_link && (
+                          <a
+                            href={conf.registration_link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center group/link"
+                          >
+                            {t('research.conferences.register')} <ArrowRight className="w-4 h-4 ml-1 group-hover/link:translate-x-1 transition-transform" />
+                          </a>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })
+              )}
             </div>
           </section>
         </div>

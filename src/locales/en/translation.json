@@ -1135,6 +1135,12 @@
       "errorLoading": "Error loading conferences",
       "retry": "Try Again",
       "noConferences": "No conferences available",
+      "noUpcoming": "No upcoming conferences",
+      "upcoming": "Upcoming Conferences",
+      "speakers": "speakers",
+      "register": "Register",
+      "registrationDeadline": "Registration Deadline",
+      "daysUntil": "In {{days}} days",
       "tabs": {
         "upcoming": "Upcoming",
         "archive": "Archive"
@@ -1155,7 +1161,6 @@
       "basicInfo": "Basic Information",
       "dates": "Event Dates",
       "location": "Location",
-      "registrationDeadline": "Registration Deadline",
       "registrationFee": "Registration Fee",
       "contact": "Contact",
       "proceedings": "Conference Proceedings",
@@ -1244,17 +1249,83 @@
         "submit": "Submit Application"
       },
       "applicationSuccess": "Application submitted successfully! We will contact you soon.",
-      "applicationError": "Error submitting application"
+      "applicationError": "Error submitting application",
+      "publications": {
+        "title": "Scientific Publications",
+        "subtitle": "Publication database of Salymbekov University researchers",
+        "loading": "Loading publications...",
+        "errorLoading": "Error loading publications",
+        "retry": "Try Again",
+        "exportError": "Error exporting data",
+        "authors": "Authors",
+        "journal": "Journal",
+        "center": "Center",
+        "citations": "citations",
+        "noAuthors": "Authors not specified",
+        "noCenter": "Center not specified",
+        "noDoi": "DOI not specified",
+        "noAbstract": "Abstract not available",
+        "expand": "Details",
+        "collapse": "Collapse",
+        "filters": {
+          "year": "Publication Year",
+          "author": "Author",
+          "allAuthors": "All Authors",
+          "allJournals": "All Journals",
+          "allCenters": "All Centers",
+          "minCitations": "Minimum Citation Index"
+        },
+        "statistics": {
+          "title": "Publication Statistics",
+          "barChart": "Bar Chart",
+          "lineChart": "Line Chart", 
+          "pieChart": "Pie Chart"
+        },
+        "table": {
+          "title": "Publications",
+          "select": "Select",
+          "publication": "Publication",
+          "year": "Year",
+          "export": {
+            "csv": "Export CSV",
+            "bibtex": "Export BibTeX"
+          },
+          "noPublications": "No publications found for selected filters",
+          "applyFilters": "Apply Filters"
+        }
+      }
     },
     "publications": {
-      "title": "Scientific Publications",
-      "subtitle": "Latest research publications and achievements",
+      "title": "Publications",
+      "subtitle": "Research publications database of Salymbekov University researchers",
+      "loading": "Loading publications...",
+      "errorLoading": "Error loading publications",
+      "retry": "Try again",
+      "exportError": "Error exporting data",
+      "authors": "Authors",
+      "journal": "Journal",
+      "center": "Center",
+      "citations": "citations",
+      "general": "General",
+      "noPublications": "No publications found",
+      "noAuthors": "Authors not specified",
+      "noCenter": "Center not specified",
+      "noDoi": "DOI not specified",
+      "noAbstract": "Abstract not available",
+      "expand": "Read more",
+      "collapse": "Collapse",
+      "minCitations": "Minimum citation index",
+      "statisticsTitle": "Publication Statistics",
       "filters": {
-        "year": "Year",
+        "title": "Filters",
+        "year": "Publication year",
         "author": "Author",
         "journal": "Journal",
         "citations": "Citations",
         "center": "Research Center",
+        "allAuthors": "All authors",
+        "allJournals": "All journals",
+        "allCenters": "All centers",
         "apply": "Apply Filters",
         "reset": "Reset"
       },
@@ -1262,13 +1333,26 @@
         "year": "Year",
         "citations": "Citations",
         "title": "Title",
+        "authors": "Authors",
         "asc": "Ascending",
         "desc": "Descending"
       },
       "charts": {
-        "bar": "Bar Chart",
-        "line": "Line Chart", 
-        "pie": "Pie Chart"
+        "bar": "Bar",
+        "line": "Line", 
+        "pie": "Pie"
+      },
+      "export": {
+        "csv": "Export CSV",
+        "bibtex": "Export BibTeX"
+      },
+      "table": {
+        "select": "Select",
+        "title": "Title",
+        "authors": "Authors",
+        "journal": "Journal",
+        "year": "Year",
+        "citations": "Citations"
       },
       "stats": {
         "totalPublications": "Total Publications",
@@ -1276,22 +1360,20 @@
         "hIndex": "H-Index",
         "averageCitations": "Average Citations"
       },
-      "export": {
-        "selected": "Export Selected",
-        "all": "Export All",
-        "format": "Format"
-      },
       "viewDetails": "View Details",
       "cite": "Cite",
       "doi": "DOI",
       "abstract": "Abstract",
-      "authors": "Authors",
-      "journal": "Journal",
       "year": "Year",
-      "citations": "Citations",
       "keywords": "Keywords",
       "loadError": "Error loading publications",
       "noResults": "No publications found matching your criteria"
+    },
+    "stats": {
+      "projects": "Research Projects",
+      "publications": "Scientific Publications",
+      "researchers": "Researchers",
+      "collaborations": "International Collaborations"
     },
     "common": {
       "showMore": "Show More",
@@ -1303,6 +1385,8 @@
       "filter": "Filter",
       "sort": "Sort",
       "reset": "Reset",
+      "noDate": "Date not specified",
+      "invalidDate": "Invalid date",
       "joinResearch": "Join Our Research",
       "joinResearchDesc": "Become part of our scientific community and contribute to important research projects",
       "participateInResearch": "Participate in Research"
