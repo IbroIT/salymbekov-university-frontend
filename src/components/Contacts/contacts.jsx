@@ -17,7 +17,7 @@ const Contacts = () => {
   }, []);
 
   // Карта Университета Салымбекова
-  const mapUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2924.028544108504!2d74.5975975!3d42.8441282!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x389ec987f324329b%3A0x2cd99bcd0df5fc1f!2z0KHQsNC70LjQvNCx0LjQu9GM0L3QvtCz0L4g0KPQvdC40LLQtdGA0YHQuNGC0LXRgg!5e0!3m2!1sru!2skg!4v1712345678901!5m2!1sru!2skg";
+  const mapUrl = "https://2gis.kg/bishkek/firm/70000001039696456/74.561483%2C42.878785?m=74.56123%2C42.878447%2F18.87";
 
   const departments = [
     {
@@ -123,6 +123,8 @@ const Contacts = () => {
                   <div>
                     <h3 className="font-semibold text-white">{t('contacts.address.title')}</h3>
                     <p className="text-blue-200">{t('contacts.address.value')}</p>
+                    <h3 className="font-semibold text-white">Адрес</h3>
+                    <p className="text-blue-200">г. Бишкек, ул. Фучика 3</p>
                     <button
                       onClick={() => copyToClipboard(t('contacts.address.value'))}
                       className="text-blue-400 text-sm hover:text-blue-300 mt-1"
@@ -251,6 +253,8 @@ const Contacts = () => {
                       <div>
                         <p className="font-bold">{t('contacts.map.universityName')}</p>
                         <p className="text-sm opacity-90">{t('contacts.address.value')}</p>
+                        <p className="font-bold">Университет Салымбекова</p>
+                        <p className="text-sm opacity-90">г. Бишкек, ул. Фучика 3</p>
                       </div>
                     </div>
                     
@@ -276,6 +280,10 @@ const Contacts = () => {
                 <li>• {t('contacts.map.transport.minibuses')}</li>
                 <li>• {t('contacts.map.transport.taxi')}</li>
                 <li>• {t('contacts.map.transport.car')}</li>
+                <li>• Автобусы: 8, 15, 35, 254 до остановки "Шлагбаум"</li>
+                <li>• Маршрутки: 173, 185, 200 А, 218, 290, 386, 935</li>
+                <li>• Такси: назовите адрес "ул. Фучика 3"</li>
+                <li>• Авто: парковка на территории кампуса</li>
               </ul>
             </div>
           </motion.div>
@@ -347,9 +355,9 @@ const Contacts = () => {
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { name: "Facebook", icon: "📘", color: "bg-blue-600/20", border: "border-blue-400/20", handle: "/SalymbekovMed" },
-              { name: "Instagram", icon: "📷", color: "bg-pink-600/20", border: "border-pink-400/20", handle: "@salymbekov_med" },
-              { name: "Twitter", icon: "🐦", color: "bg-sky-600/20", border: "border-sky-400/20", handle: "@SalymbekovMed" },
+              { name: "Facebook", icon: "📘", color: "bg-blue-600/20", border: "border-blue-400/20", handle: "/SalymbekovUniversity" },
+              { name: "Instagram", icon: "📷", color: "bg-pink-600/20", border: "border-pink-400/20", handle: "@salymbekovuniversity" },
+              { name: "Twitter", icon: "🐦", color: "bg-sky-600/20", border: "border-sky-400/20", handle: "@SalymbekovUniversity" },
               { name: "YouTube", icon: "📺", color: "bg-red-600/20", border: "border-red-400/20", handle: "Salymbekov University" }
             ].map((social, index) => (
               <motion.a
