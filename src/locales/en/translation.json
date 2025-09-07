@@ -9,7 +9,7 @@
     "news": "News",
     "contacts": "Contacts",
     "apply": "Apply",
-    
+    "faq": "FAQ",
     "about_university": "About the University",
     "management": "Management",
     "documents": "Documents",
@@ -262,159 +262,7 @@
         }
       }
     },
-    "application": {
-      "title": "Online application",
-      "subtitle": "Apply to Salymbekov University",
-      "autosave": "Your data is auto-saved every second",
-      "selectProgram": "Select the program you wish to apply for",
-      "programs": {
-        "medicine": "General Medicine",
-        "dentistry": "Dentistry",
-        "pharmacy": "Pharmacy",
-        "nursing": "Nursing"
-      },
-      "programDetails": {
-        "duration": "Duration",
-        "cost": "Cost",
-        "requirements": "Requirements",
-        "description": "Description"
-      },
-      "steps": {
-        "program": "Program selection",
-        "personal": "Personal information",
-        "education": "Education",
-        "documents": "Upload documents",
-        "confirmation": "Confirmation"
-      },
-      "stepTitles": {
-        "step1": "Program selection",
-        "step2": "Personal information",
-        "step3": "Education",
-        "step4": "Upload documents",
-        "step5": "Confirm application"
-      },
-      "stepDescriptions": {
-        "step1": "Choose a study program",
-        "step2": "Fill in your personal details",
-        "step3": "Information about your education",
-        "step4": "Attach required documents",
-        "step5": "Review before submission"
-      },
-      "search": {
-        "placeholder": "Enter program name...",
-        "noResults": "No programs found"
-      },
-      "navigation": {
-        "previous": "Back",
-        "next": "Next",
-        "submit": "Submit application",
-        "saveDraft": "Save draft",
-        "clearForm": "Clear form"
-      },
-      "personalInfo": {
-        "title": "Personal information",
-        "firstName": "First name",
-        "lastName": "Last name",
-        "middleName": "Middle name",
-        "birthDate": "Date of birth",
-        "gender": "Gender",
-        "male": "Male",
-        "female": "Female",
-        "phone": "Phone",
-        "email": "Email",
-        "address": "Address",
-        "selectGender": "Select gender",
-        "phonePlaceholder": "+996 XXX XXX XXX"
-      },
-      "education": {
-        "title": "Education",
-        "schoolName": "School/Lyceum name",
-        "graduationYear": "Graduation year",
-        "certificateNumber": "Certificate number",
-        "ortScore": "ORT score",
-        "subjects": "Subject grades",
-        "subjectsOptional": "Subject grades (optional)",
-        "selectYear": "Select year",
-        "biology": "Biology",
-        "chemistry": "Chemistry",
-        "physics": "Physics",
-        "mathematics": "Mathematics"
-      },
-      "documents": {
-        "title": "Upload documents",
-        "description": "Attach required documents",
-        "certificate": "High school diploma",
-        "passport": "Passport (all pages)",
-        "medical": "Medical certificate 086U",
-        "photos": "3x4 cm photos",
-        "ortCertificate": "ORT certificate",
-        "fileUploaded": "File uploaded",
-        "photosUploaded": "Photos uploaded",
-        "requirements": {
-          "title": "Document requirements",
-          "format": "Documents must be PDF, JPG or PNG",
-          "size": "Max file size - 5 MB",
-          "quality": "Documents must be clear and legible",
-          "passport": "All passport pages must be in one file",
-          "photos": "Photos must be 3x4 cm"
-        }
-      },
-      "confirmation": {
-        "title": "Confirm application",
-        "description": "Review your information before sending",
-        "selectedProgram": "Selected program",
-        "personalData": "Personal data",
-        "education": "Education",
-        "uploadedDocuments": "Uploaded documents",
-        "editSections": "Need to change something?",
-        "editProgram": "Program",
-        "editPersonal": "Personal data",
-        "editEducation": "Education",
-        "editDocuments": "Documents",
-        "agreeTerms": "I agree with the admission rules and study conditions",
-        "agreePrivacy": "I consent to personal data processing",
-        "rulesLink": "admission rules",
-        "conditionsLink": "study conditions",
-        "privacyLink": "personal data processing"
-      },
-      "progress": {
-        "step": "Step",
-        "of": "of",
-        "progress": "Progress"
-      },
-      "status": {
-        "draftLoaded": "Draft loaded",
-        "draftSaved": "Draft saved"
-      },
-      "help": {
-        "title": "Need help filling out?",
-        "phone": "Phone: +996 312 123 456",
-        "email": "Email: admission@salymbekov.edu.kg",
-        "hours": "Working hours: Mon-Fri 09:00-18:00",
-        "autosave": "Your data is saved automatically"
-      },
-      "validation": {
-        "required": "Required field",
-        "selectProgram": "Select a program",
-        "minLength": "Minimum 2 characters",
-        "age": "Age must be between 16 and 35",
-        "phoneFormat": "Enter phone as +996 XXX XXX XXX",
-        "emailInvalid": "Invalid email",
-        "ortRange": "ORT score must be between 0 and 240",
-        "fileFormat": "File must be PDF, JPG or PNG up to 5 MB",
-        "agreeTerms": "Please agree to the terms",
-        "agreePrivacy": "Please agree to data processing"
-      },
-      "dialogs": {
-        "clearForm": "Are you sure you want to clear the form? All entered data will be lost.",
-        "formCleared": "Form cleared. You are back at step one.",
-        "gmailOpened": "Gmail opened in a new window!",
-        "recipient": "Recipient",
-        "applicationReady": "Your application is ready to send",
-        "backupMethod": "If Gmail didn't open, press OK for a backup method.",
-        "emailClient": "Opening email client..."
-      }
-    },
+    
     "dates": {
       "title": "Admissions calendar",
       "heading": "Important dates",
@@ -883,71 +731,6 @@
       }
     }
   },
-  "news": {
-    "announcements": {
-      "title": "Announcements",
-      "subtitle": "Important information for students and university staff",
-      "pinned": "Pinned announcements",
-      "urgent": "Urgent",
-      "deadline": "Until",
-      "download": "Download",
-      "details": "Details",
-      "loadError": "Error loading announcements",
-      "noAnnouncements": "No announcements in this category yet",
-      "types": {
-        "academic": "Academic",
-        "scholarship": "Scholarship",
-        "schedule": "Schedule",
-        "competition": "Competition",
-        "health": "Health",
-        "technical": "Technical"
-      },
-      "filters": {
-        "all": "All",
-        "academic": "Academic",
-        "scholarship": "Scholarships",
-        "competition": "Competitions"
-      },
-      "newsletter": {
-        "title": "Don't miss important announcements",
-        "subtitle": "Subscribe to get important announcements by email",
-        "placeholder": "Your email address",
-        "button": "Subscribe"
-      },
-      "fallback": {
-        "winterSession": {
-          "title": "Notice about the winter exam session 2024-2025",
-          "description": "Information about exam schedules, eligibility and winter session rules.",
-          "content": "The winter exam session for all students starts on December 20, 2024. Final schedule will be published by December 15."
-        },
-        "scholarship": {
-          "title": "Scholarship program for high-achieving students",
-          "description": "Applications for increased scholarships are open for students with high academic performance.",
-          "content": "Students with GPA not less than 4.5 may apply for an increased scholarship. Scholarship amount is 15,000 som."
-        },
-        "scheduleChanges": {
-          "title": "Changes to class schedule for December",
-          "description": "Notice about schedule changes due to holidays in December.",
-          "content": "Due to public holidays, schedules from Dec 30 to Jan 8 will be modified. Details in the attached file."
-        },
-        "researchCompetition": {
-          "title": "Student research competition",
-          "description": "Annual competition of student scientific works of the Medical Faculty.",
-          "content": "Research papers across medical fields are accepted. Best works will be presented at an international student conference."
-        },
-        "vaccination": {
-          "title": "Vaccination for students and staff",
-          "description": "Information about planned influenza vaccination for all students and staff.",
-          "content": "Vaccination is provided free of charge at the university medical office by prior registration."
-        },
-        "systemUpdate": {
-          "title": "E-learning system update",
-          "description": "Planned technical work to update the remote learning platform.",
-          "content": "The system will be unavailable on Nov 15 from 02:00 to 06:00. All materials will be preserved."
-        }
-      }
-    }
-  },
   "newsanon": {
     "title": "University Events",
     "subtitle": "Conferences, seminars, open days and other events",
@@ -990,7 +773,8 @@
   "breadcrumbs": {
     "home": "Home",
     "about": "About",
-    "partners": "Partners"
+    "partners": "Partners",
+    "academics": "Academics"
   },
   "partners": {
     "title": "Our Partners",
@@ -1061,7 +845,7 @@
     },
     "address": {
       "title": "Address",
-      "value": "Bishkek, Akhunbaev St. 123"
+      "value": "Bishkek, Fuchika St.3"
     },
     "copyAddress": "Copy address",
     "phones": {
@@ -2815,6 +2599,71 @@
       "joinResearch": "Join Our Research",
       "joinResearchDesc": "Become part of our scientific community and contribute to important research projects",
       "participateInResearch": "Participate in Research"
+    }, "centers": {
+      "title": "Research Centers",
+      "subtitle": "Advanced laboratories and research complexes of the university",
+      "staffCount": "staff",
+      "equipmentTitle": "Equipment",
+      "viewPublications": "View Publications",
+      "moreItems": "more...",
+      "director": "Director",
+      "team": "Team",
+      "researchers": "research staff",
+      "goToPublications": "Go to Center Publications",
+      "positions": {
+        "professor": "Professor, MD",
+        "professorPhD": "Professor, PhD",
+        "associateProfessor": "Associate Professor, PhD"
+      },
+      "directors": {
+        "aliyev": "Aliyev A.K.",
+        "smagulova": "Smagulova G.M.",
+        "zhanuzakov": "Zhanuzakov T.R.",
+        "toktogulov": "Toktogulov N.A.",
+        "mambetova": "Mambetova A.S."
+      },
+      "equipment": {
+        "pcrAnalyzer": "PCR Analyzer",
+        "spectrophotometer": "Spectrophotometer",
+        "electronMicroscope": "Electron Microscope",
+        "cryostat": "Cryostat",
+        "eegSystem": "EEG System",
+        "mri3T": "MRI 3.0 Tesla",
+        "transcranialStimulator": "Transcranial Stimulator",
+        "optogeneticSetup": "Optogenetic Setup",
+        "bioprinter3D": "3D Bioprinter",
+        "cellSorter": "Cell Sorter",
+        "massSpectrometer": "Mass Spectrometer",
+        "bioreactors": "Bioreactors",
+        "randomizationSystem": "Randomization System",
+        "ecrfPlatform": "eCRF Platform",
+        "statisticalSoftware": "Statistical Software",
+        "monitoringEquipment": "Monitoring Equipment",
+        "epidemiologicalDatabase": "Epidemiological Database",
+        "gisSystem": "GIS System",
+        "surveyPlatforms": "Survey Platforms",
+        "analyticalTools": "Analytical Tools"
+      },
+      "molecularMedicine": {
+        "name": "Center for Molecular Medicine",
+        "description": "Advanced research in gene therapy and molecular diagnostics"
+      },
+      "neurosciences": {
+        "name": "Neuroscience Center",
+        "description": "Study of brain mechanisms and development of neurotechnologies"
+      },
+      "biomedicalTech": {
+        "name": "Biomedical Technology Center",
+        "description": "Development of innovative medical materials and implants"
+      },
+      "clinicalResearch": {
+        "name": "Clinical Research Center",
+        "description": "Conducting clinical trials and translational research"
+      },
+      "publicHealth": {
+        "name": "Public Health Center",
+        "description": "Research in epidemiology and public health"
+      }
     }
   },"reviews": {
     "title": "Our Students' Reviews",
@@ -2854,8 +2703,683 @@
         "text": "I entered this year and I'm already delighted! The atmosphere promotes learning, there are many practical classes and modern laboratories."
       }
     ]
+  },"programs": {
+  "title": "Key Programs",
+  "subtitle": "Choose the program that matches your professional goals",
+  "learnMore": "Learn More",
+  "allPrograms": "All Study Programs",
+  "previousProgram": "Previous Program",
+  "nextProgram": "Next Program",
+  "goToProgram": "Go to Program",
+  "levels": {
+    "bachelor": "Bachelor",
+    "master": "Master"
+  },
+  "durations": {
+    "fourYears": "4 years",
+    "fiveYears": "5 years",
+    "twoYears": "2 years"
+  },
+  "generalMedicine": {
+    "title": "General Medicine"
+  },
+  "dentistry": {
+    "title": "Dentistry"
+  },
+  "pharmacy": {
+    "title": "Pharmacy"
+  },
+  "medicalOptics": {
+    "title": "Medical Optics"
   }
-}
+},
+"news": {
+  "title": "Latest News",
+  "subtitle": "Stay updated with the latest events and achievements of our university",
+  "readMore": "Read More",
+  "allNews": "All News",
+  "loading": "Loading news...",
+  "fetchError": "Error while loading news",
+  "errorMessage": "An error occurred while loading data. Demo content is shown.",
+  "categories": {
+    "news": "News",
+    "events": "Events",
+    "announcements": "Announcements"
+  }
+},
+"facts": {
+  "title": "Facts and Figures",
+  "subtitle": "Our achievements over the years in the field of education",
+  "scrollHint": "Scroll down to see more",
+  "students": "students",
+  "graduates": "graduates",
+  "programs": "educational programs",
+  "clinics": "partner clinics"
+},
+"reviews": {
+  "title": "Student Reviews",
+  "subtitle": "What our students say about studying at the university",
+  "previousButton": "Previous review",
+  "nextButton": "Next review",
+  "goToReview": "Go to review",
+  "student1": {
+    "name": "Anna Ivanova",
+    "faculty": "General Medicine",
+    "course": "4th year",
+    "text": "Studying at the medical faculty gave me invaluable knowledge and practical skills. The professors are experienced practicing doctors who share real-life expertise."
+  },
+  "student2": {
+    "name": "Maksim Petrov",
+    "faculty": "Pediatrics",
+    "course": "5th year",
+    "text": "An excellent combination of theory and practice! Already in the 3rd year, we started clinical training, which allows us to apply knowledge in real conditions."
+  },
+  "student3": {
+    "name": "Elena Smirnova",
+    "faculty": "Dentistry",
+    "course": "3rd year",
+    "text": "Modern equipment and an advanced approach to education. I especially value the simulation center where we can practice skills before clinical work."
+  },
+  "student4": {
+    "name": "Dmitry Kozlov",
+    "faculty": "Pharmacy",
+    "course": "2nd year",
+    "text": "An engaging program with deep immersion in biochemistry and pharmacology. Professors support students’ scientific initiatives."
+  },
+  "student5": {
+    "name": "Olga Novikova",
+    "faculty": "Medical and Preventive Care",
+    "course": "1st year",
+    "text": "I enrolled this year and I’m already impressed! The atmosphere encourages learning, with plenty of practical classes and modern laboratories."
+  }
+},
+"partners": {
+  "title": "Our Partners",
+  "nationalHospital": "National Hospital",
+  "cityHospital": "City Clinical Hospital",
+  "medicalCenters": "Private Medical Centers",
+  "who": "WHO",
+  "redCross": "Red Cross",
+  "medicalAssociation": "Medical Association",
+  "healthInstitute": "Health Institute",
+  "researchFoundation": "Medical Research Foundation"
+},
+"about": {
+  "breadcrumb_home": "Home",
+  "breadcrumb_about": "About Us",
+  "hero_title": "Salymbekov University",
+  "hero_subtitle": "The leading medical university of Kyrgyzstan, training highly qualified healthcare professionals since 1995",
+  
+  "achievements_title": "Our Achievements",
+  "faculty_count": "Faculty Members",
+  "departments_count": "Departments",
+  "students_count": "Students",
+  "years_count": "Years of Experience",
+  
+  "mission_values": "Mission and Values",
+  "value_1_title": "Mission",
+  "value_1_desc": "Training highly qualified medical specialists",
+  "value_2_title": "Vision",
+  "value_2_desc": "Leader in medical education in Central Asia",
+  "value_3_title": "Quality",
+  "value_3_desc": "High standards of education and practical training",
+  "value_4_title": "Innovation",
+  "value_4_desc": "Modern technologies in medical education",
+  
+  "university_history": "University History",
+  "timeline_1995": "University Foundation",
+  "timeline_1995_desc": "Establishment of a private higher medical institution",
+  "timeline_2000": "Opening of the Medical Faculty",
+  "timeline_2000_desc": "Launch of the first general practice training programs",
+  "timeline_2010": "Accreditation of International Programs",
+  "timeline_2010_desc": "Recognition of educational standards at the international level",
+  "timeline_2020": "Opening of the New Campus",
+  "timeline_2020_desc": "A modern medical campus with advanced equipment",
+  
+  "leadership": "Leadership",
+  "rector_name": "Salymbekov Adilkhan",
+  "rector_title": "Rector of the University, Doctor of Medical Sciences",
+  "rector_bio": "An experienced medical professional and educator with over 25 years of experience. Author of multiple scientific publications in cardiology. Founder and visionary of the university.",
+  
+  "medical_departments": "Medical Faculties",
+  "general_medicine": "General Medicine",
+  "dentistry": "Dentistry",
+  "pharmacy": "Pharmacy",
+  "nursing": "Nursing",
+  "public_health": "Public Health",
+  "medical_psychology": "Medical Psychology",
+  "established": "Established",
+  
+  "medical_centers": "Medical Centers",
+  "clinical_center": "Clinical Center",
+  "patient_care": "Patient treatment and diagnostics",
+  "research_lab": "Research Laboratory",
+  "medical_research": "Medical research and development",
+  "simulation_center": "Simulation Center",
+  "practical_training": "Practical student training",
+  "telemedicine_center": "Telemedicine Center",
+  "remote_care": "Remote medical assistance",
+  
+  "video_presentation": "Video Presentation",
+  "watch_video": "Watch Video",
+  "video_duration": "Duration: 2-3 minutes",
+  "subtitles_available": "Subtitles available",
+  
+  "medical_resources": "Medical Resources",
+  "university_hospital": "University Hospital",
+  "hospital_desc": "A modern hospital for students’ practical training",
+  "medical_labs": "Medical Laboratories",
+  "labs_desc": "Well-equipped laboratories for research and education",
+  "student_dormitory": "Student Dormitory",
+  "dormitory_desc": "Comfortable living conditions for students",
+  
+  "quick_links": "Quick Links",
+  "management": "Management",
+  "charter_documents": "Charter Documents",
+  "careers": "Careers",
+  "partners_link": "Partners",
+  
+  "org_structure": "Organizational Structure",
+  "org_structure_subtitle": "The organizational structure of Salymbekov University includes governing bodies, faculties, departments, and administrative services",
+  "interactive_tree": "Interactive organizational tree",
+  "staff_list": "Staff List",
+  "search_placeholder": "Enter name, position, or department...",
+  "filter_by_type": "Filter by type",
+  "tree_view": "Tree",
+  "list_view": "List",
+  "expand_all": "Expand All",
+  "collapse_all": "Collapse All",
+  "export_pdf": "Export to PDF",
+  "detailed_info": "Detailed Information",
+  "about_specialist": "About the Specialist",
+  "basic_info": "Basic Information",
+  "contact_info": "Contact Information",
+  "education_label": "Education",
+  "experience_label": "Work Experience",
+  "specialization_label": "Specialization",
+  "achievements_label": "Achievements",
+  "statistics": "Statistics",
+  "students_total": "Students",
+  "teachers_count": "Teachers",
+  "department_staff": "Department Staff",
+  "found_staff": "Staff Found",
+  "no_staff_found": "No staff found",
+  "try_different_criteria": "Try different search criteria or filter",
+  "legend": "Legend",
+  "administration": "Administration",
+  "faculties": "Faculties",
+  "departments": "Departments",
+  "staff": "Staff"
+},
+"partners": {
+  "title": "Our Partners",
+  "subtitle": "Salymbekov University actively develops international cooperation with leading medical institutions and educational organizations",
+  "search": "Search partners...",
+  "showing": "Partners shown:",
+  "details": "More details",
+  "website": "Website",
+  "established": "since",
+  "about": "About the partnership",
+  "cooperation": "Areas of cooperation",
+  "achievements": "Achievements",
+  "contact": "Contact information",
+  "stats": {
+    "students": "Students",
+    "exchanges": "Exchanges",
+    "projects": "Projects",
+    "partners": "Partners",
+    "totalStudents": "Students in programs",
+    "totalExchanges": "Exchanges per year",
+    "totalProjects": "Joint projects"
+  },
+  "filter": {
+    "all": "All partners",
+    "clinical": "Clinical bases",
+    "university": "International universities",
+    "organization": "Scientific organizations",
+    "business": "Business partners"
+  },
+  "types": {
+    "clinical": "Clinical base",
+    "university": "University",
+    "organization": "Organization",
+    "business": "Business partner"
+  },
+  "map": {
+    "title": "Geography of partnership",
+    "subtitle": "Interactive map of our partners around the world"
+  },
+  "list": {
+    "1": {
+      "name": "Republican Clinical Hospital",
+      "country": "Kyrgyzstan",
+      "city": "Bishkek",
+      "description": "The main clinical base for the practice of medical faculty students. Cooperation includes clinical classes, internships, and scientific research.",
+      "cooperation": [
+        "Clinical classes for 4th–6th year students",
+        "Residency and internship",
+        "Joint scientific research",
+        "Exchange of specialists",
+        "Professional development of teachers"
+      ],
+      "achievements": [
+        "Trained over 1000 specialists",
+        "Implemented 15 joint projects",
+        "Received 3 research grants"
+      ]
+    }
+  }
+},
+"breadcrumbs": {
+  "home": "Home",
+  "about": "About us",
+  "partners": "Partners"
+},
+"calendar": {
+  "title": "Academic Calendar",
+  "subtitle": "Plan your academic year with our interactive calendar. Track important events, sessions, and holidays.",
+  "filtersTitle": "Event Filters",
+  "upcomingEvents": "Upcoming Events",
+  "today": "Today",
+  "moreLink": "more",
+  "exportAll": "Export Full Calendar",
+  "filters": {
+      "title": "Filter by Type"
+    },
+  "mobileViewButton": "Event List",
+  "downloadICS": "Download .ics",
+  "exportFileName": "academic_calendar",
+  "location": "Medical University",
+  "views": {
+    "month": "Month",
+    "week": "Week",
+    "day": "Day",
+    "list": "List"
+  },
+  "types": {
+  "studyPeriod": "Study Period",
+  "examSession": "Exam Session",
+  "vacation": "Vacation",
+  "scientificEvent": "Scientific Event",
+  "certification": "Certification",
+  "event": "Event"
+},
+"legend": {
+  "studyPeriods": "Study Periods",
+  "examSessions": "Exam Sessions",
+  "vacations": "Vacations",
+  "scientificEvents": "Scientific Events",
+  "generalEvents": "General Events",
+  "certification": "Certification"
+},
+"events": {
+  "fallSemester": {
+    "title": "Fall Semester",
+    "description": "Start of the Fall Semester of the 2024–2025 academic year. Students begin classes according to the schedule."
+  },
+  "fallSession": {
+    "title": "Fall Session",
+    "description": "Examination period of the Fall Semester. Includes tests and exams in all disciplines."
+  },
+  "winterVacation": {
+    "title": "Winter Vacation",
+    "description": "Winter break for students. Rest and recovery before the next semester."
+  },
+  "springSemester": {
+    "title": "Spring Semester",
+    "description": "Start of the Spring Semester. Continuation of the academic process according to the approved schedule."
+  },
+  "scienceConference": {
+    "title": "Scientific Conference",
+    "description": "Annual student and faculty scientific-practical conference. Reports, discussions, and workshops."
+  },
+  "springSession": {
+    "title": "Spring Session",
+    "description": "Examination period of the Spring Semester. Includes final tests and exams."
+  },
+  "summerVacation": {
+    "title": "Summer Vacation",
+    "description": "Summer break for students. Practice, rest, and preparation for the next academic year."
+  },
+  "openDay": {
+    "title": "Open Day",
+    "description": "Open Day for applicants. Campus tours and meetings with faculty."
+  },
+  "thesisDefense": {
+    "title": "Thesis Defense",
+    "description": "Defense of graduation theses. Graduates present their work to the certification committee."
+  },
+  "doctorDay": {
+    "title": "World Doctor’s Day",
+    "description": "Ceremonial meeting dedicated to World Doctor’s Day. Awards for the best students and faculty."
+  }
+},
+"resources": {
+  "breadcrumbs": {
+    "home": "Home",
+    "academics": "Academics",
+    "resources": "Educational Resources"
+  },
+  "title": "Educational Resources",
+  "subtitle": "Access to electronic resources, libraries, and university learning platforms",
+  "stats": {
+    "ebooks": "E-books",
+    "courses": "Online Courses",
+    "access": "Resource Access",
+    "databases": "Scientific Databases"
+  },
+  "resources": {
+    "library": {
+      "title": "E-Library",
+      "description": "Access to textbooks, scientific articles, and electronic editions. Over 10,000 materials in medicine and related disciplines.",
+      "linkText": "Go to Library",
+      "features": ["Catalog Search", "E-textbooks", "Scientific Articles", "Audiobooks"]
+    },
+    "databases": {
+      "title": "Scientific Databases",
+      "description": "Access to international scientific databases for research and academic work.",
+      "features": ["PubMed", "Scopus", "Web of Science", "Google Scholar"]
+    },
+    "materials": {
+      "title": "Methodological Materials",
+      "description": "Guidelines, manuals, handbooks, and syllabi for all disciplines.",
+      "features": ["Guidelines", "Syllabi", "Practicums", "Laboratory Works"]
+    },
+    "video": {
+      "title": "Video Library",
+      "description": "Video lectures, surgery recordings, demonstration materials, and training videos.",
+      "features": ["Lecture Recordings", "Surgical Operations", "Anatomical Atlases", "Demonstrations"]
+    }
+  },
+  "external_links": {
+    "pubmed": "PubMed",
+    "scopus": "Scopus",
+    "web_of_science": "Web of Science"
+  },
+  "forms": {
+    "username": "Username",
+    "password": "Password",
+    "username_placeholder": "Enter your username",
+    "password_placeholder": "Enter your password",
+    "login": "Login to Moodle",
+    "logging_in": "Logging in...",
+    "download": "Download Materials",
+    "go_to": "Go to"
+  },
+  "features_title": "Available:",
+  "tooltip": {
+    "title": "💡 Tip",
+    "text": "Some resources may require authorization through a university account"
+  }
+},
+"breadcrumbs": {
+  "home": "Home",
+  "academics": "Academics",
+  "calendar": "Academic Calendar"
+
+}},
+"application": {
+      "title": "Online application",
+      "subtitle": "Apply to Salymbekov University",
+      "autosave": "Your data is auto-saved every second",
+      "selectProgram": "Select the program you wish to apply for",
+      "programs": {
+        "medicine": "General Medicine",
+        "dentistry": "Dentistry",
+        "pharmacy": "Pharmacy",
+        "nursing": "Nursing"
+      },
+      "programDetails": {
+        "duration": "Duration",
+        "cost": "Cost",
+        "requirements": "Requirements",
+        "description": "Description"
+      },
+      "steps": {
+        "program": "Program selection",
+        "personal": "Personal information",
+        "education": "Education",
+        "documents": "Upload documents",
+        "confirmation": "Confirmation"
+      },
+      "stepTitles": {
+        "step1": "Program selection",
+        "step2": "Personal information",
+        "step3": "Education",
+        "step4": "Upload documents",
+        "step5": "Confirm application"
+      },
+      "stepDescriptions": {
+        "step1": "Choose a study program",
+        "step2": "Fill in your personal details",
+        "step3": "Information about your education",
+        "step4": "Attach required documents",
+        "step5": "Review before submission"
+      },
+      "search": {
+        "placeholder": "Enter program name...",
+        "noResults": "No programs found"
+      },
+      "navigation": {
+        "previous": "Back",
+        "next": "Next",
+        "submit": "Submit application",
+        "saveDraft": "Save draft",
+        "clearForm": "Clear form"
+      },
+      "personalInfo": {
+        "title": "Personal information",
+        "firstName": "First name",
+        "lastName": "Last name",
+        "middleName": "Middle name",
+        "birthDate": "Date of birth",
+        "gender": "Gender",
+        "male": "Male",
+        "female": "Female",
+        "phone": "Phone",
+        "email": "Email",
+        "address": "Address",
+        "selectGender": "Select gender",
+        "phonePlaceholder": "+996 XXX XXX XXX"
+      },
+      "education": {
+        "title": "Education",
+        "schoolName": "School/Lyceum name",
+        "graduationYear": "Graduation year",
+        "certificateNumber": "Certificate number",
+        "ortScore": "ORT score",
+        "subjects": "Subject grades",
+        "subjectsOptional": "Subject grades (optional)",
+        "selectYear": "Select year",
+        "biology": "Biology",
+        "chemistry": "Chemistry",
+        "physics": "Physics",
+        "mathematics": "Mathematics"
+      },
+      "documents": {
+        "title": "Upload documents",
+        "description": "Attach required documents",
+        "certificate": "High school diploma",
+        "passport": "Passport (all pages)",
+        "medical": "Medical certificate 086U",
+        "photos": "3x4 cm photos",
+        "ortCertificate": "ORT certificate",
+        "fileUploaded": "File uploaded",
+        "photosUploaded": "Photos uploaded",
+        "requirements": {
+          "title": "Document requirements",
+          "format": "Documents must be PDF, JPG or PNG",
+          "size": "Max file size - 5 MB",
+          "quality": "Documents must be clear and legible",
+          "passport": "All passport pages must be in one file",
+          "photos": "Photos must be 3x4 cm"
+        }
+      },
+      "confirmation": {
+        "title": "Confirm application",
+        "description": "Review your information before sending",
+        "selectedProgram": "Selected program",
+        "personalData": "Personal data",
+        "education": "Education",
+        "uploadedDocuments": "Uploaded documents",
+        "editSections": "Need to change something?",
+        "editProgram": "Program",
+        "editPersonal": "Personal data",
+        "editEducation": "Education",
+        "editDocuments": "Documents",
+        "agreeTerms": "I agree with the admission rules and study conditions",
+        "agreePrivacy": "I consent to personal data processing",
+        "rulesLink": "admission rules",
+        "conditionsLink": "study conditions",
+        "privacyLink": "personal data processing"
+      },
+      "progress": {
+        "step": "Step",
+        "of": "of",
+        "progress": "Progress"
+      },
+      "status": {
+        "draftLoaded": "Draft loaded",
+        "draftSaved": "Draft saved"
+      },
+      "help": {
+        "title": "Need help filling out?",
+        "phone": "Phone: +996 312 123 456",
+        "email": "Email: admission@salymbekov.edu.kg",
+        "hours": "Working hours: Mon-Fri 09:00-18:00",
+        "autosave": "Your data is saved automatically"
+      },
+      "validation": {
+        "required": "Required field",
+        "selectProgram": "Select a program",
+        "minLength": "Minimum 2 characters",
+        "age": "Age must be between 16 and 35",
+        "phoneFormat": "Enter phone as +996 XXX XXX XXX",
+        "emailInvalid": "Invalid email",
+        "ortRange": "ORT score must be between 0 and 240",
+        "fileFormat": "File must be PDF, JPG or PNG up to 5 MB",
+        "agreeTerms": "Please agree to the terms",
+        "agreePrivacy": "Please agree to data processing"
+      },
+      "dialogs": {
+        "clearForm": "Are you sure you want to clear the form? All entered data will be lost.",
+        "formCleared": "Form cleared. You are back at step one.",
+        "gmailOpened": "Gmail opened in a new window!",
+        "recipient": "Recipient",
+        "applicationReady": "Your application is ready to send",
+        "backupMethod": "If Gmail didn't open, press OK for a backup method.",
+        "emailClient": "Opening email client..."
+      }
+    },
+    "news": {
+    "announcements": {
+      "title": "Announcements",
+      "subtitle": "Important information for students and university staff",
+      "pinned": "Pinned announcements",
+      "urgent": "Urgent",
+      "deadline": "Until",
+      "download": "Download",
+      "details": "Details",
+      "loadError": "Error loading announcements",
+      "noAnnouncements": "No announcements in this category yet",
+      "types": {
+        "academic": "Academic",
+        "scholarship": "Scholarship",
+        "schedule": "Schedule",
+        "competition": "Competition",
+        "health": "Health",
+        "technical": "Technical"
+      },
+      "filters": {
+        "all": "All",
+        "academic": "Academic",
+        "scholarship": "Scholarships",
+        "competition": "Competitions"
+      },
+      "newsletter": {
+        "title": "Don't miss important announcements",
+        "subtitle": "Subscribe to get important announcements by email",
+        "placeholder": "Your email address",
+        "button": "Subscribe"
+      },
+      "fallback": {
+        "winterSession": {
+          "title": "Notice about the winter exam session 2024-2025",
+          "description": "Information about exam schedules, eligibility and winter session rules.",
+          "content": "The winter exam session for all students starts on December 20, 2024. Final schedule will be published by December 15."
+        },
+        "scholarship": {
+          "title": "Scholarship program for high-achieving students",
+          "description": "Applications for increased scholarships are open for students with high academic performance.",
+          "content": "Students with GPA not less than 4.5 may apply for an increased scholarship. Scholarship amount is 15,000 som."
+        },
+        "scheduleChanges": {
+          "title": "Changes to class schedule for December",
+          "description": "Notice about schedule changes due to holidays in December.",
+          "content": "Due to public holidays, schedules from Dec 30 to Jan 8 will be modified. Details in the attached file."
+        },
+        "researchCompetition": {
+          "title": "Student research competition",
+          "description": "Annual competition of student scientific works of the Medical Faculty.",
+          "content": "Research papers across medical fields are accepted. Best works will be presented at an international student conference."
+        },
+        "vaccination": {
+          "title": "Vaccination for students and staff",
+          "description": "Information about planned influenza vaccination for all students and staff.",
+          "content": "Vaccination is provided free of charge at the university medical office by prior registration."
+        },
+        "systemUpdate": {
+          "title": "E-learning system update",
+          "description": "Planned technical work to update the remote learning platform.",
+          "content": "The system will be unavailable on Nov 15 from 02:00 to 06:00. All materials will be preserved."
+        }
+      }
+    }
+  } ,
+   "news": {
+    "title": "University News",
+    "subtitle": "Stay updated with the latest events and announcements of Salymbekov University",
+    "featured": "Important News",
+    "important": "Important",
+    "loading": "Loading news...",
+    "loadingError": "Error loading news",
+    "featuredError": "Error loading featured news:",
+    "error": "Loading error",
+    "tryAgain": "Try again",
+    "loadMore": "Load more",
+    "tabs": {
+      "all": "All News",
+      "news": "News",
+      "events": "Events",
+      "announcements": "Announcements"
+    },
+    "categories": {
+      "news": "News",
+      "events": "Events",
+      "announcements": "Announcements"
+    },
+    "fallbackNews": [
+      {
+        "title": "Opening of a new simulation center",
+        "summary": "A modern simulation center with advanced medical equipment has opened at the university"
+      },
+      {
+        "title": "International Conference on Cardiology",
+        "summary": "An international conference with the participation of leading specialists will be held on January 25-26"
+      }
+    ]
+  },
+  "breadcrumbs": {
+  "home": "Home",
+  "academics": "Academics",
+  "calendar": "Academic Calendar"
+
+},
+ "breadcrumbs": {
+    "academics": "Academics",
+    "departments": "Departments"
+  }
+  }
 
 
 
