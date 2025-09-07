@@ -41,6 +41,149 @@
     "international": "Чет элдик студенттер үчүн",
     
     "all_news": "Бардык жаңылыктар",
+    "announcements": "Жарлыктар",
+    "articles": "Макалалар",
+    
+    "admission_office": "Кабыл алуу комиссиясы",
+    "map": "Кампус картасы",
+    "feedback": "Кери байланыш"
+  },
+  "news": {
+    "title": "Жаңылыктар жана окуялар",
+    "subtitle": "Университеттин турмушунан актуалдуу маалыматтар, окуялар жана макалалар",
+    "categories": {
+      "all": "Баары",
+      "news": "Жаңылыктар",
+      "events": "Окуялар",
+      "announcements": "Жарлыктар",
+      "articles": "Макалалар"
+    },
+    "readMore": "Кененирээк",
+    "loadMore": "Дагы жүктөө",
+    "sidebar": {
+      "popularTopics": "Популярдуу темалар",
+      "archive": "Архив",
+      "newsletter": "Жаңылыктарга жазылуу",
+      "newsletterDescription": "Университеттин бардык жаңылыктары жана окуяларынан кабардар болуңуз",
+      "emailPlaceholder": "Сиздин электрондук дарек",
+      "subscribe": "Жазылуу",
+      "subscriptionSuccess": "Рахмат! Сиз ийгиликтүү жазылдыңыз.",
+      "contact": "Байланыш",
+      "pressService": "Баспа кызматы:",
+      "phone": "Телефон:"
+    }
+  },
+  "requirements": {
+    "title": "Кабыл алуу талаптары",
+    "subtitle": "Ар түрдүү программалар үчүн кабыл алуу талаптарын билиңиз",
+    "selectProgram": "Программа тандоо",
+    "programRequirements": "Программанын талаптары",
+    "requiredDocuments": "Керектүү документтер",
+    "generalRequirements": "Бардык программалар үчүн жалпы талаптар:",
+    "additionalDocuments": "Кошумча документтер:",
+    "importantInfo": {
+      "title": "Маанилүү маалымат",
+      "translation": "Бардык документтер мамлекеттик тилге которулган болушу керек",
+      "nostrification": "Чет өлкөлүк документтер нострификация талап кылат",
+      "medicalValidity": "Медициналык справка 6 ай бою жарактуу"
+    },
+    "help": {
+      "title": "Жардам керекпи?",
+      "description": "Консультация үчүн кабыл алуу комиссиясына кайрылыңыз",
+      "phone": "Телефон",
+      "email": "Email"
+    },
+    "programs": {
+      "all": "Бардык программалар",
+      "medicine": "Дарыгерлик иш",
+      "dentistry": "Стоматология",
+      "pharmacy": "Фармация",
+      "nursing": "Медсестринское дело"
+    },
+    "subjects": {
+      "biology": "Биология",
+      "chemistry": "Химия",
+      "physics": "Физика"
+    },
+    "documents": {
+      "highSchoolDiploma": "Орто билим тууралуу аттестат",
+      "medicalCertificate": "Медициналык справка",
+      "passport": "Паспорт",
+      "photos": "3x4 сүрөттөр (6 данa)",
+      "ortCertificate": "ОРТ сертификаты",
+      "shortList": "Кыска тизме",
+      "standardPackage": "документтердин стандарттык топтому",
+      "fullList": {
+        "diploma": "Баалар менен орто билим аттестаты",
+        "passport": "Паспорттун көчүрмөсү (бардык барактары)",
+        "medicalCertificate": "086/У формасындагы медициналык справка",
+        "photos": "3x4 см сүрөттөр (6 даана)",
+        "ortCertificate": "Жыйынтыктары менен ОРТ сертификаты"
+      },
+      "additional": {
+        "parentsIncome": "Ата-энелердин киреше справкасы",
+        "benefits": "Жеңилдиктер боюнча документтер",
+        "reference": "Мектептен мүнөздөмө",
+        "portfolio": "Жетишкендиктердин портфолиосу"
+      }
+    },
+    "duration": {
+      "6years": "6 жыл",
+      "5years": "5 жыл",
+      "4years": "4 жыл"
+    },
+    "language": {
+      "ru_kg": "Орусча/Кыргызча"
+    },
+    "table": {
+      "program": "Программа",
+      "ortScore": "ОРТ баллы",
+      "entranceExams": "Кирүү экзамендери",
+      "documents": "Документтер"
+    }
+  },
+  "nav": {
+    "home": "Башкы бет",
+    "about": "Биз жөнүндө",
+    "academics": "Академия",
+    "admission": "Кабыл алуу",
+    "research": "Изилдөөлөр",
+    "campus_life": "Студенттик жашоо",
+    "news": "Жаңылыктар",
+    "contacts": "Байланыш",
+    "apply": "Арыз берүү",
+    
+    "about_university": "Университет жөнүндө",
+    "management": "Жетекчилик",
+    "documents": "Документтер",
+    "vacancies": "Бош орундар",
+    "partners": "Өнөктөштөр",
+    
+    "programs": "Билим берүү программалары",
+    "faculties": "Факультеттер",
+    "departments": "Кафедралар",
+    "calendar": "Академиялык календарь",
+    "resources": "Ресурстар",
+    
+    "admission_process": "Кабыл алуу процесси",
+    "requirements": "Талаптар",
+    "tuition": "Окуу баасы",
+    "scholarships": "Стипендиялар",
+    "apply_online": "Онлайн-арыз",
+    
+    "research_areas": "Изилдөө багыттары",
+    "research_centers": "Илимий борборлор",
+    "publications": "Басылмалар",
+    "conferences": "Конференциялар",
+    "grants": "Гранттар",
+    
+    "student_life": "Студенттик жашоо",
+    "events": "Иш-чаралар",
+    "clubs": "Клубдар жана коомдор",
+    "gallery": "Галерея",
+    "international": "Чет элдик студенттер үчүн",
+    
+    "all_news": "Бардык жаңылыктар",
     "announcements": "Жарнамалар",
     "articles": "Макалалар",
     
