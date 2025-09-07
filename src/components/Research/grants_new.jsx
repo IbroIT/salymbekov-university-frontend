@@ -47,7 +47,7 @@ const Grants = () => {
       setError(null);
     } catch (err) {
       console.error('Error fetching grants:', err);
-      setError(t('research.grants.errorLoading') || 'Ошибка загрузки');
+      setError(t('research.grants.errorLoading'));
       setGrants([]);
     } finally {
       setLoading(false);
@@ -141,7 +141,7 @@ const Grants = () => {
       }
 
       const result = await response.json();
-      alert(t('research.grants.applicationSuccess') || 'Заявка успешно отправлена!');
+      alert(t('research.grants.applicationSuccess'));
       
       // Сброс формы
       setFormData({
@@ -162,17 +162,17 @@ const Grants = () => {
       setShowApplicationForm(false);
     } catch (err) {
       console.error('Error submitting application:', err);
-      alert((t('research.grants.applicationError') || 'Ошибка при отправке заявки') + ': ' + err.message);
+      alert(t('research.grants.applicationError') + ': ' + err.message);
     }
   };
 
   const getStatusBadge = (status) => {
     const statusConfig = {
-      'active': { text: t('research.grants.statusLabels.active') || 'Активный', color: 'bg-green-100 text-green-800' },
-      'upcoming': { text: t('research.grants.statusLabels.upcoming') || 'Предстоящий', color: 'bg-blue-100 text-blue-800' },
-      'closed': { text: t('research.grants.statusLabels.closed') || 'Закрытый', color: 'bg-red-100 text-red-800' }
+      'active': { text: t('research.grants.statusLabels.active'), color: 'bg-green-100 text-green-800' },
+      'upcoming': { text: t('research.grants.statusLabels.upcoming'), color: 'bg-blue-100 text-blue-800' },
+      'closed': { text: t('research.grants.statusLabels.closed'), color: 'bg-red-100 text-red-800' }
     };
-    return statusConfig[status] || { text: status, color: 'bg-gray-100 text-gray-800' };
+    return statusConfig[status] || { text: '', color: '' };
   };
 
   const getCategoryColor = (category) => {
@@ -197,7 +197,7 @@ const Grants = () => {
     return (
       <div className="flex justify-center items-center h-64">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-        <span className="ml-3 text-lg">{t('research.grants.loading') || 'Загрузка...'}</span>
+        <span className="ml-3 text-lg">{t('research.grants.loading')}</span>
       </div>
     );
   }
@@ -211,7 +211,7 @@ const Grants = () => {
           onClick={() => fetchGrants()}
           className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
         >
-          {t('research.grants.retry') || 'Попробовать снова'}
+          {t('research.grants.retry')}
         </button>
       </div>
     );
@@ -222,10 +222,10 @@ const Grants = () => {
       {/* Заголовок */}
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold text-gray-900 mb-4">
-          {t('research.grants.title') || 'Исследовательские гранты'}
+          {t('research.grants.title')}
         </h1>
         <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-          {t('research.grants.subtitle') || 'Возможности финансирования научных исследований'}
+          {t('research.grants.subtitle')}
         </p>
       </div>
 
@@ -233,10 +233,10 @@ const Grants = () => {
       <div className="mb-8">
         <nav className="flex space-x-1 bg-gray-100 p-1 rounded-lg">
           {[
-            { id: 'all', label: t('research.grants.tabs.all') || 'Все гранты' },
-            { id: 'active', label: t('research.grants.tabs.active') || 'Активные' },
-            { id: 'upcoming', label: t('research.grants.tabs.upcoming') || 'Скоро' },
-            { id: 'closed', label: t('research.grants.tabs.closed') || 'Завершенные' }
+            { id: 'all', label: t('research.grants.tabs.all') },
+            { id: 'active', label: t('research.grants.tabs.active') },
+            { id: 'upcoming', label: t('research.grants.tabs.upcoming') },
+            { id: 'closed', label: t('research.grants.tabs.closed') }
           ].map((tab) => (
             <button
               key={tab.id}
@@ -256,7 +256,7 @@ const Grants = () => {
       {/* Список грантов */}
       {filteredGrants.length === 0 ? (
         <div className="text-center py-12">
-          <p className="text-gray-500 text-lg">{t('research.grants.noGrants') || 'Нет доступных грантов'}</p>
+          <p className="text-gray-500 text-lg">{t('research.grants.noGrants')}</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -275,7 +275,7 @@ const Grants = () => {
                     {statusBadge.text}
                   </span>
                   <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${categoryColor}`}>
-                    {t(`research.grants.categories.${grant.category}`) || grant.category}
+                    {t(`research.grants.categories.${grant.category}`)}
                   </span>
                 </div>
 
@@ -286,19 +286,19 @@ const Grants = () => {
 
                 {/* Организация */}
                 <p className="text-gray-600 text-sm mb-2">
-                  <span className="font-medium">{t('research.grants.organization') || 'Организация'}:</span> {grant.organization}
+                  <span className="font-medium">{t('research.grants.organization')}:</span> {grant.organization}
                 </p>
 
                 {/* Сумма */}
                 <p className="text-gray-600 text-sm mb-2">
-                  <span className="font-medium">{t('research.grants.amount') || 'Сумма'}:</span> {grant.amount}
+                  <span className="font-medium">{t('research.grants.amount')}:</span> {grant.amount}
                 </p>
 
                 {/* Дедлайн */}
                 <p className="text-gray-600 text-sm mb-4">
-                  <span className="font-medium">{t('research.grants.deadline') || 'Дедлайн'}:</span> {formatDate(grant.deadline)}
+                  <span className="font-medium">{t('research.grants.deadline')}:</span> {formatDate(grant.deadline)}
                   {grant.is_deadline_soon && (
-                    <span className="ml-2 text-red-600 text-xs">⚠️ {t('research.grants.deadlineSoon') || 'Скоро дедлайн'}</span>
+                    <span className="ml-2 text-red-600 text-xs">⚠️ {t('research.grants.deadlineSoon')}</span>
                   )}
                 </p>
 
@@ -308,7 +308,7 @@ const Grants = () => {
                     onClick={() => setSelectedGrant(grant)}
                     className="flex-1 bg-blue-600 text-white py-2 px-4 rounded text-sm hover:bg-blue-700 transition-colors"
                   >
-                    {t('research.grants.viewDetails') || 'Подробнее'}
+                    {t('research.grants.viewDetails')}
                   </button>
                   {grant.status === 'active' && (
                     <button
@@ -318,7 +318,7 @@ const Grants = () => {
                       }}
                       className="bg-green-600 text-white py-2 px-4 rounded text-sm hover:bg-green-700 transition-colors"
                     >
-                      {t('research.grants.apply') || 'Подать заявку'}
+                      {t('research.grants.apply')}
                     </button>
                   )}
                 </div>
@@ -349,41 +349,41 @@ const Grants = () => {
               {/* Основная информация */}
               <div className="space-y-4 mb-6">
                 <div>
-                  <span className="font-medium text-gray-700">{t('research.grants.organization') || 'Организация'}:</span>
+                  <span className="font-medium text-gray-700">{t('research.grants.organization')}:</span>
                   <span className="ml-2 text-gray-900">{selectedGrant.organization}</span>
                 </div>
                 
                 <div>
-                  <span className="font-medium text-gray-700">{t('research.grants.amount') || 'Сумма'}:</span>
+                  <span className="font-medium text-gray-700">{t('research.grants.amount')}:</span>
                   <span className="ml-2 text-gray-900">{selectedGrant.amount}</span>
                 </div>
                 
                 <div>
-                  <span className="font-medium text-gray-700">{t('research.grants.deadline') || 'Дедлайн'}:</span>
+                  <span className="font-medium text-gray-700">{t('research.grants.deadline')}:</span>
                   <span className="ml-2 text-gray-900">{formatDate(selectedGrant.deadline)}</span>
                 </div>
                 
                 <div>
-                  <span className="font-medium text-gray-700">{t('research.grants.duration') || 'Длительность'}:</span>
+                  <span className="font-medium text-gray-700">{t('research.grants.duration')}:</span>
                   <span className="ml-2 text-gray-900">{getGrantDuration(selectedGrant)}</span>
                 </div>
               </div>
 
               {/* Описание */}
               <div className="mb-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('research.grants.description') || 'Описание'}</h3>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('research.grants.description')}</h3>
                 <p className="text-gray-700 leading-relaxed">{getGrantDescription(selectedGrant)}</p>
               </div>
 
               {/* Требования */}
               <div className="mb-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('research.grants.requirements') || 'Требования'}</h3>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('research.grants.requirements')}</h3>
                 <p className="text-gray-700 leading-relaxed">{getGrantRequirements(selectedGrant)}</p>
               </div>
 
               {/* Контакты */}
               <div className="mb-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('research.grants.contacts') || 'Контакты'}</h3>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('research.grants.contacts')}</h3>
                 <div className="space-y-2">
                   <p>
                     <span className="font-medium text-gray-700">Email:</span>
@@ -393,7 +393,7 @@ const Grants = () => {
                   </p>
                   {selectedGrant.website && (
                     <p>
-                      <span className="font-medium text-gray-700">{t('research.grants.website') || 'Сайт'}:</span>
+                      <span className="font-medium text-gray-700">{t('research.grants.website')}:</span>
                       <a 
                         href={selectedGrant.website} 
                         target="_blank" 
@@ -413,7 +413,7 @@ const Grants = () => {
                   onClick={() => setSelectedGrant(null)}
                   className="px-4 py-2 border border-gray-300 text-gray-700 rounded hover:bg-gray-50"
                 >
-                  {t('research.grants.close') || 'Закрыть'}
+                  {t('research.grants.close')}
                 </button>
                 {selectedGrant.status === 'active' && (
                   <button
@@ -424,7 +424,7 @@ const Grants = () => {
                     }}
                     className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
                   >
-                    {t('research.grants.apply') || 'Подать заявку'}
+                    {t('research.grants.apply')}
                   </button>
                 )}
               </div>
@@ -440,7 +440,7 @@ const Grants = () => {
             <div className="p-6">
               <div className="flex justify-between items-center mb-6">
                 <h2 className="text-2xl font-bold text-gray-900">
-                  {t('research.grants.applicationForm.title') || 'Заявка на грант'}
+                  {t('research.grants.applicationForm.title')}
                 </h2>
                 <button
                   onClick={() => setShowApplicationForm(false)}
@@ -454,7 +454,7 @@ const Grants = () => {
                 {/* Название проекта */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    {t('research.grants.applicationForm.projectTitle') || 'Название проекта'} *
+                    {t('research.grants.applicationForm.projectTitle')} *
                   </label>
                   <input
                     type="text"
@@ -469,7 +469,7 @@ const Grants = () => {
                 {/* Руководитель проекта */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    {t('research.grants.applicationForm.principalInvestigator') || 'Руководитель проекта'} *
+                    {t('research.grants.applicationForm.principalInvestigator')} *
                   </label>
                   <input
                     type="text"
@@ -498,7 +498,7 @@ const Grants = () => {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      {t('research.grants.applicationForm.phone') || 'Телефон'}
+                      {t('research.grants.applicationForm.phone')}
                     </label>
                     <input
                       type="tel"
@@ -513,7 +513,7 @@ const Grants = () => {
                 {/* Кафедра */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    {t('research.grants.applicationForm.department') || 'Кафедра/Лаборатория'} *
+                    {t('research.grants.applicationForm.department')} *
                   </label>
                   <input
                     type="text"
@@ -528,7 +528,7 @@ const Grants = () => {
                 {/* Члены команды */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    {t('research.grants.applicationForm.teamMembers') || 'Члены команды'}
+                    {t('research.grants.applicationForm.teamMembers')}
                   </label>
                   <textarea
                     name="team_members"
@@ -536,14 +536,14 @@ const Grants = () => {
                     onChange={handleInputChange}
                     rows={3}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder={t('research.grants.applicationForm.teamMembersPlaceholder') || 'ФИО, должности через запятую'}
+                    placeholder={t('research.grants.applicationForm.teamMembersPlaceholder')}
                   />
                 </div>
 
                 {/* Описание проекта */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    {t('research.grants.applicationForm.projectDescription') || 'Описание проекта'} *
+                    {t('research.grants.applicationForm.projectDescription')} *
                   </label>
                   <textarea
                     name="project_description"
@@ -559,7 +559,7 @@ const Grants = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      {t('research.grants.applicationForm.budget') || 'Бюджет'} *
+                      {t('research.grants.applicationForm.budget')} *
                     </label>
                     <input
                       type="number"
@@ -573,7 +573,7 @@ const Grants = () => {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      {t('research.grants.applicationForm.timeline') || 'Срок (месяцев)'} *
+                      {t('research.grants.applicationForm.timeline')} *
                     </label>
                     <input
                       type="number"
@@ -591,7 +591,7 @@ const Grants = () => {
                 {/* Ожидаемые результаты */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    {t('research.grants.applicationForm.expectedResults') || 'Ожидаемые результаты'} *
+                    {t('research.grants.applicationForm.expectedResults')} *
                   </label>
                   <textarea
                     name="expected_results"
@@ -606,7 +606,7 @@ const Grants = () => {
                 {/* Файлы */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    {t('research.grants.applicationForm.attachments') || 'Прикрепленные файлы'}
+                    {t('research.grants.applicationForm.attachments')}
                   </label>
                   <input
                     type="file"
@@ -616,7 +616,7 @@ const Grants = () => {
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                   <p className="text-sm text-gray-500 mt-1">
-                    {t('research.grants.applicationForm.fileFormats') || 'Поддерживаемые форматы: PDF, DOC, DOCX, TXT'}
+                    {t('research.grants.applicationForm.fileFormats')}
                   </p>
                 </div>
 
@@ -627,13 +627,13 @@ const Grants = () => {
                     onClick={() => setShowApplicationForm(false)}
                     className="px-4 py-2 border border-gray-300 text-gray-700 rounded hover:bg-gray-50"
                   >
-                    {t('research.grants.applicationForm.cancel') || 'Отмена'}
+                    {t('research.grants.applicationForm.cancel')}
                   </button>
                   <button
                     type="submit"
                     className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
                   >
-                    {t('research.grants.applicationForm.submit') || 'Отправить заявку'}
+                    {t('research.grants.applicationForm.submit')}
                   </button>
                 </div>
               </form>
