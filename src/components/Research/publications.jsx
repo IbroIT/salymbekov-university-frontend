@@ -87,11 +87,15 @@ const Publications = () => {
     ))],
     journals: [...new Set(publicationsData.map(pub => pub.journal))],
     centers: researchCenters.map(center => center.name),
-    years: [...new Set(publicationsData.map(pub => pub.year))].sort()
+    years: publicationsData.length > 0 
+      ? [...new Set(publicationsData.map(pub => pub.year))].sort()
+      : [2018, 2019, 2020, 2021, 2022, 2023, 2024]
   }), [publicationsData, researchCenters]);
 
   // Статистика для графиков
   const chartData = useMemo(() => {
+    if (publicationsData.length === 0) return [];
+    
     const yearData = publicationsData.reduce((acc, pub) => {
       acc[pub.year] = (acc[pub.year] || 0) + 1;
       return acc;
@@ -104,6 +108,8 @@ const Publications = () => {
   }, [publicationsData]);
 
   const centerData = useMemo(() => {
+    if (publicationsData.length === 0) return [];
+    
     const centerCounts = publicationsData.reduce((acc, pub) => {
       const centerName = pub.center_name || pub.center?.name;
       if (centerName) {
@@ -283,8 +289,8 @@ const Publications = () => {
               </label>
               <input
                 type="range"
-                min={Math.min(...uniqueValues.years)}
-                max={Math.max(...uniqueValues.years)}
+                min={uniqueValues.years.length > 0 ? Math.min(...uniqueValues.years) : 2018}
+                max={uniqueValues.years.length > 0 ? Math.max(...uniqueValues.years) : 2024}
                 value={filters.yearRange[1]}
                 onChange={(e) => setFilters(prev => ({
                   ...prev,
@@ -293,8 +299,8 @@ const Publications = () => {
                 className="w-full h-2 bg-blue-100 rounded-lg appearance-none cursor-pointer"
               />
               <div className="flex justify-between text-xs text-gray-500 mt-1">
-                <span>{Math.min(...uniqueValues.years)}</span>
-                <span>{Math.max(...uniqueValues.years)}</span>
+                <span>{uniqueValues.years.length > 0 ? Math.min(...uniqueValues.years) : 2018}</span>
+                <span>{uniqueValues.years.length > 0 ? Math.max(...uniqueValues.years) : 2024}</span>
               </div>
             </div>
 
@@ -447,7 +453,7 @@ const Publications = () => {
         <div className="bg-white rounded-xl md:rounded-2xl shadow-lg p-4 md:p-6">
           <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-4 md:mb-6 space-y-3 md:space-y-0">
             <h2 className="text-lg md:text-2xl font-semibold">
-              Публикации ({filteredPublications.length})
+              Публикации ({publicationsData.length})
             </h2>
             <div className="flex space-x-2 md:space-x-4 overflow-x-auto pb-2">
               <button
@@ -467,9 +473,9 @@ const Publications = () => {
 
           {/* Мобильная версия */}
           <div className="md:hidden">
-            {filteredPublications.map(renderMobilePublication)}
+            {publicationsData.map(renderMobilePublication)}
             
-            {filteredPublications.length === 0 && (
+            {publicationsData.length === 0 && (
               <div className="text-center py-8 text-gray-500 text-sm">
                 Публикации не найдены по выбранным фильтрам
               </div>
@@ -510,14 +516,14 @@ const Publications = () => {
                   </th>
                   <th 
                     className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
-                    onClick={() => handleSort('citationIndex')}
+                    onClick={() => handleSort('citation_index')}
                   >
-                    Цитаты {sortConfig.key === 'citationIndex' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
+                    Цитаты {sortConfig.key === 'citation_index' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
                   </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
-                {filteredPublications.map((pub) => (
+                {publicationsData.map((pub) => (
                   <tr key={pub.id} className="hover:bg-gray-50 transition-colors">
                     <td className="px-4 py-3">
                       <input
@@ -529,12 +535,12 @@ const Publications = () => {
                     </td>
                     <td className="px-4 py-3">
                       <div className="text-sm font-medium text-gray-900">{pub.title}</div>
-                      <div className="text-sm text-gray-500">{pub.center}</div>
+                      <div className="text-sm text-gray-500">{pub.center_name || pub.center?.name}</div>
                     </td>
                     <td className="px-4 py-3">
                       <div className="text-sm text-gray-900">
                         {pub.authors.map((author, index) => (
-                          <div key={index}>{author}</div>
+                          <div key={index}>{author.last_name} {author.first_name}</div>
                         ))}
                       </div>
                     </td>
@@ -542,7 +548,7 @@ const Publications = () => {
                     <td className="px-4 py-3 text-sm text-gray-900">{pub.year}</td>
                     <td className="px-4 py-3">
                       <span className="px-2 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-full">
-                        {pub.citationIndex}
+                        {pub.citation_index}
                       </span>
                     </td>
                   </tr>
@@ -551,7 +557,7 @@ const Publications = () => {
             </table>
           </div>
 
-          {filteredPublications.length === 0 && (
+          {publicationsData.length === 0 && (
             <div className="hidden md:block text-center py-12 text-gray-500">
               Публикации не найдены по выбранным фильтрам
             </div>
