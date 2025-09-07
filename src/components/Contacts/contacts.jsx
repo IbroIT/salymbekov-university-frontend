@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from "framer-motion";
 import { FaPaperPlane, FaUser, FaEnvelope, FaComment, FaArrowRight, FaMapMarkerAlt, FaPhone, FaClock, FaGlobe, FaBuilding, FaIdCard } from "react-icons/fa";
+import { useTranslation } from 'react-i18next';
 
 const Contacts = () => {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState('general');
   const [isMapLoaded, setIsMapLoaded] = useState(false);
   const [showContactForm, setShowContactForm] = useState(false);
@@ -15,46 +17,46 @@ const Contacts = () => {
   }, []);
 
   // Карта Университета Салымбекова
-  const mapUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2924.028544108504!2d74.5975975!3d42.8441282!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x389ec987f324329b%3A0x2cd99bcd0df5fc1f!2z0KHQsNC70LjQvNCx0LjQu9GM0L3QvtCz0L4g0KPQvdC40LLQtdGA0YHQuNGC0LXRgg!5e0!3m2!1sru!2skg!4v1712345678901!5m2!1sru!2skg";
+  const mapUrl = "https://2gis.kg/bishkek/firm/70000001039696456/74.561483%2C42.878785?m=74.56123%2C42.878447%2F18.87";
 
   const departments = [
     {
-      name: "Приемная комиссия",
+      name: t('contacts.departments.admission.name'),
       phone: "+996 (312) 123-401",
       email: "admission@salymbekov-med.kg",
-      hours: "Пн-Пт 9:00-17:00, Сб 10:00-14:00",
-      head: "Иванова Мария Петровна",
+      hours: t('contacts.departments.admission.hours'),
+      head: t('contacts.departments.admission.head'),
       icon: "🎓"
     },
     {
-      name: "Учебный отдел",
+      name: t('contacts.departments.academic.name'),
       phone: "+996 (312) 123-402",
       email: "academic@salymbekov-med.kg",
-      hours: "Пн-Пт 9:00-18:00",
-      head: "Сидоров Алексей Владимирович",
+      hours: t('contacts.departments.academic.hours'),
+      head: t('contacts.departments.academic.head'),
       icon: "📚"
     },
     {
-      name: "Научный отдел",
+      name: t('contacts.departments.research.name'),
       phone: "+996 (312) 123-403",
       email: "research@salymbekov-med.kg",
-      hours: "Пн-Пт 10:00-17:00",
-      head: "Проф. Алиев А.К.",
+      hours: t('contacts.departments.research.hours'),
+      head: t('contacts.departments.research.head'),
       icon: "🔬"
     },
     {
-      name: "Международный отдел",
+      name: t('contacts.departments.international.name'),
       phone: "+996 (312) 123-404",
       email: "international@salymbekov-med.kg",
-      hours: "Пн-Пт 9:00-17:00",
-      head: "Dr. Sarah Johnson",
+      hours: t('contacts.departments.international.hours'),
+      head: t('contacts.departments.international.head'),
       icon: "🌐"
     }
   ];
 
   const copyToClipboard = (text) => {
     navigator.clipboard.writeText(text);
-    alert('Скопировано в буфер обмена: ' + text);
+    alert(t('contacts.copiedToClipboard', { text }));
   };
 
   return (
@@ -67,7 +69,7 @@ const Contacts = () => {
             animate={{ opacity: 1, y: 0 }}
             className="text-4xl font-bold text-white mb-4"
           >
-            📞 Контакты
+            📞 {t('contacts.title')}
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0 }}
@@ -75,7 +77,7 @@ const Contacts = () => {
             transition={{ delay: 0.2 }}
             className="text-xl text-blue-200 max-w-3xl mx-auto"
           >
-            Свяжитесь с нами любым удобным способом. Мы всегда рады помочь!
+            {t('contacts.subtitle')}
           </motion.p>
         </div>
 
@@ -86,7 +88,7 @@ const Contacts = () => {
             animate={{ opacity: 1, x: 0 }}
             className="bg-white/5 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-blue-400/20"
           >
-            <h2 className="text-2xl font-bold text-white mb-6">Контактная информация</h2>
+            <h2 className="text-2xl font-bold text-white mb-6">{t('contacts.contactInfo')}</h2>
             
             {/* Табы */}
             <div className="flex mb-6 bg-blue-900/30 rounded-xl p-1">
@@ -98,7 +100,7 @@ const Contacts = () => {
                     : 'text-blue-300 hover:text-white'
                 }`}
               >
-                Основные контакты
+                {t('contacts.tabs.general')}
               </button>
               <button
                 onClick={() => setActiveTab('departments')}
@@ -108,7 +110,7 @@ const Contacts = () => {
                     : 'text-blue-300 hover:text-white'
                 }`}
               >
-                Отделы
+                {t('contacts.tabs.departments')}
               </button>
             </div>
 
@@ -119,13 +121,15 @@ const Contacts = () => {
                     <FaBuilding className="text-blue-400 text-xl" />
                   </div>
                   <div>
+                    <h3 className="font-semibold text-white">{t('contacts.address.title')}</h3>
+                    <p className="text-blue-200">{t('contacts.address.value')}</p>
                     <h3 className="font-semibold text-white">Адрес</h3>
-                    <p className="text-blue-200">г. Бишкек, ул. Ахунбаева 123</p>
+                    <p className="text-blue-200">г. Бишкек, ул. Фучика 3</p>
                     <button
-                      onClick={() => copyToClipboard('г. Бишкек, ул. Ахунбаева 123')}
+                      onClick={() => copyToClipboard(t('contacts.address.value'))}
                       className="text-blue-400 text-sm hover:text-blue-300 mt-1"
                     >
-                      Скопировать адрес
+                      {t('contacts.copyAddress')}
                     </button>
                   </div>
                 </div>
@@ -135,14 +139,14 @@ const Contacts = () => {
                     <FaPhone className="text-green-400 text-xl" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-white">Телефоны</h3>
-                    <p className="text-blue-200">+996 (312) 123-456 (приемная)</p>
-                    <p className="text-blue-200">+996 (700) 123-456 (горячая линия)</p>
+                    <h3 className="font-semibold text-white">{t('contacts.phones.title')}</h3>
+                    <p className="text-blue-200">+996 (312) 123-456 ({t('contacts.phones.reception')})</p>
+                    <p className="text-blue-200">+996 (700) 123-456 ({t('contacts.phones.hotline')})</p>
                     <button
                       onClick={() => copyToClipboard('+996312123456')}
                       className="text-blue-400 text-sm hover:text-blue-300 mt-1"
                     >
-                      Скопировать номер
+                      {t('contacts.copyNumber')}
                     </button>
                   </div>
                 </div>
@@ -152,14 +156,14 @@ const Contacts = () => {
                     <FaEnvelope className="text-red-400 text-xl" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-white">Email</h3>
+                    <h3 className="font-semibold text-white">{t('contacts.email.title')}</h3>
                     <p className="text-blue-200">info@salymbekov-med.kg</p>
                     <p className="text-blue-200">support@salymbekov-med.kg</p>
                     <button
                       onClick={() => copyToClipboard('info@salymbekov-med.kg')}
                       className="text-blue-400 text-sm hover:text-blue-300 mt-1"
                     >
-                      Скопировать email
+                      {t('contacts.copyEmail')}
                     </button>
                   </div>
                 </div>
@@ -169,10 +173,10 @@ const Contacts = () => {
                     <FaClock className="text-yellow-400 text-xl" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-white">График работы</h3>
-                    <p className="text-blue-200">Пн-Пт: 9:00-18:00</p>
-                    <p className="text-blue-200">Сб: 10:00-14:00</p>
-                    <p className="text-blue-200">Вс: выходной</p>
+                    <h3 className="font-semibold text-white">{t('contacts.hours.title')}</h3>
+                    <p className="text-blue-200">{t('contacts.hours.weekdays')}</p>
+                    <p className="text-blue-200">{t('contacts.hours.saturday')}</p>
+                    <p className="text-blue-200">{t('contacts.hours.sunday')}</p>
                   </div>
                 </div>
 
@@ -183,7 +187,7 @@ const Contacts = () => {
                   className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 flex items-center justify-center gap-2"
                 >
                   <FaPaperPlane />
-                  Написать сообщение
+                  {t('contacts.sendMessage')}
                 </motion.button>
               </div>
             ) : (
@@ -201,7 +205,7 @@ const Contacts = () => {
                         <p className="text-sm text-blue-200 mb-1">📞 {dept.phone}</p>
                         <p className="text-sm text-blue-200 mb-1">📧 {dept.email}</p>
                         <p className="text-sm text-blue-200 mb-1">🕒 {dept.hours}</p>
-                        <p className="text-xs text-blue-300">Руководитель: {dept.head}</p>
+                        <p className="text-xs text-blue-300">{t('contacts.departments.head')}: {dept.head}</p>
                       </div>
                     </div>
                   </motion.div>
@@ -219,14 +223,14 @@ const Contacts = () => {
           >
             <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
               <FaMapMarkerAlt className="text-red-400" />
-              Мы на карте
+              {t('contacts.map.title')}
             </h2>
             
             {!isMapLoaded ? (
               <div className="h-96 bg-blue-900/30 rounded-xl animate-pulse flex items-center justify-center">
                 <div className="text-center">
                   <div className="text-4xl mb-2 text-blue-400">🗺️</div>
-                  <p className="text-blue-300">Загрузка карты...</p>
+                  <p className="text-blue-300">{t('contacts.map.loading')}</p>
                 </div>
               </div>
             ) : (
@@ -239,7 +243,7 @@ const Contacts = () => {
                   allowFullScreen=""
                   loading="lazy"
                   className="rounded-xl"
-                  aria-label="Карта Университета Салымбекова"
+                  aria-label={t('contacts.map.ariaLabel')}
                 />
                 
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/80 to-transparent p-4 pt-6">
@@ -247,8 +251,10 @@ const Contacts = () => {
                     <div className="flex items-start gap-3">
                       <FaMapMarkerAlt className="text-red-400 text-xl mt-1" />
                       <div>
+                        <p className="font-bold">{t('contacts.map.universityName')}</p>
+                        <p className="text-sm opacity-90">{t('contacts.address.value')}</p>
                         <p className="font-bold">Университет Салымбекова</p>
-                        <p className="text-sm opacity-90">г. Бишкек, ул. Ахунбаева 123</p>
+                        <p className="text-sm opacity-90">г. Бишкек, ул. Фучика 3</p>
                       </div>
                     </div>
                     
@@ -259,7 +265,7 @@ const Contacts = () => {
                     
                     <div className="flex items-center gap-3">
                       <FaClock className="text-blue-300 opacity-80" />
-                      <p className="text-sm">Пн-Пт: 9:00-18:00</p>
+                      <p className="text-sm">{t('contacts.hours.weekdays')}</p>
                     </div>
                   </div>
                 </div>
@@ -268,11 +274,15 @@ const Contacts = () => {
 
             {/* Инструкция под картой */}
             <div className="mt-4 p-4 bg-blue-900/30 rounded-lg border border-blue-400/20">
-              <h4 className="font-semibold text-white mb-2">🚌 Как добраться?</h4>
+              <h4 className="font-semibold text-white mb-2">{t('contacts.map.howToGet')}</h4>
               <ul className="text-sm text-blue-200 space-y-1">
-                <li>• Автобусы: 1, 5, 12, 24 до остановки "Медицинский университет"</li>
-                <li>• Маршрутки: 105, 107, 120, 134</li>
-                <li>• Такси: назовите адрес "ул. Ахунбаева 123"</li>
+                <li>• {t('contacts.map.transport.buses')}</li>
+                <li>• {t('contacts.map.transport.minibuses')}</li>
+                <li>• {t('contacts.map.transport.taxi')}</li>
+                <li>• {t('contacts.map.transport.car')}</li>
+                <li>• Автобусы: 8, 15, 35, 254 до остановки "Шлагбаум"</li>
+                <li>• Маршрутки: 173, 185, 200 А, 218, 290, 386, 935</li>
+                <li>• Такси: назовите адрес "ул. Фучика 3"</li>
                 <li>• Авто: парковка на территории кампуса</li>
               </ul>
             </div>
@@ -286,7 +296,7 @@ const Contacts = () => {
           transition={{ delay: 0.4 }}
           className="bg-white/5 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-blue-400/20 mb-8"
         >
-          <h2 className="text-2xl font-bold text-white mb-6">🚀 Быстрые действия</h2>
+          <h2 className="text-2xl font-bold text-white mb-6">🚀 {t('contacts.quickActions.title')}</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <motion.a
@@ -295,8 +305,8 @@ const Contacts = () => {
               className="bg-green-600/20 hover:bg-green-600/30 text-white p-4 rounded-xl text-center transition-all border border-green-400/20"
             >
               <div className="text-2xl mb-2">📞</div>
-              <p className="font-semibold">Позвонить</p>
-              <p className="text-sm opacity-90">Приемная</p>
+              <p className="font-semibold">{t('contacts.quickActions.call')}</p>
+              <p className="text-sm opacity-90">{t('contacts.phones.reception')}</p>
             </motion.a>
 
             <motion.a
@@ -305,18 +315,18 @@ const Contacts = () => {
               className="bg-blue-600/20 hover:bg-blue-600/30 text-white p-4 rounded-xl text-center transition-all border border-blue-400/20"
             >
               <div className="text-2xl mb-2">📧</div>
-              <p className="font-semibold">Написать</p>
+              <p className="font-semibold">{t('contacts.quickActions.write')}</p>
               <p className="text-sm opacity-90">Email</p>
             </motion.a>
 
             <motion.button
               whileHover={{ scale: 1.05 }}
-              onClick={() => copyToClipboard('г. Бишкек, ул. Ахунбаева 123')}
+              onClick={() => copyToClipboard(t('contacts.address.value'))}
               className="bg-purple-600/20 hover:bg-purple-600/30 text-white p-4 rounded-xl text-center transition-all border border-purple-400/20"
             >
               <div className="text-2xl mb-2">📋</div>
-              <p className="font-semibold">Скопировать</p>
-              <p className="text-sm opacity-90">Адрес</p>
+              <p className="font-semibold">{t('contacts.quickActions.copy')}</p>
+              <p className="text-sm opacity-90">{t('contacts.address.title')}</p>
             </motion.button>
 
             <motion.button
@@ -325,8 +335,8 @@ const Contacts = () => {
               className="bg-orange-600/20 hover:bg-orange-600/30 text-white p-4 rounded-xl text-center transition-all border border-orange-400/20"
             >
               <div className="text-2xl mb-2">📝</div>
-              <p className="font-semibold">Заявка</p>
-              <p className="text-sm opacity-90">Онлайн-форма</p>
+              <p className="font-semibold">{t('contacts.quickActions.application')}</p>
+              <p className="text-sm opacity-90">{t('contacts.quickActions.onlineForm')}</p>
             </motion.button>
           </div>
         </motion.div>
@@ -340,14 +350,14 @@ const Contacts = () => {
         >
           <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
             <FaGlobe className="text-cyan-400" />
-            Мы в соцсетях
+            {t('contacts.social.title')}
           </h2>
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { name: "Facebook", icon: "📘", color: "bg-blue-600/20", border: "border-blue-400/20", handle: "/SalymbekovMed" },
-              { name: "Instagram", icon: "📷", color: "bg-pink-600/20", border: "border-pink-400/20", handle: "@salymbekov_med" },
-              { name: "Twitter", icon: "🐦", color: "bg-sky-600/20", border: "border-sky-400/20", handle: "@SalymbekovMed" },
+              { name: "Facebook", icon: "📘", color: "bg-blue-600/20", border: "border-blue-400/20", handle: "/SalymbekovUniversity" },
+              { name: "Instagram", icon: "📷", color: "bg-pink-600/20", border: "border-pink-400/20", handle: "@salymbekovuniversity" },
+              { name: "Twitter", icon: "🐦", color: "bg-sky-600/20", border: "border-sky-400/20", handle: "@SalymbekovUniversity" },
               { name: "YouTube", icon: "📺", color: "bg-red-600/20", border: "border-red-400/20", handle: "Salymbekov University" }
             ].map((social, index) => (
               <motion.a
@@ -375,7 +385,7 @@ const Contacts = () => {
               <div className="flex items-center gap-3 mb-6">
                 <FaPaperPlane className="text-cyan-400 text-2xl" />
                 <h3 className="text-2xl font-bold text-white">
-                  Свяжитесь с нами
+                  {t('contacts.contactForm.title')}
                 </h3>
                 <button
                   onClick={() => setShowContactForm(false)}
@@ -392,7 +402,7 @@ const Contacts = () => {
                   </div>
                   <input
                     type="text"
-                    placeholder="Ваше имя"
+                    placeholder={t('contacts.contactForm.namePlaceholder')}
                     className="w-full pl-10 pr-4 py-3 bg-white/5 border border-blue-400/30 rounded-lg text-white placeholder-blue-300/70 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-transparent"
                   />
                 </motion.div>
@@ -403,7 +413,7 @@ const Contacts = () => {
                   </div>
                   <input
                     type="email"
-                    placeholder="Ваш email"
+                    placeholder={t('contacts.contactForm.emailPlaceholder')}
                     className="w-full pl-10 pr-4 py-3 bg-white/5 border border-blue-400/30 rounded-lg text-white placeholder-blue-300/70 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-transparent"
                   />
                 </motion.div>
@@ -413,7 +423,7 @@ const Contacts = () => {
                     <FaComment className="text-blue-400/80" />
                   </div>
                   <textarea
-                    placeholder="Ваше сообщение"
+                    placeholder={t('contacts.contactForm.messagePlaceholder')}
                     rows="4"
                     className="w-full pl-10 pr-4 py-3 bg-white/5 border border-blue-400/30 rounded-lg text-white placeholder-blue-300/70 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-transparent"
                   ></textarea>
@@ -424,7 +434,7 @@ const Contacts = () => {
                   whileTap={{ scale: 0.98 }}
                   className="w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-lg font-bold text-white flex items-center justify-center gap-2 group"
                 >
-                  Отправить сообщение
+                  {t('contacts.contactForm.sendButton')}
                   <motion.span className="inline-block group-hover:translate-x-1 transition-transform">
                     <FaArrowRight />
                   </motion.span>
@@ -432,7 +442,7 @@ const Contacts = () => {
               </form>
 
               <div className="mt-4 text-center text-sm text-blue-300/80">
-                Мы ответим вам в течение 24 часов
+                {t('contacts.contactForm.responseTime')}
               </div>
             </motion.div>
           </div>

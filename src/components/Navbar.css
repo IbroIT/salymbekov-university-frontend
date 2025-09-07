@@ -1,64 +1,105 @@
-/* Дополнительные стили для навбара для точной настройки breakpoints */
+@keyframes fadeIn {
+  from { 
+    opacity: 0;
+    transform: translate3d(0, -10px, 0);
+  }
+  to { 
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
 
-/* Для экранов 13.5 дюймов (1280px - 1440px) */
-@media (min-width: 1280px) and (max-width: 1439px) {
-  .navbar-menu-item {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    font-size: 0.875rem;
+@keyframes slideInDown {
+  from {
+    transform: translate3d(0, -100%, 0);
+    opacity: 0;
+    visibility: hidden;
   }
-  
-  .navbar-logo {
-    max-width: 120px;
-    height: auto;
+  to {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+    visibility: visible;
   }
-  
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+.animate-slideInDown {
+  animation: slideInDown 0.4s ease-out forwards;
+}
+
+/* Плавная прокрутка для всей страницы */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Стили для навбара */
+.navbar {
+  transition: all 0.3s ease;
+}
+
+.navbar-container {
+  max-width: 1200px;
+}
+
+.navbar-menu-item {
+  position: relative;
+}
+
+.navbar-menu-item::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background-color: #3b82f6;
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.navbar-menu-item:hover::after {
+  width: 70%;
+}
+
+.navbar-menu-dropdown {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-apply-button {
+  transition: all 0.3s ease;
+}
+
+.navbar-apply-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(37, 99, 235, 0.3);
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 1279px) {
   .navbar-container {
     padding-left: 1rem;
     padding-right: 1rem;
   }
 }
 
-/* Для экранов больше 1440px */
-@media (min-width: 1440px) {
-  .navbar-menu-item {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-  
-  .navbar-logo {
-    width: 150px;
-    height: 35px;
-  }
+/* Кастомный скроллбар для мобильного меню */
+.xl\:hidden::-webkit-scrollbar {
+  width: 6px;
 }
 
-/* Улучшенная адаптивность для средних экранов */
-@media (min-width: 1024px) and (max-width: 1279px) {
-  .navbar-desktop-menu {
-    display: none !important;
-  }
-  
-  .navbar-mobile-trigger {
-    display: flex !important;
-  }
+.xl\:hidden::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
 }
 
-/* Фиксация высоты навбара */
-.navbar-fixed {
-  min-height: 64px;
+.xl\:hidden::-webkit-scrollbar-thumb {
+  background: #c5c5c5;
+  border-radius: 10px;
 }
 
-.navbar-container {
-  min-height: 64px;
-}
-
-/* Плавные переходы */
-.navbar-transition {
-  transition: all 0.3s ease;
-}
-
-/* Убираем overflow для предотвращения наслоения */
-.navbar-menu-dropdown {
-  z-index: 9999;
-  position: absolute;
+.xl\:hidden::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
 }
