@@ -2732,6 +2732,44 @@
       "joinResearchDesc": "Become part of our scientific community and contribute to important research projects",
       "participateInResearch": "Participate in Research"
     }
+  },"reviews": {
+    "title": "Our Students' Reviews",
+    "subtitle": "Find out what students say about the quality of education and atmosphere at our medical university",
+    "previousButton": "Previous review",
+    "nextButton": "Next review",
+    "goToReview": "Go to review",
+    "items": [
+      {
+        "name": "Anna Ivanova",
+        "faculty": "General Medicine",
+        "course": "4th year",
+        "text": "Studying at the medical faculty gave me invaluable knowledge and practical skills. The teachers are experienced practicing doctors who share real experience."
+      },
+      {
+        "name": "Maxim Petrov",
+        "faculty": "Pediatrics",
+        "course": "5th year",
+        "text": "Excellent combination of theory and practice! Already in the 3rd year, classes began in clinics, which allows applying knowledge in real conditions."
+      },
+      {
+        "name": "Elena Smirnova",
+        "faculty": "Dentistry",
+        "course": "3rd year",
+        "text": "Modern equipment and approach to learning. I especially appreciate the simulation center where you can practice skills before clinical practice."
+      },
+      {
+        "name": "Dmitry Kozlov",
+        "faculty": "Pharmacy",
+        "course": "2nd year",
+        "text": "Interesting program, deep immersion in biochemistry and pharmacology. Teachers support students' scientific initiatives."
+      },
+      {
+        "name": "Olga Novikova",
+        "faculty": "Preventive Medicine",
+        "course": "1st year",
+        "text": "I entered this year and I'm already delighted! The atmosphere promotes learning, there are many practical classes and modern laboratories."
+      }
+    ]
   }
 }
 
