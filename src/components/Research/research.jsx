@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Calendar, FileText, Users, Award, ArrowRight, Clock, MapPin, ChevronRight, ExternalLink, BookOpen, Mic2 } from 'lucide-react';
 
 const Research = () => {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState('publications');
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef(null);
@@ -29,68 +31,68 @@ const Research = () => {
     {
       id: 1,
       icon: '🫀',
-      title: 'Кардиология',
+      title: t('research.researchAreas.cardiology.title'),
       projects: 15,
       publications: 45,
       researchers: 28,
       color: 'bg-red-100 text-red-800',
       gradient: 'from-red-500 to-orange-500',
-      description: 'Исследования в области сердечно-сосудистых заболеваний и инновационных методов лечения'
+      description: t('research.researchAreas.cardiology.description')
     },
     {
       id: 2,
       icon: '🧠',
-      title: 'Нейронауки',
+      title: t('research.researchAreas.neuroscience.title'),
       projects: 8,
       publications: 22,
       researchers: 18,
       color: 'bg-blue-100 text-blue-800',
       gradient: 'from-blue-500 to-indigo-600',
-      description: 'Изучение работы мозга и нервной системы, разработка новых нейротехнологий'
+      description: t('research.researchAreas.neuroscience.description')
     },
     {
       id: 3,
       icon: '🦠',
-      title: 'Общественное здоровье',
+      title: t('research.researchAreas.oncology.title'),
       projects: 12,
       publications: 38,
       researchers: 32,
       color: 'bg-green-100 text-green-800',
       gradient: 'from-green-500 to-teal-600',
-      description: 'Анализ популяционного здоровья и разработка стратегий профилактики заболеваний'
+      description: t('research.researchAreas.oncology.description')
     },
     {
       id: 4,
       icon: '🧬',
-      title: 'Генетика',
+      title: t('research.researchAreas.genetics.title'),
       projects: 9,
       publications: 31,
       researchers: 21,
       color: 'bg-purple-100 text-purple-800',
       gradient: 'from-purple-500 to-pink-500',
-      description: 'Молекулярно-генетические исследования и персонализированная медицина'
+      description: t('research.researchAreas.genetics.description')
     },
     {
       id: 5,
       icon: '🦴',
-      title: 'Ортопедия',
+      title: t('research.researchAreas.immunology.title'),
       projects: 6,
       publications: 19,
       researchers: 15,
       color: 'bg-orange-100 text-orange-800',
       gradient: 'from-amber-500 to-orange-600',
-      description: 'Инновационные методы лечения опорно-двигательного аппарата'
+      description: t('research.researchAreas.immunology.description')
     },
     {
       id: 6,
-      icon: '👁️',
-      title: 'Офтальмология',
+      icon: '�',
+      title: t('research.researchAreas.pharmacology.title'),
       projects: 7,
       publications: 24,
       researchers: 16,
       color: 'bg-indigo-100 text-indigo-800',
       gradient: 'from-indigo-500 to-blue-600',
-      description: 'Исследования в области заболеваний глаз и новых методов коррекции зрения'
+      description: t('research.researchAreas.pharmacology.description')
     }
   ];
 
@@ -104,7 +106,7 @@ const Research = () => {
       date: '2024-01-15',
       impactFactor: 4.2,
       link: '#',
-      area: 'Кардиология'
+      area: 'cardiology'
     },
     {
       id: 2,
@@ -114,7 +116,7 @@ const Research = () => {
       date: '2024-01-10',
       impactFactor: 3.8,
       link: '#',
-      area: 'Нейронауки'
+      area: 'neuroscience'
     },
     {
       id: 3,
@@ -124,7 +126,7 @@ const Research = () => {
       date: '2024-01-08',
       impactFactor: 2.9,
       link: '#',
-      area: 'Общественное здоровье'
+      area: 'publicHealth'
     },
     {
       id: 4,
@@ -134,7 +136,7 @@ const Research = () => {
       date: '2024-01-05',
       impactFactor: 3.5,
       link: '#',
-      area: 'Генетика'
+      area: 'genetics'
     },
     {
       id: 5,
@@ -144,7 +146,7 @@ const Research = () => {
       date: '2024-01-03',
       impactFactor: 2.7,
       link: '#',
-      area: 'Ортопедия'
+      area: 'orthopedics'
     }
   ];
 
@@ -255,19 +257,19 @@ const Research = () => {
         {/* Хлебные крошки */}
         <nav className="text-sm text-gray-600 mb-8 flex items-center">
           <Link to="/" className="hover:text-blue-600 transition-colors flex items-center">
-            Главная
+            {t('nav.home')}
           </Link>
           <ChevronRight className="w-4 h-4 mx-2" />
-          <span className="text-gray-800 font-medium">Научные исследования</span>
+          <span className="text-gray-800 font-medium">{t('research.title')}</span>
         </nav>
 
         {/* Заголовок с анимацией */}
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4 animate-fade-in">
-            Научные <span className="bg-gradient-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent">исследования</span>
+            {t('research.title')} <span className="bg-gradient-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent"></span>
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Передовые исследования в области медицины и здравоохранения, направленные на улучшение качества жизни
+            {t('research.subtitle')}
           </p>
         </div>
 
@@ -291,7 +293,7 @@ const Research = () => {
         {/* Ключевые направления */}
         <section className="mb-16">
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-3xl font-bold text-gray-800">Ключевые направления</h2>
+            <h2 className="text-3xl font-bold text-gray-800">{t('research.researchAreas.title')}</h2>
             <Link to="/research/areas" className="text-blue-600 hover:text-blue-800 flex items-center group">
               Все направления <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
             </Link>
@@ -309,7 +311,7 @@ const Research = () => {
                   <div className="flex items-start justify-between mb-4">
                     <span className="text-4xl transform group-hover:scale-110 transition-transform duration-300">{area.icon}</span>
                     <span className={`px-3 py-1 rounded-full text-sm font-medium ${area.color}`}>
-                      {area.projects} проектов
+                      {area.projects} {t('research.researchAreas.projects')}
                     </span>
                   </div>
                   
@@ -321,14 +323,14 @@ const Research = () => {
                       <BookOpen className="w-5 h-5 text-gray-400 mr-2" />
                       <div>
                         <div className="text-xl font-bold text-gray-800">{area.publications}</div>
-                        <div className="text-sm text-gray-600">Публикаций</div>
+                        <div className="text-sm text-gray-600">{t('research.researchAreas.publications')}</div>
                       </div>
                     </div>
                     <div className="flex items-center">
                       <Users className="w-5 h-5 text-gray-400 mr-2" />
                       <div>
                         <div className="text-xl font-bold text-gray-800">{area.researchers}</div>
-                        <div className="text-sm text-gray-600">Исследователей</div>
+                        <div className="text-sm text-gray-600">{t('research.researchAreas.researchers')}</div>
                       </div>
                     </div>
                   </div>
@@ -344,10 +346,10 @@ const Research = () => {
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold text-gray-800 flex items-center">
                 <Award className="w-6 h-6 mr-2 text-blue-600" />
-                Последние публикации
+                {t('research.publications.title')}
               </h2>
               <Link to="/research/publications" className="text-blue-600 hover:text-blue-800 flex items-center text-sm group">
-                Все публикации <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                {t('research.common.showMore')} <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
 
@@ -359,7 +361,7 @@ const Research = () => {
                 >
                   <div className="flex justify-between items-start mb-2">
                     <span className="text-xs font-medium text-blue-600 bg-blue-100 px-2 py-1 rounded-full">
-                      {pub.area}
+                      {t(`research.publicationAreas.${pub.area}`)}
                     </span>
                     <span className="text-xs text-gray-500">{formatDate(pub.date)}</span>
                   </div>
@@ -390,10 +392,10 @@ const Research = () => {
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold text-gray-800 flex items-center">
                 <Mic2 className="w-6 h-6 mr-2 text-orange-600" />
-                Ближайшие конференции
+                {t('research.conferences.upcoming')}
               </h2>
               <Link to="/research/conferences" className="text-blue-600 hover:text-blue-800 flex items-center text-sm group">
-                Все события <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                {t('research.common.showMore')} <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
 
@@ -429,19 +431,19 @@ const Research = () => {
                       
                       <div className="flex items-center text-gray-600">
                         <Users className="w-4 h-4 mr-2 text-purple-500" />
-                        {conf.speakers} спикеров
+                        {conf.speakers} {t('research.conferences.speakers')}
                       </div>
                     </div>
 
                     <div className="flex justify-between items-center mt-4 pt-3 border-t border-gray-100">
                       <span className="text-xs text-gray-500">
-                        Регистрация до: {formatDate(conf.deadline)}
+                        {t('research.conferences.registrationDeadline')}: {formatDate(conf.deadline)}
                       </span>
                       <a
                         href={conf.registrationLink}
                         className="text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center group/link"
                       >
-                        Зарегистрироваться <ArrowRight className="w-4 h-4 ml-1 group-hover/link:translate-x-1 transition-transform" />
+                        {t('research.conferences.register')} <ArrowRight className="w-4 h-4 ml-1 group-hover/link:translate-x-1 transition-transform" />
                       </a>
                     </div>
                   </div>
@@ -458,22 +460,22 @@ const Research = () => {
           <div className="absolute -left-10 -bottom-10 w-40 h-40 bg-white/10 rounded-full"></div>
           
           <div className="relative z-10">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4">Присоединяйтесь к нашим исследованиям</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">{t('research.common.joinResearch')}</h2>
             <p className="text-lg mb-6 opacity-90 max-w-2xl mx-auto">
-              Станьте частью научного сообщества и внесите вклад в развитие медицины
+              {t('research.common.joinResearchDesc')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 to="/research/join"
                 className="bg-white text-blue-600 hover:bg-blue-50 px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:-translate-y-1 shadow-md hover:shadow-lg flex items-center justify-center"
               >
-                Участвовать в исследованиях
+                {t('research.common.participateInResearch')}
               </Link>
               <Link
                 to="/research/grants"
                 className="border-2 border-white text-white hover:bg-white hover:text-blue-600 px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center"
               >
-                Гранты и финансирование
+                {t('research.grants.title')}
               </Link>
             </div>
           </div>
