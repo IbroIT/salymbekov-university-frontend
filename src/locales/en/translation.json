@@ -1053,671 +1053,255 @@
       "downloadButton": "Download .ics file"
     }
   },
-  "breadcrumbs": {
-    "home": "Home",
-    "about": "About",
-    "partners": "Partners"
-  },
-  "partners": {
-    "title": "Our Partners",
-    "subtitle": "Salymbekov University actively develops international cooperation with leading medical institutions and educational organizations",
-    "search": "Search partners...",
-    "showing": "Showing partners:",
-    "details": "Details",
-    "website": "Website",
-    "established": "since",
-    "about": "About Partnership",
-    "cooperation": "Areas of Cooperation",
-    "achievements": "Achievements",
-    "contact": "Contact Information",
-    "stats": {
-      "students": "Students",
-      "exchanges": "Exchanges",
-      "projects": "Projects",
-      "partners": "Partners",
-      "totalStudents": "Students in programs",
-      "totalExchanges": "Exchanges per year",
-      "totalProjects": "Joint projects"
-    },
-    "filter": {
-      "all": "All Partners",
-      "clinical": "Clinical Bases",
-      "university": "International Universities",
-      "organization": "Scientific Organizations",
-      "business": "Business Partners"
-    },
-    "types": {
-      "clinical": "Clinical Base",
-      "university": "University",
-      "organization": "Organization",
-      "business": "Business Partner"
-    },
-    "map": {
-      "title": "Partnership Geography",
-      "subtitle": "Interactive map of our partners around the world"
-    },
-    "list": {
-      "1": {
-        "name": "Republican Clinical Hospital",
-        "country": "Kyrgyzstan",
-        "city": "Bishkek",
-        "description": "The main clinical base for practice of medical faculty students. Cooperation includes clinical classes, internships and scientific research.",
-        "cooperation": [
-          "Clinical classes for 4th-6th year students",
-          "Residency and internship",
-          "Joint scientific research",
-          "Exchange of specialists",
-          "Professional development of teachers"
-        ],
-        "achievements": [
-          "Trained over 1000 specialists",
-          "Implemented 15 joint projects",
-          "Received 3 research grants"
-        ]
-      }
-    }
-  },
-   "contacts": {
-    "title": "Contacts",
-    "subtitle": "Contact us in any convenient way. We are always happy to help!",
-    "contactInfo": "Contact Information",
+  "research": {
+    "title": "Research",
+    "subtitle": "Discover breakthrough research and innovations in medical science",
     "tabs": {
-      "general": "Main Contacts",
-      "departments": "Departments"
+      "publications": "Publications",
+      "centers": "Research Centers", 
+      "conferences": "Conferences",
+      "grants": "Grants"
     },
-    "address": {
-      "title": "Address",
-      "value": "Bishkek, Akhunbaeva str. 123"
-    },
-    "copyAddress": "Copy address",
-    "phones": {
-      "title": "Phones",
-      "reception": "reception",
-      "hotline": "hotline"
-    },
-    "copyNumber": "Copy number",
-    "email": {
-      "title": "Email"
-    },
-    "copyEmail": "Copy email",
-    "hours": {
-      "title": "Working Hours",
-      "weekdays": "Mon-Fri: 9:00-18:00",
-      "saturday": "Sat: 10:00-14:00",
-      "sunday": "Sun: day off"
-    },
-    "sendMessage": "Send message",
-    "departments": {
-      "head": "Head",
-      "admission": {
-        "name": "Admission Committee",
-        "hours": "Mon-Fri 9:00-17:00, Sat 10:00-14:00",
-        "head": "Ivanova Maria Petrovna"
+    "researchAreas": {
+      "title": "Key Research Areas",
+      "cardiology": {
+        "title": "Cardiology",
+        "description": "Research in cardiovascular diseases and innovative treatment methods"
       },
-      "academic": {
-        "name": "Academic Department",
-        "hours": "Mon-Fri 9:00-18:00",
-        "head": "Sidorov Alexey Vladimirovich"
+      "neuroscience": {
+        "title": "Neuroscience",
+        "description": "Studying brain and nervous system function, developing new neurotechnologies"
       },
-      "research": {
-        "name": "Research Department",
-        "hours": "Mon-Fri 10:00-17:00",
-        "head": "Prof. Aliev A.K."
+      "oncology": {
+        "title": "Oncology",
+        "description": "Cancer research and development of new diagnostic and treatment methods"
       },
-      "international": {
-        "name": "International Department",
-        "hours": "Mon-Fri 9:00-17:00",
-        "head": "Dr. Sarah Johnson"
-      }
-    },
-    "map": {
-      "title": "We on the map",
-      "loading": "Loading map...",
-      "ariaLabel": "Salymbekov University Map",
-      "universityName": "Salymbekov University",
-      "howToGet": "🚌 How to get there?",
-      "transport": {
-        "buses": "Buses: 1, 5, 12, 24 to the \"Medical University\" stop",
-        "minibuses": "Minibuses: 105, 107, 120, 134",
-        "taxi": "Taxi: tell the address \"Akhunbaeva str. 123\"",
-        "car": "Car: parking on the campus territory"
-      }
-    },
-    "quickActions": {
-      "title": "🚀 Quick Actions",
-      "call": "Call",
-      "write": "Write",
-      "copy": "Copy",
-      "application": "Application",
-      "onlineForm": "Online form"
-    },
-    "social": {
-      "title": "We in social networks"
-    },
-    "contactForm": {
-      "title": "Contact us",
-      "namePlaceholder": "Your name",
-      "emailPlaceholder": "Your email",
-      "messagePlaceholder": "Your message",
-      "sendButton": "Send message",
-      "responseTime": "We will respond within 24 hours"
-    },
-    "copiedToClipboard": "Copied to clipboard: {{text}}"
-  },
-  "breadcrumbs": {
-    "vacancies": "Vacancies"
-  },
-  "vacancies": {
-    "urgent": "Urgent",
-    "deadlineDays": "Days left",
-    "salary": "Salary",
-    "location": "Location",
-    "employmentType": "Employment type",
-    "experience": "Experience",
-    "deadline": "Deadline",
-    "education": "Education",
-    "apply": "Apply for vacancy",
-    "applyDescription": "Send your resume and cover letter",
-    "description": "Vacancy description",
-    "responsibilities": "Responsibilities",
-    "requirements": "Requirements",
-    "conditions": "Working conditions",
-    "skills": "Key skills",
-    "contact": "Contact information",
-    "address": "Bishkek, Ibraimova str., 103",
-    "vacancyInfo": "Vacancy information",
-    "published": "Published",
-    "vacancyId": "Vacancy ID",
-    "similarVacancies": "Similar vacancies",
-    "noSimilarVacancies": "No similar vacancies found",
-    "details": "Details",
-    "until": "Until",
-    "categories": {
-      "academic": "Academic position",
-      "administrative": "Administrative position",
-      "technical": "Technical position",
-      "service": "Service position"
-    }
-  },
-  "academics": {
-    "title": "Academic Programs",
-    "subtitle": "Discover the wide range of medical programs we offer. Find the perfect direction for your professional growth.",
-    "filters": {
-      "title": "Filters",
-      "resetAll": "Reset all",
-      "searchPrograms": "Search programs",
-      "searchPlaceholder": "Enter program name...",
-      "educationLevel": "Education level",
-      "faculty": "Faculty",
-      "allFaculties": "All faculties",
-      "language": "Language of instruction",
-      "allLanguages": "All languages",
-      "applyFilters": "Apply filters"
-    },
-    "foundPrograms": "Found {{count}} programs",
-    "forQuery": "for query",
-    "sorting": "Sorting",
-    "sortOptions": {
-      "popularity": "By popularity",
-      "title": "By name",
-      "duration": "By duration"
-    },
-    "noProgramsFound": "No programs found",
-    "tryChangingFilters": "Try changing filter parameters or search query",
-    "details": "Details",
-    "educationLevels": {
-      "bachelor": "Bachelor",
-      "specialist": "Specialist",
-      "master": "Master",
-      "postgraduate": "Postgraduate"
-    },
-    "faculties": {
-      "medical": "Medical Faculty",
-      "dental": "Dental Faculty",
-      "pharmaceutical": "Pharmaceutical Faculty",
-      "biological": "Biological Faculty",
-      "publicHealth": "Public Health Faculty",
-      "it": "Information Technology Faculty",
-      "psychological": "Psychological Faculty"
-    },
-    "languages": {
-      "russian": "Russian",
-      "kyrgyz": "Kyrgyz",
-      "english": "English"
-    },
-    "durations": {
-      "fiveSixYears": "5-6 years",
-      "fiveYears": "5 years",
-      "fourYears": "4 years",
-      "twoYears": "2 years"
-    },
-    "studyForms": {
-      "fullTime": "Full-time",
-      "fullTimePartTime": "Full-time/Part-time"
-    },
-    "requirements": {
-      "basic": "High school diploma, ORT results, entrance exams",
-      "ortOnly": "High school diploma, ORT results",
-      "master": "Bachelor's degree in relevant field, interview"
-    },
-    "prices": {
-      "semester": "{{price}} som/semester"
-    },
-    "programs": {
-      "medicine": {
-        "title": "General Medicine",
-        "description": "The program prepares general practitioners with fundamental knowledge in the field of medicine."
+      "immunology": {
+        "title": "Immunology",
+        "description": "Immune system research and development of immunotherapy"
       },
-      "dentistry": {
-        "title": "Dentistry",
-        "description": "Training of highly qualified dentists to work in medical and preventive institutions."
+      "genetics": {
+        "title": "Medical Genetics",
+        "description": "Genetic disease research and gene therapy development"
       },
-      "pharmacy": {
-        "title": "Pharmacy",
-        "description": "The program prepares specialists in the development, production and sale of medicines."
+      "pharmacology": {
+        "title": "Pharmacology",
+        "description": "Development of new drugs and study of their effects on the body"
       },
-      "biochemistry": {
-        "title": "Medical Biochemistry",
-        "description": "In-depth study of biochemical processes in the human body in pathological conditions."
+      "projects": "projects",
+      "publications": "publications", 
+      "researchers": "researchers"
+    },
+    "publicationAreas": {
+      "cardiology": "Cardiology",
+      "neuroscience": "Neuroscience", 
+      "publicHealth": "Public Health",
+      "genetics": "Genetics",
+      "orthopedics": "Orthopedics"
+    },
+    "centers": {
+      "title": "Research Centers",
+      "subtitle": "Leading scientific centers conducting breakthrough research",
+      "director": "Director",
+      "staffCount": "Staff",
+      "equipment": "Equipment",
+      "publications": "Publications",
+      "viewPublications": "View Publications",
+      "molecularMedicine": {
+        "name": "Molecular Medicine Center",
+        "description": "Advanced research in gene therapy and molecular diagnostics"
       },
-      "nursing": {
-        "title": "Nursing",
-        "description": "Training of nurses with higher education to work in various medical institutions."
+      "neurosciences": {
+        "name": "Neuroscience Center", 
+        "description": "Studying brain mechanisms and developing neurotechnologies"
+      },
+      "biomedicalTech": {
+        "name": "Biomedical Technologies Center",
+        "description": "Development of medical devices and biotechnologies"
+      },
+      "clinicalResearch": {
+        "name": "Clinical Research Center",
+        "description": "Clinical trials and evidence-based medicine studies"
       },
       "publicHealth": {
-        "title": "Public Health",
-        "description": "The program prepares specialists in the field of healthcare organization and management."
-      },
-      "cybernetics": {
-        "title": "Medical Cybernetics",
-        "description": "A modern program at the intersection of medicine and IT, training specialists in medical information systems."
-      },
-      "psychology": {
-        "title": "Clinical Psychology",
-        "description": "Training psychologists to work in medical institutions with patients with various health disorders."
+        "name": "Public Health Center",
+        "description": "Epidemiological research and healthcare system studies"
       }
     },
-    "programDetails": {
-      "basicInfo": "Basic information",
-      "financialInfo": "Financial information",
-      "level": "Level",
-      "language": "Language",
-      "form": "Form",
+    "conferences": {
+      "title": "Scientific Conferences",
+      "subtitle": "International and national scientific events",
+      "upcoming": "Upcoming Conferences",
+      "archive": "Conference Archive",
+      "dates": "Dates",
+      "location": "Location",
+      "deadline": "Registration Deadline",
+      "website": "Website",
+      "topics": "Topics",
+      "speakers": "speakers",
+      "register": "Register",
+      "details": "Details",
+      "registrationDeadline": "Registration deadline",
+      "status": {
+        "registrationOpen": "Registration Open",
+        "earlyBird": "Early Bird Registration",
+        "callForPapers": "Call for Papers",
+        "completed": "Completed"
+      }
+    },
+    "grants": {
+      "title": "Research Grants",
+      "subtitle": "Funding opportunities for scientific research",
+      "pageTitle": "Grant Opportunities",
+      "pageSubtitle": "Funding for scientific research and innovative projects from leading organizations",
+      "tabs": {
+        "all": "All Grants",
+        "active": "Active",
+        "upcoming": "Upcoming",
+        "closed": "Closed"
+      },
+      "table": {
+        "grant": "Grant",
+        "organization": "Organization",
+        "amount": "Amount",
+        "deadline": "Deadline",
+        "status": "Status",
+        "actions": "Actions",
+        "details": "Details",
+        "apply": "Apply"
+      },
+      "categories": {
+        "all": "All Grants",
+        "youth": "Youth",
+        "international": "International", 
+        "fundamental": "Fundamental",
+        "applied": "Applied",
+        "innovative": "Innovative",
+        "clinical": "Clinical"
+      },
+      "filters": {
+        "category": "Category",
+        "amount": "Amount",
+        "deadline": "Deadline",
+        "search": "Search by title or organization..."
+      },
+      "amount": "Amount",
+      "deadline": "Deadline",
       "duration": "Duration",
-      "credits": "Credits",
-      "cost": "Cost",
-      "popularity": "Popularity",
-      "description": "Program description",
-      "requirements": "Admission requirements",
-      "applyButton": "Apply"
-    }
-  },
-  "faculties": {
-    "breadcrumbs": {
-      "home": "Home",
-      "academics": "Academics",
-      "faculties": "Faculties"
-    },
-    "program": {
-      "general_medicine": "General Medicine",
-      "medical_faculty": "Medical Faculty",
-      "bachelor": "Bachelor",
-      "duration": "5-6 years",
-      "languages": "Russian, English, Kyrgyz",
-      "full_time": "Full-time",
-      "price": "85,000 KGS/semester",
-      "description": "The \"General Medicine\" program trains highly qualified general practitioners. Students gain fundamental knowledge in the field of medicine, clinical skills and practical experience. The program is accredited by international medical organizations and meets world standards.",
-      "apply": "Apply now",
-      "brochure": "Brochure",
-      "basic_info": "Basic Information",
-      "level": "Level",
-      "study_duration": "Duration",
-      "language_of_instruction": "Language of instruction",
-      "tuition_fee": "Tuition fee",
-      "study_form": "Study form",
-      "faculty": "Faculty",
-      "program_description": "Program description",
-      "curriculum": "Curriculum",
-      "career_prospects": "Career prospects",
-      "semester": "Semester",
-      "credits": "Credits",
-      "subjects": "Subjects",
-      "ready_to_start": "Ready to start your journey in medicine?",
-      "join_community": "Join our students and become part of the community of future medical professionals"
-    },
-    "stats": {
-      "employment": "Graduate employment",
-      "clinical_hours": "Clinical hours",
-      "scholarship_students": "Students with scholarships",
-      "partners": "International partners"
-    },
-    "careers": {
-      "therapist": "Therapist",
-      "therapist_desc": "Work in clinics and hospitals",
-      "emergency": "Emergency medicine",
-      "emergency_desc": "Emergency medical care",
-      "researcher": "Researcher",
-      "researcher_desc": "Research work in medical institutes",
-      "surgeon": "Surgeon",
-      "surgeon_desc": "Operating activities",
-      "family_doctor": "Family doctor",
-      "family_doctor_desc": "Primary health care",
-      "medical_manager": "Medical manager",
-      "medical_manager_desc": "Management of medical institutions"
-    }
-  },
-  "breadcrumbs": {
-  "academics": "Academics",
-  "departments": "Departments"
-},
-"departments": {
-  "title": "Faculties and Departments",
-  "subtitle": "Explore the structure of our university and learn more about each faculty",
-  "teachers": "Teachers",
-  "departments": "Departments",
-  "students": "Students",
-  "searchPlaceholder": "Search by faculty, department, or head of department...",
-  "filters": "Filters",
-  "filtersAll": "All",
-  "filtersLarge": "Large",
-  "filtersSmall": "Small",
-  "structureTitle": "University Structure",
-  "noResults": "No results found",
-  "tryAgain": "Try changing your search query",
-  "loading": "Loading information...",
-  "departmentHead": "Head of Department",
-  "departmentHeadShort": "Dept. Head",
-  "mainDisciplines": "Main Disciplines",
-  "location": "Location",
-  "room": "Room",
-  "departmentsCount": "departments",
-  "more": "more",
-  "selectDepartment": "Select a department",
-  "selectDepartmentHint": "Click on any department to see detailed information",
-  "buildings": {
-    "main": "Main Building",
-    "surgical": "Surgical Building",
-    "children": "Children’s Building",
-    "dental": "Dental Building",
-    "pharmaceutical": "Pharmaceutical Building"
-  },
-  "faculties": {
-    "medical": {
-      "name": "Medical Faculty",
-      "shortName": "MedFac",
-      "departments": {
-        "therapy": {
-          "name": "Department of Therapy",
-          "disciplines": ["Internal Diseases", "Propaedeutics", "Cardiology", "Pulmonology"]
-        },
-        "surgery": {
-          "name": "Department of Surgery",
-          "disciplines": ["General Surgery", "Topographic Anatomy", "Operative Surgery", "Traumatology"]
-        },
-        "pediatrics": {
-          "name": "Department of Pediatrics",
-          "disciplines": ["Childhood Diseases", "Neonatology", "Pediatric Therapy", "Pediatric Surgery"]
-        }
+      "requirements": "Requirements",
+      "description": "Description",
+      "contact": "Contact",
+      "website": "Website",
+      "applyNow": "Apply Now",
+      "statusLabels": {
+        "active": "Applications Open",
+        "upcoming": "Opening Soon",
+        "closed": "Applications Closed"
+      },
+      "modal": {
+        "basicInfo": "Basic Information",
+        "organization": "Organization",
+        "funding": "Funding Amount",
+        "submissionDeadline": "Submission Deadline",
+        "duration": "Project Duration",
+        "contacts": "Contacts",
+        "contactPerson": "Contact Person",
+        "website": "Website",
+        "description": "Description",
+        "requirements": "Requirements",
+        "applyForGrant": "Apply for Grant"
+      },
+      "form": {
+        "applicationTitle": "Grant Application",
+        "projectTitle": "Project Title",
+        "principalInvestigator": "Principal Investigator",
+        "email": "Email",
+        "phone": "Phone",
+        "department": "Department/Laboratory",
+        "teamMembers": "Team Members",
+        "teamMembersPlaceholder": "Full names, positions separated by commas",
+        "projectDescription": "Project Description",
+        "projectDescriptionPlaceholder": "Goals, objectives, methods, expected results...",
+        "budget": "Budget (som)",
+        "timeline": "Timeline (months)",
+        "expectedResults": "Expected Results",
+        "expectedResultsPlaceholder": "Publications, patents, practical application...",
+        "attachFile": "Attach Project Proposal (PDF)",
+        "cancel": "Cancel",
+        "submit": "Submit Application",
+        "required": "*"
+      },
+      "noGrants": "No grants available for selected filter",
+      "applicationSuccess": "Application submitted successfully!",
+      "status": {
+        "active": "Active",
+        "expired": "Expired",
+        "upcoming": "Upcoming"
       }
     },
-    "dental": {
-      "name": "Dental Faculty",
-      "shortName": "DentFac",
-      "departments": {
-        "therapeutic": {
-          "name": "Department of Therapeutic Dentistry",
-          "disciplines": ["Cariology", "Endodontics", "Periodontology", "Aesthetic Dentistry"]
-        },
-        "orthopedic": {
-          "name": "Department of Orthopedic Dentistry",
-          "disciplines": ["Prosthodontics", "Orthodontics", "Gnathology", "Implantology"]
-        }
-      }
+    "publications": {
+      "title": "Scientific Publications",
+      "subtitle": "Latest research publications and achievements",
+      "filters": {
+        "year": "Year",
+        "author": "Author",
+        "journal": "Journal",
+        "citations": "Citations",
+        "center": "Research Center",
+        "apply": "Apply Filters",
+        "reset": "Reset"
+      },
+      "sort": {
+        "year": "Year",
+        "citations": "Citations",
+        "title": "Title",
+        "asc": "Ascending",
+        "desc": "Descending"
+      },
+      "charts": {
+        "bar": "Bar Chart",
+        "line": "Line Chart", 
+        "pie": "Pie Chart"
+      },
+      "stats": {
+        "totalPublications": "Total Publications",
+        "totalCitations": "Total Citations",
+        "hIndex": "H-Index",
+        "averageCitations": "Average Citations"
+      },
+      "export": {
+        "selected": "Export Selected",
+        "all": "Export All",
+        "format": "Format"
+      },
+      "viewDetails": "View Details",
+      "cite": "Cite",
+      "doi": "DOI",
+      "abstract": "Abstract",
+      "authors": "Authors",
+      "journal": "Journal",
+      "year": "Year",
+      "citations": "Citations",
+      "keywords": "Keywords",
+      "loadError": "Error loading publications",
+      "noResults": "No publications found matching your criteria"
     },
-    "pharmaceutical": {
-      "name": "Pharmaceutical Faculty",
-      "shortName": "PharmFac",
-      "departments": {
-        "pharmacy": {
-          "name": "Department of Pharmacy",
-          "disciplines": ["Pharmaceutical Technology", "Pharmacognosy", "Biopharmacy", "Pharmaceutical Chemistry"]
-        },
-        "pharmacology": {
-          "name": "Department of Pharmacology",
-          "disciplines": ["General Pharmacology", "Clinical Pharmacology", "Toxicology", "Pharmacotherapy"]
-        }
-      }
+    "common": {
+      "showMore": "Show More",
+      "showLess": "Show Less",
+      "loadMore": "Load More",
+      "loading": "Loading...",
+      "error": "Error loading data",
+      "search": "Search...",
+      "filter": "Filter",
+      "sort": "Sort",
+      "reset": "Reset",
+      "joinResearch": "Join Our Research",
+      "joinResearchDesc": "Become part of our scientific community and contribute to important research projects",
+      "participateInResearch": "Participate in Research"
     }
   }
-},
-"newsanon": {
-  "breadcrumbs": {
-    "home": "Home",
-    "academics": "Academics",
-    "calendar": "Academic Calendar"
-  },
-  "calendar": {
-    "title": "Academic Calendar",
-    "subtitle": "Plan your academic year with our interactive calendar. Track important events, sessions, and holidays.",
-    "filtersTitle": "Event Filters",
-    "upcomingEvents": "Upcoming Events",
-    "today": "Today",
-    "moreLink": "more",
-    "exportAllButton": "Export Full Calendar",
-    "mobileViewButton": "Event List",
-    "downloadICS": "Download .ics",
-    "exportFileName": "academic_calendar",
-    "location": "Medical University",
-    "views": {
-      "month": "Month",
-      "week": "Week",
-      "day": "Day",
-      "list": "List"
-    },
-    "types": {
-      "studyPeriod": "Study Period",
-      "examSession": "Exam Session",
-      "vacation": "Vacation",
-      "scientificEvent": "Scientific Event",
-      "certification": "Certification",
-      "event": "Event"
-    },
-    "legend": {
-      "studyPeriods": "Study Periods",
-      "examSessions": "Exam Sessions",
-      "vacations": "Vacations",
-      "scientificEvents": "Scientific Events",
-      "generalEvents": "General Events",
-      "certification": "Certification"
-    },
-    "events": {
-      "fallSemester": {
-        "title": "Fall Semester",
-        "description": "Start of the Fall Semester of the 2024-2025 academic year. Students begin classes according to the schedule."
-      },
-      "fallSession": {
-        "title": "Fall Exam Session",
-        "description": "Examination session of the Fall Semester. Credits and exams for all subjects."
-      },
-      "winterVacation": {
-        "title": "Winter Vacation",
-        "description": "Winter holidays for students. Rest and recovery before the next semester."
-      },
-      "springSemester": {
-        "title": "Spring Semester",
-        "description": "Start of the Spring Semester. Continuation of the learning process according to the approved schedule."
-      },
-      "scienceConference": {
-        "title": "Scientific Conference",
-        "description": "Annual scientific and practical conference for students and teachers. Reports, discussions, workshops."
-      },
-      "springSession": {
-        "title": "Spring Exam Session",
-        "description": "Examination session of the Spring Semester. Credit week and exams."
-      },
-      "summerVacation": {
-        "title": "Summer Vacation",
-        "description": "Summer holidays for students. Practice, rest, and preparation for the next academic year."
-      },
-      "openDay": {
-        "title": "Open Day",
-        "description": "Open Day for applicants. University tours and meetings with professors."
-      },
-      "thesisDefense": {
-        "title": "Thesis Defense",
-        "description": "Defense of final qualification works. Presentations before the attestation committee."
-      },
-      "doctorDay": {
-        "title": "International Doctor’s Day",
-        "description": "Ceremonial gathering dedicated to International Doctor’s Day. Awarding the best students and teachers."
-      }
-    }
-  }
-},
-"breadcrumbs": {
-  "home": "Home",
-  "academics": "Academics",
-  "calendar": "Academic Calendar"
-},
-"calendar": {
-  "title": "Academic Calendar",
-  "subtitle": "Plan your academic year with our interactive calendar. Track important events, sessions, and holidays.",
-  "filters": {
-    "title": "Event Filters"
-  },
-  "exportAll": "Export Full Calendar",
-  "eventList": "Event List",
-  "today": "Today",
-  "moreEvents": "more",
-  "upcomingEvents": "Upcoming Events",
-  "downloadICS": "Download .ics",
-  "exportFileName": "academic_calendar.ics",
-  "universityName": "Medical University",
-  "views": {
-    "month": "Month",
-    "week": "Week",
-    "day": "Day",
-    "list": "List"
-  },
-  "eventTypes": {
-    "studyPeriod": "Study Period",
-    "examSession": "Exam Session",
-    "vacation": "Vacation",
-    "scientificEvent": "Scientific Event",
-    "certification": "Certification",
-    "event": "Event"
-  },
-  "legend": {
-    "studyPeriods": "Study Periods",
-    "examSessions": "Exam Sessions",
-    "vacations": "Vacations",
-    "scientificEvents": "Scientific Events",
-    "generalEvents": "General Events",
-    "certification": "Certification"
-  },
-  "events": {
-    "fallSemester": {
-      "title": "Fall Semester",
-      "description": "Start of the Fall Semester of the 2024-2025 academic year. Students begin classes according to the schedule."
-    },
-    "fallSession": {
-      "title": "Fall Exam Session",
-      "description": "Examination session of the Fall Semester. Credits and exams for all subjects."
-    },
-    "winterVacation": {
-      "title": "Winter Vacation",
-      "description": "Winter holidays for students. Rest and recovery before the next semester."
-    },
-    "springSemester": {
-      "title": "Spring Semester",
-      "description": "Start of the Spring Semester. Continuation of the learning process according to the approved schedule."
-    },
-    "scienceConference": {
-      "title": "Scientific Conference",
-      "description": "Annual scientific and practical conference for students and professors. Reports, discussions, workshops."
-    },
-    "springSession": {
-      "title": "Spring Exam Session",
-      "description": "Examination session of the Spring Semester. Credit week and exams."
-    },
-    "summerVacation": {
-      "title": "Summer Vacation",
-      "description": "Summer holidays for students. Practice, rest, and preparation for the next academic year."
-    },
-    "openDay": {
-      "title": "Open Day",
-      "description": "Open Day for applicants. University tours and meetings with professors."
-    },
-    "thesisDefense": {
-      "title": "Thesis Defense",
-      "description": "Defense of graduation qualification works. Presentations before the attestation committee."
-    },
-    "doctorDay": {
-      "title": "International Doctor’s Day",
-      "description": "Ceremonial gathering dedicated to International Doctor’s Day. Awarding the best students and professors."
-    }
-  }
-},
-"resources": {
-    "breadcrumbs": {
-      "home": "Home",
-      "academics": "Academics",
-      "resources": "Educational Resources"
-    },
-    "title": "Educational Resources",
-    "subtitle": "Access to electronic resources, libraries and learning platforms of the university",
-    "stats": {
-      "ebooks": "E-books",
-      "courses": "Online courses",
-      "access": "Resource access",
-      "databases": "Scientific databases"
-    },
-    "resources": {
-      "library": {
-        "title": "Electronic Library",
-        "description": "Access to educational literature, scientific articles and electronic textbooks. Over 10,000 materials on medicine and related disciplines.",
-        "linkText": "Go to library",
-        "features": ["Catalog search", "Electronic textbooks", "Scientific articles", "Audiobooks"]
-      },
-      "databases": {
-        "title": "Scientific Databases",
-        "description": "Access to international scientific databases for research and scientific work.",
-        "features": ["PubMed", "Scopus", "Web of Science", "Google Scholar"]
-      },
-      "materials": {
-        "title": "Methodological Materials",
-        "description": "Methodological guidelines, manuals, guides and work programs for all disciplines.",
-        "features": ["Methodological guides", "Work programs", "Workshops", "Laboratory works"]
-      },
-      "video": {
-        "title": "Video Library",
-        "description": "Video lectures, operation recordings, demonstration materials and training videos.",
-        "features": ["Lecture recordings", "Surgical operations", "Anatomical atlases", "Demonstrations"]
-      }
-    },
-    "external_links": {
-      "pubmed": "PubMed",
-      "scopus": "Scopus",
-      "web_of_science": "Web of Science"
-    },
-    "forms": {
-      "username": "Username",
-      "password": "Password",
-      "username_placeholder": "Enter your username",
-      "password_placeholder": "Enter your password",
-      "login": "Login to Moodle",
-      "logging_in": "Logging in...",
-      "download": "Download materials",
-      "go_to": "Go to"
-    },
-    "features_title": "Available:",
-    "tooltip": {
-      "title": "💡 Tip",
-      "text": "Access to some resources may require authorization through a university account"
-    }
-  }
-
-
-
 }
+
+
 
