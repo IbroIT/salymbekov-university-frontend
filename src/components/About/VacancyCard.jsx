@@ -1,18 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const VacancyCard = ({ vacancy }) => {
-  const categories = [
-    { value: 'all', label: 'Все вакансии' },
-    { value: 'academic', label: 'Преподавательские' },
-    { value: 'administrative', label: 'Административные' },
-    { value: 'technical', label: 'Технические' },
-    { value: 'service', label: 'Обслуживающие' }
-  ];
+  const { t } = useTranslation();
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('ru-RU', {
+    return date.toLocaleDateString(t('locale'), {
       day: '2-digit',
       month: 'long',
       year: 'numeric'
@@ -47,6 +42,10 @@ const VacancyCard = ({ vacancy }) => {
     }
   };
 
+  const getCategoryLabel = (category) => {
+    return t(`vacancies.categories.${category}`);
+  };
+
   return (
     <div className="bg-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group">
       <div className="p-6">
@@ -63,7 +62,7 @@ const VacancyCard = ({ vacancy }) => {
           </div>
           {isDeadlineSoon(vacancy.deadline) && (
             <span className="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-              Срочно
+              {t('vacancies.urgent')}
             </span>
           )}
         </div>
@@ -71,7 +70,7 @@ const VacancyCard = ({ vacancy }) => {
         {/* Category Badge */}
         <div className="mb-4">
           <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${getCategoryColor(vacancy.category)}`}>
-            {categories.find(cat => cat.value === vacancy.category)?.label || 'Общие'}
+            {getCategoryLabel(vacancy.category)}
           </span>
         </div>
 
@@ -83,33 +82,24 @@ const VacancyCard = ({ vacancy }) => {
         {/* Key Info */}
         <div className="space-y-2 mb-6">
           <div className="flex items-center text-sm text-gray-600">
-            <svg className="w-4 h-4 mr-2 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
-            </svg>
+            <span className="text-green-600 mr-2">💰</span>
             <span className="font-medium">{vacancy.salary}</span>
           </div>
           
           <div className="flex items-center text-sm text-gray-600">
-            <svg className="w-4 h-4 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
+            <span className="text-blue-600 mr-2">📍</span>
             <span>{vacancy.location}</span>
           </div>
 
           <div className="flex items-center text-sm text-gray-600">
-            <svg className="w-4 h-4 mr-2 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
+            <span className="text-purple-600 mr-2">⏰</span>
             <span>{vacancy.type}</span>
           </div>
 
           {vacancy.experience && (
             <div className="flex items-center text-sm text-gray-600">
-              <svg className="w-4 h-4 mr-2 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <span>Опыт: {vacancy.experience}</span>
+              <span className="text-orange-600 mr-2">💼</span>
+              <span>{t('vacancies.experience')}: {vacancy.experience}</span>
             </div>
           )}
         </div>
@@ -129,7 +119,7 @@ const VacancyCard = ({ vacancy }) => {
             to={`/about/vacancies/${vacancy.id}`}
             className="flex-1 bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors duration-200 text-center font-medium"
           >
-            Подробнее
+            {t('vacancies.details')}
           </Link>
         </div>
 
@@ -137,10 +127,10 @@ const VacancyCard = ({ vacancy }) => {
         <div className="mt-4 pt-4 border-t border-gray-100">
           <div className="flex items-center justify-between text-sm">
             <span className="text-gray-500">
-              Опубликовано: {formatDate(vacancy.postedDate)}
+              {t('vacancies.published')}: {formatDate(vacancy.postedDate)}
             </span>
             <span className={`font-medium ${isDeadlineSoon(vacancy.deadline) ? 'text-red-600' : 'text-gray-600'}`}>
-              До: {formatDate(vacancy.deadline)}
+              {t('vacancies.until')}: {formatDate(vacancy.deadline)}
             </span>
           </div>
         </div>

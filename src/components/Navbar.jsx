@@ -12,12 +12,11 @@ const Navbar = () => {
   const { t, i18n } = useTranslation();
 
   const menuTimeoutRef = useRef(null);
+  const navbarRef = useRef(null);
   const currentLanguage = i18n.language;
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
-    // Принудительно сохраняем в localStorage
-    localStorage.setItem('i18nextLng', lng);
     setIsLangOpen(false);
   };
 
@@ -26,17 +25,23 @@ const Navbar = () => {
       setIsScrolled(window.scrollY > 10);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    // Обработка клика вне элементов навигации
+    const handleClickOutside = (event) => {
+      if (navbarRef.current && !navbarRef.current.contains(event.target)) {
+        setIsMenuOpen(false);
+        setIsLangOpen(false);
+        setActiveMenu(null);
+      }
+    };
 
-  // Проверяем сохраненный язык при загрузке
-  useEffect(() => {
-    const savedLanguage = localStorage.getItem('i18nextLng');
-    if (savedLanguage && savedLanguage !== i18n.language) {
-      i18n.changeLanguage(savedLanguage);
-    }
-  }, [i18n]);
+    window.addEventListener('scroll', handleScroll);
+    document.addEventListener('mousedown', handleClickOutside);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   // Очищаем таймер при размонтировании
   useEffect(() => {
@@ -159,15 +164,24 @@ const Navbar = () => {
     handleMenuLeave(); // Используем ту же логику закрытия
   };
 
+  // Закрытие меню при выборе пункта
+  const handleMenuItemClick = () => {
+    setIsMenuOpen(false);
+    setActiveMenu(null);
+  };
+
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 navbar-transition navbar-fixed w-full ${
-      isScrolled ? 'bg-white shadow-lg' : 'bg-white/95 backdrop-blur-sm'
-    }`}>
+    <nav 
+      ref={navbarRef}
+      className={`fixed top-0 left-0 right-0 z-50 navbar-transition navbar-fixed w-full ${
+        isScrolled ? 'bg-white shadow-lg' : 'bg-white/95 backdrop-blur-sm'
+      }`}
+    >
       <div className="w-full navbar-container px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 min-h-[64px] navbar-container">
           {/* Логотип */}
           <div className="flex items-center flex-shrink-0">
-            <a href="/" className="flex items-center">
+            <a href="/" className="flex items-center transition-transform hover:scale-105">
               <img src={Logo} alt="Salymbekov University" className='navbar-logo h-8 w-auto sm:h-9 md:h-10 xl:w-[150px] xl:h-[35px]'/>
             </a>
           </div>
@@ -177,20 +191,20 @@ const Navbar = () => {
             {Object.entries(menuData).map(([key, menu]) => (
               <div 
                 key={key}
-                className="relative"
+                className="relative group"
                 onMouseEnter={() => handleMenuEnter(key)}
                 onMouseLeave={handleMenuLeave}
               >
-                <button className="navbar-menu-item px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors flex items-center whitespace-nowrap">
+                <button className="navbar-menu-item px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors flex items-center whitespace-nowrap group-hover:text-blue-600">
                   {menu.title}
-                  <svg className="ml-1 h-4 w-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="ml-1 h-4 w-4 flex-shrink-0 transition-transform group-hover:rotate-180" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
                   </svg>
                 </button>
 
                 {(activeMenu === key || closingMenu === key) && (
                   <div 
-                    className="navbar-menu-dropdown absolute left-0 mt-0 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
+                    className="navbar-menu-dropdown absolute left-0 mt-0 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 overflow-hidden"
                     onMouseEnter={handleSubmenuEnter}
                     onMouseLeave={handleSubmenuLeave}
                     style={{ 
@@ -205,7 +219,7 @@ const Navbar = () => {
                         <a
                           key={index}
                           href={item.link}
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors"
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors transform hover:translate-x-1 duration-150"
                           role="menuitem"
                         >
                           {item.title}
@@ -224,7 +238,7 @@ const Navbar = () => {
             <div className="relative">
               <button
                 onClick={() => setIsLangOpen(!isLangOpen)}
-                className="navbar-lang-button flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-md px-2 py-1"
+                className="navbar-lang-button flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-md px-2 py-1 transition-all hover:bg-gray-50"
               >
                 <span className="mr-1 text-lg">{languages.find(lang => lang.code === currentLanguage)?.flag || '🇷🇺'}</span>
                 <span className="navbar-lang-text hidden sm:inline">{currentLanguage.toUpperCase()}</span>
@@ -238,13 +252,13 @@ const Navbar = () => {
               </button>
 
               {isLangOpen && (
-                <div className="origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
+                <div className="origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50 overflow-hidden animate-fadeIn">
                   <div className="py-1" role="menu">
                     {languages.map((language) => (
                       <button
                         key={language.code}
                         onClick={() => changeLanguage(language.code)}
-                        className={`block px-4 py-2 text-sm w-full text-left ${
+                        className={`block px-4 py-2 text-sm w-full text-left transition-colors ${
                           currentLanguage === language.code 
                             ? 'bg-blue-50 text-blue-700' 
                             : 'text-gray-700 hover:bg-gray-100'
@@ -264,7 +278,7 @@ const Navbar = () => {
             <div className="hidden lg:block">
               <a
                 href="/admissions/apply"
-                className="navbar-apply-button px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors whitespace-nowrap"
+                className="navbar-apply-button px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all transform hover:scale-105 duration-150 whitespace-nowrap"
               >
                 {t('nav.apply')}
               </a>
@@ -274,12 +288,12 @@ const Navbar = () => {
             <div className="navbar-mobile-trigger xl:hidden flex items-center">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-blue-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
+                className="inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-blue-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 transition-colors"
                 aria-expanded="false"
               >
                 <span className="sr-only">Открыть меню</span>
                 <svg
-                  className="h-6 w-6"
+                  className="h-6 w-6 transition-transform duration-300"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
@@ -300,13 +314,13 @@ const Navbar = () => {
 
       {/* Мобильное меню с аккордеоном */}
       {isMenuOpen && (
-        <div className="xl:hidden bg-white shadow-lg w-full border-t border-gray-100">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        <div className="xl:hidden bg-white shadow-lg w-full border-t border-gray-100 animate-slideInDown">
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 max-h-[70vh] overflow-y-auto">
             {Object.entries(menuData).map(([key, menu]) => (
               <div key={key} className="border-b border-gray-100 last:border-b-0">
                 <button
                   onClick={() => setActiveMenu(activeMenu === key ? null : key)}
-                  className="w-full flex justify-between items-center px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50"
+                  className="w-full flex justify-between items-center px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors"
                 >
                   <span>{menu.title}</span>
                   <svg 
@@ -319,13 +333,13 @@ const Navbar = () => {
                 </button>
                 
                 {activeMenu === key && (
-                  <div className="pl-6 pb-2 space-y-1">
+                  <div className="pl-6 pb-2 space-y-1 animate-fadeIn">
                     {menu.submenu.map((item, index) => (
                       <a
                         key={index}
                         href={item.link}
-                        className="block px-3 py-2 rounded-md text-sm text-gray-600 hover:text-blue-600 hover:bg-gray-50"
-                        onClick={() => setIsMenuOpen(false)}
+                        className="block px-3 py-2 rounded-md text-sm text-gray-600 hover:text-blue-600 hover:bg-gray-50 transition-colors"
+                        onClick={handleMenuItemClick}
                       >
                         {item.title}
                       </a>
@@ -338,8 +352,8 @@ const Navbar = () => {
             <div className="pt-4 border-t border-gray-200">
               <a
                 href="/admissions/apply"
-                className="block px-3 py-3 rounded-md text-base font-medium text-white bg-blue-600 hover:bg-blue-700 text-center"
-                onClick={() => setIsMenuOpen(false)}
+                className="block px-3 py-3 rounded-md text-base font-medium text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-center transition-colors"
+                onClick={handleMenuItemClick}
               >
                 {t('nav.apply')}
               </a>

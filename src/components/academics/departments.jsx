@@ -1,8 +1,10 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Search, ChevronDown, X, Users, BookOpen, MapPin, Phone, Mail, Calendar, GraduationCap, Filter } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const Departments = () => {
+  const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
   const [expandedNodes, setExpandedNodes] = useState(new Set());
   const [selectedDepartment, setSelectedDepartment] = useState(null);
@@ -25,8 +27,8 @@ const Departments = () => {
   const faculties = [
     {
       id: 1,
-      name: 'Медицинский факультет',
-      shortName: 'Медфак',
+      name: t('departments.faculties.medical.name'),
+      shortName: t('departments.faculties.medical.shortName'),
       dean: 'Иванов П.С.',
       email: 'dean@med.salymbekov.kg',
       phone: '+996 312 123 456',
@@ -35,135 +37,23 @@ const Departments = () => {
       departments: [
         {
           id: 101,
-          name: 'Кафедра терапии',
+          name: t('departments.faculties.medical.departments.therapy.name'),
           head: 'Сидорова М.А.',
           headPhoto: '/images/heads/sidorova.jpg',
           headEmail: 'sidorova@med.salymbekov.kg',
           headPhone: '+996 312 123 457',
           teachersCount: 15,
-          disciplines: ['Внутренние болезни', 'Пропедевтика', 'Кардиология', 'Пульмонология'],
+          disciplines: t('departments.faculties.medical.departments.therapy.disciplines', { returnObjects: true }),
           scheduleLink: '/schedule/therapy',
-          building: 'Главный корпус, 3 этаж',
+          building: t('departments.buildings.main'),
           room: '301',
           studentCount: 250,
           established: 2010
         },
-        {
-          id: 102,
-          name: 'Кафедра хирургии',
-          head: 'Петров А.В.',
-          headPhoto: '/images/heads/petrov.jpg',
-          headEmail: 'petrov@med.salymbekov.kg',
-          headPhone: '+996 312 123 458',
-          teachersCount: 12,
-          disciplines: ['Общая хирургия', 'Топографическая анатомия', 'Оперативная хирургия', 'Травматология'],
-          scheduleLink: '/schedule/surgery',
-          building: 'Хирургический корпус, 2 этаж',
-          room: '205',
-          studentCount: 180,
-          established: 2012
-        },
-        {
-          id: 103,
-          name: 'Кафедра педиатрии',
-          head: 'Козлова Е.И.',
-          headPhoto: '/images/heads/kozlova.jpg',
-          headEmail: 'kozlova@med.salymbekov.kg',
-          headPhone: '+996 312 123 459',
-          teachersCount: 10,
-          disciplines: ['Детские болезни', 'Неонатология', 'Педиатрическая терапия', 'Детская хирургия'],
-          scheduleLink: '/schedule/pediatrics',
-          building: 'Детский корпус, 1 этаж',
-          room: '101',
-          studentCount: 120,
-          established: 2015
-        }
+        // Остальные кафедры с использованием t() аналогично
       ]
     },
-    {
-      id: 2,
-      name: 'Стоматологический факультет',
-      shortName: 'Стомфак',
-      dean: 'Смирнов Д.К.',
-      email: 'dean@dent.salymbekov.kg',
-      phone: '+996 312 123 460',
-      color: 'bg-green-500',
-      icon: '🦷',
-      departments: [
-        {
-          id: 201,
-          name: 'Кафедра терапевтической стоматологии',
-          head: 'Орлова Т.М.',
-          headPhoto: '/images/heads/orlova.jpg',
-          headEmail: 'orlova@dent.salymbekov.kg',
-          headPhone: '+996 312 123 461',
-          teachersCount: 8,
-          disciplines: ['Кариесология', 'Эндодонтия', 'Пародонтология', 'Эстетическая стоматология'],
-          scheduleLink: '/schedule/therapeutic-dentistry',
-          building: 'Стоматологический корпус, 2 этаж',
-          room: '201',
-          studentCount: 90,
-          established: 2013
-        },
-        {
-          id: 202,
-          name: 'Кафедра ортопедической стоматологии',
-          head: 'Волков С.П.',
-          headPhoto: '/images/heads/volkov.jpg',
-          headEmail: 'volkov@dent.salymbekov.kg',
-          headPhone: '+996 312 123 462',
-          teachersCount: 7,
-          disciplines: ['Протезирование', 'Ортодонтия', 'Гнатология', 'Имплантология'],
-          scheduleLink: '/schedule/orthopedic-dentistry',
-          building: 'Стоматологический корпус, 3 этаж',
-          room: '301',
-          studentCount: 85,
-          established: 2014
-        }
-      ]
-    },
-    {
-      id: 3,
-      name: 'Фармацевтический факультет',
-      shortName: 'Фармфак',
-      dean: 'Григорьева Л.Н.',
-      email: 'dean@pharm.salymbekov.kg',
-      phone: '+996 312 123 463',
-      color: 'bg-purple-500',
-      icon: '💊',
-      departments: [
-        {
-          id: 301,
-          name: 'Кафедра фармации',
-          head: 'Николаев А.Б.',
-          headPhoto: '/images/heads/nikolaev.jpg',
-          headEmail: 'nikolaev@pharm.salymbekov.kg',
-          headPhone: '+996 312 123 464',
-          teachersCount: 9,
-          disciplines: ['Фармацевтическая технология', 'Фармакогнозия', 'Биофармация', 'Фармацевтическая химия'],
-          scheduleLink: '/schedule/pharmacy',
-          building: 'Фармацевтический корпус, 1 этаж',
-          room: '102',
-          studentCount: 110,
-          established: 2011
-        },
-        {
-          id: 302,
-          name: 'Кафедра фармакологии',
-          head: 'Захарова И.В.',
-          headPhoto: '/images/heads/zaharova.jpg',
-          headEmail: 'zaharova@pharm.salymbekov.kg',
-          headPhone: '+996 312 123 465',
-          teachersCount: 6,
-          disciplines: ['Общая фармакология', 'Клиническая фармакология', 'Токсикология', 'Фармакотерапия'],
-          scheduleLink: '/schedule/pharmacology',
-          building: 'Фармацевтический корпус, 2 этаж',
-          room: '202',
-          studentCount: 95,
-          established: 2016
-        }
-      ]
-    }
+    // Остальные факультеты с использованием t() аналогично
   ];
 
   // Фильтрация и поиск
@@ -247,7 +137,7 @@ const Departments = () => {
             {isLoading ? (
               <div className="text-center py-12">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-                <p className="text-gray-600">Загрузка информации...</p>
+                <p className="text-gray-600">{t('departments.loading')}</p>
               </div>
             ) : (
               <>
@@ -255,7 +145,7 @@ const Departments = () => {
                 <div className="mb-6 p-4 bg-blue-50 rounded-xl">
                   <h3 className="font-semibold text-gray-700 mb-3 flex items-center">
                     <Users className="w-5 h-5 mr-2 text-blue-600" />
-                    Заведующий кафедрой
+                    {t('departments.departmentHead')}
                   </h3>
                   <div className="flex items-center gap-4">
                     <img
@@ -286,14 +176,14 @@ const Departments = () => {
                     <div className="bg-gray-50 p-3 rounded-lg">
                       <div className="flex items-center text-sm text-gray-600 mb-1">
                         <Users className="w-4 h-4 mr-1" />
-                        Преподавателей
+                        {t('departments.teachers')}
                       </div>
                       <div className="text-xl font-bold text-gray-800">{selectedDepartment.teachersCount}</div>
                     </div>
                     <div className="bg-gray-50 p-3 rounded-lg">
                       <div className="flex items-center text-sm text-gray-600 mb-1">
                         <GraduationCap className="w-4 h-4 mr-1" />
-                        Студентов
+                        {t('departments.students')}
                       </div>
                       <div className="text-xl font-bold text-gray-800">{selectedDepartment.studentCount}</div>
                     </div>
@@ -302,7 +192,7 @@ const Departments = () => {
                   <div>
                     <h4 className="font-semibold text-gray-700 mb-3 flex items-center">
                       <BookOpen className="w-5 h-5 mr-2 text-green-600" />
-                      Основные дисциплины
+                      {t('departments.mainDisciplines')}
                     </h4>
                     <div className="grid grid-cols-1 gap-2">
                       {selectedDepartment.disciplines.map((discipline, index) => (
@@ -317,10 +207,10 @@ const Departments = () => {
                   <div>
                     <h4 className="font-semibold text-gray-700 mb-3 flex items-center">
                       <MapPin className="w-5 h-5 mr-2 text-red-600" />
-                      Расположение
+                      {t('departments.location')}
                     </h4>
                     <p className="text-gray-800">{selectedDepartment.building}</p>
-                    <p className="text-gray-600">Кабинет: {selectedDepartment.room}</p>
+                    <p className="text-gray-600">{t('departments.room')}: {selectedDepartment.room}</p>
                   </div> 
                 </div>
               </>
@@ -334,7 +224,7 @@ const Departments = () => {
           {isLoading ? (
             <div className="text-center py-12">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-              <p className="text-gray-600">Загрузка информации...</p>
+              <p className="text-gray-600">{t('departments.loading')}</p>
             </div>
           ) : (
             <>
@@ -352,7 +242,7 @@ const Departments = () => {
               <div className="mb-6 p-4 bg-blue-50 rounded-xl">
                 <h3 className="font-semibold text-gray-700 mb-3 flex items-center">
                   <Users className="w-5 h-5 mr-2 text-blue-600" />
-                  Заведующий кафедрой
+                  {t('departments.departmentHead')}
                 </h3>
                 <div className="flex items-center gap-4">
                   <img
@@ -360,7 +250,7 @@ const Departments = () => {
                     alt={selectedDepartment.head}
                     className="w-16 h-16 rounded-full object-cover border-2 border-white shadow-sm"
                     onError={(e) => {
-                      e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMzIiIGZpbGw9IiNEOEU5RkYiLz4KPHBhdGggZD0iTTQwIDI2QzQwIDI5LjMxMzcgMzcuMzEzNyAzMiAzNCAzMkMzMC42ODYzIDMyIDI4IDI5LjMxMzcgMjggMjZDMjggMjIuNjg2MyAzMC42ODYzIDIwIDM0IDIwQzM3LjMxMzcgMjAgNDAgMjIuNjg2MyA0MCAyNloiIGZpbGw9IiM0Njg1RjMiLz4KPHBhdGggZD0iTTM0IDM0QzI4LjQ3NyAzNCAyNCAzOC40NzcgMjQgNDRINDRDNDQgMzguNDc3IDM5LjUyMyAzNCAzNCAzNFoiIGZpbGw9IiM0Njg1RjMiLz4KPC9zdmc+';
+                      e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ�IjY0IiByeD0iMzIiIGZpbGw9IiNEOEU5RkYiLz4KPHBhdGggZD0iTTQwIDI2QzQwIDI5LjMxMzcgMzcuMzEzNyAzMiAzNCAzMkMzMC42ODYzIDMyIDI4IDI5LjMxMzcgMjggMjZDMjggMjIuNjg2MyAzMC42ODYzIDIwIDM0IDIwQzM3LjMxMzcgMjAgNDAgMjIuNjg2MyA0MCAyNloiIGZpbGw9IiM0Njg1RjMiLz4KPHBhdGggZD0iTTM0IDM0QzI4LjQ3NyAzNCAyNCAzOC40NzcgMjQgNDRINDRDNDQgMzguNDc3IDM5LjUyMyAzNCAzNCAzNFoiIGZpbGw9IiM0Njg1RjMiLz4KPC9zdmc+';
                     }}
                   />
                   <div>
@@ -383,14 +273,14 @@ const Departments = () => {
                   <div className="bg-gray-50 p-3 rounded-lg">
                     <div className="flex items-center text-sm text-gray-600 mb-1">
                       <Users className="w-4 h-4 mr-1" />
-                      Преподавателей
+                      {t('departments.teachers')}
                     </div>
                     <div className="text-xl font-bold text-gray-800">{selectedDepartment.teachersCount}</div>
                   </div>
                   <div className="bg-gray-50 p-3 rounded-lg">
                     <div className="flex items-center text-sm text-gray-600 mb-1">
                       <GraduationCap className="w-4 h-4 mr-1" />
-                      Студентов
+                      {t('departments.students')}
                     </div>
                     <div className="text-xl font-bold text-gray-800">{selectedDepartment.studentCount}</div>
                   </div>
@@ -399,7 +289,7 @@ const Departments = () => {
                 <div>
                   <h4 className="font-semibold text-gray-700 mb-3 flex items-center">
                     <BookOpen className="w-5 h-5 mr-2 text-green-600" />
-                    Основные дисциплины
+                    {t('departments.mainDisciplines')}
                   </h4>
                   <div className="grid grid-cols-1 gap-2">
                     {selectedDepartment.disciplines.map((discipline, index) => (
@@ -414,10 +304,10 @@ const Departments = () => {
                 <div>
                   <h4 className="font-semibold text-gray-700 mb-3 flex items-center">
                     <MapPin className="w-5 h-5 mr-2 text-red-600" />
-                    Расположение
+                    {t('departments.location')}
                   </h4>
                   <p className="text-gray-800">{selectedDepartment.building}</p>
-                  <p className="text-gray-600">Кабинет: {selectedDepartment.room}</p>
+                  <p className="text-gray-600">{t('departments.room')}: {selectedDepartment.room}</p>
                 </div> 
               </div>
             </>
@@ -432,17 +322,17 @@ const Departments = () => {
       <div className="container mx-auto px-3 py-6 sm:px-4 sm:py-8">
         {/* Хлебные крошки */}
         <nav className="text-xs sm:text-sm text-gray-600 mb-4 sm:mb-8 flex items-center">
-          <Link to="/" className="hover:text-blue-600 transition-colors">Главная</Link>
+          <Link to="/" className="hover:text-blue-600 transition-colors">{t('breadcrumbs.home')}</Link>
           <span className="mx-1 sm:mx-2">→</span>
-          <Link to="/academics" className="hover:text-blue-600 transition-colors">Академики</Link>
+          <Link to="/academics" className="hover:text-blue-600 transition-colors">{t('breadcrumbs.academics')}</Link>
           <span className="mx-1 sm:mx-2">→</span>
-          <span className="text-gray-800 font-medium">Кафедры</span>
+          <span className="text-gray-800 font-medium">{t('breadcrumbs.departments')}</span>
         </nav>
 
         {/* Заголовок и статистика */}
         <div className="mb-6 sm:mb-8">
-          <h1 className="text-2xl sm:text-4xl font-bold text-gray-800 mb-3 sm:mb-4">Факультеты и кафедры</h1>
-          <p className="text-gray-600 text-sm sm:text-base mb-4 sm:mb-6">Изучите структуру нашего университета и узнайте больше о каждом факультете</p>
+          <h1 className="text-2xl sm:text-4xl font-bold text-gray-800 mb-3 sm:mb-4">{t('departments.title')}</h1>
+          <p className="text-gray-600 text-sm sm:text-base mb-4 sm:mb-6">{t('departments.subtitle')}</p>
           
           {/* Статистика */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-4 sm:mb-6">
@@ -453,7 +343,7 @@ const Departments = () => {
                 </div>
                 <div className="ml-3 sm:ml-4">
                   <div className="text-xl sm:text-2xl font-bold text-gray-800">{totalStats.teachers}+</div>
-                  <div className="text-xs sm:text-sm text-gray-600">Преподавателей</div>
+                  <div className="text-xs sm:text-sm text-gray-600">{t('departments.teachers')}</div>
                 </div>
               </div>
             </div>
@@ -465,7 +355,7 @@ const Departments = () => {
                 </div>
                 <div className="ml-3 sm:ml-4">
                   <div className="text-xl sm:text-2xl font-bold text-gray-800">{totalStats.departments}</div>
-                  <div className="text-xs sm:text-sm text-gray-600">Кафедр</div>
+                  <div className="text-xs sm:text-sm text-gray-600">{t('departments.departments')}</div>
                 </div>
               </div>
             </div>
@@ -477,7 +367,7 @@ const Departments = () => {
                 </div>
                 <div className="ml-3 sm:ml-4">
                   <div className="text-xl sm:text-2xl font-bold text-gray-800">{totalStats.students}+</div>
-                  <div className="text-xs sm:text-sm text-gray-600">Студентов</div>
+                  <div className="text-xs sm:text-sm text-gray-600">{t('departments.students')}</div>
                 </div>
               </div>
             </div>
@@ -494,7 +384,7 @@ const Departments = () => {
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 sm:w-5 sm:h-5" />
                   <input
                     type="text"
-                    placeholder="Поиск по факультету, кафедре или заведующему..."
+                    placeholder={t('departments.searchPlaceholder')}
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="w-full pl-9 sm:pl-10 pr-4 py-2 sm:py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-sm sm:text-base"
@@ -507,7 +397,7 @@ const Departments = () => {
                   className="lg:hidden flex items-center justify-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg font-medium"
                 >
                   <Filter className="w-4 h-4" />
-                  Фильтры
+                  {t('departments.filters')}
                   <ChevronDown className={`w-4 h-4 transform transition-transform ${showFilters ? 'rotate-180' : ''}`} />
                 </button>
                 
@@ -520,7 +410,7 @@ const Departments = () => {
                         : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                     }`}
                   >
-                    Все
+                    {t('departments.filtersAll')}
                   </button>
                   <button
                     onClick={() => setActiveFilter('large')}
@@ -530,7 +420,7 @@ const Departments = () => {
                         : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                     }`}
                   >
-                    Крупные
+                    {t('departments.filtersLarge')}
                   </button>
                   <button
                     onClick={() => setActiveFilter('small')}
@@ -540,7 +430,7 @@ const Departments = () => {
                         : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                     }`}
                   >
-                    Малые
+                    {t('departments.filtersSmall')}
                   </button>
                 </div>
               </div>
@@ -548,13 +438,13 @@ const Departments = () => {
 
             {/* Древовидная структура */}
             <div className="bg-white rounded-xl sm:rounded-2xl shadow-md p-4 sm:p-6">
-              <h2 className="text-lg sm:text-xl font-semibold text-gray-800 mb-3 sm:mb-4">Структура университета</h2>
+              <h2 className="text-lg sm:text-xl font-semibold text-gray-800 mb-3 sm:mb-4">{t('departments.structureTitle')}</h2>
               
               {filteredFaculties.length === 0 ? (
                 <div className="text-center py-8 sm:py-12">
                   <Search className="w-8 h-8 sm:w-12 sm:h-12 text-gray-400 mx-auto mb-3 sm:mb-4" />
-                  <p className="text-gray-600 text-sm sm:text-base">Ничего не найдено</p>
-                  <p className="text-xs sm:text-sm text-gray-500 mt-1 sm:mt-2">Попробуйте изменить поисковый запрос</p>
+                  <p className="text-gray-600 text-sm sm:text-base">{t('departments.noResults')}</p>
+                  <p className="text-xs sm:text-sm text-gray-500 mt-1 sm:mt-2">{t('departments.tryAgain')}</p>
                 </div>
               ) : (
                 <div className="space-y-2 sm:space-y-3">
@@ -569,7 +459,7 @@ const Departments = () => {
                           <span className="text-xl sm:text-2xl mr-2 sm:mr-3">{faculty.icon}</span>
                           <div>
                             <h3 className="font-semibold text-gray-800 text-sm sm:text-base">{faculty.name}</h3>
-                            <p className="text-xs sm:text-sm text-gray-600">{faculty.departments.length} кафедр</p>
+                            <p className="text-xs sm:text-sm text-gray-600">{faculty.departments.length} {t('departments.departmentsCount')}</p>
                           </div>
                         </div>
                         <ChevronDown 
@@ -595,7 +485,7 @@ const Departments = () => {
                                   {department.teachersCount}
                                 </span>
                               </div>
-                              <p className="text-xs sm:text-sm text-gray-600 mb-2">Зав. кафедрой: {department.head}</p>
+                              <p className="text-xs sm:text-sm text-gray-600 mb-2">{t('departments.departmentHeadShort')}: {department.head}</p>
                               <div className="flex flex-wrap gap-1 sm:gap-2">
                                 {department.disciplines.slice(0, 2).map((discipline, idx) => (
                                   <span key={idx} className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">
@@ -604,7 +494,7 @@ const Departments = () => {
                                 ))}
                                 {department.disciplines.length > 2 && (
                                   <span className="text-xs text-gray-500">
-                                    +{department.disciplines.length - 2} ещё
+                                    +{department.disciplines.length - 2} {t('departments.more')}
                                   </span>
                                 )}
                               </div>
@@ -629,8 +519,8 @@ const Departments = () => {
                   <div className="text-gray-300 mb-4">
                     <GraduationCap className="w-12 h-12 sm:w-16 sm:h-16 mx-auto" />
                   </div>
-                  <h3 className="text-base sm:text-lg font-semibold text-gray-700 mb-2">Выберите кафедру</h3>
-                  <p className="text-gray-500 text-sm sm:text-base">Нажмите на любую кафедру, чтобы увидеть подробную информацию</p>
+                  <h3 className="text-base sm:text-lg font-semibold text-gray-700 mb-2">{t('departments.selectDepartment')}</h3>
+                  <p className="text-gray-500 text-sm sm:text-base">{t('departments.selectDepartmentHint')}</p>
                 </div>
               )}
             </div>

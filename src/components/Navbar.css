@@ -1,64 +1,49 @@
-/* Дополнительные стили для навбара для точной настройки breakpoints */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 
-/* Для экранов 13.5 дюймов (1280px - 1440px) */
-@media (min-width: 1280px) and (max-width: 1439px) {
-  .navbar-menu-item {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    font-size: 0.875rem;
+@keyframes slideInDown {
+  from {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.animate-slideInDown {
+  animation: slideInDown 0.3s ease-out;
+}
+
+/* Плавная прокрутка для всей страницы */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Улучшение внешнего вида скроллбара в мобильном меню */
+@media (max-width: 1279px) {
+  .xl\\:hidden {
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e0 #f7fafc;
   }
   
-  .navbar-logo {
-    max-width: 120px;
-    height: auto;
+  .xl\\:hidden::-webkit-scrollbar {
+    width: 6px;
   }
   
-  .navbar-container {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-}
-
-/* Для экранов больше 1440px */
-@media (min-width: 1440px) {
-  .navbar-menu-item {
-    padding-left: 1rem;
-    padding-right: 1rem;
+  .xl\\:hidden::-webkit-scrollbar-track {
+    background: #f7fafc;
   }
   
-  .navbar-logo {
-    width: 150px;
-    height: 35px;
+  .xl\\:hidden::-webkit-scrollbar-thumb {
+    background-color: #cbd5e0;
+    border-radius: 3px;
   }
-}
-
-/* Улучшенная адаптивность для средних экранов */
-@media (min-width: 1024px) and (max-width: 1279px) {
-  .navbar-desktop-menu {
-    display: none !important;
-  }
-  
-  .navbar-mobile-trigger {
-    display: flex !important;
-  }
-}
-
-/* Фиксация высоты навбара */
-.navbar-fixed {
-  min-height: 64px;
-}
-
-.navbar-container {
-  min-height: 64px;
-}
-
-/* Плавные переходы */
-.navbar-transition {
-  transition: all 0.3s ease;
-}
-
-/* Убираем overflow для предотвращения наслоения */
-.navbar-menu-dropdown {
-  z-index: 9999;
-  position: absolute;
 }

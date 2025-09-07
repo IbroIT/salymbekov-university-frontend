@@ -6,125 +6,141 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import interactionPlugin from '@fullcalendar/interaction';
 import ruLocale from '@fullcalendar/core/locales/ru';
+import enLocale from '@fullcalendar/core/locales/en-gb';
+import { useTranslation } from 'react-i18next';
 
 const Calendar = () => {
+  const { t, i18n } = useTranslation();
   const [calendarView, setCalendarView] = useState('dayGridMonth');
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [filteredTypes, setFilteredTypes] = useState(['Учебный период', 'Экзаменационная сессия', 'Каникулы', 'Научное мероприятие', 'Аттестация', 'Мероприятие']);
+  const [filteredTypes, setFilteredTypes] = useState([
+    t('calendar.eventTypes.studyPeriod'),
+    t('calendar.eventTypes.examSession'),
+    t('calendar.eventTypes.vacation'),
+    t('calendar.eventTypes.scientificEvent'),
+    t('calendar.eventTypes.certification'),
+    t('calendar.eventTypes.event')
+  ]);
   const calendarRef = useRef(null);
+
+  // Получение локали для календаря
+  const getCalendarLocale = () => {
+    return i18n.language === 'kg' ? ruLocale : 
+           i18n.language === 'en' ? enLocale : ruLocale;
+  };
 
   // Моковые данные академического календаря
   const calendarEvents = [
     {
       id: 1,
-      title: 'Осенний семестр',
+      title: t('calendar.events.fallSemester.title'),
       start: '2024-09-01',
       end: '2024-12-20',
       color: '#3B82F6',
-      type: 'Учебный период',
-      description: 'Начало осеннего семестра 2024-2025 учебного года. Студенты приступают к занятиям по расписанию.',
+      type: t('calendar.eventTypes.studyPeriod'),
+      description: t('calendar.events.fallSemester.description'),
       icon: '📚'
     },
     {
       id: 2,
-      title: 'Осенняя сессия',
+      title: t('calendar.events.fallSession.title'),
       start: '2024-12-23',
       end: '2025-01-10',
       color: '#EF4444',
-      type: 'Экзаменационная сессия',
-      description: 'Экзаменационная сессия осеннего семестра. Проводятся зачеты и экзамены по всем дисциплинам.',
+      type: t('calendar.eventTypes.examSession'),
+      description: t('calendar.events.fallSession.description'),
       icon: '📝'
     },
     {
       id: 3,
-      title: 'Зимние каникулы',
+      title: t('calendar.events.winterVacation.title'),
       start: '2025-01-11',
       end: '2025-02-02',
       color: '#10B981',
-      type: 'Каникулы',
-      description: 'Зимние каникулы для студентов. Отдых и восстановление перед следующим семестром.',
+      type: t('calendar.eventTypes.vacation'),
+      description: t('calendar.events.winterVacation.description'),
       icon: '⛷️'
     },
     {
       id: 4,
-      title: 'Весенний семестр',
+      title: t('calendar.events.springSemester.title'),
       start: '2025-02-03',
       end: '2025-05-20',
       color: '#3B82F6',
-      type: 'Учебный период',
-      description: 'Начало весеннего семестра. Продолжение учебного процесса по утвержденному расписанию.',
+      type: t('calendar.eventTypes.studyPeriod'),
+      description: t('calendar.events.springSemester.description'),
       icon: '🌱'
     },
     {
       id: 5,
-      title: 'Научная конференция',
+      title: t('calendar.events.scienceConference.title'),
       start: '2025-03-15',
       end: '2025-03-17',
       color: '#8B5CF6',
-      type: 'Научное мероприятие',
-      description: 'Ежегодная научно-практическая конференция студентов и преподавателей. Доклады, дискуссии, мастер-классы.',
+      type: t('calendar.eventTypes.scientificEvent'),
+      description: t('calendar.events.scienceConference.description'),
       icon: '🔬'
     },
     {
       id: 6,
-      title: 'Весенняя сессия',
+      title: t('calendar.events.springSession.title'),
       start: '2025-05-23',
       end: '2025-06-15',
       color: '#EF4444',
-      type: 'Экзаменационная сессия',
-      description: 'Экзаменационная сессия весеннего семестра. Зачетная неделя и экзамены.',
+      type: t('calendar.eventTypes.examSession'),
+      description: t('calendar.events.springSession.description'),
       icon: '📖'
     },
     {
       id: 7,
-      title: 'Летние каникулы',
+      title: t('calendar.events.summerVacation.title'),
       start: '2025-06-16',
       end: '2025-08-31',
       color: '#10B981',
-      type: 'Каникулы',
-      description: 'Летние каникулы для студентов. Практика, отдых, подготовка к следующему учебному году.',
+      type: t('calendar.eventTypes.vacation'),
+      description: t('calendar.events.summerVacation.description'),
       icon: '🌞'
     },
     {
       id: 8,
-      title: 'День открытых дверей',
+      title: t('calendar.events.openDay.title'),
       start: '2025-04-12T10:00:00',
       end: '2025-04-12T16:00:00',
       color: '#F59E0B',
-      type: 'Мероприятие',
-      description: 'День открытых дверей для абитуриентов. Экскурсии по университету, встречи с преподавателями.',
+      type: t('calendar.eventTypes.event'),
+      description: t('calendar.events.openDay.description'),
       icon: '🎓'
     },
     {
       id: 9,
-      title: 'Защита дипломов',
+      title: t('calendar.events.thesisDefense.title'),
       start: '2025-06-20',
       end: '2025-06-25',
       color: '#EC4899',
-      type: 'Аттестация',
-      description: 'Защита выпускных квалификационных работ. Выступление выпускников перед аттестационной комиссией.',
+      type: t('calendar.eventTypes.certification'),
+      description: t('calendar.events.thesisDefense.description'),
       icon: '🎯'
     },
     {
       id: 10,
-      title: 'Международный день врача',
+      title: t('calendar.events.doctorDay.title'),
       start: '2024-10-07',
       color: '#6366F1',
-      type: 'Мероприятие',
-      description: 'Торжественное собрание, посвященное Международному дню врача. Награждение лучших студентов и преподавателей.',
+      type: t('calendar.eventTypes.event'),
+      description: t('calendar.events.doctorDay.description'),
       icon: '👨‍⚕️'
     }
   ];
 
   // Легенда событий
   const eventTypes = [
-    { color: '#3B82F6', label: 'Учебные периоды', icon: '📚', type: 'Учебный период' },
-    { color: '#EF4444', label: 'Экзаменационные сессии', icon: '📝', type: 'Экзаменационная сессия' },
-    { color: '#10B981', label: 'Каникулы', icon: '🎉', type: 'Каникулы' },
-    { color: '#8B5CF6', label: 'Научные мероприятия', icon: '🔬', type: 'Научное мероприятие' },
-    { color: '#F59E0B', label: 'Общие мероприятия', icon: '🎓', type: 'Мероприятие' },
-    { color: '#EC4899', label: 'Аттестация', icon: '🎯', type: 'Аттестация' }
+    { color: '#3B82F6', label: t('calendar.legend.studyPeriods'), icon: '📚', type: t('calendar.eventTypes.studyPeriod') },
+    { color: '#EF4444', label: t('calendar.legend.examSessions'), icon: '📝', type: t('calendar.eventTypes.examSession') },
+    { color: '#10B981', label: t('calendar.legend.vacations'), icon: '🎉', type: t('calendar.eventTypes.vacation') },
+    { color: '#8B5CF6', label: t('calendar.legend.scientificEvents'), icon: '🔬', type: t('calendar.eventTypes.scientificEvent') },
+    { color: '#F59E0B', label: t('calendar.legend.generalEvents'), icon: '🎓', type: t('calendar.eventTypes.event') },
+    { color: '#EC4899', label: t('calendar.legend.certification'), icon: '🎯', type: t('calendar.eventTypes.certification') }
   ];
 
   // Фильтрация событий по выбранным типам
@@ -157,13 +173,13 @@ const Calendar = () => {
 
     const icsContent = `BEGIN:VCALENDAR
 VERSION:2.0
-PRODID:-//Medical University//Academic Calendar//RU
+PRODID:-//Medical University//Academic Calendar//${i18n.language.toUpperCase()}
 BEGIN:VEVENT
 SUMMARY:${event.title}
 DTSTART:${formatDate(event.startStr)}
 DTEND:${formatDate(event.endStr)}
 DESCRIPTION:${event.extendedProps.description}
-LOCATION:Медицинский университет
+LOCATION:${t('calendar.universityName')}
 END:VEVENT
 END:VCALENDAR`;
 
@@ -186,14 +202,14 @@ END:VCALENDAR`;
 
     const icsContent = `BEGIN:VCALENDAR
 VERSION:2.0
-PRODID:-//Medical University//Academic Calendar//RU
+PRODID:-//Medical University//Academic Calendar//${i18n.language.toUpperCase()}
 ${calendarEvents.map(event => `
 BEGIN:VEVENT
 SUMMARY:${event.title}
 DTSTART:${formatDate(event.start)}
 DTEND:${formatDate(event.end)}
 DESCRIPTION:${event.description}
-LOCATION:Медицинский университет
+LOCATION:${t('calendar.universityName')}
 END:VEVENT
 `).join('')}
 END:VCALENDAR`;
@@ -202,7 +218,7 @@ END:VCALENDAR`;
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = 'academic_calendar.ics';
+    link.download = t('calendar.exportFileName');
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -254,28 +270,36 @@ END:VCALENDAR`;
     }
   }, [filteredTypes]);
 
+  // Эффект для обновления календаря при изменении языка
+  useEffect(() => {
+    if (calendarRef.current) {
+      const calendarApi = calendarRef.current.getApi();
+      calendarApi.setOption('locale', getCalendarLocale());
+    }
+  }, [i18n.language]);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50">
       <div className="container mx-auto px-4 py-8">
         {/* Хлебные крошки */}
         <nav className="text-sm text-gray-600 mb-8 flex items-center">
-          <Link to="/" className="hover:text-blue-600 transition-colors">Главная</Link>
+          <Link to="/" className="hover:text-blue-600 transition-colors">{t('breadcrumbs.home')}</Link>
           <span className="mx-2">→</span>
-          <Link to="/academics" className="hover:text-blue-600 transition-colors">Академики</Link>
+          <Link to="/academics" className="hover:text-blue-600 transition-colors">{t('breadcrumbs.academics')}</Link>
           <span className="mx-2">→</span>
-          <span className="text-gray-800 font-medium">Академический календарь</span>
+          <span className="text-gray-800 font-medium">{t('breadcrumbs.calendar')}</span>
         </nav>
 
         <div className="text-center mb-10">
-          <h1 className="text-4xl font-bold text-gray-800 mb-3">Академический календарь</h1>
+          <h1 className="text-4xl font-bold text-gray-800 mb-3">{t('calendar.title')}</h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Планируйте свой учебный год с нашим интерактивным календарем. Отслеживайте важные события, сессии и каникулы.
+            {t('calendar.subtitle')}
           </p>
         </div>
 
         {/* Легенда и фильтры событий */}
         <div className="bg-white rounded-2xl shadow-lg p-6 mb-6">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">Фильтры событий</h2>
+          <h2 className="text-xl font-semibold text-gray-800 mb-4">{t('calendar.filters.title')}</h2>
           <div className="flex flex-wrap gap-3">
             {eventTypes.map((type, index) => (
               <button
@@ -306,7 +330,7 @@ END:VCALENDAR`;
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
               </svg>
-              Экспорт всего календаря
+              {t('calendar.exportAll')}
             </button>
             
             <a
@@ -316,7 +340,7 @@ END:VCALENDAR`;
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
               </svg>
-              Список событий
+              {t('calendar.eventList')}
             </a>
           </div>
         </div>
@@ -333,24 +357,24 @@ END:VCALENDAR`;
               right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
             }}
             views={{
-              dayGridMonth: { buttonText: 'Месяц' },
-              timeGridWeek: { buttonText: 'Неделя' },
-              timeGridDay: { buttonText: 'День' },
+              dayGridMonth: { buttonText: t('calendar.views.month') },
+              timeGridWeek: { buttonText: t('calendar.views.week') },
+              timeGridDay: { buttonText: t('calendar.views.day') },
               listMonth: { 
-                buttonText: 'Список',
+                buttonText: t('calendar.views.list'),
                 eventContent: eventContentList
               }
             }}
             events={filteredEvents}
             eventContent={eventContent}
             eventClick={handleEventClick}
-            locale={ruLocale}
+            locale={getCalendarLocale()}
             buttonText={{
-              today: 'Сегодня',
-              month: 'Месяц',
-              week: 'Неделя',
-              day: 'День',
-              list: 'Список'
+              today: t('calendar.today'),
+              month: t('calendar.views.month'),
+              week: t('calendar.views.week'),
+              day: t('calendar.views.day'),
+              list: t('calendar.views.list')
             }}
             height="auto"
             contentHeight="auto"
@@ -361,7 +385,7 @@ END:VCALENDAR`;
               meridiem: false
             }}
             dayMaxEvents={3}
-            moreLinkText="еще"
+            moreLinkText={t('calendar.moreEvents')}
             windowResize={() => {
               if (calendarRef.current) {
                 const calendarApi = calendarRef.current.getApi();
@@ -373,7 +397,7 @@ END:VCALENDAR`;
 
         {/* Мобильный вид - список событий (скрыт на десктопе) */}
         <div id="mobile-view" className="md:hidden bg-white rounded-2xl shadow-lg p-6 mb-8">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">Ближайшие события</h2>
+          <h2 className="text-xl font-semibold text-gray-800 mb-4">{t('calendar.upcomingEvents')}</h2>
           <div className="space-y-4">
             {filteredEvents.slice(0, 5).map(event => (
               <div 
@@ -405,11 +429,11 @@ END:VCALENDAR`;
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
-                  {new Date(event.start).toLocaleDateString('ru-RU')}
+                  {new Date(event.start).toLocaleDateString(i18n.language)}
                   {event.end && (
                     <>
                       <span className="mx-2">—</span>
-                      {new Date(event.end).toLocaleDateString('ru-RU')}
+                      {new Date(event.end).toLocaleDateString(i18n.language)}
                     </>
                   )}
                 </div>
@@ -448,7 +472,7 @@ END:VCALENDAR`;
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
                 <span>
-                  {new Date(selectedEvent.startStr).toLocaleDateString('ru-RU', { 
+                  {new Date(selectedEvent.startStr).toLocaleDateString(i18n.language, { 
                     weekday: 'long', 
                     year: 'numeric', 
                     month: 'long', 
@@ -459,7 +483,7 @@ END:VCALENDAR`;
                   <>
                     <span className="mx-2">—</span>
                     <span>
-                      {new Date(selectedEvent.endStr).toLocaleDateString('ru-RU', { 
+                      {new Date(selectedEvent.endStr).toLocaleDateString(i18n.language, { 
                         weekday: 'long', 
                         year: 'numeric', 
                         month: 'long', 
@@ -489,7 +513,7 @@ END:VCALENDAR`;
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                 </svg>
-                Скачать .ics
+                {t('calendar.downloadICS')}
               </button>
             </div>
           </div>
