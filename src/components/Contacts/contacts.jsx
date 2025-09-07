@@ -127,7 +127,6 @@ const Contacts = () => {
                     <p className="text-blue-200">г. Бишкек, ул. Фучика 3</p>
                     <button
                       onClick={() => copyToClipboard(t('contacts.address.value'))}
-                      onClick={() => copyToClipboard('г. Бишкек, ул. Фучика 3')}
                       className="text-blue-400 text-sm hover:text-blue-300 mt-1"
                     >
                       {t('contacts.copyAddress')}
