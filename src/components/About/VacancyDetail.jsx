@@ -18,7 +18,7 @@ const VacancyDetail = () => {
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('ru-RU', {
+    return date.toLocaleDateString(t('locale'), {
       day: '2-digit',
       month: 'long',
       year: 'numeric'
@@ -44,13 +44,7 @@ const VacancyDetail = () => {
   };
 
   const getCategoryLabel = (category) => {
-    const categories = {
-      'academic': 'Преподавательская должность',
-      'administrative': 'Административная должность',
-      'technical': 'Техническая должность',
-      'service': 'Обслуживающая должность'
-    };
-    return categories[category] || 'Общая должность';
+    return t(`vacancies.categories.${category}`);
   };
 
   return (
@@ -59,11 +53,11 @@ const VacancyDetail = () => {
       <div className="bg-blue-50 py-4">
         <div className="container mx-auto px-4">
           <nav className="flex items-center text-sm text-gray-600">
-            <Link to="/" className="hover:text-blue-600">Главная</Link>
+            <Link to="/" className="hover:text-blue-600">{t('breadcrumbs.home')}</Link>
             <span className="mx-2">→</span>
-            <Link to="/about" className="hover:text-blue-600">О нас</Link>
+            <Link to="/about" className="hover:text-blue-600">{t('breadcrumbs.about')}</Link>
             <span className="mx-2">→</span>
-            <Link to="/about/vacancies" className="hover:text-blue-600">Вакансии</Link>
+            <Link to="/about/vacancies" className="hover:text-blue-600">{t('breadcrumbs.vacancies')}</Link>
             <span className="mx-2">→</span>
             <span className="text-blue-600">{vacancy.title}</span>
           </nav>
@@ -90,10 +84,10 @@ const VacancyDetail = () => {
               {isDeadlineSoon(vacancy.deadline) && (
                 <div className="text-right">
                   <span className="bg-red-100 text-red-800 text-sm font-medium px-3 py-1 rounded-full">
-                    ⚠️ Срочная вакансия
+                    ⚠️ {t('vacancies.urgent')}
                   </span>
                   <p className="text-red-600 text-sm mt-2">
-                    До окончания: {Math.ceil((new Date(vacancy.deadline) - new Date()) / (1000 * 60 * 60 * 24))} дн.
+                    {t('vacancies.deadlineDays')}: {Math.ceil((new Date(vacancy.deadline) - new Date()) / (1000 * 60 * 60 * 24))}
                   </p>
                 </div>
               )}
@@ -106,7 +100,7 @@ const VacancyDetail = () => {
                   <span className="text-green-600">💰</span>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600">Зарплата</p>
+                  <p className="text-sm text-gray-600">{t('vacancies.salary')}</p>
                   <p className="font-semibold text-gray-900">{vacancy.salary}</p>
                 </div>
               </div>
@@ -116,7 +110,7 @@ const VacancyDetail = () => {
                   <span className="text-blue-600">📍</span>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600">Местоположение</p>
+                  <p className="text-sm text-gray-600">{t('vacancies.location')}</p>
                   <p className="font-semibold text-gray-900">{vacancy.location}</p>
                 </div>
               </div>
@@ -126,7 +120,7 @@ const VacancyDetail = () => {
                   <span className="text-purple-600">⏰</span>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600">Тип занятости</p>
+                  <p className="text-sm text-gray-600">{t('vacancies.employmentType')}</p>
                   <p className="font-semibold text-gray-900">{vacancy.type}</p>
                 </div>
               </div>
@@ -137,7 +131,7 @@ const VacancyDetail = () => {
                     <span className="text-orange-600">💼</span>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600">Опыт работы</p>
+                    <p className="text-sm text-gray-600">{t('vacancies.experience')}</p>
                     <p className="font-semibold text-gray-900">{vacancy.experience}</p>
                   </div>
                 </div>
@@ -148,7 +142,7 @@ const VacancyDetail = () => {
                   <span className="text-red-600">📅</span>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600">Дедлайн</p>
+                  <p className="text-sm text-gray-600">{t('vacancies.deadline')}</p>
                   <p className="font-semibold text-gray-900">{formatDate(vacancy.deadline)}</p>
                 </div>
               </div>
@@ -159,7 +153,7 @@ const VacancyDetail = () => {
                     <span className="text-indigo-600">🎓</span>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600">Образование</p>
+                    <p className="text-sm text-gray-600">{t('vacancies.education')}</p>
                     <p className="font-semibold text-gray-900">{vacancy.education}</p>
                   </div>
                 </div>
@@ -172,10 +166,10 @@ const VacancyDetail = () => {
                 onClick={() => setShowApplicationForm(true)}
                 className="bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200 text-lg"
               >
-                📧 Откликнуться на вакансию
+                📧 {t('vacancies.apply')}
               </button>
               <p className="text-sm text-gray-600 mt-2">
-                Отправьте свое резюме и сопроводительное письмо
+                {t('vacancies.applyDescription')}
               </p>
             </div>
           </div>
@@ -187,7 +181,7 @@ const VacancyDetail = () => {
               {/* Description */}
               <div className="bg-white rounded-lg shadow-lg p-8">
                 <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                  📋 Описание вакансии
+                  📋 {t('vacancies.description')}
                 </h2>
                 <p className="text-gray-700 leading-relaxed text-lg">
                   {vacancy.description}
@@ -197,7 +191,7 @@ const VacancyDetail = () => {
               {/* Responsibilities */}
               <div className="bg-white rounded-lg shadow-lg p-8">
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                  ✅ Обязанности
+                  ✅ {t('vacancies.responsibilities')}
                 </h2>
                 <ul className="space-y-4">
                   {vacancy.responsibilities.map((responsibility, index) => (
@@ -214,7 +208,7 @@ const VacancyDetail = () => {
               {/* Requirements */}
               <div className="bg-white rounded-lg shadow-lg p-8">
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                  📚 Требования к кандидату
+                  📚 {t('vacancies.requirements')}
                 </h2>
                 <ul className="space-y-4">
                   {vacancy.requirements.map((requirement, index) => (
@@ -232,7 +226,7 @@ const VacancyDetail = () => {
               {/* Conditions */}
               <div className="bg-white rounded-lg shadow-lg p-6">
                 <h3 className="text-xl font-bold text-gray-900 mb-4">
-                  🎁 Условия работы
+                  🎁 {t('vacancies.conditions')}
                 </h3>
                 <ul className="space-y-3">
                   {vacancy.conditions.map((condition, index) => (
@@ -248,7 +242,7 @@ const VacancyDetail = () => {
               {vacancy.tags && (
                 <div className="bg-white rounded-lg shadow-lg p-6">
                   <h3 className="text-xl font-bold text-gray-900 mb-4">
-                    🏷️ Ключевые навыки
+                    🏷️ {t('vacancies.skills')}
                   </h3>
                   <div className="flex flex-wrap gap-2">
                     {vacancy.tags.slice(1).map((tag, index) => (
@@ -266,7 +260,7 @@ const VacancyDetail = () => {
               {/* Contact Information */}
               <div className="bg-blue-50 rounded-lg p-6">
                 <h3 className="text-xl font-bold text-blue-900 mb-4">
-                  📞 Контактная информация
+                  📞 {t('vacancies.contact')}
                 </h3>
                 <div className="space-y-3">
                   <div className="flex items-center text-sm">
@@ -284,7 +278,7 @@ const VacancyDetail = () => {
                   <div className="flex items-start text-sm">
                     <span className="text-blue-600 mr-2 mt-0.5">📍</span>
                     <span className="text-gray-700">
-                      г. Бишкек, ул. Ибраимова 103
+                      {t('vacancies.address')}
                     </span>
                   </div>
                 </div>
@@ -293,21 +287,21 @@ const VacancyDetail = () => {
               {/* Application Stats */}
               <div className="bg-gray-50 rounded-lg p-6">
                 <h3 className="text-lg font-bold text-gray-900 mb-4">
-                  📊 Информация о вакансии
+                  📊 {t('vacancies.vacancyInfo')}
                 </h3>
                 <div className="space-y-3 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Опубликована:</span>
+                    <span className="text-gray-600">{t('vacancies.published')}:</span>
                     <span className="font-medium">{formatDate(vacancy.postedDate)}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Дедлайн:</span>
+                    <span className="text-gray-600">{t('vacancies.deadline')}:</span>
                     <span className={`font-medium ${isDeadlineSoon(vacancy.deadline) ? 'text-red-600' : 'text-gray-900'}`}>
                       {formatDate(vacancy.deadline)}
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600">ID вакансии:</span>
+                    <span className="text-gray-600">{t('vacancies.vacancyId')}:</span>
                     <span className="font-medium">#{vacancy.id.toString().padStart(4, '0')}</span>
                   </div>
                 </div>
@@ -318,7 +312,7 @@ const VacancyDetail = () => {
                 onClick={() => setShowApplicationForm(true)}
                 className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200"
               >
-                Откликнуться
+                {t('vacancies.apply')}
               </button>
             </div>
           </div>
@@ -327,7 +321,7 @@ const VacancyDetail = () => {
           <div className="mt-12">
             <div className="bg-white rounded-lg shadow-lg p-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                💡 Похожие вакансии
+                💡 {t('vacancies.similarVacancies')}
               </h2>
               <div className="grid md:grid-cols-2 gap-6">
                 {vacanciesData
@@ -353,7 +347,7 @@ const VacancyDetail = () => {
               </div>
               {vacanciesData.filter(v => v.id !== vacancy.id && v.category === vacancy.category).length === 0 && (
                 <p className="text-gray-500 text-center py-8">
-                  Похожих вакансий не найдено
+                  {t('vacancies.noSimilarVacancies')}
                 </p>
               )}
             </div>
