@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { 
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   LineChart, Line, PieChart, Pie, Cell 
@@ -8,6 +9,7 @@ import { publicationsApi, researchCentersApi } from './api';
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8'];
 
 const Publications = () => {
+  const { t } = useTranslation();
   const [publicationsData, setPublicationsData] = useState([]);
   const [researchCenters, setResearchCenters] = useState([]);
   const [loading, setLoading] = useState(true);

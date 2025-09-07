@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 // Моковые данные конференций
 const conferencesData = {
@@ -93,6 +94,7 @@ const conferencesData = {
 };
 
 const Conferences = () => {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState('upcoming');
   const [selectedConference, setSelectedConference] = useState(null);
 
@@ -111,10 +113,10 @@ const Conferences = () => {
         {/* Заголовок */}
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-800 mb-4">
-            Научные конференции
+            {t('research.conferences.title')}
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Участвуйте в ведущих научных мероприятиях, организуемых Университетом Салымбекова
+            {t('research.conferences.subtitle')}
           </p>
         </div>
 

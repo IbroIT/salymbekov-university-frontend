@@ -1052,6 +1052,256 @@
       "googleButton": "Add to Google Calendar",
       "downloadButton": "Download .ics file"
     }
+  },
+  "research": {
+    "title": "Research",
+    "subtitle": "Discover breakthrough research and innovations in medical science",
+    "tabs": {
+      "publications": "Publications",
+      "centers": "Research Centers", 
+      "conferences": "Conferences",
+      "grants": "Grants"
+    },
+    "researchAreas": {
+      "title": "Key Research Areas",
+      "cardiology": {
+        "title": "Cardiology",
+        "description": "Research in cardiovascular diseases and innovative treatment methods"
+      },
+      "neuroscience": {
+        "title": "Neuroscience",
+        "description": "Studying brain and nervous system function, developing new neurotechnologies"
+      },
+      "oncology": {
+        "title": "Oncology",
+        "description": "Cancer research and development of new diagnostic and treatment methods"
+      },
+      "immunology": {
+        "title": "Immunology",
+        "description": "Immune system research and development of immunotherapy"
+      },
+      "genetics": {
+        "title": "Medical Genetics",
+        "description": "Genetic disease research and gene therapy development"
+      },
+      "pharmacology": {
+        "title": "Pharmacology",
+        "description": "Development of new drugs and study of their effects on the body"
+      },
+      "projects": "projects",
+      "publications": "publications", 
+      "researchers": "researchers"
+    },
+    "publicationAreas": {
+      "cardiology": "Cardiology",
+      "neuroscience": "Neuroscience", 
+      "publicHealth": "Public Health",
+      "genetics": "Genetics",
+      "orthopedics": "Orthopedics"
+    },
+    "centers": {
+      "title": "Research Centers",
+      "subtitle": "Leading scientific centers conducting breakthrough research",
+      "director": "Director",
+      "staffCount": "Staff",
+      "equipment": "Equipment",
+      "publications": "Publications",
+      "viewPublications": "View Publications",
+      "molecularMedicine": {
+        "name": "Molecular Medicine Center",
+        "description": "Advanced research in gene therapy and molecular diagnostics"
+      },
+      "neurosciences": {
+        "name": "Neuroscience Center", 
+        "description": "Studying brain mechanisms and developing neurotechnologies"
+      },
+      "biomedicalTech": {
+        "name": "Biomedical Technologies Center",
+        "description": "Development of medical devices and biotechnologies"
+      },
+      "clinicalResearch": {
+        "name": "Clinical Research Center",
+        "description": "Clinical trials and evidence-based medicine studies"
+      },
+      "publicHealth": {
+        "name": "Public Health Center",
+        "description": "Epidemiological research and healthcare system studies"
+      }
+    },
+    "conferences": {
+      "title": "Scientific Conferences",
+      "subtitle": "International and national scientific events",
+      "upcoming": "Upcoming Conferences",
+      "archive": "Conference Archive",
+      "dates": "Dates",
+      "location": "Location",
+      "deadline": "Registration Deadline",
+      "website": "Website",
+      "topics": "Topics",
+      "speakers": "speakers",
+      "register": "Register",
+      "details": "Details",
+      "registrationDeadline": "Registration deadline",
+      "status": {
+        "registrationOpen": "Registration Open",
+        "earlyBird": "Early Bird Registration",
+        "callForPapers": "Call for Papers",
+        "completed": "Completed"
+      }
+    },
+    "grants": {
+      "title": "Research Grants",
+      "subtitle": "Funding opportunities for scientific research",
+      "pageTitle": "Grant Opportunities",
+      "pageSubtitle": "Funding for scientific research and innovative projects from leading organizations",
+      "tabs": {
+        "all": "All Grants",
+        "active": "Active",
+        "upcoming": "Upcoming",
+        "closed": "Closed"
+      },
+      "table": {
+        "grant": "Grant",
+        "organization": "Organization",
+        "amount": "Amount",
+        "deadline": "Deadline",
+        "status": "Status",
+        "actions": "Actions",
+        "details": "Details",
+        "apply": "Apply"
+      },
+      "categories": {
+        "all": "All Grants",
+        "youth": "Youth",
+        "international": "International", 
+        "fundamental": "Fundamental",
+        "applied": "Applied",
+        "innovative": "Innovative",
+        "clinical": "Clinical"
+      },
+      "filters": {
+        "category": "Category",
+        "amount": "Amount",
+        "deadline": "Deadline",
+        "search": "Search by title or organization..."
+      },
+      "amount": "Amount",
+      "deadline": "Deadline",
+      "duration": "Duration",
+      "requirements": "Requirements",
+      "description": "Description",
+      "contact": "Contact",
+      "website": "Website",
+      "applyNow": "Apply Now",
+      "statusLabels": {
+        "active": "Applications Open",
+        "upcoming": "Opening Soon",
+        "closed": "Applications Closed"
+      },
+      "modal": {
+        "basicInfo": "Basic Information",
+        "organization": "Organization",
+        "funding": "Funding Amount",
+        "submissionDeadline": "Submission Deadline",
+        "duration": "Project Duration",
+        "contacts": "Contacts",
+        "contactPerson": "Contact Person",
+        "website": "Website",
+        "description": "Description",
+        "requirements": "Requirements",
+        "applyForGrant": "Apply for Grant"
+      },
+      "form": {
+        "applicationTitle": "Grant Application",
+        "projectTitle": "Project Title",
+        "principalInvestigator": "Principal Investigator",
+        "email": "Email",
+        "phone": "Phone",
+        "department": "Department/Laboratory",
+        "teamMembers": "Team Members",
+        "teamMembersPlaceholder": "Full names, positions separated by commas",
+        "projectDescription": "Project Description",
+        "projectDescriptionPlaceholder": "Goals, objectives, methods, expected results...",
+        "budget": "Budget (som)",
+        "timeline": "Timeline (months)",
+        "expectedResults": "Expected Results",
+        "expectedResultsPlaceholder": "Publications, patents, practical application...",
+        "attachFile": "Attach Project Proposal (PDF)",
+        "cancel": "Cancel",
+        "submit": "Submit Application",
+        "required": "*"
+      },
+      "noGrants": "No grants available for selected filter",
+      "applicationSuccess": "Application submitted successfully!",
+      "status": {
+        "active": "Active",
+        "expired": "Expired",
+        "upcoming": "Upcoming"
+      }
+    },
+    "publications": {
+      "title": "Scientific Publications",
+      "subtitle": "Latest research publications and achievements",
+      "filters": {
+        "year": "Year",
+        "author": "Author",
+        "journal": "Journal",
+        "citations": "Citations",
+        "center": "Research Center",
+        "apply": "Apply Filters",
+        "reset": "Reset"
+      },
+      "sort": {
+        "year": "Year",
+        "citations": "Citations",
+        "title": "Title",
+        "asc": "Ascending",
+        "desc": "Descending"
+      },
+      "charts": {
+        "bar": "Bar Chart",
+        "line": "Line Chart", 
+        "pie": "Pie Chart"
+      },
+      "stats": {
+        "totalPublications": "Total Publications",
+        "totalCitations": "Total Citations",
+        "hIndex": "H-Index",
+        "averageCitations": "Average Citations"
+      },
+      "export": {
+        "selected": "Export Selected",
+        "all": "Export All",
+        "format": "Format"
+      },
+      "viewDetails": "View Details",
+      "cite": "Cite",
+      "doi": "DOI",
+      "abstract": "Abstract",
+      "authors": "Authors",
+      "journal": "Journal",
+      "year": "Year",
+      "citations": "Citations",
+      "keywords": "Keywords",
+      "loadError": "Error loading publications",
+      "noResults": "No publications found matching your criteria"
+    },
+    "common": {
+      "showMore": "Show More",
+      "showLess": "Show Less",
+      "loadMore": "Load More",
+      "loading": "Loading...",
+      "error": "Error loading data",
+      "search": "Search...",
+      "filter": "Filter",
+      "sort": "Sort",
+      "reset": "Reset",
+      "joinResearch": "Join Our Research",
+      "joinResearchDesc": "Become part of our scientific community and contribute to important research projects",
+      "participateInResearch": "Participate in Research"
+    }
   }
 }
+
+
 
