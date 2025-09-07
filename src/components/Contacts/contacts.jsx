@@ -123,8 +123,6 @@ const Contacts = () => {
                   <div>
                     <h3 className="font-semibold text-white">{t('contacts.address.title')}</h3>
                     <p className="text-blue-200">{t('contacts.address.value')}</p>
-                    <h3 className="font-semibold text-white">Адрес</h3>
-                    <p className="text-blue-200">г. Бишкек, ул. Фучика 3</p>
                     <button
                       onClick={() => copyToClipboard(t('contacts.address.value'))}
                       className="text-blue-400 text-sm hover:text-blue-300 mt-1"
@@ -234,7 +232,7 @@ const Contacts = () => {
                 </div>
               </div>
             ) : (
-              <div className="h-96 rounded-xl relative overflow-hidden">
+              <div className="h-150 rounded-xl relative overflow-hidden">
                 <iframe
                   src={mapUrl}
                   width="100%"
@@ -253,8 +251,6 @@ const Contacts = () => {
                       <div>
                         <p className="font-bold">{t('contacts.map.universityName')}</p>
                         <p className="text-sm opacity-90">{t('contacts.address.value')}</p>
-                        <p className="font-bold">Университет Салымбекова</p>
-                        <p className="text-sm opacity-90">г. Бишкек, ул. Фучика 3</p>
                       </div>
                     </div>
                     
@@ -271,21 +267,6 @@ const Contacts = () => {
                 </div>
               </div>
             )}
-
-            {/* Инструкция под картой */}
-            <div className="mt-4 p-4 bg-blue-900/30 rounded-lg border border-blue-400/20">
-              <h4 className="font-semibold text-white mb-2">{t('contacts.map.howToGet')}</h4>
-              <ul className="text-sm text-blue-200 space-y-1">
-                <li>• {t('contacts.map.transport.buses')}</li>
-                <li>• {t('contacts.map.transport.minibuses')}</li>
-                <li>• {t('contacts.map.transport.taxi')}</li>
-                <li>• {t('contacts.map.transport.car')}</li>
-                <li>• Автобусы: 8, 15, 35, 254 до остановки "Шлагбаум"</li>
-                <li>• Маршрутки: 173, 185, 200 А, 218, 290, 386, 935</li>
-                <li>• Такси: назовите адрес "ул. Фучика 3"</li>
-                <li>• Авто: парковка на территории кампуса</li>
-              </ul>
-            </div>
           </motion.div>
         </div>
 

@@ -104,7 +104,6 @@ const Navbar = () => {
       title: t('nav.campus_life'),
       submenu: [
         { title: t('nav.student_life'), link: '/campus-life' },
-        { title: t('nav.events'), link: '/campus-life/events' },
         { title: t('nav.clubs'), link: '/campus-life/clubs' },
         { title: t('nav.gallery'), link: '/campus-life/gallery' },
         { title: t('nav.international'), link: '/campus-life/international' },

@@ -1,89 +1,27 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-// Моковые данные для центров
-const researchCenters = [
-  {
-    id: 1,
-    name: "Центр молекулярной медицины",
-    logo: "🧬",
-    director: {
-      name: "Алиев А.К.",
-      photo: "👨‍⚕️",
-      position: "Профессор, д.м.н."
-    },
-    staffCount: 25,
-    equipment: [
-      "ПЦР-анализатор",
-      "Спектрофотометр",
-      "Электронный микроскоп",
-      "Криостат"
-    ],
-    publicationsLink: "/publications/center-1",
-    description: "Передовые исследования в области генной терапии и молекулярной диагностики"
-  },
-  {
-    id: 2,
-    name: "Центр нейронаук",
-    logo: "🧠",
-    director: {
-      name: "Смагулова Г.М.",
-      photo: "👩‍⚕️",
-      position: "Профессор, PhD"
-    },
-    staffCount: 18,
-    equipment: [
-      "ЭЭГ-система",
-      "МРТ 3.0 Тесла",
-      "Транскраниальный стимулятор",
-      "Оптогенетическая установка"
-    ],
-    publicationsLink: "/publications/center-2",
-    description: "Изучение механизмов работы мозга и разработка нейротехнологий"
-  },
-  {
-    id: 3,
-    name: "Центр биомедицинских технологий",
-    logo: "🔬",
-    director: {
-      name: "Жанузаков Т.Р.",
-      photo: "👨‍🔬",
-      position: "Доцент, к.м.н."
-    },
-    staffCount: 32,
-    equipment: [
-      "Биопринтер 3D",
-      "Клеточный сортер",
-      "Масс-спектрометр",
-      "Биореакторы"
-    ],
-    publicationsLink: "/publications/center-3",
-    description: "Разработка инновационных медицинских материалов и имплантов"
-  }
-];
-
 const Centers = () => {
   const { t } = useTranslation();
   const [selectedCenter, setSelectedCenter] = useState(null);
   const [hoveredCard, setHoveredCard] = useState(null);
 
-  // Моковые данные для центров с переводами
   const researchCenters = [
     {
       id: 1,
       name: t('research.centers.molecularMedicine.name'),
       logo: "🧬",
       director: {
-        name: "Алиев А.К.",
+        name: t('research.centers.directors.aliyev'),
         photo: "👨‍⚕️",
-        position: "Профессор, д.м.н."
+        position: t('research.centers.positions.professor')
       },
       staffCount: 25,
       equipment: [
-        "ПЦР-анализатор",
-        "Спектрофотометр",
-        "Электронный микроскоп",
-        "Криостат"
+        t('research.centers.equipment.pcrAnalyzer'),
+        t('research.centers.equipment.spectrophotometer'),
+        t('research.centers.equipment.electronMicroscope'),
+        t('research.centers.equipment.cryostat')
       ],
       publicationsLink: "/publications/center-1",
       description: t('research.centers.molecularMedicine.description')
@@ -93,16 +31,16 @@ const Centers = () => {
       name: t('research.centers.neurosciences.name'),
       logo: "🧠",
       director: {
-        name: "Смагулова Г.М.",
+        name: t('research.centers.directors.smagulova'),
         photo: "👩‍⚕️",
-        position: "Профессор, PhD"
+        position: t('research.centers.positions.professorPhD')
       },
       staffCount: 18,
       equipment: [
-        "ЭЭГ-система",
-        "МРТ 3.0 Тесла",
-        "Транскраниальный стимулятор",
-        "Оптогенетическая установка"
+        t('research.centers.equipment.eegSystem'),
+        t('research.centers.equipment.mri3T'),
+        t('research.centers.equipment.transcranialStimulator'),
+        t('research.centers.equipment.optogeneticSetup')
       ],
       publicationsLink: "/publications/center-2",
       description: t('research.centers.neurosciences.description')
@@ -112,16 +50,16 @@ const Centers = () => {
       name: t('research.centers.biomedicalTech.name'),
       logo: "🔬",
       director: {
-        name: "Жанузаков Т.Р.",
+        name: t('research.centers.directors.zhanuzakov'),
         photo: "👨‍🔬",
-        position: "Доцент, к.м.н."
+        position: t('research.centers.positions.associateProfessor')
       },
       staffCount: 32,
       equipment: [
-        "Биопринтер 3D",
-        "Клеточный сортер",
-        "Масс-спектрометр",
-        "Биореакторы"
+        t('research.centers.equipment.bioprinter3D'),
+        t('research.centers.equipment.cellSorter'),
+        t('research.centers.equipment.massSpectrometer'),
+        t('research.centers.equipment.bioreactors')
       ],
       publicationsLink: "/publications/center-3",
       description: t('research.centers.biomedicalTech.description')
@@ -131,16 +69,16 @@ const Centers = () => {
       name: t('research.centers.clinicalResearch.name'),
       logo: "⚕️",
       director: {
-        name: "Токтогулов Н.А.",
+        name: t('research.centers.directors.toktogulov'),
         photo: "👨‍⚕️",
-        position: "Профессор, д.м.н."
+        position: t('research.centers.positions.professor')
       },
       staffCount: 28,
       equipment: [
-        "Система рандомизации",
-        "eCRF платформа",
-        "Статистический софт",
-        "Мониторинг оборудование"
+        t('research.centers.equipment.randomizationSystem'),
+        t('research.centers.equipment.ecrfPlatform'),
+        t('research.centers.equipment.statisticalSoftware'),
+        t('research.centers.equipment.monitoringEquipment')
       ],
       publicationsLink: "/publications/center-4",
       description: t('research.centers.clinicalResearch.description')
@@ -150,16 +88,16 @@ const Centers = () => {
       name: t('research.centers.publicHealth.name'),
       logo: "🏥",
       director: {
-        name: "Мамбетова А.С.",
+        name: t('research.centers.directors.mambetova'),
         photo: "👩‍⚕️",
-        position: "Профессор, PhD"
+        position: t('research.centers.positions.professorPhD')
       },
       staffCount: 22,
       equipment: [
-        "Эпидемиологическая база данных",
-        "ГИС система",
-        "Анкетирование платформы",
-        "Аналитические инструменты"
+        t('research.centers.equipment.epidemiologicalDatabase'),
+        t('research.centers.equipment.gisSystem'),
+        t('research.centers.equipment.surveyPlatforms'),
+        t('research.centers.equipment.analyticalTools')
       ],
       publicationsLink: "/publications/center-5",
       description: t('research.centers.publicHealth.description')
@@ -221,7 +159,7 @@ const Centers = () => {
                 <div className="mb-6">
                   <h4 className="font-semibold text-gray-800 mb-3 flex items-center">
                     <span className="mr-2">⚙️</span>
-                    {t('research.centers.equipment')}
+                    {t('research.centers.equipmentTitle')}
                   </h4>
                   <div className="space-y-2">
                     {center.equipment.slice(0, 3).map((item, index) => (
@@ -235,7 +173,7 @@ const Centers = () => {
                     ))}
                     {center.equipment.length > 3 && (
                       <div className="text-sm text-blue-600 font-medium">
-                        +{center.equipment.length - 3} ещё...
+                        +{center.equipment.length - 3} {t('research.centers.moreItems')}
                       </div>
                     )}
                   </div>
@@ -276,7 +214,9 @@ const Centers = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Руководитель */}
                   <div className="bg-gray-50 p-4 rounded-lg">
-                    <h3 className="font-semibold text-lg mb-3">Руководитель</h3>
+                    <h3 className="font-semibold text-lg mb-3">
+                      {t('research.centers.director')}
+                    </h3>
                     <div className="flex items-center">
                       <div className="text-4xl mr-4">{selectedCenter.director.photo}</div>
                       <div>
@@ -288,15 +228,21 @@ const Centers = () => {
 
                   {/* Сотрудники */}
                   <div className="bg-gray-50 p-4 rounded-lg">
-                    <h3 className="font-semibold text-lg mb-3">Команда</h3>
+                    <h3 className="font-semibold text-lg mb-3">
+                      {t('research.centers.team')}
+                    </h3>
                     <p className="text-3xl font-bold text-blue-600">{selectedCenter.staffCount}</p>
-                    <p className="text-sm text-gray-600">научных сотрудников</p>
+                    <p className="text-sm text-gray-600">
+                      {t('research.centers.researchers')}
+                    </p>
                   </div>
                 </div>
 
                 {/* Оборудование */}
                 <div className="mt-6">
-                  <h3 className="font-semibold text-lg mb-3">Оборудование</h3>
+                  <h3 className="font-semibold text-lg mb-3">
+                    {t('research.centers.equipmentTitle')}
+                  </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {selectedCenter.equipment.map((item, index) => (
                       <div
@@ -316,7 +262,7 @@ const Centers = () => {
                     href={selectedCenter.publicationsLink}
                     className="inline-block bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-200 transform hover:scale-105"
                   >
-                    📖 Перейти к публикациям центра
+                    📖 {t('research.centers.goToPublications')}
                   </a>
                 </div>
               </div>
