@@ -8,25 +8,21 @@ const HeroSlider = () => {
       title: "Начни карьеру в медицине",
       subtitle: "Стань частью сообщества будущих врачей",
       image: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-      buttonText: "Подробнее"
     },
     {
       title: "Международные стандарты образования",
       subtitle: "Образование, соответствующее мировым требованиям",
       image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-      buttonText: "Подробнее"
     },
     {
       title: "Современные симуляционные центры",
       subtitle: "Отрабатывайте навыки на передовом оборудовании",
       image: "https://images.unsplash.com/photo-1582719471384-894e35a4b48f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-      buttonText: "Подробнее"
     },
     {
       title: "Клиническая практика с первого курса",
       subtitle: "Реальный опыт работы с пациентами с самого начала",
       image: "https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-      buttonText: "Подробнее"
     }
   ];
 
@@ -82,9 +78,7 @@ const HeroSlider = () => {
               <p className="text-xl md:text-2xl mb-8 max-w-2xl animate-fadeIn delay-200">
                 {slide.subtitle}
               </p>
-              <button className="bg-white text-blue-800 hover:bg-blue-100 font-semibold py-3 px-8 rounded-full text-lg transition-all duration-300 transform hover:scale-105 animate-fadeIn delay-500">
-                {slide.buttonText}
-              </button>
+              
             </div>
           </div>
         ))}

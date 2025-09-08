@@ -1,20 +1,52 @@
-import React, { useState } from 'react';
-import { useParams, Link, Navigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import ApplicationForm from './ApplicationForm';
-import { vacanciesData } from './vacanciesData';
-import './About.css';
+import careersAPI from '../../services/careersAPI';
 
 const VacancyDetail = () => {
+  const { t, i18n } = useTranslation();
   const { id } = useParams();
-  const { t } = useTranslation();
-  const [showApplicationForm, setShowApplicationForm] = useState(false);
+  const navigate = useNavigate();
+  const [vacancy, setVacancy] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [showApplication, setShowApplication] = useState(false);
+  const [applicationData, setApplicationData] = useState({
+    full_name: '',
+    email: '',
+    phone: '',
+    cover_letter: '',
+    resume: null
+  });
+  const [submitting, setSubmitting] = useState(false);
 
-  const vacancy = vacanciesData.find(v => v.id === parseInt(id));
+  useEffect(() => {
+    loadVacancy();
+  }, [id]);
 
-  if (!vacancy) {
-    return <Navigate to="/about/vacancies" replace />;
-  }
+  const loadVacancy = async () => {
+    try {
+      setLoading(true);
+      const data = await careersAPI.getVacancy(id);
+      setVacancy(data);
+    } catch (err) {
+      console.error('Error loading vacancy:', err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Get current language for translations
+  const currentLanguage = i18n.language === 'ru' ? 'ru' : i18n.language === 'en' ? 'en' : 'kg';
+  
+  // Extract translated fields based on current language
+  const getTranslatedField = (field) => {
+    if (typeof field === 'object' && field !== null) {
+      return field[currentLanguage] || field['ru'] || field['en'] || field['kg'] || '';
+    }
+    return field || '';
+  };
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -23,14 +55,6 @@ const VacancyDetail = () => {
       month: 'long',
       year: 'numeric'
     });
-  };
-
-  const isDeadlineSoon = (deadline) => {
-    const deadlineDate = new Date(deadline);
-    const today = new Date();
-    const diffTime = deadlineDate - today;
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays <= 7 && diffDays > 0;
   };
 
   const getCategoryIcon = (category) => {
@@ -43,9 +67,77 @@ const VacancyDetail = () => {
     }
   };
 
-  const getCategoryLabel = (category) => {
-    return t(`vacancies.categories.${category}`);
+  const handleApplicationSubmit = async (e) => {
+    e.preventDefault();
+    setSubmitting(true);
+
+    try {
+      const formData = new FormData();
+      Object.keys(applicationData).forEach(key => {
+        if (applicationData[key] !== null) {
+          formData.append(key, applicationData[key]);
+        }
+      });
+      formData.append('vacancy', id);
+
+      await careersAPI.submitApplication(formData);
+      alert(t('careers.application.success'));
+      setShowApplication(false);
+      setApplicationData({
+        full_name: '',
+        email: '',
+        phone: '',
+        cover_letter: '',
+        resume: null
+      });
+    } catch (err) {
+      console.error('Error submitting application:', err);
+      alert(t('careers.application.error'));
+    } finally {
+      setSubmitting(false);
+    }
   };
+
+  const handleInputChange = (e) => {
+    const { name, value, files } = e.target;
+    setApplicationData(prev => ({
+      ...prev,
+      [name]: files ? files[0] : value
+    }));
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">{t('careers.loading')}</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !vacancy) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-red-500 mb-4">
+            <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h3 className="text-lg font-medium text-gray-900 mb-2">{t('careers.not_found')}</h3>
+          <p className="text-gray-500 mb-4">{error || t('careers.vacancy_not_found')}</p>
+          <Link
+            to="/about/careers"
+            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+          >
+            {t('careers.back_to_careers')}
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -53,13 +145,13 @@ const VacancyDetail = () => {
       <div className="bg-blue-50 py-4">
         <div className="container mx-auto px-4">
           <nav className="flex items-center text-sm text-gray-600">
-            <Link to="/" className="hover:text-blue-600">{t('breadcrumbs.home')}</Link>
+            <Link to="/" className="hover:text-blue-600">{t('careers.breadcrumbs.home')}</Link>
             <span className="mx-2">→</span>
-            <Link to="/about" className="hover:text-blue-600">{t('breadcrumbs.about')}</Link>
+            <Link to="/about" className="hover:text-blue-600">{t('careers.breadcrumbs.about')}</Link>
             <span className="mx-2">→</span>
-            <Link to="/about/vacancies" className="hover:text-blue-600">{t('breadcrumbs.vacancies')}</Link>
+            <Link to="/about/careers" className="hover:text-blue-600">{t('careers.breadcrumbs.careers')}</Link>
             <span className="mx-2">→</span>
-            <span className="text-blue-600">{vacancy.title}</span>
+            <span className="text-blue-600">{getTranslatedField(vacancy.title)}</span>
           </nav>
         </div>
       </div>
@@ -73,294 +165,255 @@ const VacancyDetail = () => {
                 <span className="text-5xl mr-4">{getCategoryIcon(vacancy.category)}</span>
                 <div>
                   <h1 className="text-3xl font-bold text-blue-900 mb-2">
-                    {vacancy.title}
+                    {getTranslatedField(vacancy.title)}
                   </h1>
-                  <p className="text-xl text-blue-600 font-medium mb-2">{vacancy.department}</p>
-                  <span className="inline-block bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">
-                    {getCategoryLabel(vacancy.category)}
-                  </span>
-                </div>
-              </div>
-              {isDeadlineSoon(vacancy.deadline) && (
-                <div className="text-right">
-                  <span className="bg-red-100 text-red-800 text-sm font-medium px-3 py-1 rounded-full">
-                    ⚠️ {t('vacancies.urgent')}
-                  </span>
-                  <p className="text-red-600 text-sm mt-2">
-                    {t('vacancies.deadlineDays')}: {Math.ceil((new Date(vacancy.deadline) - new Date()) / (1000 * 60 * 60 * 24))}
+                  <p className="text-xl text-blue-600 font-medium">
+                    {getTranslatedField(vacancy.department_name)}
                   </p>
                 </div>
-              )}
-            </div>
-
-            {/* Key Information Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8 p-6 bg-gray-50 rounded-lg">
-              <div className="flex items-center">
-                <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-3">
-                  <span className="text-green-600">💰</span>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-600">{t('vacancies.salary')}</p>
-                  <p className="font-semibold text-gray-900">{vacancy.salary}</p>
-                </div>
               </div>
-
-              <div className="flex items-center">
-                <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
-                  <span className="text-blue-600">📍</span>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-600">{t('vacancies.location')}</p>
-                  <p className="font-semibold text-gray-900">{vacancy.location}</p>
-                </div>
-              </div>
-
-              <div className="flex items-center">
-                <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center mr-3">
-                  <span className="text-purple-600">⏰</span>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-600">{t('vacancies.employmentType')}</p>
-                  <p className="font-semibold text-gray-900">{vacancy.type}</p>
-                </div>
-              </div>
-
-              {vacancy.experience && (
-                <div className="flex items-center">
-                  <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center mr-3">
-                    <span className="text-orange-600">💼</span>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-600">{t('vacancies.experience')}</p>
-                    <p className="font-semibold text-gray-900">{vacancy.experience}</p>
-                  </div>
-                </div>
-              )}
-
-              <div className="flex items-center">
-                <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center mr-3">
-                  <span className="text-red-600">📅</span>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-600">{t('vacancies.deadline')}</p>
-                  <p className="font-semibold text-gray-900">{formatDate(vacancy.deadline)}</p>
-                </div>
-              </div>
-
-              {vacancy.education && (
-                <div className="flex items-center">
-                  <div className="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center mr-3">
-                    <span className="text-indigo-600">🎓</span>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-600">{t('vacancies.education')}</p>
-                    <p className="font-semibold text-gray-900">{vacancy.education}</p>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Action Button */}
-            <div className="text-center">
               <button
-                onClick={() => setShowApplicationForm(true)}
-                className="bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200 text-lg"
+                onClick={() => setShowApplication(true)}
+                className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium"
               >
-                📧 {t('vacancies.apply')}
+                {t('careers.apply_now')}
               </button>
-              <p className="text-sm text-gray-600 mt-2">
-                {t('vacancies.applyDescription')}
-              </p>
+            </div>
+
+            {/* Key Info Grid */}
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {vacancy.salary && (
+                <div className="text-center">
+                  <div className="text-2xl mb-2">💰</div>
+                  <div className="text-sm text-gray-500">{t('careers.salary')}</div>
+                  <div className="font-semibold">{vacancy.salary}</div>
+                </div>
+              )}
+              
+              {vacancy.location && (
+                <div className="text-center">
+                  <div className="text-2xl mb-2">📍</div>
+                  <div className="text-sm text-gray-500">{t('careers.location')}</div>
+                  <div className="font-semibold">{vacancy.location}</div>
+                </div>
+              )}
+
+              {vacancy.employment_type && (
+                <div className="text-center">
+                  <div className="text-2xl mb-2">⏰</div>
+                  <div className="text-sm text-gray-500">{t('careers.employment_type')}</div>
+                  <div className="font-semibold">{t(`careers.employment_types.${vacancy.employment_type}`)}</div>
+                </div>
+              )}
+
+              <div className="text-center">
+                <div className="text-2xl mb-2">⏳</div>
+                <div className="text-sm text-gray-500">{t('careers.deadline')}</div>
+                <div className="font-semibold">{formatDate(vacancy.deadline)}</div>
+              </div>
             </div>
           </div>
 
           {/* Main Content */}
           <div className="grid lg:grid-cols-3 gap-8">
-            {/* Left Column - Main Information */}
-            <div className="lg:col-span-2 space-y-8">
+            <div className="lg:col-span-2">
               {/* Description */}
-              <div className="bg-white rounded-lg shadow-lg p-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                  📋 {t('vacancies.description')}
-                </h2>
-                <p className="text-gray-700 leading-relaxed text-lg">
-                  {vacancy.description}
-                </p>
-              </div>
-
-              {/* Responsibilities */}
-              <div className="bg-white rounded-lg shadow-lg p-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                  ✅ {t('vacancies.responsibilities')}
-                </h2>
-                <ul className="space-y-4">
-                  {vacancy.responsibilities.map((responsibility, index) => (
-                    <li key={index} className="flex items-start">
-                      <span className="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-sm font-bold mr-4 mt-0.5 flex-shrink-0">
-                        {index + 1}
-                      </span>
-                      <span className="text-gray-700 leading-relaxed">{responsibility}</span>
-                    </li>
+              <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
+                <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('careers.description')}</h2>
+                <div className="prose max-w-none text-gray-700">
+                  {getTranslatedField(vacancy.description).split('\n').map((paragraph, index) => (
+                    <p key={index} className="mb-4">{paragraph}</p>
                   ))}
-                </ul>
+                </div>
               </div>
 
               {/* Requirements */}
-              <div className="bg-white rounded-lg shadow-lg p-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                  📚 {t('vacancies.requirements')}
-                </h2>
-                <ul className="space-y-4">
-                  {vacancy.requirements.map((requirement, index) => (
-                    <li key={index} className="flex items-start">
-                      <span className="text-green-600 mr-4 mt-1 text-lg flex-shrink-0">✓</span>
-                      <span className="text-gray-700 leading-relaxed">{requirement}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-
-            {/* Right Column - Sidebar */}
-            <div className="space-y-6">
-              {/* Conditions */}
-              <div className="bg-white rounded-lg shadow-lg p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-4">
-                  🎁 {t('vacancies.conditions')}
-                </h3>
-                <ul className="space-y-3">
-                  {vacancy.conditions.map((condition, index) => (
-                    <li key={index} className="flex items-start">
-                      <span className="text-purple-600 mr-3 mt-1">★</span>
-                      <span className="text-gray-700 text-sm leading-relaxed">{condition}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Tags */}
-              {vacancy.tags && (
-                <div className="bg-white rounded-lg shadow-lg p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-4">
-                    🏷️ {t('vacancies.skills')}
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {vacancy.tags.slice(1).map((tag, index) => (
-                      <span
-                        key={index}
-                        className="inline-flex items-center px-3 py-2 rounded-full text-sm bg-gray-100 text-gray-800 font-medium"
-                      >
-                        {tag}
-                      </span>
+              {vacancy.requirements && (
+                <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
+                  <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('careers.requirements')}</h2>
+                  <div className="space-y-2">
+                    {getTranslatedField(vacancy.requirements).split('\n').map((requirement, index) => (
+                      <div key={index} className="flex items-start">
+                        <span className="text-blue-600 mr-2 mt-1">•</span>
+                        <span className="text-gray-700">{requirement}</span>
+                      </div>
                     ))}
                   </div>
                 </div>
               )}
 
-              {/* Contact Information */}
-              <div className="bg-blue-50 rounded-lg p-6">
-                <h3 className="text-xl font-bold text-blue-900 mb-4">
-                  📞 {t('vacancies.contact')}
-                </h3>
-                <div className="space-y-3">
-                  <div className="flex items-center text-sm">
-                    <span className="text-blue-600 mr-2">📧</span>
-                    <a href="mailto:hr@salymbekov.kg" className="text-blue-600 hover:underline">
-                      hr@salymbekov.kg
-                    </a>
-                  </div>
-                  <div className="flex items-center text-sm">
-                    <span className="text-blue-600 mr-2">📱</span>
-                    <a href="tel:+996312123456" className="text-blue-600 hover:underline">
-                      +996 (312) 12-34-56
-                    </a>
-                  </div>
-                  <div className="flex items-start text-sm">
-                    <span className="text-blue-600 mr-2 mt-0.5">📍</span>
-                    <span className="text-gray-700">
-                      {t('vacancies.address')}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Application Stats */}
-              <div className="bg-gray-50 rounded-lg p-6">
-                <h3 className="text-lg font-bold text-gray-900 mb-4">
-                  📊 {t('vacancies.vacancyInfo')}
-                </h3>
-                <div className="space-y-3 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">{t('vacancies.published')}:</span>
-                    <span className="font-medium">{formatDate(vacancy.postedDate)}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">{t('vacancies.deadline')}:</span>
-                    <span className={`font-medium ${isDeadlineSoon(vacancy.deadline) ? 'text-red-600' : 'text-gray-900'}`}>
-                      {formatDate(vacancy.deadline)}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">{t('vacancies.vacancyId')}:</span>
-                    <span className="font-medium">#{vacancy.id.toString().padStart(4, '0')}</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Apply Button (Sidebar) */}
-              <button
-                onClick={() => setShowApplicationForm(true)}
-                className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200"
-              >
-                {t('vacancies.apply')}
-              </button>
-            </div>
-          </div>
-
-          {/* Similar Vacancies */}
-          <div className="mt-12">
-            <div className="bg-white rounded-lg shadow-lg p-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                💡 {t('vacancies.similarVacancies')}
-              </h2>
-              <div className="grid md:grid-cols-2 gap-6">
-                {vacanciesData
-                  .filter(v => v.id !== vacancy.id && v.category === vacancy.category)
-                  .slice(0, 2)
-                  .map(similarVacancy => (
-                    <Link
-                      key={similarVacancy.id}
-                      to={`/about/vacancies/${similarVacancy.id}`}
-                      className="border rounded-lg p-4 hover:shadow-md transition-shadow duration-200"
-                    >
-                      <div className="flex items-center mb-2">
-                        <span className="text-2xl mr-3">{getCategoryIcon(similarVacancy.category)}</span>
-                        <div>
-                          <h3 className="font-semibold text-blue-900">{similarVacancy.title}</h3>
-                          <p className="text-sm text-gray-600">{similarVacancy.department}</p>
-                        </div>
+              {/* Responsibilities */}
+              {vacancy.responsibilities && (
+                <div className="bg-white rounded-lg shadow-lg p-8">
+                  <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('careers.responsibilities')}</h2>
+                  <div className="space-y-2">
+                    {getTranslatedField(vacancy.responsibilities).split('\n').map((responsibility, index) => (
+                      <div key={index} className="flex items-start">
+                        <span className="text-green-600 mr-2 mt-1">•</span>
+                        <span className="text-gray-700">{responsibility}</span>
                       </div>
-                      <p className="text-sm text-gray-700">{similarVacancy.shortDescription}</p>
-                      <p className="text-sm font-medium text-green-600 mt-2">{similarVacancy.salary}</p>
-                    </Link>
-                  ))}
-              </div>
-              {vacanciesData.filter(v => v.id !== vacancy.id && v.category === vacancy.category).length === 0 && (
-                <p className="text-gray-500 text-center py-8">
-                  {t('vacancies.noSimilarVacancies')}
-                </p>
+                    ))}
+                  </div>
+                </div>
               )}
+            </div>
+
+            {/* Sidebar */}
+            <div>
+              {/* Quick Apply */}
+              <div className="bg-white rounded-lg shadow-lg p-6 mb-6 sticky top-6">
+                <h3 className="text-lg font-bold text-blue-900 mb-4">{t('careers.quick_apply')}</h3>
+                <p className="text-gray-600 mb-4">{t('careers.quick_apply_description')}</p>
+                <button
+                  onClick={() => setShowApplication(true)}
+                  className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors font-medium mb-3"
+                >
+                  {t('careers.apply_now')}
+                </button>
+                <Link
+                  to="/about/careers"
+                  className="w-full bg-gray-200 text-gray-800 py-3 px-4 rounded-lg hover:bg-gray-300 transition-colors font-medium text-center block"
+                >
+                  {t('careers.back_to_list')}
+                </Link>
+              </div>
+
+              {/* Stats */}
+              <div className="bg-white rounded-lg shadow-lg p-6">
+                <h3 className="text-lg font-bold text-blue-900 mb-4">{t('careers.vacancy_stats')}</h3>
+                <div className="space-y-3">
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">{t('careers.published')}</span>
+                    <span className="font-medium">{formatDate(vacancy.created_at)}</span>
+                  </div>
+                  {vacancy.views_count && (
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">{t('careers.views')}</span>
+                      <span className="font-medium">{vacancy.views_count}</span>
+                    </div>
+                  )}
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">{t('careers.category')}</span>
+                    <span className="font-medium">{t(`careers.categories.${vacancy.category}`)}</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       {/* Application Modal */}
-      {showApplicationForm && (
-        <ApplicationForm 
-          vacancy={vacancy} 
-          onClose={() => setShowApplicationForm(false)} 
-        />
+      {showApplication && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-screen overflow-y-auto">
+            <div className="p-6">
+              <div className="flex justify-between items-center mb-6">
+                <h3 className="text-2xl font-bold text-blue-900">{t('careers.apply_for')} {getTranslatedField(vacancy.title)}</h3>
+                <button
+                  onClick={() => setShowApplication(false)}
+                  className="text-gray-400 hover:text-gray-600"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+
+              <form onSubmit={handleApplicationSubmit} className="space-y-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    {t('careers.application.full_name')} *
+                  </label>
+                  <input
+                    type="text"
+                    name="full_name"
+                    value={applicationData.full_name}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    {t('careers.application.email')} *
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={applicationData.email}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    {t('careers.application.phone')} *
+                  </label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={applicationData.phone}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    {t('careers.application.resume')} *
+                  </label>
+                  <input
+                    type="file"
+                    name="resume"
+                    onChange={handleInputChange}
+                    accept=".pdf,.doc,.docx"
+                    required
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                  <p className="text-sm text-gray-500 mt-1">
+                    {t('careers.application.resume_formats')}
+                  </p>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    {t('careers.application.cover_letter')}
+                  </label>
+                  <textarea
+                    name="cover_letter"
+                    value={applicationData.cover_letter}
+                    onChange={handleInputChange}
+                    rows={5}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder={t('careers.application.cover_letter_placeholder')}
+                  />
+                </div>
+
+                <div className="flex space-x-4">
+                  <button
+                    type="submit"
+                    disabled={submitting}
+                    className="flex-1 bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors font-medium disabled:opacity-50"
+                  >
+                    {submitting ? t('careers.application.submitting') : t('careers.application.submit')}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setShowApplication(false)}
+                    className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                  >
+                    {t('careers.application.cancel')}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

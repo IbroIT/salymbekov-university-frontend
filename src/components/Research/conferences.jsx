@@ -149,7 +149,6 @@ const Conferences = () => {
         <div className="flex justify-center mb-8">
           <div className="bg-white rounded-2xl shadow-lg p-1 inline-flex">
             <button
-              onClick={() => handleTabChange('upcoming')}
               className={`px-8 py-3 rounded-xl text-lg font-semibold transition-all duration-300 ${
                 activeTab === 'upcoming'
                   ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg'
@@ -157,16 +156,6 @@ const Conferences = () => {
               }`}
             >
               📅 {t('research.conferences.tabs.upcoming') || 'Предстоящие'}
-            </button>
-            <button
-              onClick={() => handleTabChange('archive')}
-              className={`px-8 py-3 rounded-xl text-lg font-semibold transition-all duration-300 ${
-                activeTab === 'archive'
-                  ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg'
-                  : 'text-gray-600 hover:text-gray-800'
-              }`}
-            >
-              🗄️ {t('research.conferences.tabs.archive') || 'Архив'}
             </button>
           </div>
         </div>

@@ -6,7 +6,7 @@ import careersAPI from '../../services/careersAPI';
 import './About.css';
 
 const CareersMain = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const [vacancies, setVacancies] = useState([]);
   const [categories, setCategories] = useState([]);
   const [filterCategory, setFilterCategory] = useState('all');
@@ -15,11 +15,11 @@ const CareersMain = () => {
 
   useEffect(() => {
     loadInitialData();
-  }, [i18n.language]); // Добавляем зависимость от языка
+  }, []);
 
   useEffect(() => {
     loadVacancies();
-  }, [filterCategory, i18n.language]); // Добавляем зависимость от языка
+  }, [filterCategory]);
 
   const loadInitialData = async () => {
     try {
@@ -29,31 +29,11 @@ const CareersMain = () => {
         careersAPI.getVacancies()
       ]);
       
-      console.log('categoriesData:', categoriesData);
-      console.log('vacanciesData:', vacanciesData);
-      
-      // Handle categories data - ensure it's an array
-      const categories = Array.isArray(categoriesData) 
-        ? categoriesData 
-        : (categoriesData?.results || []);
-      
-      // Add fallback for empty translations
-      const processedCategories = categories.map(category => ({
-        ...category,
-        display_name: category.display_name || category.name || 'Unknown Category'
-      }));
-      
       setCategories([
         { name: 'all', display_name: t('careers.categories.all') },
-        ...processedCategories
+        ...categoriesData
       ]);
-      
-      // Handle vacancies data
-      const vacancies = Array.isArray(vacanciesData) 
-        ? vacanciesData 
-        : (vacanciesData?.results || []);
-      
-      setVacancies(vacancies);
+      setVacancies(vacanciesData.results || vacanciesData);
     } catch (err) {
       console.error('Error loading initial data:', err);
       setError(err.message);
@@ -74,13 +54,7 @@ const CareersMain = () => {
     try {
       const params = filterCategory === 'all' ? {} : { category: filterCategory };
       const data = await careersAPI.getVacancies(params);
-      
-      // Handle vacancies data - ensure it's an array
-      const vacancies = Array.isArray(data) 
-        ? data 
-        : (data?.results || []);
-      
-      setVacancies(vacancies);
+      setVacancies(data.results || data);
     } catch (err) {
       console.error('Error loading vacancies:', err);
       setError(err.message);
