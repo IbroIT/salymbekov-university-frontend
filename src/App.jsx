@@ -9,6 +9,7 @@ import Hero from "./components/Home/hero";
 import About from "./components/About/About";
 import Management from "./components/About/Management";
 import Careers from "./components/About/Careers";
+import VacancyDetail from "./components/About/VacancyDetail";
 import Partners from "./components/About/Partners";
 
 import Academics from './components/academics/academics'
@@ -66,6 +67,8 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/about/management" element={<Management />} />
             <Route path="/about/vacancies" element={<Careers />} />
+            <Route path="/about/careers" element={<Careers />} />
+            <Route path="/about/careers/:id" element={<VacancyDetail />} />
             <Route path="/about/partners" element={<Partners />} />
 
             {/* Academics */}

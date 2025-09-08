@@ -4,12 +4,13 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   LineChart, Line, PieChart, Pie, Cell 
 } from 'recharts';
-import { publicationsApi, researchCentersApi } from './api';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8'];
 
 const Publications = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const currentLang = i18n.language; // 'ru', 'en', или 'kg'
+  
   const [publicationsData, setPublicationsData] = useState([]);
   const [researchCenters, setResearchCenters] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -29,75 +30,114 @@ const Publications = () => {
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [expandedPublication, setExpandedPublication] = useState(null);
 
-  // Загрузка данных
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const [publicationsResponse, centersResponse] = await Promise.all([
-          publicationsApi.getPublications(),
-          researchCentersApi.getResearchCenters()
-        ]);
-        
-        setPublicationsData(publicationsResponse.data.results || publicationsResponse.data);
-        setResearchCenters(centersResponse.data.results || centersResponse.data);
-      } catch (err) {
-        setError('Ошибка загрузки данных');
-        console.error('Error fetching data:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
+  // Функции для получения данных на текущем языке
+  const getPublicationTitle = (publication) => {
+    return publication[`title_${currentLang}`] || publication.title_ru || publication.title;
+  };
 
+  const getPublicationAbstract = (publication) => {
+    return publication[`abstract_${currentLang}`] || publication.abstract_ru || publication.abstract;
+  };
+
+  const getCenterName = (center) => {
+    if (typeof center === 'string') return center;
+    return center?.[`name_${currentLang}`] || center?.name_ru || center?.name;
+  };
+
+  // Функция для получения данных из API
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      const [publicationsResponse, centersResponse] = await Promise.all([
+        fetch('http://127.0.0.1:8000/research/api/publications/'),
+        fetch('http://127.0.0.1:8000/research/api/centers/')
+      ]);
+      
+      if (!publicationsResponse.ok || !centersResponse.ok) {
+        throw new Error('Failed to fetch data');
+      }
+      
+      const publicationsData = await publicationsResponse.json();
+      const centersData = await centersResponse.json();
+      
+      setPublicationsData(publicationsData.results || publicationsData);
+      setResearchCenters(centersData.results || centersData);
+      setError(null);
+    } catch (err) {
+      setError(t('research.publications.errorLoading') || 'Ошибка загрузки данных');
+      console.error('Error fetching data:', err);
+      setPublicationsData([]);
+      setResearchCenters([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Функция для получения отфильтрованных данных
+  const fetchFilteredData = async () => {
+    try {
+      setLoading(true);
+      const params = new URLSearchParams({
+        publication_date__year__gte: filters.yearRange[0],
+        publication_date__year__lte: filters.yearRange[1],
+        citations_count__gte: filters.minCitations,
+        ordering: sortConfig.direction === 'asc' ? sortConfig.key : `-${sortConfig.key}`
+      });
+
+      if (filters.author) params.append('authors__icontains', filters.author);
+      if (filters.journal) params.append('journal__icontains', filters.journal);
+      if (filters.center) params.append('research_center__name__icontains', filters.center);
+
+      const response = await fetch(`http://127.0.0.1:8000/research/api/publications/?${params}`);
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch filtered data');
+      }
+      
+      const data = await response.json();
+      setPublicationsData(data.results || data);
+      setError(null);
+    } catch (err) {
+      setError(t('research.publications.errorLoading') || 'Ошибка загрузки данных');
+      console.error('Error fetching filtered data:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Загрузка данных при монтировании компонента
+  useEffect(() => {
     fetchData();
   }, []);
 
   // Загрузка данных с фильтрами
   useEffect(() => {
-    const fetchFilteredData = async () => {
-      try {
-        setLoading(true);
-        const params = {
-          year__gte: filters.yearRange[0],
-          year__lte: filters.yearRange[1],
-          citation_index__gte: filters.minCitations,
-          ...(filters.author && { author: filters.author }),
-          ...(filters.journal && { journal: filters.journal }),
-          ...(filters.center && { center: filters.center }),
-          ordering: sortConfig.direction === 'asc' ? sortConfig.key : `-${sortConfig.key}`
-        };
-
-        const response = await publicationsApi.getPublications(params);
-        setPublicationsData(response.data.results || response.data);
-      } catch (err) {
-        setError('Ошибка загрузки данных');
-        console.error('Error fetching filtered data:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchFilteredData();
+    if (publicationsData.length > 0) {
+      fetchFilteredData();
+    }
   }, [filters, sortConfig]);
 
   // Уникальные значения для фильтров
   const uniqueValues = useMemo(() => ({
     authors: [...new Set(publicationsData.flatMap(pub => 
-      pub.authors.map(author => `${author.last_name} ${author.first_name}`)
+      (pub.authors || '').split(',').map(author => author.trim()).filter(Boolean)
     ))],
-    journals: [...new Set(publicationsData.map(pub => pub.journal))],
-    centers: researchCenters.map(center => center.name),
+    journals: [...new Set(publicationsData.map(pub => pub.journal).filter(Boolean))],
+    centers: [...new Set(researchCenters.map(center => getCenterName(center)).filter(Boolean))],
     years: publicationsData.length > 0 
-      ? [...new Set(publicationsData.map(pub => pub.year))].sort()
+      ? [...new Set(publicationsData.map(pub => pub.publication_date ? new Date(pub.publication_date).getFullYear() : pub.publication_year || pub.year).filter(Boolean))].sort()
       : [2018, 2019, 2020, 2021, 2022, 2023, 2024]
-  }), [publicationsData, researchCenters]);
+  }), [publicationsData, researchCenters, currentLang]);
 
   // Статистика для графиков
   const chartData = useMemo(() => {
     if (publicationsData.length === 0) return [];
     
     const yearData = publicationsData.reduce((acc, pub) => {
-      acc[pub.year] = (acc[pub.year] || 0) + 1;
+      const year = pub.publication_date ? new Date(pub.publication_date).getFullYear() : pub.publication_year || pub.year;
+      if (year) {
+        acc[year] = (acc[year] || 0) + 1;
+      }
       return acc;
     }, {});
 
@@ -111,7 +151,7 @@ const Publications = () => {
     if (publicationsData.length === 0) return [];
     
     const centerCounts = publicationsData.reduce((acc, pub) => {
-      const centerName = pub.center_name || pub.center?.name;
+      const centerName = getCenterName(pub.research_center) || pub.center_name;
       if (centerName) {
         acc[centerName] = (acc[centerName] || 0) + 1;
       }
@@ -122,7 +162,7 @@ const Publications = () => {
       center,
       count
     }));
-  }, [publicationsData]);
+  }, [publicationsData, currentLang]);
 
   const handleSort = (key) => {
     setSortConfig(prev => ({
@@ -133,22 +173,29 @@ const Publications = () => {
 
   const handleExport = async (format) => {
     try {
-      const params = {
-        year__gte: filters.yearRange[0],
-        year__lte: filters.yearRange[1],
-        citation_index__gte: filters.minCitations,
-        ...(filters.author && { author: filters.author }),
-        ...(filters.journal && { journal: filters.journal }),
-        ...(filters.center && { center: filters.center })
-      };
+      const params = new URLSearchParams({
+        publication_date__year__gte: filters.yearRange[0],
+        publication_date__year__lte: filters.yearRange[1],
+        citations_count__gte: filters.minCitations
+      });
 
-      const response = await publicationsApi.getPublications(params);
-      const data = response.data.results || response.data;
+      if (filters.author) params.append('authors__icontains', filters.author);
+      if (filters.journal) params.append('journal__icontains', filters.journal);
+      if (filters.center) params.append('research_center__name__icontains', filters.center);
+
+      const response = await fetch(`http://127.0.0.1:8000/research/api/publications/?${params}`);
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch export data');
+      }
+      
+      const result = await response.json();
+      const data = result.results || result;
 
       if (format === 'csv') {
         const csvContent = [
           'Title,Authors,Journal,Year,Citations,DOI,Center',
-          ...data.map(pub => `"${pub.title}","${pub.authors.map(a => `${a.last_name} ${a.first_name}`).join(', ')}","${pub.journal}",${pub.year},${pub.citation_index},"${pub.doi}","${pub.center_name || pub.center?.name}"`)
+          ...data.map(pub => `"${getPublicationTitle(pub)}","${pub.authors || ''}","${pub.journal || ''}",${pub.publication_year || pub.year},${pub.citation_count || 0},"${pub.doi || ''}","${getCenterName(pub.research_center) || pub.center_name || ''}"`)
         ].join('\n');
 
         const blob = new Blob([csvContent], { type: 'text/csv' });
@@ -160,7 +207,7 @@ const Publications = () => {
       }
     } catch (err) {
       console.error('Export error:', err);
-      alert('Ошибка при экспорте данных');
+      alert(t('research.publications.exportError') || 'Ошибка при экспорте данных');
     }
   };
 
@@ -191,38 +238,41 @@ const Publications = () => {
           onClick={() => togglePublicationExpand(pub.id)}
           className="text-blue-600 text-sm"
         >
-          {expandedPublication === pub.id ? 'Свернуть' : 'Подробнее'}
+          {expandedPublication === pub.id ? 
+            (t('research.publications.collapse') || 'Свернуть') : 
+            (t('research.publications.expand') || 'Подробнее')
+          }
         </button>
       </div>
 
       <h3 className="font-semibold text-gray-800 text-sm mb-2 line-clamp-2">
-        {pub.title}
+        {getPublicationTitle(pub)}
       </h3>
 
       <div className="text-xs text-gray-600 mb-2">
-        <strong>Авторы:</strong> {pub.authors.map(a => `${a.last_name} ${a.first_name}`).join(', ')}
+        <strong>{t('research.publications.authors') || 'Авторы'}:</strong> {pub.authors || t('research.publications.noAuthors') || 'Не указано'}
       </div>
 
       <div className="text-xs text-gray-600 mb-2">
-        <strong>Журнал:</strong> {pub.journal}
+        <strong>{t('research.publications.journal') || 'Журнал'}:</strong> {pub.journal}
       </div>
 
       <div className="flex justify-between items-center">
-        <span className="text-xs text-gray-600">{pub.year}</span>
+        <span className="text-xs text-gray-600">{pub.publication_date ? new Date(pub.publication_date).getFullYear() : pub.publication_year || pub.year}</span>
         <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-full">
-          {pub.citation_index} цитат
+          {pub.citations_count || pub.citation_count || 0} {t('research.publications.citations') || 'цитат'}
         </span>
       </div>
 
       {expandedPublication === pub.id && (
         <div className="mt-3 pt-3 border-t">
           <div className="text-xs text-gray-600 mb-2">
-            <strong>Центр:</strong> {pub.center_name || pub.center?.name}
+            <strong>{t('research.publications.center') || 'Центр'}:</strong> {getCenterName(pub.research_center) || pub.center_name || t('research.publications.noCenter') || 'Не указано'}
           </div>
           <div className="text-xs text-gray-600 mb-2">
-            <strong>DOI:</strong> {pub.doi}
+            <strong>DOI:</strong> {pub.doi || t('research.publications.noDoi') || 'Не указано'}
           </div>
-          <p className="text-xs text-gray-600 italic">{pub.abstract}</p>
+          <p className="text-xs text-gray-600 italic">{getPublicationAbstract(pub) || t('research.publications.noAbstract') || 'Аннотация недоступна'}</p>
         </div>
       )}
     </div>
@@ -233,7 +283,7 @@ const Publications = () => {
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Загрузка данных...</p>
+          <p className="mt-4 text-gray-600">{t('research.publications.loading') || 'Загрузка данных...'}</p>
         </div>
       </div>
     );
@@ -254,8 +304,12 @@ const Publications = () => {
       <div className="max-w-7xl mx-auto">
         {/* Заголовок */}
         <div className="text-center mb-6 md:mb-8">
-          <h1 className="text-2xl md:text-4xl font-bold text-gray-800 mb-2 md:mb-4">Научные публикации</h1>
-          <p className="text-sm md:text-xl text-gray-600">База публикаций исследователей Университета Салымбекова</p>
+          <h1 className="text-2xl md:text-4xl font-bold text-gray-800 mb-2 md:mb-4">
+            {t('research.publications.title') || 'Научные публикации'}
+          </h1>
+          <p className="text-sm md:text-xl text-gray-600">
+            {t('research.publications.subtitle') || 'База публикаций исследователей Университета Салымбекова'}
+          </p>
         </div>
 
         {/* Кнопка фильтров для мобильных */}
@@ -264,7 +318,7 @@ const Publications = () => {
             onClick={() => setIsFiltersOpen(!isFiltersOpen)}
             className="w-full p-3 bg-white rounded-xl shadow-md flex items-center justify-between"
           >
-            <span className="font-medium text-gray-700">Фильтры публикаций</span>
+            <span className="font-medium text-gray-700">{t('research.publications.filters.title') || 'Фильтры публикаций'}</span>
             <svg 
               xmlns="http://www.w3.org/2000/svg" 
               className={`h-5 w-5 text-gray-500 transition-transform ${isFiltersOpen ? 'rotate-180' : ''}`} 
@@ -279,13 +333,15 @@ const Publications = () => {
 
         {/* Фильтры */}
         <div className={`bg-white rounded-xl md:rounded-2xl shadow-lg p-4 md:p-6 mb-6 md:mb-8 ${isFiltersOpen ? 'block' : 'hidden md:block'}`}>
-          <h2 className="text-lg md:text-2xl font-semibold mb-4 md:mb-6">Фильтры публикаций</h2>
+          <h2 className="text-lg md:text-2xl font-semibold mb-4 md:mb-6">
+            {t('research.publications.filters.title') || 'Фильтры публикаций'}
+          </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             {/* Год публикации */}
             <div>
               <label className="block text-xs md:text-sm font-medium text-gray-700 mb-2">
-                Год публикации: {filters.yearRange[0]} - {filters.yearRange[1]}
+                {t('research.publications.filters.year') || 'Год публикации'}: {filters.yearRange[0]} - {filters.yearRange[1]}
               </label>
               <input
                 type="range"
@@ -306,13 +362,15 @@ const Publications = () => {
 
             {/* Автор */}
             <div>
-              <label className="block text-xs md:text-sm font-medium text-gray-700 mb-2">Автор</label>
+              <label className="block text-xs md:text-sm font-medium text-gray-700 mb-2">
+                {t('research.publications.filters.author') || 'Автор'}
+              </label>
               <select
                 value={filters.author}
                 onChange={(e) => setFilters(prev => ({ ...prev, author: e.target.value }))}
                 className="w-full px-3 py-2 text-sm md:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
-                <option value="">Все авторы</option>
+                <option value="">{t('research.publications.filters.allAuthors') || 'Все авторы'}</option>
                 {uniqueValues.authors.map(author => (
                   <option key={author} value={author}>{author}</option>
                 ))}
@@ -321,13 +379,15 @@ const Publications = () => {
 
             {/* Журнал */}
             <div>
-              <label className="block text-xs md:text-sm font-medium text-gray-700 mb-2">Журнал</label>
+              <label className="block text-xs md:text-sm font-medium text-gray-700 mb-2">
+                {t('research.publications.filters.journal') || 'Журнал'}
+              </label>
               <select
                 value={filters.journal}
                 onChange={(e) => setFilters(prev => ({ ...prev, journal: e.target.value }))}
                 className="w-full px-3 py-2 text-sm md:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
-                <option value="">Все журналы</option>
+                <option value="">{t('research.publications.filters.allJournals') || 'Все журналы'}</option>
                 {uniqueValues.journals.map(journal => (
                   <option key={journal} value={journal}>{journal}</option>
                 ))}
@@ -336,13 +396,15 @@ const Publications = () => {
 
             {/* Центр */}
             <div>
-              <label className="block text-xs md:text-sm font-medium text-gray-700 mb-2">Научный центр</label>
+              <label className="block text-xs md:text-sm font-medium text-gray-700 mb-2">
+                {t('research.publications.filters.center') || 'Научный центр'}
+              </label>
               <select
                 value={filters.center}
                 onChange={(e) => setFilters(prev => ({ ...prev, center: e.target.value }))}
                 className="w-full px-3 py-2 text-sm md:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
-                <option value="">Все центры</option>
+                <option value="">{t('research.publications.filters.allCenters') || 'Все центры'}</option>
                 {uniqueValues.centers.map(center => (
                   <option key={center} value={center}>{center}</option>
                 ))}
@@ -353,7 +415,7 @@ const Publications = () => {
           {/* Цитатный индекс */}
           <div className="mt-4 md:mt-6">
             <label className="block text-xs md:text-sm font-medium text-gray-700 mb-2">
-              Минимальный индекс цитирования: {filters.minCitations}
+              {t('research.publications.minCitations') || 'Минимальный индекс цитирования'}: {filters.minCitations}
             </label>
             <input
               type="range"
@@ -379,7 +441,9 @@ const Publications = () => {
         {/* Статистика */}
         <div className="bg-white rounded-xl md:rounded-2xl shadow-lg p-4 md:p-6 mb-6 md:mb-8">
           <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-4 md:mb-6">
-            <h2 className="text-lg md:text-2xl font-semibold mb-3 md:mb-0">Статистика публикаций</h2>
+            <h2 className="text-lg md:text-2xl font-semibold mb-3 md:mb-0">
+              {t('research.publications.statisticsTitle') || 'Статистика публикаций'}
+            </h2>
             <div className="flex space-x-1 md:space-x-2 overflow-x-auto pb-2">
               <button
                 onClick={() => setSelectedChart('bar')}
@@ -387,7 +451,7 @@ const Publications = () => {
                   selectedChart === 'bar' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'
                 }`}
               >
-                Столбчатая
+                {t('research.publications.charts.bar') || 'Столбчатая'}
               </button>
               <button
                 onClick={() => setSelectedChart('line')}
@@ -395,7 +459,7 @@ const Publications = () => {
                   selectedChart === 'line' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'
                 }`}
               >
-                Линейная
+                {t('research.publications.charts.line') || 'Линейная'}
               </button>
               <button
                 onClick={() => setSelectedChart('pie')}
@@ -403,7 +467,7 @@ const Publications = () => {
                   selectedChart === 'pie' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'
                 }`}
               >
-                Круговая
+                {t('research.publications.charts.pie') || 'Круговая'}
               </button>
             </div>
           </div>
@@ -453,20 +517,20 @@ const Publications = () => {
         <div className="bg-white rounded-xl md:rounded-2xl shadow-lg p-4 md:p-6">
           <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-4 md:mb-6 space-y-3 md:space-y-0">
             <h2 className="text-lg md:text-2xl font-semibold">
-              Публикации ({publicationsData.length})
+              {t('research.publications.title') || 'Публикации'} ({publicationsData.length})
             </h2>
             <div className="flex space-x-2 md:space-x-4 overflow-x-auto pb-2">
               <button
                 onClick={() => handleExport('csv')}
                 className="px-3 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors text-xs md:text-sm whitespace-nowrap"
               >
-                Экспорт CSV
+                {t('research.publications.export.csv') || 'Экспорт CSV'}
               </button>
               <button
                 onClick={() => handleExport('bibtex')}
                 className="px-3 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-xs md:text-sm whitespace-nowrap"
               >
-                Экспорт BibTeX
+                {t('research.publications.export.bibtex') || 'Экспорт BibTeX'}
               </button>
             </div>
           </div>
@@ -477,7 +541,7 @@ const Publications = () => {
             
             {publicationsData.length === 0 && (
               <div className="text-center py-8 text-gray-500 text-sm">
-                Публикации не найдены по выбранным фильтрам
+                {t('research.publications.noResults') || 'Публикации не найдены по выбранным фильтрам'}
               </div>
             )}
           </div>
@@ -488,37 +552,37 @@ const Publications = () => {
               <thead>
                 <tr className="bg-gray-50">
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Выбор
+                    {t('research.publications.table.select') || 'Выбор'}
                   </th>
                   <th 
                     className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
                     onClick={() => handleSort('title')}
                   >
-                    Название {sortConfig.key === 'title' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
+                    {t('research.publications.table.title') || 'Название'} {sortConfig.key === 'title' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
                   </th>
                   <th 
                     className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
                     onClick={() => handleSort('authors')}
                   >
-                    Авторы {sortConfig.key === 'authors' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
+                    {t('research.publications.table.authors') || 'Авторы'} {sortConfig.key === 'authors' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
                   </th>
                   <th 
                     className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
                     onClick={() => handleSort('journal')}
                   >
-                    Журнал {sortConfig.key === 'journal' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
+                    {t('research.publications.table.journal') || 'Журнал'} {sortConfig.key === 'journal' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
                   </th>
                   <th 
                     className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
                     onClick={() => handleSort('year')}
                   >
-                    Год {sortConfig.key === 'year' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
+                    {t('research.publications.table.year') || 'Год'} {sortConfig.key === 'year' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
                   </th>
                   <th 
                     className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
                     onClick={() => handleSort('citation_index')}
                   >
-                    Цитаты {sortConfig.key === 'citation_index' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
+                    {t('research.publications.table.citations') || 'Цитаты'} {sortConfig.key === 'citation_index' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
                   </th>
                 </tr>
               </thead>
@@ -539,16 +603,14 @@ const Publications = () => {
                     </td>
                     <td className="px-4 py-3">
                       <div className="text-sm text-gray-900">
-                        {pub.authors.map((author, index) => (
-                          <div key={index}>{author.last_name} {author.first_name}</div>
-                        ))}
+                        {pub.authors}
                       </div>
                     </td>
                     <td className="px-4 py-3 text-sm text-gray-900">{pub.journal}</td>
-                    <td className="px-4 py-3 text-sm text-gray-900">{pub.year}</td>
+                    <td className="px-4 py-3 text-sm text-gray-900">{pub.publication_date ? new Date(pub.publication_date).getFullYear() : pub.publication_year || pub.year}</td>
                     <td className="px-4 py-3">
                       <span className="px-2 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-full">
-                        {pub.citation_index}
+                        {pub.citations_count || pub.citation_count || pub.citation_index || 0}
                       </span>
                     </td>
                   </tr>
@@ -559,7 +621,7 @@ const Publications = () => {
 
           {publicationsData.length === 0 && (
             <div className="hidden md:block text-center py-12 text-gray-500">
-              Публикации не найдены по выбранным фильтрам
+              {t('research.publications.noResults') || 'Публикации не найдены по выбранным фильтрам'}
             </div>
           )}
         </div>

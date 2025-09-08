@@ -9,28 +9,24 @@ const Management = () => {
 
   const organizationData = {
     id: 'rector',
-    name: 'Салымбековский университет',
+    name: t('management.university.name'),
     type: 'administration',
-    head: 'Салымбеков Адилхан',
-    position: 'Ректор',
+    head: t('management.peopleInfo.rector.name'),
+    position: t('management.positions.rector'),
     email: 'rector@salymbekov.kg',
     phone: '+996 312 625-100',
     experience: '25 лет',
     education: 'Доктор медицинских наук',
-    bio: 'Основатель университета, ведущий кардиолог Кыргызстана',
+    bio: t('management.peopleInfo.rector.bio'),
     avatar: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&h=400&fit=crop&crop=face',
-    achievements: [
-      'Автор более 150 научных публикаций',
-      'Заслуженный деятель науки КР',
-      'Основатель 3 медицинских центров'
-    ],
+    achievements: t('management.peopleInfo.rector.achievements', { returnObjects: true }),
     children: [
       {
         id: 'academic',
-        name: 'Учебная работа',
+        name: t('management.departments.academicWork'),
         type: 'administration',
         head: 'Петров Петр Петрович',
-        position: 'Проректор по учебной работе',
+        position: t('management.positions.vicerectorAcademic'),
         email: 'academic@salymbekov.kg',
         phone: '+996 312 625-101',
         experience: '20 лет',
@@ -40,10 +36,10 @@ const Management = () => {
         children: [
           {
             id: 'medical-faculty',
-            name: 'Медицинский факультет',
+            name: t('management.departments.medicalFaculty'),
             type: 'faculty',
             head: 'Сидоров Сергей Сергеевич',
-            position: 'Декан',
+            position: t('management.positions.deanMedical'),
             email: 'medical@salymbekov.kg',
             phone: '+996 312 625-201',
             experience: '18 лет',
@@ -55,10 +51,10 @@ const Management = () => {
             children: [
               {
                 id: 'therapy',
-                name: 'Кафедра терапии',
+                name: t('management.departments.therapyDept'),
                 type: 'department',
                 head: 'Орлов Олег Олегович',
-                position: 'Заведующий кафедрой',
+                position: t('management.positions.headTherapy'),
                 email: 'therapy@salymbekov.kg',
                 phone: '+996 312 625-301',
                 experience: '15 лет',
@@ -68,7 +64,7 @@ const Management = () => {
                 staff: [
                   { 
                     name: 'Волков Владимир Владимирович', 
-                    position: 'Профессор',
+                    position: t('management.positions.professor'),
                     experience: '30 лет',
                     education: 'Доктор медицинских наук',
                     email: 'volkov@salymbekov.kg',
@@ -76,7 +72,7 @@ const Management = () => {
                   },
                   { 
                     name: 'Козлов Константин Константинович', 
-                    position: 'Доцент',
+                    position: t('management.positions.associateProfessor'),
                     experience: '12 лет',
                     education: 'Кандидат медицинских наук',
                     email: 'kozlov@salymbekov.kg',
@@ -84,7 +80,7 @@ const Management = () => {
                   },
                   { 
                     name: 'Новиков Николай Николаевич', 
-                    position: 'Ассистент',
+                    position: t('management.positions.assistant'),
                     experience: '5 лет',
                     education: 'Врач-терапевт',
                     email: 'novikov@salymbekov.kg',
@@ -94,10 +90,10 @@ const Management = () => {
               },
               {
                 id: 'surgery',
-                name: 'Кафедра хирургии',
+                name: t('management.departments.surgeryDept'),
                 type: 'department',
                 head: 'Морозов Михаил Михайлович',
-                position: 'Заведующий кафедрой',
+                position: t('management.positions.headSurgery'),
                 email: 'surgery@salymbekov.kg',
                 phone: '+996 312 625-302',
                 experience: '17 лет',
@@ -107,21 +103,21 @@ const Management = () => {
                 staff: [
                   { 
                     name: 'Лебедев Леонид Леонидович', 
-                    position: 'Профессор',
+                    position: t('management.positions.professor'),
                     experience: '25 лет',
                     education: 'Доктор медицинских наук',
                     specialization: 'Кардиохирургия'
                   },
                   { 
                     name: 'Соколов Сергей Сергеевич', 
-                    position: 'Доцент',
+                    position: t('management.positions.associateProfessor'),
                     experience: '14 лет',
                     education: 'Кандидат медицинских наук',
                     specialization: 'Общая хирургия'
                   },
                   { 
                     name: 'Попов Павел Павлович', 
-                    position: 'Ассистент',
+                    position: t('management.positions.assistant'),
                     experience: '6 лет',
                     education: 'Врач-хирург',
                     specialization: 'Абдоминальная хирургия'
@@ -130,10 +126,10 @@ const Management = () => {
               },
               {
                 id: 'anatomy',
-                name: 'Кафедра анатомии',
+                name: t('management.departments.anatomyDept'),
                 type: 'department',
                 head: 'Белов Борис Борисович',
-                position: 'Заведующий кафедрой',
+                position: t('management.positions.headAnatomy'),
                 email: 'anatomy@salymbekov.kg',
                 phone: '+996 312 625-303',
                 experience: '16 лет',
@@ -143,14 +139,14 @@ const Management = () => {
                 staff: [
                   { 
                     name: 'Черный Чеслав Черславович', 
-                    position: 'Доцент',
+                    position: t('management.positions.associateProfessor'),
                     experience: '10 лет',
                     education: 'Кандидат биологических наук',
                     specialization: 'Анатомия человека'
                   },
                   { 
                     name: 'Рыжов Роман Романович', 
-                    position: 'Ассистент',
+                    position: t('management.positions.assistant'),
                     experience: '4 года',
                     education: 'Магистр биологии',
                     specialization: 'Гистология'
@@ -161,10 +157,10 @@ const Management = () => {
           },
           {
             id: 'pharmacy-faculty',
-            name: 'Фармацевтический факультет',
+            name: t('management.departments.pharmacyFaculty'),
             type: 'faculty',
             head: 'Зеленый Захар Захарович',
-            position: 'Декан',
+            position: t('management.positions.deanPharmacy'),
             email: 'pharmacy@salymbekov.kg',
             phone: '+996 312 625-202',
             experience: '19 лет',
@@ -176,10 +172,10 @@ const Management = () => {
             children: [
               {
                 id: 'pharmacology',
-                name: 'Кафедра фармакологии',
+                name: t('management.departments.pharmacologyDept'),
                 type: 'department',
                 head: 'Синий Степан Степанович',
-                position: 'Заведующий кафедрой',
+                position: t('management.positions.headPharmacology'),
                 email: 'pharmacology@salymbekov.kg',
                 phone: '+996 312 625-304',
                 experience: '13 лет',
@@ -189,14 +185,14 @@ const Management = () => {
                 staff: [
                   { 
                     name: 'Желтый Жора Жорович', 
-                    position: 'Профессор',
+                    position: t('management.positions.professor'),
                     experience: '22 года',
                     education: 'Доктор фармацевтических наук',
                     specialization: 'Фармакология'
                   },
                   { 
                     name: 'Красный Кирилл Кириллович', 
-                    position: 'Доцент',
+                    position: t('management.positions.associateProfessor'),
                     experience: '9 лет',
                     education: 'Кандидат химических наук',
                     specialization: 'Органическая химия'
@@ -207,10 +203,10 @@ const Management = () => {
           },
           {
             id: 'dentistry-faculty',
-            name: 'Стоматологический факультет',
+            name: t('management.departments.dentistryFaculty'),
             type: 'faculty',
             head: 'Белый Борис Борисович',
-            position: 'Декан',
+            position: t('management.positions.deanDentistry'),
             email: 'dentistry@salymbekov.kg',
             phone: '+996 312 625-203',
             experience: '16 лет',
@@ -224,10 +220,10 @@ const Management = () => {
       },
       {
         id: 'science',
-        name: 'Научная работа',
+        name: t('management.departments.scientificWork'),
         type: 'administration',
         head: 'Федоров Федор Федорович',
-        position: 'Проректор по научной работе',
+        position: t('management.positions.vicerectorScience'),
         email: 'science@salymbekov.kg',
         phone: '+996 312 625-102',
         experience: '22 года',
@@ -237,10 +233,10 @@ const Management = () => {
         children: [
           {
             id: 'research-dept',
-            name: 'Отдел науки и инноваций',
+            name: t('management.departments.researchDept'),
             type: 'department',
             head: 'Антонов Антон Антонович',
-            position: 'Начальник отдела',
+            position: t('management.positions.headDept'),
             email: 'research@salymbekov.kg',
             phone: '+996 312 625-401',
             experience: '8 лет',
@@ -250,14 +246,14 @@ const Management = () => {
             staff: [
               { 
                 name: 'Григорьев Григорий Григорьевич', 
-                position: 'Специалист',
+                position: t('management.positions.specialist'),
                 experience: '5 лет',
                 education: 'Магистр науки',
                 specialization: 'Научные исследования'
               },
               { 
                 name: 'Михайлов Михаил Михайлович', 
-                position: 'Специалист',
+                position: t('management.positions.specialist'),
                 experience: '3 года',
                 education: 'Магистр инноваций',
                 specialization: 'Инновационные проекты'
@@ -266,10 +262,10 @@ const Management = () => {
           },
           {
             id: 'library',
-            name: 'Научная библиотека',
+            name: t('management.departments.library'),
             type: 'department',
             head: 'Библиотекарева Библиотека Библиотековна',
-            position: 'Директор библиотеки',
+            position: t('management.positions.director'),
             email: 'library@salymbekov.kg',
             phone: '+996 312 625-402',
             experience: '15 лет',
@@ -279,13 +275,13 @@ const Management = () => {
             staff: [
               { 
                 name: 'Книжный Кирилл Кириллович', 
-                position: 'Старший библиотекарь',
+                position: t('management.positions.librarian'),
                 experience: '10 лет',
                 specialization: 'Медицинская литература'
               },
               { 
                 name: 'Читальный Чингиз Чингизович', 
-                position: 'Библиотекарь',
+                position: t('management.positions.librarian'),
                 experience: '7 лет',
                 specialization: 'Электронные ресурсы'
               }
@@ -295,10 +291,10 @@ const Management = () => {
       },
       {
         id: 'admin',
-        name: 'Административная работа',
+        name: t('management.departments.administrativeWork'),
         type: 'administration',
         head: 'Административный Александр Александрович',
-        position: 'Проректор по административной работе',
+        position: t('management.positions.vicerectorAdmin'),
         email: 'admin@salymbekov.kg',
         phone: '+996 312 625-103',
         experience: '18 лет',
@@ -308,10 +304,10 @@ const Management = () => {
         children: [
           {
             id: 'it-dept',
-            name: 'IT отдел',
+            name: t('management.departments.itDept'),
             type: 'department',
             head: 'Компьютерный Константин Константинович',
-            position: 'Начальник IT отдела',
+            position: t('management.positions.headDept'),
             email: 'it@salymbekov.kg',
             phone: '+996 312 625-501',
             experience: '12 лет',
@@ -321,14 +317,14 @@ const Management = () => {
             staff: [
               { 
                 name: 'Программист Петр Петрович', 
-                position: 'Ведущий разработчик',
+                position: t('management.positions.developer'),
                 experience: '8 лет',
                 education: 'Бакалавр IT',
                 specialization: 'Full-stack разработка'
               },
               { 
                 name: 'Системный Сергей Сергеевич', 
-                position: 'Системный администратор',
+                position: t('management.positions.systemAdmin'),
                 experience: '6 лет',
                 education: 'Бакалавр IT',
                 specialization: 'Сетевое администрирование'
@@ -337,10 +333,10 @@ const Management = () => {
           },
           {
             id: 'hr-dept',
-            name: 'Отдел кадров',
+            name: t('management.departments.hrDept'),
             type: 'department',
             head: 'Кадровый Константин Константинович',
-            position: 'Начальник отдела кадров',
+            position: t('management.positions.headDept'),
             email: 'hr@salymbekov.kg',
             phone: '+996 312 625-502',
             experience: '14 лет',
@@ -350,7 +346,7 @@ const Management = () => {
             staff: [
               { 
                 name: 'Персональный Петр Петрович', 
-                position: 'Специалист по кадрам',
+                position: t('management.positions.specialist'),
                 experience: '7 лет',
                 education: 'Бакалавр психологии',
                 specialization: 'Подбор персонала'
@@ -359,10 +355,10 @@ const Management = () => {
           },
           {
             id: 'finance-dept',
-            name: 'Финансовый отдел',
+            name: t('management.departments.financeDept'),
             type: 'department',
             head: 'Финансов Федор Федорович',
-            position: 'Главный бухгалтер',
+            position: t('management.positions.chiefAccountant'),
             email: 'finance@salymbekov.kg',
             phone: '+996 312 625-503',
             experience: '20 лет',
@@ -463,22 +459,22 @@ const Management = () => {
   const renderPyramidStructure = () => {
     const levels = [
       {
-        title: "Ректорат",
+        title: t('management.levels.rectorateTitle'),
         staff: [organizationData],
         level: 1
       },
       {
-        title: "Проректоры",
+        title: t('management.levels.vicerectorsTitle'),
         staff: organizationData.children || [],
         level: 2
       },
       {
-        title: "Деканы факультетов",
+        title: t('management.levels.deansTitle'),
         staff: organizationData.children?.flatMap(child => child.children || []).filter(item => item.type === 'faculty') || [],
         level: 3
       },
       {
-        title: "Заведующие кафедрами",
+        title: t('management.levels.headsTitle'),
         staff: organizationData.children?.flatMap(child => 
           child.children?.flatMap(grandchild => grandchild.children || []) || []
         ).filter(item => item.type === 'department') || [],
@@ -540,7 +536,7 @@ const Management = () => {
                           setIsModalOpen(true);
                         }}
                         className="p-2 bg-purple-100 hover:bg-purple-200 rounded-full transition-colors"
-                        title="Подробнее"
+                        title={t('management.buttons.viewDetails')}
                       >
                         👤
                       </button>
@@ -694,6 +690,7 @@ const Management = () => {
                           department: node.name,
                           type: 'staff'
                         })}
+                        title={t('management.buttons.viewDetails')}
                       >
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -757,20 +754,20 @@ const Management = () => {
           <div className="p-1 space-y-6">
             {person.bio && (
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">О специалисте</h3>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('management.modal.aboutSpecialist')}</h3>
                 <p className="text-gray-700 leading-relaxed">{person.bio}</p>
               </div>
             )}
             
             <div className="grid md:grid-cols-2 gap-6">
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">Основная информация</h3>
+                <h3 className="text-lg font-semibold text-gray-900 mb-3">{t('management.modal.basicInfo')}</h3>
                 <div className="space-y-3">
                   {person.education && (
                     <div className="flex items-start space-x-3">
                       <span className="text-2xl">🎓</span>
                       <div>
-                        <p className="font-medium text-gray-900">Образование</p>
+                        <p className="font-medium text-gray-900">{t('management.contactInfo.education')}</p>
                         <p className="text-gray-700">{person.education}</p>
                       </div>
                     </div>
@@ -780,7 +777,7 @@ const Management = () => {
                     <div className="flex items-start space-x-3">
                       <span className="text-2xl">⏱️</span>
                       <div>
-                        <p className="font-medium text-gray-900">Опыт работы</p>
+                        <p className="font-medium text-gray-900">{t('management.contactInfo.experience')}</p>
                         <p className="text-gray-700">{person.experience}</p>
                       </div>
                     </div>
@@ -790,7 +787,7 @@ const Management = () => {
                     <div className="flex items-start space-x-3">
                       <span className="text-2xl">🔬</span>
                       <div>
-                        <p className="font-medium text-gray-900">Специализация</p>
+                        <p className="font-medium text-gray-900">{t('management.contactInfo.specialization')}</p>
                         <p className="text-gray-700">{person.specialization}</p>
                       </div>
                     </div>
@@ -799,7 +796,7 @@ const Management = () => {
               </div>
               
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">Контактная информация</h3>
+                <h3 className="text-lg font-semibold text-gray-900 mb-3">{t('management.modal.contactInfo')}</h3>
                 <div className="space-y-3">
                   {person.email && (
                     <a 
@@ -830,13 +827,13 @@ const Management = () => {
                       {person.studentCount && (
                         <div className="flex items-center space-x-2">
                           <span className="text-green-600">👨‍🎓</span>
-                          <span className="text-gray-700">Студентов: {person.studentCount}</span>
+                          <span className="text-gray-700">{t('management.studentsCount')}: {person.studentCount}</span>
                         </div>
                       )}
                       {person.teacherCount && (
                         <div className="flex items-center space-x-2">
                           <span className="text-blue-600">👨‍🏫</span>
-                          <span className="text-gray-700">Преподавателей: {person.teacherCount}</span>
+                          <span className="text-gray-700">{t('management.teachersCount')}: {person.teacherCount}</span>
                         </div>
                       )}
                     </div>
@@ -847,7 +844,7 @@ const Management = () => {
             
             {person.achievements && person.achievements.length > 0 && (
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">Достижения</h3>
+                <h3 className="text-lg font-semibold text-gray-900 mb-3">{t('management.contactInfo.achievements')}</h3>
                 <div className="space-y-2">
                   {person.achievements.map((achievement, index) => (
                     <div key={index} className="flex items-start space-x-3">
@@ -872,39 +869,38 @@ const Management = () => {
         <div className="container mx-auto px-4 relative z-10">
           {/* Breadcrumbs */}
           <nav className="flex items-center text-sm text-blue-200 mb-8">
-            <a href="/" className="hover:text-white transition-colors">{t('about.breadcrumb_home')}</a>
+            <a href="/" className="hover:text-white transition-colors">{t('management.breadcrumbHome')}</a>
             <span className="mx-2">→</span>
-            <a href="/about" className="hover:text-white transition-colors">{t('about.breadcrumb_about')}</a>
+            <a href="/about" className="hover:text-white transition-colors">{t('management.breadcrumbAbout')}</a>
             <span className="mx-2">→</span>
-            <span className="text-white">Структура управления</span>
+            <span className="text-white">{t('management.title')}</span>
           </nav>
           
           <div className="text-center">
             <h1 className="text-5xl font-bold mb-6 animate-fade-in">
-              Структура управления
+              {t('management.title')}
             </h1>
             <p className="text-xl text-blue-200 max-w-3xl mx-auto leading-relaxed animate-fade-in-up">
-              Организационная структура Салымбековского университета включает в себя руководящие органы, 
-              факультеты, кафедры и административные службы, обеспечивающие эффективную работу учебного заведения
+              {t('management.description')}
             </p>
             
             {/* Statistics */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 max-w-4xl mx-auto">
               <div className="text-center animate-fade-in stats-counter">
                 <div className="text-3xl font-bold text-blue-300">150+</div>
-                <div className="text-sm text-blue-200">Преподавателей</div>
+                <div className="text-sm text-blue-200">{t('management.teachersCount')}</div>
               </div>
               <div className="text-center animate-fade-in stats-counter">
                 <div className="text-3xl font-bold text-green-300">15</div>
-                <div className="text-sm text-blue-200">Кафедр</div>
+                <div className="text-sm text-blue-200">{t('management.departmentsCount')}</div>
               </div>
               <div className="text-center animate-fade-in stats-counter">
                 <div className="text-3xl font-bold text-yellow-300">5</div>
-                <div className="text-sm text-blue-200">Факультетов</div>
+                <div className="text-sm text-blue-200">{t('management.facultiesCount')}</div>
               </div>
               <div className="text-center animate-fade-in stats-counter">
                 <div className="text-3xl font-bold text-purple-300">2000+</div>
-                <div className="text-sm text-blue-200">Студентов</div>
+                <div className="text-sm text-blue-200">{t('management.studentsCount')}</div>
               </div>
             </div>
           </div>
@@ -916,8 +912,8 @@ const Management = () => {
         {/* Pyramid View */}
         <div className="bg-white rounded-2xl shadow-xl p-8" id="org-chart">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-2">Руководство университета</h2>
-              <p className="text-gray-600 text-lg">Пирамидальная иерархия университета</p>
+            <h2 className="text-4xl font-bold text-gray-900 mb-2">{t('management.organizationTitle')}</h2>
+              <p className="text-gray-600 text-lg">{t('management.organizationSubtitle')}</p>
             </div>
             
             {renderPyramidStructure()}

@@ -3361,70 +3361,7 @@
         "title": "International Conference on Cardiology",
         "summary": "An international conference with the participation of leading specialists will be held on January 25-26"
       }
-    ],
-    "announcements": {
-      "title": "Announcements",
-      "subtitle": "Important information for university students and staff",
-      "pinned": "Pinned Announcements",
-      "urgent": "Urgent",
-      "deadline": "Until",
-      "download": "Download",
-      "details": "Details",
-      "loadError": "Error loading announcements",
-      "noAnnouncements": "No announcements in this category yet",
-      "types": {
-        "academic": "Academic",
-        "scholarship": "Scholarship",
-        "schedule": "Schedule",
-        "competition": "Competition",
-        "health": "Health",
-        "technical": "Technical"
-      },
-      "filters": {
-        "all": "All",
-        "academic": "Academic",
-        "scholarship": "Scholarships",
-        "competition": "Competitions"
-      },
-      "newsletter": {
-        "title": "Don't Miss Important Announcements",
-        "subtitle": "Subscribe to notifications to receive important announcements by email",
-        "placeholder": "Your email address",
-        "button": "Subscribe"
-      },
-      "fallback": {
-        "winterSession": {
-          "title": "Announcement about Winter Exam Session 2024-2025",
-          "description": "Information about exam schedule, admission requirements and rules for conducting the winter session.",
-          "content": "The winter examination session for students of all courses will begin on December 20, 2024. The detailed schedule will be published by December 15."
-        },
-        "scholarship": {
-          "title": "Scholarship Program for Excellent Students",
-          "description": "Applications are open for receiving increased scholarships for students with high academic performance.",
-          "content": "Students with an average score of at least 4.5 can apply for an increased scholarship. The scholarship amount is 15,000 KGS."
-        },
-        "scheduleChanges": {
-          "title": "Changes to Class Schedule for December",
-          "description": "Notification of changes to the class schedule due to holidays in December.",
-          "content": "Due to public holidays, the class schedule from December 30 to January 8 will be changed. Details in the attached file."
-        },
-        "researchCompetition": {
-          "title": "Student Research Papers Competition",
-          "description": "The annual competition of research papers for medical faculty students is announced.",
-          "content": "Research papers in all areas of medicine are accepted. The best papers will be presented at the international student conference."
-        },
-        "vaccination": {
-          "title": "Vaccination of Students and Staff",
-          "description": "Information about planned flu vaccination for all university students and staff.",
-          "content": "Vaccination is carried out free of charge in the university medical office by appointment."
-        },
-        "systemUpdate": {
-          "title": "E-Learning System Update",
-          "description": "Scheduled technical work to update the distance learning platform.",
-          "content": "The system will be unavailable on November 15 from 02:00 to 06:00. All materials will be saved."
-        }
-      }
-    }
+    ]
   },
   "breadcrumbs": {
   "home": "Home",
@@ -3519,43 +3456,6 @@
     },
     "loading": "Loading vacancies...",
     "error": "Error loading vacancies",
-    "retry": "Try again",
-    "not_found": "Page Not Found",
-    "vacancy_not_found": "Vacancy not found",
-    "back_to_careers": "Back to Careers",
-    "back_to_list": "Back to List",
-    "view_details": "View Details",
-    "apply_now": "Apply Now",
-    "apply_for": "Apply for",
-    "quick_apply": "Quick Apply",
-    "quick_apply_description": "Submit your application quickly and easily",
-    "published": "Published",
-    "views": "views",
-    "salary": "Salary",
-    "location": "Location",
-    "employment_type": "Employment Type",
-    "deadline": "Application Deadline",
-    "experience": "Experience required",
-    "key_requirements": "Key Requirements",
-    "description": "Job Description",
-    "requirements": "Requirements",
-    "responsibilities": "Responsibilities",
-    "vacancy_stats": "Vacancy Statistics",
-    "category": "Category",
-    "application": {
-      "full_name": "Full Name",
-      "email": "Email Address",
-      "phone": "Phone Number",
-      "resume": "Resume",
-      "resume_formats": "Accepted formats: PDF, DOC, DOCX",
-      "cover_letter": "Cover Letter",
-      "cover_letter_placeholder": "Tell us why you're interested in this position...",
-      "submit": "Submit Application",
-      "submitting": "Submitting...",
-      "cancel": "Cancel",
-      "success": "Application submitted successfully! We will contact you soon.",
-      "error": "Error submitting application. Please try again."
-    }
-  },
-  "locale": "en"
+    "retry": "Try again"
+  }
 }

@@ -15,7 +15,7 @@ const News = () => {
   useEffect(() => {
     fetchNews();
     fetchFeaturedNews();
-  }, [i18n.language]); // Перезагружаем данные при смене языка
+  }, [i18n.language]);
 
   const fetchNews = async () => {
     try {
@@ -27,7 +27,7 @@ const News = () => {
         }
       });
       if (!response.ok) {
-        throw new Error('Ошибка при загрузке новостей');
+        throw new Error(t('news.loadingError'));
       }
       const data = await response.json();
       setNewsData(data.results || data);
@@ -37,8 +37,8 @@ const News = () => {
       setNewsData([
         {
           id: 1,
-          title: "Открытие нового симуляционного центра",
-          summary: "В университете открылся современный симуляционный центр с передовым медицинским оборудованием",
+          title: t('news.fallbackNews.0.title'),
+          summary: t('news.fallbackNews.0.summary'),
           published_at: "2024-12-01",
           category: { name: "news" },
           image_url: "https://images.unsplash.com/photo-1582719471384-894e35a4b48f?w=400&h=250&fit=crop",
@@ -46,8 +46,8 @@ const News = () => {
         },
         {
           id: 2,
-          title: "Международная конференция по кардиологии",
-          summary: "25-26 января состоится международная конференция с участием ведущих специалистов",
+          title: t('news.fallbackNews.1.title'),
+          summary: t('news.fallbackNews.1.summary'),
           published_at: "2024-11-28",
           category: { name: "events" },
           image_url: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=400&h=250&fit=crop",
@@ -72,7 +72,7 @@ const News = () => {
         setFeaturedNews(data);
       }
     } catch (err) {
-      console.error('Ошибка при загрузке рекомендуемых новостей:', err);
+      console.error(t('news.featuredError'), err);
     }
   };
 
@@ -84,11 +84,16 @@ const News = () => {
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('ru-RU', {
+    return date.toLocaleDateString(i18n.language === 'kg' ? 'ky-KG' : i18n.language, {
       day: 'numeric',
       month: 'long',
       year: 'numeric'
     });
+  };
+
+  const getCategoryName = (category) => {
+    const categoryKey = category?.name || category;
+    return t(`news.categories.${categoryKey}`, categoryKey);
   };
 
   if (loading) {
@@ -96,7 +101,7 @@ const News = () => {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Загрузка новостей...</p>
+          <p className="mt-4 text-gray-600">{t('news.loading')}</p>
         </div>
       </div>
     );
@@ -106,7 +111,7 @@ const News = () => {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <p className="text-red-600 mb-4">Ошибка загрузки: {error}</p>
+          <p className="text-red-600 mb-4">{t('news.error')}: {error}</p>
           <button 
             onClick={() => {
               setError(null);
@@ -114,7 +119,7 @@ const News = () => {
             }}
             className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
           >
-            Попробовать снова
+            {t('news.tryAgain')}
           </button>
         </div>
       </div>
@@ -128,10 +133,10 @@ const News = () => {
         <div className="container mx-auto px-4">
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              Новости университета
+              {t('news.title')}
             </h1>
             <p className="text-xl text-blue-100 max-w-2xl mx-auto">
-              Будьте в курсе последних событий и объявлений Салымбековского университета
+              {t('news.subtitle')}
             </p>
           </div>
         </div>
@@ -142,7 +147,7 @@ const News = () => {
         {displayFeaturedNews.length > 0 && (
           <div className="mb-12">
             <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">
-              Важные новости
+              {t('news.featured')}
             </h2>
             <div className="grid md:grid-cols-2 gap-8">
               {displayFeaturedNews.map((item) => (
@@ -160,7 +165,7 @@ const News = () => {
                       />
                       <div className="absolute top-4 left-4">
                         <span className="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
-                          Важное
+                          {t('news.important')}
                         </span>
                       </div>
                     </div>
@@ -184,46 +189,19 @@ const News = () => {
 
         {/* Filter Tabs */}
         <div className="flex flex-wrap justify-center gap-2 mb-8">
-          <button
-            onClick={() => setActiveTab('all')}
-            className={`px-6 py-3 rounded-full font-semibold transition-colors ${
-              activeTab === 'all'
-                ? 'bg-blue-600 text-white'
-                : 'bg-white text-gray-600 hover:bg-blue-50'
-            }`}
-          >
-            Все новости
-          </button>
-          <button
-            onClick={() => setActiveTab('news')}
-            className={`px-6 py-3 rounded-full font-semibold transition-colors ${
-              activeTab === 'news'
-                ? 'bg-blue-600 text-white'
-                : 'bg-white text-gray-600 hover:bg-blue-50'
-            }`}
-          >
-            Новости
-          </button>
-          <button
-            onClick={() => setActiveTab('events')}
-            className={`px-6 py-3 rounded-full font-semibold transition-colors ${
-              activeTab === 'events'
-                ? 'bg-blue-600 text-white'
-                : 'bg-white text-gray-600 hover:bg-blue-50'
-            }`}
-          >
-            События
-          </button>
-          <button
-            onClick={() => setActiveTab('announcements')}
-            className={`px-6 py-3 rounded-full font-semibold transition-colors ${
-              activeTab === 'announcements'
-                ? 'bg-blue-600 text-white'
-                : 'bg-white text-gray-600 hover:bg-blue-50'
-            }`}
-          >
-            Объявления
-          </button>
+          {['all', 'news', 'events', 'announcements'].map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`px-6 py-3 rounded-full font-semibold transition-colors ${
+                activeTab === tab
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-white text-gray-600 hover:bg-blue-50'
+              }`}
+            >
+              {t(`news.tabs.${tab}`)}
+            </button>
+          ))}
         </div>
 
         {/* News Grid */}
@@ -252,8 +230,7 @@ const News = () => {
                       (item.category?.name || item.category) === 'events' ? 'bg-green-100 text-green-800' :
                       'bg-yellow-100 text-yellow-800'
                     }`}>
-                      {(item.category?.name || item.category) === 'news' ? 'Новости' :
-                       (item.category?.name || item.category) === 'events' ? 'События' : 'Объявления'}
+                      {getCategoryName(item.category?.name || item.category)}
                     </span>
                   </div>
                   <h3 className="text-lg font-bold text-gray-800 mb-3 group-hover:text-blue-600 transition-colors">
@@ -271,7 +248,7 @@ const News = () => {
         {/* Load More Button */}
         <div className="text-center mt-12">
           <button className="bg-blue-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-blue-700 transition-colors">
-            Загрузить еще
+            {t('news.loadMore')}
           </button>
         </div>
       </div>
