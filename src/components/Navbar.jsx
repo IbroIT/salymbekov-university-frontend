@@ -2,6 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import Logo from '../assets/logo-salymbekov-university-site.png';
 import './Navbar.css';
+import RuIcon from "../assets/Ru_icon.svg";
+import KgIcon from "../assets/Kg_icon.svg";
+import EnIcon from "../assets/En_icon.png";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -52,12 +55,18 @@ const Navbar = () => {
     };
   }, []);
 
-  // Языки
+  // Языки с иконками
   const languages = [
-    { code: 'ru', name: 'Русский', flag: '🇷🇺' },
-    { code: 'kg', name: 'Кыргызча', flag: '🇰🇬' },
-    { code: 'en', name: 'English', flag: '🇺🇸' },
+    { code: 'ru', name: 'Русский', icon: RuIcon },
+    { code: 'kg', name: 'Кыргызча', icon: KgIcon },
+    { code: 'en', name: 'English', icon: EnIcon },
   ];
+
+  // Получение текущей иконки языка
+  const getCurrentLanguageIcon = () => {
+    const currentLang = languages.find(lang => lang.code === currentLanguage);
+    return currentLang ? currentLang.icon : RuIcon;
+  };
 
   // Структура меню с подразделами
   const menuData = {
@@ -187,50 +196,49 @@ const Navbar = () => {
 
           {/* Основное меню для десктопа */}
           <div className="navbar-desktop-menu hidden xl:flex xl:items-center xl:space-x-1 flex-1 justify-end ml-8">
-  {Object.entries(menuData).map(([key, menu]) => (
-    <div 
-      key={key}
-      className="relative group"
-      onMouseEnter={() => handleMenuEnter(key)}
-      onMouseLeave={handleMenuLeave}
-    >
-      <button className="navbar-menu-item px-4 py-2 text-sm font-medium text-gray-800 hover:text-blue-600 transition-colors flex items-center whitespace-nowrap group-hover:text-blue-600">
-        {menu.title}
-        <svg className="ml-1 h-4 w-4 flex-shrink-0 transition-transform group-hover:rotate-180" fill="currentColor" viewBox="0 0 20 20">
-          <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-        </svg>
-      </button>
-
-      {(activeMenu === key || closingMenu === key) && (
-        <div 
-          className="navbar-menu-dropdown absolute left-0 mt-0 w-56 rounded-xl shadow-xl bg-white ring-1 ring-black ring-opacity-5 overflow-hidden"
-          onMouseEnter={handleSubmenuEnter}
-          onMouseLeave={handleSubmenuLeave}
-          style={{ 
-            top: '100%',
-            opacity: closingMenu === key ? 0 : 1,
-            transform: closingMenu === key ? 'translateY(-10px)' : 'translateY(0)',
-            transition: 'opacity 0.2s ease, transform 0.2s ease'
-          }}
-        >
-          <div className="py-2" role="menu">
-            {menu.submenu.map((item, index) => (
-              <a
-                key={index}
-                href={item.link}
-                className="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200"
-                role="menuitem"
+            {Object.entries(menuData).map(([key, menu]) => (
+              <div 
+                key={key}
+                className="relative group"
+                onMouseEnter={() => handleMenuEnter(key)}
+                onMouseLeave={handleMenuLeave}
               >
-                {item.title}
-              </a>
+                <button className="navbar-menu-item px-4 py-2 text-sm font-medium text-gray-800 hover:text-blue-600 transition-colors flex items-center whitespace-nowrap group-hover:text-blue-600">
+                  {menu.title}
+                  <svg className="ml-1 h-4 w-4 flex-shrink-0 transition-transform group-hover:rotate-180" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </button>
+
+                {(activeMenu === key || closingMenu === key) && (
+                  <div 
+                    className="navbar-menu-dropdown absolute left-0 mt-0 w-56 rounded-xl shadow-xl bg-white ring-1 ring-black ring-opacity-5 overflow-hidden"
+                    onMouseEnter={handleSubmenuEnter}
+                    onMouseLeave={handleSubmenuLeave}
+                    style={{ 
+                      top: '100%',
+                      opacity: closingMenu === key ? 0 : 1,
+                      transform: closingMenu === key ? 'translateY(-10px)' : 'translateY(0)',
+                      transition: 'opacity 0.2s ease, transform 0.2s ease'
+                    }}
+                  >
+                    <div className="py-2" role="menu">
+                      {menu.submenu.map((item, index) => (
+                        <a
+                          key={index}
+                          href={item.link}
+                          className="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200"
+                          role="menuitem"
+                        >
+                          {item.title}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             ))}
           </div>
-        </div>
-      )}
-    </div>
-  ))}
-</div>
-
 
           {/* Правая часть: языки и кнопка подать заявку */}
           <div className="flex ml-5 items-center space-x-3 flex-shrink-0">
@@ -240,7 +248,11 @@ const Navbar = () => {
                 onClick={() => setIsLangOpen(!isLangOpen)}
                 className="navbar-lang-button flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 focus:outline-none rounded-md px-3 py-2 transition-all hover:bg-gray-100"
               >
-                <span className="mr-1 text-lg">{languages.find(lang => lang.code === currentLanguage)?.flag || '🇷🇺'}</span>
+                <img 
+                  src={getCurrentLanguageIcon()} 
+                  alt={currentLanguage} 
+                  className="w-5 h-5 mr-1 object-contain"
+                />
                 <span className="navbar-lang-text hidden sm:inline">{currentLanguage.toUpperCase()}</span>
                 <svg 
                   className={`ml-1 h-4 w-4 transition-transform ${isLangOpen ? 'rotate-180' : ''}`} 
@@ -258,14 +270,18 @@ const Navbar = () => {
                       <button
                         key={language.code}
                         onClick={() => changeLanguage(language.code)}
-                        className={`block px-4 py-3 text-sm w-full text-left transition-colors ${
+                        className={`flex items-center px-4 py-3 text-sm w-full text-left transition-colors ${
                           currentLanguage === language.code 
                             ? 'bg-blue-50 text-blue-700' 
                             : 'text-gray-700 hover:bg-gray-100'
                         }`}
                         role="menuitem"
                       >
-                        <span className="mr-2 text-lg">{language.flag}</span>
+                        <img 
+                          src={language.icon} 
+                          alt={language.code} 
+                          className="w-5 h-5 mr-3 object-contain"
+                        />
                         {language.name}
                       </button>
                     ))}
