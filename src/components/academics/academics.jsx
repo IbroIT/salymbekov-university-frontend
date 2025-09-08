@@ -32,7 +32,7 @@ const Academics = () => {
       language: t('academics.languages.russian'),
       duration: t('academics.durations.fiveSixYears'),
       popularity: 95,
-      image: '/images/medicine.jpg',
+      image: 'https://лазуркин.бел/wp-content/uploads/2020/05/Spetsialnost-79-01-01---Lechebnoe-delo--.jpg',
       description: t('academics.programs.medicine.description'),
       requirements: t('academics.requirements.basic'),
       price: t('academics.prices.semester', { price: 25000 }),
@@ -47,7 +47,7 @@ const Academics = () => {
       language: t('academics.languages.kyrgyz'),
       duration: t('academics.durations.fiveYears'),
       popularity: 88,
-      image: '/images/dentistry.jpg',
+      image: 'https://dostoma.ru/upload/iblock/b30/vneuu4lpzryi60ejfrq08191tlhrul0v.png',
       description: t('academics.programs.dentistry.description'),
       requirements: t('academics.requirements.basic'),
       price: t('academics.prices.semester', { price: 28000 }),
@@ -62,7 +62,7 @@ const Academics = () => {
       language: t('academics.languages.russian'),
       duration: t('academics.durations.fiveYears'),
       popularity: 76,
-      image: '/images/pharmacy.jpg',
+      image: 'https://gomel.1prof.by/kcfinder/upload/images/135791-3776.jpg',
       description: t('academics.programs.pharmacy.description'),
       requirements: t('academics.requirements.basic'),
       price: t('academics.prices.semester', { price: 22000 }),
@@ -77,7 +77,7 @@ const Academics = () => {
       language: t('academics.languages.english'),
       duration: t('academics.durations.twoYears'),
       popularity: 65,
-      image: '/images/biochemistry.jpg',
+      image: 'https://mbf.msk.ru/images/info_img.jpg',
       description: t('academics.programs.biochemistry.description'),
       requirements: t('academics.requirements.master'),
       price: t('academics.prices.semester', { price: 30000 }),
@@ -92,7 +92,7 @@ const Academics = () => {
       language: t('academics.languages.kyrgyz'),
       duration: t('academics.durations.fourYears'),
       popularity: 82,
-      image: '/images/nursing.jpg',
+      image: 'https://mfk1.kg/wp-content/uploads/2022/07/n-bg-1.jpg',
       description: t('academics.programs.nursing.description'),
       requirements: t('academics.requirements.ortOnly'),
       price: t('academics.prices.semester', { price: 18000 }),
@@ -107,7 +107,7 @@ const Academics = () => {
       language: t('academics.languages.russian'),
       duration: t('academics.durations.twoYears'),
       popularity: 59,
-      image: '/images/public-health.jpg',
+      image: 'https://niioz.ru/upload/iblock/1c9/1c9f6777ca6fe42541563d5bd24b6cec.jpg',
       description: t('academics.programs.publicHealth.description'),
       requirements: t('academics.requirements.master'),
       price: t('academics.prices.semester', { price: 26000 }),
@@ -122,7 +122,7 @@ const Academics = () => {
       language: t('academics.languages.russian'),
       duration: t('academics.durations.fourYears'),
       popularity: 71,
-      image: '/images/cybernetics.jpg',
+      image: 'https://rsmu.ru/fileadmin/templates/img/cardimg/undergraduate/med-info.jpg',
       description: t('academics.programs.cybernetics.description'),
       requirements: t('academics.requirements.basic'),
       price: t('academics.prices.semester', { price: 27000 }),
@@ -137,7 +137,7 @@ const Academics = () => {
       language: t('academics.languages.russian'),
       duration: t('academics.durations.fiveYears'),
       popularity: 68,
-      image: '/images/psychology.jpg',
+      image: 'https://mmamos.ru/wp-content/themes/yootheme/cache/71/klin_psy02-71b7a3e4.jpeg',
       description: t('academics.programs.psychology.description'),
       requirements: t('academics.requirements.basic'),
       price: t('academics.prices.semester', { price: 23000 }),
@@ -564,25 +564,14 @@ const Academics = () => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-2 md:p-4 z-50">
           <div className="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
             <div className="relative">
-              <div className="h-40 md:h-64 bg-gradient-to-r from-blue-400 to-indigo-600">
-                <img 
-                  src={selectedProgram.image} 
-                  alt={selectedProgram.title}
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjMyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiLz4=';
-                    e.target.className = "w-full h-full object-cover bg-gray-200";
-                  }}
-                />
                 <button 
                   onClick={() => setSelectedProgram(null)}
-                  className="absolute top-2 md:top-4 right-2 md:right-4 bg-white rounded-full p-1 md:p-2 shadow-md hover:bg-gray-100 transition-colors"
+                  className="absolute top-2 md:top-4 right-2 md:right-4 bg-blue-300 rounded-full p-1 md:p-2 shadow-md hover:bg-blue-600 transition-colors"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 md:h-6 md:w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </button>
-              </div>
               
               <div className="p-4 md:p-6">
                 <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-2">{selectedProgram.title}</h2>

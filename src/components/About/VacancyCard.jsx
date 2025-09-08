@@ -113,15 +113,6 @@ const VacancyCard = ({ vacancy }) => {
           ))}
         </div>
 
-        {/* Action Button */}
-        <div className="flex space-x-3">
-          <Link
-            to={`/about/vacancies/${vacancy.id}`}
-            className="flex-1 bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors duration-200 text-center font-medium"
-          >
-            {t('vacancies.details')}
-          </Link>
-        </div>
 
         {/* Deadline */}
         <div className="mt-4 pt-4 border-t border-gray-100">

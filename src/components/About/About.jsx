@@ -324,7 +324,7 @@ const About = () => {
                   <iframe
                     width="100%"
                     height="100%"
-                    src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&cc_load_policy=1&cc_lang_pref=ru"
+                    src="https://youtu.be/SdluvCyzd6M?si=uFnAvwDl4MTMROle"
                     title="University Presentation"
                     frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
