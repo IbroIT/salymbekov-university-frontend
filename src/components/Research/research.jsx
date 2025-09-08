@@ -13,6 +13,7 @@ const Research = () => {
   // State для данных из API
   const [publications, setPublications] = useState([]);
   const [conferences, setConferences] = useState([]);
+  const [researchAreas, setResearchAreas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -21,12 +22,110 @@ const Research = () => {
     return publication[`title_${currentLang}`] || publication.title_ru || publication.title;
   };
 
+  const getPublicationAuthors = (publication) => {
+    return publication[`authors_${currentLang}`] || publication.authors_ru || publication.authors;
+  };
+
+  const getResearchCenterName = (center) => {
+    if (!center) return null;
+    return center[`name_${currentLang}`] || center.name_ru || center.name;
+  };
+
   const getConferenceTitle = (conference) => {
     return conference[`title_${currentLang}`] || conference.title_ru || conference.title;
   };
 
   const getConferenceDescription = (conference) => {
     return conference[`description_${currentLang}`] || conference.description_ru || conference.description;
+  };
+
+  const getAreaName = (area) => {
+    return area[`title_${currentLang}`] || area.title_ru || area.title;
+  };
+
+  const getAreaDescription = (area) => {
+    return area[`description_${currentLang}`] || area.description_ru || area.description;
+  };
+
+  // Вспомогательные функции для обработки областей исследований
+  const extractAreaFromKeywords = (publication) => {
+    const keywords = publication.keywords_ru || publication.keywords_en || [];
+    if (keywords.length === 0) return null;
+    
+    // Пытаемся определить область по ключевым словам
+    const keywordString = keywords.join(' ').toLowerCase();
+    
+    if (keywordString.includes('кардио') || keywordString.includes('сердце') || keywordString.includes('cardio')) {
+      return 'Кардиология';
+    } else if (keywordString.includes('нейро') || keywordString.includes('мозг') || keywordString.includes('neuro')) {
+      return 'Неврология';
+    } else if (keywordString.includes('онко') || keywordString.includes('рак') || keywordString.includes('cancer')) {
+      return 'Онкология';
+    } else if (keywordString.includes('генет') || keywordString.includes('ген') || keywordString.includes('genetic')) {
+      return 'Генетика';
+    } else if (keywordString.includes('иммун') || keywordString.includes('immune')) {
+      return 'Иммунология';
+    } else if (keywordString.includes('фарм') || keywordString.includes('drug') || keywordString.includes('препарат')) {
+      return 'Фармакология';
+    }
+    
+    return null;
+  };
+
+  const translateArea = (areaName, targetLang) => {
+    const translations = {
+      'Кардиология': { en: 'Cardiology', kg: 'Кардиология' },
+      'Неврология': { en: 'Neuroscience', kg: 'Нейрология' },
+      'Онкология': { en: 'Oncology', kg: 'Онкология' },
+      'Генетика': { en: 'Genetics', kg: 'Генетика' },
+      'Иммунология': { en: 'Immunology', kg: 'Иммунология' },
+      'Фармакология': { en: 'Pharmacology', kg: 'Фармакология' },
+      'Общая медицина': { en: 'General Medicine', kg: 'Жалпы медицина' }
+    };
+    
+    return translations[areaName]?.[targetLang] || areaName;
+  };
+
+  const getAreaIcon = (areaName) => {
+    const icons = {
+      'Кардиология': '🫀',
+      'Неврология': '🧠',
+      'Онкология': '🦠',
+      'Генетика': '🧬',
+      'Иммунология': '🦴',
+      'Фармакология': '💊',
+      'Общая медицина': '⚕️'
+    };
+    
+    return icons[areaName] || '🔬';
+  };
+
+  const getAreaColor = (areaName) => {
+    const colors = {
+      'Кардиология': 'red',
+      'Неврология': 'blue',
+      'Онкология': 'green',
+      'Генетика': 'purple',
+      'Иммунология': 'orange',
+      'Фармакология': 'indigo',
+      'Общая медицина': 'gray'
+    };
+    
+    return colors[areaName] || 'blue';
+  };
+
+  const getColorClasses = (color) => {
+    const colorClasses = {
+      'red': 'bg-red-100 text-red-800',
+      'blue': 'bg-blue-100 text-blue-800',
+      'green': 'bg-green-100 text-green-800',
+      'purple': 'bg-purple-100 text-purple-800',
+      'orange': 'bg-orange-100 text-orange-800',
+      'indigo': 'bg-indigo-100 text-indigo-800',
+      'gray': 'bg-gray-100 text-gray-800'
+    };
+    
+    return colorClasses[color] || 'bg-blue-100 text-blue-800';
   };
 
   // Функции для получения данных из API
@@ -62,11 +161,75 @@ const Research = () => {
     }
   };
 
+  const fetchResearchAreas = async () => {
+    try {
+      // Получаем все публикации для анализа
+      const response = await fetch('http://127.0.0.1:8000/research/api/publications/');
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      const publicationsData = data.results || data;
+      
+      // Группируем публикации по областям исследований
+      const areasMap = new Map();
+      
+      publicationsData.forEach(pub => {
+        const areaName = pub.research_area?.title_ru || 
+                        pub.research_area?.title_en || 
+                        extractAreaFromKeywords(pub) || 
+                        'Общая медицина';
+        
+        if (!areasMap.has(areaName)) {
+          areasMap.set(areaName, {
+            id: areaName,
+            title_ru: pub.research_area?.title_ru || areaName,
+            title_en: pub.research_area?.title_en || translateArea(areaName, 'en'),
+            title_kg: pub.research_area?.title_kg || translateArea(areaName, 'kg'),
+            description_ru: pub.research_area?.description_ru || `Исследования в области ${areaName.toLowerCase()}`,
+            description_en: pub.research_area?.description_en || `Research in ${areaName.toLowerCase()}`,
+            description_kg: pub.research_area?.description_kg || `${areaName} областындагы изилдөөлөр`,
+            icon: getAreaIcon(areaName),
+            color: getAreaColor(areaName),
+            publications_count: 0,
+            researchers_count: new Set(),
+            projects_count: 0
+          });
+        }
+        
+        const area = areasMap.get(areaName);
+        area.publications_count++;
+        
+        // Добавляем авторов (подсчет уникальных исследователей)
+        if (pub.authors_ru || pub.authors_en) {
+          const authors = (pub.authors_ru || pub.authors_en || '').split(',');
+          authors.forEach(author => {
+            if (author.trim()) {
+              area.researchers_count.add(author.trim());
+            }
+          });
+        }
+      });
+      
+      // Преобразуем Set в число для подсчета исследователей
+      const areas = Array.from(areasMap.values()).map(area => ({
+        ...area,
+        researchers_count: area.researchers_count.size,
+        projects_count: Math.ceil(area.publications_count / 3) // Примерно 3 публикации на проект
+      }));
+      
+      setResearchAreas(areas);
+    } catch (err) {
+      console.error('Error fetching research areas:', err);
+      setError(t('research.areas.errorLoading') || 'Ошибка загрузки областей исследований');
+    }
+  };
+
   // Загрузка данных при монтировании компонента
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
-      await Promise.all([fetchPublications(), fetchConferences()]);
+      await Promise.all([fetchPublications(), fetchConferences(), fetchResearchAreas()]);
       setLoading(false);
     };
     
@@ -89,76 +252,6 @@ const Research = () => {
 
     return () => observer.disconnect();
   }, []);
-
-  // Ключевые направления исследований
-  const researchAreas = [
-    {
-      id: 1,
-      icon: '🫀',
-      title: t('research.researchAreas.cardiology.title'),
-      projects: 15,
-      publications: 45,
-      researchers: 28,
-      color: 'bg-red-100 text-red-800',
-      gradient: 'from-red-500 to-orange-500',
-      description: t('research.researchAreas.cardiology.description')
-    },
-    {
-      id: 2,
-      icon: '🧠',
-      title: t('research.researchAreas.neuroscience.title'),
-      projects: 8,
-      publications: 22,
-      researchers: 18,
-      color: 'bg-blue-100 text-blue-800',
-      gradient: 'from-blue-500 to-indigo-600',
-      description: t('research.researchAreas.neuroscience.description')
-    },
-    {
-      id: 3,
-      icon: '🦠',
-      title: t('research.researchAreas.oncology.title'),
-      projects: 12,
-      publications: 38,
-      researchers: 32,
-      color: 'bg-green-100 text-green-800',
-      gradient: 'from-green-500 to-teal-600',
-      description: t('research.researchAreas.oncology.description')
-    },
-    {
-      id: 4,
-      icon: '🧬',
-      title: t('research.researchAreas.genetics.title'),
-      projects: 9,
-      publications: 31,
-      researchers: 21,
-      color: 'bg-purple-100 text-purple-800',
-      gradient: 'from-purple-500 to-pink-500',
-      description: t('research.researchAreas.genetics.description')
-    },
-    {
-      id: 5,
-      icon: '🦴',
-      title: t('research.researchAreas.immunology.title'),
-      projects: 6,
-      publications: 19,
-      researchers: 15,
-      color: 'bg-orange-100 text-orange-800',
-      gradient: 'from-amber-500 to-orange-600',
-      description: t('research.researchAreas.immunology.description')
-    },
-    {
-      id: 6,
-      icon: '💊',
-      title: t('research.researchAreas.pharmacology.title'),
-      projects: 7,
-      publications: 24,
-      researchers: 16,
-      color: 'bg-indigo-100 text-indigo-800',
-      gradient: 'from-indigo-500 to-blue-600',
-      description: t('research.researchAreas.pharmacology.description')
-    }
-  ];
 
   // Статистика исследований
   const researchStats = [
@@ -277,9 +370,7 @@ const Research = () => {
         <section className="mb-16">
           <div className="flex items-center justify-between mb-8">
             <h2 className="text-3xl font-bold text-gray-800">{t('research.researchAreas.title')}</h2>
-            <Link to="/research/areas" className="text-blue-600 hover:text-blue-800 flex items-center group">
-              Все направления <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-            </Link>
+            
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -292,27 +383,27 @@ const Research = () => {
                 
                 <div className="relative z-10">
                   <div className="flex items-start justify-between mb-4">
-                    <span className="text-4xl transform group-hover:scale-110 transition-transform duration-300">{area.icon}</span>
-                    <span className={`px-3 py-1 rounded-full text-sm font-medium ${area.color}`}>
-                      {area.projects} {t('research.researchAreas.projects')}
+                    <span className="text-4xl transform group-hover:scale-110 transition-transform duration-300">{area.icon || '🔬'}</span>
+                    <span className={`px-3 py-1 rounded-full text-sm font-medium ${getColorClasses(area.color)}`}>
+                      {area.projects_count || 0} {t('research.researchAreas.projects')}
                     </span>
                   </div>
                   
-                  <h3 className="text-xl font-semibold text-gray-800 mb-3 group-hover:text-gray-900 transition-colors">{area.title}</h3>
-                  <p className="text-gray-600 mb-4 leading-relaxed">{area.description}</p>
+                  <h3 className="text-xl font-semibold text-gray-800 mb-3 group-hover:text-gray-900 transition-colors">{getAreaName(area)}</h3>
+                  <p className="text-gray-600 mb-4 leading-relaxed">{getAreaDescription(area)}</p>
                   
                   <div className="grid grid-cols-2 gap-4 pt-4 border-t border-gray-100">
                     <div className="flex items-center">
                       <BookOpen className="w-5 h-5 text-gray-400 mr-2" />
                       <div>
-                        <div className="text-xl font-bold text-gray-800">{area.publications}</div>
+                        <div className="text-xl font-bold text-gray-800">{area.publications_count || 0}</div>
                         <div className="text-sm text-gray-600">{t('research.researchAreas.publications')}</div>
                       </div>
                     </div>
                     <div className="flex items-center">
                       <Users className="w-5 h-5 text-gray-400 mr-2" />
                       <div>
-                        <div className="text-xl font-bold text-gray-800">{area.researchers}</div>
+                        <div className="text-xl font-bold text-gray-800">{area.researchers_count || 0}</div>
                         <div className="text-sm text-gray-600">{t('research.researchAreas.researchers')}</div>
                       </div>
                     </div>
@@ -358,7 +449,7 @@ const Research = () => {
                   >
                     <div className="flex justify-between items-start mb-2">
                       <span className="text-xs font-medium text-blue-600 bg-blue-100 px-2 py-1 rounded-full">
-                        {pub.research_center?.name || t('research.publications.general')}
+                        {getResearchCenterName(pub.research_center) || t('research.publications.general')}
                       </span>
                       <span className="text-xs text-gray-500">{formatDate(pub.publication_date)}</span>
                     </div>
@@ -366,7 +457,7 @@ const Research = () => {
                     <h3 className="font-semibold text-gray-800 mb-2 line-clamp-2 group-hover:text-blue-700 transition-colors">
                       {getPublicationTitle(pub)}
                     </h3>
-                    <p className="text-sm text-gray-600 mb-2">{pub.authors}</p>
+                    <p className="text-sm text-gray-600 mb-2">{getPublicationAuthors(pub)}</p>
                     
                     <div className="flex justify-between items-center">
                       <span className="text-xs text-gray-500">{pub.journal}</span>

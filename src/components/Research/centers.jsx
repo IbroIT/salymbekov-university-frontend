@@ -1,108 +1,103 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const Centers = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const currentLang = i18n.language; // 'ru', 'en', или 'kg'
   const [selectedCenter, setSelectedCenter] = useState(null);
   const [hoveredCard, setHoveredCard] = useState(null);
+  const [researchCenters, setResearchCenters] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const researchCenters = [
-    {
-      id: 1,
-      name: t('research.centers.molecularMedicine.name'),
-      logo: "🧬",
-      director: {
-        name: t('research.centers.directors.aliyev'),
-        photo: "👨‍⚕️",
-        position: t('research.centers.positions.professor')
-      },
-      staffCount: 25,
-      equipment: [
-        t('research.centers.equipment.pcrAnalyzer'),
-        t('research.centers.equipment.spectrophotometer'),
-        t('research.centers.equipment.electronMicroscope'),
-        t('research.centers.equipment.cryostat')
-      ],
-      publicationsLink: "/publications/center-1",
-      description: t('research.centers.molecularMedicine.description')
-    },
-    {
-      id: 2,
-      name: t('research.centers.neurosciences.name'),
-      logo: "🧠",
-      director: {
-        name: t('research.centers.directors.smagulova'),
-        photo: "👩‍⚕️",
-        position: t('research.centers.positions.professorPhD')
-      },
-      staffCount: 18,
-      equipment: [
-        t('research.centers.equipment.eegSystem'),
-        t('research.centers.equipment.mri3T'),
-        t('research.centers.equipment.transcranialStimulator'),
-        t('research.centers.equipment.optogeneticSetup')
-      ],
-      publicationsLink: "/publications/center-2",
-      description: t('research.centers.neurosciences.description')
-    },
-    {
-      id: 3,
-      name: t('research.centers.biomedicalTech.name'),
-      logo: "🔬",
-      director: {
-        name: t('research.centers.directors.zhanuzakov'),
-        photo: "👨‍🔬",
-        position: t('research.centers.positions.associateProfessor')
-      },
-      staffCount: 32,
-      equipment: [
-        t('research.centers.equipment.bioprinter3D'),
-        t('research.centers.equipment.cellSorter'),
-        t('research.centers.equipment.massSpectrometer'),
-        t('research.centers.equipment.bioreactors')
-      ],
-      publicationsLink: "/publications/center-3",
-      description: t('research.centers.biomedicalTech.description')
-    },
-    {
-      id: 4,
-      name: t('research.centers.clinicalResearch.name'),
-      logo: "⚕️",
-      director: {
-        name: t('research.centers.directors.toktogulov'),
-        photo: "👨‍⚕️",
-        position: t('research.centers.positions.professor')
-      },
-      staffCount: 28,
-      equipment: [
-        t('research.centers.equipment.randomizationSystem'),
-        t('research.centers.equipment.ecrfPlatform'),
-        t('research.centers.equipment.statisticalSoftware'),
-        t('research.centers.equipment.monitoringEquipment')
-      ],
-      publicationsLink: "/publications/center-4",
-      description: t('research.centers.clinicalResearch.description')
-    },
-    {
-      id: 5,
-      name: t('research.centers.publicHealth.name'),
-      logo: "🏥",
-      director: {
-        name: t('research.centers.directors.mambetova'),
-        photo: "👩‍⚕️",
-        position: t('research.centers.positions.professorPhD')
-      },
-      staffCount: 22,
-      equipment: [
-        t('research.centers.equipment.epidemiologicalDatabase'),
-        t('research.centers.equipment.gisSystem'),
-        t('research.centers.equipment.surveyPlatforms'),
-        t('research.centers.equipment.analyticalTools')
-      ],
-      publicationsLink: "/publications/center-5",
-      description: t('research.centers.publicHealth.description')
+  // Функции для получения данных на текущем языке
+  const getCenterName = (center) => {
+    return center[`name_${currentLang}`] || center.name_ru || center.name;
+  };
+
+  const getCenterDescription = (center) => {
+    return center[`description_${currentLang}`] || center.description_ru || center.description;
+  };
+
+  const getDirectorName = (center) => {
+    return center[`director_${currentLang}`] || center.director_ru || center.director;
+  };
+
+  const getEquipment = (center) => {
+    return center[`equipment_${currentLang}`] || center.equipment_ru || center.equipment || '';
+  };
+
+  // Функция для получения данных из API
+  const fetchCenters = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch('http://127.0.0.1:8000/research/api/centers/');
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      
+      // API может возвращать paginated результаты
+      const centersData = data.results || data;
+      setResearchCenters(centersData);
+      setError(null);
+    } catch (err) {
+      console.error('Error fetching centers:', err);
+      setError(t('research.centers.errorLoading') || 'Ошибка загрузки центров');
+      setResearchCenters([]);
+    } finally {
+      setLoading(false);
     }
-  ];
+  };
+
+  // Загрузка данных при монтировании компонента
+  useEffect(() => {
+    fetchCenters();
+  }, []);
+
+  // Загрузка при смене языка
+  useEffect(() => {
+    if (researchCenters.length > 0) {
+      // Обновляем отображение при смене языка
+      setSelectedCenter(null);
+    }
+  }, [currentLang]);
+
+  const formatEquipmentList = (equipmentText) => {
+    if (!equipmentText) return [];
+    // Разделяем оборудование по строкам или запятым
+    return equipmentText.split(/[,\n]/).map(item => item.trim()).filter(Boolean);
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mb-4"></div>
+          <p className="text-xl text-gray-600">{t('research.centers.loading') || 'Загрузка центров...'}</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-6xl text-gray-400 mb-4">⚠️</div>
+          <p className="text-xl text-red-600 mb-4">{error}</p>
+          <button
+            onClick={fetchCenters}
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200"
+          >
+            {t('research.centers.retry') || 'Повторить попытку'}
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4">
@@ -119,76 +114,84 @@ const Centers = () => {
 
         {/* Сетка карточек */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {researchCenters.map((center) => (
-            <div
-              key={center.id}
-              className={`bg-white rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 ${
-                hoveredCard === center.id 
-                  ? 'scale-105 shadow-2xl' 
-                  : 'scale-100 hover:scale-102'
-              }`}
-              onMouseEnter={() => setHoveredCard(center.id)}
-              onMouseLeave={() => setHoveredCard(null)}
-            >
-              {/* Верхняя часть с логотипом и названием */}
-              <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-6 text-white">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="text-4xl">{center.logo}</div>
-                  <div className="text-right">
-                    <span className="text-sm bg-white/20 px-3 py-1 rounded-full">
-                      {center.staffCount} {t('research.centers.staffCount')}
-                    </span>
+          {researchCenters.map((center) => {
+            const equipmentList = formatEquipmentList(getEquipment(center));
+            return (
+              <div
+                key={center.id}
+                className={`bg-white rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 ${
+                  hoveredCard === center.id 
+                    ? 'scale-105 shadow-2xl' 
+                    : 'scale-100 hover:scale-102'
+                }`}
+                onMouseEnter={() => setHoveredCard(center.id)}
+                onMouseLeave={() => setHoveredCard(null)}
+              >
+                {/* Верхняя часть с логотипом и названием */}
+                <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-6 text-white">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="text-4xl">🏥</div>
+                    <div className="text-right">
+                      <span className="text-sm bg-white/20 px-3 py-1 rounded-full">
+                        {center.staff_count} {t('research.centers.staffCount')}
+                      </span>
+                    </div>
                   </div>
+                  <h3 className="text-xl font-bold">{getCenterName(center)}</h3>
+                  <p className="text-sm opacity-90 mt-2">{getCenterDescription(center)}</p>
                 </div>
-                <h3 className="text-xl font-bold">{center.name}</h3>
-                <p className="text-sm opacity-90 mt-2">{center.description}</p>
+
+                {/* Контент карточки */}
+                <div className="p-6">
+                  {/* Руководитель */}
+                  <div className="flex items-center mb-6 p-4 bg-gray-50 rounded-lg">
+                    <div className="text-3xl mr-4">👨‍⚕️</div>
+                    <div>
+                      <h4 className="font-semibold text-gray-800">{getDirectorName(center)}</h4>
+                      <p className="text-sm text-gray-600">{t('research.centers.positions.professor')}</p>
+                    </div>
+                  </div>
+
+                  {/* Оборудование */}
+                  <div className="mb-6">
+                    <h4 className="font-semibold text-gray-800 mb-3 flex items-center">
+                      <span className="mr-2">⚙️</span>
+                      {t('research.centers.equipmentTitle')}
+                    </h4>
+                    <div className="space-y-2">
+                      {equipmentList.slice(0, 3).map((item, index) => (
+                        <div
+                          key={index}
+                          className="flex items-center text-sm text-gray-700 bg-blue-50 px-3 py-2 rounded-lg"
+                        >
+                          <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+                          {item}
+                        </div>
+                      ))}
+                      {equipmentList.length > 3 && (
+                        <div className="text-sm text-blue-600 font-medium">
+                          +{equipmentList.length - 3} {t('research.centers.moreItems')}
+                        </div>
+                      )}
+                      {equipmentList.length === 0 && (
+                        <div className="text-sm text-gray-500 italic">
+                          {t('research.centers.noEquipment') || 'Информация об оборудовании отсутствует'}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Кнопка публикаций */}
+                  <button
+                    onClick={() => setSelectedCenter(center)}
+                    className="w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                  >
+                    📚 {t('research.centers.viewDetails')}
+                  </button>
+                </div>
               </div>
-
-              {/* Контент карточки */}
-              <div className="p-6">
-                {/* Руководитель */}
-                <div className="flex items-center mb-6 p-4 bg-gray-50 rounded-lg">
-                  <div className="text-3xl mr-4">{center.director.photo}</div>
-                  <div>
-                    <h4 className="font-semibold text-gray-800">{center.director.name}</h4>
-                    <p className="text-sm text-gray-600">{center.director.position}</p>
-                  </div>
-                </div>
-
-                {/* Оборудование */}
-                <div className="mb-6">
-                  <h4 className="font-semibold text-gray-800 mb-3 flex items-center">
-                    <span className="mr-2">⚙️</span>
-                    {t('research.centers.equipmentTitle')}
-                  </h4>
-                  <div className="space-y-2">
-                    {center.equipment.slice(0, 3).map((item, index) => (
-                      <div
-                        key={index}
-                        className="flex items-center text-sm text-gray-700 bg-blue-50 px-3 py-2 rounded-lg"
-                      >
-                        <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
-                        {item}
-                      </div>
-                    ))}
-                    {center.equipment.length > 3 && (
-                      <div className="text-sm text-blue-600 font-medium">
-                        +{center.equipment.length - 3} {t('research.centers.moreItems')}
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                {/* Кнопка публикаций */}
-                <button
-                  onClick={() => setSelectedCenter(center)}
-                  className="w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
-                >
-                  📚 {t('research.centers.viewPublications')}
-                </button>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Модальное окно с деталями */}
@@ -198,8 +201,8 @@ const Centers = () => {
               <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-6 text-white">
                 <div className="flex justify-between items-start">
                   <div>
-                    <h2 className="text-2xl font-bold">{selectedCenter.name}</h2>
-                    <p className="opacity-90">{selectedCenter.description}</p>
+                    <h2 className="text-2xl font-bold">{getCenterName(selectedCenter)}</h2>
+                    <p className="opacity-90">{getCenterDescription(selectedCenter)}</p>
                   </div>
                   <button
                     onClick={() => setSelectedCenter(null)}
@@ -218,10 +221,10 @@ const Centers = () => {
                       {t('research.centers.director')}
                     </h3>
                     <div className="flex items-center">
-                      <div className="text-4xl mr-4">{selectedCenter.director.photo}</div>
+                      <div className="text-4xl mr-4">👨‍⚕️</div>
                       <div>
-                        <p className="font-semibold">{selectedCenter.director.name}</p>
-                        <p className="text-sm text-gray-600">{selectedCenter.director.position}</p>
+                        <p className="font-semibold">{getDirectorName(selectedCenter)}</p>
+                        <p className="text-sm text-gray-600">{t('research.centers.positions.professor')}</p>
                       </div>
                     </div>
                   </div>
@@ -231,39 +234,86 @@ const Centers = () => {
                     <h3 className="font-semibold text-lg mb-3">
                       {t('research.centers.team')}
                     </h3>
-                    <p className="text-3xl font-bold text-blue-600">{selectedCenter.staffCount}</p>
+                    <p className="text-3xl font-bold text-blue-600">{selectedCenter.staff_count}</p>
                     <p className="text-sm text-gray-600">
                       {t('research.centers.researchers')}
                     </p>
                   </div>
                 </div>
 
+                {/* Контактная информация */}
+                {(selectedCenter.website || selectedCenter.email || selectedCenter.phone) && (
+                  <div className="mt-6 bg-gray-50 p-4 rounded-lg">
+                    <h3 className="font-semibold text-lg mb-3">
+                      {t('research.centers.contacts') || 'Контактная информация'}
+                    </h3>
+                    <div className="space-y-2">
+                      {selectedCenter.website && (
+                        <div className="flex items-center">
+                          <span className="text-blue-600 mr-2">🌐</span>
+                          <a href={selectedCenter.website} target="_blank" rel="noopener noreferrer" 
+                             className="text-blue-600 hover:text-blue-800 underline">
+                            {selectedCenter.website}
+                          </a>
+                        </div>
+                      )}
+                      {selectedCenter.email && (
+                        <div className="flex items-center">
+                          <span className="text-blue-600 mr-2">📧</span>
+                          <a href={`mailto:${selectedCenter.email}`} 
+                             className="text-blue-600 hover:text-blue-800">
+                            {selectedCenter.email}
+                          </a>
+                        </div>
+                      )}
+                      {selectedCenter.phone && (
+                        <div className="flex items-center">
+                          <span className="text-blue-600 mr-2">📞</span>
+                          <span className="text-gray-700">{selectedCenter.phone}</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+
                 {/* Оборудование */}
                 <div className="mt-6">
                   <h3 className="font-semibold text-lg mb-3">
                     {t('research.centers.equipmentTitle')}
                   </h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {selectedCenter.equipment.map((item, index) => (
-                      <div
-                        key={index}
-                        className="flex items-center bg-blue-50 px-4 py-3 rounded-lg"
-                      >
-                        <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
-                        <span className="text-sm">{item}</span>
-                      </div>
-                    ))}
-                  </div>
+                  {formatEquipmentList(getEquipment(selectedCenter)).length > 0 ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      {formatEquipmentList(getEquipment(selectedCenter)).map((item, index) => (
+                        <div
+                          key={index}
+                          className="flex items-center bg-blue-50 px-4 py-3 rounded-lg"
+                        >
+                          <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+                          <span className="text-sm">{item}</span>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-gray-500 italic text-center py-4">
+                      {t('research.centers.noEquipment') || 'Информация об оборудовании отсутствует'}
+                    </div>
+                  )}
                 </div>
 
-                {/* Ссылка на публикации */}
-                <div className="mt-8 text-center">
-                  <a
-                    href={selectedCenter.publicationsLink}
-                    className="inline-block bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-200 transform hover:scale-105"
-                  >
-                    📖 {t('research.centers.goToPublications')}
-                  </a>
+                {/* Дополнительная информация */}
+                <div className="mt-6 bg-blue-50 p-4 rounded-lg">
+                  <h3 className="font-semibold text-lg mb-2">
+                    {t('research.centers.additionalInfo') || 'Дополнительная информация'}
+                  </h3>
+                  <div className="text-sm text-gray-600 space-y-1">
+                    <p><strong>{t('research.centers.established') || 'Год основания'}:</strong> {selectedCenter.established_year}</p>
+                    {selectedCenter.image && (
+                      <div className="mt-3">
+                        <img src={selectedCenter.image} alt={getCenterName(selectedCenter)} 
+                             className="w-full h-40 object-cover rounded-lg" />
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
