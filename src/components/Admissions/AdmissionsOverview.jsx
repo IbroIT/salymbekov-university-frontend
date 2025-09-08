@@ -218,9 +218,6 @@ Email: [Ваш email]
                 >
                   {isAutoPlay ? '⏸️' : '▶️'}
                 </button>
-                <div className="text-sm text-gray-600 px-2">
-                  {t('common.step')} {activeStep + 1} {t('common.of')} {timelineSteps.length}
-                </div>
                 <button
                   onClick={() => setActiveStep((prev) => (prev - 1 + timelineSteps.length) % timelineSteps.length)}
                   className="p-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors"
