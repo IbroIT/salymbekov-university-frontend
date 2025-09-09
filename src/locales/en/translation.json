@@ -2624,8 +2624,12 @@
       "subtitle": "Advanced laboratories and research complexes of the university",
       "staffCount": "staff",
       "equipmentTitle": "Equipment",
+      "noEquipment": "No equipment information available",
       "viewPublications": "View Publications",
       "moreItems": "more...",
+      "viewDetails": "View Details",
+      "additionalInfo": "Additional Information",
+      "established": "Established",
       "director": "Director",
       "team": "Team",
       "researchers": "research staff",
@@ -3300,7 +3304,37 @@
         "applicationReady": "Your application is ready to send",
         "backupMethod": "If Gmail didn't open, press OK for a backup method.",
         "emailClient": "Opening email client..."
-      }
+      },
+      "programs": {
+    "medicine": {
+      "name": "General Medicine",
+      "duration": "6 years",
+      "cost": "170,000 KGS/year",
+      "requirements": "NCT: 120+, Biology, Chemistry",
+      "description": "Training general practitioners"
+    },
+    "dentistry": {
+      "name": "Dentistry",
+      "duration": "5 years",
+      "cost": "190,000 KGS/year",
+      "requirements": "NCT: 110+, Biology, Chemistry",
+      "description": "Training dental doctors"
+    },
+    "pharmacy": {
+      "name": "Pharmacy",
+      "duration": "5 years",
+      "cost": "150,000 KGS/year",
+      "requirements": "NCT: 100+, Chemistry, Biology",
+      "description": "Training pharmacists"
+    },
+    "nursing": {
+      "name": "Nursing",
+      "duration": "4 years",
+      "cost": "130,000 KGS/year",
+      "requirements": "NCT: 90+, Biology",
+      "description": "Training nurses"
+    }
+  }
     },
     "news": {
     "announcements": {
