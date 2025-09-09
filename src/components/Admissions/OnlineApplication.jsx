@@ -52,39 +52,40 @@ const OnlineApplication = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const programs = [
-    {
-      id: 'medicine',
-      name: t('application.programs.medicine'),
-      duration: '6 лет',
-      cost: '170,000 сом/год',
-      requirements: 'ОРТ: 120+, Биология, Химия',
-      description: 'Подготовка врачей общей практики'
-    },
-    {
-      id: 'dentistry',
-      name: t('application.programs.dentistry'),
-      duration: '5 лет',
-      cost: '190,000 сом/год',
-      requirements: 'ОРТ: 110+, Биология, Химия',
-      description: 'Подготовка врачей-стоматологов'
-    },
-    {
-      id: 'pharmacy',
-      name: t('application.programs.pharmacy'),
-      duration: '5 лет',
-      cost: '150,000 сом/год',
-      requirements: 'ОРТ: 100+, Химия, Биология',
-      description: 'Подготовка провизоров и фармацевтов'
-    },
-    {
-      id: 'nursing',
-      name: t('application.programs.nursing'),
-      duration: '4 года',
-      cost: '130,000 сом/год',
-      requirements: 'ОРТ: 90+, Биология',
-      description: 'Подготовка медицинских сестер'
-    }
-  ];
+  {
+    id: 'medicine',
+    name: t('application.programs.medicine.name'),
+    duration: t('application.programs.medicine.duration'),
+    cost: t('application.programs.medicine.cost'),
+    requirements: t('application.programs.medicine.requirements'),
+    description: t('application.programs.medicine.description')
+  },
+  {
+    id: 'dentistry',
+    name: t('application.programs.dentistry.name'),
+    duration: t('application.programs.dentistry.duration'),
+    cost: t('application.programs.dentistry.cost'),
+    requirements: t('application.programs.dentistry.requirements'),
+    description: t('application.programs.dentistry.description')
+  },
+  {
+    id: 'pharmacy',
+    name: t('application.programs.pharmacy.name'),
+    duration: t('application.programs.pharmacy.duration'),
+    cost: t('application.programs.pharmacy.cost'),
+    requirements: t('application.programs.pharmacy.requirements'),
+    description: t('application.programs.pharmacy.description')
+  },
+  {
+    id: 'nursing',
+    name: t('application.programs.nursing.name'),
+    duration: t('application.programs.nursing.duration'),
+    cost: t('application.programs.nursing.cost'),
+    requirements: t('application.programs.nursing.requirements'),
+    description: t('application.programs.nursing.description')
+  }
+];
+
 
   const steps = [
     { id: 1, title: t('application.steps.program'), icon: '📋' },

@@ -29,84 +29,28 @@ const NewsAnnouncements = () => {
         throw new Error(t('news.announcements.loadError'));
       }
       const data = await response.json();
-      setAnnouncements(data.results || data);
+      // Маппинг полей API к фронтенду
+      const mappedAnnouncements = (data.results || data).map(announcement => ({
+        ...announcement,
+        // Дата публикации
+        date: announcement.published_at,
+        // Тип объявления
+        type: announcement.announcement_type,
+        // Описание из summary
+        description: announcement.summary,
+        // Приоритет
+        priority: announcement.priority,
+        // Закреплено
+        pinned: announcement.is_pinned,
+        // Имя вложения
+        attachment: announcement.attachment_name,
+        // Приближается дедлайн
+        deadlineApproaching: announcement.is_deadline_approaching
+      }));
+      setAnnouncements(mappedAnnouncements);
     } catch (err) {
       setError(err.message);
-      // Fallback данные для объявлений
-      setAnnouncements([
-        {
-          id: 1,
-          title: t('news.announcements.fallback.winterSession.title'),
-          date: "2024-11-25",
-          type: "academic",
-          priority: "high",
-          deadline: "2025-01-15",
-          description: t('news.announcements.fallback.winterSession.description'),
-          content: t('news.announcements.fallback.winterSession.content'),
-          attachment: "winter_session_schedule.pdf",
-          pinned: true
-        },
-        {
-          id: 2,
-          title: t('news.announcements.fallback.scholarship.title'),
-          date: "2024-11-20",
-          type: "scholarship",
-          priority: "high",
-          deadline: "2024-12-10",
-          description: t('news.announcements.fallback.scholarship.description'),
-          content: t('news.announcements.fallback.scholarship.content'),
-          attachment: "scholarship_application_form.pdf",
-          pinned: true
-        },
-        {
-          id: 3,
-          title: t('news.announcements.fallback.scheduleChanges.title'),
-          date: "2024-11-18",
-          type: "schedule",
-          priority: "medium",
-          deadline: null,
-          description: t('news.announcements.fallback.scheduleChanges.description'),
-          content: t('news.announcements.fallback.scheduleChanges.content'),
-          attachment: "december_schedule_changes.pdf",
-          pinned: false
-        },
-        {
-          id: 4,
-          title: t('news.announcements.fallback.researchCompetition.title'),
-          date: "2024-11-15",
-          type: "competition",
-          priority: "medium",
-          deadline: "2025-02-28",
-          description: t('news.announcements.fallback.researchCompetition.description'),
-          content: t('news.announcements.fallback.researchCompetition.content'),
-          attachment: "research_competition_rules.pdf",
-          pinned: false
-        },
-        {
-          id: 5,
-          title: t('news.announcements.fallback.vaccination.title'),
-          date: "2024-11-10",
-          type: "health",
-          priority: "medium",
-          deadline: "2024-12-20",
-          description: t('news.announcements.fallback.vaccination.description'),
-          content: t('news.announcements.fallback.vaccination.content'),
-          attachment: null,
-          pinned: false
-        },
-        {
-          id: 6,
-          title: t('news.announcements.fallback.systemUpdate.title'),
-          date: "2024-11-05",
-          type: "technical",
-          priority: "low",
-          deadline: null,
-          description: t('news.announcements.fallback.systemUpdate.description'),
-          content: t('news.announcements.fallback.systemUpdate.content'),
-          attachment: null,
-          pinned: false
-        }
-      ]);
+      setAnnouncements([]);
     }
     setLoading(false);
   };
@@ -119,12 +63,64 @@ const NewsAnnouncements = () => {
   const regularAnnouncements = filteredAnnouncements.filter(item => !item.pinned);
 
   const formatDate = (dateString) => {
+    if (!dateString) return t('news.announcements.noDate', 'Дата не указана');
+    
     const date = new Date(dateString);
+    if (isNaN(date.getTime())) {
+      return t('news.announcements.invalidDate', 'Некорректная дата');
+    }
+    
     return date.toLocaleDateString(i18n.language === 'kg' ? 'ky-KG' : i18n.language, {
       day: 'numeric',
       month: 'long',
       year: 'numeric'
     });
+  };
+
+  const formatTime = (dateString) => {
+    if (!dateString) return '';
+    
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return '';
+    
+    return date.toLocaleTimeString(i18n.language === 'kg' ? 'ky-KG' : i18n.language, {
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
+
+  const formatDeadline = (dateString) => {
+    if (!dateString) return '';
+    
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return '';
+    
+    const dateStr = date.toLocaleDateString(i18n.language === 'kg' ? 'ky-KG' : i18n.language, {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    });
+    
+    const timeStr = date.toLocaleTimeString(i18n.language === 'kg' ? 'ky-KG' : i18n.language, {
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+    
+    return `${dateStr}, ${timeStr}`;
+  };
+
+  const formatDateTime = (dateString) => {
+    if (!dateString) return t('news.announcements.noDate', 'Дата не указана');
+    
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) {
+      return t('news.announcements.invalidDate', 'Некорректная дата');
+    }
+    
+    const dateStr = formatDate(dateString);
+    const timeStr = formatTime(dateString);
+    
+    return `${dateStr}, ${timeStr}`;
   };
 
   const getTypeInfo = (type) => {
@@ -198,8 +194,26 @@ const NewsAnnouncements = () => {
       </div>
 
       <div className="container mx-auto px-4 py-12">
-        {/* Pinned Announcements */}
-        {pinnedAnnouncements.length > 0 && (
+        {/* Error Message */}
+        {error && (
+          <div className="text-center py-8 mb-8">
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+              {error}
+            </div>
+          </div>
+        )}
+
+        {/* Loading State */}
+        {loading ? (
+          <div className="text-center py-12">
+            <div className="text-gray-500 text-lg">
+              {t('news.announcements.loading', 'Загрузка объявлений...')}
+            </div>
+          </div>
+        ) : !error && (
+          <>
+            {/* Pinned Announcements */}
+            {pinnedAnnouncements.length > 0 && (
           <div className="mb-12">
             <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
               <Pin className="w-6 h-6 mr-2 text-red-500" />
@@ -232,15 +246,17 @@ const NewsAnnouncements = () => {
                           {item.content}
                         </p>
                         
-                        <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500">
-                          <div className="flex items-center">
-                            <Calendar className="w-4 h-4 mr-1" />
-                            {formatDate(item.date)}
-                          </div>
-                          {item.deadline && (
-                            <div className={`flex items-center ${isDeadlineApproaching(item.deadline) ? 'text-red-600 font-semibold' : ''}`}>
-                              <Bell className="w-4 h-4 mr-1" />
-                              {t('news.announcements.deadline')}: {formatDate(item.deadline)}
+                        <div className="flex flex-wrap items-center gap-4 text-sm">
+                          {item.deadline ? (
+                            <div className={`flex items-center ${isDeadlineApproaching(item.deadline) ? 'text-red-600 font-semibold' : 'text-gray-700'}`}>
+                              <Bell className="w-4 h-4 mr-2" />
+                              <span className="font-medium">{t('news.announcements.deadline')}:</span>
+                              <span className="ml-1">{formatDeadline(item.deadline)}</span>
+                            </div>
+                          ) : (
+                            <div className="flex items-center text-gray-500">
+                              <Calendar className="w-4 h-4 mr-2" />
+                              <span>{formatDateTime(item.date)}</span>
                             </div>
                           )}
                         </div>
@@ -341,15 +357,17 @@ const NewsAnnouncements = () => {
                       {item.description}
                     </p>
                     
-                    <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500">
-                      <div className="flex items-center">
-                        <Calendar className="w-4 h-4 mr-1" />
-                        {formatDate(item.date)}
-                      </div>
-                      {item.deadline && (
-                        <div className={`flex items-center ${isDeadlineApproaching(item.deadline) ? 'text-red-600 font-semibold' : ''}`}>
-                          <Bell className="w-4 h-4 mr-1" />
-                          {t('news.announcements.deadline')}: {formatDate(item.deadline)}
+                    <div className="flex flex-wrap items-center gap-4 text-sm">
+                      {item.deadline ? (
+                        <div className={`flex items-center ${isDeadlineApproaching(item.deadline) ? 'text-red-600 font-semibold' : 'text-gray-700'}`}>
+                          <Bell className="w-4 h-4 mr-2" />
+                          <span className="font-medium">{t('news.announcements.deadline')}:</span>
+                          <span className="ml-1">{formatDeadline(item.deadline)}</span>
+                        </div>
+                      ) : (
+                        <div className="flex items-center text-gray-500">
+                          <Calendar className="w-4 h-4 mr-2" />
+                          <span>{formatDateTime(item.date)}</span>
                         </div>
                       )}
                     </div>
@@ -405,6 +423,8 @@ const NewsAnnouncements = () => {
             </div>
           </div>
         </div>
+          </>
+        )}
       </div>
     </div>
   );

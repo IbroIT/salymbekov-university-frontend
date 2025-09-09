@@ -11,6 +11,9 @@ const getCurrentLanguage = () => {
     if (i18n && i18n.language) {
       currentLang = i18n.language;
       console.log('Language from i18n instance:', currentLang);
+    } else if (i18n && i18n.resolvedLanguage) {
+      currentLang = i18n.resolvedLanguage;
+      console.log('Language from i18n.resolvedLanguage:', currentLang);
     } else if (typeof window !== 'undefined' && window.i18n) {
       currentLang = window.i18n.language;
       console.log('Language from window.i18n:', currentLang);
@@ -18,15 +21,15 @@ const getCurrentLanguage = () => {
       currentLang = document.documentElement.lang;
       console.log('Language from document.documentElement.lang:', currentLang);
     } else {
-      // Try localStorage
+      // Try localStorage as last resort
       const stored = localStorage.getItem('i18nextLng');
-      if (stored) {
+      if (stored && stored !== 'undefined') {
         currentLang = stored;
         console.log('Language from localStorage:', currentLang);
       } else {
         // Fallback to browser language or default
         const browserLang = navigator.language.split('-')[0];
-        currentLang = ['ru', 'en', 'kg'].includes(browserLang) ? browserLang : 'ru';
+        currentLang = ['ru', 'en', 'kg', 'ky'].includes(browserLang) ? browserLang : 'ru';
         console.log('Language from browser or default:', currentLang);
       }
     }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { localizeNewsItem, localizeItems } from '../../utils/i18nHelpers';
 
 const API_BASE_URL = 'http://localhost:8000/api';
 
@@ -30,7 +31,9 @@ const News = () => {
         throw new Error(t('news.loadingError'));
       }
       const data = await response.json();
-      setNewsData(data.results || data);
+      // Локализуем данные с сервера
+      const localizedNews = localizeItems(data.results || data, 'news', i18n.language);
+      setNewsData(localizedNews);
     } catch (err) {
       setError(err.message);
       // Fallback данные если API недоступен
@@ -69,7 +72,9 @@ const News = () => {
       });
       if (response.ok) {
         const data = await response.json();
-        setFeaturedNews(data);
+        // Локализуем данные с сервера
+        const localizedFeatured = localizeItems(data, 'news', i18n.language);
+        setFeaturedNews(localizedFeatured);
       }
     } catch (err) {
       console.error(t('news.featuredError'), err);
