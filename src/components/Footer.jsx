@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn, FaTelegramPlane } from 'react-icons/fa';
+import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube, FaWhatsapp } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 
 const Footer = () => {
@@ -44,11 +44,11 @@ const Footer = () => {
             <h3 className="text-xl font-bold mb-4">{t('footer.socialTitle')}</h3>
             <div className="flex space-x-3 mb-6">
               {[
-                { icon: <FaFacebookF />, url: '#', name: 'Facebook' },
-                { icon: <FaTwitter />, url: '#', name: 'Twitter' },
-                { icon: <FaInstagram />, url: '#', name: 'Instagram' },
-                { icon: <FaLinkedinIn />, url: '#', name: 'LinkedIn' },
-                { icon: <FaTelegramPlane />, url: '#', name: 'Telegram' }
+                { icon: <FaFacebookF />, url: 'https://www.facebook.com/salymbekov.kg', name: 'Facebook' },
+                { icon: <FaTwitter />, url: 'https://x.com/SalymbekovO', name: 'Twitter' },
+                { icon: <FaInstagram />, url: 'https://www.instagram.com/salymbekovuniversity/', name: 'Instagram' },
+                { icon: <FaYoutube />, url: 'https://www.youtube.com/@salymbekovuniversity8213', name: 'YouTube' },
+                { icon: <FaWhatsapp />, url: 'https://api.whatsapp.com/send/?phone=996505658518&text&type=phone_number&app_absent=0', name: 'WhatsApp' }
               ].map((social, index) => (
                 <a
                   key={index}

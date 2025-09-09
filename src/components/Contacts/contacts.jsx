@@ -279,7 +279,7 @@ const Contacts = () => {
           transition={{ delay: 0.4 }}
           className="bg-white/5 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-blue-400/20 mb-8"
         >
-          <h2 className="text-2xl font-bold text-white mb-6">🚀 {t('contacts.quickActions.title')}</h2>
+          <h2 className="text-2xl font-bold text-white mb-6"> {t('contacts.quickActions.title')}</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <motion.a
@@ -338,15 +338,15 @@ const Contacts = () => {
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { name: "Facebook", icon: "📘", color: "bg-blue-600/20", border: "border-blue-400/20", handle: "/SalymbekovUniversity" },
-              { name: "Instagram", icon: "📷", color: "bg-pink-600/20", border: "border-pink-400/20", handle: "@salymbekovuniversity" },
-              { name: "Twitter", icon: "🐦", color: "bg-sky-600/20", border: "border-sky-400/20", handle: "@SalymbekovUniversity" },
-              { name: "YouTube", icon: "📺", color: "bg-red-600/20", border: "border-red-400/20", handle: "Salymbekov University" }
+              { name: "Facebook", icon: "📘", color: "bg-blue-600/20", border: "border-blue-400/20", handle: "/SalymbekovUniversity", URL: 'https://www.facebook.com/salymbekov.kg' },
+              { name: "Instagram", icon: "📷", color: "bg-pink-600/20", border: "border-pink-400/20", handle: "@salymbekovuniversity", URL: 'https://www.instagram.com/salymbekovuniversity/' },
+              { name: "Twitter", icon: "🐦", color: "bg-sky-600/20", border: "border-sky-400/20", handle: "@SalymbekovUniversity", URL: 'https://x.com/SalymbekovO' },
+              { name: "YouTube", icon: "📺", color: "bg-red-600/20", border: "border-red-400/20", handle: "Salymbekov University", URL: 'https://www.youtube.com/@salymbekovuniversity8213' }
             ].map((social, index) => (
               <motion.a
                 key={index}
                 whileHover={{ scale: 1.05 }}
-                href="#"
+                href={social.URL || '#'}
                 className={`${social.color} hover:${social.color.replace('20', '30')} text-white p-4 rounded-xl text-center transition-all border ${social.border}`}
               >
                 <div className="text-2xl mb-2">{social.icon}</div>
