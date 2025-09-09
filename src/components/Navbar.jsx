@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import Logo from '../assets/logo-salymbekov-university-site.png';
+import Logo from '../assets/logo-salymbekov-university-site.jpg';
 import './Navbar.css';
 import RuIcon from "../assets/Ru_icon.svg";
 import KgIcon from "../assets/Kg_icon.svg";

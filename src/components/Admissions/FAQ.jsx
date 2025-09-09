@@ -301,13 +301,6 @@ const FAQ = () => {
                   </button>
                 ))}
               </div>
-
-              <button
-                onClick={() => setShowQuestionForm(true)}
-                className="w-full mt-6 bg-indigo-600 text-white p-3 rounded-lg hover:bg-indigo-700 transition-colors font-medium"
-              >
-                {t('admissions.faq.askQuestion')}
-              </button>
             </div>
           </div>
 

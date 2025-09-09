@@ -16,8 +16,8 @@ const Contacts = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  // Карта Университета Салымбекова
-  const mapUrl = "https://2gis.kg/bishkek/firm/70000001039696456/74.561483%2C42.878785?m=74.56123%2C42.878447%2F18.87";
+  // Правильный URL для встраивания карты
+  const mapEmbedUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2923.836236396766!2d74.5693123154662!3d42.87489097915548!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x389eb7d8665c9707%3A0x6f8baf32986b4b0c!2sSalymbekov%20University!5e0!3m2!1sen!2skg!4v1645541234567!5m2!1sen!2skg";
 
   const departments = [
     {
@@ -225,23 +225,25 @@ const Contacts = () => {
             </h2>
             
             {!isMapLoaded ? (
-              <div className="h-96 bg-blue-900/30 rounded-xl animate-pulse flex items-center justify-center">
+              <div className="h-140 bg-blue-900/30 rounded-xl animate-pulse flex items-center justify-center">
                 <div className="text-center">
                   <div className="text-4xl mb-2 text-blue-400">🗺️</div>
                   <p className="text-blue-300">{t('contacts.map.loading')}</p>
                 </div>
               </div>
             ) : (
-              <div className="h-150 rounded-xl relative overflow-hidden">
+              <div className="h-140 rounded-xl relative overflow-hidden">
                 <iframe
-                  src={mapUrl}
+                  src={mapEmbedUrl}
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
                   allowFullScreen=""
                   loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
                   className="rounded-xl"
                   aria-label={t('contacts.map.ariaLabel')}
+                  title="Google Maps - Salymbekov University"
                 />
                 
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/80 to-transparent p-4 pt-6">

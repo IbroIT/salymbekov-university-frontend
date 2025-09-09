@@ -295,25 +295,6 @@ const Faculties = () => {
 </div>
 
         </div>
-
-        {/* Призыв к действию */}
-        <div className="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-xl md:rounded-2xl p-4 md:p-8 text-center text-white mt-6 md:mt-12 shadow-lg md:shadow-xl">
-          <h2 className="text-xl md:text-2xl lg:text-3xl font-bold mb-2 md:mb-4">
-            {t('faculties.program.ready_to_start')}
-          </h2>
-          <p className="text-sm md:text-lg mb-4 md:mb-6 opacity-90 max-w-2xl mx-auto">
-            {t('faculties.program.join_community')}
-          </p>
-          <button
-            onClick={handleApply}
-            className="bg-white text-blue-600 hover:bg-blue-50 px-4 py-2 md:px-8 md:py-3 rounded-lg font-semibold transition-colors inline-flex items-center justify-center text-sm md:text-base"
-          >
-            {t('faculties.program.apply')}
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 md:h-5 md:w-5 ml-1 md:ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-            </svg>
-          </button>
-        </div>
       </div>
     </div>
   );
