@@ -13,14 +13,15 @@ const Faculties = () => {
     image: '/images/medicine-hero.jpg',
     brochure: '/brochures/medicine.pdf',
     
-    curriculum: [
-      { semester: 1, credits: 30, subjects: ['Анатомия', 'Биология', 'Химия', 'Латинский язык'] },
-      { semester: 2, credits: 32, subjects: ['Гистология', 'Биохимия', 'Физика', 'Философия'] },
-      { semester: 3, credits: 34, subjects: ['Физиология', 'Микробиология', 'Патологическая анатомия'] },
-      { semester: 4, credits: 36, subjects: ['Фармакология', 'Пропедевтика', 'Иммунология'] },
-      { semester: 5, credits: 38, subjects: ['Внутренние болезни', 'Хирургия', 'Педиатрия'] },
-      { semester: 6, credits: 40, subjects: ['Акушерство', 'Гинекология', 'Неврология'] }
-    ],
+   curriculum: [
+  { semester: 1, credits: 30, subjects: ['anatomy', 'biology', 'chemistry', 'latin'] },
+  { semester: 2, credits: 32, subjects: ['histology', 'biochemistry', 'physics', 'philosophy'] },
+  { semester: 3, credits: 34, subjects: ['physiology', 'microbiology', 'pathological_anatomy'] },
+  { semester: 4, credits: 36, subjects: ['pharmacology', 'propaedeutics', 'immunology'] },
+  { semester: 5, credits: 38, subjects: ['internal_diseases', 'surgery', 'pediatrics'] },
+  { semester: 6, credits: 40, subjects: ['obstetrics', 'gynecology', 'neurology'] }
+],
+
     
     careers: [
       { icon: '🏥', key: 'therapist' },
@@ -211,63 +212,88 @@ const Faculties = () => {
           </div>
 
           {/* Учебный план */}
-          <div id="curriculum" className="bg-white rounded-xl md:rounded-2xl shadow-sm md:shadow-md p-4 md:p-8">
-            <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-4 md:mb-6">
-              {t('faculties.program.curriculum')}
-            </h3>
-            <div className="overflow-x-auto">
-              <table className="w-full text-left rounded-lg overflow-hidden text-sm md:text-base">
-                <thead className="bg-blue-600 text-white">
-                  <tr>
-                    <th className="px-3 py-2 md:px-6 md:py-4 font-semibold">
-                      {t('faculties.program.semester')}
-                    </th>
-                    <th className="px-3 py-2 md:px-6 md:py-4 font-semibold">
-                      {t('faculties.program.credits')}
-                    </th>
-                    <th className="px-3 py-2 md:px-6 md:py-4 font-semibold">
-                      {t('faculties.program.subjects')}
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {program.curriculum.map((semester, index) => (
-                    <tr key={semester.semester} className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
-                      <td className="px-3 py-2 md:px-6 md:py-4 font-medium text-gray-700">{semester.semester}</td>
-                      <td className="px-3 py-2 md:px-6 md:py-4 text-gray-600">{semester.credits}</td>
-                      <td className="px-3 py-2 md:px-6 md:py-4 text-gray-600">
-                        <ul className="list-disc list-inside">
-                          {semester.subjects.map((subject, idx) => (
-                            <li key={idx} className="text-xs md:text-sm">{subject}</li>
-                          ))}
-                        </ul>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
+<div
+  id="curriculum"
+  className="bg-white rounded-xl md:rounded-2xl shadow-sm md:shadow-md p-4 md:p-8"
+>
+  <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-4 md:mb-6">
+    {t('faculties.program.curriculum')}
+  </h3>
+  <div className="overflow-x-auto">
+    <table className="w-full text-left rounded-lg overflow-hidden text-sm md:text-base">
+      <thead className="bg-blue-600 text-white">
+        <tr>
+          <th className="px-3 py-2 md:px-6 md:py-4 font-semibold">
+            {t('faculties.program.semester')}
+          </th>
+          <th className="px-3 py-2 md:px-6 md:py-4 font-semibold">
+            {t('faculties.program.credits')}
+          </th>
+          <th className="px-3 py-2 md:px-6 md:py-4 font-semibold">
+            {t('faculties.program.subjects')}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {program.curriculum.map((semester, index) => (
+          <tr
+            key={semester.semester}
+            className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}
+          >
+            <td className="px-3 py-2 md:px-6 md:py-4 font-medium text-gray-700">
+              {semester.semester}
+            </td>
+            <td className="px-3 py-2 md:px-6 md:py-4 text-gray-600">
+              {semester.credits}
+            </td>
+            <td className="px-3 py-2 md:px-6 md:py-4 text-gray-600">
+              <ul className="list-disc list-inside">
+                {semester.subjects.map((subject, idx) => (
+                  <li key={idx} className="text-xs md:text-sm">
+                    {t(`faculties.subjects.${subject}`)}
+                  </li>
+                ))}
+              </ul>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</div>
+
 
           {/* Карьерные перспективы */}
-          <div id="careers" className="bg-white rounded-xl md:rounded-2xl shadow-sm md:shadow-md p-4 md:p-8">
-            <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-4 md:mb-6">
-              {t('faculties.program.career_prospects')}
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
-              {program.careers.map((career, index) => (
-                <div key={index} className="text-center p-4 md:p-6 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg md:rounded-xl hover:shadow-md transition-all duration-300 transform hover:-translate-y-1">
-                  <div className="text-3xl md:text-4xl mb-2 md:mb-4">{career.icon}</div>
-                  <h4 className="font-semibold text-gray-800 mb-1 md:mb-2 text-sm md:text-base">
-                    {t(`faculties.careers.${career.key}`)}
-                  </h4>
-                  <p className="text-gray-600 text-xs md:text-sm">
-                    {t(`faculties.careers.${career.key}_desc`)}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
+<div
+  id="careers"
+  className="bg-white rounded-xl md:rounded-2xl shadow-sm md:shadow-md p-4 md:p-8"
+>
+  <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-4 md:mb-6">
+    {t('faculties.program.career_prospects')}
+  </h3>
+
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
+    {program.careers.map((career) => (
+      <div
+        key={career.key}
+        className="text-center p-4 md:p-6 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg md:rounded-xl hover:shadow-md transition-all duration-300 transform hover:-translate-y-1"
+      >
+        <div className="text-3xl md:text-4xl mb-2 md:mb-4">{career.icon}</div>
+
+        {/* Название профессии */}
+        <h4 className="font-semibold text-gray-800 mb-1 md:mb-2 text-sm md:text-base">
+          {t(`faculties.careers.${career.key}.title`)}
+        </h4>
+
+        {/* Описание профессии */}
+        <p className="text-gray-600 text-xs md:text-sm">
+          {t(`faculties.careers.${career.key}.desc`)}
+        </p>
+      </div>
+    ))}
+  </div>
+</div>
+
         </div>
 
         {/* Призыв к действию */}
