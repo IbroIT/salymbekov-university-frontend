@@ -22,7 +22,7 @@ const VacancyDetail = () => {
 
   useEffect(() => {
     loadVacancy();
-  }, [id]);
+  }, [id, i18n.language]); // Добавляем зависимость от языка
 
   const loadVacancy = async () => {
     try {
@@ -37,15 +37,9 @@ const VacancyDetail = () => {
     }
   };
 
-  // Get current language for translations
-  const currentLanguage = i18n.language === 'ru' ? 'ru' : i18n.language === 'en' ? 'en' : 'kg';
-  
-  // Extract translated fields based on current language
-  const getTranslatedField = (field) => {
-    if (typeof field === 'object' && field !== null) {
-      return field[currentLanguage] || field['ru'] || field['en'] || field['kg'] || '';
-    }
-    return field || '';
+  // API now returns localized strings directly, no need for translation extraction
+  const getFieldValue = (field, fallback = '') => {
+    return (field && field !== 'not given') ? field : fallback;
   };
 
   const formatDate = (dateString) => {
@@ -58,6 +52,15 @@ const VacancyDetail = () => {
   };
 
   const getCategoryIcon = (category) => {
+    // Use icon from API if available
+    if (typeof category === 'object' && category.icon) {
+      return category.icon;
+    }
+    
+    // Fallback to hardcoded icons only if no API icon
+    if (typeof category === 'object' && category.name) {
+      category = category.name;
+    }
     switch (category) {
       case 'academic': return '🏫';
       case 'administrative': return '💼';
@@ -78,7 +81,7 @@ const VacancyDetail = () => {
           formData.append(key, applicationData[key]);
         }
       });
-      formData.append('vacancy', id);
+      formData.append('vacancy', vacancy.id);
 
       await careersAPI.submitApplication(formData);
       alert(t('careers.application.success'));
@@ -151,7 +154,7 @@ const VacancyDetail = () => {
             <span className="mx-2">→</span>
             <Link to="/about/careers" className="hover:text-blue-600">{t('careers.breadcrumbs.careers')}</Link>
             <span className="mx-2">→</span>
-            <span className="text-blue-600">{getTranslatedField(vacancy.title)}</span>
+            <span className="text-blue-600">{getFieldValue(vacancy.title, t('careers.title_not_available'))}</span>
           </nav>
         </div>
       </div>
@@ -165,10 +168,13 @@ const VacancyDetail = () => {
                 <span className="text-5xl mr-4">{getCategoryIcon(vacancy.category)}</span>
                 <div>
                   <h1 className="text-3xl font-bold text-blue-900 mb-2">
-                    {getTranslatedField(vacancy.title)}
+                    {getFieldValue(vacancy.title, t('careers.title_not_available'))}
                   </h1>
                   <p className="text-xl text-blue-600 font-medium">
-                    {getTranslatedField(vacancy.department_name)}
+                    {vacancy.department && typeof vacancy.department === 'object' 
+                      ? getFieldValue(vacancy.department.name || vacancy.department.short_name)
+                      : getFieldValue(vacancy.department)
+                    }
                   </p>
                 </div>
               </div>
@@ -182,11 +188,11 @@ const VacancyDetail = () => {
 
             {/* Key Info Grid */}
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {vacancy.salary && (
+              {vacancy.salary_display && (
                 <div className="text-center">
                   <div className="text-2xl mb-2">💰</div>
                   <div className="text-sm text-gray-500">{t('careers.salary')}</div>
-                  <div className="font-semibold">{vacancy.salary}</div>
+                  <div className="font-semibold">{vacancy.salary_display}</div>
                 </div>
               )}
               
@@ -206,6 +212,14 @@ const VacancyDetail = () => {
                 </div>
               )}
 
+              {vacancy.experience_years && (
+                <div className="text-center">
+                  <div className="text-2xl mb-2">💼</div>
+                  <div className="text-sm text-gray-500">{t('careers.experience')}</div>
+                  <div className="font-semibold">{vacancy.experience_years}</div>
+                </div>
+              )}
+
               <div className="text-center">
                 <div className="text-2xl mb-2">⏳</div>
                 <div className="text-sm text-gray-500">{t('careers.deadline')}</div>
@@ -221,20 +235,33 @@ const VacancyDetail = () => {
               <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
                 <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('careers.description')}</h2>
                 <div className="prose max-w-none text-gray-700">
-                  {getTranslatedField(vacancy.description).split('\n').map((paragraph, index) => (
-                    <p key={index} className="mb-4">{paragraph}</p>
-                  ))}
+                  <p>{getFieldValue(vacancy.description, vacancy.short_description)}</p>
                 </div>
               </div>
 
+              {/* Responsibilities */}
+              {vacancy.responsibilities_list && vacancy.responsibilities_list.length > 0 && (
+                <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
+                  <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('careers.responsibilities')}</h2>
+                  <div className="space-y-2">
+                    {vacancy.responsibilities_list.map((responsibility, index) => (
+                      <div key={index} className="flex items-start">
+                        <span className="text-blue-600 mr-2 mt-1">•</span>
+                        <span className="text-gray-700">{responsibility}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {/* Requirements */}
-              {vacancy.requirements && (
+              {vacancy.requirements_list && vacancy.requirements_list.length > 0 && (
                 <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
                   <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('careers.requirements')}</h2>
                   <div className="space-y-2">
-                    {getTranslatedField(vacancy.requirements).split('\n').map((requirement, index) => (
+                    {vacancy.requirements_list.map((requirement, index) => (
                       <div key={index} className="flex items-start">
-                        <span className="text-blue-600 mr-2 mt-1">•</span>
+                        <span className="text-green-600 mr-2 mt-1">✓</span>
                         <span className="text-gray-700">{requirement}</span>
                       </div>
                     ))}
@@ -242,20 +269,21 @@ const VacancyDetail = () => {
                 </div>
               )}
 
-              {/* Responsibilities */}
-              {vacancy.responsibilities && (
+              {/* Conditions */}
+              {vacancy.conditions_list && vacancy.conditions_list.length > 0 && (
                 <div className="bg-white rounded-lg shadow-lg p-8">
-                  <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('careers.responsibilities')}</h2>
+                  <h2 className="text-2xl font-bold text-blue-900 mb-4">{t('careers.conditions')}</h2>
                   <div className="space-y-2">
-                    {getTranslatedField(vacancy.responsibilities).split('\n').map((responsibility, index) => (
+                    {vacancy.conditions_list.map((condition, index) => (
                       <div key={index} className="flex items-start">
-                        <span className="text-green-600 mr-2 mt-1">•</span>
-                        <span className="text-gray-700">{responsibility}</span>
+                        <span className="text-purple-600 mr-2 mt-1">★</span>
+                        <span className="text-gray-700">{condition}</span>
                       </div>
                     ))}
                   </div>
                 </div>
               )}
+
             </div>
 
             {/* Sidebar */}
@@ -284,9 +312,9 @@ const VacancyDetail = () => {
                 <div className="space-y-3">
                   <div className="flex justify-between">
                     <span className="text-gray-600">{t('careers.published')}</span>
-                    <span className="font-medium">{formatDate(vacancy.created_at)}</span>
+                    <span className="font-medium">{formatDate(vacancy.posted_date)}</span>
                   </div>
-                  {vacancy.views_count && (
+                  {vacancy.views_count !== undefined && (
                     <div className="flex justify-between">
                       <span className="text-gray-600">{t('careers.views')}</span>
                       <span className="font-medium">{vacancy.views_count}</span>
@@ -294,8 +322,19 @@ const VacancyDetail = () => {
                   )}
                   <div className="flex justify-between">
                     <span className="text-gray-600">{t('careers.category')}</span>
-                    <span className="font-medium">{t(`careers.categories.${vacancy.category}`)}</span>
+                    <span className="font-medium">
+                      {vacancy.category && typeof vacancy.category === 'object' 
+                        ? getFieldValue(vacancy.category.display_name)
+                        : t(`careers.categories.${vacancy.category}`)
+                      }
+                    </span>
                   </div>
+                  {vacancy.applications_count !== undefined && (
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">{t('careers.applications')}</span>
+                      <span className="font-medium">{vacancy.applications_count}</span>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -309,7 +348,7 @@ const VacancyDetail = () => {
           <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-screen overflow-y-auto">
             <div className="p-6">
               <div className="flex justify-between items-center mb-6">
-                <h3 className="text-2xl font-bold text-blue-900">{t('careers.apply_for')} {getTranslatedField(vacancy.title)}</h3>
+                <h3 className="text-2xl font-bold text-blue-900">{t('careers.apply_for')} {getFieldValue(vacancy.title, t('careers.this_position'))}</h3>
                 <button
                   onClick={() => setShowApplication(false)}
                   className="text-gray-400 hover:text-gray-600"

@@ -14,16 +14,26 @@ const CareersMain = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    loadInitialData();
+    // Добавляем небольшую задержку для обновления языка
+    const timer = setTimeout(() => {
+      loadInitialData();
+    }, 100);
+    
+    return () => clearTimeout(timer);
   }, [i18n.language]); // Добавляем зависимость от языка
 
   useEffect(() => {
-    loadVacancies();
+    // Загружаем вакансии только после того, как категории загружены
+    if (categories.length > 0) {
+      loadVacancies();
+    }
   }, [filterCategory, i18n.language]); // Добавляем зависимость от языка
 
   const loadInitialData = async () => {
     try {
       setLoading(true);
+      console.log('Loading data with language:', i18n.language);
+      
       const [categoriesData, vacanciesData] = await Promise.all([
         careersAPI.getCategories(),
         careersAPI.getVacancies()
@@ -57,14 +67,11 @@ const CareersMain = () => {
     } catch (err) {
       console.error('Error loading initial data:', err);
       setError(err.message);
-      // Fallback to static categories if API fails
+      // No fallback data - show error instead
       setCategories([
-        { name: 'all', display_name: t('careers.categories.all') },
-        { name: 'academic', display_name: t('careers.categories.academic') },
-        { name: 'administrative', display_name: t('careers.categories.administrative') },
-        { name: 'technical', display_name: t('careers.categories.technical') },
-        { name: 'service', display_name: t('careers.categories.service') }
+        { name: 'all', display_name: t('careers.categories.all') }
       ]);
+      setVacancies([]);
     } finally {
       setLoading(false);
     }

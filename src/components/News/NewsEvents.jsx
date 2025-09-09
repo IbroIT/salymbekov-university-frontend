@@ -29,36 +29,26 @@ const NewsEvents = () => {
         throw new Error(t('newsanon.loadError'));
       }
       const data = await response.json();
-      setEvents(data.results || data);
+      // Маппинг полей API к фронтенду
+      const mappedEvents = (data.results || data).map(event => ({
+        ...event,
+        // Поля даты и времени
+        date: event.event_date,
+        time: event.event_time,
+        // Категория
+        category: event.event_category,
+        // Участники уже в правильном формате participants_info
+        participants: event.participants_info,
+        // Описание из summary (уже локализовано на бэкенде)
+        description: event.summary,
+        // Изображение с fallback
+        image: event.image_url || "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=400&h=250&fit=crop",
+        // title, location, author уже локализованы на бэкенде через сериализатор
+      }));
+      setEvents(mappedEvents);
     } catch (err) {
       setError(err.message);
-      // Fallback данные для событий
-      setEvents([
-        {
-          id: 1,
-          title: t('newsanon.fallbackEvent1.title'),
-          date: "2025-01-25",
-          time: "09:00",
-          location: t('newsanon.fallbackEvent1.location'),
-          category: "conference",
-          participants: "200+",
-          description: t('newsanon.fallbackEvent1.description'),
-          image: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=400&h=250&fit=crop",
-          status: "upcoming"
-        },
-        {
-          id: 2,
-          title: t('newsanon.fallbackEvent2.title'),
-          date: "2025-02-15",
-          time: "10:00",
-          location: t('newsanon.fallbackEvent2.location'),
-          category: "open-day",
-          participants: "500+",
-          description: t('newsanon.fallbackEvent2.description'),
-          image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&h=250&fit=crop",
-          status: "upcoming"
-        }
-      ]);
+      setEvents([]);
     }
     setLoading(false);
   };
@@ -74,6 +64,12 @@ const NewsEvents = () => {
       month: 'long',
       year: 'numeric'
     });
+  };
+
+  const formatTime = (timeString) => {
+    if (!timeString) return '';
+    // Если время в формате HH:MM:SS, берем только HH:MM
+    return timeString.substring(0, 5);
   };
 
   const getCategoryName = (category) => {
@@ -143,8 +139,24 @@ const NewsEvents = () => {
         </div>
 
         {/* Events Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredEvents.map((event) => (
+        {error && (
+          <div className="text-center py-8">
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+              {error}
+            </div>
+          </div>
+        )}
+
+        {loading ? (
+          <div className="text-center py-12">
+            <div className="text-gray-500 text-lg">
+              {t('newsanon.loading', 'Загрузка...')}
+            </div>
+          </div>
+        ) : !error && (
+          <>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredEvents.map((event) => (
             <div key={event.id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
               <div className="relative">
                 <img 
@@ -178,7 +190,7 @@ const NewsEvents = () => {
                   </div>
                   <div className="flex items-center text-sm text-gray-600">
                     <Clock className="w-4 h-4 mr-2" />
-                    {event.time}
+                    {formatTime(event.time)}
                   </div>
                   <div className="flex items-center text-sm text-gray-600">
                     <MapPin className="w-4 h-4 mr-2" />
@@ -196,7 +208,7 @@ const NewsEvents = () => {
                 
                 <div className="flex justify-between items-center">
                   <Link 
-                    to={`/news/detail/${event.id}`}
+                    to={`/news/detail/${event.slug}`}
                     className="text-green-600 hover:text-green-800 font-semibold text-sm transition-colors"
                   >
                     {t('newsanon.readMore')} →
@@ -210,14 +222,16 @@ const NewsEvents = () => {
               </div>
             </div>
           ))}
-        </div>
-
-        {filteredEvents.length === 0 && (
-          <div className="text-center py-12">
-            <div className="text-gray-500 text-lg">
-              {t('newsanon.noEvents')}
             </div>
-          </div>
+
+            {filteredEvents.length === 0 && (
+              <div className="text-center py-12">
+                <div className="text-gray-500 text-lg">
+                  {t('newsanon.noEvents')}
+                </div>
+              </div>
+            )}
+          </>
         )}
 
         {/* Calendar Integration */}
