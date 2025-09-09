@@ -262,7 +262,6 @@
         }
       }
     },
-    
     "dates": {
       "title": "Admissions calendar",
       "heading": "Important dates",
@@ -433,9 +432,6 @@
       "practice": "Practice",
       "practiceDesc": "Modern laboratories"
     }
-  },
-  "common": {
-    "currency": "som"
   },
   "management": {
     "title": "Management Structure",
@@ -1505,7 +1501,42 @@
         "totalCost": "Total Program Cost",
         "withDiscount": "With Discount"
       }
-    },
+    },"dates": {
+  "title": "Admission Calendar",
+  "heading": "Important Dates",
+  "description": "Don't miss key application deadlines",
+  "start": "Start of Application Submission",
+  "deadline": "Final Application Deadline",
+  "exams": "Entrance Exams",
+  "status": {
+    "open": "⏳ Applications Open",
+    "deadline": "🚨 Last Chance",
+    "exams": "📝 Exam Time"
+  }
+},"cta": {
+  "title": "Ready to start your journey in medicine?",
+  "description": "Join the new generation of doctors and become part of Salymbekov University’s medical community",
+  "applyOnline": "Apply Online",
+  "sendEmail": "Send via Gmail",
+  "contactUs": "Contact Us",
+  "askQuestion": "Ask a Question"
+},
+"stats": {
+  "graduates": "Graduates",
+  "employment": "Employment",
+  "experience": "Years of Experience"
+},
+"info": {
+  "programs": "Programs",
+  "programsDesc": "Study in 4 directions",
+  "quality": "Quality",
+  "qualityDesc": "Accredited programs",
+  "teachers": "Teachers",
+  "teachersDesc": "Experienced specialists",
+  "practice": "Practice",
+  "practiceDesc": "Modern laboratories"
+}
+,
     "faq": {
       "title": "Frequently Asked Questions", 
       "subtitle": "Get answers to common questions about admission",
@@ -1837,20 +1868,6 @@
       "teachersDesc": "Experienced specialists",
       "practice": "Practice",
       "practiceDesc": "Modern laboratories"
-    }
-  },
-  "common": {
-    "currency": "som",
-    "pause": "Pause",
-    "play": "Play",
-    "step": "Step",
-    "of": "of",
-    "previous": "Previous",
-    "next": "Next",
-    "submitting": "Submitting",
-    "months": {
-      "jun": "JUN",
-      "aug": "AUG"
     }
   },
    "tuition": {
@@ -2348,7 +2365,15 @@
       "centers": "Research Centers", 
       "conferences": "Conferences",
       "grants": "Grants"
-    },
+    },"stats": {
+  "projects": "Projects",
+  "collaborations": "Collaborations",
+  "ongoingProjects": "Ongoing Projects",
+  "researchers": "Researchers",
+  "publications": "Publications",
+  "citations": "Citations"
+}
+,
     "researchAreas": {
       "title": "Key Research Areas",
       "cardiology": {
@@ -2534,6 +2559,7 @@
       "applicationError": "Error submitting application"
     },
     "publications": {
+      "general": "quotes",
       "title": "Scientific Publications",
       "subtitle": "Latest research publications and achievements",
       "filters": {
@@ -2658,7 +2684,10 @@
         "name": "Public Health Center",
         "description": "Research in epidemiology and public health"
       }
-    }
+    },"conferences": {
+      "upcoming": "Upcoming Conferences",
+      "daysUntil": " days until start"
+}
   },"reviews": {
     "title": "Our Students' Reviews",
     "subtitle": "Find out what students say about the quality of education and atmosphere at our medical university",
@@ -2962,12 +2991,18 @@
         "Received 3 research grants"
       ]
     }
-  }
+  },
+  "nationalHospital": "National Hospital",
+  "cityHospital": "City Clinical Hospital",
+  "medicalCenters": "Private Medical Centers",
+  "who": "WHO",
+  "redCross": "Red Cross",
+  "medicalAssociation": "Medical Association",
+  "healthInstitute": "Health Institute",
+  "researchFoundation": "Medical Research Foundation"
 },
 "breadcrumbs": {
-  "home": "Home",
-  "about": "About us",
-  "partners": "Partners"
+  "home": "Home"
 },
 "calendar": {
   "title": "Academic Calendar",
@@ -3109,7 +3144,9 @@
 "breadcrumbs": {
   "home": "Home",
   "academics": "Academics",
-  "calendar": "Academic Calendar"
+  "calendar": "Academic Calendar",
+  "about": "About us",
+  "partners": "Partners"
 
 }},
 "application": {
@@ -3424,7 +3461,9 @@
           "content": "The system will be unavailable on November 15 from 02:00 to 06:00. All materials will be saved."
         }
       }
-    }
+    },
+    "readMore": "Read More",
+    "allNews": "All News"
   },
   "breadcrumbs": {
   "home": "Home",
@@ -3434,7 +3473,9 @@
 },
  "breadcrumbs": {
     "academics": "Academics",
-    "departments": "Departments"
+    "departments": "Departments",
+  "about": "About us",
+  "partners": "Partners"
   },
   "careers": {
     "title": "Career at University", 
@@ -3556,6 +3597,78 @@
       "success": "Application submitted successfully! We will contact you soon.",
       "error": "Error submitting application. Please try again."
     }
+  },"resources": {
+  "breadcrumbs": {
+    "home": "Home",
+    "academics": "Academics",
+    "resources": "Educational Resources"
   },
-  "locale": "en"
+  "title": "Educational Resources",
+  "subtitle": "Access to the university's e-resources, libraries, and learning platforms",
+  "stats": {
+    "ebooks": "E-books",
+    "courses": "Online Courses",
+    "access": "Resource Access",
+    "databases": "Scientific Databases"
+  },
+  "resources": {
+    "library": {
+      "title": "E-Library",
+      "description": "Access to textbooks, scientific articles, and electronic editions. More than 10,000 materials on medicine and related disciplines.",
+      "linkText": "Go to Library",
+      "features": ["Catalog Search", "E-Textbooks", "Scientific Articles", "Audiobooks"]
+    },
+    "databases": {
+      "title": "Scientific Databases",
+      "description": "Access to international scientific databases for research and academic work.",
+      "features": ["PubMed", "Scopus", "Web of Science", "Google Scholar"]
+    },
+    "materials": {
+      "title": "Methodological Materials",
+      "description": "Guidelines, manuals, handbooks, and syllabi for all disciplines.",
+      "features": ["Methodological Guides", "Syllabi", "Practical Workbooks", "Lab Work"]
+    },
+    "video": {
+      "title": "Video Library",
+      "description": "Video lectures, surgical recordings, demonstrations, and educational videos.",
+      "features": ["Lecture Recordings", "Surgical Operations", "Anatomical Atlases", "Demonstrations"]
+    }
+  },
+  "external_links": {
+    "pubmed": "PubMed",
+    "scopus": "Scopus",
+    "web_of_science": "Web of Science"
+  },
+  "forms": {
+    "username": "Username",
+    "password": "Password",
+    "username_placeholder": "Enter your username",
+    "password_placeholder": "Enter your password",
+    "login": "Login to Moodle",
+    "logging_in": "Logging in...",
+    "download": "Download Materials",
+    "go_to": "Go to"
+  },
+  "features_title": "Available:",
+  "tooltip": {
+    "title": "💡 Tip",
+    "text": "Some resources may require authentication via your university account"
+  }
+}
+,
+  "locale": "en",
+   "common": {
+    "currency": "som",
+    "pause": "Pause",
+    "play": "Play",
+    "step": "Step",
+    "of": "of",
+    "previous": "Previous",
+    "next": "Next",
+    "submitting": "Submitting",
+    "months": {
+      "jun": "JUN",
+      "aug": "AUG"
+    }
+  }
 }
