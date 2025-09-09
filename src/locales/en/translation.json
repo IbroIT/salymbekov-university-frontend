@@ -1396,6 +1396,7 @@
     }
   },
   "faculties": {
+    
     "breadcrumbs": {
       "home": "Home",
       "academics": "Academics",
@@ -1433,7 +1434,56 @@
       "clinical_hours": "Clinical hours",
       "scholarship_students": "Scholarship students",
       "partners": "International partners"
+    },
+    "careers": {
+    "therapist": {
+      "title": "Therapist",
+      "desc": "A specialist in diagnosing and treating a wide range of diseases."
+    },
+    "emergency": {
+      "title": "Emergency Physician",
+      "desc": "Provides urgent medical care in critical situations."
+    },
+    "researcher": {
+      "title": "Medical Researcher",
+      "desc": "Conducts research and develops new treatment methods."
+    },
+    "surgeon": {
+      "title": "Surgeon",
+      "desc": "Performs surgeries and provides surgical treatment for patients."
+    },
+    "family_doctor": {
+      "title": "Family Doctor",
+      "desc": "Provides long-term healthcare for the entire family."
+    },
+    "medical_manager": {
+      "title": "Medical Manager",
+      "desc": "Organizes and manages healthcare institutions."
     }
+  },
+  "subjects": {
+  "anatomy": "Anatomy",
+  "biology": "Biology",
+  "chemistry": "Chemistry",
+  "latin": "Latin",
+  "histology": "Histology",
+  "biochemistry": "Biochemistry",
+  "physics": "Physics",
+  "philosophy": "Philosophy",
+  "physiology": "Physiology",
+  "microbiology": "Microbiology",
+  "pathological_anatomy": "Pathological Anatomy",
+  "pharmacology": "Pharmacology",
+  "propaedeutics": "Propaedeutics",
+  "immunology": "Immunology",
+  "internal_diseases": "Internal Diseases",
+  "surgery": "Surgery",
+  "pediatrics": "Pediatrics",
+  "obstetrics": "Obstetrics",
+  "gynecology": "Gynecology",
+  "neurology": "Neurology"
+}
+
   },
   "departments": {
     "title": "Faculties & Departments",
@@ -1689,9 +1739,28 @@
       }
     },
     "conferences": {
-      "upcoming": "Upcoming Conferences",
-      "daysUntil": " days until start"
-    },
+  "basicInfo": "Basic Information",
+  "description": "Description",
+  "visitOfficialSite": "Visit Official Website",
+  "submitAbstract": "Submit Abstract",
+  "addToCalendar": "Add to Calendar",
+  "visitWebsite": "Visit Website",
+  "upcoming": "Upcoming Conferences",
+  "daysUntil": " days left",
+  "title": "Scientific Conferences",
+  "subtitle": "International conferences to discuss the latest achievements in medical science",
+  "viewDetails": "View Details",
+  "tabs": {
+    "upcoming": "Upcoming",
+    "past": "Past"
+  },
+  "statusLabels": {
+    "registrationOpen": "Registration Open",
+    "registrationClosed": "Registration Closed",
+    "callForPapers": "Call for Papers"
+  }
+}
+,
     "grants": {
       "title": "Research Grants",
       "subtitle": "Funding opportunities for scientific research",
@@ -1772,10 +1841,16 @@
       "applicationError": "Error submitting application"
     },
     "publications": {
+      "minCitations": "Min. citations",
+      "statisticsTitle": "Publication Statistics",
       "general": "quotes",
       "title": "Scientific Publications",
       "subtitle": "Latest research publications and achievements",
       "filters": {
+        "title": "Filters",
+        "allAuthors": "All Authors",
+        "allJournals": "All Journals",
+        "allCenters": "All Centers",
         "year": "Year",
         "author": "Author",
         "journal": "Journal",
@@ -1783,6 +1858,14 @@
         "center": "Research Center",
         "apply": "Apply Filters",
         "reset": "Reset"
+      },
+      "table":{
+        "select": "Select",
+        "title": "Title",
+        "authors": "Authors",
+        "journal": "Journal",
+        "year": "Year",
+        "citations": "Citations"
       },
       "sort": {
         "year": "Year",
@@ -1805,7 +1888,9 @@
       "export": {
         "selected": "Export Selected",
         "all": "Export All",
-        "format": "Format"
+        "format": "Format",
+        "csv": "CSV",
+        "bibtex": "BibTeX"
       },
       "viewDetails": "View Details",
       "cite": "Cite",
@@ -1820,6 +1905,7 @@
       "noResults": "No publications found matching your criteria"
     },
     "common": {
+    "currency": "USD",
       "showMore": "Show More",
       "showLess": "Show Less",
       "loadMore": "Load More",

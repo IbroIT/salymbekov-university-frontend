@@ -149,9 +149,6 @@ const Partners = () => {
             ))}
           </div>
           
-          {/* Градиентные затемнения по краям */}
-          <div className="absolute top-0 left-0 w-32 h-full bg-gradient-to-r from-slate-900 to-transparent z-10 pointer-events-none"></div>
-          <div className="absolute top-0 right-0 w-32 h-full bg-gradient-to-l from-indigo-900 to-transparent z-10 pointer-events-none"></div>
         </div>
         
       </div>
