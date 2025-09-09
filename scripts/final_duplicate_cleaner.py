@@ -171,7 +171,8 @@ def process_file(file_path, dry_run=False):
         return False
     
     # Создаем резервную копию
-    backup_path = f"{file_path}.backup.{pd.Timestamp.now().strftime('%Y%m%d_%H%M%S')}"
+    from datetime import datetime
+    backup_path = f"{file_path}.backup.{datetime.now().strftime('%Y%m%d_%H%M%S')}"
     try:
         shutil.copy2(file_path, backup_path)
         print(f"💾 Создана резервная копия: {backup_path}")
@@ -289,18 +290,6 @@ def main():
         print(f"⚠️  Обработано: {success_count}/{len(translation_files)}")
     
     return 0 if success_count == len(translation_files) else 1
-
-# Добавляем импорт pandas только если он доступен
-try:
-    import pandas as pd
-except ImportError:
-    # Создаем заглушку для timestamp
-    class pd:
-        class Timestamp:
-            @staticmethod
-            def now():
-                from datetime import datetime
-                return datetime.now()
 
 if __name__ == "__main__":
     exit(main())

@@ -262,7 +262,6 @@
         }
       }
     },
-    
     "dates": {
       "title": "Admissions calendar",
       "heading": "Important dates",
@@ -433,9 +432,6 @@
       "practice": "Practice",
       "practiceDesc": "Modern laboratories"
     }
-  },
-  "common": {
-    "currency": "som"
   },
   "management": {
     "title": "Management Structure",
@@ -1505,7 +1501,42 @@
         "totalCost": "Total Program Cost",
         "withDiscount": "With Discount"
       }
-    },
+    },"dates": {
+  "title": "Admission Calendar",
+  "heading": "Important Dates",
+  "description": "Don't miss key application deadlines",
+  "start": "Start of Application Submission",
+  "deadline": "Final Application Deadline",
+  "exams": "Entrance Exams",
+  "status": {
+    "open": "⏳ Applications Open",
+    "deadline": "🚨 Last Chance",
+    "exams": "📝 Exam Time"
+  }
+},"cta": {
+  "title": "Ready to start your journey in medicine?",
+  "description": "Join the new generation of doctors and become part of Salymbekov University’s medical community",
+  "applyOnline": "Apply Online",
+  "sendEmail": "Send via Gmail",
+  "contactUs": "Contact Us",
+  "askQuestion": "Ask a Question"
+},
+"stats": {
+  "graduates": "Graduates",
+  "employment": "Employment",
+  "experience": "Years of Experience"
+},
+"info": {
+  "programs": "Programs",
+  "programsDesc": "Study in 4 directions",
+  "quality": "Quality",
+  "qualityDesc": "Accredited programs",
+  "teachers": "Teachers",
+  "teachersDesc": "Experienced specialists",
+  "practice": "Practice",
+  "practiceDesc": "Modern laboratories"
+}
+,
     "faq": {
       "title": "Frequently Asked Questions", 
       "subtitle": "Get answers to common questions about admission",
@@ -1837,20 +1868,6 @@
       "teachersDesc": "Experienced specialists",
       "practice": "Practice",
       "practiceDesc": "Modern laboratories"
-    }
-  },
-  "common": {
-    "currency": "som",
-    "pause": "Pause",
-    "play": "Play",
-    "step": "Step",
-    "of": "of",
-    "previous": "Previous",
-    "next": "Next",
-    "submitting": "Submitting",
-    "months": {
-      "jun": "JUN",
-      "aug": "AUG"
     }
   },
    "tuition": {
@@ -2348,7 +2365,15 @@
       "centers": "Research Centers", 
       "conferences": "Conferences",
       "grants": "Grants"
-    },
+    },"stats": {
+  "projects": "Projects",
+  "collaborations": "Collaborations",
+  "ongoingProjects": "Ongoing Projects",
+  "researchers": "Researchers",
+  "publications": "Publications",
+  "citations": "Citations"
+}
+,
     "researchAreas": {
       "title": "Key Research Areas",
       "cardiology": {
@@ -2534,6 +2559,7 @@
       "applicationError": "Error submitting application"
     },
     "publications": {
+      "general": "quotes",
       "title": "Scientific Publications",
       "subtitle": "Latest research publications and achievements",
       "filters": {
@@ -2598,8 +2624,12 @@
       "subtitle": "Advanced laboratories and research complexes of the university",
       "staffCount": "staff",
       "equipmentTitle": "Equipment",
+      "noEquipment": "No equipment information available",
       "viewPublications": "View Publications",
       "moreItems": "more...",
+      "viewDetails": "View Details",
+      "additionalInfo": "Additional Information",
+      "established": "Established",
       "director": "Director",
       "team": "Team",
       "researchers": "research staff",
@@ -2658,7 +2688,10 @@
         "name": "Public Health Center",
         "description": "Research in epidemiology and public health"
       }
-    }
+    },"conferences": {
+      "upcoming": "Upcoming Conferences",
+      "daysUntil": " days until start"
+}
   },"reviews": {
     "title": "Our Students' Reviews",
     "subtitle": "Find out what students say about the quality of education and atmosphere at our medical university",
@@ -2962,12 +2995,18 @@
         "Received 3 research grants"
       ]
     }
-  }
+  },
+  "nationalHospital": "National Hospital",
+  "cityHospital": "City Clinical Hospital",
+  "medicalCenters": "Private Medical Centers",
+  "who": "WHO",
+  "redCross": "Red Cross",
+  "medicalAssociation": "Medical Association",
+  "healthInstitute": "Health Institute",
+  "researchFoundation": "Medical Research Foundation"
 },
 "breadcrumbs": {
-  "home": "Home",
-  "about": "About us",
-  "partners": "Partners"
+  "home": "Home"
 },
 "calendar": {
   "title": "Academic Calendar",
@@ -3109,7 +3148,9 @@
 "breadcrumbs": {
   "home": "Home",
   "academics": "Academics",
-  "calendar": "Academic Calendar"
+  "calendar": "Academic Calendar",
+  "about": "About us",
+  "partners": "Partners"
 
 }},
 "application": {
@@ -3263,7 +3304,37 @@
         "applicationReady": "Your application is ready to send",
         "backupMethod": "If Gmail didn't open, press OK for a backup method.",
         "emailClient": "Opening email client..."
-      }
+      },
+      "programs": {
+    "medicine": {
+      "name": "General Medicine",
+      "duration": "6 years",
+      "cost": "170,000 KGS/year",
+      "requirements": "NCT: 120+, Biology, Chemistry",
+      "description": "Training general practitioners"
+    },
+    "dentistry": {
+      "name": "Dentistry",
+      "duration": "5 years",
+      "cost": "190,000 KGS/year",
+      "requirements": "NCT: 110+, Biology, Chemistry",
+      "description": "Training dental doctors"
+    },
+    "pharmacy": {
+      "name": "Pharmacy",
+      "duration": "5 years",
+      "cost": "150,000 KGS/year",
+      "requirements": "NCT: 100+, Chemistry, Biology",
+      "description": "Training pharmacists"
+    },
+    "nursing": {
+      "name": "Nursing",
+      "duration": "4 years",
+      "cost": "130,000 KGS/year",
+      "requirements": "NCT: 90+, Biology",
+      "description": "Training nurses"
+    }
+  }
     },
     "news": {
     "announcements": {
@@ -3361,7 +3432,72 @@
         "title": "International Conference on Cardiology",
         "summary": "An international conference with the participation of leading specialists will be held on January 25-26"
       }
-    ]
+    ],
+    "announcements": {
+      "title": "Announcements",
+      "subtitle": "Important information for university students and staff",
+      "pinned": "Pinned Announcements",
+      "urgent": "Urgent",
+      "deadline": "Until",
+      "download": "Download",
+      "details": "Details",
+      "loadError": "Error loading announcements",
+      "noAnnouncements": "No announcements in this category yet",
+      "types": {
+        "academic": "Academic",
+        "scholarship": "Scholarship",
+        "schedule": "Schedule",
+        "competition": "Competition",
+        "health": "Health",
+        "technical": "Technical"
+      },
+      "filters": {
+        "all": "All",
+        "academic": "Academic",
+        "scholarship": "Scholarships",
+        "competition": "Competitions"
+      },
+      "newsletter": {
+        "title": "Don't Miss Important Announcements",
+        "subtitle": "Subscribe to notifications to receive important announcements by email",
+        "placeholder": "Your email address",
+        "button": "Subscribe"
+      },
+      "fallback": {
+        "winterSession": {
+          "title": "Announcement about Winter Exam Session 2024-2025",
+          "description": "Information about exam schedule, admission requirements and rules for conducting the winter session.",
+          "content": "The winter examination session for students of all courses will begin on December 20, 2024. The detailed schedule will be published by December 15."
+        },
+        "scholarship": {
+          "title": "Scholarship Program for Excellent Students",
+          "description": "Applications are open for receiving increased scholarships for students with high academic performance.",
+          "content": "Students with an average score of at least 4.5 can apply for an increased scholarship. The scholarship amount is 15,000 KGS."
+        },
+        "scheduleChanges": {
+          "title": "Changes to Class Schedule for December",
+          "description": "Notification of changes to the class schedule due to holidays in December.",
+          "content": "Due to public holidays, the class schedule from December 30 to January 8 will be changed. Details in the attached file."
+        },
+        "researchCompetition": {
+          "title": "Student Research Papers Competition",
+          "description": "The annual competition of research papers for medical faculty students is announced.",
+          "content": "Research papers in all areas of medicine are accepted. The best papers will be presented at the international student conference."
+        },
+        "vaccination": {
+          "title": "Vaccination of Students and Staff",
+          "description": "Information about planned flu vaccination for all university students and staff.",
+          "content": "Vaccination is carried out free of charge in the university medical office by appointment."
+        },
+        "systemUpdate": {
+          "title": "E-Learning System Update",
+          "description": "Scheduled technical work to update the distance learning platform.",
+          "content": "The system will be unavailable on November 15 from 02:00 to 06:00. All materials will be saved."
+        }
+      }
+    },
+    "readMore": "Read More",
+    "allNews": "All News"
   },
   "breadcrumbs": {
   "home": "Home",
@@ -3371,7 +3507,9 @@
 },
  "breadcrumbs": {
     "academics": "Academics",
-    "departments": "Departments"
+    "departments": "Departments",
+  "about": "About us",
+  "partners": "Partners"
   },
   "careers": {
     "title": "Career at University", 
@@ -3456,6 +3594,115 @@
     },
     "loading": "Loading vacancies...",
     "error": "Error loading vacancies",
-    "retry": "Try again"
+    "retry": "Try again",
+    "not_found": "Page Not Found",
+    "vacancy_not_found": "Vacancy not found",
+    "back_to_careers": "Back to Careers",
+    "back_to_list": "Back to List",
+    "view_details": "View Details",
+    "apply_now": "Apply Now",
+    "apply_for": "Apply for",
+    "quick_apply": "Quick Apply",
+    "quick_apply_description": "Submit your application quickly and easily",
+    "published": "Published",
+    "views": "views",
+    "salary": "Salary",
+    "location": "Location",
+    "employment_type": "Employment Type",
+    "deadline": "Application Deadline",
+    "experience": "Experience required",
+    "key_requirements": "Key Requirements",
+    "description": "Job Description",
+    "requirements": "Requirements",
+    "responsibilities": "Responsibilities",
+    "vacancy_stats": "Vacancy Statistics",
+    "category": "Category",
+    "application": {
+      "full_name": "Full Name",
+      "email": "Email Address",
+      "phone": "Phone Number",
+      "resume": "Resume",
+      "resume_formats": "Accepted formats: PDF, DOC, DOCX",
+      "cover_letter": "Cover Letter",
+      "cover_letter_placeholder": "Tell us why you're interested in this position...",
+      "submit": "Submit Application",
+      "submitting": "Submitting...",
+      "cancel": "Cancel",
+      "success": "Application submitted successfully! We will contact you soon.",
+      "error": "Error submitting application. Please try again."
+    }
+  },"resources": {
+  "breadcrumbs": {
+    "home": "Home",
+    "academics": "Academics",
+    "resources": "Educational Resources"
+  },
+  "title": "Educational Resources",
+  "subtitle": "Access to the university's e-resources, libraries, and learning platforms",
+  "stats": {
+    "ebooks": "E-books",
+    "courses": "Online Courses",
+    "access": "Resource Access",
+    "databases": "Scientific Databases"
+  },
+  "resources": {
+    "library": {
+      "title": "E-Library",
+      "description": "Access to textbooks, scientific articles, and electronic editions. More than 10,000 materials on medicine and related disciplines.",
+      "linkText": "Go to Library",
+      "features": ["Catalog Search", "E-Textbooks", "Scientific Articles", "Audiobooks"]
+    },
+    "databases": {
+      "title": "Scientific Databases",
+      "description": "Access to international scientific databases for research and academic work.",
+      "features": ["PubMed", "Scopus", "Web of Science", "Google Scholar"]
+    },
+    "materials": {
+      "title": "Methodological Materials",
+      "description": "Guidelines, manuals, handbooks, and syllabi for all disciplines.",
+      "features": ["Methodological Guides", "Syllabi", "Practical Workbooks", "Lab Work"]
+    },
+    "video": {
+      "title": "Video Library",
+      "description": "Video lectures, surgical recordings, demonstrations, and educational videos.",
+      "features": ["Lecture Recordings", "Surgical Operations", "Anatomical Atlases", "Demonstrations"]
+    }
+  },
+  "external_links": {
+    "pubmed": "PubMed",
+    "scopus": "Scopus",
+    "web_of_science": "Web of Science"
+  },
+  "forms": {
+    "username": "Username",
+    "password": "Password",
+    "username_placeholder": "Enter your username",
+    "password_placeholder": "Enter your password",
+    "login": "Login to Moodle",
+    "logging_in": "Logging in...",
+    "download": "Download Materials",
+    "go_to": "Go to"
+  },
+  "features_title": "Available:",
+  "tooltip": {
+    "title": "💡 Tip",
+    "text": "Some resources may require authentication via your university account"
+  }
+}
+,
+  "locale": "en",
+   "common": {
+    "currency": "som",
+    "pause": "Pause",
+    "play": "Play",
+    "step": "Step",
+    "of": "of",
+    "previous": "Previous",
+    "next": "Next",
+    "submitting": "Submitting",
+    "months": {
+      "jun": "JUN",
+      "aug": "AUG"
+    }
   }
 }
