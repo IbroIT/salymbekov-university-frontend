@@ -79,14 +79,14 @@ const Navbar = () => {
         { title: t('nav.partners'), link: '/about/partners' },
       ]
     },
-    academics: {
-      title: t('nav.academics'),
+    HSM: {
+      title: t('nav.HSM'),
       submenu: [
-        { title: t('nav.programs'), link: '/academics' },
-        { title: t('nav.faculties'), link: '/academics/faculties' },
-        { title: t('nav.departments'), link: '/academics/departments' },
-        { title: t('nav.calendar'), link: '/academics/calendar' },
-        { title: t('nav.resources'), link: '/academics/resources' },
+        { title: t('nav.programs'), link: '/HCM' },
+        { title: t('nav.faculties'), link: '/HCM/faculties' },
+        { title: t('nav.departments'), link: '/HCM/departments' },
+        { title: t('nav.calendar'), link: '/HCM/calendar' },
+        { title: t('nav.resources'), link: '/HCM/resources' },
       ]
     },
     admission: {

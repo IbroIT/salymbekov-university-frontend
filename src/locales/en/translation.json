@@ -2,10 +2,10 @@
   "nav": {
     "home": "Home",
     "about": "About",
-    "academics": "Academics",
+  "HSM": "High School of Medicine",
     "admission": "Admission",
     "research": "Research",
-    "campus_life": "Campus Life",
+    "campus_life": "For Students",
     "news": "News",
     "contacts": "Contacts",
     "apply": "Apply Now",
@@ -1091,7 +1091,7 @@
     }
   },
   "breadcrumbs": {
-    "academics": "Academics",
+  "HSM": "High School of Medicine",
     "departments": "Departments",
     "about": "About us",
     "partners": "Partners"
