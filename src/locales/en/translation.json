@@ -1739,6 +1739,8 @@
       }
     },
     "conferences": {
+      "dates": "Dates",
+      "location": "Location",
   "basicInfo": "Basic Information",
   "description": "Description",
   "visitOfficialSite": "Visit Official Website",
