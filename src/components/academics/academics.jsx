@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
-const Academics = () => {
+const HSM = () => {
   const { t } = useTranslation();
   
   // Состояния для фильтров
@@ -649,4 +649,4 @@ const Academics = () => {
   );
 };
 
-export default Academics;
+export default HSM;

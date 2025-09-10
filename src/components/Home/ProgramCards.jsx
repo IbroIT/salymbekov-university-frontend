@@ -14,7 +14,7 @@ const ProgramCards = () => {
       titleKey: 'programs.generalMedicine.title',
       levelKey: 'programs.levels.bachelor',
       durationKey: 'programs.durations.fourYears',
-      link: '#',
+      link: '/HSM',
       color: 'from-blue-500 to-cyan-500',
       bgColor: 'bg-gradient-to-br from-blue-50 to-cyan-50'
     },
@@ -24,7 +24,7 @@ const ProgramCards = () => {
       titleKey: 'programs.dentistry.title',
       levelKey: 'programs.levels.bachelor',
       durationKey: 'programs.durations.fiveYears',
-      link: '#',
+      link: '/HSM',
       color: 'from-teal-500 to-emerald-500',
       bgColor: 'bg-gradient-to-br from-teal-50 to-emerald-50'
     },
@@ -34,7 +34,7 @@ const ProgramCards = () => {
       titleKey: 'programs.pharmacy.title',
       levelKey: 'programs.levels.bachelor',
       durationKey: 'programs.durations.fourYears',
-      link: '#',
+      link: '/HSM',
       color: 'from-indigo-500 to-purple-500',
       bgColor: 'bg-gradient-to-br from-indigo-50 to-purple-50'
     },
@@ -44,7 +44,7 @@ const ProgramCards = () => {
       titleKey: 'programs.medicalOptics.title',
       levelKey: 'programs.levels.master',
       durationKey: 'programs.durations.twoYears',
-      link: '#',
+      link: '/HSM',
       color: 'from-violet-500 to-fuchsia-500',
       bgColor: 'bg-gradient-to-br from-violet-50 to-fuchsia-50'
     }

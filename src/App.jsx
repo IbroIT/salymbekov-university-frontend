@@ -12,7 +12,7 @@ import Careers from "./components/About/Careers";
 import VacancyDetail from "./components/About/VacancyDetail";
 import Partners from "./components/About/Partners";
 
-import Academics from './components/academics/academics'
+import HSM from './components/academics/academics'
 import Faculties from './components/academics/faculties'
 import Deparments from './components/academics/departments'
 import Calendar from './components/academics/calendar'
@@ -72,11 +72,11 @@ function App() {
             <Route path="/about/partners" element={<Partners />} />
 
             {/* Academics */}
-            <Route path="/academics" element={<Academics />} />
-            <Route path="/academics/faculties" element={<Faculties />} />
-            <Route path="/academics/departments" element={<Deparments />} />
-            <Route path="/academics/calendar" element={<Calendar />} />
-            <Route path="/academics/resources" element={<Resources />} />
+            <Route path="/hsm" element={<HSM />} />
+            <Route path="/hsm/faculties" element={<Faculties />} />
+            <Route path="/hsm/departments" element={<Deparments />} />
+            <Route path="/hsm/calendar" element={<Calendar />} />
+            <Route path="/hsm/resources" element={<Resources />} />
 
             {/* Admission */}
             <Route path="/admissions" element={<AdmissionsOverview />} />

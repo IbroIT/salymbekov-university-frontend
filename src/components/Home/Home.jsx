@@ -47,7 +47,13 @@ const HeroSlider = () => {
         throw new Error('No banners received from API');
       }
       
-      setSlides(banners);
+      // Преобразуем баннеры
+      const processedBanners = banners.map((banner) => ({
+        id: banner.id,
+        photo: banner.photo
+      }));
+      
+      setSlides(processedBanners);
       
     } catch (err) {
       console.error('Error fetching banners:', err);
@@ -56,15 +62,11 @@ const HeroSlider = () => {
       setSlides([
         {
           id: 1,
-          title: i18n.language === 'kg' ? "Медицинадагы кесип баштоо" : "Начни карьеру в медицине",
-          subtitle: i18n.language === 'kg' ? "Келечек врачтар коомунун бир бөлүгү бол" : "Стань частью сообщества будущих врачей",
-          image: "https://img2.rtve.es/i/?w=1600&i=01712310257437.jpg",
+          photo: "https://img2.rtve.es/i/?w=1600&i=01712310257437.jpg",
         },
         {
           id: 2,
-          title: i18n.language === 'kg' ? "Эл аралык билим берүү стандарттары" : "Международные стандарты образования",
-          subtitle: i18n.language === 'kg' ? "Дүйнөлүк талаптарга жооп берген билим берүү" : "Образование, соответствующее мировым требованиям",
-          image: "https://www.fundacionhergar.org/sites/fundacionhergar.org/files/GettyImages-1961399015.jpg",
+          photo: "https://www.fundacionhergar.org/sites/fundacionhergar.org/files/GettyImages-1961399015.jpg",
         }
       ]);
     } finally {
@@ -99,23 +101,59 @@ const HeroSlider = () => {
   };
 
   // Обработчик ошибок изображений
-  const handleImageError = (index) => {
-    console.error(`Image failed to load for slide ${index}`);
+  const handleImageError = (index, imageUrl) => {
+    console.error(`Image failed to load for slide ${index}:`, imageUrl);
+    console.log('Trying to decode URL:', decodeURIComponent(imageUrl));
+    console.log('Trying to load image in a new tab to test accessibility...');
+    
+    // Попробуем загрузить изображение через fetch
+    fetch(imageUrl, { method: 'HEAD', mode: 'cors' })
+      .then(response => {
+        console.log('Fetch test response:', response.status, response.statusText);
+        if (!response.ok) {
+          console.error('Fetch test failed:', response.status);
+        }
+      })
+      .catch(error => {
+        console.error('Fetch test error:', error);
+      });
+      
     setImageErrors(prev => ({ ...prev, [index]: true }));
+  };
+
+  // Тестирование загрузки изображения
+  const testImageLoad = async (imageUrl) => {
+    try {
+      console.log(`Testing image load: ${imageUrl}`);
+      const response = await fetch(imageUrl, { method: 'HEAD' });
+      console.log(`Image test result: ${response.status} ${response.statusText}`);
+      return response.ok;
+    } catch (error) {
+      console.error(`Image test failed:`, error);
+      return false;
+    }
   };
 
   // Полный URL для изображения
   const getImageUrl = (imagePath) => {
-    if (!imagePath) {
-      console.warn('Empty image path');
-      return '';
+    if (!imagePath || imagePath === '') {
+      console.warn('Empty or null image path');
+      return null;
     }
     
     console.log('Original image path:', imagePath);
     
     // Если это уже полный URL (http/https)
     if (imagePath.startsWith('http')) {
-      return imagePath;
+      // Декодируем URL-кодированные символы
+      try {
+        const decodedUrl = decodeURIComponent(imagePath);
+        console.log('Decoded URL:', decodedUrl);
+        return imagePath; // Возвращаем оригинальный URL-кодированный URL
+      } catch (error) {
+        console.warn('Failed to decode URL:', error);
+        return imagePath;
+      }
     }
     
     // Для медиафайлов Django
@@ -169,15 +207,20 @@ const HeroSlider = () => {
         style={{ transform: `translateX(-${currentSlide * 100}%)` }}
       >
         {slides.map((slide, index) => {
-          // Пробуем разные возможные поля для изображения
-          const imagePath = slide.image || slide.image_url || slide.photo || slide.photo_url || slide.banner_image;
+          // Используем поле photo
+          const imagePath = slide.photo;
           const imageUrl = getImageUrl(imagePath);
           const hasImageError = imageErrors[index];
           
           console.log(`Slide ${index}:`, slide);
-          console.log(`Image path ${index}:`, imagePath);
+          console.log(`Photo path ${index}:`, imagePath);
           console.log(`Image URL ${index}:`, imageUrl);
           console.log(`Image error ${index}:`, hasImageError);
+          
+          // Тестируем загрузку изображения
+          if (imageUrl && !hasImageError) {
+            testImageLoad(imageUrl);
+          }
           
           return (
             <div 
@@ -188,47 +231,49 @@ const HeroSlider = () => {
               <div 
                 className="absolute inset-0 bg-cover bg-center bg-no-repeat"
                 style={{ 
-                  backgroundImage: hasImageError 
+                  backgroundImage: (hasImageError || !imageUrl) 
                     ? 'linear-gradient(to right, #4F46E5, #7C3AED)'
-                    : `url(${imageUrl})`,
+                    : `url("${imageUrl}")`,
                   backgroundSize: 'cover',
                   backgroundPosition: 'center'
                 }}
               >
-                {!hasImageError && (
-                  <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+                {!hasImageError && imageUrl && (
+                  <div className="absolute inset-0 bg-black bg-opacity-30 z-10"></div>
                 )}
                 
-                {/* Скрытый img для обработки ошибок */}
-                <img 
-                  src={imageUrl}
-                  alt=""
-                  className="hidden"
-                  onError={() => handleImageError(index)}
-                  onLoad={() => console.log(`Image loaded: ${imageUrl}`)}
-                />
-              </div>
-              
-              {/* Контент слайда */}
-              <div className="relative z-10 flex flex-col justify-end items-center h-full pb-8 md:pb-20 lg:pb-24 px-4 sm:px-8 md:px-14 text-white">
-                <div className="bg-gradient-to-r from-gray-900/90 to-purple-900/60 backdrop-blur-xl p-6 md:p-8 rounded-3xl max-w-2xl transform transition-all duration-700 hover:scale-[1.02] border border-white/10 shadow-2xl shadow-purple-500/10 mx-4">
-                  <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
-                    {slide.title}
-                  </h1>
-                  <p className="text-lg sm:text-xl md:text-2xl opacity-90 leading-relaxed font-light">
-                    {slide.subtitle}
-                  </p>
-                  <div className="absolute -inset-2 bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-3xl blur-lg -z-10"></div>
-                </div>
-
-                <div className="absolute -left-20 -top-20 w-72 h-72 bg-purple-500/20 rounded-full blur-3xl"></div>
-                <div className="absolute -right-20 -bottom-20 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl"></div>
+                {/* Отладочная информация в случае ошибки */}
+                {hasImageError && (
+                  <div className="absolute inset-0 flex items-center justify-center text-white bg-gray-800 bg-opacity-75">
+                    <div className="text-center p-4">
+                      <p className="text-lg mb-2">Изображение не загрузилось</p>
+                      <p className="text-sm opacity-75 break-all">{imageUrl}</p>
+                      <button 
+                        onClick={() => window.open(imageUrl, '_blank')}
+                        className="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                      >
+                        Открыть в новой вкладке
+                      </button>
+                    </div>
+                  </div>
+                )}
+                
+                {/* Отладочное img — показываем напрямую (object-cover) */}
+                {imageUrl && (
+                  <img
+                    src={imageUrl}
+                    alt=""
+                    className="absolute inset-0 w-full h-full object-cover z-50"
+                    style={{ border: '2px solid rgba(255,0,0,0.6)' }}
+                    onError={() => handleImageError(index, imageUrl)}
+                    onLoad={() => console.log(`Image loaded: ${imageUrl}`)}
+                  />
+                )}
               </div>
             </div>
           );
         })}
       </div>
-      
       {/* Навигационные кнопки (только если больше 1 слайда) */}
       {slides.length > 1 && (
         <>

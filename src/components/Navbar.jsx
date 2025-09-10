@@ -82,11 +82,11 @@ const Navbar = () => {
     HSM: {
       title: t('nav.HSM'),
       submenu: [
-        { title: t('nav.programs'), link: '/HCM' },
-        { title: t('nav.faculties'), link: '/HCM/faculties' },
-        { title: t('nav.departments'), link: '/HCM/departments' },
-        { title: t('nav.calendar'), link: '/HCM/calendar' },
-        { title: t('nav.resources'), link: '/HCM/resources' },
+        { title: t('nav.programs'), link: '/HSM' },
+        { title: t('nav.faculties'), link: '/HSM/faculties' },
+        { title: t('nav.departments'), link: '/HSM/departments' },
+        { title: t('nav.calendar'), link: '/HSM/calendar' },
+        { title: t('nav.resources'), link: '/HSM/resources' },
       ]
     },
     admission: {
