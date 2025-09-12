@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { emailConfig, openGmailCompose, createMailtoLink } from '../../config/emailConfig';
+import admissionsAPI from '../../services/admissionsAPI';
 
 const OnlineApplication = () => {
   const { t } = useTranslation();
@@ -50,6 +51,7 @@ const OnlineApplication = () => {
   const [isDraftLoaded, setIsDraftLoaded] = useState(false);
   const [errors, setErrors] = useState({});
   const [searchTerm, setSearchTerm] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const programs = [
   {
@@ -282,37 +284,46 @@ ${data.firstName} ${data.lastName}
     `.trim();
   };
 
-  const submitApplication = () => {
+  const submitApplication = async () => {
     if (validateStep(5)) {
+      setIsSubmitting(true); // Устанавливаем состояние загрузки
+      
       const subject = 'Заявка на поступление в Салымбеков Университет';
       const body = generateApplicationEmailBody(formData);
-      
+
+      const hasAnyFile = !!(
+        formData.documents.certificate ||
+        formData.documents.passport ||
+        formData.documents.medical ||
+        (formData.documents.photos && formData.documents.photos.length > 0) ||
+        formData.documents.ortCertificate
+      );
+
       try {
-        // Сначала пытаемся открыть Gmail напрямую
-        openGmailCompose(emailConfig.mainAdmissions, subject, body);
-        
-        // Показываем сообщение пользователю
-        alert(`✅ ${t('application.dialogs.gmailOpened')}
+        // Всегда отправляем через backend (с телом письма и вложениями, если есть)
+        await admissionsAPI.submitWithAttachments({
+          ...formData,
+          body,
+          submittedAt: new Date().toLocaleString('ru-RU')
+        });
 
-� Получатель: ${emailConfig.mainAdmissions}
-�📋 Ваша заявка готова к отправке
-
-Если Gmail не открылся, нажмите OK для резервного способа.`);
-        
-        // Сохраняем факт отправки
+        alert('✅ Заявка отправлена на почту приемной комиссии' + (hasAnyFile ? ' вместе с документами.' : '.'));
+        // Откроем Gmail как визуальное подтверждение (текст без вложений)
+        try { openGmailCompose(emailConfig.mainAdmissions, subject, body); } catch (_) {}
         localStorage.removeItem('applicationDraft');
-        
-      } catch (error) {
-        console.error('Error opening Gmail:', error);
-        
-        // Резервный вариант - обычный mailto
-        const mailtoLink = createMailtoLink(emailConfig.mainAdmissions, subject, body);
-        window.location.href = mailtoLink;
-        
-        alert(`📧 ${t('application.dialogs.emailClient')}
-        
-${t('application.dialogs.recipient')}: ${emailConfig.mainAdmissions}
-${t('application.dialogs.applicationReady')}!`);
+        return;
+      } catch (e) {
+        console.error('Backend email send failed:', e);
+        // Резерв: открыть почтовый клиент
+        try {
+          openGmailCompose(emailConfig.mainAdmissions, subject, body);
+        } catch (err) {
+          const mailtoLink = createMailtoLink(emailConfig.mainAdmissions, subject, body);
+          window.location.href = mailtoLink;
+        }
+        alert('⚠️ Не удалось отправить через сервер. Открылся ваш почтовый клиент с готовым письмом. Добавьте файлы вручную и отправьте.');
+      } finally {
+        setIsSubmitting(false); // Сбрасываем состояние загрузки в любом случае
       }
     }
   };
@@ -1117,9 +1128,21 @@ ${t('application.dialogs.applicationReady')}!`);
             ) : (
               <button
                 onClick={submitApplication}
-                className="px-10 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 shadow-lg transition-all"
+                disabled={isSubmitting}
+                className={`px-10 py-3 rounded-lg font-medium shadow-lg transition-all ${
+                  isSubmitting 
+                    ? 'bg-gray-400 text-gray-700 cursor-not-allowed' 
+                    : 'bg-blue-600 text-white hover:bg-blue-700'
+                }`}
               >
-                📤 {t('application.navigation.submit')}
+                {isSubmitting ? (
+                  <>
+                    <span className="inline-block animate-spin mr-2">⏳</span>
+                    Отправка...
+                  </>
+                ) : (
+                  <>📤 {t('application.navigation.submit')}</>
+                )}
               </button>
             )}
           </div>
