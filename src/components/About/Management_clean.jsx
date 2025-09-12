@@ -1,33 +1,25 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getManagement, getTeachers } from '../../services/teachers';
+import './About.css';
+import { getManagement } from '../../services/teachers';
 
 const Management = () => {
   const { t, i18n } = useTranslation();
   const [selectedPerson, setSelectedPerson] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [managementData, setManagementData] = useState(null);
-  const [teachersData, setTeachersData] = useState([]);
   const [loading, setLoading] = useState(true);
 
   // Загружаем данные с API
   useEffect(() => {
     const fetchData = async () => {
-      console.log('Fetching management and teachers data...');
+      console.log('Fetching management data...');
       setLoading(true);
-      
-      // Загружаем данные руководства
-      const managementData = await getManagement();
-      console.log('Management data received:', managementData);
-      if (managementData && managementData.length > 0) {
-        setManagementData(managementData[0]);
+      const data = await getManagement();
+      console.log('Management data received:', data);
+      if (data && data.length > 0) {
+        setManagementData(data[0]);
       }
-      
-      // Загружаем данные учителей
-      const teachersData = await getTeachers();
-      console.log('Teachers data received:', teachersData);
-      setTeachersData(teachersData);
-      
       setLoading(false);
     };
     fetchData();
@@ -76,131 +68,69 @@ const Management = () => {
     children: []
   };
 
-const renderMemberCard = (member, level = 0) => {
-  const cardSizes = {
-    0: 'inline-block text-center w-full md:w-96 flex-none',
-    1: 'inline-block text-center w-full md:w-80 flex-none',
-    2: 'inline-block text-center w-full md:w-72 flex-none',
-    3: 'inline-block text-center w-full md:w-64 flex-none',
-  };
+  const renderMemberCard = (member, level = 0) => {
+    const levelClasses = {
+      0: 'text-center w-full md:w-80 mx-auto',
+      1: 'text-center w-full md:w-72 mx-auto',
+      2: 'text-center w-full md:w-64 mx-auto',
+      3: 'text-center w-full md:w-56 mx-auto'
+    };
 
-  const avatarSizes = {
-    0: 'w-28 h-28',
-    1: 'w-24 h-24',
-    2: 'w-20 h-20',
-    3: 'w-16 h-16',
-  };
-
-  return (
-    <div className="flex flex-col items-center" key={member.id}>
-      <div
-        className={`
-          ${cardSizes[level] || cardSizes[3]} 
-          h-80 flex flex-col justify-between items-center text-center
-          bg-white rounded-2xl p-6 shadow-md 
-          hover:shadow-lg transition duration-300
-        `}
-      >
-        {/* Фото */}
-        <div className="relative">
-          {member.avatar ? (
-            <img
-              src={member.avatar}
-              alt={member.head}
-              className={`${avatarSizes[level] || avatarSizes[3]} rounded-full mx-auto border-2 border-gray-200 object-cover`}
-            />
-          ) : (
-            <div
-              className={`
-                ${avatarSizes[level] || avatarSizes[3]} 
-                flex items-center justify-center rounded-full bg-blue-500 text-white text-lg font-bold mx-auto
-              `}
-            >
-              {member.head
-                ?.split(' ')
-                .map((n) => n[0])
-                .slice(0, 2)
-                .join('')
-                .toUpperCase()}
-            </div>
-          )}
-        </div>
-
-        {/* Имя и должность */}
-        <div>
-          <h3 className="text-lg font-bold text-gray-900">{member.head}</h3>
-          <p className="text-sm text-gray-600">{member.position}</p>
-        </div>
-
-        {/* Контакты */}
-        <div className="text-xs text-gray-500 space-y-1">
-          {member.email && <p>📧 {member.email}</p>}
-          {member.phone && <p>📞 {member.phone}</p>}
-          {member.experience && <p>⏰ {member.experience}</p>}
-        </div>
-
-        {/* Статистика (если есть) */}
-        {(member.studentCount || member.teacherCount) && (
-          <div className="pt-3 border-t border-gray-200 w-full">
-            <div className="flex justify-center space-x-6 text-xs text-gray-600">
-              {member.studentCount && <span>👨‍🎓 {member.studentCount}</span>}
-              {member.teacherCount && <span>👨‍🏫 {member.teacherCount}</span>}
-            </div>
-          </div>
-        )}
-      </div>
-
-    </div>
-  );
-};
-
-
-
-  // Функция для отображения карточки учителя
-  const renderTeacherCard = (teacher) => {
-    const teacherData = {
-      id: teacher.id.toString(),
-      head: getLocalizedText(teacher, 'full_name'),
-      position: getLocalizedText(teacher, 'position'),
-      bio: getLocalizedText(teacher, 'bio'),
-      email: `${getLocalizedText(teacher, 'full_name').toLowerCase().replace(/\s+/g, '.')}@salymbekov.kg`,
-      phone: '+996 312 625-100',
-      experience: '10+ лет',
-      education: 'Высшее образование',
-      avatar: teacher.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(getLocalizedText(teacher, 'full_name'))}&size=400&background=16a085&color=fff&rounded=true`,
-      type: 'teacher'
+    const levelStyles = {
+      0: 'bg-gradient-to-br from-blue-600 to-blue-800 text-white',
+      1: 'bg-gradient-to-br from-blue-500 to-blue-700 text-white',
+      2: 'bg-gradient-to-br from-blue-400 to-blue-600 text-white',
+      3: 'bg-gradient-to-br from-blue-300 to-blue-500 text-white'
     };
 
     return (
-      <div 
-        key={teacher.id} 
-        className="bg-white rounded-xl shadow-sm p-6 transition-shadow duration-200 hover:shadow-lg cursor-pointer"
-        onClick={() => {
-          setSelectedPerson(teacherData);
-          setIsModalOpen(true);
-        }}
-      >
-        <div className="text-center">
+      <div className="flex flex-col items-center mb-8" key={member.id}>
+        <div className={`${levelClasses[level] || levelClasses[3]} ${levelStyles[level] || levelStyles[3]} rounded-xl shadow-xl p-6 transform transition-all duration-300 hover:scale-105 hover:shadow-2xl`}>
           <div className="relative mb-4">
             <img
-              src={teacherData.avatar}
-              alt={teacherData.head}
-              className="w-20 h-20 rounded-full mx-auto border-2 border-gray-100 shadow-sm object-cover"
+              src={member.avatar}
+              alt={member.head}
+              className="w-20 h-20 rounded-full mx-auto border-4 border-white/20 shadow-lg object-cover"
             />
-            <div className="absolute -bottom-2 -right-2 bg-green-100 text-green-800 px-2 py-0.5 rounded-full text-xs font-semibold shadow-sm">
-              🎓
+            <div className="absolute -bottom-2 -right-2 bg-yellow-400 text-yellow-900 px-2 py-1 rounded-full text-xs font-bold shadow-lg">
+              {member.type === 'administration' ? '👑' : member.type === 'faculty' ? '🎓' : '📚'}
             </div>
           </div>
-          <h3 className="text-lg font-bold mb-2 text-gray-900">{teacherData.head}</h3>
-          <p className="text-sm text-gray-600 mb-3">{teacherData.position}</p>
-          <div className="text-xs space-y-1 text-gray-500">
-            <p>📧 {teacherData.email}</p>
-            <p>📞 {teacherData.phone}</p>
+          <h3 className="text-lg font-bold mb-2">{member.head}</h3>
+          <p className="text-sm opacity-90 mb-3">{member.position}</p>
+          <div className="text-xs space-y-1 opacity-75">
+            <p>📧 {member.email}</p>
+            <p>📞 {member.phone}</p>
+            <p>⏰ {member.experience}</p>
           </div>
-          {teacherData.bio && (
-            <p className="text-xs text-gray-600 mt-2 line-clamp-2">{teacherData.bio}</p>
+          
+          {/* Дополнительная информация для деканов и заведующих */}
+          {(member.studentCount || member.teacherCount) && (
+            <div className="mt-3 pt-3 border-t border-white/20">
+              <div className="flex justify-center space-x-4 text-xs">
+                {member.studentCount && (
+                  <span className="flex items-center">
+                    👨‍🎓 {member.studentCount}
+                  </span>
+                )}
+                {member.teacherCount && (
+                  <span className="flex items-center">
+                    👨‍🏫 {member.teacherCount}
+                  </span>
+                )}
+              </div>
+            </div>
           )}
         </div>
+
+        {/* Отображение детей */}
+        {member.children && member.children.length > 0 && (
+          <div className="mt-8 w-full">
+            <div className="flex flex-col lg:flex-row lg:justify-center lg:flex-wrap gap-6">
+              {member.children.map(child => renderMemberCard(child, level + 1))}
+            </div>
+          </div>
+        )}
       </div>
     );
   };
@@ -208,43 +138,16 @@ const renderMemberCard = (member, level = 0) => {
   const renderPyramidStructure = () => {
     if (!organizationData) {
       return (
-        <div className="text-center py-16">
-          <div className="inline-block w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 animate-pulse"></div>
-          <p className="mt-6 text-gray-600 text-lg">Загрузка структуры...</p>
+        <div className="text-center py-12">
+          <div className="animate-spin inline-block w-8 h-8 border-4 border-current border-t-transparent text-blue-600 rounded-full"></div>
+          <p className="mt-4 text-gray-600">Загрузка структуры...</p>
         </div>
       );
     }
 
-    // Строим уровни иерархии (BFS)
-    const buildLevels = (root) => {
-      const levels = [];
-      let queue = [{ node: root, level: 0 }];
-      while (queue.length) {
-        const { node, level } = queue.shift();
-        if (!levels[level]) levels[level] = [];
-        levels[level].push(node);
-        if (node.children && node.children.length) {
-          node.children.forEach((child) => queue.push({ node: child, level: level + 1 }));
-        }
-      }
-      return levels;
-    };
-
-    const levels = buildLevels(organizationData);
-
     return (
-      <div className="space-y-10">
-        {levels.map((nodes, idx) => (
-          <div key={idx} className="flex justify-center">
-            <div className="max-w-6xl w-full flex flex-wrap justify-center gap-8">
-              {nodes.map((n) => (
-                <div key={n.id}>
-                  {renderMemberCard(n, idx)}
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
+      <div className="max-w-6xl mx-auto">
+        {renderMemberCard(organizationData)}
       </div>
     );
   };
@@ -425,8 +328,8 @@ const renderMemberCard = (member, level = 0) => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-r from-blue-800 to-blue-900 text-white py-16">
-        <div className="absolute inset-0 bg-black/10"></div>
+      <div className="relative bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 text-white py-20">
+        <div className="absolute inset-0 bg-black/20"></div>
         <div className="container mx-auto px-4 relative z-10">
           {/* Breadcrumbs */}
           <nav className="flex items-center text-sm text-blue-200 mb-8">
@@ -438,30 +341,30 @@ const renderMemberCard = (member, level = 0) => {
           </nav>
           
           <div className="text-center">
-            <h1 className="text-5xl font-bold mb-6 opacity-95">
+            <h1 className="text-5xl font-bold mb-6 animate-fade-in">
               {t('management.title')}
             </h1>
-            <p className="text-xl text-blue-200 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl text-blue-200 max-w-3xl mx-auto leading-relaxed animate-fade-in-up">
               {t('management.description')}
             </p>
             
             {/* Statistics */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 max-w-4xl mx-auto">
-              <div className="text-center bg-white/10 backdrop-blur-sm rounded-2xl p-6">
-                <div className="text-4xl font-extrabold text-white mb-2">150+</div>
-                <div className="text-sm text-blue-100">{t('management.teachersCount')}</div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 max-w-4xl mx-auto">
+              <div className="text-center animate-fade-in stats-counter">
+                <div className="text-3xl font-bold text-blue-300">150+</div>
+                <div className="text-sm text-blue-200">{t('management.teachersCount')}</div>
               </div>
-              <div className="text-center bg-white/10 backdrop-blur-sm rounded-2xl p-6">
-                <div className="text-4xl font-extrabold text-white mb-2">15</div>
-                <div className="text-sm text-blue-100">{t('management.departmentsCount')}</div>
+              <div className="text-center animate-fade-in stats-counter">
+                <div className="text-3xl font-bold text-green-300">15</div>
+                <div className="text-sm text-blue-200">{t('management.departmentsCount')}</div>
               </div>
-              <div className="text-center bg-white/10 backdrop-blur-sm rounded-2xl p-6">
-                <div className="text-4xl font-extrabold text-white mb-2">5</div>
-                <div className="text-sm text-blue-100">{t('management.facultiesCount')}</div>
+              <div className="text-center animate-fade-in stats-counter">
+                <div className="text-3xl font-bold text-yellow-300">5</div>
+                <div className="text-sm text-blue-200">{t('management.facultiesCount')}</div>
               </div>
-              <div className="text-center bg-white/10 backdrop-blur-sm rounded-2xl p-6">
-                <div className="text-4xl font-extrabold text-white mb-2">2000+</div>
-                <div className="text-sm text-blue-100">{t('management.studentsCount')}</div>
+              <div className="text-center animate-fade-in stats-counter">
+                <div className="text-3xl font-bold text-purple-300">2000+</div>
+                <div className="text-sm text-blue-200">{t('management.studentsCount')}</div>
               </div>
             </div>
           </div>
@@ -471,39 +374,13 @@ const renderMemberCard = (member, level = 0) => {
       {/* Main Content */}
       <div className="container mx-auto px-4 py-12">
         {/* Pyramid View */}
-        <div className="bg-white rounded-3xl shadow-2xl p-10 mb-12" id="org-chart">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">{t('management.organizationTitle')}</h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">{t('management.organizationSubtitle')}</p>
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mt-4 rounded-full"></div>
-          </div>
-          
-          <div className="max-w-7xl mx-auto">
-            {renderPyramidStructure()}
-          </div>
-        </div>
-
-        {/* Teachers Section */}
-        <div className="bg-white rounded-2xl shadow-xl p-8" id="teachers">
+        <div className="bg-white rounded-2xl shadow-xl p-8" id="org-chart">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-2">Преподаватели</h2>
-            <p className="text-gray-600 text-lg">Наши квалифицированные преподаватели</p>
+            <h2 className="text-4xl font-bold text-gray-900 mb-2">{t('management.organizationTitle')}</h2>
+            <p className="text-gray-600 text-lg">{t('management.organizationSubtitle')}</p>
           </div>
           
-          {loading ? (
-            <div className="text-center py-12">
-              <div className="inline-block w-8 h-8 rounded-full bg-green-200/60 animate-pulse"></div>
-              <p className="mt-4 text-gray-600">Загрузка преподавателей...</p>
-            </div>
-          ) : teachersData.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {teachersData.map(teacher => renderTeacherCard(teacher))}
-            </div>
-          ) : (
-            <div className="text-center py-12">
-              <p className="text-gray-600">Данные о преподавателях не найдены</p>
-            </div>
-          )}
+          {renderPyramidStructure()}
         </div>
       </div>
 
