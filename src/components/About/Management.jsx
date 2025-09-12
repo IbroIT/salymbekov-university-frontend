@@ -116,8 +116,7 @@ const renderMemberCard = (member, level = 0) => {
                 flex items-center justify-center rounded-full bg-blue-500 text-white text-lg font-bold mx-auto
               `}
             >
-              {member.head
-                ?.split(' ')
+              {member.he?.split(' ')
                 .map((n) => n[0])
                 .slice(0, 2)
                 .join('')
