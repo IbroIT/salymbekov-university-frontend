@@ -73,7 +73,7 @@
 @media(max-width:768px){
   .avatar{width:72px;height:72px}
   .h1{font-size:1.6rem}
-  .stats-grid{gap:.5rem}
+  .stats-grid{gap:.5rem} 
 }
 
 /* Reduced motion and accessibility */
