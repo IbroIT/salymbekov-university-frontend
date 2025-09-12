@@ -93,7 +93,7 @@
 .tree-line:hover::before{background:var(--accent);height:2px}
 
 /* End of refined About.css */
-  background-color: #B91C1C;
+/* Удалено: некорректная строка вне селектора */
 
 
 .harvard-gradient {
