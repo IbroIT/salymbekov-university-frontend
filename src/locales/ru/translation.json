@@ -40,7 +40,33 @@
     "articles": "Статьи",
     "admission_office": "Приемная комиссия",
     "map": "Карта кампуса",
-    "feedback": "Обратная связь"
+    "feedback": "Обратная связь",
+    "mission": "Миссия",
+    "regulations": "НПА",
+    
+    "about_HSM": "О ВШМ",
+    "faculty": "ППС",
+    "accreditation": "Аккредитация",
+    "learning_goals": "Цели обучения",
+    "for_applicants": "Поступающим",
+    "for_citizens_kg": "Для граждан КР",
+    "for_foreign_citizens": "Для иностранных граждан",
+    
+    "infrastructure": "Инфраструктура",
+    "hospitals": "Больницы",
+    "laboratories": "Лаборатории",
+    "academic_buildings": "Учебные корпуса",
+    "dormitories": "Общежития",
+    
+    "management_body": "Орган управления",
+    "scientific_journals": "Научные журналы",
+    
+    "student": "Студенту",
+    "internships": "Практика",
+    "academic_mobility": "Академическая мобильность",
+    "instructions": "Инструкции",
+    "appeal_form": "Обращение"
+  
   },
   "news": {
     "title": "Новости университета",

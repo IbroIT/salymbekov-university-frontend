@@ -39,7 +39,31 @@
     "articles": "Articles",
     "admission_office": "Admission Office",
     "map": "Campus Map",
-    "feedback": "Feedback"
+    "feedback": "Feedback",
+    "mission": "Mission",
+    "regulations": "Regulations",
+    "faculty": "Faculty",
+    "accreditation": "Accreditation",
+    "learning_goals": "Learning Goals",
+    "for_applicants": "For Applicants",
+    "for_citizens_kg": "For KG Citizens",
+    "for_foreign_citizens": "For Foreign Citizens",
+    "faq": "FAQ",
+    
+    "infrastructure": "Infrastructure",
+    "hospitals": "Hospitals",
+    "laboratories": "Laboratories",
+    "academic_buildings": "Academic Buildings",
+    "dormitories": "Dormitories",
+    
+    "management_body": "Management Body",
+    "scientific_journals": "Scientific Journals",
+    
+    "student": "Student",
+    "internships": "Internships",
+    "academic_mobility": "Academic Mobility",
+    "instructions": "Instructions",
+    "appeal_form": "Appeal Form"
   },
   "news": {
     "title": "University News",

@@ -39,7 +39,31 @@
     "articles": "Макалалар",
     "admission_office": "Кабыл алуу комиссиясы",
     "map": "Кампус картасы",
-    "feedback": "Кери байланыш"
+    "feedback": "Кери байланыш",
+    "mission": "Миссия",
+    "regulations": "НУА",
+    "about_HSM": "ББМ жөнүндө",
+    "faculty": "Окутуучу курам",
+    "accreditation": "Аккредитация",
+    "learning_goals": "Окуу максаттары",
+    "for_applicants": "Абитуриенттер үчүн",
+    "for_citizens_kg": "КР жарандары үчүн",
+    "for_foreign_citizens": "Чет элдик жарандар үчүн",
+    "faq": "Көп берилүүчү суроолор",
+    
+    "infrastructure": "Инфраструктура",
+    "hospitals": "Ооруканалар",
+    "laboratories": "Лабораториялар",
+    "academic_buildings": "Окуу имараттары",
+    "dormitories": "Жатаканалар",
+    "management_body": "Башкаруу органы",
+    "scientific_journals": "Илимий журналдар",
+    
+    "student": "Студенттер үчүн",
+    "internships": "Практика",
+    "academic_mobility": "Академиялык мобилдүүлүк",
+    "instructions": "Нускамалар",
+    "appeal_form": "Арыз"
   },
   "news": {
     "title": "Университеттин жаңылыктары",

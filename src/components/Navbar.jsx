@@ -68,7 +68,7 @@ const Navbar = () => {
     return currentLang ? currentLang.icon : RuIcon;
   };
 
-  // Структура меню с подразделами
+  // Обновленная структура меню с подразделами
   const menuData = {
     about: {
       title: t('nav.about'),
@@ -77,6 +77,9 @@ const Navbar = () => {
         { title: t('nav.management'), link: '/about/management' },
         { title: t('nav.vacancies'), link: '/about/vacancies' },
         { title: t('nav.partners'), link: '/about/partners' },
+        // Добавленные подразделы
+        { title: t('nav.mission'), link: '/about/mission' },
+        { title: t('nav.regulations'), link: '/about/regulations' },
       ]
     },
     HSM: {
@@ -87,16 +90,43 @@ const Navbar = () => {
         { title: t('nav.departments'), link: '/HSM/departments' },
         { title: t('nav.calendar'), link: '/HSM/calendar' },
         { title: t('nav.resources'), link: '/HSM/resources' },
+        // Добавленные подразделы
+        { title: t('nav.about_HSM'), link: '/HSM/about' },
+        { title: t('nav.accreditation'), link: '/HSM/accreditation' },
+        { title: t('nav.learning_goals'), link: '/HSM/learning-goals' },
       ]
     },
     admission: {
       title: t('nav.admission'),
       submenu: [
-        { title: t('nav.admission_process'), link: '/admissions' },
-        { title: t('nav.requirements'), link: '/admissions/requirements' },
+        { title: t('nav.for_applicants'), link: '/admissions/applicants' },
+        { 
+          title: t('nav.for_citizens_kg'), 
+          link: '/admissions/citizens-kg',
+          subitems: [
+            { title: t('nav.requirements'), link: '/admissions/citizens-kg/requirements' },
+            { title: t('nav.apply_online'), link: '/admissions/citizens-kg/apply' },
+          ]
+        },
+        { 
+          title: t('nav.for_foreign_citizens'), 
+          link: '/admissions/foreign-citizens',
+          subitems: [
+            { title: t('nav.requirements'), link: '/admissions/foreign-citizens/requirements' },
+            { title: t('nav.apply_online'), link: '/admissions/foreign-citizens/apply' },
+          ]
+        },
         { title: t('nav.tuition'), link: '/admissions/tuition' },
-        { title: t('nav.faq'), link: '/admissions/faq' },
-        { title: t('nav.apply_online'), link: '/admissions/apply' },
+      ]
+    },
+    infrastructure: {
+      title: t('nav.infrastructure'),
+      submenu: [
+        // Добавленные подразделы
+        { title: t('nav.hospitals'), link: '/infrastructure/hospitals' },
+        { title: t('nav.laboratories'), link: '/infrastructure/laboratories' },
+        { title: t('nav.academic_buildings'), link: '/infrastructure/academic-buildings' },
+        { title: t('nav.dormitories'), link: '/infrastructure/dormitories' },
       ]
     },
     research: {
@@ -107,15 +137,24 @@ const Navbar = () => {
         { title: t('nav.publications'), link: '/research/publications' },
         { title: t('nav.conferences'), link: '/research/conferences' },
         { title: t('nav.grants'), link: '/research/grants' },
+        // Добавленные подразделы
+        { title: t('nav.management_body'), link: '/research/management' },
+        { title: t('nav.scientific_journals'), link: '/research/journals' },
       ]
     },
-    campus_life: {
-      title: t('nav.campus_life'),
+    student: {
+      title: t('nav.student'),
       submenu: [
-        { title: t('nav.student_life'), link: '/campus-life' },
-        { title: t('nav.clubs'), link: '/campus-life/clubs' },
-        { title: t('nav.gallery'), link: '/campus-life/gallery' },
-        { title: t('nav.international'), link: '/campus-life/international' },
+        { title: t('nav.student_life'), link: '/student' },
+        { title: t('nav.clubs'), link: '/student/clubs' },
+        { title: t('nav.gallery'), link: '/student/gallery' },
+        { title: t('nav.international'), link: '/student/international' },
+        // Добавленные подразделы
+        { title: t('nav.internships'), link: '/student/internships' },
+        { title: t('nav.academic_mobility'), link: '/student/academic-mobility' },
+        { title: t('nav.regulations'), link: '/student/regulations' },
+        { title: t('nav.instructions'), link: '/student/instructions' },
+        { title: t('nav.appeal_form'), link: '/student/appeal' },
       ]
     },
     news: {
@@ -178,6 +217,49 @@ const Navbar = () => {
     setActiveMenu(null);
   };
 
+  // Функция для отображения многоуровневого меню
+  const renderSubmenu = (submenu) => {
+    return (
+      <div className="py-2" role="menu">
+        {submenu.map((item, index) => (
+          <div key={index}>
+            {item.subitems ? (
+              <div className="relative group">
+                <div className="flex items-center justify-between px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200 cursor-pointer">
+                  <span>{item.title}</span>
+                  <svg className="ml-2 h-4 w-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <div className="absolute left-full top-0 ml-1 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                  <div className="py-1">
+                    {item.subitems.map((subitem, subIndex) => (
+                      <a
+                        key={subIndex}
+                        href={subitem.link}
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                      >
+                        {subitem.title}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <a
+                href={item.link}
+                className="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200"
+                role="menuitem"
+              >
+                {item.title}
+              </a>
+            )}
+          </div>
+        ))}
+      </div>
+    );
+  };
+
   return (
     <nav 
       ref={navbarRef}
@@ -222,18 +304,7 @@ const Navbar = () => {
                       transition: 'opacity 0.2s ease, transform 0.2s ease'
                     }}
                   >
-                    <div className="py-2" role="menu">
-                      {menu.submenu.map((item, index) => (
-                        <a
-                          key={index}
-                          href={item.link}
-                          className="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200"
-                          role="menuitem"
-                        >
-                          {item.title}
-                        </a>
-                      ))}
-                    </div>
+                    {renderSubmenu(menu.submenu)}
                   </div>
                 )}
               </div>
@@ -351,14 +422,47 @@ const Navbar = () => {
                 {activeMenu === key && (
                   <div className="pl-6 pb-3 space-y-2 animate-fadeIn">
                     {menu.submenu.map((item, index) => (
-                      <a
-                        key={index}
-                        href={item.link}
-                        className="block px-3 py-2 rounded-md text-sm text-gray-600 hover:text-blue-600 hover:bg-gray-50 transition-colors"
-                        onClick={handleMenuItemClick}
-                      >
-                        {item.title}
-                      </a>
+                      <div key={index}>
+                        {item.subitems ? (
+                          <>
+                            <button
+                              onClick={() => setActiveMenu(activeMenu === `${key}-${index}` ? null : `${key}-${index}`)}
+                              className="w-full flex justify-between items-center px-3 py-2 rounded-md text-sm text-gray-600 hover:text-blue-600 hover:bg-gray-50 transition-colors"
+                            >
+                              <span>{item.title}</span>
+                              <svg 
+                                className={`h-4 w-4 transition-transform ${activeMenu === `${key}-${index}` ? 'rotate-180' : ''}`} 
+                                fill="currentColor" 
+                                viewBox="0 0 20 20"
+                              >
+                                <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                              </svg>
+                            </button>
+                            {activeMenu === `${key}-${index}` && (
+                              <div className="pl-4 space-y-2 animate-fadeIn">
+                                {item.subitems.map((subitem, subIndex) => (
+                                  <a
+                                    key={subIndex}
+                                    href={subitem.link}
+                                    className="block px-3 py-2 rounded-md text-sm text-gray-600 hover:text-blue-600 hover:bg-gray-50 transition-colors"
+                                    onClick={handleMenuItemClick}
+                                  >
+                                    {subitem.title}
+                                  </a>
+                                ))}
+                              </div>
+                            )}
+                          </>
+                        ) : (
+                          <a
+                            href={item.link}
+                            className="block px-3 py-2 rounded-md text-sm text-gray-600 hover:text-blue-600 hover:bg-gray-50 transition-colors"
+                            onClick={handleMenuItemClick}
+                          >
+                            {item.title}
+                          </a>
+                        )}
+                      </div>
                     ))}
                   </div>
                 )}
