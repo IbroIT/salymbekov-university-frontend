@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const API_URL = 'http://127.0.0.1:8000/api/teachers/';
-const API_MANAGEMENT_URL = 'http://127.0.0.1:8000/api/management/';
+const API_URL = 'https://su-back.onrender.com/api/teachers/';
+const API_MANAGEMENT_URL = 'https://su-back.onrender.com/api/management/';
 
 export const getTeachers = async () => {
     try {

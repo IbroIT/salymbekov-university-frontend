@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Calendar, MapPin, Clock, Users } from 'lucide-react';
 
-const API_BASE_URL = 'http://localhost:8000/api';
+const API_BASE_URL = 'https://su-back.onrender.com/api';
 
 const NewsEvents = () => {
   const { t, i18n } = useTranslation();

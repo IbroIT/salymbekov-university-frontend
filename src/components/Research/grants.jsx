@@ -33,7 +33,7 @@ const Grants = () => {
   const fetchGrants = async (endpoint = 'grants') => {
     try {
       setLoading(true);
-      const response = await fetch(`http://127.0.0.1:8000/research/api/${endpoint}/`);
+      const response = await fetch(`https://su-back.onrender.com/research/api/${endpoint}/`);
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -130,7 +130,7 @@ const Grants = () => {
         formDataToSend.append('files', formData.files);
       }
 
-      const response = await fetch('http://127.0.0.1:8000/research/api/grant-applications/', {
+      const response = await fetch('https://su-back.onrender.com/research/api/grant-applications/', {
         method: 'POST',
         body: formDataToSend,
       });

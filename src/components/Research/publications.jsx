@@ -49,8 +49,8 @@ const Publications = () => {
     try {
       setLoading(true);
       const [publicationsResponse, centersResponse] = await Promise.all([
-        fetch('http://127.0.0.1:8000/research/api/publications/'),
-        fetch('http://127.0.0.1:8000/research/api/centers/')
+        fetch('https://su-back.onrender.com/research/api/publications/'),
+        fetch('https://su-back.onrender.com/research/api/centers/')
       ]);
       
       if (!publicationsResponse.ok || !centersResponse.ok) {
@@ -88,7 +88,7 @@ const Publications = () => {
       if (filters.journal) params.append('journal__icontains', filters.journal);
       if (filters.center) params.append('research_center__name__icontains', filters.center);
 
-      const response = await fetch(`http://127.0.0.1:8000/research/api/publications/?${params}`);
+      const response = await fetch(`https://su-back.onrender.com/research/api/publications/?${params}`);
       
       if (!response.ok) {
         throw new Error('Failed to fetch filtered data');
@@ -183,7 +183,7 @@ const Publications = () => {
       if (filters.journal) params.append('journal__icontains', filters.journal);
       if (filters.center) params.append('research_center__name__icontains', filters.center);
 
-      const response = await fetch(`http://127.0.0.1:8000/research/api/publications/?${params}`);
+      const response = await fetch(`https://su-back.onrender.com/research/api/publications/?${params}`);
       
       if (!response.ok) {
         throw new Error('Failed to fetch export data');

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-const API_BASE_URL = 'http://localhost:8000/api';
+const API_BASE_URL = 'https://su-back.onrender.com/api';
 
 const HomeNews = () => {
   const { t, i18n } = useTranslation();

@@ -1,6 +1,6 @@
 import i18n from '../i18n';
 
-const API_BASE_URL = 'http://localhost:8000/api/careers';
+const API_BASE_URL = 'https://su-back.onrender.com/api/careers';
 
 // Get current language from i18n
 const getCurrentLanguage = () => {
