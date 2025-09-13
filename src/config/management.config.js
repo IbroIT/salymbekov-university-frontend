@@ -4,7 +4,7 @@
 export const managementConfig = {
   // API настройки
   api: {
-    baseUrl: process.env.REACT_APP_API_URL || 'http://localhost:3001',
+    baseUrl: import.meta.env.VITE_API_URL || 'http://localhost:3001',
     endpoints: {
       organizationStructure: '/api/organization/structure',
       staffList: '/api/staff',
@@ -55,7 +55,7 @@ export const managementConfig = {
 
   // Настройки аналитики
   analytics: {
-    enabled: process.env.NODE_ENV === 'production',
+    enabled: import.meta.env.MODE === 'production',
     trackSearches: true,
     trackProfileViews: true,
     trackExports: true,
@@ -204,7 +204,7 @@ export const managementConfig = {
 
   // Debug настройки
   debug: {
-    enabled: process.env.NODE_ENV === 'development',
+    enabled: import.meta.env.MODE === 'development',
     logLevel: 'warn', // 'error' | 'warn' | 'info' | 'debug'
     showPerformanceMetrics: false,
     logApiRequests: true,
@@ -271,7 +271,7 @@ export const validateConfig = (config = managementConfig) => {
 
 // Получение конфигурации для окружения
 export const getEnvironmentConfig = () => {
-  const env = process.env.NODE_ENV || 'development';
+  const env = import.meta.env.MODE || 'development';
   
   switch (env) {
     case 'production':

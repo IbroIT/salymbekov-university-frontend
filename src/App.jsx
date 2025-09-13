@@ -23,6 +23,15 @@ import AboutHSM from "./components/academics/AboutHSM";
 import Accreditation from "./components/academics/Accreditation";
 import LearningGoals from "./components/academics/LearningGoals";
 
+// Новые компоненты ВШМ
+import Faculty from "./components/HSM/Faculty";
+import Programs from "./components/HSM/Programs";
+import HSMInfo from "./components/HSM/HSMInfo";
+import HSMAccreditation from "./components/HSM/HSMAccreditation";
+import HSMLearningGoals from "./components/HSM/HSMLearningGoals";
+import HSMAcademicStuff from "./components/HSM/HSMAcademicStuff";
+
+
 import LifeOverview from "./components/Life/LifeOverview";
 import ClubsSection from "./components/Life/ClubsSection";
 import InternationalStudents from "./components/Life/InternationalStudents";
@@ -42,6 +51,14 @@ import AdmissionProcess from "./components/Admissions/AdmissionProcess";
 import ForApplicants from "./components/Admissions/ForApplicants";
 import ForCitizensKG from "./components/Admissions/ForCitizensKG";
 import ForForeignCitizens from "./components/Admissions/ForForeignCitizens";
+
+// Новые компоненты для детальных страниц абитуриентов
+import RequirementsCitizensKG from "./components/Admissions/Requirements/RequirementsCitizensKG";
+import RequirementsForeignCitizens from "./components/Admissions/Requirements/RequirementsForeignCitizens";
+import ApplyCitizensKG from "./components/Admissions/Apply/ApplyCitizensKG";
+import ApplyForeignCitizens from "./components/Admissions/Apply/ApplyForeignCitizens";
+import TuitionCitizensKG from "./components/Admissions/Tuition/TuitionCitizensKG";
+import TuitionForeignCitizens from "./components/Admissions/Tuition/TuitionForeignCitizens";
 
 import News from "./components/News/News";
 import NewsDetail from "./components/News/NewsDetail";
@@ -97,15 +114,17 @@ function App() {
             <Route path="/about/mission" element={<Mission />} />
             <Route path="/about/regulations" element={<Regulations />} />
 
-            {/* Academics (HSM) */}
-            <Route path="/hsm" element={<HSM />} />
+            {/* HSM */}
+            <Route path="/hsm/programs" element={<HSM />} />
             <Route path="/hsm/faculties" element={<Faculties />} />
             <Route path="/hsm/departments" element={<Deparments />} />
             <Route path="/hsm/calendar" element={<Calendar />} />
             <Route path="/hsm/resources" element={<Resources />} />
-            <Route path="/hsm/about" element={<AboutHSM />} />
-            <Route path="/hsm/accreditation" element={<Accreditation />} />
-            <Route path="/hsm/learning-goals" element={<LearningGoals />} />
+            <Route path="/hsm/accreditation" element={<HSMAccreditation />} />
+            <Route path="/hsm/learning-goals" element={<HSMLearningGoals />} />
+            <Route path="/hsm/about" element={<HSMInfo />} />
+            <Route path="/hsm/AS" element={<HSMAcademicStuff />} />
+
 
             {/* Admission */}
             <Route path="/admissions" element={<AdmissionsOverview />} />
@@ -117,12 +136,12 @@ function App() {
             <Route path="/admissions/applicants" element={<ForApplicants />} />
             <Route path="/admissions/applicants/citizens-kg" element={<ForCitizensKG />} />
             <Route path="/admissions/applicants/foreign-citizens" element={<ForForeignCitizens />} />
-            <Route path="/admissions/requirements/citizens-kg" element={<Page title="Требования для граждан КР" />} />
-            <Route path="/admissions/requirements/foreign-citizens" element={<Page title="Требования для иностранных граждан" />} />
-            <Route path="/admissions/apply/citizens-kg" element={<Page title="Подача заявки для граждан КР" />} />
-            <Route path="/admissions/apply/foreign-citizens" element={<Page title="Подача заявки для иностранных граждан" />} />
-            <Route path="/admissions/tuition/citizens-kg" element={<Page title="Стоимость обучения для граждан КР" />} />
-            <Route path="/admissions/tuition/foreign-citizens" element={<Page title="Стоимость обучения для иностранных граждан" />} />
+            <Route path="/admissions/requirements/citizens-kg" element={<RequirementsCitizensKG />} />
+            <Route path="/admissions/requirements/foreign-citizens" element={<RequirementsForeignCitizens />} />
+            <Route path="/admissions/apply/citizens-kg" element={<ApplyCitizensKG />} />
+            <Route path="/admissions/apply/foreign-citizens" element={<ApplyForeignCitizens />} />
+            <Route path="/admissions/tuition/citizens-kg" element={<TuitionCitizensKG />} />
+            <Route path="/admissions/tuition/foreign-citizens" element={<TuitionForeignCitizens />} />
 
             {/* Infrastructure */}
             <Route path="/infrastructure" element={<Infrastructure />} />

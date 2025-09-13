@@ -13,6 +13,7 @@
     "management": "Management",
     "documents": "Documents",
     "vacancies": "Vacancies",
+    "academic_stuff": "Academic Staff",
     "partners": "Partners",
     "programs": "Educational Programs",
     "faculties": "Faculties",
@@ -2659,6 +2660,731 @@
       "title": "💡 Tip",
       "text": "Some resources may require authentication via your university account"
     }
+  },
+  "requirementsCitizensKG": {
+    "title": "Requirements for KR Citizens",
+    "subtitle": "Academic and documentation requirements for admission",
+    "ortScores": {
+      "title": "Minimum ORT Scores",
+      "specialty": "Specialty",
+      "minScore": "Min. Score"
+    },
+    "medical": {
+      "title": "Medical Requirements",
+      "note": "Note:",
+      "noteText": "All medical certificates must be obtained no earlier than 3 months before document submission."
+    },
+    "admission": {
+      "title": "Admission Conditions",
+      "budget": {
+        "title": "Budget Places"
+      },
+      "contract": {
+        "title": "Contract Places"
+      }
+    },
+    "contact": {
+      "title": "Need Help?",
+      "subtitle": "Contact the admissions committee for detailed consultation",
+      "phone": "Phone",
+      "email": "Email",
+      "hours": "Working Hours",
+      "schedule": "Mon-Fri: 9:00-18:00"
+    }
+  },
+  "reqForeign": {
+    "title": "Requirements for Foreign Citizens",
+    "subtitle": "Academic requirements, visa processing and support for international students",
+    "translation": {
+      "title": "Translation and Nostrification of Documents",
+      "documents": "Documents for notarized translation:"
+    },
+    "nostrification": {
+      "title": "Document Nostrification:",
+      "step1": "Step 1: Application Submission",
+      "step1desc": "To the Ministry of Education and Science of KR",
+      "step2": "Step 2: Examination",
+      "step2desc": "Document review (30-45 days)",
+      "step3": "Step 3: Certificate Receipt",
+      "step3desc": "Recognition certificate issuance"
+    },
+    "language": {
+      "title": "Language Requirements",
+      "level": "Level",
+      "certificates": "Accepted certificates:",
+      "note": "Note:",
+      "noteText": "Students without language certificates can take a language test at the university or complete preparatory courses."
+    },
+    "visa": {
+      "title": "Visa Requirements",
+      "documentsTitle": "Required documents:",
+      "timelineTitle": "Processing timeline:",
+      "timeline1": "University invitation",
+      "timeline2": "Consulate application",
+      "timeline3": "Visa receipt"
+    },
+    "support": {
+      "title": "International Student Support",
+      "housing": {
+        "title": "Housing Assistance",
+        "desc": "Help with finding dormitory or apartment"
+      },
+      "curator": {
+        "title": "Curator Assignment",
+        "desc": "Personal curator for adaptation"
+      },
+      "consultation": {
+        "title": "24/7 Consultations",
+        "desc": "Round-the-clock support for any questions"
+      }
+    },
+    "contact": {
+      "title": "International Department",
+      "subtitle": "Contact us for detailed information",
+      "phone": "Phone",
+      "email": "Email",
+      "address": "Address",
+      "addressText": "Bishkek, Intergelpo St. 720000"
+    }
+  },
+  "applyCitizens": {
+    "title": "Application for KR Citizens",
+    "subtitle": "Step-by-step guide to admission to Medical University",
+    "process": {
+      "title": "Admission Process"
+    },
+    "step1": {
+      "title": "Document Submission",
+      "desc": "Collecting and submitting required documents",
+      "duration": "1-2 weeks",
+      "actions": "What to do:",
+      "action1": "Collect required documents",
+      "action2": "Fill out the application",
+      "action3": "Submit documents to admissions committee",
+      "tips": "Useful tips:",
+      "tip1": "Submit documents as early as possible",
+      "tip2": "Check all documents in advance"
+    },
+    "step2": {
+      "title": "Taking Exams",
+      "desc": "Taking entrance examinations",
+      "duration": "1 day",
+      "exams": "Exam types:",
+      "ort": "ORT (General Republican Testing)",
+      "interview": "Interview (for some specialties)",
+      "preparation": "Preparation:",
+      "prep1": "Study the ORT program",
+      "prep2": "Take practice tests"
+    },
+    "step3": {
+      "title": "Enrollment",
+      "desc": "Receiving results and enrollment",
+      "duration": "1-2 weeks",
+      "results": "Getting results:",
+      "result1": "Check results on the website",
+      "result2": "Receive notification",
+      "result3": "Confirm enrollment",
+      "next": "Next steps:",
+      "next1": "Pay tuition (for contract)",
+      "next2": "Get student ID card"
+    },
+    "documents": {
+      "title": "Required Documents",
+      "note": "Important:",
+      "noteText": "All documents must be originals with notarized copies."
+    },
+    "calendar": {
+      "title": "Application Deadlines",
+      "period1": "First Wave",
+      "dates1": "June 1 - July 15",
+      "desc1": "Main period for document submission",
+      "period2": "Second Wave",
+      "dates2": "July 16 - July 31",
+      "desc2": "Additional period (if places available)",
+      "period3": "Third Wave",
+      "dates3": "August 1 - August 15",
+      "desc3": "Final period",
+      "active": "Active",
+      "reminder": "Reminder:",
+      "reminderText": "It is recommended to submit documents in the first wave for better admission chances."
+    },
+    "contact": {
+      "title": "Admissions Committee Contacts",
+      "subtitle": "We are ready to help you at every stage of admission",
+      "phone": "Phone",
+      "email": "Email",
+      "hours": "Working Hours",
+      "schedule": "Mon-Fri: 9:00-18:00",
+      "address": "Address",
+      "addressText": "Bishkek, Intergelpo St. 720000",
+      "mapPlaceholder": "Interactive Map"
+    }
+  },
+  "applyForeign": {
+    "title": "Application for Foreign Citizens",
+    "subtitle": "Complete guide to admission for international students",
+    "algorithm": {
+      "title": "Admission Algorithm for Foreigners"
+    },
+    "step1": {
+      "title": "Document Preparation",
+      "desc": "Collecting, translating and nostrifying educational documents",
+      "duration": "2-4 weeks",
+      "documents": "Required documents:",
+      "doc1": "Diploma/certificate (with notarized translation)",
+      "doc2": "Passport and its translation",
+      "doc3": "Medical certificate",
+      "doc4": "Language certificate (if available)",
+      "tips": "Important points:",
+      "tip1": "All translations must be notarized",
+      "tip2": "Documents are valid for 6 months"
+    },
+    "step2": {
+      "title": "Application Submission",
+      "desc": "Sending documents and receiving university invitation",
+      "duration": "1-2 weeks",
+      "process": "Submission process:",
+      "process1": "Submit documents online or by mail",
+      "process2": "Application review (5-10 days)",
+      "process3": "Receive invitation",
+      "invitation": "Invitation includes:",
+      "inv1": "Official university letter",
+      "inv2": "Study program information",
+      "inv3": "Visa application data"
+    },
+    "step3": {
+      "title": "Visa Processing",
+      "desc": "Obtaining student visa",
+      "duration": "2-3 weeks",
+      "visa": "Visa processing:",
+      "visa1": "Appointment at KR consulate",
+      "visa2": "Document submission",
+      "visa3": "Student visa receipt",
+      "timing": "Processing times:",
+      "time1": "Standard processing: 15-20 days",
+      "time2": "Express processing: 5-7 days"
+    },
+    "step4": {
+      "title": "Arrival and Enrollment",
+      "desc": "Document processing at the university",
+      "duration": "1 week",
+      "arrival": "Upon arrival:",
+      "arrival1": "Airport pickup (upon request)",
+      "arrival2": "Registration with Ministry of Internal Affairs",
+      "arrival3": "University registration",
+      "documents": "Final documents:",
+      "doc1": "Student ID card",
+      "doc2": "Certificate for visa extension"
+    },
+    "visaReqs": {
+      "title": "Visa Documents",
+      "required": "Required",
+      "note": "Important:",
+      "noteText": "All documents must be translated into Kyrgyz or Russian and notarized."
+    },
+    "timeline": {
+      "title": "Admission Calendar",
+      "completed": "Completed",
+      "active": "Active",
+      "upcoming": "Upcoming"
+    },
+    "support": {
+      "title": "International Student Support",
+      "subtitle": "We provide full support at all stages of education",
+      "housing": {
+        "title": "Housing Assistance",
+        "desc": "Help with finding dormitory or apartment",
+        "feature1": "Dormitory room reservation",
+        "feature2": "Apartment rental assistance",
+        "feature3": "City district consultations"
+      },
+      "curator": {
+        "title": "Personal Curator",
+        "desc": "Individual support in adaptation",
+        "feature1": "Airport pickup",
+        "feature2": "Document processing assistance",
+        "feature3": "Study process adaptation"
+      },
+      "legal": {
+        "title": "Legal Support",
+        "desc": "Help with processing all necessary documents",
+        "feature1": "Residence registration",
+        "feature2": "Student ID processing",
+        "feature3": "Legal consultations"
+      }
+    },
+    "contact": {
+      "title": "International Department",
+      "subtitle": "Our team is ready to help you 24/7",
+      "phone": "Phone",
+      "email": "Email",
+      "messenger": "Messengers"
+    }
+  },
+  "tuitionCitizens": {
+    "title": "Tuition for KR Citizens",
+    "subtitle": "Current information about program costs and payment methods",
+    "faculties": {
+      "title": "Select Faculty"
+    },
+    "table": {
+      "program": "Program",
+      "budget": "Budget",
+      "contract": "Contract"
+    },
+    "budget": "Budget",
+    "noBudget": "No",
+    "limitedBudget": "Limited",
+    "som": "som",
+    "note": "Note:",
+    "noteText": "Prices are indicated for the 2025 academic year. Prices may change annually.",
+    "paymentOptions": {
+      "title": "Payment Options and Benefits"
+    },
+    "payment": {
+      "installment": "Payment Plan",
+      "installmentDesc": "Possibility of payment by semesters",
+      "cond1": "50% at the beginning of semester",
+      "cond2": "50% before the end of semester",
+      "cond3": "No additional interest",
+      "scholarship": "Academic Scholarships",
+      "scholarshipDesc": "Discounts for academic achievements",
+      "scho1": "10% discount for excellent studies",
+      "scho2": "5% discount for good studies",
+      "scho3": "Annual review",
+      "social": "Social Benefits",
+      "socialDesc": "Benefits for certain categories",
+      "soc1": "Orphans: 50% discount",
+      "soc2": "Disabled: 30% discount",
+      "soc3": "Large families: 20% discount"
+    },
+    "bankDetails": {
+      "title": "Bank Details",
+      "download": "Download PDF",
+      "bankName": "Bank name:",
+      "account": "Account number:",
+      "bik": "BIC:",
+      "inn": "INN:",
+      "recipient": "Recipient:",
+      "purpose": "Payment purpose:",
+      "important": "Important!",
+      "rule1": "In payment purpose, be sure to indicate student's full name and course",
+      "rule2": "Keep payment receipt until graduation",
+      "rule3": "When paying through ATM, check the correctness of details"
+    },
+    "bank": {
+      "name": "Commercial Bank KYRGYZSTAN",
+      "recipient": "OO \"Medical University\"",
+      "purpose": "Tuition payment"
+    },
+    "contact": {
+      "title": "Payment Questions?",
+      "subtitle": "Contact accounting for consultation",
+      "phone": "Accounting phone",
+      "email": "Email",
+      "hours": "Working hours",
+      "schedule": "Mon-Fri: 9:00-17:00"
+    }
+  },
+  "tuitionForeign": {
+    "title": "Tuition for Foreign Citizens",
+    "subtitle": "Complete information about program costs, additional expenses and scholarships",
+    "tuition": {
+      "title": "Study Program Costs"
+    },
+    "som": "SOM",
+    "perYear": "/year",
+    "note": "Note:",
+    "noteText": "Exchange rates may change. Payment is accepted in US dollars, euros or KR soms.",
+    "additionalCosts": {
+      "title": "Additional Expenses"
+    },
+    "costs": {
+      "accommodation": "Accommodation",
+      "dormitory": "Dormitory",
+      "dormitoryDesc": "Double room",
+      "apartment": "Apartment rental",
+      "apartmentDesc": "Depends on district",
+      "living": "Monthly expenses",
+      "food": "Food",
+      "foodDesc": "Including cafeteria and groceries",
+      "transport": "Transport",
+      "transportDesc": "Public transport",
+      "personal": "Personal expenses",
+      "personalDesc": "Clothing, entertainment",
+      "oneTime": "One-time expenses",
+      "visa": "Student visa",
+      "visaDesc": "Consular fee",
+      "medical": "Medical insurance",
+      "medicalDesc": "Full coverage",
+      "documents": "Document processing",
+      "documentsDesc": "Translations, nostrification"
+    },
+    "budgetEstimate": {
+      "title": "Estimated monthly budget:",
+      "minimum": "Minimum:",
+      "comfortable": "Comfortable:",
+      "note": "* Excluding tuition costs",
+      "varies": "* Expenses may vary depending on lifestyle"
+    },
+    "scholarships": {
+      "title": "Scholarships and Benefits",
+      "government": "Government Scholarship",
+      "governmentDesc": "Full tuition coverage from KR government",
+      "governmentCoverage": "100% of tuition costs",
+      "govReq1": "High academic performance",
+      "govReq2": "Embassy recommendations",
+      "govReq3": "Knowledge of Russian or English",
+      "govDeadline": "March 31",
+      "university": "University Scholarship",
+      "universityDesc": "Partial compensation from university",
+      "universityCoverage": "25-50% of tuition costs",
+      "uniReq1": "Excellent entrance exam results",
+      "uniReq2": "Motivation letter",
+      "uniReq3": "Achievement portfolio",
+      "uniDeadline": "May 15",
+      "merit": "Merit Scholarship",
+      "meritDesc": "Recognition of outstanding students",
+      "meritCoverage": "15-30% discount",
+      "merReq1": "Active participation in research",
+      "merReq2": "Volunteer activities",
+      "merReq3": "Leadership qualities",
+      "merDeadline": "Throughout the year",
+      "requirements": "Requirements:",
+      "deadline": "Application deadline:"
+    },
+    "bankDetails": {
+      "title": "Bank Details for International Transfers",
+      "download": "Download PDF",
+      "usdTitle": "For USD transfers",
+      "eurTitle": "For EUR transfers",
+      "bank": "Bank:",
+      "account": "Account:",
+      "correspondent": "Correspondent bank:",
+      "recipient": "Recipient:",
+      "important": "Important points for transfers:",
+      "rule1": "All bank commissions are paid by sender",
+      "rule2": "In payment purpose indicate student's name and \"tuition fee\"",
+      "rule3": "Transfers may take 3-5 business days",
+      "rule4": "Keep transfer confirmation until receiving grade book"
+    },
+    "bank": {
+      "nameUSD": "Demir Bank SWIFT: DEMIKGKA",
+      "nameEUR": "Optima Bank SWIFT: OPTIMAKG",
+      "recipient": "OO \"Medical University\""
+    },
+    "contact": {
+      "title": "Financial Department for International Students",
+      "subtitle": "We help with any payment and financing questions",
+      "phone": "Phone",
+      "email": "Email",
+      "support": "Support 24/7"
+    }
+  },
+  "forCitizensKG": {
+    "title": "Admission for KR Citizens",
+    "subtitle": "Complete information about admission to Medical University for citizens of the Kyrgyz Republic",
+    "quickLinks": {
+      "title": "Quick Links"
+    },
+    "links": {
+      "requirements": {
+        "title": "Requirements",
+        "desc": "Academic and medical requirements"
+      },
+      "apply": {
+        "title": "Apply",
+        "desc": "Detailed document submission instructions"
+      },
+      "tuition": {
+        "title": "Cost",
+        "desc": "Tuition costs and payment methods"
+      }
+    },
+    "stepsTitle": "Step-by-step Admission Guide",
+    "steps": {
+      "documents": "Documents/Actions:",
+      "step1": {
+        "title": "Document Submission",
+        "desc": "Collecting and submitting required documents to admissions committee",
+        "doc1": "KR citizen passport",
+        "doc2": "Secondary education certificate",
+        "doc3": "Medical certificate (086/u)",
+        "doc4": "3x4 cm photos (6 pieces)",
+        "timing": "June - July"
+      },
+      "step2": {
+        "title": "Taking Exams",
+        "desc": "Passing ORT and additional entrance examinations",
+        "doc1": "ORT (General Republican Testing)",
+        "doc2": "Interview (for some specialties)",
+        "doc3": "Medical examination",
+        "timing": "July - August"
+      },
+      "step3": {
+        "title": "Enrollment",
+        "desc": "Receiving results and enrollment in selected program",
+        "doc1": "Receiving ORT results",
+        "doc2": "Enrollment confirmation",
+        "doc3": "Tuition payment (for contract)",
+        "timing": "August - September"
+      }
+    },
+    "importantTitle": "Important to Know",
+    "info": {
+      "ort": {
+        "title": "ORT - mandatory",
+        "desc": "All applicants must take General Republican Testing"
+      },
+      "budget": {
+        "title": "Budget places",
+        "desc": "Budget places available by competition"
+      },
+      "deadline": {
+        "title": "Application deadlines",
+        "desc": "Don't miss document submission deadlines"
+      }
+    },
+    "minScores": {
+      "title": "Minimum ORT Passing Scores",
+      "specialty": "Specialty",
+      "budget": "Budget",
+      "contract": "Contract",
+      "duration": "Study duration",
+      "generalMedicine": "General Medicine",
+      "dentistry": "Dentistry",
+      "pharmacy": "Pharmacy",
+      "nursing": "Nursing",
+      "note": "Note:",
+      "noteText": "Passing scores may vary depending on competition and admission year."
+    },
+    "contact": {
+      "title": "Admissions Committee",
+      "subtitle": "We are ready to answer all your questions",
+      "phone": "Phone",
+      "email": "Email",
+      "hours": "Working hours",
+      "schedule": "Mon-Fri: 9:00-18:00",
+      "address": "Address",
+      "addressText": "Bishkek, Intergelpo St."
+    }
+  },
+  "forForeignCitizens": {
+    "title": "Admission for Foreign Citizens",
+    "subtitle": "Welcome to Medical University! We are happy to welcome students from all over the world",
+    "quickLinks": {
+      "title": "Quick Links"
+    },
+    "links": {
+      "requirements": {
+        "title": "Requirements",
+        "desc": "Documents, language and visa requirements"
+      },
+      "apply": {
+        "title": "Apply",
+        "desc": "Detailed admission algorithm"
+      },
+      "tuition": {
+        "title": "Cost",
+        "desc": "Tuition costs and additional expenses"
+      }
+    },
+    "algorithmTitle": "Admission Algorithm for Foreigners",
+    "steps": {
+      "documents": "Documents/Actions:",
+      "step1": {
+        "title": "Document Preparation",
+        "desc": "Collecting, translating and nostrifying educational documents",
+        "doc1": "Diploma/certificate (with notarized translation)",
+        "doc2": "Passport and its translation",
+        "doc3": "Medical certificate",
+        "doc4": "Language certificate (if available)",
+        "timing": "2-4 weeks"
+      },
+      "step2": {
+        "title": "Application Submission",
+        "desc": "Sending documents and receiving university invitation",
+        "doc1": "Filling out applicant form",
+        "doc2": "Sending documents online or by mail",
+        "doc3": "Receiving invitation",
+        "timing": "1-2 weeks"
+      },
+      "step3": {
+        "title": "Visa Processing",
+        "desc": "Obtaining student visa at KR consulate",
+        "doc1": "Submitting documents to consulate",
+        "doc2": "Medical insurance",
+        "doc3": "Receiving student visa",
+        "timing": "2-3 weeks"
+      },
+      "step4": {
+        "title": "Arrival and Enrollment",
+        "desc": "Arrival in Kyrgyzstan and final processing",
+        "doc1": "Registration with Ministry of Internal Affairs",
+        "doc2": "University processing",
+        "doc3": "Receiving student ID card",
+        "timing": "1 week"
+      }
+    },
+    "advantagesTitle": "Why Choose Us",
+    "advantages": {
+      "quality": {
+        "title": "Quality Education",
+        "desc": "Accredited international-level programs"
+      },
+      "cost": {
+        "title": "Affordable Cost",
+        "desc": "Competitive prices for education and living"
+      },
+      "recognition": {
+        "title": "Diploma Recognition",
+        "desc": "Diplomas recognized in CIS countries and EU"
+      },
+      "support": {
+        "title": "Full Support",
+        "desc": "Help with visa, housing and adaptation"
+      },
+      "language": {
+        "title": "Teaching Languages",
+        "desc": "Programs in Russian and English"
+      },
+      "culture": {
+        "title": "Rich Culture",
+        "desc": "Unique culture and hospitality"
+      }
+    },
+    "communityTitle": "Our International Community",
+    "countries": {
+      "russia": "Russia",
+      "kazakhstan": "Kazakhstan",
+      "uzbekistan": "Uzbekistan",
+      "tajikistan": "Tajikistan",
+      "india": "India",
+      "turkey": "Turkey",
+      "pakistan": "Pakistan",
+      "other": "Others"
+    },
+    "totalStudents": "More than 450 international students from 25+ countries",
+    "contact": {
+      "title": "International Department",
+      "subtitle": "Our team speaks different languages and is ready to help 24/7",
+      "phone": "Phone",
+      "email": "Email",
+      "messenger": "Messengers",
+      "hours": "Support",
+      "support24": "24/7 online",
+      "languages": "We speak the following languages:"
+    }
+  },
+  "ortScores": {
+    "generalMedicine": "General Medicine",
+    "dentistry": "Dentistry",
+    "pharmacy": "Pharmacy",
+    "nursing": "Nursing",
+    "publicHealth": "Public Health"
+  },
+  "medicalReqs": {
+    "generalHealth": "Health certificate (form 086/u)",
+    "vaccination": "Vaccination certificate",
+    "fluorography": "Fluorography",
+    "bloodTest": "Blood test (general)",
+    "urineTest": "Urine test (general)",
+    "psychologist": "Psychologist's conclusion"
+  },
+  "commonData": {
+    "docs": {
+      "diploma": "Education diploma/certificate",
+      "transcript": "Academic transcript",
+      "passport": "Passport or identity document",
+      "birthCert": "Birth certificate",
+      "photos": "3x4 cm photos (6 pieces)"
+    },
+    "lang": {
+      "russian": "Russian language",
+      "russianLevel": "B2 and above",
+      "english": "English language",
+      "englishLevel": "B2 and above"
+    },
+    "visa": {
+      "invitation": "University invitation",
+      "passport": "Valid foreign passport",
+      "medical": "Medical certificate with translation",
+      "insurance": "Medical insurance",
+      "photos": "Visa photos",
+      "fee": "Consular fee payment"
+    }
+  },
+  "hsm": {
+    "title": "High School of Medicine",
+    "subtitle": "Advanced medical education at international level",
+    "about_hsm": "About High School of Medicine", 
+    "description": "Our specialists train doctors of the new generation",
+    "history": "History",
+    "main_directions": "Main Directions",
+    "programs": "Programs",
+    "faculty": "Faculty",
+    "accreditation": "Accreditation",
+    "learning_goals": "Learning Goals",
+    "view_programs": "Explore our educational programs",
+    "meet_faculty": "Meet our faculty members",
+    "view_accreditation": "Our accreditations and certificates",
+    "view_goals": "Learning goals and outcomes",
+    "learning_goals_title": "Learning Goals and Outcomes",
+    "learning_goals_description": "Learn about the competencies you will acquire and career opportunities after completing our programs",
+    "competencies": "Competencies",
+    "career_prospects": "Career Prospects",
+    "related_programs": "Related Programs",
+    "no_learning_goals": "Learning goals not found",
+    "no_learning_goals_description": "Information about learning goals and outcomes will appear on the site soon",
+    "ready_to_start": "Ready to start your education?",
+    "join_us_text": "Join us and develop your professional skills",
+    "apply_now": "Apply Now",
+    "error": "Error",
+    "no_data": "No data",
+    "accreditations_title": "Accreditations and Certificates",
+    "accreditations_description": "Our accreditations confirm the high quality of medical education and compliance with international standards",
+    "valid": "Valid",
+    "expired": "Expired",
+    "accrediting_organization": "Accrediting Organization",
+    "issue_date": "Issue Date",
+    "expiry_date": "Expiry Date",
+    "certificate_number": "Certificate Number",
+    "no_accreditations": "Accreditations not found",
+    "no_accreditations_description": "Information about accreditations will appear on the site soon",
+    "faculty_title": "Faculty Members",
+    "faculty_description": "Highly qualified teachers and researchers of the High School of Medicine",
+    "office": "Office",
+    "no_faculty": "Faculty members not found",
+    "no_faculty_description": "Information about faculty members will appear on the site soon",
+    "programs_title": "Educational Programs",
+    "programs_description": "Modern educational programs of the High School of Medicine for training qualified medical professionals",
+    "bachelor_programs": "Bachelor Programs",
+    "master_programs": "Master Programs",
+    "no_programs": "Programs not found",
+    "no_programs_description": "Information about educational programs will appear on the site soon",
+    "duration": "Duration",
+    "degree": "Degree",
+    "language": "Language of instruction",
+    "format": "Format",
+    "admission_requirements": "Admission Requirements",
+    "career_opportunities": "Career Opportunities",
+    "years": "years"
+  ,
+  "head": "Head",
+  "academic_degree": "Academic Degree",
+  "academic_title": "Academic Title",
+  "reception_hours": "Reception Hours",
+  "specialization": "Specialization",
+  "search_faculty": "Search faculty...",
+  "search_results": "Search Results",
+  "faculty_found": "faculty members found",
+  "no_search_results": "No faculty members found",
+  "try_different_search": "Try changing your search query",
+  "faculty_statistics": "Faculty Statistics",
+  "total_faculty": "Total Faculty",
+  "professors": "Professors",
+  "associate_professors": "Associate Professors",
+  "doctors": "Doctors of Science"
   },
   "locale": "en"
 }

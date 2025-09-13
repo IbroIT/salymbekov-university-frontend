@@ -1,0 +1,377 @@
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
+const TuitionCitizensKG = () => {
+  const { t } = useTranslation();
+  const [selectedFaculty, setSelectedFaculty] = useState('general');
+
+  // Статичные данные для стоимости программ
+  const tuitionData = {
+    general: {
+      name: t('tuitionCitizens.general.name', 'Лечебное дело'),
+      programs: [
+        {
+          program: t('tuitionCitizens.general.prog1', 'Лечебное дело (6 лет)'),
+          budget: t('tuitionCitizens.budget', 'Бюджет'),
+          contract: '250,000',
+          currency: t('tuitionCitizens.som', 'сом/год')
+        },
+        {
+          program: t('tuitionCitizens.general.prog2', 'Лечебное дело (на английском)'),
+          budget: t('tuitionCitizens.noBudget', 'Нет'),
+          contract: '280,000',
+          currency: t('tuitionCitizens.som', 'сом/год')
+        }
+      ]
+    },
+    dentistry: {
+      name: t('tuitionCitizens.dentistry.name', 'Стоматология'),
+      programs: [
+        {
+          program: t('tuitionCitizens.dentistry.prog1', 'Стоматология (5 лет)'),
+          budget: t('tuitionCitizens.budget', 'Бюджет'),
+          contract: '300,000',
+          currency: t('tuitionCitizens.som', 'сом/год')
+        },
+        {
+          program: t('tuitionCitizens.dentistry.prog2', 'Ортодонтия (специализация)'),
+          budget: t('tuitionCitizens.noBudget', 'Нет'),
+          contract: '350,000',
+          currency: t('tuitionCitizens.som', 'сом/год')
+        }
+      ]
+    },
+    pharmacy: {
+      name: t('tuitionCitizens.pharmacy.name', 'Фармация'),
+      programs: [
+        {
+          program: t('tuitionCitizens.pharmacy.prog1', 'Фармация (5 лет)'),
+          budget: t('tuitionCitizens.budget', 'Бюджет'),
+          contract: '200,000',
+          currency: t('tuitionCitizens.som', 'сом/год')
+        },
+        {
+          program: t('tuitionCitizens.pharmacy.prog2', 'Клиническая фармация'),
+          budget: t('tuitionCitizens.limitedBudget', 'Ограничено'),
+          contract: '220,000',
+          currency: t('tuitionCitizens.som', 'сом/год')
+        }
+      ]
+    },
+    nursing: {
+      name: t('tuitionCitizens.nursing.name', 'Сестринское дело'),
+      programs: [
+        {
+          program: t('tuitionCitizens.nursing.prog1', 'Сестринское дело (4 года)'),
+          budget: t('tuitionCitizens.budget', 'Бюджет'),
+          contract: '180,000',
+          currency: t('tuitionCitizens.som', 'сом/год')
+        },
+        {
+          program: t('tuitionCitizens.nursing.prog2', 'Сестринское дело (магистратура)'),
+          budget: t('tuitionCitizens.limitedBudget', 'Ограничено'),
+          contract: '200,000',
+          currency: t('tuitionCitizens.som', 'сом/год')
+        }
+      ]
+    }
+  };
+
+  // Статичные данные для рассрочки и льгот
+  const paymentOptions = [
+    {
+      type: t('tuitionCitizens.payment.installment', 'Рассрочка платежа'),
+      description: t('tuitionCitizens.payment.installmentDesc', 'Возможность оплаты по семестрам'),
+      conditions: [
+        t('tuitionCitizens.payment.cond1', '50% в начале семестра'),
+        t('tuitionCitizens.payment.cond2', '50% до окончания семестра'),
+        t('tuitionCitizens.payment.cond3', 'Без дополнительных процентов')
+      ],
+      icon: '💳'
+    },
+    {
+      type: t('tuitionCitizens.payment.scholarship', 'Академические стипендии'),
+      description: t('tuitionCitizens.payment.scholarshipDesc', 'Скидки за успехи в учебе'),
+      conditions: [
+        t('tuitionCitizens.payment.scho1', '10% скидка за отличную учебу'),
+        t('tuitionCitizens.payment.scho2', '5% скидка за хорошую учебу'),
+        t('tuitionCitizens.payment.scho3', 'Ежегодный пересмотр')
+      ],
+      icon: '🏆'
+    },
+    {
+      type: t('tuitionCitizens.payment.social', 'Социальные льготы'),
+      description: t('tuitionCitizens.payment.socialDesc', 'Льготы для определенных категорий'),
+      conditions: [
+        t('tuitionCitizens.payment.soc1', 'Дети-сироты: 50% скидка'),
+        t('tuitionCitizens.payment.soc2', 'Инвалиды: 30% скидка'),
+        t('tuitionCitizens.payment.soc3', 'Многодетные семьи: 20% скидка')
+      ],
+      icon: '🤝'
+    }
+  ];
+
+  // Банковские реквизиты
+  const bankDetails = {
+    bankName: t('tuitionCitizens.bank.name', 'Коммерческий банк КЫРГЫЗСТАН'),
+    account: '1234567890123456',
+    bik: '109001',
+    inn: '12345678901234',
+    recipient: t('tuitionCitizens.bank.recipient', 'ОО "Медицинский университет"'),
+    purpose: t('tuitionCitizens.bank.purpose', 'Оплата за обучение')
+  };
+
+  const faculties = Object.keys(tuitionData);
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16">
+        <div className="container mx-auto px-4">
+          <h1 className="text-4xl font-bold mb-4">
+            {t('tuitionCitizens.title', 'Стоимость обучения для граждан КР')}
+          </h1>
+          <p className="text-xl opacity-90">
+            {t('tuitionCitizens.subtitle', 'Актуальная информация о стоимости программ и способах оплаты')}
+          </p>
+        </div>
+      </div>
+
+      <div className="container mx-auto px-4 py-12">
+        {/* Переключатель факультетов */}
+        <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+          <h2 className="text-2xl font-bold text-gray-800 mb-6">
+            {t('tuitionCitizens.faculties.title', 'Выберите факультет')}
+          </h2>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+            {faculties.map((faculty) => (
+              <button
+                key={faculty}
+                onClick={() => setSelectedFaculty(faculty)}
+                className={`p-4 rounded-lg border-2 transition-all ${
+                  selectedFaculty === faculty
+                    ? 'border-blue-500 bg-blue-50 text-blue-700'
+                    : 'border-gray-200 hover:border-gray-300 text-gray-700'
+                }`}
+              >
+                <h3 className="font-semibold">{tuitionData[faculty].name}</h3>
+              </button>
+            ))}
+          </div>
+
+          {/* Таблица стоимости */}
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse">
+              <thead>
+                <tr className="bg-gray-100">
+                  <th className="border border-gray-300 px-4 py-3 text-left font-semibold text-gray-800">
+                    {t('tuitionCitizens.table.program', 'Программа')}
+                  </th>
+                  <th className="border border-gray-300 px-4 py-3 text-center font-semibold text-gray-800">
+                    {t('tuitionCitizens.table.budget', 'Бюджет')}
+                  </th>
+                  <th className="border border-gray-300 px-4 py-3 text-center font-semibold text-gray-800">
+                    {t('tuitionCitizens.table.contract', 'Контракт')}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {tuitionData[selectedFaculty].programs.map((program, index) => (
+                  <tr key={index} className="hover:bg-gray-50">
+                    <td className="border border-gray-300 px-4 py-3 text-gray-800">
+                      {program.program}
+                    </td>
+                    <td className="border border-gray-300 px-4 py-3 text-center">
+                      <span className={`px-3 py-1 rounded-full text-sm font-semibold ${
+                        program.budget === t('tuitionCitizens.budget', 'Бюджет')
+                          ? 'bg-green-100 text-green-800'
+                          : program.budget === t('tuitionCitizens.limitedBudget', 'Ограничено')
+                          ? 'bg-yellow-100 text-yellow-800'
+                          : 'bg-red-100 text-red-800'
+                      }`}>
+                        {program.budget}
+                      </span>
+                    </td>
+                    <td className="border border-gray-300 px-4 py-3 text-center">
+                      <span className="text-lg font-bold text-blue-600">
+                        {program.contract} {program.currency}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="mt-6 p-4 bg-blue-50 border-l-4 border-blue-400">
+            <p className="text-sm text-blue-800">
+              <strong>{t('tuitionCitizens.note', 'Примечание:')}</strong> {' '}
+              {t('tuitionCitizens.noteText', 'Стоимость указана на 2025 учебный год. Цены могут изменяться ежегодно.')}
+            </p>
+          </div>
+        </div>
+
+        {/* Варианты оплаты и льготы */}
+        <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+          <h2 className="text-2xl font-bold text-gray-800 mb-6">
+            {t('tuitionCitizens.paymentOptions.title', 'Варианты оплаты и льготы')}
+          </h2>
+          
+          <div className="grid md:grid-cols-3 gap-6">
+            {paymentOptions.map((option, index) => (
+              <div key={index} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+                <div className="text-center mb-4">
+                  <span className="text-4xl mb-2 block">{option.icon}</span>
+                  <h3 className="text-xl font-semibold text-gray-800 mb-2">{option.type}</h3>
+                  <p className="text-gray-600 text-sm">{option.description}</p>
+                </div>
+                
+                <div className="space-y-2">
+                  {option.conditions.map((condition, condIndex) => (
+                    <div key={condIndex} className="flex items-start">
+                      <span className="text-green-600 mr-2 mt-1">•</span>
+                      <p className="text-gray-700 text-sm">{condition}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Банковские реквизиты */}
+        <div className="bg-white rounded-lg shadow-lg p-6">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-bold text-gray-800">
+              {t('tuitionCitizens.bankDetails.title', 'Банковские реквизиты')}
+            </h2>
+            <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors">
+              {t('tuitionCitizens.bankDetails.download', 'Скачать PDF')}
+            </button>
+          </div>
+          
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="space-y-4">
+              <div className="border-b border-gray-200 pb-2">
+                <label className="text-sm font-medium text-gray-600">
+                  {t('tuitionCitizens.bankDetails.bankName', 'Наименование банка:')}
+                </label>
+                <p className="text-gray-800 font-semibold">{bankDetails.bankName}</p>
+              </div>
+              
+              <div className="border-b border-gray-200 pb-2">
+                <label className="text-sm font-medium text-gray-600">
+                  {t('tuitionCitizens.bankDetails.account', 'Расчетный счет:')}
+                </label>
+                <p className="text-gray-800 font-mono text-lg">{bankDetails.account}</p>
+              </div>
+              
+              <div className="border-b border-gray-200 pb-2">
+                <label className="text-sm font-medium text-gray-600">
+                  {t('tuitionCitizens.bankDetails.bik', 'БИК:')}
+                </label>
+                <p className="text-gray-800 font-mono">{bankDetails.bik}</p>
+              </div>
+            </div>
+            
+            <div className="space-y-4">
+              <div className="border-b border-gray-200 pb-2">
+                <label className="text-sm font-medium text-gray-600">
+                  {t('tuitionCitizens.bankDetails.inn', 'ИНН:')}
+                </label>
+                <p className="text-gray-800 font-mono">{bankDetails.inn}</p>
+              </div>
+              
+              <div className="border-b border-gray-200 pb-2">
+                <label className="text-sm font-medium text-gray-600">
+                  {t('tuitionCitizens.bankDetails.recipient', 'Получатель:')}
+                </label>
+                <p className="text-gray-800 font-semibold">{bankDetails.recipient}</p>
+              </div>
+              
+              <div className="border-b border-gray-200 pb-2">
+                <label className="text-sm font-medium text-gray-600">
+                  {t('tuitionCitizens.bankDetails.purpose', 'Назначение платежа:')}
+                </label>
+                <p className="text-gray-800">{bankDetails.purpose}</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-6 p-4 bg-yellow-50 border-l-4 border-yellow-400">
+            <div className="flex items-start">
+              <svg className="w-5 h-5 text-yellow-600 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.99-.833-2.768 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+              </svg>
+              <div>
+                <p className="text-sm text-yellow-800 mb-2">
+                  <strong>{t('tuitionCitizens.bankDetails.important', 'Важно!')}</strong>
+                </p>
+                <ul className="text-sm text-yellow-800 space-y-1">
+                  <li>• {t('tuitionCitizens.bankDetails.rule1', 'В назначении платежа обязательно укажите ФИО студента и курс')}</li>
+                  <li>• {t('tuitionCitizens.bankDetails.rule2', 'Сохраняйте квитанцию об оплате до окончания обучения')}</li>
+                  <li>• {t('tuitionCitizens.bankDetails.rule3', 'При оплате через банкомат проверьте правильность реквизитов')}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Контактная информация */}
+        <div className="mt-12 bg-white rounded-lg shadow-lg p-6">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-bold text-gray-800 mb-2">
+              {t('tuitionCitizens.contact.title', 'Вопросы по оплате?')}
+            </h2>
+            <p className="text-gray-600">
+              {t('tuitionCitizens.contact.subtitle', 'Свяжитесь с бухгалтерией для получения консультации')}
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-6 text-center">
+            <div className="p-4">
+              <div className="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
+                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+              </div>
+              <h3 className="font-semibold text-gray-800 mb-1">
+                {t('tuitionCitizens.contact.phone', 'Телефон бухгалтерии')}
+              </h3>
+              <p className="text-gray-600">+996 312 545 002</p>
+            </div>
+            
+            <div className="p-4">
+              <div className="bg-green-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
+                <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <h3 className="font-semibold text-gray-800 mb-1">
+                {t('tuitionCitizens.contact.email', 'Email')}
+              </h3>
+              <p className="text-gray-600">finance@su.edu.kg</p>
+            </div>
+            
+            <div className="p-4">
+              <div className="bg-purple-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
+                <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 className="font-semibold text-gray-800 mb-1">
+                {t('tuitionCitizens.contact.hours', 'Часы работы')}
+              </h3>
+              <p className="text-gray-600">
+                {t('tuitionCitizens.contact.schedule', 'Пн-Пт: 9:00-17:00')}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default TuitionCitizensKG;

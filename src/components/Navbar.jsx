@@ -84,14 +84,16 @@ const Navbar = () => {
     HSM: {
       title: t('nav.HSM'),
       submenu: [
-        { title: t('nav.programs'), link: '/HSM' },
-        { title: t('nav.faculties'), link: '/HSM/faculties' },
-        { title: t('nav.departments'), link: '/HSM/departments' },
-        { title: t('nav.calendar'), link: '/HSM/calendar' },
-        { title: t('nav.resources'), link: '/HSM/resources' },
-        { title: t('nav.about_HSM'), link: '/HSM/about' },
-        { title: t('nav.accreditation'), link: '/HSM/accreditation' },
-        { title: t('nav.learning_goals'), link: '/HSM/learning-goals' },
+        { title: t('nav.about_HSM'), link: '/hsm/about' },
+        { title: t('nav.programs'), link: '/hsm/programs' },
+        { title: t('nav.faculties'), link: '/hsm/faculties' },
+        { title: t('nav.academic_stuff'), link: '/hsm/AS' },
+        { title: t('nav.accreditation'), link: '/hsm/accreditation' },
+        { title: t('nav.learning_goals'), link: '/hsm/learning-goals' },
+        { title: t('nav.faculties'), link: '/hsm/faculties' },
+        { title: t('nav.departments'), link: '/hsm/departments' },
+        { title: t('nav.calendar'), link: '/hsm/calendar' },
+        { title: t('nav.resources'), link: '/hsm/resources' },
       ]
     },
     admission: {
