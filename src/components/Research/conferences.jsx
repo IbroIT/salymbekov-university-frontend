@@ -24,7 +24,7 @@ const Conferences = () => {
         endpoint = 'conferences/past';
       }
       
-      const response = await fetch(`https://su-back.onrender.com/research/api/${endpoint}/`);
+      const response = await fetch(`https://su-med-backend-35d3d951c74b.herokuapp.com/research/api/${endpoint}/`);
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);

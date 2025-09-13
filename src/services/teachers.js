@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const API_URL = 'https://su-back.onrender.com/api/teachers/';
-const API_MANAGEMENT_URL = 'https://su-back.onrender.com/api/management/';
+const API_URL = 'https://su-med-backend-35d3d951c74b.herokuapp.com/api/teachers/';
+const API_MANAGEMENT_URL = 'https://su-med-backend-35d3d951c74b.herokuapp.com/api/management/';
 
 export const getTeachers = async () => {
     try {

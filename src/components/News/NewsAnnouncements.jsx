@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Bell, Calendar, Download, ExternalLink, Pin } from 'lucide-react';
 
-const API_BASE_URL = 'https://su-back.onrender.com/api';
+const API_BASE_URL = 'https://su-med-backend-35d3d951c74b.herokuapp.com/api';
 
 const NewsAnnouncements = () => {
   const { t, i18n } = useTranslation();
