@@ -58,12 +58,10 @@ function App() {
 
   return (
     <BrowserRouter>
-    <Router>
       <div className="App">
         <Navbar />
         <div className="pt-16">
           <Routes>
-            {/* About */}
             <Route path="/" element={<Hero />} />
             <Route path="/about" element={<About />} />
             <Route path="/about/management" element={<Management />} />
@@ -86,7 +84,7 @@ function App() {
             <Route path="/admissions/faq" element={<FAQ />} />
             <Route path="/admissions/apply" element={<OnlineApplication />} />
 
-            {/* Legacy admission routes for compatibility */}
+            {/* Legacy admission routes */}
             <Route path="/admission" element={<AdmissionsOverview />} />
             <Route path="/admission/requirements" element={<Requirements />} />
             <Route path="/admission/tuition" element={<Tuition />} />
@@ -103,9 +101,9 @@ function App() {
             {/* Campus Life */}
             <Route path="/campus-life" element={<LifeOverview />} />
             <Route path="/campus-life/events" element={<Page title="Campus Events" />} />
-            <Route path="/campus-life/clubs" element={<ClubsSection/>} />
-            <Route path="/campus-life/gallery" element={<Gallery/>} />
-            <Route path="/campus-life/international" element={<InternationalStudents/>} />
+            <Route path="/campus-life/clubs" element={<ClubsSection />} />
+            <Route path="/campus-life/gallery" element={<Gallery />} />
+            <Route path="/campus-life/international" element={<InternationalStudents />} />
 
             {/* News */}
             <Route path="/news" element={<News />} />
@@ -119,7 +117,6 @@ function App() {
         </div>
         <Footer />
       </div>
-    </Router>
     </BrowserRouter>
   );
 }
