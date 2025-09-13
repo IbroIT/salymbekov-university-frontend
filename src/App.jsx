@@ -57,6 +57,7 @@ function App() {
   }, [i18n]);
 
   return (
+    <BrowserRouter>
     <Router>
       <div className="App">
         <Navbar />
@@ -119,6 +120,7 @@ function App() {
         <Footer />
       </div>
     </Router>
+    </BrowserRouter>
   );
 }
 
