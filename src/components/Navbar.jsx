@@ -13,7 +13,7 @@ const Navbar = () => {
   const [activeMenu, setActiveMenu] = useState(null);
   const [closingMenu, setClosingMenu] = useState(null);
   const { t, i18n } = useTranslation();
-
+  const [activeSubmenu, setActiveSubmenu] = useState(null);
   const menuTimeoutRef = useRef(null);
   const navbarRef = useRef(null);
   const currentLanguage = i18n.language;
@@ -77,7 +77,6 @@ const Navbar = () => {
         { title: t('nav.management'), link: '/about/management' },
         { title: t('nav.vacancies'), link: '/about/vacancies' },
         { title: t('nav.partners'), link: '/about/partners' },
-        // Добавленные подразделы
         { title: t('nav.mission'), link: '/about/mission' },
         { title: t('nav.regulations'), link: '/about/regulations' },
       ]
@@ -90,7 +89,6 @@ const Navbar = () => {
         { title: t('nav.departments'), link: '/HSM/departments' },
         { title: t('nav.calendar'), link: '/HSM/calendar' },
         { title: t('nav.resources'), link: '/HSM/resources' },
-        // Добавленные подразделы
         { title: t('nav.about_HSM'), link: '/HSM/about' },
         { title: t('nav.accreditation'), link: '/HSM/accreditation' },
         { title: t('nav.learning_goals'), link: '/HSM/learning-goals' },
@@ -99,30 +97,45 @@ const Navbar = () => {
     admission: {
       title: t('nav.admission'),
       submenu: [
-        { title: t('nav.for_applicants'), link: '/admissions/applicants' },
         { 
-          title: t('nav.for_citizens_kg'), 
-          link: '/admissions/citizens-kg',
+          title: t('nav.for_applicants'), 
+          link: '/admissions/applicants',
           subitems: [
-            { title: t('nav.requirements'), link: '/admissions/citizens-kg/requirements' },
-            { title: t('nav.apply_online'), link: '/admissions/citizens-kg/apply' },
+            { title: t('nav.for_citizens_kg'), link: '/admissions/applicants/citizens-kg' },
+            { title: t('nav.for_foreign_citizens'), link: '/admissions/applicants/foreign-citizens' },
           ]
         },
         { 
-          title: t('nav.for_foreign_citizens'), 
-          link: '/admissions/foreign-citizens',
+          title: t('nav.requirements'), 
+          link: '/admissions/requirements',
           subitems: [
-            { title: t('nav.requirements'), link: '/admissions/foreign-citizens/requirements' },
-            { title: t('nav.apply_online'), link: '/admissions/foreign-citizens/apply' },
+            { title: t('nav.for_citizens_kg'), link: '/admissions/requirements/citizens-kg' },
+            { title: t('nav.for_foreign_citizens'), link: '/admissions/requirements/foreign-citizens' },
           ]
         },
-        { title: t('nav.tuition'), link: '/admissions/tuition' },
+        { 
+          title: t('nav.apply_online'), 
+          link: '/admissions/apply',
+          subitems: [
+            { title: t('nav.for_citizens_kg'), link: '/admissions/apply/citizens-kg' },
+            { title: t('nav.for_foreign_citizens'), link: '/admissions/apply/foreign-citizens' },
+          ]
+        },
+        { 
+          title: t('nav.tuition'), 
+          link: '/admissions/tuition',
+          subitems: [
+            { title: t('nav.for_citizens_kg'), link: '/admissions/tuition/citizens-kg' },
+            { title: t('nav.for_foreign_citizens'), link: '/admissions/tuition/foreign-citizens' },
+          ]
+        },
+        { title: t('nav.admission_process'), link: '/admissions/process' },
+        { title: t('nav.faq'), link: '/admissions/faq' },
       ]
     },
     infrastructure: {
       title: t('nav.infrastructure'),
       submenu: [
-        // Добавленные подразделы
         { title: t('nav.hospitals'), link: '/infrastructure/hospitals' },
         { title: t('nav.laboratories'), link: '/infrastructure/laboratories' },
         { title: t('nav.academic_buildings'), link: '/infrastructure/academic-buildings' },
@@ -137,7 +150,6 @@ const Navbar = () => {
         { title: t('nav.publications'), link: '/research/publications' },
         { title: t('nav.conferences'), link: '/research/conferences' },
         { title: t('nav.grants'), link: '/research/grants' },
-        // Добавленные подразделы
         { title: t('nav.management_body'), link: '/research/management' },
         { title: t('nav.scientific_journals'), link: '/research/journals' },
       ]
@@ -149,7 +161,6 @@ const Navbar = () => {
         { title: t('nav.clubs'), link: '/student/clubs' },
         { title: t('nav.gallery'), link: '/student/gallery' },
         { title: t('nav.international'), link: '/student/international' },
-        // Добавленные подразделы
         { title: t('nav.internships'), link: '/student/internships' },
         { title: t('nav.academic_mobility'), link: '/student/academic-mobility' },
         { title: t('nav.regulations'), link: '/student/regulations' },
@@ -198,18 +209,18 @@ const Navbar = () => {
     }, 300); // 300ms задержка
   };
 
-  const handleSubmenuEnter = () => {
-    // Очищаем таймер закрытия при наведении на подменю
-    if (menuTimeoutRef.current) {
-      clearTimeout(menuTimeoutRef.current);
-      menuTimeoutRef.current = null;
-    }
-    setClosingMenu(null);
-  };
+const handleSubmenuEnter = () => {
+  if (menuTimeoutRef.current) {
+    clearTimeout(menuTimeoutRef.current);
+    menuTimeoutRef.current = null;
+  }
+  setClosingMenu(null);
+};
 
-  const handleSubmenuLeave = () => {
-    handleMenuLeave(); // Используем ту же логику закрытия
-  };
+const handleSubmenuLeave = () => {
+  setActiveSubmenu(null);
+  handleMenuLeave();
+};
 
   // Закрытие меню при выборе пункта
   const handleMenuItemClick = () => {
@@ -219,46 +230,56 @@ const Navbar = () => {
 
   // Функция для отображения многоуровневого меню
   const renderSubmenu = (submenu) => {
-    return (
-      <div className="py-2" role="menu">
-        {submenu.map((item, index) => (
-          <div key={index}>
-            {item.subitems ? (
-              <div className="relative group">
-                <div className="flex items-center justify-between px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200 cursor-pointer">
-                  <span>{item.title}</span>
-                  <svg className="ml-2 h-4 w-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
-                  </svg>
-                </div>
-                <div className="absolute left-full top-0 ml-1 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+  return (
+    <div className="py-2" role="menu">
+      {submenu.map((item, index) => (
+        <div 
+          key={index} 
+          className="relative group"
+          onMouseEnter={() => setActiveSubmenu(index)}
+          onMouseLeave={() => setActiveSubmenu(null)}
+        >
+          {item.subitems ? (
+            <>
+              <div className="flex items-center justify-between px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200 cursor-pointer">
+                <span>{item.title}</span>
+                <svg className="ml-2 h-4 w-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                </svg>
+              </div>
+              
+              {activeSubmenu === index && (
+                <div className="absolute left-full top-0 ml-1 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50 border border-gray-100">
                   <div className="py-1">
                     {item.subitems.map((subitem, subIndex) => (
                       <a
                         key={subIndex}
                         href={subitem.link}
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600"
+                        onClick={handleMenuItemClick}
                       >
                         {subitem.title}
                       </a>
                     ))}
                   </div>
                 </div>
-              </div>
-            ) : (
-              <a
-                href={item.link}
-                className="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200"
-                role="menuitem"
-              >
-                {item.title}
-              </a>
-            )}
-          </div>
-        ))}
-      </div>
-    );
-  };
+              )}
+            </>
+          ) : (
+            <a
+              href={item.link}
+              className="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200"
+              role="menuitem"
+              onClick={handleMenuItemClick}
+            >
+              {item.title}
+            </a>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+};
 
   return (
     <nav 
@@ -293,20 +314,20 @@ const Navbar = () => {
                 </button>
 
                 {(activeMenu === key || closingMenu === key) && (
-                  <div 
-                    className="navbar-menu-dropdown absolute left-0 mt-0 w-56 rounded-xl shadow-xl bg-white ring-1 ring-black ring-opacity-5 overflow-hidden"
-                    onMouseEnter={handleSubmenuEnter}
-                    onMouseLeave={handleSubmenuLeave}
-                    style={{ 
-                      top: '100%',
-                      opacity: closingMenu === key ? 0 : 1,
-                      transform: closingMenu === key ? 'translateY(-10px)' : 'translateY(0)',
-                      transition: 'opacity 0.2s ease, transform 0.2s ease'
-                    }}
-                  >
-                    {renderSubmenu(menu.submenu)}
-                  </div>
-                )}
+                <div 
+                  className="navbar-menu-dropdown absolute left-0 mt-0 w-56 rounded-xl shadow-xl bg-white ring-1 ring-black ring-opacity-5 overflow-visible z-50"
+                  onMouseEnter={handleSubmenuEnter}
+                  onMouseLeave={handleSubmenuLeave}
+                  style={{ 
+                    top: '100%',
+                    opacity: closingMenu === key ? 0 : 1,
+                    transform: closingMenu === key ? 'translateY(-10px)' : 'translateY(0)',
+                    transition: 'opacity 0.2s ease, transform 0.2s ease'
+                  }}
+                >
+                  {renderSubmenu(menu.submenu)}
+                </div>
+              )}
               </div>
             ))}
           </div>
@@ -426,19 +447,19 @@ const Navbar = () => {
                         {item.subitems ? (
                           <>
                             <button
-                              onClick={() => setActiveMenu(activeMenu === `${key}-${index}` ? null : `${key}-${index}`)}
+                              onClick={() => setActiveSubmenu(activeSubmenu === `${key}-${index}` ? null : `${key}-${index}`)}
                               className="w-full flex justify-between items-center px-3 py-2 rounded-md text-sm text-gray-600 hover:text-blue-600 hover:bg-gray-50 transition-colors"
                             >
                               <span>{item.title}</span>
                               <svg 
-                                className={`h-4 w-4 transition-transform ${activeMenu === `${key}-${index}` ? 'rotate-180' : ''}`} 
+                                className={`h-4 w-4 transition-transform ${activeSubmenu === `${key}-${index}` ? 'rotate-180' : ''}`} 
                                 fill="currentColor" 
                                 viewBox="0 0 20 20"
                               >
                                 <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
                               </svg>
                             </button>
-                            {activeMenu === `${key}-${index}` && (
+                            {activeSubmenu === `${key}-${index}` && (
                               <div className="pl-4 space-y-2 animate-fadeIn">
                                 {item.subitems.map((subitem, subIndex) => (
                                   <a
@@ -452,6 +473,7 @@ const Navbar = () => {
                                 ))}
                               </div>
                             )}
+
                           </>
                         ) : (
                           <a
