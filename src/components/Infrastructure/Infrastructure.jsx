@@ -13,7 +13,7 @@ const Infrastructure = () => {
       id: 'hospitals',
       title: {
         ru: 'Больницы и клиники',
-        kg: 'Ооруканалар жана клиникалар', 
+        kg: 'Ооруканалар жана клиникалар',
         en: 'Hospitals and Clinics'
       },
       description: {

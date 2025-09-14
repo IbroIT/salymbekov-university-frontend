@@ -149,7 +149,7 @@ const Hospitals = () => {
             <div key={hospital.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
               <div className="md:flex">
                 <div className="md:w-1/3">
-                  <img 
+                  <img
                     src={hospital.photo || hospital.photo_url || `https://via.placeholder.com/400x300?text=${encodeURIComponent(getTranslatedField(hospital, 'name'))}`}
                     alt={getTranslatedField(hospital, 'name')}
                     className="w-full h-64 md:h-full object-cover"
@@ -165,7 +165,7 @@ const Hospitals = () => {
                   <p className="text-gray-600 mb-4">
                     {getTranslatedField(hospital, 'description')}
                   </p>
-                  
+
                   <div className="mb-4">
                     <h3 className="text-lg font-semibold text-gray-800 mb-2">
                       {t('hospitals.address', 'Адрес')}:
@@ -178,7 +178,7 @@ const Hospitals = () => {
                     onClick={() => setSelectedHospital(selectedHospital === hospital.id ? null : hospital.id)}
                     className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
                   >
-                    {selectedHospital === hospital.id 
+                    {selectedHospital === hospital.id
                       ? t('hospitals.hideDetails', 'Скрыть детали')
                       : t('hospitals.showDetails', 'Показать детали')
                     }
@@ -213,9 +213,9 @@ const Hospitals = () => {
                       </h3>
                       <div className="bg-white p-4 rounded-lg shadow">
                         <p className="text-gray-700">
-                          {getTranslatedField(hospital, 'practice_opportunities') || 
-                           (hospital.practiceOpportunities && hospital.practiceOpportunities[getCurrentLanguage()]) ||
-                           t('hospitals.defaultPractice', 'Возможности для практики в данной больнице')}
+                          {getTranslatedField(hospital, 'practice_opportunities') ||
+                            (hospital.practiceOpportunities && hospital.practiceOpportunities[getCurrentLanguage()]) ||
+                            t('hospitals.defaultPractice', 'Возможности для практики в данной больнице')}
                         </p>
                       </div>
 

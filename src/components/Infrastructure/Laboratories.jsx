@@ -217,8 +217,8 @@ const Laboratories = () => {
     return obj[`${fieldPrefix}_${lang}`] || obj[`${fieldPrefix}_ru`] || '';
   };
 
-  const filteredLabs = activeTab === 'all' 
-    ? laboratories 
+  const filteredLabs = activeTab === 'all'
+    ? laboratories
     : laboratories.filter(lab => lab.type === activeTab);
 
   const labTypes = [
@@ -258,11 +258,10 @@ const Laboratories = () => {
             <button
               key={type.id}
               onClick={() => setActiveTab(type.id)}
-              className={`m-2 px-6 py-2 rounded-full transition-colors ${
-                activeTab === type.id
+              className={`m-2 px-6 py-2 rounded-full transition-colors ${activeTab === type.id
                   ? 'bg-blue-600 text-white'
                   : 'bg-white text-gray-700 hover:bg-blue-50'
-              }`}
+                }`}
             >
               {type.name[getCurrentLanguage()]}
             </button>
@@ -274,7 +273,7 @@ const Laboratories = () => {
             <div key={lab.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
               <div className="md:flex">
                 <div className="md:w-1/3">
-                  <img 
+                  <img
                     src={lab.photo || lab.photo_url || `https://via.placeholder.com/400x300?text=${encodeURIComponent(getTranslatedField(lab, 'name'))}`}
                     alt={getTranslatedField(lab, 'name')}
                     className="w-full h-64 md:h-full object-cover"
@@ -292,20 +291,20 @@ const Laboratories = () => {
                       {t('laboratories.capacity', 'Вместимость')}: {lab.capacity || 20} {t('laboratories.students', 'студентов')}
                     </span>
                   </div>
-                  
+
                   <p className="text-gray-600 mb-4">
                     {getTranslatedField(lab, 'description')}
                   </p>
-                  
+
                   <div className="grid md:grid-cols-2 gap-4 mb-4">
                     <div>
                       <h3 className="font-semibold text-gray-800 mb-2">
                         {t('laboratories.schedule', 'График работы')}:
                       </h3>
                       <p className="text-gray-600 text-sm">
-                        {getTranslatedField(lab, 'schedule') || 
-                         (lab.access && lab.access.schedule && lab.access.schedule[getCurrentLanguage()]) ||
-                         t('laboratories.defaultSchedule', 'Понедельник-Пятница 9:00-18:00')}
+                        {getTranslatedField(lab, 'schedule') ||
+                          (lab.access && lab.access.schedule && lab.access.schedule[getCurrentLanguage()]) ||
+                          t('laboratories.defaultSchedule', 'Понедельник-Пятница 9:00-18:00')}
                       </p>
                     </div>
                     <div>
@@ -313,9 +312,9 @@ const Laboratories = () => {
                         {t('laboratories.requirements', 'Требования')}:
                       </h3>
                       <p className="text-gray-600 text-sm">
-                        {getTranslatedField(lab, 'safety_requirements') || 
-                         (lab.access && lab.access.requirements && lab.access.requirements[getCurrentLanguage()]) ||
-                         t('laboratories.defaultRequirements', 'Специальная одежда, соблюдение техники безопасности')}
+                        {getTranslatedField(lab, 'safety_requirements') ||
+                          (lab.access && lab.access.requirements && lab.access.requirements[getCurrentLanguage()]) ||
+                          t('laboratories.defaultRequirements', 'Специальная одежда, соблюдение техники безопасности')}
                       </p>
                     </div>
                   </div>
@@ -324,7 +323,7 @@ const Laboratories = () => {
                     onClick={() => setSelectedLab(selectedLab === lab.id ? null : lab.id)}
                     className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
                   >
-                    {selectedLab === lab.id 
+                    {selectedLab === lab.id
                       ? t('laboratories.hideEquipment', 'Скрыть оборудование')
                       : t('laboratories.showEquipment', 'Показать оборудование')
                     }
@@ -392,7 +391,7 @@ const Laboratories = () => {
                 </li>
               </ul>
             </div>
-            
+
             <div>
               <h3 className="text-lg font-semibold text-gray-800 mb-4">
                 {t('laboratories.contactInfo', 'Контактная информация')}

@@ -309,10 +309,10 @@ const AcademicBuildings = () => {
             <div key={building.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
               <div className="md:flex">
                 <div className="md:w-1/3">
-                  <img 
-                    src={building.photo || building.photo_url || 
-                         (building.photos && building.photos.find(p => p.type === 'facade')?.url) ||
-                         `https://via.placeholder.com/400x300?text=${encodeURIComponent(getTranslatedField(building, 'name'))}`}
+                  <img
+                    src={building.photo || building.photo_url ||
+                      (building.photos && building.photos.find(p => p.type === 'facade')?.url) ||
+                      `https://via.placeholder.com/400x300?text=${encodeURIComponent(getTranslatedField(building, 'name'))}`}
                     alt={getTranslatedField(building, 'name')}
                     className="w-full h-64 md:h-full object-cover"
                     onError={(e) => {
@@ -329,11 +329,11 @@ const AcademicBuildings = () => {
                       {building.floors || 3} {t('academicBuildings.floors', 'этажа')}
                     </span>
                   </div>
-                  
+
                   <p className="text-gray-600 mb-4">
                     {getTranslatedField(building, 'description')}
                   </p>
-                  
+
                   <div className="mb-4">
                     <h3 className="font-semibold text-gray-800 mb-2 flex items-center">
                       <svg className="w-5 h-5 mr-2 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -371,7 +371,7 @@ const AcademicBuildings = () => {
                     onClick={() => setSelectedBuilding(selectedBuilding === building.id ? null : building.id)}
                     className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
                   >
-                    {selectedBuilding === building.id 
+                    {selectedBuilding === building.id
                       ? t('academicBuildings.hideDetails', 'Скрыть детали')
                       : t('academicBuildings.showDetails', 'Показать детали')
                     }
@@ -412,7 +412,7 @@ const AcademicBuildings = () => {
                       <div className="grid grid-cols-2 gap-3">
                         {building.photos.map((photo, index) => (
                           <div key={index} className="relative group">
-                            <img 
+                            <img
                               src={photo.url}
                               alt={photoTypeNames[photo.type]?.[getCurrentLanguage()] || photo.type}
                               className="w-full h-32 object-cover rounded-lg"
@@ -467,7 +467,7 @@ const AcademicBuildings = () => {
                 </li>
               </ul>
             </div>
-            
+
             <div>
               <h3 className="text-lg font-semibold text-gray-800 mb-4">
                 {t('academicBuildings.contactInfo', 'Контактная информация')}

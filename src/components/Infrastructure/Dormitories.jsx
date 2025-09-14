@@ -231,21 +231,19 @@ const Dormitories = () => {
           <div className="bg-white rounded-lg shadow p-1">
             <button
               onClick={() => setActiveTab('dormitories')}
-              className={`px-6 py-2 rounded-md transition-colors ${
-                activeTab === 'dormitories'
+              className={`px-6 py-2 rounded-md transition-colors ${activeTab === 'dormitories'
                   ? 'bg-blue-600 text-white'
                   : 'text-gray-600 hover:text-blue-600'
-              }`}
+                }`}
             >
               {t('dormitories.dormitoriesTab', 'Общежития')}
             </button>
             <button
               onClick={() => setActiveTab('application')}
-              className={`px-6 py-2 rounded-md transition-colors ${
-                activeTab === 'application'
+              className={`px-6 py-2 rounded-md transition-colors ${activeTab === 'application'
                   ? 'bg-blue-600 text-white'
                   : 'text-gray-600 hover:text-blue-600'
-              }`}
+                }`}
             >
               {t('dormitories.applicationTab', 'Порядок заселения')}
             </button>
@@ -258,10 +256,10 @@ const Dormitories = () => {
               <div key={dorm.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
                 <div className="md:flex">
                   <div className="md:w-1/3">
-                    <img 
-                      src={dorm.photo || dorm.photo_url || 
-                           (dorm.photos && dorm.photos.find(p => p.type === 'exterior')?.url) ||
-                           `https://via.placeholder.com/400x300?text=${encodeURIComponent(getTranslatedField(dorm, 'name'))}`}
+                    <img
+                      src={dorm.photo || dorm.photo_url ||
+                        (dorm.photos && dorm.photos.find(p => p.type === 'exterior')?.url) ||
+                        `https://via.placeholder.com/400x300?text=${encodeURIComponent(getTranslatedField(dorm, 'name'))}`}
                       alt={getTranslatedField(dorm, 'name')}
                       className="w-full h-64 md:h-full object-cover"
                       onError={(e) => {
@@ -283,11 +281,11 @@ const Dormitories = () => {
                         </div>
                       </div>
                     </div>
-                    
+
                     <p className="text-gray-600 mb-4">
                       {getTranslatedField(dorm, 'description')}
                     </p>
-                    
+
                     <div className="mb-4">
                       <h3 className="font-semibold text-gray-800 mb-2 flex items-center">
                         <svg className="w-5 h-5 mr-2 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -332,7 +330,7 @@ const Dormitories = () => {
                       onClick={() => setSelectedDorm(selectedDorm === dorm.id ? null : dorm.id)}
                       className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
                     >
-                      {selectedDorm === dorm.id 
+                      {selectedDorm === dorm.id
                         ? t('dormitories.hideDetails', 'Скрыть детали')
                         : t('dormitories.showDetails', 'Показать детали')
                       }
@@ -389,7 +387,7 @@ const Dormitories = () => {
                         <div className="grid grid-cols-2 gap-3">
                           {dorm.photos.map((photo, index) => (
                             <div key={index} className="relative group">
-                              <img 
+                              <img
                                 src={photo.url}
                                 alt={photoTypeNames[photo.type]?.[getCurrentLanguage()] || photo.type}
                                 className="w-full h-32 object-cover rounded-lg"
@@ -419,7 +417,7 @@ const Dormitories = () => {
             <h2 className="text-2xl font-bold text-gray-800 mb-6">
               {t('dormitories.applicationProcess', 'Порядок заселения в общежитие')}
             </h2>
-            
+
             <div className="grid lg:grid-cols-2 gap-8">
               {/* Required Documents */}
               <div>
