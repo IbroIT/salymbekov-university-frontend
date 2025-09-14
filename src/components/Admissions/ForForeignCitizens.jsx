@@ -160,8 +160,8 @@ const ForForeignCitizens = () => {
           </h2>
           <div className="grid md:grid-cols-3 gap-6">
             {quickLinks.map((link, index) => (
-              <Link 
-                key={index} 
+              <Link
+                key={index}
                 to={link.link}
                 className={`block border-2 rounded-lg p-6 transition-all transform hover:scale-105 ${getColorClasses(link.color)}`}
               >
@@ -180,7 +180,7 @@ const ForForeignCitizens = () => {
           <h2 className="text-2xl font-bold text-gray-800 mb-6">
             {t('forForeignCitizens.algorithmTitle', 'Алгоритм поступления для иностранцев')}
           </h2>
-          
+
           <div className="space-y-8">
             {admissionSteps.map((step, index) => (
               <div key={step.step} className="relative">
@@ -188,13 +188,13 @@ const ForForeignCitizens = () => {
                 {index < admissionSteps.length - 1 && (
                   <div className="absolute left-6 top-16 w-0.5 h-32 bg-gray-300 hidden md:block"></div>
                 )}
-                
+
                 <div className="flex flex-col md:flex-row items-start">
                   {/* Номер шага */}
                   <div className="flex items-center justify-center w-12 h-12 bg-green-600 text-white rounded-full font-bold text-lg mb-4 md:mb-0 md:mr-6 flex-shrink-0">
                     {step.step}
                   </div>
-                  
+
                   {/* Содержимое шага */}
                   <div className="flex-1">
                     <div className="bg-gray-50 rounded-lg p-6">
@@ -205,9 +205,9 @@ const ForForeignCitizens = () => {
                           {step.timing}
                         </span>
                       </div>
-                      
+
                       <p className="text-gray-600 mb-4">{step.description}</p>
-                      
+
                       <div className="grid md:grid-cols-2 gap-4">
                         <div>
                           <h4 className="font-medium text-gray-800 mb-2">
@@ -236,7 +236,7 @@ const ForForeignCitizens = () => {
           <h2 className="text-2xl font-bold text-gray-800 mb-6">
             {t('forForeignCitizens.advantagesTitle', 'Почему выбирают нас')}
           </h2>
-          
+
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {advantages.map((advantage, index) => (
               <div key={index} className="border border-gray-200 rounded-lg p-6 text-center hover:shadow-md transition-shadow">
@@ -248,12 +248,170 @@ const ForForeignCitizens = () => {
           </div>
         </div>
 
+        {/* Поддержка иностранных студентов */}
+        <div className="bg-white rounded-lg shadow-lg p-6 mb-12">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-bold text-gray-800 mb-2">
+              {t('forForeignCitizens.support.title', 'Поддержка иностранных студентов')}
+            </h2>
+            <p className="text-gray-600">
+              {t('forForeignCitizens.support.subtitle', 'Мы поможем вам адаптироваться к жизни в Кыргызстане')}
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            {/* Помощь с жильём */}
+            <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+              <div className="text-center mb-4">
+                <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                  {t('forForeignCitizens.support.housing.title', 'Помощь с жильём')}
+                </h3>
+              </div>
+              <ul className="space-y-2 text-sm text-gray-600">
+                <li className="flex items-start">
+                  <span className="text-green-600 mr-2 mt-0.5">•</span>
+                  {t('forForeignCitizens.support.housing.dormitory', 'Места в общежитии университета')}
+                </li>
+                <li className="flex items-start">
+                  <span className="text-green-600 mr-2 mt-0.5">•</span>
+                  {t('forForeignCitizens.support.housing.rental', 'Помощь в поиске съемного жилья')}
+                </li>
+                <li className="flex items-start">
+                  <span className="text-green-600 mr-2 mt-0.5">•</span>
+                  {t('forForeignCitizens.support.housing.temporary', 'Временное размещение при прибытии')}
+                </li>
+                <li className="flex items-start">
+                  <span className="text-green-600 mr-2 mt-0.5">•</span>
+                  {t('forForeignCitizens.support.housing.safe', 'Безопасные районы для студентов')}
+                </li>
+              </ul>
+            </div>
+
+            {/* Назначение куратора */}
+            <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+              <div className="text-center mb-4">
+                <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                  {t('forForeignCitizens.support.curator.title', 'Персональный куратор')}
+                </h3>
+              </div>
+              <ul className="space-y-2 text-sm text-gray-600">
+                <li className="flex items-start">
+                  <span className="text-green-600 mr-2 mt-0.5">•</span>
+                  {t('forForeignCitizens.support.curator.assignment', 'Назначение в первый день')}
+                </li>
+                <li className="flex items-start">
+                  <span className="text-green-600 mr-2 mt-0.5">•</span>
+                  {t('forForeignCitizens.support.curator.help', 'Помощь в адаптации')}
+                </li>
+                <li className="flex items-start">
+                  <span className="text-green-600 mr-2 mt-0.5">•</span>
+                  {t('forForeignCitizens.support.curator.academic', 'Академическая поддержка')}
+                </li>
+                <li className="flex items-start">
+                  <span className="text-green-600 mr-2 mt-0.5">•</span>
+                  {t('forForeignCitizens.support.curator.cultural', 'Культурная адаптация')}
+                </li>
+              </ul>
+            </div>
+
+            {/* Документооборот */}
+            <div className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+              <div className="text-center mb-4">
+                <div className="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <svg className="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                  {t('forForeignCitizens.support.documents.title', 'Помощь с документами')}
+                </h3>
+              </div>
+              <ul className="space-y-2 text-sm text-gray-600">
+                <li className="flex items-start">
+                  <span className="text-green-600 mr-2 mt-0.5">•</span>
+                  {t('forForeignCitizens.support.documents.registration', 'Регистрация в МВД')}
+                </li>
+                <li className="flex items-start">
+                  <span className="text-green-600 mr-2 mt-0.5">•</span>
+                  {t('forForeignCitizens.support.documents.visa', 'Продление визы')}
+                </li>
+                <li className="flex items-start">
+                  <span className="text-green-600 mr-2 mt-0.5">•</span>
+                  {t('forForeignCitizens.support.documents.permits', 'Разрешения на работу')}
+                </li>
+                <li className="flex items-start">
+                  <span className="text-green-600 mr-2 mt-0.5">•</span>
+                  {t('forForeignCitizens.support.documents.medical', 'Медицинские справки')}
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Контакты международного отдела */}
+          <div className="bg-gradient-to-r from-blue-50 to-green-50 rounded-lg p-6">
+            <div className="text-center mb-6">
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                {t('forForeignCitizens.support.international.title', 'Международный отдел')}
+              </h3>
+              <p className="text-gray-600">
+                {t('forForeignCitizens.support.international.subtitle', 'Ваша поддержка 24/7')}
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-4 text-center">
+              <div className="bg-white rounded-lg p-4">
+                <div className="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                  </svg>
+                </div>
+                <h4 className="font-semibold text-gray-800 mb-1">WhatsApp</h4>
+                <p className="text-sm text-gray-600">+996 700 123 456</p>
+              </div>
+
+              <div className="bg-white rounded-lg p-4">
+                <div className="bg-green-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <h4 className="font-semibold text-gray-800 mb-1">Email</h4>
+                <p className="text-sm text-gray-600">international@su.edu.kg</p>
+              </div>
+
+              <div className="bg-white rounded-lg p-4">
+                <div className="bg-purple-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  </svg>
+                </div>
+                <h4 className="font-semibold text-gray-800 mb-1">
+                  {t('forForeignCitizens.support.international.office', 'Офис')}
+                </h4>
+                <p className="text-sm text-gray-600">
+                  {t('forForeignCitizens.support.international.room', 'Главное здание, 205')}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Международное сообщество */}
         <div className="bg-white rounded-lg shadow-lg p-6 mb-12">
           <h2 className="text-2xl font-bold text-gray-800 mb-6">
             {t('forForeignCitizens.communityTitle', 'Наше международное сообщество')}
           </h2>
-          
+
           <div className="grid md:grid-cols-4 lg:grid-cols-8 gap-4 mb-6">
             {partnerCountries.map((country, index) => (
               <div key={index} className="text-center p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
@@ -284,7 +442,7 @@ const ForForeignCitizens = () => {
               {t('forForeignCitizens.contact.subtitle', 'Наша команда говорит на разных языках и готова помочь 24/7')}
             </p>
           </div>
-          
+
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 text-center mb-8">
             <div className="p-4">
               <div className="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
@@ -298,7 +456,7 @@ const ForForeignCitizens = () => {
               <p className="text-gray-600 text-sm">+996 312 545 001</p>
               <p className="text-gray-600 text-sm">+996 555 123 456</p>
             </div>
-            
+
             <div className="p-4">
               <div className="bg-green-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
                 <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -311,7 +469,7 @@ const ForForeignCitizens = () => {
               <p className="text-gray-600 text-sm">international@su.edu.kg</p>
               <p className="text-gray-600 text-sm">admissions@su.edu.kg</p>
             </div>
-            
+
             <div className="p-4">
               <div className="bg-purple-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
                 <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">

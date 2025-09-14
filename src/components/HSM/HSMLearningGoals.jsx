@@ -1,53 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import hsmService from '../../services/hsmService';
+import { getLearningGoals, getLocalizedText } from '../../data/hsmData';
 
 const LearningGoalCard = ({ goal, language }) => {
   const { t } = useTranslation();
   
   const getTitle = () => {
-    switch (language) {
-      case 'kg':
-        return goal.title_kg || goal.title;
-      case 'en':
-        return goal.title_en || goal.title;
-      default:
-        return goal.title;
-    }
+    return getLocalizedText(goal, 'title', language);
   };
 
   const getDescription = () => {
-    switch (language) {
-      case 'kg':
-        return goal.description_kg || goal.description;
-      case 'en':
-        return goal.description_en || goal.description;
-      default:
-        return goal.description;
-    }
+    return getLocalizedText(goal, 'description', language);
   };
 
   const getCompetencies = () => {
-    switch (language) {
-      case 'kg':
-        return goal.competencies_kg || goal.competencies;
-      case 'en':
-        return goal.competencies_en || goal.competencies;
-      default:
-        return goal.competencies;
-    }
+    return getLocalizedText(goal, 'competencies', language);
   };
 
   const getCareerProspects = () => {
-    switch (language) {
-      case 'kg':
-        return goal.career_prospects_kg || goal.career_prospects;
-      case 'en':
-        return goal.career_prospects_en || goal.career_prospects;
-      default:
-        return goal.career_prospects;
-    }
+    return getLocalizedText(goal, 'career_prospects', language);
   };
 
   return (
@@ -140,66 +112,12 @@ const HSMLearningGoals = () => {
   const { t, i18n } = useTranslation();
   const [learningGoals, setLearningGoals] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  // Fallback данные для целей обучения медицинской школы
-  const fallbackLearningGoals = [
-    {
-      id: 1,
-      title: 'Подготовка врачей общей практики',
-      title_en: 'Training General Practitioners',
-      title_kg: 'Жалпы практика дарыгерлерин даярдоо',
-      description: 'Формирование у студентов фундаментальных знаний в области медицины, развитие клинического мышления и практических навыков диагностики и лечения.',
-      description_en: 'Formation of fundamental knowledge in medicine among students, development of clinical thinking and practical skills in diagnosis and treatment.',
-      description_kg: 'Студенттерде медицина тармагында фундаменталдык билимдерди калыптандыруу, клиникалык ой жүгүртүүнү жана диагностика менен дарылоонун практикалык көндүмдөрүн өнүктүрүү.',
-      competencies: 'Диагностика заболеваний, назначение лечения, профилактика болезней, оказание неотложной помощи, работа с пациентами.',
-      competencies_en: 'Disease diagnosis, treatment prescription, disease prevention, emergency care, patient work.',
-      competencies_kg: 'Оорулардын диагностикасы, дарылоону дайындоо, оорулардын алдын алуу, шашылыш жардам көрсөтүү, бейтаптар менен иштөө.',
-      career_prospects: 'Врач-терапевт, семейный врач, врач скорой помощи, клинический ординатор, врач поликлиники.',
-      career_prospects_en: 'Therapist, family doctor, emergency physician, clinical resident, polyclinic doctor.',
-      career_prospects_kg: 'Дарыгер-терапевт, үй-бүлө дарыгери, тез жардам дарыгери, клиникалык ординатор, поликлиника дарыгери.',
-      programs: [{ id: 1, name: 'Лечебное дело' }]
-    },
-    {
-      id: 2,
-      title: 'Подготовка врачей-стоматологов',
-      title_en: 'Training Dentists',
-      title_kg: 'Тиш дарыгерлерин даярдоо',
-      description: 'Развитие специализированных знаний и навыков в области стоматологии, включая терапевтическую, хирургическую и ортопедическую стоматологию.',
-      description_en: 'Development of specialized knowledge and skills in dentistry, including therapeutic, surgical and orthopedic dentistry.',
-      description_kg: 'Стоматология тармагында, анын ичинде терапевтикалык, хирургиялык жана ортопедиялык стоматологияны камтыган адистештирилген билимдер менен көндүмдөрдү өнүктүрүү.',
-      competencies: 'Диагностика стоматологических заболеваний, лечение зубов, протезирование, хирургические вмешательства в полости рта.',
-      competencies_en: 'Diagnosis of dental diseases, tooth treatment, prosthetics, surgical interventions in the oral cavity.',
-      competencies_kg: 'Стоматологиялык оорулардын диагностикасы, тиштерди дарылоо, протездөө, ооз көңдөйүндө хирургиялык кийлигишүүлөр.',
-      career_prospects: 'Врач-стоматолог, стоматолог-хирург, ортодонт, стоматолог-ортопед, детский стоматолог.',
-      career_prospects_en: 'Dentist, dental surgeon, orthodontist, orthopedic dentist, pediatric dentist.',
-      career_prospects_kg: 'Дарыгер-стоматолог, стоматолог-хирург, ортодонт, стоматолог-ортопед, балдар стоматологу.',
-      programs: [{ id: 2, name: 'Стоматология' }]
-    }
-  ];
 
   useEffect(() => {
-    const fetchLearningGoals = async () => {
-      try {
-        setLoading(true);
-        const data = await hsmService.getLearningGoals();
-        // Если нет данных из API или данные не соответствуют медицине, используем fallback
-        if (!data || data.length === 0) {
-          setLearningGoals(fallbackLearningGoals);
-        } else {
-          setLearningGoals(data);
-        }
-      } catch (err) {
-        console.error('Error fetching learning goals:', err);
-        // При ошибке используем fallback данные
-        setLearningGoals(fallbackLearningGoals);
-        setError(null);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchLearningGoals();
+    // Используем локальные данные
+    const data = getLearningGoals();
+    setLearningGoals(data);
+    setLoading(false);
   }, []);
 
   if (loading) {
@@ -208,19 +126,6 @@ const HSMLearningGoals = () => {
         <div className="container mx-auto px-4">
           <div className="flex justify-center items-center h-64">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="min-h-screen bg-gray-50 pt-24">
-        <div className="container mx-auto px-4">
-          <div className="text-center py-12">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('hsm.error')}</h2>
-            <p className="text-gray-600">{error}</p>
           </div>
         </div>
       </div>

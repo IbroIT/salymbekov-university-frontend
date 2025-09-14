@@ -121,8 +121,8 @@ const ForCitizensKG = () => {
           </h2>
           <div className="grid md:grid-cols-3 gap-6">
             {quickLinks.map((link, index) => (
-              <Link 
-                key={index} 
+              <Link
+                key={index}
                 to={link.link}
                 className={`block border-2 rounded-lg p-6 transition-all transform hover:scale-105 ${getColorClasses(link.color)}`}
               >
@@ -141,7 +141,7 @@ const ForCitizensKG = () => {
           <h2 className="text-2xl font-bold text-gray-800 mb-6">
             {t('forCitizensKG.stepsTitle', 'Пошаговая инструкция поступления')}
           </h2>
-          
+
           <div className="space-y-8">
             {admissionSteps.map((step, index) => (
               <div key={step.step} className="relative">
@@ -149,13 +149,13 @@ const ForCitizensKG = () => {
                 {index < admissionSteps.length - 1 && (
                   <div className="absolute left-6 top-16 w-0.5 h-32 bg-gray-300 hidden md:block"></div>
                 )}
-                
+
                 <div className="flex flex-col md:flex-row items-start">
                   {/* Номер шага */}
                   <div className="flex items-center justify-center w-12 h-12 bg-blue-600 text-white rounded-full font-bold text-lg mb-4 md:mb-0 md:mr-6 flex-shrink-0">
                     {step.step}
                   </div>
-                  
+
                   {/* Содержимое шага */}
                   <div className="flex-1">
                     <div className="bg-gray-50 rounded-lg p-6">
@@ -166,9 +166,9 @@ const ForCitizensKG = () => {
                           {step.timing}
                         </span>
                       </div>
-                      
+
                       <p className="text-gray-600 mb-4">{step.description}</p>
-                      
+
                       <div className="grid md:grid-cols-2 gap-4">
                         <div>
                           <h4 className="font-medium text-gray-800 mb-2">
@@ -197,7 +197,7 @@ const ForCitizensKG = () => {
           <h2 className="text-2xl font-bold text-gray-800 mb-6">
             {t('forCitizensKG.importantTitle', 'Важно знать')}
           </h2>
-          
+
           <div className="grid md:grid-cols-3 gap-6">
             {importantInfo.map((info, index) => (
               <div key={index} className="border border-gray-200 rounded-lg p-6 text-center hover:shadow-md transition-shadow">
@@ -214,7 +214,7 @@ const ForCitizensKG = () => {
           <h2 className="text-2xl font-bold text-gray-800 mb-6">
             {t('forCitizensKG.minScores.title', 'Минимальные проходные баллы ОРТ')}
           </h2>
-          
+
           <div className="overflow-x-auto">
             <table className="w-full border-collapse">
               <thead>
@@ -294,6 +294,88 @@ const ForCitizensKG = () => {
           </div>
         </div>
 
+        {/* Календарь сроков подачи */}
+        <div className="bg-white rounded-lg shadow-lg p-6 mb-12">
+          <h2 className="text-2xl font-bold text-gray-800 mb-6">
+            {t('forCitizensKG.calendar.title', 'Календарь сроков подачи документов')}
+          </h2>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="border-2 border-green-200 rounded-lg p-4 bg-green-50">
+              <div className="text-center mb-3">
+                <span className="text-3xl">📅</span>
+                <h3 className="text-lg font-semibold text-green-800 mt-2">
+                  {t('forCitizensKG.calendar.phase1', 'Подача документов')}
+                </h3>
+              </div>
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-gray-600">{t('forCitizensKG.calendar.start', 'Начало:')}</span>
+                  <span className="font-semibold">15 июня</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">{t('forCitizensKG.calendar.end', 'Окончание:')}</span>
+                  <span className="font-semibold">25 июля</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="border-2 border-blue-200 rounded-lg p-4 bg-blue-50">
+              <div className="text-center mb-3">
+                <span className="text-3xl">📝</span>
+                <h3 className="text-lg font-semibold text-blue-800 mt-2">
+                  {t('forCitizensKG.calendar.phase2', 'ОРТ и экзамены')}
+                </h3>
+              </div>
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-gray-600">{t('forCitizensKG.calendar.start', 'Начало:')}</span>
+                  <span className="font-semibold">1 августа</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">{t('forCitizensKG.calendar.end', 'Окончание:')}</span>
+                  <span className="font-semibold">15 августа</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="border-2 border-purple-200 rounded-lg p-4 bg-purple-50">
+              <div className="text-center mb-3">
+                <span className="text-3xl">🎓</span>
+                <h3 className="text-lg font-semibold text-purple-800 mt-2">
+                  {t('forCitizensKG.calendar.phase3', 'Зачисление')}
+                </h3>
+              </div>
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-gray-600">{t('forCitizensKG.calendar.start', 'Начало:')}</span>
+                  <span className="font-semibold">20 августа</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">{t('forCitizensKG.calendar.end', 'Окончание:')}</span>
+                  <span className="font-semibold">5 сентября</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-6 p-4 bg-yellow-50 border-l-4 border-yellow-400">
+            <div className="flex items-start">
+              <svg className="w-5 h-5 text-yellow-600 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.99-.833-2.768 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+              </svg>
+              <div>
+                <p className="text-sm text-yellow-800 font-semibold mb-1">
+                  {t('forCitizensKG.calendar.warning', 'Внимание!')}
+                </p>
+                <p className="text-sm text-yellow-800">
+                  {t('forCitizensKG.calendar.warningText', 'Сроки могут изменяться. Следите за обновлениями на официальном сайте и в социальных сетях университета.')}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Контакты */}
         <div className="bg-white rounded-lg shadow-lg p-6">
           <div className="text-center mb-8">
@@ -304,8 +386,8 @@ const ForCitizensKG = () => {
               {t('forCitizensKG.contact.subtitle', 'Мы готовы ответить на все ваши вопросы')}
             </p>
           </div>
-          
-          <div className="grid md:grid-cols-4 gap-6 text-center">
+
+          <div className="grid md:grid-cols-4 gap-6 text-center mb-8">
             <div className="p-4">
               <div className="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
                 <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -317,7 +399,7 @@ const ForCitizensKG = () => {
               </h3>
               <p className="text-gray-600 text-sm">+996 312 545 000</p>
             </div>
-            
+
             <div className="p-4">
               <div className="bg-green-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
                 <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -329,7 +411,7 @@ const ForCitizensKG = () => {
               </h3>
               <p className="text-gray-600 text-sm">admissions@su.edu.kg</p>
             </div>
-            
+
             <div className="p-4">
               <div className="bg-purple-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
                 <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -357,6 +439,48 @@ const ForCitizensKG = () => {
               <p className="text-gray-600 text-sm">
                 {t('forCitizensKG.contact.addressText', 'г. Бишкек, ул. Интергельпо')}
               </p>
+            </div>
+          </div>
+
+          {/* Карта и подробный адрес */}
+          <div className="border-t border-gray-200 pt-8">
+            <h3 className="text-lg font-semibold text-gray-800 mb-4 text-center">
+              {t('forCitizensKG.contact.location', 'Расположение приемной комиссии')}
+            </h3>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="space-y-4">
+                <div className="p-4 bg-gray-50 rounded-lg">
+                  <h4 className="font-semibold text-gray-800 mb-2">
+                    {t('forCitizensKG.contact.fullAddress', 'Полный адрес:')}
+                  </h4>
+                  <p className="text-gray-700">
+                    720040, Кыргызская Республика,<br />
+                    г. Бишкек, ул. Интергельпо, 2<br />
+                    {t('forCitizensKG.contact.building', 'Административное здание, 1 этаж')}
+                  </p>
+                </div>
+
+                <div className="p-4 bg-blue-50 rounded-lg">
+                  <h4 className="font-semibold text-blue-800 mb-2">
+                    {t('forCitizensKG.contact.publicTransport', 'Общественный транспорт:')}
+                  </h4>
+                  <p className="text-blue-700 text-sm">
+                    {t('forCitizensKG.contact.busRoutes', 'Автобусы: №12, №18, №22')} <br />
+                    {t('forCitizensKG.contact.trolleyRoutes', 'Троллейбусы: №4, №6')} <br />
+                    {t('forCitizensKG.contact.nearestStop', 'Остановка: "Университет"')}
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-gray-100 rounded-lg p-4 text-center">
+                <svg className="w-16 h-16 text-gray-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-1.447-.894L15 4m0 13V4m0 0L9 7" />
+                </svg>
+                <p className="text-gray-600 text-sm">
+                  {t('forCitizensKG.contact.mapPlaceholder', 'Интерактивная карта будет добавлена')}
+                </p>
+              </div>
             </div>
           </div>
         </div>

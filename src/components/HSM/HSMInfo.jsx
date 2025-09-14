@@ -1,109 +1,27 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import hsmService from '../../services/hsmService';
+import { getHSMInfo, getLocalizedText } from '../../data/hsmData';
 
 const HSMInfo = () => {
   const { t, i18n } = useTranslation();
   const [hsmInfo, setHsmInfo] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  // Fallback данные для Высшей медицинской школы
-  const fallbackData = {
-    title: 'Высшая медицинская школа',
-    title_en: 'High School of Medicine',
-    title_kg: 'Жогорку медициналык мектеп',
-    description: `Высшая медицинская школа Салымбекова является ведущим центром подготовки высококвалифицированных медицинских кадров в Кыргызстане. Мы готовим профессиональных врачей, способных эффективно работать в современной медицине.
-
-Наша школа предлагает инновационные образовательные программы, современное оборудование и практическую подготовку в лучших клиниках страны.`,
-    description_en: `The High School of Medicine of Salymbekov University is a leading center for training highly qualified medical personnel in Kyrgyzstan. We prepare professional doctors capable of working effectively in modern medicine.
-
-Our school offers innovative educational programs, modern equipment and practical training in the best clinics of the country.`,
-    description_kg: `Салымбеков университетинин Жогорку медициналык мектеби Кыргызстанда жогорку квалификациялуу медициналык кадрларды даярдоодо алдыңкы орунда турат. Биз заманбап медицинада натыйжалуу иштей ала турган кесипкөй дарыгерлерди даярдайбыз.
-
-Биздин мектеп инновациялык билим берүү программаларын, заманбап жабдууларды жана өлкөнүн эң мыкты клиникаларында практикалык даярдыкты сунуштайт.`,
-    history: `Высшая медицинская школа была основана в 2010 году как специализированное подразделение Салымбекова университета. За годы работы школа подготовила более 500 специалистов в области медицины, многие из которых занимают ведущие позиции в крупных медицинских центрах и государственных учреждениях здравоохранения.`,
-    history_en: `The High School of Medicine was established in 2010 as a specialized division of Salymbekov University. Over the years, the school has graduated more than 500 specialists in medicine, many of whom hold leading positions in major medical centers and government healthcare institutions.`,
-    history_kg: `Жогорку медициналык мектеп 2010-жылы Салымбеков университетинин адистешкен бөлүмү катары түзүлгөн. Иштеген жылдары мектеп медицина тармагында 500дөн ашык адисти даярдаган, алардын көбү ири медициналык борборлордо жана мамлекеттик саламаттыкты сактоо мекемелеринде жетекчи орундарды ээлешет.`,
-    main_directions: `Основные направления деятельности:
-
-• Лечебное дело
-• Стоматология  
-• Фармация
-• Сестринское дело
-• Общественное здравоохранение
-• Медицинская реабилитация
-• Клиническая лабораторная диагностика`,
-    main_directions_en: `Main directions of activity:
-
-• General Medicine
-• Dentistry
-• Pharmacy
-• Nursing
-• Public Health
-• Medical Rehabilitation
-• Clinical Laboratory Diagnostics`,
-    main_directions_kg: `Ишмердүүлүктүн негизги багыттары:
-
-• Дарылоо иши
-• Тиш дарылоо
-• Дарылык иш
-• Медайым иш
-• Коомдук саламаттыкты сактоо
-• Медициналык реабилитация
-• Клиникалык лабораториялык диагностика`
-  };
 
   useEffect(() => {
-    const fetchHSMInfo = async () => {
-      try {
-        setLoading(true);
-        const data = await hsmService.getHSMInfo();
-        if (data && data.length > 0) {
-          // Если данные из API содержат информацию о менеджменте, используем fallback
-          const apiData = data[0];
-          if (apiData.title && (apiData.title.includes('менеджмент') || apiData.title.includes('Management'))) {
-            setHsmInfo(fallbackData);
-          } else {
-            setHsmInfo(apiData);
-          }
-        } else {
-          setHsmInfo(fallbackData);
-        }
-      } catch (err) {
-        console.error('Error fetching HSM info:', err);
-        // При ошибке API используем fallback данные
-        setHsmInfo(fallbackData);
-        setError(null); // Не показываем ошибку, так как у нас есть fallback
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchHSMInfo();
+    // Используем локальные данные
+    const data = getHSMInfo();
+    setHsmInfo(data);
+    setLoading(false);
   }, []);
 
   // Обновляем заголовок страницы
   useEffect(() => {
     if (hsmInfo) {
-      const title = getLocalizedText('title');
+      const title = getLocalizedText(hsmInfo, 'title', i18n.language);
       document.title = `${title} - Салымбеков Университет`;
     }
   }, [hsmInfo, i18n.language]);
-
-  const getLocalizedText = (field) => {
-    if (!hsmInfo) return '';
-    
-    switch (i18n.language) {
-      case 'kg':
-        return hsmInfo[`${field}_kg`] || hsmInfo[field];
-      case 'en':
-        return hsmInfo[`${field}_en`] || hsmInfo[field];
-      default:
-        return hsmInfo[field];
-    }
-  };
 
   if (loading) {
     return (
@@ -117,13 +35,13 @@ Our school offers innovative educational programs, modern equipment and practica
     );
   }
 
-  if (error || !hsmInfo) {
+  if (!hsmInfo) {
     return (
       <div className="min-h-screen bg-gray-50 pt-24">
         <div className="container mx-auto px-4">
           <div className="text-center py-12">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('hsm.error')}</h2>
-            <p className="text-gray-600">{error || t('hsm.no_data')}</p>
+            <p className="text-gray-600">{t('hsm.no_data')}</p>
           </div>
         </div>
       </div>
@@ -141,7 +59,7 @@ Our school offers innovative educational programs, modern equipment and practica
           transition={{ duration: 0.6 }}
         >
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            {getLocalizedText('title')}
+            {getLocalizedText(hsmInfo, 'title', i18n.language)}
           </h1>
         </motion.div>
 
@@ -157,7 +75,7 @@ Our school offers innovative educational programs, modern equipment and practica
               {t('hsm.about_hsm', 'О Высшей медицинской школе')}
             </h2>
             <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
-              {getLocalizedText('description').split('\n').map((paragraph, index) => (
+              {getLocalizedText(hsmInfo, 'description', i18n.language).split('\n').map((paragraph, index) => (
                 paragraph.trim() && (
                   <p key={index} className="mb-4">
                     {paragraph}
@@ -178,7 +96,7 @@ Our school offers innovative educational programs, modern equipment and practica
               {t('hsm.history', 'История')}
             </h2>
             <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
-              {getLocalizedText('history').split('\n').map((paragraph, index) => (
+              {getLocalizedText(hsmInfo, 'history', i18n.language).split('\n').map((paragraph, index) => (
                 paragraph.trim() && (
                   <p key={index} className="mb-4">
                     {paragraph}
@@ -199,7 +117,7 @@ Our school offers innovative educational programs, modern equipment and practica
               {t('hsm.main_directions', 'Основные направления')}
             </h2>
             <div className="prose prose-lg max-w-none text-gray-700">
-              {getLocalizedText('main_directions').split('\n').map((line, index) => {
+              {getLocalizedText(hsmInfo, 'main_directions', i18n.language).split('\n').map((line, index) => {
                 if (line.trim().startsWith('•')) {
                   return (
                     <div key={index} className="flex items-start mb-2">

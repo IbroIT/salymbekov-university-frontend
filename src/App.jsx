@@ -19,16 +19,9 @@ import Faculties from './components/academics/faculties'
 import Deparments from './components/academics/departments'
 import Calendar from './components/academics/calendar'
 import Resources from "./components/academics/resources";
-import AboutHSM from "./components/academics/AboutHSM";
-import Accreditation from "./components/academics/Accreditation";
-import LearningGoals from "./components/academics/LearningGoals";
-
-// Новые компоненты ВШМ
-import Faculty from "./components/HSM/Faculty";
-import Programs from "./components/HSM/Programs";
 import HSMInfo from "./components/HSM/HSMInfo";
-import HSMAccreditation from "./components/HSM/HSMAccreditation";
 import HSMLearningGoals from "./components/HSM/HSMLearningGoals";
+import HSMAccreditation from "./components/HSM/HSMAccreditation";
 import HSMAcademicStuff from "./components/HSM/HSMAcademicStuff";
 
 
@@ -51,8 +44,6 @@ import AdmissionProcess from "./components/Admissions/AdmissionProcess";
 import ForApplicants from "./components/Admissions/ForApplicants";
 import ForCitizensKG from "./components/Admissions/ForCitizensKG";
 import ForForeignCitizens from "./components/Admissions/ForForeignCitizens";
-
-// Новые компоненты для детальных страниц абитуриентов
 import RequirementsCitizensKG from "./components/Admissions/Requirements/RequirementsCitizensKG";
 import RequirementsForeignCitizens from "./components/Admissions/Requirements/RequirementsForeignCitizens";
 import ApplyCitizensKG from "./components/Admissions/Apply/ApplyCitizensKG";
