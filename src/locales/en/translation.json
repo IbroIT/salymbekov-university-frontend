@@ -3579,5 +3579,92 @@
   "associate_professors": "Associate Professors",
   "doctors": "Doctors of Science"
   },
+  "mission": {
+    "title": "University Mission and Vision",
+    "pageTitle": "Mission",
+    "subtitle": "Our purpose and values",
+    "missionTitle": "University Mission",
+    "missionText": "Salymbekov University strives to become a leading medical educational institution in Central Asia, providing high-quality education, innovative research, and healthcare for the population.",
+    "valuesTitle": "Our Values",
+    "values": {
+      "education": {
+        "title": "Education",
+        "description": "Providing quality medical education that meets international standards"
+      },
+      "science": {
+        "title": "Science",
+        "description": "Advancing medical research and implementing innovative technologies in healthcare"
+      },
+      "medicine": {
+        "title": "Medicine",
+        "description": "Training highly qualified medical professionals to serve society"
+      },
+      "studentCare": {
+        "title": "Student Care",
+        "description": "Creating a supportive educational environment and promoting holistic student development"
+      }
+    },
+    "prioritiesTitle": "Development Priorities",
+    "priorities": [
+      "Modernizing educational programs in accordance with international standards",
+      "Developing research activities and innovative projects",
+      "Strengthening international cooperation and academic mobility",
+      "Improving the university's material and technical base",
+      "Enhancing the quality of medical personnel training",
+      "Developing digital technologies in education and medicine"
+    ]
+  },
+  "regulations": {
+    "title": "Legal and Regulatory Acts",
+    "pageTitle": "Regulations",
+    "subtitle": "Documents governing university activities",
+    "internalDocuments": "Internal Documents",
+    "downloadPdf": "Download PDF",
+    "lastUpdated": "Updated",
+    "fileSize": "File size",
+    "documents": {
+      "charter": {
+        "title": "Salymbekov University Charter",
+        "description": "The main founding document defining the legal status, goals, objectives and operating procedures of the university"
+      },
+      "academicRegulations": {
+        "title": "Academic Process Organization Regulations",
+        "description": "Regulates the organization and conduct of the educational process at the university"
+      },
+      "admissionRules": {
+        "title": "University Admission Rules",
+        "description": "Defines the procedure for admitting students to university educational programs"
+      },
+      "studentRegulations": {
+        "title": "Student Regulations",
+        "description": "Regulates the rights, duties and procedures for student education"
+      },
+      "facultyRegulations": {
+        "title": "Faculty and Staff Regulations",
+        "description": "Defines requirements for faculty, employment procedures and certification"
+      },
+      "researchRegulations": {
+        "title": "Research Activity Regulations",
+        "description": "Regulates the organization and conduct of research at the university"
+      },
+      "qualityAssurance": {
+        "title": "Educational Quality Assurance System Regulations",
+        "description": "Defines principles and mechanisms for ensuring the quality of educational services"
+      },
+      "libraryRegulations": {
+        "title": "Library Regulations",
+        "description": "Regulates library activities and procedures for using library resources"
+      }
+    },
+    "categories": {
+      "foundational": "Founding Documents",
+      "academic": "Academic Activities",
+      "administrative": "Administrative Activities",
+      "research": "Research Activities"
+    },
+    "searchPlaceholder": "Search documents...",
+    "noDocuments": "No documents found",
+    "downloadError": "Error downloading file"
+  },
   "locale": "en"
 }
