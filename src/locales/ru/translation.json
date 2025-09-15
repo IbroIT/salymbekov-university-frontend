@@ -2767,6 +2767,104 @@
       "description": "Описание программы",
       "requirements": "Требования к поступлению",
       "applyButton": "Подать заявку"
+    },
+    "management": {
+      "title": "Научное управление",
+      "subtitle": "Структура научного управления университета",
+      "tabs": {
+        "positions": "Структура управления",
+        "management": "Структура управления",
+        "councils": "Научные советы",
+        "commissions": "Комиссии"
+      },
+      "structure": {
+        "leadership": "Руководство",
+        "institute": "Институт",
+        "center": "Центр",
+        "department": "Кафедра"
+      },
+      "positions": {
+        "position": "Должность",
+        "fullName": "ФИО",
+        "bio": "Биография",
+        "education": "Образование",
+        "interests": "Научные интересы",
+        "contacts": "Контакты",
+        "email": "Email",
+        "phone": "Телефон",
+        "office": "Кабинет"
+      },
+      "councils": {
+        "chairman": "Председатель",
+        "secretary": "Секретарь",
+        "members": "Члены совета",
+        "responsibilities": "Функции и обязанности",
+        "schedule": "График заседаний"
+      },
+      "commissions": {
+        "chairman": "Председатель",
+        "members": "Члены комиссии",
+        "functions": "Функции",
+        "types": {
+          "ethics": "Этическая комиссия",
+          "qualification": "Квалификационная комиссия",
+          "publication": "Издательская комиссия",
+          "grant": "Грантовая комиссия",
+          "dissertation": "Диссертационная комиссия"
+        }
+      },
+      "noData": {
+        "management": "Нет данных об управлении",
+        "councils": "Нет данных о научных советах",
+        "commissions": "Нет данных о комиссиях"
+      },
+      "loading": "Загрузка данных управления...",
+      "error": "Ошибка загрузки данных",
+      "qualifications": "Квалификация",
+      "responsibilities": "Обязанности",
+      "contact": "Контакт",
+      "position": "Должность",
+      "description": "Описание",
+      "types": {
+        "leadership": "Руководство",
+        "institute": "Институт", 
+        "center": "Центр",
+        "department": "Кафедра",
+        "ethics": "Этическая комиссия",
+        "qualification": "Квалификационная комиссия",
+        "publication": "Издательская комиссия",
+        "grant": "Грантовая комиссия",
+        "dissertation": "Диссертационная комиссия"
+      }
+    },
+    "journals": {
+      "title": "Научные журналы",
+      "subtitle": "Научные журналы Салымбековского университета с архивом выпусков и возможностью скачивания",
+      "editor": "Главный редактор",
+      "frequency": "Периодичность публикаций",
+      "year": "Год основания",
+      "issn": "ISSN",
+      "currentIssue": "Текущий выпуск",
+      "allIssues": "Все выпуски",
+      "viewIssue": "Посмотреть выпуск",
+      "downloadPdf": "Скачать PDF",
+      "articles": "Статьи",
+      "openAccess": "Открытый доступ",
+      "peerReviewed": "Рецензируемый",
+      "website": "Сайт",
+      "impactFactor": "Импакт-фактор",
+      "volume": "Том",
+      "number": "№",
+      "published": "Опубликован",
+      "publicationDate": "Дата публикации",
+      "pages": "Страниц",
+      "doi": "DOI",
+      "basicInfo": "Основная информация",
+      "editorInChief": "Главный редактор",
+      "publicationFrequency": "Периодичность",
+      "establishedYear": "Год основания",
+      "scope": "Тематика",
+      "yearLabel": "год"
     }
   },
   "faculties": {
