@@ -3666,5 +3666,143 @@
     "noDocuments": "No documents found",
     "downloadError": "Error downloading file"
   },
+  "studentLife": {
+    "instructions": {
+      "title": "Student Instructions",
+      "subtitle": "Step-by-step guides for important procedures",
+      "loading": "Loading instructions...",
+      "error": "Loading Error",
+      "errorMessage": "Failed to load data. Please try again later.",
+      "tryAgain": "Try Again",
+      "noInstructions": "No instructions available",
+      "viewInstruction": "View Instruction",
+      "back": "Back",
+      "estimatedTime": "Time",
+      "duration": "Duration",
+      "notSpecified": "Not specified",
+      "requirements": "Requirements",
+      "timeframe": "Timeframe",
+      "contacts": "Contacts",
+      "defaultContact": "Dean's Office: +996 312 123-456",
+      "importantNotes": "Important Notes",
+      "notes": [
+        "All documents must be submitted within the established deadlines",
+        "Incomplete document packages are not considered",
+        "Decisions can be appealed in accordance with established procedures",
+        "If you have questions, contact the specified contacts"
+      ],
+      "generalInfo": "General Information",
+      "workingHours": "Dean's Office Hours",
+      "schedule": [
+        "Monday - Friday: 9:00 - 17:00",
+        "Lunch break: 12:00 - 13:00",
+        "Saturday - Sunday: closed"
+      ],
+      "requiredDocuments": "Required Documents",
+      "documentTips": [
+        "Always carry your student ID card",
+        "Prepare documents in advance",
+        "Make copies of important documents"
+      ],
+      "needHelp": "Need Help?",
+      "helpDescription": "If you have any questions or need individual consultation, contact:",
+      "deanOffice": "Dean's Office:",
+      "academicOffice": "Academic Office:",
+      "mainBuilding": "Main building, 1st floor",
+      "room": "room"
+    },
+    "regulations": {
+      "title": "Legal and Regulatory Acts",
+      "subtitle": "Internal regulations, academic regulations and downloadable documents",
+      "loading": "Loading regulatory data...",
+      "error": "Loading Error",
+      "errorMessage": "Failed to load data. Please try again later.",
+      "tryAgain": "Try Again",
+      "tabs": {
+        "rules": "Internal Regulations",
+        "academic": "Academic Regulations",
+        "documents": "Downloadable Documents"
+      },
+      "noRules": "No rules available",
+      "noRegulations": "No regulations available",
+      "noDocuments": "No documents available",
+      "downloadDocument": "Download Document",
+      "format": "Format",
+      "size": "Size",
+      "updated": "Updated",
+      "importantInfo": "Important to Know!",
+      "importantNotes": [
+        "Ignorance of rules does not exempt from responsibility",
+        "Disciplinary measures are provided for violations",
+        "In case of doubts, contact the dean's office",
+        "Rules may be changed by university administration"
+      ],
+      "contactInfo": "Contact Information",
+      "deanOffice": "Dean's Office: Main building, 1st floor, room 105",
+      "phone": "Phone: +996 312 123-456 (ext. 105)",
+      "email": "Email: dean@su.edu.kg",
+      "workingHours": "Working hours: Mon-Fri, 9:00-17:00",
+      "documentsInfo": "Document Information",
+      "documentNotes": [
+        "All documents are presented in the current version",
+        "Adobe Reader or similar software is required to open files",
+        "If you have download problems, contact IT support",
+        "Some documents may be updated without prior notice"
+      ],
+      "usefulLinks": "Useful Links"
+    },
+    "academicMobility": {
+      "title": "Academic Mobility",
+      "subtitle": "Exchange programs, partner universities and international education opportunities",
+      "loading": "Loading data...",
+      "error": "Loading Error",
+      "errorMessage": "Error loading data. Please refresh the page.",
+      "tabs": {
+        "opportunities": "Exchange Opportunities",
+        "universities": "Partner Universities",
+        "requirements": "Requirements"
+      },
+      "noOpportunities": "No exchange programs available",
+      "noUniversities": "No partner universities",
+      "noRequirements": "No requirements",
+      "duration": "Duration",
+      "benefits": "Benefits",
+      "country": "Country",
+      "city": "City",
+      "website": "Website",
+      "programs": "Programs",
+      "language": "Language of instruction",
+      "importantInfo": "Important Information",
+      "applicationDeadlines": "Application Deadlines",
+      "supportInfo": "Support and Consultations"
+    },
+    "internships": {
+      "title": "Internships and Placements",
+      "subtitle": "Internship sites, requirements and documents",
+      "loading": "Loading internship data...",
+      "error": "Loading Error",
+      "errorMessage": "Failed to load data. Please try again later.",
+      "tryAgain": "Try Again",
+      "tabs": {
+        "partners": "Internship Sites",
+        "requirements": "Requirements",
+        "documents": "Documents"
+      },
+      "noPartners": "No internship sites",
+      "noRequirements": "No requirements",
+      "noDocuments": "No documents",
+      "contact": "Contact",
+      "phone": "Phone",
+      "email": "Email",
+      "address": "Address",
+      "downloadDocument": "Download Document",
+      "format": "Format",
+      "size": "Size",
+      "updated": "Updated",
+      "importantInfo": "Important Information",
+      "practiceCoordinator": "Practice Coordinator",
+      "emergencyContact": "Emergency Contact"
+    }
+  },
   "locale": "en"
 }
