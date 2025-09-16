@@ -3709,58 +3709,128 @@
       "deanOffice": "Dean's Office:",
       "academicOffice": "Academic Office:",
       "mainBuilding": "Main building, 1st floor",
-      "room": "room"
+      "room": "room",
+      "instructionNotFound": "Instruction not found",
+      "instructionLoadError": "Error loading instruction",
+      "commonPhrases": {
+        "2-3 дня": "2-3 days",
+        "30 дней": "30 days",
+        "1-2 недели": "1-2 weeks",
+        "2-3 недели": "2-3 weeks",
+        "До начала семестра": "Before the semester starts",
+        "1-2 дня": "1-2 days",
+        "30 минут": "30 minutes",
+        "5-7 дней": "5-7 days",
+        "1 день": "1 day",
+        "1-4 недели": "1-4 weeks",
+        "3-5 дней": "3-5 days",
+        "7-10 дней": "7-10 days",
+        "15 минут": "15 minutes",
+        "1-3 дня": "1-3 days",
+        "Зависит от типа документа": "Depends on document type",
+        "Деканат:": "Dean's Office:",
+        "Учебная часть:": "Academic Office:",
+        "Приемная комиссия:": "Admissions Committee:",
+        "Канцелярия:": "Chancellery:"
+      }
     },
     "regulations": {
       "title": "Legal and Regulatory Acts",
       "subtitle": "Internal regulations, academic regulations and downloadable documents",
-      "loading": "Loading regulatory data...",
-      "error": "Loading Error",
-      "errorMessage": "Failed to load data. Please try again later.",
+      "loading": "Loading data...",
+      "errorTitle": "Loading Error",
       "tryAgain": "Try Again",
       "tabs": {
         "rules": "Internal Regulations",
         "academic": "Academic Regulations",
         "documents": "Downloadable Documents"
       },
-      "noRules": "No rules available",
-      "noRegulations": "No regulations available",
-      "noDocuments": "No documents available",
+      "noData": {
+        "rules": "No rules available",
+        "academic": "No regulations available",
+        "documents": "No documents available"
+      },
+      "importantInfo": {
+        "title": "Important to Know!",
+        "ignoranceNotExcused": "Ignorance of rules does not exempt from responsibility",
+        "disciplinaryMeasures": "Disciplinary measures are provided for violations",
+        "contactDean": "In case of doubts, contact the dean's office",
+        "rulesCanChange": "Rules may be changed by university administration"
+      },
+      "contact": {
+        "title": "Contact Information",
+        "dean": "Dean's Office",
+        "deanAddress": "Main building, 1st floor, room 105",
+        "phone": "Phone",
+        "hours": "Working hours",
+        "hoursTime": "Mon-Fri, 9:00-17:00"
+      },
+      "documentsInfo": {
+        "title": "Document Information",
+        "currentVersion": "All documents are presented in the current version",
+        "readerRequired": "Adobe Reader or similar software is required to open files",
+        "contactIT": "If you have download problems, contact IT support",
+        "mayUpdate": "Some documents may be updated without prior notice"
+      },
+      "fileInfo": {
+        "format": "Format",
+        "size": "Size",
+        "updated": "Updated"
+      },
       "downloadDocument": "Download Document",
-      "format": "Format",
-      "size": "Size",
-      "updated": "Updated",
-      "importantInfo": "Important to Know!",
-      "importantNotes": [
-        "Ignorance of rules does not exempt from responsibility",
-        "Disciplinary measures are provided for violations",
-        "In case of doubts, contact the dean's office",
-        "Rules may be changed by university administration"
-      ],
-      "contactInfo": "Contact Information",
-      "deanOffice": "Dean's Office: Main building, 1st floor, room 105",
-      "phone": "Phone: +996 312 123-456 (ext. 105)",
-      "email": "Email: dean@su.edu.kg",
-      "workingHours": "Working hours: Mon-Fri, 9:00-17:00",
-      "documentsInfo": "Document Information",
-      "documentNotes": [
-        "All documents are presented in the current version",
-        "Adobe Reader or similar software is required to open files",
-        "If you have download problems, contact IT support",
-        "Some documents may be updated without prior notice"
-      ],
-      "usefulLinks": "Useful Links"
+      "usefulLinks": {
+        "title": "Useful Links",
+        "ministry": "Official website of the Ministry of Education of the Kyrgyz Republic",
+        "accreditation": "National Accreditation Agency",
+        "testingCenter": "Testing Center under the Ministry of Education",
+        "studentPortal": "Student Portal"
+      }
     },
     "academicMobility": {
       "title": "Academic Mobility",
-      "subtitle": "Exchange programs, partner universities and international education opportunities",
+      "subtitle": "International exchange opportunities for medical university students",
       "loading": "Loading data...",
       "error": "Loading Error",
-      "errorMessage": "Error loading data. Please refresh the page.",
+      "tryAgain": "Try Again",
+      "noData": "No academic mobility data available",
       "tabs": {
         "opportunities": "Exchange Opportunities",
-        "universities": "Partner Universities",
-        "requirements": "Requirements"
+        "partners": "Partner Universities",
+        "requirements": "Participation Requirements"
+      },
+      "universityCard": {
+        "language": "Language of instruction",
+        "requirements": "Requirements",
+        "languageCert": "Language certificate",
+        "recommendations": "Recommendation letters",
+        "contact": "Contact"
+      },
+      "applicationSteps": {
+        "title": "How to Apply",
+        "step1": "Choose program and university",
+        "step2": "Prepare required documents",
+        "step3": "Submit application to international office",
+        "step4": "Pass selection and prepare for trip"
+      },
+      "importantDates": {
+        "title": "Important Dates",
+        "fall": "Fall semester",
+        "fallDeadline": "Application deadline by May 15",
+        "spring": "Spring semester",
+        "springDeadline": "Application deadline by October 15",
+        "summer": "Summer programs",
+        "summerDeadline": "Application deadline by March 15",
+        "selection": "Selection and notification",
+        "selectionTime": "4-6 weeks after document submission"
+      },
+      "contact": {
+        "title": "Contact Information",
+        "department": "International Relations Office",
+        "phone": "Phone",
+        "office": "Office",
+        "officeLocation": "Main building, 2nd floor, room 201",
+        "hours": "Working hours",
+        "workingHours": "Mon-Fri, 9:00-17:00"
       },
       "noOpportunities": "No exchange programs available",
       "noUniversities": "No partner universities",
@@ -3802,6 +3872,118 @@
       "importantInfo": "Important Information",
       "practiceCoordinator": "Practice Coordinator",
       "emergencyContact": "Emergency Contact"
+    },
+    "appealForm": {
+      "title": "Appeal Form",
+      "subtitle": "Submit a complaint, suggestion or question to the university administration",
+      "types": {
+        "complaint": {
+          "label": "Complaint",
+          "description": "Report violations or wrongful actions"
+        },
+        "suggestion": {
+          "label": "Suggestion", 
+          "description": "Propose improvements to the educational process"
+        },
+        "question": {
+          "label": "Question",
+          "description": "Get clarification on academic or administrative matters"
+        },
+        "request": {
+          "label": "Request",
+          "description": "Submit an official application or petition"
+        }
+      },
+      "urgency": {
+        "low": {
+          "label": "Low",
+          "description": "Response within 10-14 days"
+        },
+        "medium": {
+          "label": "Medium", 
+          "description": "Response within 5-7 days"
+        },
+        "high": {
+          "label": "High",
+          "description": "Response within 2-3 days"
+        },
+        "urgent": {
+          "label": "Urgent",
+          "description": "Response within 24 hours"
+        }
+      },
+      "form": {
+        "personalInfo": "Personal Information",
+        "fullName": "Full Name",
+        "studentId": "Student ID",
+        "course": "Course",
+        "faculty": "Faculty",
+        "email": "Email",
+        "phone": "Phone",
+        "appealDetails": "Appeal Details",
+        "appealType": "Appeal Type",
+        "subject": "Subject",
+        "subjectPlaceholder": "Briefly describe the essence of the appeal",
+        "description": "Description",
+        "descriptionPlaceholder": "Describe the situation in detail, include dates, names, circumstances...",
+        "urgencyLevel": "Urgency Level",
+        "attachments": "Attachments",
+        "selectFaculty": "Select faculty",
+        "selectCourse": "Select course",
+        "selectType": "Select appeal type",
+        "selectUrgency": "Select urgency level",
+        "courseNumber": "year",
+        "submit": "Submit Appeal",
+        "submitting": "Submitting...",
+        "cancel": "Cancel",
+        "required": "Required field",
+        "fileFormats": "Supported formats: PDF, DOC, DOCX, JPG, PNG. Maximum size: 10 MB",
+        "successMessage": "Appeal submitted successfully! A notification has been sent to your email.",
+        "errorMessage": "Submission error. Check that all required fields are filled and try again."
+      },
+      "faculties": {
+        "medical": "Faculty of Medicine",
+        "dental": "Faculty of Dentistry",
+        "publicHealth": "Faculty of Public Health",
+        "preventive": "Faculty of Preventive Medicine",
+        "nursing": "Faculty of Nursing"
+      },
+      "success": {
+        "title": "Appeal Submitted!",
+        "message": "Your appeal has been successfully submitted.",
+        "ticketNumber": "Appeal Number",
+        "responseTime": "A confirmation with appeal details has been sent to your specified email. The response will be sent according to the selected urgency level.",
+        "newAppeal": "Submit New Appeal"
+      },
+      "validation": {
+        "fillRequired": "Please fill in all required fields",
+        "emailFormat": "Enter a valid email address"
+      },
+      "sidebar": {
+        "howItWorks": {
+          "title": "How does the system work?",
+          "step1": "Fill out and submit the appeal form",
+          "step2": "Receive appeal number and email confirmation",
+          "step3": "Responsible staff will review your appeal",
+          "step4": "Receive response to specified email within established timeframe"
+        },
+        "contact": {
+          "title": "Contact Information",
+          "department": "Student Affairs Department",
+          "address": "Main building, 1st floor, room 108",
+          "phone": "Tel",
+          "workingHours": "Working hours",
+          "schedule": "Mon-Fri: 9:00-17:00",
+          "lunch": "Lunch: 12:00-13:00"
+        },
+        "importantInfo": {
+          "title": "Important to know",
+          "anonymous": "Anonymous appeals are not considered",
+          "contactInfo": "Provide accurate contact information",
+          "processingTime": "Processing time depends on question complexity",
+          "confidential": "All appeals are confidential"
+        }
+      }
     }
   },
   "locale": "en"

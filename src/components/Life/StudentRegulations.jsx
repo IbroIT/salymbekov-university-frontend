@@ -112,7 +112,7 @@ const StudentRegulations = () => {
       <div className="min-h-screen pt-20 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Загрузка данных...</p>
+          <p className="text-gray-600">{t('studentLife.regulations.loading')}</p>
         </div>
       </div>
     );
@@ -128,13 +128,13 @@ const StudentRegulations = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
             </svg>
           </div>
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">Ошибка загрузки</h3>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('studentLife.regulations.errorTitle')}</h3>
           <p className="text-gray-600 mb-4">{error}</p>
           <button
             onClick={fetchRegulationsData}
             className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
           >
-            Попробовать снова
+            {t('studentLife.regulations.tryAgain')}
           </button>
         </div>
       </div>
@@ -211,7 +211,7 @@ const StudentRegulations = () => {
 
             {data.internal_rules?.length === 0 && (
               <div className="text-center py-8">
-                <p className="text-gray-500">Нет доступных правил</p>
+                <p className="text-gray-500">{t('studentLife.regulations.noData.rules')}</p>
               </div>
             )}
 
@@ -219,12 +219,12 @@ const StudentRegulations = () => {
               <div className="flex items-start">
                 <ExclamationTriangleIcon className="w-6 h-6 text-yellow-600 mr-3 flex-shrink-0 mt-0.5" />
                 <div>
-                  <h3 className="text-lg font-semibold text-yellow-800 mb-2">Важно знать!</h3>
+                  <h3 className="text-lg font-semibold text-yellow-800 mb-2">{t('studentLife.regulations.importantInfo.title')}</h3>
                   <ul className="text-yellow-700 space-y-1 text-sm">
-                    <li>• Незнание правил не освобождает от ответственности</li>
-                    <li>• За нарушения предусмотрены дисциплинарные меры</li>
-                    <li>• В случае сомнений обращайтесь в деканат</li>
-                    <li>• Правила могут быть изменены администрацией университета</li>
+                    <li>• {t('studentLife.regulations.importantInfo.ignoranceNotExcused')}</li>
+                    <li>• {t('studentLife.regulations.importantInfo.disciplinaryMeasures')}</li>
+                    <li>• {t('studentLife.regulations.importantInfo.contactDean')}</li>
+                    <li>• {t('studentLife.regulations.importantInfo.rulesCanChange')}</li>
                   </ul>
                 </div>
               </div>
@@ -256,17 +256,17 @@ const StudentRegulations = () => {
 
             {data.academic_regulations?.length === 0 && (
               <div className="text-center py-8">
-                <p className="text-gray-500">Нет доступных регламентов</p>
+                <p className="text-gray-500">{t('studentLife.regulations.noData.academic')}</p>
               </div>
             )}
 
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-blue-900 mb-3">Контактная информация</h3>
+              <h3 className="text-lg font-semibold text-blue-900 mb-3">{t('studentLife.regulations.contact.title')}</h3>
               <div className="text-blue-800 space-y-2">
-                <p><strong>Деканат:</strong> Главный корпус, 1 этаж, каб. 105</p>
-                <p><strong>Телефон:</strong> +996 312 123-456 (доб. 105)</p>
+                <p><strong>{t('studentLife.regulations.contact.dean')}:</strong> {t('studentLife.regulations.contact.deanAddress')}</p>
+                <p><strong>{t('studentLife.regulations.contact.phone')}:</strong> +996 312 123-456 (доб. 105)</p>
                 <p><strong>Email:</strong> <a href="mailto:dean@su.edu.kg" className="underline">dean@su.edu.kg</a></p>
-                <p><strong>Часы работы:</strong> Пн-Пт, 9:00-17:00</p>
+                <p><strong>{t('studentLife.regulations.contact.hours')}:</strong> {t('studentLife.regulations.contact.hoursTime')}</p>
               </div>
             </div>
           </div>
@@ -275,12 +275,12 @@ const StudentRegulations = () => {
         {activeTab === 'documents' && (
           <div className="space-y-6">
             <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-3">Информация о документах</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-3">{t('studentLife.regulations.documentsInfo.title')}</h3>
               <div className="text-gray-700 space-y-2 text-sm">
-                <p>• Все документы представлены в актуальной версии</p>
-                <p>• Для открытия файлов требуется Adobe Reader или аналогичная программа</p>
-                <p>• При возникновении проблем с загрузкой обращайтесь в IT-поддержку</p>
-                <p>• Некоторые документы могут быть обновлены без предварительного уведомления</p>
+                <p>• {t('studentLife.regulations.documentsInfo.currentVersion')}</p>
+                <p>• {t('studentLife.regulations.documentsInfo.readerRequired')}</p>
+                <p>• {t('studentLife.regulations.documentsInfo.contactIT')}</p>
+                <p>• {t('studentLife.regulations.documentsInfo.mayUpdate')}</p>
               </div>
             </div>
 
@@ -298,10 +298,10 @@ const StudentRegulations = () => {
                     
                     <div className="flex items-center justify-between text-xs text-gray-500 mb-4">
                       <div className="space-x-4">
-                        <span>Формат: {file.format}</span>
-                        <span>Размер: {file.file_size}</span>
+                        <span>{t('studentLife.regulations.fileInfo.format')}: {file.format}</span>
+                        <span>{t('studentLife.regulations.fileInfo.size')}: {file.file_size}</span>
                       </div>
-                      <span>Обновлено: {file.last_updated}</span>
+                      <span>{t('studentLife.regulations.fileInfo.updated')}: {file.last_updated}</span>
                     </div>
                   </div>
                   
@@ -310,7 +310,7 @@ const StudentRegulations = () => {
                     className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center"
                   >
                     <DocumentArrowDownIcon className="w-4 h-4 mr-2" />
-                    Скачать документ
+                    {t('studentLife.regulations.downloadDocument')}
                   </button>
                 </div>
               ))}
@@ -318,17 +318,17 @@ const StudentRegulations = () => {
 
             {data.downloadable_files?.length === 0 && (
               <div className="text-center py-8">
-                <p className="text-gray-500">Нет доступных документов</p>
+                <p className="text-gray-500">{t('studentLife.regulations.noData.documents')}</p>
               </div>
             )}
 
             <div className="bg-green-50 border border-green-200 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-green-800 mb-3">Полезные ссылки</h3>
+              <h3 className="text-lg font-semibold text-green-800 mb-3">{t('studentLife.regulations.usefulLinks.title')}</h3>
               <div className="space-y-2 text-green-700">
-                <p>• <a href="#" className="underline hover:no-underline">Официальный сайт Министерства образования КР</a></p>
-                <p>• <a href="#" className="underline hover:no-underline">Национальное агентство аккредитации</a></p>
-                <p>• <a href="#" className="underline hover:no-underline">Центр тестирования при МОиН КР</a></p>
-                <p>• <a href="#" className="underline hover:no-underline">Студенческий портал</a></p>
+                <p>• <a href="#" className="underline hover:no-underline">{t('studentLife.regulations.usefulLinks.ministry')}</a></p>
+                <p>• <a href="#" className="underline hover:no-underline">{t('studentLife.regulations.usefulLinks.accreditation')}</a></p>
+                <p>• <a href="#" className="underline hover:no-underline">{t('studentLife.regulations.usefulLinks.testingCenter')}</a></p>
+                <p>• <a href="#" className="underline hover:no-underline">{t('studentLife.regulations.usefulLinks.studentPortal')}</a></p>
               </div>
             </div>
           </div>

@@ -86,7 +86,7 @@ const Internships = () => {
       <div className="min-h-screen pt-20 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Загрузка данных...</p>
+          <p className="text-gray-600">{t('studentLife.internships.loading')}</p>
         </div>
       </div>
     );
@@ -102,13 +102,13 @@ const Internships = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
             </svg>
           </div>
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">Ошибка загрузки</h3>
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('studentLife.internships.error')}</h3>
           <p className="text-gray-600 mb-4">{error}</p>
           <button
             onClick={fetchInternshipsData}
             className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
           >
-            Попробовать снова
+            {t('studentLife.internships.tryAgain')}
           </button>
         </div>
       </div>
@@ -119,9 +119,9 @@ const Internships = () => {
     <div className="min-h-screen pt-20">
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Практика</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">{t('studentLife.internships.title')}</h1>
           <p className="text-lg text-gray-600">
-            Информация о прохождении практики в партнерских медицинских учреждениях
+            {t('studentLife.internships.subtitle')}
           </p>
         </div>
 
@@ -137,7 +137,7 @@ const Internships = () => {
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                 }`}
               >
-                Организации-партнеры
+                {t('studentLife.internships.tabs.partners')}
               </button>
               <button
                 onClick={() => setActiveTab('requirements')}
@@ -147,7 +147,7 @@ const Internships = () => {
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                 }`}
               >
-                Условия прохождения
+                {t('studentLife.internships.tabs.requirements')}
               </button>
               <button
                 onClick={() => setActiveTab('templates')}
@@ -157,7 +157,7 @@ const Internships = () => {
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                 }`}
               >
-                Шаблоны отчетов
+                {t('studentLife.internships.tabs.documents')}
               </button>
             </nav>
           </div>
@@ -178,7 +178,7 @@ const Internships = () => {
                   </div>
                   
                   <div className="mb-4">
-                    <h4 className="font-medium text-gray-900 mb-2">Специализации:</h4>
+                    <h4 className="font-medium text-gray-900 mb-2">{t('common.specializations')}:</h4>
                     <div className="flex flex-wrap gap-2">
                       {org.specializations?.map((spec, index) => (
                         <span key={index} className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">
@@ -189,13 +189,13 @@ const Internships = () => {
                   </div>
 
                   <div className="border-t pt-4 mt-4">
-                    <h4 className="font-medium text-gray-900 mb-2">Контактная информация:</h4>
+                    <h4 className="font-medium text-gray-900 mb-2">{t('studentLife.internships.contact')}:</h4>
                     <div className="text-sm text-gray-600 space-y-1">
-                      <p><strong>Контактное лицо:</strong> {org.contact_person}</p>
-                      <p><strong>Телефон:</strong> {org.phone}</p>
-                      <p><strong>Email:</strong> {org.email}</p>
+                      <p><strong>{t('common.contactPerson')}:</strong> {org.contact_person}</p>
+                      <p><strong>{t('studentLife.internships.phone')}:</strong> {org.phone}</p>
+                      <p><strong>{t('studentLife.internships.email')}:</strong> {org.email}</p>
                       {org.website && (
-                        <p><strong>Сайт:</strong> <a href={org.website} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">{org.website}</a></p>
+                        <p><strong>{t('common.website')}:</strong> <a href={org.website} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">{org.website}</a></p>
                       )}
                     </div>
                   </div>
@@ -205,7 +205,7 @@ const Internships = () => {
             
             {data.partner_organizations?.length === 0 && (
               <div className="text-center py-8">
-                <p className="text-gray-500">Нет доступных организаций-партнеров</p>
+                <p className="text-gray-500">{t('studentLife.internships.noPartners')}</p>
               </div>
             )}
           </div>
@@ -231,12 +231,12 @@ const Internships = () => {
             ))}
 
             <div className="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded">
-              <h3 className="text-lg font-semibold text-yellow-800 mb-2">Важная информация</h3>
+              <h3 className="text-lg font-semibold text-yellow-800 mb-2">{t('studentLife.internships.importantInfo')}</h3>
               <ul className="text-yellow-700 space-y-1 text-sm">
-                <li>• Все документы должны быть поданы за 2 недели до начала практики</li>
-                <li>• Медицинский осмотр действителен в течение 6 месяцев</li>
-                <li>• Студенты обязаны соблюдать внутренний распорядок медицинского учреждения</li>
-                <li>• По завершении практики необходимо сдать отчет в течение 1 недели</li>
+                <li>• {t('studentLife.internships.docDeadline')}</li>
+                <li>• {t('studentLife.internships.medExamValidity')}</li>
+                <li>• {t('studentLife.internships.rulesCompliance')}</li>
+                <li>• {t('studentLife.internships.reportDeadline')}</li>
               </ul>
             </div>
           </div>
@@ -245,12 +245,12 @@ const Internships = () => {
         {activeTab === 'templates' && (
           <div className="space-y-6">
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-blue-900 mb-2">Требования к отчетам</h3>
+              <h3 className="text-lg font-semibold text-blue-900 mb-2">{t('studentLife.internships.reportRequirements')}</h3>
               <ul className="text-blue-800 space-y-1 text-sm">
-                <li>• Отчет должен быть оформлен согласно установленным требованиям</li>
-                <li>• Объем отчета: 15-25 страниц (без учета приложений)</li>
-                <li>• Шрифт: Times New Roman, размер 14, межстрочный интервал 1.5</li>
-                <li>• Обязательны подписи руководителей практики от университета и организации</li>
+                <li>• {t('studentLife.internships.reportFormat')}</li>
+                <li>• {t('studentLife.internships.reportLength')}</li>
+                <li>• {t('studentLife.internships.reportFont')}</li>
+                <li>• {t('studentLife.internships.reportSignatures')}</li>
               </ul>
             </div>
 
@@ -272,7 +272,7 @@ const Internships = () => {
                     className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center"
                   >
                     <DocumentArrowDownIcon className="w-4 h-4 mr-2" />
-                    Скачать шаблон
+                    {t('studentLife.internships.downloadDocument')}
                   </button>
                 </div>
               ))}
@@ -280,17 +280,17 @@ const Internships = () => {
 
             {data.report_templates?.length === 0 && (
               <div className="text-center py-8">
-                <p className="text-gray-500">Нет доступных шаблонов</p>
+                <p className="text-gray-500">{t('studentLife.internships.noDocuments')}</p>
               </div>
             )}
 
             <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-3">Дополнительная информация</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-3">{t('common.additionalInfo')}</h3>
               <div className="text-gray-700 space-y-2 text-sm">
-                <p>• Все шаблоны разработаны в соответствии с требованиями кафедры</p>
-                <p>• При возникновении вопросов по оформлению обращайтесь к координатору практики</p>
-                <p>• Готовые отчеты сдаются в электронном и печатном виде</p>
-                <p>• Контактный email для вопросов: <a href="mailto:practice@su.edu.kg" className="text-blue-600 hover:underline">practice@su.edu.kg</a></p>
+                <p>• {t('studentLife.internships.templatesInfo')}</p>
+                <p>• {t('studentLife.internships.contactCoordinator')}</p>
+                <p>• {t('studentLife.internships.submissionFormat')}</p>
+                <p>• {t('studentLife.internships.practiceCoordinator')}: <a href="mailto:practice@su.edu.kg" className="text-blue-600 hover:underline">practice@su.edu.kg</a></p>
               </div>
             </div>
           </div>

@@ -36,7 +36,9 @@ const Instructions = () => {
 
   const updateDataForCurrentLanguage = () => {
     // Адаптируем данные для текущего языка
-    const adaptedGuides = adaptMultilingualArray(rawStudentGuides, ['title', 'description']);
+    const adaptedGuides = adaptMultilingualArray(rawStudentGuides, [
+      'title', 'description', 'estimated_time', 'max_duration', 'contact_info', 'requirements'
+    ]);
     
     // Также адаптируем вложенные структуры
     const fullyAdaptedGuides = adaptedGuides.map(guide => ({
@@ -44,7 +46,9 @@ const Instructions = () => {
       steps: guide.steps?.map(step => ({
         ...step,
         title: getMultilingualText(step, 'title', step.title),
-        description: getMultilingualText(step, 'description', step.description)
+        description: getMultilingualText(step, 'description', step.description),
+        timeframe: getMultilingualText(step, 'timeframe', step.timeframe),
+        details: getMultilingualText(step, 'details', step.details) || []
       })) || []
     }));
     
@@ -76,21 +80,10 @@ const Instructions = () => {
       // Сохраняем оригинальные данные
       setRawStudentGuides(guides);
       
-      // Адаптируем для текущего языка
-      const adaptedGuides = adaptMultilingualArray(guides, ['title', 'description']);
-      const fullyAdaptedGuides = adaptedGuides.map(guide => ({
-        ...guide,
-        steps: guide.steps?.map(step => ({
-          ...step,
-          title: getMultilingualText(step, 'title', step.title),
-          description: getMultilingualText(step, 'description', step.description)
-        })) || []
-      }));
-      
-      setStudentGuides(fullyAdaptedGuides);
+      // Адаптация данных будет выполнена через useEffect
     } catch (err) {
       console.error('Ошибка загрузки инструкций:', err);
-      setError('Не удалось загрузить данные. Попробуйте позже.');
+      setError(t('studentLife.instructions.errorMessage'));
     } finally {
       setLoading(false);
     }
@@ -105,11 +98,11 @@ const Instructions = () => {
       if (guide) {
         setActiveGuide(guide);
       } else {
-        throw new Error('Инструкция не найдена');
+        throw new Error(t('studentLife.instructions.instructionNotFound'));
       }
     } catch (err) {
       console.error('Ошибка загрузки деталей инструкции:', err);
-      alert('Ошибка при загрузке инструкции');
+      alert(t('studentLife.instructions.instructionLoadError'));
     } finally {
       setGuideDetailsLoading(false);
     }
@@ -359,7 +352,7 @@ const Instructions = () => {
               className="mb-6 flex items-center text-blue-600 hover:text-blue-800 transition-colors"
             >
               <ArrowLeftIcon className="w-4 h-4 mr-2" />
-              Вернуться к списку инструкций
+              {t('studentLife.instructions.back')}
             </button>
             <GuideDetail guide={activeGuide} />
           </div>

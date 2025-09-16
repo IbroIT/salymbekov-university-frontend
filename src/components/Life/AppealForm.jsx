@@ -32,47 +32,47 @@ const AppealForm = () => {
   const appealTypes = [
     {
       value: 'complaint',
-      label: 'Жалоба',
+      label: t('studentLife.appealForm.types.complaint.label'),
       icon: ExclamationTriangleIcon,
-      description: 'Сообщить о нарушениях или неправомерных действиях',
+      description: t('studentLife.appealForm.types.complaint.description'),
       color: 'red'
     },
     {
       value: 'suggestion',
-      label: 'Предложение',
+      label: t('studentLife.appealForm.types.suggestion.label'),
       icon: LightBulbIcon,
-      description: 'Предложить улучшения в образовательном процессе',
+      description: t('studentLife.appealForm.types.suggestion.description'),
       color: 'yellow'
     },
     {
       value: 'question',
-      label: 'Вопрос',
+      label: t('studentLife.appealForm.types.question.label'),
       icon: QuestionMarkCircleIcon,
-      description: 'Получить разъяснения по учебным или административным вопросам',
+      description: t('studentLife.appealForm.types.question.description'),
       color: 'blue'
     },
     {
       value: 'request',
-      label: 'Заявление',
+      label: t('studentLife.appealForm.types.request.label'),
       icon: ChatBubbleLeftEllipsisIcon,
-      description: 'Подать официальное заявление или ходатайство',
+      description: t('studentLife.appealForm.types.request.description'),
       color: 'green'
     }
   ];
 
   const urgencyLevels = [
-    { value: 'low', label: 'Низкая', description: 'Ответ в течение 10-14 дней' },
-    { value: 'medium', label: 'Средняя', description: 'Ответ в течение 5-7 дней' },
-    { value: 'high', label: 'Высокая', description: 'Ответ в течение 2-3 дней' },
-    { value: 'urgent', label: 'Срочная', description: 'Ответ в течение 24 часов' }
+    { value: 'low', label: t('studentLife.appealForm.urgency.low.label'), description: t('studentLife.appealForm.urgency.low.description') },
+    { value: 'medium', label: t('studentLife.appealForm.urgency.medium.label'), description: t('studentLife.appealForm.urgency.medium.description') },
+    { value: 'high', label: t('studentLife.appealForm.urgency.high.label'), description: t('studentLife.appealForm.urgency.high.description') },
+    { value: 'urgent', label: t('studentLife.appealForm.urgency.urgent.label'), description: t('studentLife.appealForm.urgency.urgent.description') }
   ];
 
   const faculties = [
-    'Лечебный факультет',
-    'Стоматологический факультет', 
-    'Факультет общественного здравоохранения',
-    'Факультет медико-профилактического дела',
-    'Факультет сестринского дела'
+    { key: 'medical', label: t('studentLife.appealForm.faculties.medical') },
+    { key: 'dental', label: t('studentLife.appealForm.faculties.dental') },
+    { key: 'publicHealth', label: t('studentLife.appealForm.faculties.publicHealth') },
+    { key: 'preventive', label: t('studentLife.appealForm.faculties.preventive') },
+    { key: 'nursing', label: t('studentLife.appealForm.faculties.nursing') }
   ];
 
   const handleInputChange = (e) => {
@@ -197,25 +197,24 @@ const AppealForm = () => {
       <div className="bg-white rounded-lg p-8 max-w-md mx-4">
         <div className="text-center">
           <CheckCircleIcon className="w-16 h-16 text-green-500 mx-auto mb-4" />
-          <h3 className="text-xl font-semibold text-gray-900 mb-2">Обращение отправлено!</h3>
+          <h3 className="text-xl font-semibold text-gray-900 mb-2">{t('studentLife.appealForm.success.title')}</h3>
           <p className="text-gray-600 mb-4">
-            Ваше обращение успешно отправлено. 
+            {t('studentLife.appealForm.success.message')} 
             {formData.ticketNumber && (
               <>
                 <br />
-                Номер обращения: <strong>{formData.ticketNumber}</strong>
+                {t('studentLife.appealForm.success.ticketNumber')}: <strong>{formData.ticketNumber}</strong>
               </>
             )}
           </p>
           <p className="text-sm text-gray-500 mb-6">
-            На указанную вами почту отправлено подтверждение с деталями обращения. 
-            Ответ будет направлен в соответствии с выбранным уровнем срочности.
+            {t('studentLife.appealForm.success.responseTime')}
           </p>
           <button
             onClick={() => setShowSuccess(false)}
             className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
           >
-            Понятно
+            {t('common.understood')}
           </button>
         </div>
       </div>
@@ -226,9 +225,9 @@ const AppealForm = () => {
     <div className="min-h-screen pt-20">
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Форма обращений</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">{t('studentLife.appealForm.title')}</h1>
           <p className="text-lg text-gray-600">
-            Оставьте ваше обращение, жалобу, предложение или вопрос
+            {t('studentLife.appealForm.subtitle')}
           </p>
         </div>
 
@@ -238,11 +237,11 @@ const AppealForm = () => {
             <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-md p-6 space-y-6">
               {/* Личная информация */}
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Личная информация</h3>
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('studentLife.appealForm.form.personalInfo')}</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      ФИО *
+                      {t('studentLife.appealForm.form.fullName')} *
                     </label>
                     <input
                       type="text"
@@ -255,7 +254,7 @@ const AppealForm = () => {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Студенческий билет *
+                      {t('studentLife.appealForm.form.studentId')} *
                     </label>
                     <input
                       type="text"
@@ -268,7 +267,7 @@ const AppealForm = () => {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Факультет *
+                      {t('studentLife.appealForm.form.faculty')} *
                     </label>
                     <select
                       name="faculty"
@@ -277,15 +276,15 @@ const AppealForm = () => {
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                       required
                     >
-                      <option value="">Выберите факультет</option>
+                      <option value="">{t('studentLife.appealForm.form.selectFaculty')}</option>
                       {faculties.map(faculty => (
-                        <option key={faculty} value={faculty}>{faculty}</option>
+                        <option key={faculty.key} value={faculty.label}>{faculty.label}</option>
                       ))}
                     </select>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Курс *
+                      {t('studentLife.appealForm.form.course')} *
                     </label>
                     <select
                       name="course"
@@ -294,15 +293,15 @@ const AppealForm = () => {
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                       required
                     >
-                      <option value="">Выберите курс</option>
+                      <option value="">{t('studentLife.appealForm.form.selectCourse')}</option>
                       {[1, 2, 3, 4, 5, 6].map(course => (
-                        <option key={course} value={course}>{course} курс</option>
+                        <option key={course} value={course}>{course} {t('studentLife.appealForm.form.courseNumber')}</option>
                       ))}
                     </select>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Email *
+                      {t('studentLife.appealForm.form.email')} *
                     </label>
                     <input
                       type="email"
@@ -315,7 +314,7 @@ const AppealForm = () => {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Телефон
+                      {t('studentLife.appealForm.form.phone')}
                     </label>
                     <input
                       type="tel"
@@ -330,7 +329,7 @@ const AppealForm = () => {
 
               {/* Тип обращения */}
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Тип обращения *</h3>
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('studentLife.appealForm.form.appealType')} *</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {appealTypes.map((type) => {
                     const IconComponent = type.icon;
@@ -367,11 +366,11 @@ const AppealForm = () => {
 
               {/* Детали обращения */}
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Детали обращения</h3>
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('studentLife.appealForm.form.appealDetails')}</h3>
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Тема обращения *
+                      {t('studentLife.appealForm.form.subject')} *
                     </label>
                     <input
                       type="text"
@@ -379,14 +378,14 @@ const AppealForm = () => {
                       value={formData.subject}
                       onChange={handleInputChange}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      placeholder="Кратко опишите суть обращения"
+                      placeholder={t('studentLife.appealForm.form.subjectPlaceholder')}
                       required
                     />
                   </div>
                   
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Описание *
+                      {t('studentLife.appealForm.form.description')} *
                     </label>
                     <textarea
                       name="description"
@@ -394,14 +393,14 @@ const AppealForm = () => {
                       onChange={handleInputChange}
                       rows={6}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      placeholder="Подробно опишите ситуацию, укажите даты, имена, обстоятельства..."
+                      placeholder={t('studentLife.appealForm.form.descriptionPlaceholder')}
                       required
                     />
                   </div>
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Срочность
+                      {t('studentLife.appealForm.form.urgencyLevel')}
                     </label>
                     <select
                       name="urgency"
@@ -419,7 +418,7 @@ const AppealForm = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Приложения
+                      {t('studentLife.appealForm.form.attachments')}
                     </label>
                     <input
                       type="file"
@@ -429,7 +428,7 @@ const AppealForm = () => {
                       accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
                     />
                     <p className="text-xs text-gray-500 mt-1">
-                      Поддерживаемые форматы: PDF, DOC, DOCX, JPG, PNG. Максимальный размер: 10 МБ
+                      {t('studentLife.appealForm.form.fileFormats')}
                     </p>
                   </div>
                 </div>
@@ -441,8 +440,8 @@ const AppealForm = () => {
                   submitStatus === 'success' ? 'bg-green-50 text-green-800 border border-green-200' :
                   'bg-red-50 text-red-800 border border-red-200'
                 }`}>
-                  {submitStatus === 'success' && 'Обращение успешно отправлено! На вашу почту направлено уведомление.'}
-                  {submitStatus === 'error' && 'Ошибка отправки. Проверьте заполнение всех обязательных полей и попробуйте снова.'}
+                  {submitStatus === 'success' && t('studentLife.appealForm.form.successMessage')}
+                  {submitStatus === 'error' && t('studentLife.appealForm.form.errorMessage')}
                 </div>
               )}
 
@@ -455,12 +454,12 @@ const AppealForm = () => {
                 {isSubmitting ? (
                   <>
                     <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                    Отправка...
+                    {t('studentLife.appealForm.form.submitting')}
                   </>
                 ) : (
                   <>
                     <PaperAirplaneIcon className="w-5 h-5 mr-2" />
-                    Отправить обращение
+                    {t('studentLife.appealForm.form.submit')}
                   </>
                 )}
               </button>
@@ -470,51 +469,51 @@ const AppealForm = () => {
           {/* Боковая панель с информацией */}
           <div className="space-y-6">
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-blue-900 mb-3">Как работает система?</h3>
+              <h3 className="text-lg font-semibold text-blue-900 mb-3">{t('studentLife.appealForm.sidebar.howItWorks.title')}</h3>
               <div className="space-y-3 text-blue-800 text-sm">
                 <div className="flex items-start space-x-2">
                   <div className="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">1</div>
-                  <p>Заполните и отправьте форму обращения</p>
+                  <p>{t('studentLife.appealForm.sidebar.howItWorks.step1')}</p>
                 </div>
                 <div className="flex items-start space-x-2">
                   <div className="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">2</div>
-                  <p>Получите номер обращения и подтверждение на email</p>
+                  <p>{t('studentLife.appealForm.sidebar.howItWorks.step2')}</p>
                 </div>
                 <div className="flex items-start space-x-2">
                   <div className="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">3</div>
-                  <p>Ответственный сотрудник рассмотрит ваше обращение</p>
+                  <p>{t('studentLife.appealForm.sidebar.howItWorks.step3')}</p>
                 </div>
                 <div className="flex items-start space-x-2">
                   <div className="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">4</div>
-                  <p>Получите ответ на указанную почту в установленные сроки</p>
+                  <p>{t('studentLife.appealForm.sidebar.howItWorks.step4')}</p>
                 </div>
               </div>
             </div>
 
             <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-3">Контактная информация</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-3">{t('studentLife.appealForm.sidebar.contact.title')}</h3>
               <div className="space-y-3 text-gray-700 text-sm">
                 <div>
-                  <p className="font-medium">Отдел по работе со студентами</p>
-                  <p>Главный корпус, 1 этаж, каб. 108</p>
-                  <p>Тел: +996 312 123-459</p>
+                  <p className="font-medium">{t('studentLife.appealForm.sidebar.contact.department')}</p>
+                  <p>{t('studentLife.appealForm.sidebar.contact.address')}</p>
+                  <p>{t('studentLife.appealForm.sidebar.contact.phone')}: +996 312 123-459</p>
                   <p>Email: students@su.edu.kg</p>
                 </div>
                 <div>
-                  <p className="font-medium">Часы работы:</p>
-                  <p>Пн-Пт: 9:00-17:00</p>
-                  <p>Обед: 12:00-13:00</p>
+                  <p className="font-medium">{t('studentLife.appealForm.sidebar.contact.workingHours')}:</p>
+                  <p>{t('studentLife.appealForm.sidebar.contact.schedule')}</p>
+                  <p>{t('studentLife.appealForm.sidebar.contact.lunch')}</p>
                 </div>
               </div>
             </div>
 
             <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-yellow-800 mb-3">Важно знать</h3>
+              <h3 className="text-lg font-semibold text-yellow-800 mb-3">{t('studentLife.appealForm.sidebar.importantInfo.title')}</h3>
               <ul className="space-y-2 text-yellow-700 text-sm">
-                <li>• Анонимные обращения не рассматриваются</li>
-                <li>• Укажите достоверную контактную информацию</li>
-                <li>• Срок рассмотрения зависит от сложности вопроса</li>
-                <li>• Все обращения конфиденциальны</li>
+                <li>• {t('studentLife.appealForm.sidebar.importantInfo.anonymous')}</li>
+                <li>• {t('studentLife.appealForm.sidebar.importantInfo.contactInfo')}</li>
+                <li>• {t('studentLife.appealForm.sidebar.importantInfo.processingTime')}</li>
+                <li>• {t('studentLife.appealForm.sidebar.importantInfo.confidential')}</li>
               </ul>
             </div>
           </div>

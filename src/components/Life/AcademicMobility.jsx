@@ -104,7 +104,7 @@ const AcademicMobility = () => {
         <div className="container mx-auto px-4 py-8">
           <div className="flex justify-center items-center h-64">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-            <span className="ml-3 text-lg text-gray-600">Загрузка данных...</span>
+            <span className="ml-3 text-lg text-gray-600">{t('studentLife.academicMobility.loading')}</span>
           </div>
         </div>
       </div>
@@ -116,13 +116,13 @@ const AcademicMobility = () => {
       <div className="min-h-screen pt-20">
         <div className="container mx-auto px-4 py-8">
           <div className="bg-red-50 border border-red-200 rounded-lg p-6">
-            <h3 className="text-lg font-semibold text-red-800 mb-2">Ошибка загрузки</h3>
+            <h3 className="text-lg font-semibold text-red-800 mb-2">{t('studentLife.academicMobility.error')}</h3>
             <p className="text-red-700 mb-4">{error}</p>
             <button 
               onClick={fetchAcademicMobilityData}
               className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
             >
-              Попробовать снова
+              {t('studentLife.academicMobility.tryAgain')}
             </button>
           </div>
         </div>
@@ -134,9 +134,9 @@ const AcademicMobility = () => {
     <div className="min-h-screen pt-20">
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Академическая мобильность</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">{t('studentLife.academicMobility.title')}</h1>
           <p className="text-lg text-gray-600">
-            Возможности международного обмена для студентов медицинского университета
+            {t('studentLife.academicMobility.subtitle')}
           </p>
         </div>
 
@@ -152,7 +152,7 @@ const AcademicMobility = () => {
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                 }`}
               >
-                Возможности обмена
+                {t('studentLife.academicMobility.tabs.opportunities')}
               </button>
               <button
                 onClick={() => setActiveTab('universities')}
@@ -162,7 +162,7 @@ const AcademicMobility = () => {
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                 }`}
               >
-                Университеты-партнеры
+                {t('studentLife.academicMobility.tabs.partners')}
               </button>
               <button
                 onClick={() => setActiveTab('requirements')}
@@ -172,7 +172,7 @@ const AcademicMobility = () => {
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                 }`}
               >
-                Условия участия
+                {t('studentLife.academicMobility.tabs.requirements')}
               </button>
             </nav>
           </div>
@@ -210,23 +210,23 @@ const AcademicMobility = () => {
             </div>
 
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-blue-900 mb-3">Как подать заявку</h3>
+              <h3 className="text-lg font-semibold text-blue-900 mb-3">{t('studentLife.academicMobility.applicationSteps.title')}</h3>
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-center">
                 <div className="space-y-2">
                   <div className="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold mx-auto">1</div>
-                  <p className="text-sm text-blue-800 font-medium">Выберите программу и университет</p>
+                  <p className="text-sm text-blue-800 font-medium">{t('studentLife.academicMobility.applicationSteps.step1')}</p>
                 </div>
                 <div className="space-y-2">
                   <div className="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold mx-auto">2</div>
-                  <p className="text-sm text-blue-800 font-medium">Подготовьте необходимые документы</p>
+                  <p className="text-sm text-blue-800 font-medium">{t('studentLife.academicMobility.applicationSteps.step2')}</p>
                 </div>
                 <div className="space-y-2">
                   <div className="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold mx-auto">3</div>
-                  <p className="text-sm text-blue-800 font-medium">Подайте заявку в отдел международных связей</p>
+                  <p className="text-sm text-blue-800 font-medium">{t('studentLife.academicMobility.applicationSteps.step3')}</p>
                 </div>
                 <div className="space-y-2">
                   <div className="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold mx-auto">4</div>
-                  <p className="text-sm text-blue-800 font-medium">Пройдите отбор и подготовку к поездке</p>
+                  <p className="text-sm text-blue-800 font-medium">{t('studentLife.academicMobility.applicationSteps.step4')}</p>
                 </div>
               </div>
             </div>
@@ -273,22 +273,22 @@ const AcademicMobility = () => {
                         <p className="text-gray-600">{university.duration}</p>
                       </div>
                       <div>
-                        <span className="font-medium text-gray-900">Язык обучения:</span>
+                        <span className="font-medium text-gray-900">{t('studentLife.academicMobility.universityCard.language')}:</span>
                         <p className="text-gray-600">{university.language}</p>
                       </div>
                     </div>
 
                     <div>
-                      <h4 className="font-medium text-gray-900 mb-1">Требования:</h4>
+                      <h4 className="font-medium text-gray-900 mb-1">{t('studentLife.academicMobility.universityCard.requirements')}:</h4>
                       <div className="text-sm text-gray-600 space-y-1">
                         <p>• GPA: {university.requirements.gpa}+</p>
-                        <p>• Языковой сертификат: {university.requirements.language_cert}</p>
-                        <p>• Рекомендательные письма: {university.requirements.recommendation}</p>
+                        <p>• {t('studentLife.academicMobility.universityCard.languageCert')}: {university.requirements.language_cert}</p>
+                        <p>• {t('studentLife.academicMobility.universityCard.recommendations')}: {university.requirements.recommendation}</p>
                       </div>
                     </div>
 
                     <div className="pt-3 border-t">
-                      <span className="font-medium text-gray-900">Контакт:</span>
+                      <span className="font-medium text-gray-900">{t('studentLife.academicMobility.universityCard.contact')}:</span>
                       <p className="text-sm text-blue-600">{university.contact_email}</p>
                     </div>
                   </div>
@@ -331,23 +331,23 @@ const AcademicMobility = () => {
             })}
 
             <div className="bg-orange-50 border border-orange-200 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-orange-800 mb-3">Важные даты</h3>
+              <h3 className="text-lg font-semibold text-orange-800 mb-3">{t('studentLife.academicMobility.importantDates.title')}</h3>
               <div className="space-y-2 text-orange-700">
-                <p>• <strong>Осенний семестр:</strong> Подача заявок до 15 мая</p>
-                <p>• <strong>Весенний семестр:</strong> Подача заявок до 15 октября</p>
-                <p>• <strong>Летние программы:</strong> Подача заявок до 15 марта</p>
-                <p>• <strong>Отбор и уведомление:</strong> В течение 4-6 недель после подачи документов</p>
+                <p>• <strong>{t('studentLife.academicMobility.importantDates.fall')}:</strong> {t('studentLife.academicMobility.importantDates.fallDeadline')}</p>
+                <p>• <strong>{t('studentLife.academicMobility.importantDates.spring')}:</strong> {t('studentLife.academicMobility.importantDates.springDeadline')}</p>
+                <p>• <strong>{t('studentLife.academicMobility.importantDates.summer')}:</strong> {t('studentLife.academicMobility.importantDates.summerDeadline')}</p>
+                <p>• <strong>{t('studentLife.academicMobility.importantDates.selection')}:</strong> {t('studentLife.academicMobility.importantDates.selectionTime')}</p>
               </div>
             </div>
 
             <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-3">Контактная информация</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-3">{t('studentLife.academicMobility.contact.title')}</h3>
               <div className="space-y-2 text-gray-700">
-                <p><strong>Отдел международных связей</strong></p>
+                <p><strong>{t('studentLife.academicMobility.contact.department')}</strong></p>
                 <p>Email: <a href="mailto:international@su.edu.kg" className="text-blue-600 hover:underline">international@su.edu.kg</a></p>
-                <p>Телефон: +996 312 123-456 (доб. 123)</p>
-                <p>Кабинет: Главный корпус, 2 этаж, каб. 201</p>
-                <p>Часы работы: Пн-Пт, 9:00-17:00</p>
+                <p>{t('studentLife.academicMobility.contact.phone')}: +996 312 123-456 (доб. 123)</p>
+                <p>{t('studentLife.academicMobility.contact.office')}: {t('studentLife.academicMobility.contact.officeLocation')}</p>
+                <p>{t('studentLife.academicMobility.contact.hours')}: {t('studentLife.academicMobility.contact.workingHours')}</p>
               </div>
             </div>
           </div>
