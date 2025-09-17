@@ -181,7 +181,8 @@ const Navbar = () => {
     contacts: {
       title: t('nav.contacts'),
       submenu: [
-        { title: t('nav.contacts'), link: '/contacts' }
+        { title: t('nav.contacts'), link: '/contacts' },
+        { title: t('nav.media'), link: '/media' },
       ]
     }
   };

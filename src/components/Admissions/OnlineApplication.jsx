@@ -1091,13 +1091,7 @@ ${data.firstName} ${data.lastName}
               ← {t('application.navigation.previous')}
             </button>
             
-            <button
-              onClick={saveDraft}
-              className="px-4 py-2 bg-yellow-500 text-white rounded-lg font-medium hover:bg-yellow-600 text-sm shadow-md"
-            >
-              💾 {t('application.navigation.saveDraft')}
-            </button>
-            
+           
             <button
               onClick={clearDraft}
               className="px-4 py-2 bg-red-500 text-white rounded-lg font-medium hover:bg-red-600 text-sm shadow-md"

@@ -264,7 +264,7 @@ const HeroSlider = () => {
                     src={imageUrl}
                     alt=""
                     className="absolute inset-0 w-full h-full object-cover z-50"
-                    style={{ border: '2px solid rgba(255,0,0,0.6)' }}
+                    
                     onError={() => handleImageError(index, imageUrl)}
                     onLoad={() => console.log(`Image loaded: ${imageUrl}`)}
                   />
