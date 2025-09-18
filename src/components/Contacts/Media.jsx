@@ -5,131 +5,119 @@ const Media = () => {
   const { t, i18n } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [articles, setArticles] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [dashboardStats, setDashboardStats] = useState(null);
+  const [error, setError] = useState(null);
 
-  // Данные о публикациях в СМИ
-  const mediaData = [
-    {
-      id: 1,
-      category: 'tv',
-      outlet: 'КТР',
-      title: {
-        ru: 'Салымбековский Университет открывает новый симуляционный центр',
-        en: 'Salymbekov University opens new simulation center',
-        kg: 'Салымбеков Университети жаңы симуляциялык борбор ачат'
-      },
-      description: {
-        ru: 'Репортаж о современном медицинском оборудовании в новом симуляционном центре университета',
-        en: 'Report on modern medical equipment in the university\'s new simulation center',
-        kg: 'Университеттин жаңы симуляциялык борборундагы заманбап медициналык жабдыктар жөнүндө репортаж'
-      },
-      date: '2024-11-15',
-      image: 'https://images.unsplash.com/photo-1582719471384-894e35a4b48f?w=400&h=250&fit=crop',
-      link: '#'
-    },
-    {
-      id: 2,
-      category: 'newspaper',
-      outlet: 'Вечерний Бишкек',
-      title: {
-        ru: 'Университет готовит высококвалифицированных медиков',
-        en: 'University trains highly qualified medical professionals',
-        kg: 'Университет жогорку квалификациялуу медиктерди даярдайт'
-      },
-      description: {
-        ru: 'Статья о качестве образования и достижениях выпускников Салымбековского Университета',
-        en: 'Article about education quality and achievements of Salymbekov University graduates',
-        kg: 'Салымбеков Университетинин бүтүрүүчүлөрүнүн жетишкендиктери жана билим берүүнүн сапаты жөнүндө макала'
-      },
-      date: '2024-11-10',
-      image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=400&h=250&fit=crop',
-      link: '#'
-    },
-    {
-      id: 3,
-      category: 'online',
-      outlet: '24.kg',
-      title: {
-        ru: 'Международное сотрудничество в медицинском образовании',
-        en: 'International cooperation in medical education',
-        kg: 'Медициналык билим берүүдөгү эл аралык кызматташтык'
-      },
-      description: {
-        ru: 'Материал о партнерстве университета с международными медицинскими организациями',
-        en: 'Article about university partnerships with international medical organizations',
-        kg: 'Университеттин эл аралык медициналык уюмдар менен өнөктөштүгү жөнүндө материал'
-      },
-      date: '2024-11-05',
-      image: 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=400&h=250&fit=crop',
-      link: '#'
-    },
-    {
-      id: 4,
-      category: 'radio',
-      outlet: 'Биринчи радио',
-      title: {
-        ru: 'Студенты-медики помогают в борьбе с эпидемиями',
-        en: 'Medical students help fight epidemics',
-        kg: 'Медик студенттер эпидемияларга каршы күрөшүүдө жардам беришет'
-      },
-      description: {
-        ru: 'Интервью с деканом о вкладе студентов в общественное здравоохранение',
-        en: 'Interview with the dean about students\' contribution to public health',
-        kg: 'Студенттердин коомдук саламаттыкка кошкон салымы жөнүндө декан менен маек'
-      },
-      date: '2024-10-28',
-      image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&h=250&fit=crop',
-      link: '#'
-    },
-    {
-      id: 5,
-      category: 'tv',
-      outlet: 'НТС',
-      title: {
-        ru: 'Выпускники университета работают по всему Кыргызстану',
-        en: 'University graduates work throughout Kyrgyzstan',
-        kg: 'Университеттин бүтүрүүчүлөрү бүткүл Кыргызстан боюнча иштешет'
-      },
-      description: {
-        ru: 'Сюжет о том, как выпускники укрепляют систему здравоохранения страны',
-        en: 'Story about how graduates strengthen the country\'s healthcare system',
-        kg: 'Бүтүрүүчүлөр өлкөнүн саламаттыкты сактоо системасын кантип күчөтүп жатканы жөнүндө сюжет'
-      },
-      date: '2024-10-20',
-      image: 'https://images.unsplash.com/photo-1551076805-e1869033e561?w=400&h=250&fit=crop',
-      link: '#'
-    },
-    {
-      id: 6,
-      category: 'online',
-      outlet: 'Kaktus.media',
-      title: {
-        ru: 'Инновации в медицинском образовании',
-        en: 'Innovations in medical education',
-        kg: 'Медициналык билим берүүдөгү инновациялар'
-      },
-      description: {
-        ru: 'Обзор современных методов обучения, применяемых в Салымбековском Университете',
-        en: 'Overview of modern teaching methods used at Salymbekov University',
-        kg: 'Салымбеков Университетинде колдонулган заманбап окутуу методдорунун көз жугуртуусу'
-      },
-      date: '2024-10-15',
-      image: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=250&fit=crop',
-      link: '#'
+  // API базовый URL
+  const API_BASE_URL = 'http://localhost:8000/api/media-coverage';
+
+  // Функции для работы с API
+  const fetchMediaArticles = async (categoryId = null) => {
+    try {
+      let url = `${API_BASE_URL}/articles/?page_size=20`;
+      if (categoryId && categoryId !== 'all') {
+        // Находим ID категории по slug
+        const categoryData = categories.find(cat => cat.slug === categoryId);
+        if (categoryData && categoryData.id !== 'all') {
+          url += `&category=${categoryData.id}`;
+        }
+      }
+      
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error('Ошибка при загрузке статей');
+      }
+      
+      const data = await response.json();
+      return data.results || [];
+    } catch (error) {
+      console.error('Error fetching articles:', error);
+      setError(error.message);
+      return [];
     }
-  ];
+  };
 
-  const categories = [
-    { id: 'all', name: { ru: 'Все', en: 'All', kg: 'Баары' }, icon: '📺' },
-    { id: 'tv', name: { ru: 'Телевидение', en: 'Television', kg: 'Телевидение' }, icon: '📺' },
-    { id: 'newspaper', name: { ru: 'Газеты', en: 'Newspapers', kg: 'Гезиттер' }, icon: '📰' },
-    { id: 'online', name: { ru: 'Интернет', en: 'Online', kg: 'Интернет' }, icon: '💻' },
-    { id: 'radio', name: { ru: 'Радио', en: 'Radio', kg: 'Радио' }, icon: '📻' }
-  ];
+  const fetchCategories = async () => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/categories/`);
+      if (!response.ok) {
+        throw new Error('Ошибка при загрузке категорий');
+      }
+      
+      const data = await response.json();
+      
+      // Добавляем категорию "Все" в начало списка
+      const allCategory = {
+        id: 'all',
+        slug: 'all',
+        name_ru: 'Все',
+        name_kg: 'Баары',
+        name_en: 'All',
+        icon: '📺'
+      };
+      
+      return [allCategory, ...data.results];
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+      setError(error.message);
+      return [];
+    }
+  };
+
+  const fetchDashboardStats = async () => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/dashboard/`);
+      if (!response.ok) {
+        throw new Error('Ошибка при загрузке статистики');
+      }
+      
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error fetching dashboard stats:', error);
+      setError(error.message);
+      return null;
+    }
+  };
 
   useEffect(() => {
-    // Имитация загрузки
-    setTimeout(() => setLoading(false), 1000);
-  }, []);
+    const loadData = async () => {
+      setLoading(true);
+      setError(null);
+      
+      try {
+        // Загружаем все данные параллельно
+        const [articles, categoriesData, stats] = await Promise.all([
+          fetchMediaArticles(selectedCategory),
+          fetchCategories(),
+          fetchDashboardStats()
+        ]);
+
+        setArticles(articles);
+        setCategories(categoriesData);
+        setDashboardStats(stats);
+      } catch (error) {
+        console.error('Error loading data:', error);
+        setError('Ошибка при загрузке данных');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadData();
+  }, [selectedCategory]);
+
+  // Обработчик смены категории
+  const handleCategoryChange = async (categorySlug) => {
+    setSelectedCategory(categorySlug);
+    setLoading(true);
+    
+    const articles = await fetchMediaArticles(categorySlug === 'all' ? null : categorySlug);
+    setArticles(articles);
+    setLoading(false);
+  };
 
   const getLocalizedContent = (content) => {
     if (typeof content === 'object') {
@@ -138,17 +126,71 @@ const Media = () => {
     return content;
   };
 
+  // Получение данных статистики из дашборда
+  const getStatsData = () => {
+    if (dashboardStats) {
+      // Подсчитываем статистику по категориям из articles_by_category
+      const categoryStats = dashboardStats.articles_by_category || {};
+      console.log('Dashboard stats:', dashboardStats);
+      console.log('Category stats:', categoryStats);
+      
+      const stats = {
+        tv: categoryStats['Телевидение'] || 0,
+        newspaper: categoryStats['Газеты'] || 0, 
+        online: categoryStats['Интернет'] || 0,
+        radio: categoryStats['Радио'] || 0,
+        magazine: categoryStats['Журналы'] || 0
+      };
+      
+      console.log('Calculated stats:', stats);
+      return stats;
+    }
+    
+    // Fallback данные, если API не доступен
+    return { tv: 0, newspaper: 0, online: 0, radio: 0, magazine: 0 };
+  };
+
+  // Функция для получения локализованного названия категории
+  const getCategoryName = (category) => {
+    const lang = i18n.language;
+    if (category.name_ru) {
+      return category[`name_${lang}`] || category.name_ru;
+    }
+    return getLocalizedContent(category.name);
+  };
+
+  // Функция для получения локализованного заголовка статьи
+  const getArticleTitle = (article) => {
+    const lang = i18n.language;
+    return article[`title_${lang}`] || article.title_ru || '';
+  };
+
+  // Функция для получения локализованного названия тега
+  const getTagName = (tag) => {
+    const lang = i18n.language;
+    if (tag.name_ru) {
+      return tag[`name_${lang}`] || tag.name_ru;
+    }
+    return getLocalizedContent(tag.name);
+  };
+
+  // Функция для получения локализованного описания статьи
+  const getArticleDescription = (article) => {
+    const lang = i18n.language;
+    return article[`description_${lang}`] || article.description_ru || '';
+  };
+
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const options = { day: 'numeric', month: 'long', year: 'numeric' };
     return date.toLocaleDateString(i18n.language === 'kg' ? 'ky-KG' : i18n.language, options);
   };
 
-  const filteredMedia = selectedCategory === 'all' 
-    ? mediaData 
-    : mediaData.filter(item => item.category === selectedCategory);
-
   const getCategoryIcon = (category) => {
+    if (typeof category === 'object' && category.icon) {
+      return category.icon;
+    }
+    // Fallback для старых данных
     switch (category) {
       case 'tv': return '📺';
       case 'newspaper': return '📰';
@@ -163,7 +205,41 @@ const Media = () => {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600 text-lg">Загрузка медиа-материалов...</p>
+          <p className="text-gray-600 text-lg">
+            {getLocalizedContent({
+              ru: 'Загрузка медиа-материалов...',
+              en: 'Loading media materials...',
+              kg: 'Медиа материалдар жүктөлүүдө...'
+            })}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-red-500 text-6xl mb-4">⚠️</div>
+          <h2 className="text-2xl font-bold text-gray-800 mb-2">
+            {getLocalizedContent({
+              ru: 'Ошибка загрузки',
+              en: 'Loading Error',
+              kg: 'Жүктөө катасы'
+            })}
+          </h2>
+          <p className="text-gray-600 mb-4">{error}</p>
+          <button 
+            onClick={() => window.location.reload()}
+            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            {getLocalizedContent({
+              ru: 'Обновить страницу',
+              en: 'Refresh page',
+              kg: 'Барактын жаңыртуу'
+            })}
+          </button>
         </div>
       </div>
     );
@@ -195,9 +271,9 @@ const Media = () => {
               </svg>
               <span>
                 {getLocalizedContent({
-                  ru: 'Более 50 публикаций за последний год',
-                  en: 'Over 50 publications in the last year',
-                  kg: 'Акыркы жылда 50дон ашык жарыялоо'
+                  ru: `${dashboardStats?.total_articles || 30} публикаций за последний год`,
+                  en: `${dashboardStats?.total_articles || 30} publications in the last year`,
+                  kg: `Акыркы жылда ${dashboardStats?.total_articles || 30} жарыялоо`
                 })}
               </span>
             </div>
@@ -211,15 +287,15 @@ const Media = () => {
           {categories.map((category) => (
             <button
               key={category.id}
-              onClick={() => setSelectedCategory(category.id)}
+              onClick={() => handleCategoryChange(category.slug || category.id)}
               className={`flex items-center px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
-                selectedCategory === category.id
+                selectedCategory === (category.slug || category.id)
                   ? 'bg-blue-600 text-white shadow-lg transform scale-105'
                   : 'bg-white text-gray-700 hover:bg-blue-50 hover:text-blue-600 shadow-md'
               }`}
             >
-              <span className="mr-2 text-lg">{category.icon}</span>
-              {getLocalizedContent(category.name)}
+              <span className="mr-2 text-lg">{getCategoryIcon(category)}</span>
+              {getCategoryName(category)}
             </button>
           ))}
         </div>
@@ -227,7 +303,7 @@ const Media = () => {
         {/* Статистика */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
           <div className="bg-white rounded-xl p-6 text-center shadow-md">
-            <div className="text-3xl font-bold text-blue-600 mb-2">25+</div>
+            <div className="text-3xl font-bold text-blue-600 mb-2">{getStatsData().tv}+</div>
             <div className="text-gray-600">
               {getLocalizedContent({
                 ru: 'ТВ сюжетов',
@@ -237,7 +313,7 @@ const Media = () => {
             </div>
           </div>
           <div className="bg-white rounded-xl p-6 text-center shadow-md">
-            <div className="text-3xl font-bold text-green-600 mb-2">15+</div>
+            <div className="text-3xl font-bold text-green-600 mb-2">{getStatsData().newspaper}+</div>
             <div className="text-gray-600">
               {getLocalizedContent({
                 ru: 'Статей в прессе',
@@ -247,7 +323,7 @@ const Media = () => {
             </div>
           </div>
           <div className="bg-white rounded-xl p-6 text-center shadow-md">
-            <div className="text-3xl font-bold text-purple-600 mb-2">20+</div>
+            <div className="text-3xl font-bold text-purple-600 mb-2">{getStatsData().online}+</div>
             <div className="text-gray-600">
               {getLocalizedContent({
                 ru: 'Онлайн публикаций',
@@ -257,7 +333,7 @@ const Media = () => {
             </div>
           </div>
           <div className="bg-white rounded-xl p-6 text-center shadow-md">
-            <div className="text-3xl font-bold text-orange-600 mb-2">10+</div>
+            <div className="text-3xl font-bold text-orange-600 mb-2">{getStatsData().radio}+</div>
             <div className="text-gray-600">
               {getLocalizedContent({
                 ru: 'Радио интервью',
@@ -269,60 +345,105 @@ const Media = () => {
         </div>
 
         {/* Список медиа-материалов */}
+        {/* Статьи */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredMedia.map((item) => (
-            <div key={item.id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-              {/* Изображение */}
-              <div className="relative">
+          {articles.map((article) => (
+            <div key={article.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              {/* Изображение или тип медиа */}
+              {article.image ? (
                 <img 
-                  src={item.image} 
-                  alt={getLocalizedContent(item.title)}
+                  src={`http://localhost:8000${article.image}`} 
+                  alt={article.title}
                   className="w-full h-48 object-cover"
                 />
-                {/* Тип медиа */}
-                <div className="absolute top-4 left-4">
-                  <span className="bg-black bg-opacity-70 text-white px-3 py-1 rounded-full text-sm font-semibold flex items-center">
-                    <span className="mr-1">{getCategoryIcon(item.category)}</span>
-                    {item.outlet}
-                  </span>
+              ) : (
+                <div className="bg-gradient-to-br from-blue-500 to-blue-700 h-48 flex items-center justify-center">
+                  <div className="text-center text-white">
+                    <div className="text-4xl mb-2">
+                      {article.outlet?.outlet_type === 'tv' && '📺'}
+                      {article.outlet?.outlet_type === 'newspaper' && '📰'}
+                      {article.outlet?.outlet_type === 'online' && '💻'}
+                      {article.outlet?.outlet_type === 'radio' && '📻'}
+                      {!article.outlet?.outlet_type && '📰'}
+                    </div>
+                    <div className="font-semibold text-lg">
+                      {article.outlet ? getLocalizedContent({
+                        ru: article.outlet.name_ru,
+                        kg: article.outlet.name_kg,
+                        en: article.outlet.name_en
+                      }) : 'Media Outlet'}
+                    </div>
+                  </div>
                 </div>
-                {/* Дата */}
-                <div className="absolute bottom-4 right-4">
-                  <span className="bg-white bg-opacity-90 text-gray-800 px-3 py-1 rounded-full text-sm font-semibold">
-                    {formatDate(item.date)}
-                  </span>
-                </div>
-              </div>
-
+              )}
+              
               {/* Контент */}
               <div className="p-6">
                 <h3 className="text-xl font-bold text-gray-800 mb-3 line-clamp-2">
-                  {getLocalizedContent(item.title)}
+                  {getLocalizedContent({
+                    ru: article.title_ru,
+                    kg: article.title_kg,
+                    en: article.title_en
+                  })}
                 </h3>
                 <p className="text-gray-600 mb-4 line-clamp-3">
-                  {getLocalizedContent(item.description)}
+                  {getLocalizedContent({
+                    ru: article.description_ru,
+                    kg: article.description_kg,
+                    en: article.description_en
+                  })}
                 </p>
+                
+                {/* Теги */}
+                {article.tags && article.tags.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {article.tags.map((tag) => (
+                      <span key={tag.id} className="px-2 py-1 bg-blue-100 text-blue-600 text-xs rounded-full">
+                        {getTagName(tag)}
+                      </span>
+                    ))}
+                  </div>
+                )}
+                
+                {/* Дата публикации */}
+                <div className="text-sm text-gray-500 mb-4">
+                  {new Date(article.publication_date || article.created_at).toLocaleDateString(
+                    i18n.language === 'ru' ? 'ru-RU' : 
+                    i18n.language === 'kg' ? 'ky-KG' : 'en-US'
+                  )}
+                </div>
                 
                 {/* Кнопка просмотра */}
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-gray-500 font-medium">
-                    {item.outlet}
+                    {article.outlet ? getLocalizedContent({
+                      ru: article.outlet.name_ru,
+                      kg: article.outlet.name_kg,
+                      en: article.outlet.name_en
+                    }) : 'Источник'}
                   </span>
-                  <a 
-                    href={item.link}
-                    className="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold transition-colors"
-                  >
-                    <span>
-                      {getLocalizedContent({
-                        ru: 'Читать',
-                        en: 'Read',
-                        kg: 'Окуу'
-                      })}
-                    </span>
-                    <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
-                    </svg>
-                  </a>
+                  <div className="flex gap-2">
+                    {article.original_url && (
+                      <a 
+                        href={article.original_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold transition-colors text-sm"
+                      >
+                        <span>
+                          {getLocalizedContent({
+                            ru: 'Источник',
+                            en: 'Source',
+                            kg: 'Булак'
+                          })}
+                        </span>
+                        <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                      </a>
+                    )}
+                    
+                  </div>
                 </div>
               </div>
             </div>
