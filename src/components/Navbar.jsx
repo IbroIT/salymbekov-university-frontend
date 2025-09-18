@@ -121,8 +121,6 @@ const Navbar = () => {
             { title: t('nav.for_foreign_citizens'), link: '/admissions/tuition/foreign-citizens' },
           ]
         },
-        { title: t('nav.admission_process'), link: '/admissions/process' },
-        { title: t('nav.faq'), link: '/admissions/faq' },
       ]
     },
     infrastructure: {
