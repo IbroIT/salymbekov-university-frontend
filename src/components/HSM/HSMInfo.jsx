@@ -1,219 +1,340 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { getHSMInfo, getLocalizedText } from '../../data/hsmData';
+import { 
+  AcademicCapIcon, 
+  UserGroupIcon, 
+  DocumentCheckIcon, 
+  ChartBarIcon,
+  ArrowTopRightOnSquareIcon,
+  BuildingLibraryIcon,
+  ClockIcon,
+  TrophyIcon,
+  HeartIcon
+} from '@heroicons/react/24/outline';
 
 const HSMInfo = () => {
   const { t, i18n } = useTranslation();
   const [hsmInfo, setHsmInfo] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Используем локальные данные
-    const data = getHSMInfo();
-    setHsmInfo(data);
-    setLoading(false);
+    try {
+      const loadData = async () => {
+        setLoading(true);
+        await new Promise(resolve => setTimeout(resolve, 800));
+        const data = getHSMInfo();
+        
+        if (!data) {
+          throw new Error('Failed to load HSM data');
+        }
+        
+        setHsmInfo(data);
+        setLoading(false);
+      };
+      
+      loadData();
+    } catch (err) {
+      setError(err.message);
+      setLoading(false);
+    }
   }, []);
 
-  // Обновляем заголовок страницы
-  useEffect(() => {
-    if (hsmInfo) {
-      const title = getLocalizedText(hsmInfo, 'title', i18n.language);
-      document.title = `${title} - Салымбеков Университет`;
-    }
+  const localizedData = useMemo(() => {
+    if (!hsmInfo) return null;
+    
+    return {
+      title: getLocalizedText(hsmInfo, 'title', i18n.language),
+      description: getLocalizedText(hsmInfo, 'description', i18n.language),
+      history: getLocalizedText(hsmInfo, 'history', i18n.language),
+      mainDirections: getLocalizedText(hsmInfo, 'main_directions', i18n.language)
+    };
   }, [hsmInfo, i18n.language]);
+
+  useEffect(() => {
+    if (localizedData?.title) {
+      document.title = `${localizedData.title} - Салымбеков Университет`;
+    }
+  }, [localizedData?.title]);
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  const quickLinks = [
+    {
+      URL: "https://storage.yandexcloud.net/mdschool1/a1706028859740-picture",
+      icon: <AcademicCapIcon className="w-6 h-6" />,
+      title: t('hsm.programs', 'Программы'),
+      description: t('hsm.view_programs', 'Ознакомьтесь с нашими образовательными программами'),
+      color: "blue"
+    },
+    {
+      href: "/hsm/AS",
+      icon: <UserGroupIcon className="w-6 h-6" />,
+      title: t('hsm.faculty', 'Преподаватели'),
+      description: t('hsm.meet_faculty', 'Познакомьтесь с нашими преподавателями'),
+      color: "green"
+    },
+    {
+      href: "/hsm/accreditation",
+      icon: <DocumentCheckIcon className="w-6 h-6" />,
+      title: t('hsm.accreditation', 'Аккредитация'),
+      description: t('hsm.view_accreditation', 'Наши аккредитации и сертификаты'),
+      color: "purple"
+    },
+    {
+      href: "/hsm/learning-goals",
+      icon: <ChartBarIcon className="w-6 h-6" />,
+      title: t('hsm.learning_goals', 'Цели обучения'),
+      description: t('hsm.view_goals', 'Цели и результаты обучения'),
+      color: "orange"
+    }
+  ];
+
+  const renderFormattedText = (text) => {
+    return text.split('\n').map((paragraph, index) => {
+      if (!paragraph.trim()) return null;
+      
+      if (paragraph.trim().startsWith('•')) {
+        return (
+          <div key={index} className="flex items-start mb-2">
+            <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+            <span className="text-gray-700">{paragraph.replace('•', '').trim()}</span>
+          </div>
+        );
+      }
+      
+      if (paragraph.trim().endsWith(':')) {
+        return (
+          <p key={index} className="mb-4 font-semibold text-gray-900 text-lg">
+            {paragraph}
+          </p>
+        );
+      }
+      
+      return (
+        <p key={index} className="mb-4 text-gray-700 leading-relaxed">
+          {paragraph}
+        </p>
+      );
+    });
+  };
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 pt-24">
+      <div className="min-h-screen bg-gradient-to-b from-blue-50 to-gray-50 pt-24">
         <div className="container mx-auto px-4">
-          <div className="flex justify-center items-center h-64">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+          <div className="flex justify-center items-center h-96">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-center"
+            >
+              <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto mb-4"></div>
+              <p className="text-gray-600">{t('common.loading', 'Загрузка...')}</p>
+            </motion.div>
           </div>
         </div>
       </div>
     );
   }
 
-  if (!hsmInfo) {
+  if (error || !hsmInfo) {
     return (
-      <div className="min-h-screen bg-gray-50 pt-24">
+      <div className="min-h-screen bg-gradient-to-b from-blue-50 to-gray-50 pt-24">
         <div className="container mx-auto px-4">
-          <div className="text-center py-12">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t('hsm.error')}</h2>
-            <p className="text-gray-600">{t('hsm.no_data')}</p>
-          </div>
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center py-16"
+          >
+            <div className="bg-white rounded-xl shadow-lg p-8 max-w-md mx-auto">
+              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">{t('hsm.error', 'Ошибка')}</h2>
+              <p className="text-gray-600 mb-6">{t('hsm.no_data', 'Не удалось загрузить информацию')}</p>
+              <button 
+                onClick={() => window.location.reload()}
+                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                {t('common.try_again', 'Попробовать снова')}
+              </button>
+            </div>
+          </motion.div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-24">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-gray-50 pt-24">
       <div className="container mx-auto px-4 py-8">
-        {/* Header */}
+        {/* Header с фоновым изображением */}
         <motion.div
-          className="text-center mb-12"
+          className="text-center mb-16 relative overflow-hidden rounded-2xl bg-blue-900 py-16 px-4 shadow-xl"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.7 }}
         >
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            {getLocalizedText(hsmInfo, 'title', i18n.language)}
-          </h1>
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-700 to-purple-600 opacity-90"></div>
+          <div className="absolute inset-0 bg-pattern opacity-10"></div>
+          <div className="relative z-10">
+            <motion.h1 
+              className="text-5xl font-bold text-white mb-6"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+            >
+              {localizedData.title}
+            </motion.h1>
+            <motion.div 
+              className="w-24 h-1 bg-white mx-auto rounded-full"
+              initial={{ width: 0 }}
+              animate={{ width: 96 }}
+              transition={{ delay: 0.5, duration: 0.8 }}
+            ></motion.div>
+          </div>
         </motion.div>
 
-        <div className="max-w-4xl mx-auto space-y-8">
-          {/* Description Section */}
-          <motion.div
-            className="bg-white rounded-lg shadow-lg p-8"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+        <div className="max-w-5xl mx-auto space-y-16">
+          {/* Description Section с изображением */}
+          <motion.section
+            className="bg-white rounded-2xl shadow-xl overflow-hidden"
+            variants={itemVariants}
+            initial="hidden"
+            animate="visible"
           >
-            <h2 className="text-2xl font-bold text-gray-900 mb-4 border-b-2 border-blue-600 pb-2">
-              {t('hsm.about_hsm', 'О Высшей медицинской школе')}
-            </h2>
-            <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
-              {getLocalizedText(hsmInfo, 'description', i18n.language).split('\n').map((paragraph, index) => (
-                paragraph.trim() && (
-                  <p key={index} className="mb-4">
-                    {paragraph}
-                  </p>
-                )
-              ))}
+            <div className="md:flex">
+              <div className="md:w-2/3 p-8 md:p-10">
+                <div className="flex items-center mb-6">
+                  <div className="w-3 h-8 bg-blue-600 rounded-full mr-4"></div>
+                  <h2 className="text-3xl font-bold text-gray-900">
+                    {t('hsm.about_hsm', 'О Высшей медицинской школе')}
+                  </h2>
+                </div>
+                <div className="prose prose-lg max-w-none text-gray-700">
+                  {renderFormattedText(localizedData.description)}
+                </div>
+              </div>
+              <div className="md:w-1/3 p-6 flex items-center justify-center bg-blue-50">
+              <img src="https://storage.yandexcloud.net/mdschool1/a1706028859740-picture" alt="" />
+              </div>
             </div>
-          </motion.div>
+          </motion.section>
 
-          {/* History Section */}
-          <motion.div
-            className="bg-white rounded-lg shadow-lg p-8"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+          {/* History Section с изображением */}
+          <motion.section
+            className="bg-white rounded-2xl shadow-xl overflow-hidden"
+            variants={itemVariants}
+            initial="hidden"
+            animate="visible"
+            transition={{ delay: 0.1 }}
           >
-            <h2 className="text-2xl font-bold text-gray-900 mb-4 border-b-2 border-blue-600 pb-2">
-              {t('hsm.history', 'История')}
-            </h2>
-            <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
-              {getLocalizedText(hsmInfo, 'history', i18n.language).split('\n').map((paragraph, index) => (
-                paragraph.trim() && (
-                  <p key={index} className="mb-4">
-                    {paragraph}
-                  </p>
-                )
-              ))}
+            <div className="md:flex flex-row-reverse">
+              <div className="md:w-2/3 p-8 md:p-10">
+                <div className="flex items-center mb-6">
+                  <div className="w-3 h-8 bg-green-600 rounded-full mr-4"></div>
+                  <h2 className="text-3xl font-bold text-gray-900">
+                    {t('hsm.history', 'История')}
+                  </h2>
+                </div>
+                <div className="prose prose-lg max-w-none text-gray-700">
+                  {renderFormattedText(localizedData.history)}
+                </div>
+              </div>
+              <div className="md:w-1/3 p-6 flex items-center justify-center bg-green-50">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Rembrandt_Harmensz._van_Rijn_007.jpg/250px-Rembrandt_Harmensz._van_Rijn_007.jpg" alt="" />
+              </div>
             </div>
-          </motion.div>
+          </motion.section>
 
-          {/* Main Directions Section */}
-          <motion.div
-            className="bg-white rounded-lg shadow-lg p-8"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+          {/* Main Directions Section с изображением */}
+          <motion.section
+            className="bg-white rounded-2xl shadow-xl overflow-hidden"
+            variants={itemVariants}
+            initial="hidden"
+            animate="visible"
+            transition={{ delay: 0.2 }}
           >
-            <h2 className="text-2xl font-bold text-gray-900 mb-4 border-b-2 border-blue-600 pb-2">
-              {t('hsm.main_directions', 'Основные направления')}
-            </h2>
-            <div className="prose prose-lg max-w-none text-gray-700">
-              {getLocalizedText(hsmInfo, 'main_directions', i18n.language).split('\n').map((line, index) => {
-                if (line.trim().startsWith('•')) {
-                  return (
-                    <div key={index} className="flex items-start mb-2">
-                      <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                      <span>{line.replace('•', '').trim()}</span>
-                    </div>
-                  );
-                } else if (line.trim()) {
-                  return (
-                    <p key={index} className="mb-4 font-semibold">
-                      {line}
-                    </p>
-                  );
-                }
-                return null;
-              })}
+            <div className="md:flex">
+              <div className="md:w-2/3 p-8 md:p-10">
+                <div className="flex items-center mb-6">
+                  <div className="w-3 h-8 bg-purple-600 rounded-full mr-4"></div>
+                  <h2 className="text-3xl font-bold text-gray-900">
+                    {t('hsm.main_directions', 'Основные направления')}
+                  </h2>
+                </div>
+                <div className="prose prose-lg max-w-none text-gray-700">
+                  {renderFormattedText(localizedData.mainDirections)}
+                </div>
+              </div>
+              <div className="md:w-1/3 p-6 flex items-center justify-center bg-purple-50">
+                <img src="https://cf2.ppt-online.org/files2/slide/5/5uVIEeArX2cWFtsiyOSq9hNGfCxK0zMB7gYwDoRZPQ/slide-25.jpg" alt="" />
+              </div>
             </div>
-          </motion.div>
+          </motion.section>
 
           {/* Quick Links */}
           <motion.div
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
           >
-            <a
-              href="/hsm/programs"
-              className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow duration-300 text-center group"
-            >
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-200 transition-colors">
-                <svg className="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                {t('hsm.programs', 'Программы')}
-              </h3>
-              <p className="text-gray-600 text-sm">
-                {t('hsm.view_programs', 'Ознакомьтесь с нашими образовательными программами')}
-              </p>
-            </a>
-
-            <a
-              href="/hsm/AS"
-              className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow duration-300 text-center group"
-            >
-              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-green-200 transition-colors">
-                <svg className="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                {t('hsm.faculty', 'Преподаватели')}
-              </h3>
-              <p className="text-gray-600 text-sm">
-                {t('hsm.meet_faculty', 'Познакомьтесь с нашими преподавателями')}
-              </p>
-            </a>
-
-            <a
-              href="/hsm/accreditation"
-              className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow duration-300 text-center group"
-            >
-              <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-purple-200 transition-colors">
-                <svg className="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                {t('hsm.accreditation', 'Аккредитация')}
-              </h3>
-              <p className="text-gray-600 text-sm">
-                {t('hsm.view_accreditation', 'Наши аккредитации и сертификаты')}
-              </p>
-            </a>
-
-            <a
-              href="/hsm/learning-goals"
-              className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow duration-300 text-center group"
-            >
-              <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-orange-200 transition-colors">
-                <svg className="w-6 h-6 text-orange-600" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                {t('hsm.learning_goals', 'Цели обучения')}
-              </h3>
-              <p className="text-gray-600 text-sm">
-                {t('hsm.view_goals', 'Цели и результаты обучения')}
-              </p>
-            </a>
+            {quickLinks.map((link, index) => (
+              <motion.a
+                key={index}
+                href={link.href}
+                className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 group hover:-translate-y-1"
+                variants={itemVariants}
+                whileHover={{ scale: 1.02 }}
+              >
+                <div className={`w-12 h-12 bg-${link.color}-100 rounded-xl flex items-center justify-center mb-4 group-hover:bg-${link.color}-200 transition-colors`}>
+                  {link.icon}
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2 flex items-center">
+                  {link.title}
+                  <ArrowTopRightOnSquareIcon className="w-4 h-4 ml-2 opacity-0 group-hover:opacity-100 transition-opacity" />
+                </h3>
+                <p className="text-gray-600 text-sm">
+                  {link.description}
+                </p>
+              </motion.a>
+            ))}
           </motion.div>
         </div>
       </div>
+
+      {/* Стили для фонового паттерна */}
+      <style jsx>{`
+        .bg-pattern {
+          background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+      `}</style>
     </div>
   );
 };

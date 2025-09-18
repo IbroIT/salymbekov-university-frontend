@@ -1,109 +1,226 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { getLearningGoals, getLocalizedText } from '../../data/hsmData';
 
-const LearningGoalCard = ({ goal, language }) => {
+// Новые компоненты для улучшенного UI
+const AnimatedSection = ({ children, delay = 0 }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5, delay }}
+  >
+    {children}
+  </motion.div>
+);
+
+const IconWrapper = ({ children, color }) => (
+  <div className={`p-2 rounded-full bg-${color}-100`}>
+    {React.cloneElement(children, { 
+      className: `w-5 h-5 text-${color}-600 ${children.props.className || ''}` 
+    })}
+  </div>
+);
+
+const LearningGoalCard = ({ goal, language, index }) => {
   const { t } = useTranslation();
+  const [isExpanded, setIsExpanded] = useState(false);
   
-  const getTitle = () => {
-    return getLocalizedText(goal, 'title', language);
-  };
-
-  const getDescription = () => {
-    return getLocalizedText(goal, 'description', language);
-  };
-
-  const getCompetencies = () => {
-    return getLocalizedText(goal, 'competencies', language);
-  };
-
-  const getCareerProspects = () => {
-    return getLocalizedText(goal, 'career_prospects', language);
-  };
+  // Мемоизируем значения для производительности
+  const title = useMemo(() => getLocalizedText(goal, 'title', language), [goal, language]);
+  const description = useMemo(() => getLocalizedText(goal, 'description', language), [goal, language]);
+  const competencies = useMemo(() => getLocalizedText(goal, 'competencies', language), [goal, language]);
+  const careerProspects = useMemo(() => getLocalizedText(goal, 'career_prospects', language), [goal, language]);
 
   return (
     <motion.div
-      className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow duration-300"
-      whileHover={{ y: -5 }}
-      initial={{ opacity: 0, y: 20 }}
+      className="bg-white rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all duration-300 border border-gray-100 overflow-hidden"
+      whileHover={{ y: -8, scale: 1.01 }}
+      initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
+      transition={{ duration: 0.4, delay: index * 0.1 }}
+      layout
     >
-      {/* Header */}
-      <div className="mb-4">
-        <h3 className="text-xl font-bold text-gray-900 mb-2">
-          {getTitle()}
+      {/* Header с возможностью развернуть/свернуть */}
+      <motion.div 
+        className="flex justify-between items-start cursor-pointer mb-4"
+        onClick={() => setIsExpanded(!isExpanded)}
+        layout
+      >
+        <h3 className="text-xl font-bold text-gray-900 pr-4">
+          {title}
         </h3>
-      </div>
+        <motion.button
+          whileTap={{ scale: 0.95 }}
+          className="p-1 text-gray-500 hover:text-blue-600 transition-colors"
+          aria-label={isExpanded ? t('common.collapse') : t('common.expand')}
+        >
+          <motion.svg
+            animate={{ rotate: isExpanded ? 180 : 0 }}
+            className="w-6 h-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </motion.svg>
+        </motion.button>
+      </motion.div>
 
-      {/* Description */}
-      {getDescription() && (
-        <div className="mb-4">
-          <h4 className="font-semibold text-gray-800 mb-2 flex items-center">
-            <svg className="w-5 h-5 text-blue-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-            </svg>
-            {t('hsm.description', 'Описание')}
-          </h4>
-          <p className="text-gray-600 leading-relaxed">
-            {getDescription()}
-          </p>
-        </div>
-      )}
+      <AnimatePresence>
+        {isExpanded && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            {/* Description */}
+            {description && (
+              <AnimatedSection delay={0.1}>
+                <div className="mb-5">
+                  <h4 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
+                    <IconWrapper color="blue">
+                      <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                      </svg>
+                    </IconWrapper>
+                    {t('hsm.description', 'Описание')}
+                  </h4>
+                  <p className="text-gray-600 leading-relaxed pl-9">
+                    {description}
+                  </p>
+                </div>
+              </AnimatedSection>
+            )}
 
-      {/* Competencies */}
-      {getCompetencies() && (
-        <div className="mb-4">
-          <h4 className="font-semibold text-gray-800 mb-2 flex items-center">
-            <svg className="w-5 h-5 text-green-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-            </svg>
-            {t('hsm.competencies', 'Компетенции')}
-          </h4>
-          <p className="text-gray-600 leading-relaxed">
-            {getCompetencies()}
-          </p>
-        </div>
-      )}
+            {/* Competencies */}
+            {competencies && (
+              <AnimatedSection delay={0.2}>
+                <div className="mb-5">
+                  <h4 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
+                    <IconWrapper color="green">
+                      <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                    </IconWrapper>
+                    {t('hsm.competencies', 'Компетенции')}
+                  </h4>
+                  <p className="text-gray-600 leading-relaxed pl-9">
+                    {competencies}
+                  </p>
+                </div>
+              </AnimatedSection>
+            )}
 
-      {/* Career Prospects */}
-      {getCareerProspects() && (
-        <div className="mb-4">
-          <h4 className="font-semibold text-gray-800 mb-2 flex items-center">
-            <svg className="w-5 h-5 text-purple-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clipRule="evenodd" />
-              <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z" />
-            </svg>
-            {t('hsm.career_prospects', 'Карьерные перспективы')}
-          </h4>
-          <p className="text-gray-600 leading-relaxed">
-            {getCareerProspects()}
-          </p>
-        </div>
-      )}
+            {/* Career Prospects */}
+            {careerProspects && (
+              <AnimatedSection delay={0.3}>
+                <div className="mb-5">
+                  <h4 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
+                    <IconWrapper color="purple">
+                      <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clipRule="evenodd" />
+                        <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z" />
+                      </svg>
+                    </IconWrapper>
+                    {t('hsm.career_prospects', 'Карьерные перспективы')}
+                  </h4>
+                  <p className="text-gray-600 leading-relaxed pl-9">
+                    {careerProspects}
+                  </p>
+                </div>
+              </AnimatedSection>
+            )}
 
-      {/* Related Programs */}
-      {goal.programs && goal.programs.length > 0 && (
-        <div className="pt-4 border-t border-gray-200">
-          <h4 className="font-semibold text-gray-800 mb-2 flex items-center">
-            <svg className="w-5 h-5 text-orange-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            {t('hsm.related_programs', 'Связанные программы')}
-          </h4>
-          <div className="flex flex-wrap gap-2">
-            {goal.programs.map((program) => (
-              <span
-                key={program.id}
-                className="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full"
-              >
-                {program.name}
-              </span>
-            ))}
-          </div>
-        </div>
-      )}
+            {/* Related Programs */}
+            {goal.programs && goal.programs.length > 0 && (
+              <AnimatedSection delay={0.4}>
+                <div className="pt-5 border-t border-gray-200">
+                  <h4 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
+                    <IconWrapper color="orange">
+                      <svg fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </IconWrapper>
+                    {t('hsm.related_programs', 'Связанные программы')}
+                  </h4>
+                  <div className="flex flex-wrap gap-2 pl-9">
+                    {goal.programs.map((program) => (
+                      <motion.span
+                        key={program.id}
+                        whileHover={{ scale: 1.05 }}
+                        className="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full font-medium transition-colors hover:bg-blue-200"
+                      >
+                        {program.name}
+                      </motion.span>
+                    ))}
+                  </div>
+                </div>
+              </AnimatedSection>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Кнопка для развертывания/свертывания внизу карточки */}
+      <motion.div 
+        className="flex justify-center mt-4 pt-3 border-t border-gray-100"
+        layout
+      >
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => setIsExpanded(!isExpanded)}
+          className="flex items-center text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors"
+        >
+          {isExpanded ? t('common.show_less') : t('common.show_more')}
+          <motion.svg
+            animate={{ rotate: isExpanded ? 180 : 0 }}
+            className="w-4 h-4 ml-1"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </motion.svg>
+        </motion.button>
+      </motion.div>
+    </motion.div>
+  );
+};
+
+// Новый компонент для фильтрации
+const LearningGoalsFilter = ({ filters, setFilters, t }) => {
+  const filterOptions = [
+    { id: 'all', label: t('hsm.filters.all', 'Все') },
+    { id: 'technical', label: t('hsm.filters.technical', 'Технические') },
+    { id: 'management', label: t('hsm.filters.management', 'Управленческие') },
+    { id: 'design', label: t('hsm.filters.design', 'Дизайн') },
+  ];
+
+  return (
+    <motion.div 
+      className="flex flex-wrap justify-center gap-3 mb-10"
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+    >
+      {filterOptions.map((option) => (
+        <motion.button
+          key={option.id}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => setFilters(option.id)}
+          className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+            filters === option.id
+              ? 'bg-blue-600 text-white shadow-md'
+              : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+          }`}
+        >
+          {option.label}
+        </motion.button>
+      ))}
     </motion.div>
   );
 };
@@ -112,20 +229,47 @@ const HSMLearningGoals = () => {
   const { t, i18n } = useTranslation();
   const [learningGoals, setLearningGoals] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
-    // Используем локальные данные
-    const data = getLearningGoals();
-    setLearningGoals(data);
-    setLoading(false);
+    // Имитация загрузки данных с небольшей задержкой
+    const loadData = async () => {
+      setLoading(true);
+      try {
+        // Имитация задержки сети
+        await new Promise(resolve => setTimeout(resolve, 800));
+        const data = getLearningGoals();
+        setLearningGoals(data);
+      } catch (error) {
+        console.error('Error loading learning goals:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadData();
   }, []);
+
+  // Фильтрация и поиск
+  const filteredGoals = useMemo(() => {
+  return learningGoals.filter(goal => {
+    return searchQuery === '' || 
+      getLocalizedText(goal, 'title', i18n.language).toLowerCase().includes(searchQuery.toLowerCase()) ||
+      getLocalizedText(goal, 'description', i18n.language).toLowerCase().includes(searchQuery.toLowerCase());
+  });
+}, [learningGoals, searchQuery, i18n.language]);
+
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 pt-24">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 pt-24">
         <div className="container mx-auto px-4">
           <div className="flex justify-center items-center h-64">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+              className="rounded-full h-12 w-12 border-b-2 border-blue-600"
+            ></motion.div>
           </div>
         </div>
       </div>
@@ -133,67 +277,123 @@ const HSMLearningGoals = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-24">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 pt-24">
       <div className="container mx-auto px-4 py-8">
-        {/* Header */}
+        {/* Header с анимацией */}
         <motion.div
           className="text-center mb-12"
-          initial={{ opacity: 0, y: -20 }}
+          initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.7, type: "spring" }}
         >
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+          <motion.h1 
+            className="text-4xl md:text-5xl font-bold text-gray-900 mb-4"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
             {t('hsm.learning_goals_title', 'Цели и результаты обучения')}
-          </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          </motion.h1>
+          <motion.p 
+            className="text-xl text-gray-600 max-w-3xl mx-auto"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
             {t('hsm.learning_goals_description', 'Узнайте о компетенциях, которые вы получите, и карьерных возможностях после окончания наших программ')}
-          </p>
+          </motion.p>
+        </motion.div>
+
+        {/* Поиск и фильтры */}
+        <motion.div
+          className="max-w-2xl mx-auto mb-12"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
+        >
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <svg className="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <input
+              type="text"
+              placeholder={t('hsm.search_placeholder', 'Поиск целей обучения...')}
+              className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white shadow-sm transition-all"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
         </motion.div>
 
         {/* Learning Goals Grid */}
-        {learningGoals.length > 0 ? (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {learningGoals.map((goal) => (
-              <LearningGoalCard 
-                key={goal.id} 
-                goal={goal} 
-                language={i18n.language}
-              />
-            ))}
-          </div>
+        {filteredGoals.length > 0 ? (
+          <motion.div 
+            className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8"
+            layout
+          >
+            <AnimatePresence>
+              {filteredGoals.map((goal, index) => (
+                <LearningGoalCard 
+                  key={goal.id} 
+                  goal={goal} 
+                  language={i18n.language}
+                  index={index}
+                />
+              ))}
+            </AnimatePresence>
+          </motion.div>
         ) : (
           /* Empty State */
           <motion.div
-            className="text-center py-12"
+            className="text-center py-16"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="bg-white rounded-lg shadow-lg p-8 max-w-md mx-auto">
-              <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+            <motion.div
+              animate={{ y: [0, -10, 0] }}
+              transition={{ duration: 3, repeat: Infinity }}
+              className="bg-white rounded-2xl shadow-lg p-8 max-w-md mx-auto"
+            >
+              <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg className="w-10 h-10 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
                 </svg>
               </div>
               <h3 className="text-lg font-medium text-gray-900 mb-2">
                 {t('hsm.no_learning_goals', 'Цели обучения не найдены')}
               </h3>
-              <p className="text-gray-600">
-                {t('hsm.no_learning_goals_description', 'Информация о целях и результатах обучения скоро появится на сайте')}
+              <p className="text-gray-600 mb-4">
+                {t('hsm.no_learning_goals_description', 'Попробуйте изменить параметры поиска или фильтры')}
               </p>
-            </div>
+              <button
+                onClick={() => {
+                  setSearchQuery('');
+                  setActiveFilter('all');
+                }}
+                className="text-blue-600 hover:text-blue-800 font-medium"
+              >
+                {t('hsm.clear_filters', 'Сбросить фильтры')}
+              </button>
+            </motion.div>
           </motion.div>
         )}
 
         {/* Call to Action */}
-        {learningGoals.length > 0 && (
+        {filteredGoals.length > 0 && (
           <motion.div
-            className="mt-12 text-center"
-            initial={{ opacity: 0, y: 20 }}
+            className="mt-16 text-center"
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg p-8 text-white">
+            <motion.div 
+              className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white shadow-xl"
+              whileHover={{ scale: 1.01 }}
+              transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            >
               <h2 className="text-2xl font-bold mb-4">
                 {t('hsm.ready_to_start', 'Готовы начать обучение?')}
               </h2>
@@ -201,20 +401,24 @@ const HSMLearningGoals = () => {
                 {t('hsm.join_us_text', 'Присоединяйтесь к нам и развивайте свои профессиональные навыки')}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a
+                <motion.a
                   href="/hsm/programs"
-                  className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-300 shadow-md"
                 >
                   {t('hsm.view_programs', 'Посмотреть программы')}
-                </a>
-                <a
+                </motion.a>
+                <motion.a
                   href="/admissions"
-                  className="bg-transparent border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors duration-300"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-transparent border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-all duration-300"
                 >
                   {t('hsm.apply_now', 'Подать заявку')}
-                </a>
+                </motion.a>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
         )}
       </div>
