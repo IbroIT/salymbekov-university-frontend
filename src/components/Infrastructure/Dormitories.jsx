@@ -1,5 +1,51 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { motion, AnimatePresence } from 'framer-motion';
+import { 
+  BuildingOfficeIcon, 
+  MapPinIcon, 
+  UsersIcon, 
+  CheckBadgeIcon,
+  DocumentTextIcon,
+  ClockIcon,
+  PhoneIcon,
+  EnvelopeIcon,
+  AcademicCapIcon,
+  HomeModernIcon,
+  ArrowRightIcon,
+  ChevronDownIcon,
+  ChevronUpIcon
+} from '@heroicons/react/24/outline';
+
+// Анимированные компоненты
+const FadeIn = ({ children, delay = 0 }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.6, delay }}
+  >
+    {children}
+  </motion.div>
+);
+
+const StaggerChildren = ({ children, className = '' }) => (
+  <motion.div
+    initial="hidden"
+    animate="visible"
+    variants={{
+      hidden: { opacity: 0 },
+      visible: {
+        opacity: 1,
+        transition: {
+          staggerChildren: 0.1
+        }
+      }
+    }}
+    className={className}
+  >
+    {children}
+  </motion.div>
+);
 
 const Dormitories = () => {
   const { t, i18n } = useTranslation();
@@ -7,24 +53,25 @@ const Dormitories = () => {
   const [loading, setLoading] = useState(true);
   const [selectedDorm, setSelectedDorm] = useState(null);
   const [activeTab, setActiveTab] = useState('dormitories');
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    // Fetch dormitories from Django API
     const fetchDormitories = async () => {
       try {
+        setLoading(true);
+        // Имитация загрузки с красивой анимацией
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        
         const response = await fetch('http://localhost:8000/api/infrastructure/dormitories/');
         if (response.ok) {
           const data = await response.json();
           const dormitoriesData = data.results || data;
           setDormitories(dormitoriesData);
         } else {
-          console.error('Failed to fetch dormitories:', response.statusText);
-          // Fallback to mock data if API fails
-          setDormitories(getMockDormitories());
+          throw new Error('Failed to fetch dormitories');
         }
       } catch (error) {
-        console.error('Error fetching dormitories:', error);
-        // Fallback to mock data if API fails
+        console.error('Error:', error);
         setDormitories(getMockDormitories());
       } finally {
         setLoading(false);
@@ -186,372 +233,502 @@ const Dormitories = () => {
     return ['ru', 'kg', 'en'].includes(i18n.language) ? i18n.language : 'ru';
   };
 
-  // Helper function to get translated field value
   const getTranslatedField = (obj, fieldPrefix) => {
     const lang = getCurrentLanguage();
     return obj[`${fieldPrefix}_${lang}`] || obj[`${fieldPrefix}_ru`] || '';
   };
 
-  const photoTypeNames = {
-    exterior: { ru: "Внешний вид", kg: "Сырткы көрүнүш", en: "Exterior" },
-    room: { ru: "Комната", kg: "Бөлмө", en: "Room" },
-    kitchen: { ru: "Кухня", kg: "Ашкана", en: "Kitchen" },
-    common: { ru: "Общая зона", kg: "Жалпы аймак", en: "Common area" },
-    sports: { ru: "Спортивная комната", kg: "Спорт бөлмөсү", en: "Sports room" },
-    apartment: { ru: "Квартира", kg: "Батир", en: "Apartment" },
-    playground: { ru: "Игровая площадка", kg: "Оюн аянты", en: "Playground" },
-    parking: { ru: "Парковка", kg: "Унаа токтотуу", en: "Parking" }
-  };
+  // Поиск общежитий
+  const filteredDormitories = useMemo(() => {
+    if (!searchTerm) return dormitories;
+    
+    return dormitories.filter(dorm => {
+      const name = getTranslatedField(dorm, 'name').toLowerCase();
+      const description = getTranslatedField(dorm, 'description').toLowerCase();
+      const address = getTranslatedField(dorm, 'address').toLowerCase();
+      const search = searchTerm.toLowerCase();
+      
+      return name.includes(search) || description.includes(search) || address.includes(search);
+    });
+  }, [dormitories, searchTerm]);
 
   if (loading) {
     return (
-      <div className="min-h-screen pt-20 flex items-center justify-center">
+      <div className="min-h-screen pt-20 flex items-center justify-center bg-gradient-to-br from-blue-50 via-purple-50 to-indigo-100">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-500 mx-auto"></div>
-          <p className="mt-4 text-gray-600">{t('loading')}</p>
+          <motion.div
+            animate={{ 
+              rotate: 360,
+              scale: [1, 1.1, 1]
+            }}
+            transition={{ 
+              rotate: { duration: 2, repeat: Infinity, ease: "linear" },
+              scale: { duration: 1.5, repeat: Infinity }
+            }}
+            className="w-24 h-24 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl"
+          >
+            <HomeModernIcon className="w-12 h-12 text-white" />
+          </motion.div>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+            className="text-xl text-gray-700 font-medium"
+          >
+            {t('loading', 'Загрузка общежитий...')}
+          </motion.p>
+          <motion.div
+            initial={{ width: 0 }}
+            animate={{ width: 200 }}
+            transition={{ duration: 2, ease: "easeOut" }}
+            className="h-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full mt-4 mx-auto"
+          />
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen pt-20 bg-gray-50">
+    <div className="min-h-screen pt-20 bg-gradient-to-br from-blue-50 via-purple-50 to-indigo-100">
       <div className="container mx-auto px-4 py-8">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-800 mb-4">
-            {t('dormitories.title', 'Общежития университета')}
-          </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            {t('dormitories.subtitle', 'Комфортабельное проживание для студентов в современных общежитиях')}
-          </p>
-        </div>
+        {/* Hero Section */}
+        <FadeIn delay={0.1}>
+          <div className="text-center mb-12">
+            <motion.h1 
+              className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+              initial={{ opacity: 0, y: -30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, type: "spring" }}
+            >
+              {t('dormitories.title', 'Студенческие общежития')}
+            </motion.h1>
+            <motion.p 
+              className="text-xl md:text-2xl text-gray-700 max-w-4xl mx-auto leading-relaxed"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4 }}
+            >
+              {t('dormitories.subtitle', 'Комфортабельное проживание с современными условиями для успешной учебы')}
+            </motion.p>
+          </div>
+        </FadeIn>
+
+        {/* Search Section */}
+        <FadeIn delay={0.2}>
+          <div className="bg-white rounded-2xl shadow-2xl p-8 mb-12 border border-gray-100">
+            <div className="text-center mb-6">
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                {t('dormitories.findDormitory', 'Найдите идеальное общежитие')}
+              </h2>
+              <p className="text-gray-600">
+                {t('dormitories.searchHint', 'Ищите по названию, описанию или адресу')}
+              </p>
+            </div>
+            <div className="relative max-w-2xl mx-auto">
+              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <BuildingOfficeIcon className="h-6 w-6 text-blue-500" />
+              </div>
+              <input
+                type="text"
+                placeholder={t('dormitories.searchPlaceholder', 'Поиск общежитий...')}
+                className="w-full pl-12 pr-6 py-4 text-lg border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 transition-all duration-300"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              {searchTerm && (
+                <motion.button
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  onClick={() => setSearchTerm('')}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600"
+                >
+                  ×
+                </motion.button>
+              )}
+            </div>
+          </div>
+        </FadeIn>
 
         {/* Tab Navigation */}
-        <div className="flex justify-center mb-8">
-          <div className="bg-white rounded-lg shadow p-1">
-            <button
-              onClick={() => setActiveTab('dormitories')}
-              className={`px-6 py-2 rounded-md transition-colors ${activeTab === 'dormitories'
-                  ? 'bg-blue-600 text-white'
-                  : 'text-gray-600 hover:text-blue-600'
-                }`}
-            >
-              {t('dormitories.dormitoriesTab', 'Общежития')}
-            </button>
-            <button
-              onClick={() => setActiveTab('application')}
-              className={`px-6 py-2 rounded-md transition-colors ${activeTab === 'application'
-                  ? 'bg-blue-600 text-white'
-                  : 'text-gray-600 hover:text-blue-600'
-                }`}
-            >
-              {t('dormitories.applicationTab', 'Порядок заселения')}
-            </button>
+        <FadeIn delay={0.3}>
+          <div className="flex justify-center mb-12">
+            <div className="bg-white rounded-2xl shadow-lg p-2 border border-gray-200">
+              <div className="flex">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setActiveTab('dormitories')}
+                  className={`px-8 py-4 rounded-xl transition-all flex items-center gap-3 text-lg font-medium ${
+                    activeTab === 'dormitories'
+                      ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md'
+                      : 'text-gray-600 hover:text-blue-600'
+                  }`}
+                >
+                  <HomeModernIcon className="w-6 h-6" />
+                  {t('dormitories.dormitoriesTab', 'Общежития')}
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setActiveTab('application')}
+                  className={`px-8 py-4 rounded-xl transition-all flex items-center gap-3 text-lg font-medium ${
+                    activeTab === 'application'
+                      ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md'
+                      : 'text-gray-600 hover:text-blue-600'
+                  }`}
+                >
+                  <DocumentTextIcon className="w-6 h-6" />
+                  {t('dormitories.applicationTab', 'Заселение')}
+                </motion.button>
+              </div>
+            </div>
           </div>
-        </div>
+        </FadeIn>
 
-        {activeTab === 'dormitories' && (
-          <div className="space-y-8">
-            {dormitories.map((dorm) => (
-              <div key={dorm.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
-                <div className="md:flex">
-                  <div className="md:w-1/3">
-                    <img
-                      src={dorm.photo || dorm.photo_url ||
-                        (dorm.photos && dorm.photos.find(p => p.type === 'exterior')?.url) ||
-                        `https://via.placeholder.com/400x300?text=${encodeURIComponent(getTranslatedField(dorm, 'name'))}`}
-                      alt={getTranslatedField(dorm, 'name')}
-                      className="w-full h-64 md:h-full object-cover"
-                      onError={(e) => {
-                        e.target.src = 'https://via.placeholder.com/400x300?text=Dormitory+Photo';
-                      }}
-                    />
-                  </div>
-                  <div className="md:w-2/3 p-6">
-                    <div className="flex justify-between items-start mb-3">
-                      <h2 className="text-2xl font-bold text-gray-800">
-                        {getTranslatedField(dorm, 'name')}
-                      </h2>
-                      <div className="text-right">
-                        <div className="text-sm text-gray-500">
-                          {t('dormitories.available', 'Доступно')}
-                        </div>
-                        <div className={`text-lg font-bold ${(dorm.available || 0) > 0 ? 'text-green-600' : 'text-red-600'}`}>
-                          {dorm.available || 0} / {dorm.capacity || 100}
-                        </div>
-                      </div>
-                    </div>
-
-                    <p className="text-gray-600 mb-4">
-                      {getTranslatedField(dorm, 'description')}
-                    </p>
-
-                    <div className="mb-4">
-                      <h3 className="font-semibold text-gray-800 mb-2 flex items-center">
-                        <svg className="w-5 h-5 mr-2 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                        </svg>
-                        {t('dormitories.address', 'Адрес')}:
-                      </h3>
-                      <p className="text-gray-600">{getTranslatedField(dorm, 'address')}</p>
-                    </div>
-
-                    <div className="grid md:grid-cols-2 gap-4 mb-4">
-                      <div>
-                        <h3 className="font-semibold text-gray-800 mb-2">
-                          {t('dormitories.roomTypes', 'Типы комнат')}:
-                        </h3>
-                        <ul className="text-sm text-gray-600 space-y-1">
-                          {(dorm.rooms || []).map((room, index) => (
-                            <li key={index}>
-                              {getTranslatedField(room, 'name') || room.name} - {getTranslatedField(room, 'price') || room.price || '0 сом/месяц'}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-gray-800 mb-2">
-                          {t('dormitories.mainFacilities', 'Основные удобства')}:
-                        </h3>
-                        <ul className="text-sm text-gray-600 space-y-1">
-                          {(dorm.facilities || []).slice(0, 3).map((facility, index) => (
-                            <li key={index} className="flex items-center">
-                              <svg className="w-4 h-4 text-green-500 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                              </svg>
-                              {typeof facility === 'string' ? facility : getTranslatedField(facility, 'name') || facility[getCurrentLanguage()] || facility}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-
-                    <button
-                      onClick={() => setSelectedDorm(selectedDorm === dorm.id ? null : dorm.id)}
-                      className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+        <AnimatePresence mode="wait">
+          {activeTab === 'dormitories' && (
+            <motion.div
+              key="dormitories"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5 }}
+              className="space-y-8"
+            >
+              {filteredDormitories.length > 0 ? (
+                <StaggerChildren className="space-y-8">
+                  {filteredDormitories.map((dorm, index) => (
+                    <motion.div
+                      key={dorm.id}
+                      initial={{ opacity: 0, y: 50 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: index * 0.1 }}
+                      className="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-500 border border-gray-100"
                     >
-                      {selectedDorm === dorm.id
-                        ? t('dormitories.hideDetails', 'Скрыть детали')
-                        : t('dormitories.showDetails', 'Показать детали')
-                      }
-                    </button>
-                  </div>
-                </div>
-
-                {selectedDorm === dorm.id && (
-                  <div className="bg-gray-50 p-6 border-t">
-                    <div className="grid lg:grid-cols-2 gap-8">
-                      {/* Room Details */}
-                      <div>
-                        <h3 className="text-xl font-semibold text-gray-800 mb-4">
-                          {t('dormitories.roomDetails', 'Подробности о комнатах')}
-                        </h3>
-                        <div className="space-y-4">
-                          {dorm.rooms.map((room, index) => (
-                            <div key={index} className="bg-white p-4 rounded-lg shadow">
-                              <h4 className="font-semibold text-gray-800 mb-2">
-                                {room.name[getCurrentLanguage()]}
-                              </h4>
-                              <p className="text-blue-600 font-medium mb-2">
-                                {room.price[getCurrentLanguage()]}
-                              </p>
-                              <p className="text-gray-600 text-sm">
-                                {room.features[getCurrentLanguage()]}
-                              </p>
-                            </div>
-                          ))}
+                      <div className="md:flex">
+                        <div className="md:w-2/5 relative group">
+                          <motion.img
+                            src={dorm.photos?.[0]?.url || `https://via.placeholder.com/600x400?text=${encodeURIComponent(getTranslatedField(dorm, 'name'))}`}
+                            alt={getTranslatedField(dorm, 'name')}
+                            className="w-full h-72 md:h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                            onError={(e) => {
+                              e.target.src = 'https://via.placeholder.com/600x400?text=Dormitory+Photo';
+                            }}
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                          
+                          <div className="absolute top-4 left-4">
+                            <span className={`px-4 py-2 rounded-full text-sm font-semibold ${
+                              dorm.type === 'female' ? 'bg-pink-100 text-pink-800' :
+                              dorm.type === 'male' ? 'bg-blue-100 text-blue-800' :
+                              'bg-green-100 text-green-800'
+                            }`}>
+                              {t(`dormitories.types.${dorm.type}`, dorm.type)}
+                            </span>
+                          </div>
+                          
+                          <div className="absolute top-4 right-4 bg-white rounded-full p-2 shadow-lg">
+                            <div className={`w-4 h-4 rounded-full ${dorm.available > 0 ? 'bg-green-500' : 'bg-red-500'}`} />
+                          </div>
                         </div>
-
-                        <div className="mt-6">
-                          <h4 className="text-lg font-semibold text-gray-800 mb-3">
-                            {t('dormitories.allFacilities', 'Все удобства')}
-                          </h4>
-                          <div className="grid grid-cols-1 gap-2">
-                            {dorm.facilities.map((facility, index) => (
-                              <div key={index} className="flex items-center text-gray-700">
-                                <svg className="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                                </svg>
-                                {facility[getCurrentLanguage()]}
+                        
+                        <div className="md:w-3/5 p-8">
+                          <div className="flex justify-between items-start mb-6">
+                            <h2 className="text-3xl font-bold text-gray-900">
+                              {getTranslatedField(dorm, 'name')}
+                            </h2>
+                            <div className="text-right">
+                              <div className="text-sm text-gray-500 mb-1">{t('dormitories.available', 'Свободно')}</div>
+                              <div className={`text-2xl font-bold ${dorm.available > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                                {dorm.available} / {dorm.capacity}
                               </div>
-                            ))}
+                            </div>
+                          </div>
+
+                          <p className="text-gray-600 mb-8 leading-relaxed text-lg">
+                            {getTranslatedField(dorm, 'description')}
+                          </p>
+
+                          <div className="grid md:grid-cols-2 gap-6 mb-8">
+                            <div className="flex items-center text-gray-700">
+                              <MapPinIcon className="w-6 h-6 text-blue-500 mr-4" />
+                              <span>{getTranslatedField(dorm, 'address')}</span>
+                            </div>
+                            <div className="flex items-center text-gray-700">
+                              <UsersIcon className="w-6 h-6 text-green-500 mr-4" />
+                              <span>{dorm.capacity} {t('dormitories.capacity', 'мест')}</span>
+                            </div>
+                          </div>
+
+                          <div className="flex gap-4">
+                            <motion.button
+                              whileHover={{ scale: 1.05, boxShadow: "0 10px 25px -5px rgba(59, 130, 246, 0.4)" }}
+                              whileTap={{ scale: 0.95 }}
+                              onClick={() => setSelectedDorm(selectedDorm === dorm.id ? null : dorm.id)}
+                              className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-300 font-semibold text-lg flex items-center justify-center gap-3"
+                            >
+                              {selectedDorm === dorm.id ? (
+                                <>
+                                  <ChevronUpIcon className="w-5 h-5" />
+                                  {t('dormitories.hideDetails', 'Скрыть')}
+                                </>
+                              ) : (
+                                <>
+                                  <ChevronDownIcon className="w-5 h-5" />
+                                  {t('dormitories.showDetails', 'Подробнее')}
+                                </>
+                              )}
+                            </motion.button>
+                            
+                            <motion.button
+                              whileHover={{ scale: 1.05 }}
+                              whileTap={{ scale: 0.95 }}
+                              className="px-8 py-4 border-2 border-blue-600 text-blue-600 rounded-xl hover:bg-blue-50 transition-all duration-300 font-semibold text-lg"
+                            >
+                              {t('dormitories.applyNow', 'Подать заявку')}
+                            </motion.button>
                           </div>
                         </div>
                       </div>
 
-                      {/* Photo Gallery */}
-                      <div>
-                        <h3 className="text-xl font-semibold text-gray-800 mb-4">
-                          {t('dormitories.photos', 'Фотографии')}
-                        </h3>
-                        <div className="grid grid-cols-2 gap-3">
-                          {dorm.photos.map((photo, index) => (
-                            <div key={index} className="relative group">
-                              <img
-                                src={photo.url}
-                                alt={photoTypeNames[photo.type]?.[getCurrentLanguage()] || photo.type}
-                                className="w-full h-32 object-cover rounded-lg"
-                                onError={(e) => {
-                                  e.target.src = 'https://via.placeholder.com/200x150?text=Photo';
-                                }}
-                              />
-                              <div className="absolute inset-0 bg-black bg-opacity-50 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                <span className="text-white text-sm font-medium">
-                                  {photoTypeNames[photo.type]?.[getCurrentLanguage()] || photo.type}
-                                </span>
+                      <AnimatePresence>
+                        {selectedDorm === dorm.id && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.4 }}
+                            className="bg-gradient-to-r from-blue-50 to-purple-50 p-8 border-t"
+                          >
+                            <div className="grid lg:grid-cols-2 gap-12">
+                              <div>
+                                <h3 className="text-2xl font-bold text-gray-900 mb-8 flex items-center">
+                                  <AcademicCapIcon className="w-8 h-8 text-blue-600 mr-4" />
+                                  {t('dormitories.roomDetails', 'Типы комнат и цены')}
+                                </h3>
+                                <div className="space-y-6">
+                                  {dorm.rooms.map((room, index) => (
+                                    <motion.div
+                                      key={index}
+                                      whileHover={{ scale: 1.02, y: -2 }}
+                                      className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100"
+                                    >
+                                      <h4 className="font-bold text-gray-900 text-xl mb-3">
+                                        {room.name[getCurrentLanguage()]}
+                                      </h4>
+                                      <p className="text-blue-600 font-bold text-2xl mb-3">
+                                        {room.price[getCurrentLanguage()]}
+                                      </p>
+                                      <p className="text-gray-600">
+                                        {room.features[getCurrentLanguage()]}
+                                      </p>
+                                    </motion.div>
+                                  ))}
+                                </div>
+                              </div>
+
+                              <div>
+                                <h3 className="text-2xl font-bold text-gray-900 mb-8 flex items-center">
+                                  <CheckBadgeIcon className="w-8 h-8 text-green-600 mr-4" />
+                                  {t('dormitories.allFacilities', 'Все удобства')}
+                                </h3>
+                                <div className="grid grid-cols-1 gap-4">
+                                  {dorm.facilities.map((facility, index) => (
+                                    <motion.div
+                                      key={index}
+                                      initial={{ opacity: 0, x: 20 }}
+                                      animate={{ opacity: 1, x: 0 }}
+                                      transition={{ delay: index * 0.1 }}
+                                      className="flex items-center p-4 bg-white rounded-xl shadow-sm border border-gray-200"
+                                    >
+                                      <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                                        <CheckBadgeIcon className="w-5 h-5 text-green-600" />
+                                      </div>
+                                      <span className="text-gray-700 font-medium">
+                                        {typeof facility === 'string' ? facility : getTranslatedField(facility, 'name')}
+                                      </span>
+                                    </motion.div>
+                                  ))}
+                                </div>
                               </div>
                             </div>
-                          ))}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </motion.div>
+                  ))}
+                </StaggerChildren>
+              ) : (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="text-center py-20"
+                >
+                  <div className="bg-white rounded-2xl p-12 shadow-2xl max-w-2xl mx-auto">
+                    <BuildingOfficeIcon className="w-20 h-20 text-gray-400 mx-auto mb-6" />
+                    <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                      {t('dormitories.noDormitories', 'Общежития не найдены')}
+                    </h3>
+                    <p className="text-gray-600 mb-6 text-lg">
+                      {t('dormitories.noDormitoriesDesc', 'Попробуйте изменить поисковый запрос')}
+                    </p>
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => setSearchTerm('')}
+                      className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-xl font-semibold"
+                    >
+                      {t('dormitories.clearSearch', 'Очистить поиск')}
+                    </motion.button>
+                  </div>
+                </motion.div>
+              )}
+            </motion.div>
+          )}
+
+          {activeTab === 'application' && (
+            <motion.div
+              key="application"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5 }}
+              className="bg-white rounded-2xl shadow-2xl p-8"
+            >
+              <h2 className="text-4xl font-bold text-gray-900 mb-12 text-center">
+                {t('dormitories.applicationProcess', 'Процесс заселения')}
+              </h2>
+
+              <div className="grid lg:grid-cols-2 gap-16">
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-800 mb-8 flex items-center">
+                    <DocumentTextIcon className="w-8 h-8 text-blue-600 mr-4" />
+                    {t('dormitories.requiredDocuments', 'Необходимые документы')}
+                  </h3>
+                  <div className="space-y-4">
+                    {[
+                      { ru: "Заявление на заселение", kg: "Орнотууга арыз", en: "Application for accommodation" },
+                      { ru: "Справка о доходах семьи", kg: "Үй-бүлөнүн кирешеси жөнүндө маалымат", en: "Family income certificate" },
+                      { ru: "Медицинская справка", kg: "Медициналык справка", en: "Medical certificate" },
+                      { ru: "Копия паспорта", kg: "Паспорттун көчүрмөсү", en: "Passport copy" },
+                      { ru: "Фотографии 3x4", kg: "3x4 сүрөттөр", en: "Photos 3x4" },
+                      { ru: "Справка о флюорографии", kg: "Флюорография справкасы", en: "Fluorography certificate" }
+                    ].map((doc, index) => (
+                      <motion.div
+                        key={index}
+                        whileHover={{ x: 10 }}
+                        className="flex items-center p-5 bg-blue-50 rounded-xl border-l-4 border-blue-500"
+                      >
+                        <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                          <span className="text-blue-600 font-bold">{index + 1}</span>
                         </div>
-                      </div>
+                        <span className="text-gray-700 font-medium">{doc[getCurrentLanguage()]}</span>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-800 mb-8 flex items-center">
+                    <ClockIcon className="w-8 h-8 text-green-600 mr-4" />
+                    {t('dormitories.applicationSteps', 'Этапы заселения')}
+                  </h3>
+                  <div className="space-y-6">
+                    {[
+                      {
+                        title: { ru: "Подача документов", kg: "Документтерди тапшыруу", en: "Document submission" },
+                        desc: { ru: "Подача полного пакета документов", kg: "Толук документтерди тапшыруу", en: "Submit complete documents" }
+                      },
+                      {
+                        title: { ru: "Рассмотрение заявления", kg: "Арызды кароо", en: "Application review" },
+                        desc: { ru: "Рассмотрение в течение 5-7 дней", kg: "5-7 күн ичинде кароо", en: "Review within 5-7 days" }
+                      },
+                      {
+                        title: { ru: "Уведомление", kg: "Кабарлоо", en: "Notification" },
+                        desc: { ru: "Уведомление о предоставлении места", kg: "Орун берүү жөнүндө кабарлоо", en: "Place allocation notification" }
+                      },
+                      {
+                        title: { ru: "Заселение", kg: "Орношуу", en: "Check-in" },
+                        desc: { ru: "Подписание договора и заселение", kg: "Келишим жана орношуу", en: "Contract signing and check-in" }
+                      }
+                    ].map((step, index) => (
+                      <motion.div
+                        key={index}
+                        whileHover={{ scale: 1.02 }}
+                        className="bg-white p-6 rounded-xl shadow-lg border border-gray-200"
+                      >
+                        <div className="flex items-start">
+                          <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full flex items-center justify-center text-lg font-bold mr-4">
+                            {index + 1}
+                          </div>
+                          <div>
+                            <h4 className="font-bold text-gray-800 text-xl mb-2">
+                              {step.title[getCurrentLanguage()]}
+                            </h4>
+                            <p className="text-gray-600">
+                              {step.desc[getCurrentLanguage()]}
+                            </p>
+                          </div>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Contact Information */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+                className="mt-16 pt-12 border-t border-gray-200"
+              >
+                <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">
+                  {t('dormitories.contactInfo', 'Контактная информация')}
+                </h3>
+                <div className="grid md:grid-cols-2 gap-8">
+                  <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-2xl">
+                    <h4 className="font-semibold text-gray-800 mb-4 text-lg">
+                      {t('dormitories.dormitoryDepartment', 'Отдел общежитий')}
+                    </h4>
+                    <div className="space-y-3">
+                      <p className="flex items-center text-gray-700">
+                        <ClockIcon className="w-5 h-5 text-blue-600 mr-3" />
+                        {t('dormitories.schedule', 'Пн-Пт: 9:00-17:00')}
+                      </p>
+                      <p className="flex items-center text-gray-700">
+                        <PhoneIcon className="w-5 h-5 text-blue-600 mr-3" />
+                        +996 312 123-456
+                      </p>
+                      <p className="flex items-center text-gray-700">
+                        <EnvelopeIcon className="w-5 h-5 text-blue-600 mr-3" />
+                        dormitory@salymbekov.edu.kg
+                      </p>
                     </div>
                   </div>
-                )}
-              </div>
-            ))}
-          </div>
-        )}
-
-        {activeTab === 'application' && (
-          <div className="bg-white rounded-lg shadow-lg p-8">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">
-              {t('dormitories.applicationProcess', 'Порядок заселения в общежитие')}
-            </h2>
-
-            <div className="grid lg:grid-cols-2 gap-8">
-              {/* Required Documents */}
-              <div>
-                <h3 className="text-xl font-semibold text-gray-800 mb-4">
-                  {t('dormitories.requiredDocuments', 'Необходимые документы')}
-                </h3>
-                <ul className="space-y-3">
-                  {[
-                    { ru: "Заявление на заселение", kg: "Орнотууга арыз", en: "Application for accommodation" },
-                    { ru: "Справка о доходах семьи", kg: "Үй-бүлөнүн кирешеси жөнүндө маалымат", en: "Family income certificate" },
-                    { ru: "Медицинская справка (форма 086-у)", kg: "Медициналык справка (086-у форма)", en: "Medical certificate (form 086-u)" },
-                    { ru: "Копия паспорта", kg: "Паспорттун көчүрмөсү", en: "Passport copy" },
-                    { ru: "Фотографии 3x4 (2 шт.)", kg: "3x4 сүрөттөр (2 даана)", en: "Photos 3x4 (2 pieces)" },
-                    { ru: "Справка о флюорографии", kg: "Флюорография жөнүндө справка", en: "Fluorography certificate" }
-                  ].map((doc, index) => (
-                    <li key={index} className="flex items-start">
-                      <svg className="w-5 h-5 text-blue-500 mr-3 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                      </svg>
-                      {doc[getCurrentLanguage()]}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Application Process */}
-              <div>
-                <h3 className="text-xl font-semibold text-gray-800 mb-4">
-                  {t('dormitories.applicationSteps', 'Этапы подачи заявления')}
-                </h3>
-                <div className="space-y-4">
-                  {[
-                    {
-                      step: 1,
-                      title: { ru: "Подача документов", kg: "Документтерди тапшыруу", en: "Document submission" },
-                      desc: { ru: "Подача полного пакета документов в деканат", kg: "Толук документтерди деканатка тапшыруу", en: "Submit complete documents to dean's office" }
-                    },
-                    {
-                      step: 2,
-                      title: { ru: "Рассмотрение заявления", kg: "Арызды кароо", en: "Application review" },
-                      desc: { ru: "Рассмотрение комиссией в течение 5-7 рабочих дней", kg: "Комиссия тарабынан 5-7 иш күнүнө каралат", en: "Commission review within 5-7 working days" }
-                    },
-                    {
-                      step: 3,
-                      title: { ru: "Уведомление о результате", kg: "Жыйынтык жөнүндө кабарлоо", en: "Result notification" },
-                      desc: { ru: "Уведомление о предоставлении места", kg: "Орун берүү жөнүндө кабарлоо", en: "Notification about place allocation" }
-                    },
-                    {
-                      step: 4,
-                      title: { ru: "Заселение", kg: "Орношуу", en: "Check-in" },
-                      desc: { ru: "Подписание договора и заселение", kg: "Келишимге кол коюу жана орношуу", en: "Contract signing and check-in" }
-                    }
-                  ].map((step) => (
-                    <div key={step.step} className="flex items-start">
-                      <div className="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">
-                        {step.step}
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-gray-800">
-                          {step.title[getCurrentLanguage()]}
-                        </h4>
-                        <p className="text-gray-600 text-sm">
-                          {step.desc[getCurrentLanguage()]}
-                        </p>
-                      </div>
+                  
+                  <div className="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-2xl">
+                    <h4 className="font-semibold text-gray-800 mb-4 text-lg">
+                      {t('dormitories.adminOffice', 'Администрация')}
+                    </h4>
+                    <div className="space-y-3">
+                      <p className="flex items-center text-gray-700">
+                        <PhoneIcon className="w-5 h-5 text-purple-600 mr-3" />
+                        +996 555 123-456
+                      </p>
+                      <p className="text-gray-700">
+                        {t('dormitories.administrator', 'Администратор')}: Петрова А.И.
+                      </p>
+                      <p className="text-gray-700">
+                        {t('dormitories.mainAddress', 'ул. Студенческая, 8')}
+                      </p>
                     </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Contact Information */}
-            <div className="mt-8 pt-8 border-t border-gray-200">
-              <h3 className="text-xl font-semibold text-gray-800 mb-4">
-                {t('dormitories.contactInfo', 'Контактная информация')}
-              </h3>
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <h4 className="font-semibold text-gray-800 mb-2">
-                    {t('dormitories.dormitoryDepartment', 'Отдел общежитий')}
-                  </h4>
-                  <div className="text-gray-700 space-y-1">
-                    <p>{t('dormitories.workingHours', 'Часы работы')}: {t('dormitories.schedule', 'Пн-Пт: 9:00-17:00')}</p>
-                    <p>{t('dormitories.phone', 'Телефон')}: +996 312 123-456</p>
-                    <p>Email: dormitory@salymbekov.edu.kg</p>
                   </div>
                 </div>
-                <div>
-                  <h4 className="font-semibold text-gray-800 mb-2">
-                    {t('dormitories.adminOffice', 'Администрация общежитий')}
-                  </h4>
-                  <div className="text-gray-700 space-y-1">
-                    <p>{t('dormitories.emergencyContact', 'Экстренная связь')}: +996 555 123-456</p>
-                    <p>{t('dormitories.administrator', 'Администратор')}: Петрова А.И.</p>
-                    <p>{t('dormitories.address', 'Адрес')}: {t('dormitories.mainAddress', 'ул. Студенческая, 8 (главный офис)')}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Important Notes */}
-            <div className="mt-8 bg-blue-50 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-800 mb-3">
-                {t('dormitories.importantNotes', 'Важные примечания')}
-              </h3>
-              <ul className="text-gray-700 space-y-2">
-                <li className="flex items-start">
-                  <svg className="w-5 h-5 text-blue-500 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-                  </svg>
-                  {t('dormitories.note1', 'Приоритет отдается студентам из других регионов и малообеспеченным семьям')}
-                </li>
-                <li className="flex items-start">
-                  <svg className="w-5 h-5 text-blue-500 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-                  </svg>
-                  {t('dormitories.note2', 'Оплата производится ежемесячно до 10 числа')}
-                </li>
-                <li className="flex items-start">
-                  <svg className="w-5 h-5 text-blue-500 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-                  </svg>
-                  {t('dormitories.note3', 'Посещение общежития посторонними лицами ограничено с 22:00 до 6:00')}
-                </li>
-                <li className="flex items-start">
-                  <svg className="w-5 h-5 text-blue-500 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-                  </svg>
-                  {t('dormitories.note4', 'В комнатах запрещено курение и употребление алкоголя')}
-                </li>
-              </ul>
-            </div>
-          </div>
-        )}
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );

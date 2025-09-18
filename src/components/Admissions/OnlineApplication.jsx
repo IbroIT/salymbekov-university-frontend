@@ -1077,70 +1077,95 @@ ${data.firstName} ${data.lastName}
         </div>
 
         {/* Navigation Buttons */}
-        <div className="flex justify-between items-center">
-          <div className="flex items-center space-x-4">
-            <button
-              onClick={prevStep}
-              disabled={currentStep === 1}
-              className={`px-6 py-3 rounded-lg font-medium transition-all ${
-                currentStep === 1
-                  ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                  : 'bg-gray-600 text-white hover:bg-gray-700 shadow-md'
-              }`}
-            >
-              ← {t('application.navigation.previous')}
-            </button>
-            
-           
-            <button
-              onClick={clearDraft}
-              className="px-4 py-2 bg-red-500 text-white rounded-lg font-medium hover:bg-red-600 text-sm shadow-md"
-            >
-              🗑️ {t('application.navigation.clearForm')}
-            </button>
-          </div>
-          
-          <div className="flex items-center space-x-4">
-            {isDraftLoaded && (
-              <span className="text-sm text-blue-600 font-medium animate-pulse">
-                📂 {t('application.status.draftLoaded')}
-              </span>
-            )}
-            {isDraftSaved && (
-              <span className="text-sm text-green-600 font-medium animate-pulse">
-                ✓ {t('application.status.draftSaved')}
-              </span>
-            )}
-            
-            {currentStep < 5 ? (
-              <button
-                onClick={nextStep}
-                className="px-8 py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 shadow-md transition-all"
-              >
-                {t('application.navigation.next')} →
-              </button>
-            ) : (
-              <button
-                onClick={submitApplication}
-                disabled={isSubmitting}
-                className={`px-10 py-3 rounded-lg font-medium shadow-lg transition-all ${
-                  isSubmitting 
-                    ? 'bg-gray-400 text-gray-700 cursor-not-allowed' 
-                    : 'bg-blue-600 text-white hover:bg-blue-700'
-                }`}
-              >
-                {isSubmitting ? (
-                  <>
-                    <span className="inline-block animate-spin mr-2">⏳</span>
-                    Отправка...
-                  </>
-                ) : (
-                  <>📤 {t('application.navigation.submit')}</>
-                )}
-              </button>
-            )}
-          </div>
-        </div>
+<div className="flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-6">
+  {/* Left side buttons */}
+  <div className="flex items-center gap-3 w-full sm:w-auto">
+    <button
+      onClick={prevStep}
+      disabled={currentStep === 1}
+      className={`flex items-center justify-center px-4 py-3 rounded-xl font-medium transition-all 
+        flex-1 sm:flex-none min-w-[120px] sm:min-w-[140px] ${
+        currentStep === 1
+          ? 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200'
+          : 'bg-white text-gray-700 hover:bg-gray-50 shadow-md border border-gray-200 hover:border-gray-300 hover:shadow-lg transform hover:-translate-y-0.5'
+      }`}
+    >
+      <span className="text-lg mr-2">←</span>
+      <span className="hidden sm:inline">{t('application.navigation.previous')}</span>
+      <span className="sm:hidden">Назад</span>
+    </button>
+    
+    <button
+      onClick={clearDraft}
+      className="flex items-center justify-center px-4 py-3 rounded-xl bg-white text-red-600 font-medium 
+        hover:bg-red-50 shadow-md border border-red-200 hover:border-red-300 hover:shadow-lg 
+        transition-all transform hover:-translate-y-0.5 flex-1 sm:flex-none min-w-[100px] sm:min-w-[120px]"
+    >
+      <span className="text-lg mr-2">🗑️</span>
+      <span className="hidden sm:inline">Очистить</span>
+      <span className="sm:hidden">Очистить</span>
+    </button>
+  </div>
+  
+  {/* Status messages */}
+  <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
+    {isDraftLoaded && (
+      <div className="flex items-center bg-blue-100 text-blue-700 px-3 py-2 rounded-lg text-sm font-medium">
+        <span className="text-lg mr-2">📂</span>
+        <span className="hidden sm:inline">{t('application.status.draftLoaded')}</span>
+        <span className="sm:hidden">Черновик</span>
+      </div>
+    )}
+    {isDraftSaved && (
+      <div className="flex items-center bg-green-100 text-green-700 px-3 py-2 rounded-lg text-sm font-medium">
+        <span className="text-lg mr-2">✓</span>
+        <span className="hidden sm:inline">{t('application.status.draftSaved')}</span>
+        <span className="sm:hidden">Сохранено</span>
+      </div>
+    )}
+  </div>
+  
+  {/* Right side buttons */}
+  <div className="flex items-center gap-3 w-full sm:w-auto">
+    {currentStep < 5 ? (
+      <button
+        onClick={nextStep}
+        className="flex items-center justify-center px-6 py-3 rounded-xl bg-gradient-to-r from-green-500 to-green-600 
+          text-white font-medium hover:from-green-600 hover:to-green-700 shadow-lg hover:shadow-xl 
+          transition-all transform hover:-translate-y-0.5 flex-1 sm:flex-none min-w-[120px] sm:min-w-[140px]"
+      >
+        <span className="hidden sm:inline">{t('application.navigation.next')}</span>
+        <span className="sm:hidden">Далее</span>
+        <span className="text-lg ml-2">→</span>
+      </button>
+    ) : (
+      <button
+        onClick={submitApplication}
+        disabled={isSubmitting}
+        className={`flex items-center justify-center px-6 py-3 rounded-xl font-medium shadow-lg 
+          transition-all transform hover:-translate-y-0.5 flex-1 sm:flex-none min-w-[140px] sm:min-w-[160px]
+          ${isSubmitting 
+            ? 'bg-gray-400 text-gray-700 cursor-not-allowed' 
+            : 'bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:from-blue-600 hover:to-blue-700 hover:shadow-xl'
+          }`}
+      >
+        {isSubmitting ? (
+          <>
+            <span className="inline-block animate-spin mr-2">⏳</span>
+            <span className="hidden sm:inline">Отправка...</span>
+            <span className="sm:hidden">Отправка...</span>
+          </>
+        ) : (
+          <>
+            <span className="text-lg mr-2">📤</span>
+            <span className="hidden sm:inline">{t('application.navigation.submit')}</span>
+            <span className="sm:hidden">Отправить</span>
+          </>
+        )}
+      </button>
+    )}
+  </div>
+</div>
 
         {/* Help Information */}
         <div className="mt-12 bg-blue-50 p-6 rounded-lg">
