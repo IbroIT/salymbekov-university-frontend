@@ -1,51 +1,21 @@
+/* Анимации для меню */
 @keyframes fadeIn {
-  from { 
-    opacity: 0;
-    transform: translate3d(0, -10px, 0);
-  }
-  to { 
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-@keyframes slideInDown {
-  from {
-    transform: translate3d(0, -100%, 0);
-    opacity: 0;
-    visibility: hidden;
-  }
-  to {
-    transform: translate3d(0, 0, 0);
-    opacity: 1;
-    visibility: visible;
-  }
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .animate-fadeIn {
   animation: fadeIn 0.3s ease-out forwards;
 }
 
-.animate-slideInDown {
-  animation: slideInDown 0.4s ease-out forwards;
-}
-
-/* Плавная прокрутка для всей страницы */
-html {
-  scroll-behavior: smooth;
-}
-
 /* Стили для навбара */
-.navbar {
+.navbar-logo {
   transition: all 0.3s ease;
-}
-
-.navbar-container {
-  max-width: 1200px;
 }
 
 .navbar-menu-item {
   position: relative;
+  transition: color 0.2s ease;
 }
 
 .navbar-menu-item::after {
@@ -64,42 +34,104 @@ html {
   width: 70%;
 }
 
-.navbar-menu-dropdown {
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-}
-
 .navbar-apply-button {
+  position: relative;
+  overflow: hidden;
   transition: all 0.3s ease;
 }
 
-.navbar-apply-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(37, 99, 235, 0.3);
+.navbar-apply-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: all 极.6s ease;
 }
 
-/* Адаптивность для мобильных устройств */
-@media (max-width: 1279px) {
-  .navbar-container {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
+.navbar-apply-button:hover::before {
+  left: 100%;
 }
 
-/* Кастомный скроллбар для мобильного меню */
-.xl\:hidden::-webkit-scrollbar {
+/* Стили для десктопного бургер-меню */
+.desktop-burger-menu {
+  right: 4px;
+  left: auto;
+  transform: none;
+  max-height: 70vh;
+  overflow-y: auto;
+  width: 95vw;
+  max-width: 1200px;
+}
+
+.desktop-burger-menu::-webkit-scrollbar {
   width: 6px;
 }
 
-.xl\:hidden::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 10px;
+.desktop-burger-menu::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 3px;
 }
 
-.xl\:hidden::-webkit-scrollbar-thumb {
-  background: #c5c5c5;
-  border-radius: 10px;
+.desktop-burger-menu::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 3px;
 }
 
-.xl\:hidden::-webkit-scrollbar-thumb:hover {
-  background: #a8a8a8;
+/* Адаптивные стили */
+@media (max-width: 640px) {
+  .navbar-lang-text {
+    display: none;
+  }
+}
+
+/* Стили для выпадающих меню */
+.group:hover .group-hover\:block {
+  display: block;
+}
+
+/* Улучшенные стили для вложенных меню */
+.navbar-dropdown {
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Плавные переходы */
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Улучшенная читаемость для выпадающих меню */
+.navbar-dropdown-item {
+  transition: all 0.2s ease;
+}
+
+.navbar-dropdown-item:hover {
+  transform: translateX(4px);
+}
+
+/* Стили для бургер-кнопки на десктопе */
+.desktop-burger-button {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  transition: all 0.2s ease;
+}
+
+.desktop-burger-button:hover {
+  color: #2563eb;
+  background-color: #f3f4f6;
+}
+
+.desktop-burger-button:focus {
+  outline: none;
+  ring: 2px;
+  ring-color: #3b82f6;
 }

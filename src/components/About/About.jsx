@@ -182,36 +182,48 @@ const About = () => {
         </section>
 
         {/* Timeline Section */}
-        <section className="mb-20 animate-fadeInUp">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">{t('about.university_history')}</h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-blue-500 to-blue-700 mx-auto rounded-full"></div>
+        <section className="mb-16 md:mb-20 animate-fadeInUp">
+  <div className="text-center mb-10 md:mb-12">
+    <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">{t('about.university_history')}</h2>
+    <div className="w-16 md:w-20 h-1 bg-gradient-to-r from-blue-500 to-blue-700 mx-auto rounded-full"></div>
+  </div>
+  
+  <div className="relative">
+    {/* Мобильная вертикальная линия - видна только на мобильных */}
+    <div className="block md:hidden absolute left-4 sm:left-6 h-full w-1 bg-gradient-to-b from-blue-500 to-blue-700 rounded-full"></div>
+    
+    {/* Десктопная вертикальная линия */}
+    <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-blue-500 to-blue-700 rounded-full"></div>
+    
+    {timeline.map((item, index) => (
+      <div key={index} className="flex mb-8 md:mb-12">
+        {/* Точка на временной линии */}
+        <div className="absolute left-4 sm:left-6 md:left-1/2 transform -translate-x-1/2 w-5 h-5 md:w-6 md:h-6 bg-blue-600 rounded-full border-4 border-white shadow-lg z-10 hover:bg-blue-800 hover:scale-110 md:hover:scale-125 transition-all duration-300"></div>
+        
+        {/* Контент */}
+        <div className={`w-full ml-10 sm:ml-14 md:ml-0 ${index % 2 === 0 ? 'md:w-1/2 md:pr-8 md:text-right' : 'md:w-1/2 md:pl-8 md:order-2'}`}>
+          <div className="group bg-white p-5 sm:p-6 md:p-8 rounded-xl md:rounded-2xl shadow-md md:shadow-xl hover:shadow-lg md:hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-1 md:hover:-translate-y-2 border border-blue-100 hover:border-blue-300">
+            <div className="flex items-center mb-3 md:mb-4">
+              <span className="text-2xl md:text-3xl mr-3">{item.icon}</span>
+              <span className="text-lg md:text-2xl font-bold text-blue-700 group-hover:text-blue-900 transition-colors duration-300">
+                {item.year}
+              </span>
+            </div>
+            <h3 className="text-lg md:text-xl font-semibold text-gray-900 mb-2 md:mb-3 group-hover:text-blue-900 transition-colors duration-300">
+              {item.event}
+            </h3>
+            <p className="text-sm md:text-base text-gray-600 group-hover:text-gray-800 transition-colors duration-300">
+              {item.description}
+            </p>
           </div>
-          <div className="relative">
-            <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-blue-500 to-blue-700 rounded-full"></div>
-            {timeline.map((item, index) => (
-              <div key={index} className={`flex items-center mb-12 ${index % 2 === 0 ? 'flex-row-reverse' : ''}`}>
-                <div className={`w-1/2 ${index % 2 === 0 ? 'pr-8 text-right' : 'pl-8'}`}>
-                  <div className="group bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-blue-100 hover:border-blue-300">
-                    <div className="flex items-center mb-4">
-                      <span className="text-3xl mr-3">{item.icon}</span>
-                      <span className="text-2xl font-bold text-blue-700 group-hover:text-blue-900 transition-colors duration-300">
-                        {item.year}
-                      </span>
-                    </div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-blue-900 transition-colors duration-300">
-                      {item.event}
-                    </h3>
-                    <p className="text-gray-600 group-hover:text-gray-800 transition-colors duration-300">
-                      {item.description}
-                    </p>
-                  </div>
-                </div>
-                <div className="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-blue-600 rounded-full border-4 border-white shadow-lg hover:bg-blue-800 hover:scale-125 transition-all duration-300"></div>
-              </div>
-            ))}
-          </div>
-        </section>
+        </div>
+        
+        {/* Пустой блок для чередования на десктопе */}
+        <div className={`hidden md:block md:w-1/2 ${index % 2 === 0 ? '' : 'order-1'}`}></div>
+      </div>
+    ))}
+  </div>
+</section>
 
         {/* Leadership Section */}
         <section className="mb-20 animate-fadeInUp">

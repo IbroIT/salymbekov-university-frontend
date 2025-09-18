@@ -8,70 +8,70 @@ const TuitionCitizensKG = () => {
   // Статичные данные для стоимости программ
   const tuitionData = {
     general: {
-      name: t('tuitionCitizens.general.name', 'Лечебное дело'),
+      name: t('tuitionCitizens.general.name'),
       programs: [
         {
-          program: t('tuitionCitizens.general.prog1', 'Лечебное дело (6 лет)'),
-          budget: t('tuitionCitizens.budget', 'Бюджет'),
+          program: t('tuitionCitizens.general.prog1'),
+          budget: t('tuitionCitizens.budget'),
           contract: '250,000',
-          currency: t('tuitionCitizens.som', 'сом/год')
+          currency: t('tuitionCitizens.som')
         },
         {
-          program: t('tuitionCitizens.general.prog2', 'Лечебное дело (на английском)'),
-          budget: t('tuitionCitizens.noBudget', 'Нет'),
+          program: t('tuitionCitizens.general.prog2'),
+          budget: t('tuitionCitizens.noBudget'),
           contract: '280,000',
-          currency: t('tuitionCitizens.som', 'сом/год')
+          currency: t('tuitionCitizens.som')
         }
       ]
     },
     dentistry: {
-      name: t('tuitionCitizens.dentistry.name', 'Стоматология'),
+      name: t('tuitionCitizens.dentistry.name'),
       programs: [
         {
-          program: t('tuitionCitizens.dentistry.prog1', 'Стоматология (5 лет)'),
-          budget: t('tuitionCitizens.budget', 'Бюджет'),
+          program: t('tuitionCitizens.dentistry.prog1'),
+          budget: t('tuitionCitizens.budget'),
           contract: '300,000',
-          currency: t('tuitionCitizens.som', 'сом/год')
+          currency: t('tuitionCitizens.som')
         },
         {
-          program: t('tuitionCitizens.dentistry.prog2', 'Ортодонтия (специализация)'),
-          budget: t('tuitionCitizens.noBudget', 'Нет'),
+          program: t('tuitionCitizens.dentistry.prog2'),
+          budget: t('tuitionCitizens.noBudget'),
           contract: '350,000',
-          currency: t('tuitionCitizens.som', 'сом/год')
+          currency: t('tuitionCitizens.som')
         }
       ]
     },
     pharmacy: {
-      name: t('tuitionCitizens.pharmacy.name', 'Фармация'),
+      name: t('tuitionCitizens.pharmacy.name'),
       programs: [
         {
-          program: t('tuitionCitizens.pharmacy.prog1', 'Фармация (5 лет)'),
-          budget: t('tuitionCitizens.budget', 'Бюджет'),
+          program: t('tuitionCitizens.pharmacy.prog1'),
+          budget: t('tuitionCitizens.budget'),
           contract: '200,000',
-          currency: t('tuitionCitizens.som', 'сом/год')
+          currency: t('tuitionCitizens.som')
         },
         {
-          program: t('tuitionCitizens.pharmacy.prog2', 'Клиническая фармация'),
-          budget: t('tuitionCitizens.limitedBudget', 'Ограничено'),
+          program: t('tuitionCitizens.pharmacy.prog2'),
+          budget: t('tuitionCitizens.limitedBudget'),
           contract: '220,000',
-          currency: t('tuitionCitizens.som', 'сом/год')
+          currency: t('tuitionCitizens.som')
         }
       ]
     },
     nursing: {
-      name: t('tuitionCitizens.nursing.name', 'Сестринское дело'),
+      name: t('tuitionCitizens.nursing.name'),
       programs: [
         {
-          program: t('tuitionCitizens.nursing.prog1', 'Сестринское дело (4 года)'),
-          budget: t('tuitionCitizens.budget', 'Бюджет'),
+          program: t('tuitionCitizens.nursing.prog1'),
+          budget: t('tuitionCitizens.budget'),
           contract: '180,000',
-          currency: t('tuitionCitizens.som', 'сом/год')
+          currency: t('tuitionCitizens.som')
         },
         {
-          program: t('tuitionCitizens.nursing.prog2', 'Сестринское дело (магистратура)'),
-          budget: t('tuitionCitizens.limitedBudget', 'Ограничено'),
+          program: t('tuitionCitizens.nursing.prog2'),
+          budget: t('tuitionCitizens.limitedBudget'),
           contract: '200,000',
-          currency: t('tuitionCitizens.som', 'сом/год')
+          currency: t('tuitionCitizens.som')
         }
       ]
     }
@@ -80,32 +80,32 @@ const TuitionCitizensKG = () => {
   // Статичные данные для рассрочки и льгот
   const paymentOptions = [
     {
-      type: t('tuitionCitizens.payment.installment', 'Рассрочка платежа'),
-      description: t('tuitionCitizens.payment.installmentDesc', 'Возможность оплаты по семестрам'),
+      type: t('tuitionCitizens.payment.installment'),
+      description: t('tuitionCitizens.payment.installmentDesc'),
       conditions: [
-        t('tuitionCitizens.payment.cond1', '50% в начале семестра'),
-        t('tuitionCitizens.payment.cond2', '50% до окончания семестра'),
-        t('tuitionCitizens.payment.cond3', 'Без дополнительных процентов')
+        t('tuitionCitizens.payment.cond1'),
+        t('tuitionCitizens.payment.cond2'),
+        t('tuitionCitizens.payment.cond3')
       ],
       icon: '💳'
     },
     {
-      type: t('tuitionCitizens.payment.scholarship', 'Академические стипендии'),
-      description: t('tuitionCitizens.payment.scholarshipDesc', 'Скидки за успехи в учебе'),
+      type: t('tuitionCitizens.payment.scholarship'),
+      description: t('tuitionCitizens.payment.scholarshipDesc'),
       conditions: [
-        t('tuitionCitizens.payment.scho1', '10% скидка за отличную учебу'),
-        t('tuitionCitizens.payment.scho2', '5% скидка за хорошую учебу'),
-        t('tuitionCitizens.payment.scho3', 'Ежегодный пересмотр')
+        t('tuitionCitizens.payment.scho1'),
+        t('tuitionCitizens.payment.scho2'),
+        t('tuitionCitizens.payment.scho3')
       ],
       icon: '🏆'
     },
     {
-      type: t('tuitionCitizens.payment.social', 'Социальные льготы'),
-      description: t('tuitionCitizens.payment.socialDesc', 'Льготы для определенных категорий'),
+      type: t('tuitionCitizens.payment.social'),
+      description: t('tuitionCitizens.payment.socialDesc'),
       conditions: [
-        t('tuitionCitizens.payment.soc1', 'Дети-сироты: 50% скидка'),
-        t('tuitionCitizens.payment.soc2', 'Инвалиды: 30% скидка'),
-        t('tuitionCitizens.payment.soc3', 'Многодетные семьи: 20% скидка')
+        t('tuitionCitizens.payment.soc1'),
+        t('tuitionCitizens.payment.soc2'),
+        t('tuitionCitizens.payment.soc3')
       ],
       icon: '🤝'
     }
@@ -113,12 +113,12 @@ const TuitionCitizensKG = () => {
 
   // Банковские реквизиты
   const bankDetails = {
-    bankName: t('tuitionCitizens.bank.name', 'Коммерческий банк КЫРГЫЗСТАН'),
+    bankName: t('tuitionCitizens.bank.name',),
     account: '1234567890123456',
     bik: '109001',
     inn: '12345678901234',
-    recipient: t('tuitionCitizens.bank.recipient', 'ОО "Медицинский университет"'),
-    purpose: t('tuitionCitizens.bank.purpose', 'Оплата за обучение')
+    recipient: t('tuitionCitizens.bank.recipient'),
+    purpose: t('tuitionCitizens.bank.purpose')
   };
 
   const faculties = Object.keys(tuitionData);
@@ -129,10 +129,10 @@ const TuitionCitizensKG = () => {
       <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl font-bold mb-4">
-            {t('tuitionCitizens.title', 'Стоимость обучения для граждан КР')}
+            {t('tuitionCitizens.title')}
           </h1>
           <p className="text-xl opacity-90">
-            {t('tuitionCitizens.subtitle', 'Актуальная информация о стоимости программ и способах оплаты')}
+            {t('tuitionCitizens.subtitle')}
           </p>
         </div>
       </div>
@@ -141,7 +141,7 @@ const TuitionCitizensKG = () => {
         {/* Переключатель факультетов */}
         <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
           <h2 className="text-2xl font-bold text-gray-800 mb-6">
-            {t('tuitionCitizens.faculties.title', 'Выберите факультет')}
+            {t('tuitionCitizens.faculties.title')}
           </h2>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
@@ -165,13 +165,13 @@ const TuitionCitizensKG = () => {
               <thead>
                 <tr className="bg-gray-100">
                   <th className="border border-gray-300 px-4 py-3 text-left font-semibold text-gray-800">
-                    {t('tuitionCitizens.table.program', 'Программа')}
+                    {t('tuitionCitizens.table.program')}
                   </th>
                   <th className="border border-gray-300 px-4 py-3 text-center font-semibold text-gray-800">
-                    {t('tuitionCitizens.table.budget', 'Бюджет')}
+                    {t('tuitionCitizens.table.budget')}
                   </th>
                   <th className="border border-gray-300 px-4 py-3 text-center font-semibold text-gray-800">
-                    {t('tuitionCitizens.table.contract', 'Контракт')}
+                    {t('tuitionCitizens.table.contract')}
                   </th>
                 </tr>
               </thead>
@@ -182,9 +182,9 @@ const TuitionCitizensKG = () => {
                       {program.program}
                     </td>
                     <td className="border border-gray-300 px-4 py-3 text-center">
-                      <span className={`px-3 py-1 rounded-full text-sm font-semibold ${program.budget === t('tuitionCitizens.budget', 'Бюджет')
+                      <span className={`px-3 py-1 rounded-full text-sm font-semibold ${program.budget === t('tuitionCitizens.budget')
                           ? 'bg-green-100 text-green-800'
-                          : program.budget === t('tuitionCitizens.limitedBudget', 'Ограничено')
+                          : program.budget === t('tuitionCitizens.limitedBudget')
                             ? 'bg-yellow-100 text-yellow-800'
                             : 'bg-red-100 text-red-800'
                         }`}>
@@ -204,8 +204,8 @@ const TuitionCitizensKG = () => {
 
           <div className="mt-6 p-4 bg-blue-50 border-l-4 border-blue-400">
             <p className="text-sm text-blue-800">
-              <strong>{t('tuitionCitizens.note', 'Примечание:')}</strong> {' '}
-              {t('tuitionCitizens.noteText', 'Стоимость указана на 2025 учебный год. Цены могут изменяться ежегодно.')}
+              <strong>{t('tuitionCitizens.note')}</strong> {' '}
+              {t('tuitionCitizens.noteText')}
             </p>
           </div>
         </div>
@@ -213,7 +213,7 @@ const TuitionCitizensKG = () => {
         {/* Варианты оплаты и льготы */}
         <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
           <h2 className="text-2xl font-bold text-gray-800 mb-6">
-            {t('tuitionCitizens.paymentOptions.title', 'Варианты оплаты и льготы')}
+            {t('tuitionCitizens.paymentOptions.title')}
           </h2>
 
           <div className="grid md:grid-cols-3 gap-6">
@@ -242,10 +242,10 @@ const TuitionCitizensKG = () => {
         <div className="bg-white rounded-lg shadow-lg p-6">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-bold text-gray-800">
-              {t('tuitionCitizens.bankDetails.title', 'Банковские реквизиты')}
+              {t('tuitionCitizens.bankDetails.title')}
             </h2>
             <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors">
-              {t('tuitionCitizens.bankDetails.download', 'Скачать PDF')}
+              {t('tuitionCitizens.bankDetails.download')}
             </button>
           </div>
 
@@ -253,21 +253,21 @@ const TuitionCitizensKG = () => {
             <div className="space-y-4">
               <div className="border-b border-gray-200 pb-2">
                 <label className="text-sm font-medium text-gray-600">
-                  {t('tuitionCitizens.bankDetails.bankName', 'Наименование банка:')}
+                  {t('tuitionCitizens.bankDetails.bankName')}
                 </label>
                 <p className="text-gray-800 font-semibold">{bankDetails.bankName}</p>
               </div>
 
               <div className="border-b border-gray-200 pb-2">
                 <label className="text-sm font-medium text-gray-600">
-                  {t('tuitionCitizens.bankDetails.account', 'Расчетный счет:')}
+                  {t('tuitionCitizens.bankDetails.account')}
                 </label>
                 <p className="text-gray-800 font-mono text-lg">{bankDetails.account}</p>
               </div>
 
               <div className="border-b border-gray-200 pb-2">
                 <label className="text-sm font-medium text-gray-600">
-                  {t('tuitionCitizens.bankDetails.bik', 'БИК:')}
+                  {t('tuitionCitizens.bankDetails.bik')}
                 </label>
                 <p className="text-gray-800 font-mono">{bankDetails.bik}</p>
               </div>
@@ -276,21 +276,21 @@ const TuitionCitizensKG = () => {
             <div className="space-y-4">
               <div className="border-b border-gray-200 pb-2">
                 <label className="text-sm font-medium text-gray-600">
-                  {t('tuitionCitizens.bankDetails.inn', 'ИНН:')}
+                  {t('tuitionCitizens.bankDetails.inn')}
                 </label>
                 <p className="text-gray-800 font-mono">{bankDetails.inn}</p>
               </div>
 
               <div className="border-b border-gray-200 pb-2">
                 <label className="text-sm font-medium text-gray-600">
-                  {t('tuitionCitizens.bankDetails.recipient', 'Получатель:')}
+                  {t('tuitionCitizens.bankDetails.recipient')}
                 </label>
                 <p className="text-gray-800 font-semibold">{bankDetails.recipient}</p>
               </div>
 
               <div className="border-b border-gray-200 pb-2">
                 <label className="text-sm font-medium text-gray-600">
-                  {t('tuitionCitizens.bankDetails.purpose', 'Назначение платежа:')}
+                  {t('tuitionCitizens.bankDetails.purpose')}
                 </label>
                 <p className="text-gray-800">{bankDetails.purpose}</p>
               </div>
@@ -307,9 +307,9 @@ const TuitionCitizensKG = () => {
                   <strong>{t('tuitionCitizens.bankDetails.important', 'Важно!')}</strong>
                 </p>
                 <ul className="text-sm text-yellow-800 space-y-1">
-                  <li>• {t('tuitionCitizens.bankDetails.rule1', 'В назначении платежа обязательно укажите ФИО студента и курс')}</li>
-                  <li>• {t('tuitionCitizens.bankDetails.rule2', 'Сохраняйте квитанцию об оплате до окончания обучения')}</li>
-                  <li>• {t('tuitionCitizens.bankDetails.rule3', 'При оплате через банкомат проверьте правильность реквизитов')}</li>
+                  <li>• {t('tuitionCitizens.bankDetails.rule1')}</li>
+                  <li>• {t('tuitionCitizens.bankDetails.rule2')}</li>
+                  <li>• {t('tuitionCitizens.bankDetails.rule3')}</li>
                 </ul>
               </div>
             </div>
@@ -359,10 +359,10 @@ Email: finance@su.edu.kg
               <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
-              {t('tuitionCitizens.bankDetails.downloadPDF', 'Скачать реквизиты')}
+              {t('tuitionCitizens.bankDetails.downloadPDF')}
             </button>
             <p className="text-sm text-gray-600 mt-2">
-              {t('tuitionCitizens.bankDetails.downloadNote', 'Файл с банковскими реквизитами для распечатки')}
+              {t('tuitionCitizens.bankDetails.downloadNote')}
             </p>
           </div>
         </div>
@@ -371,10 +371,10 @@ Email: finance@su.edu.kg
         <div className="mt-12 bg-white rounded-lg shadow-lg p-6">
           <div className="text-center mb-8">
             <h2 className="text-2xl font-bold text-gray-800 mb-2">
-              {t('tuitionCitizens.contact.title', 'Вопросы по оплате?')}
+              {t('tuitionCitizens.contact.title')}
             </h2>
             <p className="text-gray-600">
-              {t('tuitionCitizens.contact.subtitle', 'Свяжитесь с бухгалтерией для получения консультации')}
+              {t('tuitionCitizens.contact.subtitle')}
             </p>
           </div>
 
@@ -386,7 +386,7 @@ Email: finance@su.edu.kg
                 </svg>
               </div>
               <h3 className="font-semibold text-gray-800 mb-1">
-                {t('tuitionCitizens.contact.phone', 'Телефон бухгалтерии')}
+                {t('tuitionCitizens.contact.phone')}
               </h3>
               <p className="text-gray-600">+996 312 545 002</p>
             </div>
@@ -410,10 +410,10 @@ Email: finance@su.edu.kg
                 </svg>
               </div>
               <h3 className="font-semibold text-gray-800 mb-1">
-                {t('tuitionCitizens.contact.hours', 'Часы работы')}
+                {t('tuitionCitizens.contact.hours')}
               </h3>
               <p className="text-gray-600">
-                {t('tuitionCitizens.contact.schedule', 'Пн-Пт: 9:00-17:00')}
+                {t('tuitionCitizens.contact.schedule')}
               </p>
             </div>
           </div>

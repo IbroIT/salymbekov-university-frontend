@@ -2915,7 +2915,13 @@
       "timelineTitle": "Processing timeline:",
       "timeline1": "University invitation",
       "timeline2": "Consulate application",
-      "timeline3": "Visa receipt"
+      "timeline3": "Visa receipt",
+      "invitation": "University invitation",
+  "passport": "Valid international passport",
+  "medical": "Medical certificate with translation",
+  "insurance": "Medical insurance",
+  "photos": "Visa photos",
+  "fee": "Consular fee payment"
     },
     "support": {
       "title": "International Student Support",
@@ -2939,7 +2945,20 @@
       "email": "Email",
       "address": "Address",
       "addressText": "Bishkek, Intergelpo St. 720000"
-    }
+    },
+    "numbers": {
+  "invitation": "5-7 working days",
+  "application": "10-15 working days",
+  "visa": "1-2 working days"
+}
+,
+    "lang": {
+      "russian": "Russian",
+      "english": "English",
+  "russianLevel": "B2 and above",
+  "englishLevel": "B2 and above"
+}
+
   },
   "applyCitizens": {
     "title": "Application for KR Citizens",

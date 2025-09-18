@@ -7,7 +7,8 @@ import {
   DocumentTextIcon,
   ClockIcon,
   ArchiveBoxIcon,
-  ExclamationTriangleIcon
+  ExclamationTriangleIcon,
+  XMarkIcon
 } from '@heroicons/react/24/outline';
 
 const Regulations = () => {
@@ -18,6 +19,7 @@ const Regulations = () => {
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
 
   const currentLanguage = i18n.language;
 
@@ -114,13 +116,28 @@ const Regulations = () => {
     research: DocumentIcon
   };
 
+  const categoryColors = {
+    foundational: 'bg-purple-100 text-purple-800',
+    academic: 'bg-blue-100 text-blue-800',
+    administrative: 'bg-green-100 text-green-800',
+    research: 'bg-amber-100 text-amber-800',
+    default: 'bg-gray-100 text-gray-800'
+  };
+
+  const getCategoryColor = (categoryName) => {
+    return categoryColors[categoryName] || categoryColors.default;
+  };
+
   if (loading) {
     return (
-      <div className="min-h-screen pt-20 bg-gray-50">
+      <div className="min-h-screen pt-20 bg-gradient-to-br from-blue-50 to-indigo-50">
         <div className="container mx-auto px-4 py-8">
-          <div className="flex justify-center items-center h-64">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-            <span className="ml-3 text-lg text-gray-600">Загрузка документов...</span>
+          <div className="flex flex-col justify-center items-center h-96">
+            <div className="relative">
+              <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600"></div>
+              <DocumentIcon className="h-8 w-8 text-blue-600 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+            </div>
+            <span className="mt-6 text-lg font-medium text-gray-700 animate-pulse">Загрузка документов...</span>
           </div>
         </div>
       </div>
@@ -129,15 +146,17 @@ const Regulations = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen pt-20 bg-gray-50">
+      <div className="min-h-screen pt-20 bg-gradient-to-br from-blue-50 to-indigo-50">
         <div className="container mx-auto px-4 py-8">
-          <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
-            <ExclamationTriangleIcon className="h-12 w-12 text-red-500 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-red-900 mb-2">Ошибка загрузки</h3>
-            <p className="text-red-700 mb-4">{error}</p>
+          <div className="max-w-md mx-auto bg-red-50 border border-red-200 rounded-2xl p-8 text-center shadow-lg transform transition-all duration-300 hover:scale-[1.02]">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-red-100 rounded-full mb-4">
+              <ExclamationTriangleIcon className="h-8 w-8 text-red-600" />
+            </div>
+            <h3 className="text-xl font-semibold text-red-900 mb-3">Ошибка загрузки</h3>
+            <p className="text-red-700 mb-6">{error}</p>
             <button 
               onClick={fetchData}
-              className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors"
+              className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl transition-all duration-300 transform hover:-translate-y-1 shadow-md hover:shadow-lg"
             >
               Попробовать снова
             </button>
@@ -148,66 +167,93 @@ const Regulations = () => {
   }
 
   return (
-    <div className="min-h-screen pt-20 bg-gray-50">
+    <div className="min-h-screen pt-20 bg-gradient-to-br from-blue-50 to-indigo-50">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-white rounded-2xl shadow-lg mb-6 transform transition-all duration-500 hover:rotate-12">
+            <DocumentTextIcon className="h-10 w-10 text-blue-600" />
+          </div>
+          <h1 className="text-5xl font-bold text-gray-900 mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
             {t('regulations.title')}
           </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
             {t('regulations.subtitle')}
           </p>
         </div>
 
         {/* Search and Filter */}
-        <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-          <div className="flex flex-col md:flex-row gap-4">
+        <div className="bg-white rounded-2xl shadow-xl p-8 mb-12 transform transition-all duration-300 hover:shadow-2xl">
+          <div className="flex flex-col md:flex-row gap-6">
             {/* Search */}
             <div className="flex-1 relative">
-              <MagnifyingGlassIcon className="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <div className={`absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none transition-all duration-300 ${isSearchFocused ? 'text-blue-600' : 'text-gray-400'}`}>
+                <MagnifyingGlassIcon className="h-5 w-5" />
+              </div>
               <input
                 type="text"
                 placeholder={t('regulations.searchPlaceholder')}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                onFocus={() => setIsSearchFocused(true)}
+                onBlur={() => setIsSearchFocused(false)}
+                className="w-full pl-10 pr-10 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 shadow-sm"
               />
+              {searchTerm && (
+                <button
+                  onClick={() => setSearchTerm('')}
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                >
+                  <XMarkIcon className="h-5 w-5 text-gray-400 hover:text-gray-600 transition-colors" />
+                </button>
+              )}
             </div>
 
             {/* Category Filter */}
-            <select
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            >
-              <option value="all">Все категории</option>
-              {Array.isArray(categories) && categories.map(category => (
-                <option key={category.id} value={category.name}>
-                  {getLocalizedValue(category, 'name')}
-                </option>
-              ))}
-            </select>
+            <div className="relative">
+              <select
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+                className="w-full md:w-64 px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none transition-all duration-300 shadow-sm bg-white"
+              >
+                <option value="all">Все категории</option>
+                {Array.isArray(categories) && categories.map(category => (
+                  <option key={category.id} value={category.name}>
+                    {getLocalizedValue(category, 'name')}
+                  </option>
+                ))}
+              </select>
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
+              </div>
+            </div>
           </div>
         </div>
 
         {/* Documents Grid */}
         {Array.isArray(documents) && documents.length > 0 ? (
-          <div className="grid lg:grid-cols-2 gap-6">
+          <div className="grid lg:grid-cols-2 gap-8">
             {documents.map(doc => {
               const CategoryIcon = categoryIcons[doc.category_name] || DocumentIcon;
               return (
-                <div key={doc.id} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
-                  <div className="p-6">
+                <div 
+                  key={doc.id} 
+                  className="bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-500 hover:shadow-xl hover:-translate-y-2 group"
+                >
+                  <div className="p-8">
                     {/* Document Header */}
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="flex items-center space-x-3">
-                        <CategoryIcon className="h-8 w-8 text-blue-600 flex-shrink-0" />
+                    <div className="flex items-start justify-between mb-6">
+                      <div className="flex items-center space-x-4">
+                        <div className={`p-3 rounded-xl ${getCategoryColor(doc.category_name)} transition-colors duration-300 group-hover:scale-110`}>
+                          <CategoryIcon className="h-6 w-6" />
+                        </div>
                         <div>
-                          <h3 className="text-lg font-semibold text-gray-900 mb-1">
+                          <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
                             {getLocalizedValue(doc, 'title')}
                           </h3>
-                          <span className="inline-block px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full">
+                          <span className={`inline-block px-3 py-1 text-xs font-medium rounded-full ${getCategoryColor(doc.category_name)}`}>
                             {getLocalizedValue(doc, 'category_display')}
                           </span>
                         </div>
@@ -215,20 +261,20 @@ const Regulations = () => {
                     </div>
 
                     {/* Document Description */}
-                    <p className="text-gray-600 mb-4 leading-relaxed">
+                    <p className="text-gray-600 mb-6 leading-relaxed line-clamp-3">
                       {getLocalizedValue(doc, 'description')}
                     </p>
 
                     {/* Document Info */}
-                    <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 mb-4">
-                      <div className="flex items-center space-x-1">
+                    <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 mb-6">
+                      <div className="flex items-center space-x-2">
                         <ClockIcon className="h-4 w-4" />
                         <span>
                           {t('regulations.lastUpdated')}: {new Date(doc.updated_at).toLocaleDateString('ru-RU')}
                         </span>
                       </div>
                       {doc.file_size && (
-                        <div className="flex items-center space-x-1">
+                        <div className="flex items-center space-x-2">
                           <ArchiveBoxIcon className="h-4 w-4" />
                           <span>{t('regulations.fileSize')}: {doc.file_size}</span>
                         </div>
@@ -238,9 +284,9 @@ const Regulations = () => {
                     {/* Download Button */}
                     <button
                       onClick={() => handleDownload(doc)}
-                      className="w-full flex items-center justify-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
+                      className="w-full flex items-center justify-center space-x-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium py-3 px-6 rounded-xl transition-all duration-300 transform hover:-translate-y-1 shadow-md hover:shadow-lg group/button"
                     >
-                      <ArrowDownTrayIcon className="h-5 w-5" />
+                      <ArrowDownTrayIcon className="h-5 w-5 transition-transform duration-300 group-hover/button:translate-y-1" />
                       <span>{t('regulations.downloadPdf')}</span>
                     </button>
                   </div>
@@ -249,26 +295,30 @@ const Regulations = () => {
             })}
           </div>
         ) : (
-          <div className="text-center py-12">
-            <DocumentIcon className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2">
+          <div className="text-center py-16 bg-white rounded-2xl shadow-lg">
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-gray-100 rounded-2xl mb-6">
+              <DocumentIcon className="h-10 w-10 text-gray-400" />
+            </div>
+            <h3 className="text-2xl font-medium text-gray-900 mb-3">
               {t('regulations.noDocuments')}
             </h3>
-            <p className="text-gray-600">
-              Попробуйте изменить критерии поиска
+            <p className="text-gray-600 max-w-md mx-auto">
+              Попробуйте изменить критерии поиска или выбрать другую категорию
             </p>
           </div>
         )}
 
         {/* Internal Documents Note */}
-        <div className="mt-12 bg-blue-50 border border-blue-200 rounded-lg p-6">
-          <h3 className="text-lg font-semibold text-blue-900 mb-3">
-            {t('regulations.internalDocuments')}
-          </h3>
-          <p className="text-blue-800 leading-relaxed">
-            Все представленные документы являются официальными нормативно-правовыми актами университета. 
-            Документы регулярно обновляются в соответствии с изменениями в законодательстве и внутренней политике университета.
-          </p>
+        <div className="mt-16 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl shadow-xl overflow-hidden">
+          <div className="p-8 md:p-12 text-white">
+            <h3 className="text-2xl font-semibold mb-4">
+              {t('regulations.internalDocuments')}
+            </h3>
+            <p className="text-blue-100 leading-relaxed max-w-3xl">
+              Все представленные документы являются официальными нормативно-правовыми актами университета. 
+              Документы регулярно обновляются в соответствии с изменениями в законодательстве и внутренней политике университета.
+            </p>
+          </div>
         </div>
       </div>
     </div>

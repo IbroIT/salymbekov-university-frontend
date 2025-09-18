@@ -297,7 +297,7 @@ const ForCitizensKG = () => {
         {/* Календарь сроков подачи */}
         <div className="bg-white rounded-lg shadow-lg p-6 mb-12">
           <h2 className="text-2xl font-bold text-gray-800 mb-6">
-            {t('forCitizensKG.calendar.title', 'Календарь сроков подачи документов')}
+            {t('forCitizensKG.calendar.title', 'Календарь поступления')}
           </h2>
 
           <div className="grid md:grid-cols-3 gap-6">

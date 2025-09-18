@@ -16,8 +16,8 @@ const RequirementsForeignCitizens = () => {
   // Статичные данные для языковых требований
   const languageRequirements = [
     { 
-      language: t('reqForeign.lang.russian', 'Русский язык'), 
-      level: t('reqForeign.lang.russianLevel', 'B2 и выше'),
+      language: t('reqForeign.lang.russian'), 
+      level: t('reqForeign.lang.russianLevel'),
       certificates: ['ТРКИ-2', 'TORFL-2']
     },
     { 
@@ -29,12 +29,12 @@ const RequirementsForeignCitizens = () => {
 
   // Статичные данные для визовых требований
   const visaRequirements = [
-    t('reqForeign.visa.invitation', 'Приглашение от университета'),
-    t('reqForeign.visa.passport', 'Действующий загранпаспорт'),
-    t('reqForeign.visa.medical', 'Медицинская справка с переводом'),
-    t('reqForeign.visa.insurance', 'Медицинская страховка'),
-    t('reqForeign.visa.photos', 'Фотографии для визы'),
-    t('reqForeign.visa.fee', 'Оплата консульского сбора'),
+    t('reqForeign.visa.invitation'),
+    t('reqForeign.visa.passport'),
+    t('reqForeign.visa.medical'),
+    t('reqForeign.visa.insurance'),
+    t('reqForeign.visa.photos'),
+    t('reqForeign.visa.fee'),
   ];
 
   return (
@@ -214,7 +214,7 @@ const RequirementsForeignCitizens = () => {
                       <p className="font-semibold text-gray-800">
                         {t('reqForeign.visa.timeline1', 'Приглашение от университета')}
                       </p>
-                      <p className="text-sm text-gray-600">5-7 рабочих дней</p>
+                      <p className="text-sm text-gray-600">{t('reqForeign.numbers.invitation')}</p>
                     </div>
                   </div>
                   <div className="flex items-center p-3 bg-green-50 rounded-lg">
@@ -225,7 +225,7 @@ const RequirementsForeignCitizens = () => {
                       <p className="font-semibold text-gray-800">
                         {t('reqForeign.visa.timeline2', 'Подача в консульство')}
                       </p>
-                      <p className="text-sm text-gray-600">10-15 рабочих дней</p>
+                      <p className="text-sm text-gray-600">{t('reqForeign.numbers.application')}</p>
                     </div>
                   </div>
                   <div className="flex items-center p-3 bg-purple-50 rounded-lg">
@@ -236,7 +236,7 @@ const RequirementsForeignCitizens = () => {
                       <p className="font-semibold text-gray-800">
                         {t('reqForeign.visa.timeline3', 'Получение визы')}
                       </p>
-                      <p className="text-sm text-gray-600">1-2 рабочих дня</p>
+                      <p className="text-sm text-gray-600">{t('reqForeign.numbers.visa')}</p>
                     </div>
                   </div>
                 </div>
