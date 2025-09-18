@@ -60,7 +60,7 @@ const Contacts = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-blue-900 py-8 px-4">
+    <div className="bg-gradient-to-br from-gray-900 to-blue-900 py-8 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Заголовок */}
         <div className="text-center mb-12">
@@ -338,10 +338,10 @@ const Contacts = () => {
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { name: "Facebook", icon: "📘", color: "bg-blue-600/20", border: "border-blue-400/20", handle: "/SalymbekovUniversity", URL: 'https://www.facebook.com/salymbekov.kg' },
-              { name: "Instagram", icon: "📷", color: "bg-pink-600/20", border: "border-pink-400/20", handle: "@salymbekovuniversity", URL: 'https://www.instagram.com/salymbekovuniversity/' },
-              { name: "Twitter", icon: "🐦", color: "bg-sky-600/20", border: "border-sky-400/20", handle: "@SalymbekovUniversity", URL: 'https://x.com/SalymbekovO' },
-              { name: "YouTube", icon: "📺", color: "bg-red-600/20", border: "border-red-400/20", handle: "Salymbekov University", URL: 'https://www.youtube.com/@salymbekovuniversity8213' }
+              { name: "Facebook", icon: "📘", color: "bg-blue-600/20", border: "border-blue-400/20", URL: 'https://www.facebook.com/salymbekov.kg' },
+              { name: "Instagram", icon: "📷", color: "bg-pink-600/20", border: "border-pink-400/20", URL: 'https://www.instagram.com/salymbekovuniversity/' },
+              { name: "Twitter", icon: "🐦", color: "bg-sky-600/20", border: "border-sky-400/20", URL: 'https://x.com/SalymbekovO' },
+              { name: "YouTube", icon: "📺", color: "bg-red-600/20", border: "border-red-400/20", URL: 'https://www.youtube.com/@salymbekovuniversity8213' }
             ].map((social, index) => (
               <motion.a
                 key={index}
@@ -435,4 +435,4 @@ const Contacts = () => {
   );
 };
 
-export default Contacts;
+export default Contacts;  
