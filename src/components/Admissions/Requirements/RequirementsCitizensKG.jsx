@@ -6,21 +6,21 @@ const RequirementsCitizensKG = () => {
 
   // Статичные данные для минимальных баллов по ОРТ
   const ortScores = [
-    { specialty: t('ortScores.generalMedicine', 'Лечебное дело'), score: 140 },
-    { specialty: t('ortScores.dentistry', 'Стоматология'), score: 135 },
-    { specialty: t('ortScores.pharmacy', 'Фармация'), score: 130 },
-    { specialty: t('ortScores.nursing', 'Сестринское дело'), score: 120 },
-    { specialty: t('ortScores.publicHealth', 'Общественное здравоохранение'), score: 125 },
+    { specialty: t('requirementsCitizensKG.ortScores.generalMedicine'), score: 140 },
+    { specialty: t('requirementsCitizensKG.ortScores.dentistry'), score: 135 },
+    { specialty: t('requirementsCitizensKG.ortScores.pharmacy'), score: 130 },
+    { specialty: t('requirementsCitizensKG.ortScores.nursing'), score: 120 },
+    { specialty: t('requirementsCitizensKG.ortScores.publicHealth'), score: 125 },
   ];
 
   // Статичные данные для медицинских требований
   const medicalRequirements = [
-    t('medicalReqs.generalHealth', 'Справка о состоянии здоровья (форма 086/у)'),
-    t('medicalReqs.vaccination', 'Справка о прививках'),
-    t('medicalReqs.fluorography', 'Флюорография'),
-    t('medicalReqs.bloodTest', 'Анализ крови (общий)'),
-    t('medicalReqs.urineTest', 'Анализ мочи (общий)'),
-    t('medicalReqs.psychologist', 'Заключение психолога'),
+    t('requirementsCitizensKG.medicalReqs.generalHealth'),
+    t('requirementsCitizensKG.medicalReqs.vaccination'),
+    t('requirementsCitizensKG.medicalReqs.fluorography'),
+    t('requirementsCitizensKG.medicalReqs.bloodTest'),
+    t('requirementsCitizensKG.medicalReqs.urineTest'),
+    t('requirementsCitizensKG.medicalReqs.psychologist'),
   ];
 
   return (
@@ -109,8 +109,8 @@ const RequirementsCitizensKG = () => {
             
             <div className="mt-6 p-4 bg-yellow-50 border-l-4 border-yellow-400">
               <p className="text-sm text-yellow-800">
-                <strong>{t('requirementsCitizensKG.medical.note', 'Примечание:')}</strong> {' '}
-                {t('requirementsCitizensKG.medical.noteText', 'Все медицинские справки должны быть получены не ранее чем за 3 месяца до подачи документов.')}
+                <strong>{t('requirementsCitizensKG.medical.note')}</strong> {' '}
+                {t('requirementsCitizensKG.medical.noteText')}
               </p>
             </div>
           </div>
@@ -144,15 +144,15 @@ const RequirementsCitizensKG = () => {
                 <ul className="space-y-2 text-gray-700">
                   <li className="flex items-start">
                     <span className="text-green-600 mr-2">•</span>
-                    {t('requirementsCitizensKG.admission.budget.citizenship', 'Гражданство КР')}
+                    {t('requirementsCitizensKG.admission.budget.citizenship')}
                   </li>
                   <li className="flex items-start">
                     <span className="text-green-600 mr-2">•</span>
-                    {t('requirementsCitizensKG.admission.budget.highScores', 'Высокие баллы по ОРТ')}
+                    {t('requirementsCitizensKG.admission.budget.highScores')}
                   </li>
                   <li className="flex items-start">
                     <span className="text-green-600 mr-2">•</span>
-                    {t('requirementsCitizensKG.admission.budget.competition', 'Конкурсный отбор')}
+                    {t('requirementsCitizensKG.admission.budget.competition')}
                   </li>
                 </ul>
               </div>
@@ -172,15 +172,15 @@ const RequirementsCitizensKG = () => {
                 <ul className="space-y-2 text-gray-700">
                   <li className="flex items-start">
                     <span className="text-blue-600 mr-2">•</span>
-                    {t('requirementsCitizensKG.admission.contract.minScore', 'Минимальный проходной балл')}
+                    {t('requirementsCitizensKG.admission.contract.minScore')}
                   </li>
                   <li className="flex items-start">
                     <span className="text-blue-600 mr-2">•</span>
-                    {t('requirementsCitizensKG.admission.contract.payment', 'Оплата обучения')}
+                    {t('requirementsCitizensKG.admission.contract.payment')}
                   </li>
                   <li className="flex items-start">
                     <span className="text-blue-600 mr-2">•</span>
-                    {t('requirementsCitizensKG.admission.contract.guarantee', 'Гарантированное место при соответствии требованиям')}
+                    {t('requirementsCitizensKG.admission.contract.guarantee')}
                   </li>
                 </ul>
               </div>
@@ -192,10 +192,10 @@ const RequirementsCitizensKG = () => {
         <div className="mt-12 bg-white rounded-lg shadow-lg p-6">
           <div className="text-center mb-8">
             <h2 className="text-2xl font-bold text-gray-800 mb-2">
-              {t('requirementsCitizensKG.contact.title', 'Нужна помощь?')}
+              {t('requirementsCitizensKG.contact.title')}
             </h2>
             <p className="text-gray-600">
-              {t('requirementsCitizensKG.contact.subtitle', 'Свяжитесь с приемной комиссией для получения подробной консультации')}
+              {t('requirementsCitizensKG.contact.subtitle')}
             </p>
           </div>
           
@@ -207,7 +207,7 @@ const RequirementsCitizensKG = () => {
                 </svg>
               </div>
               <h3 className="font-semibold text-gray-800 mb-1">
-                {t('requirementsCitizensKG.contact.phone', 'Телефон')}
+                {t('requirementsCitizensKG.contact.phone')}
               </h3>
               <p className="text-gray-600">+996 312 545 000</p>
             </div>
@@ -219,7 +219,7 @@ const RequirementsCitizensKG = () => {
                 </svg>
               </div>
               <h3 className="font-semibold text-gray-800 mb-1">
-                {t('requirementsCitizensKG.contact.email', 'Email')}
+                {t('requirementsCitizensKG.contact.email')}
               </h3>
               <p className="text-gray-600">admissions@su.edu.kg</p>
             </div>
@@ -231,10 +231,10 @@ const RequirementsCitizensKG = () => {
                 </svg>
               </div>
               <h3 className="font-semibold text-gray-800 mb-1">
-                {t('requirementsCitizensKG.contact.hours', 'Часы работы')}
+                {t('requirementsCitizensKG.contact.hours')}
               </h3>
               <p className="text-gray-600">
-                {t('requirementsCitizensKG.contact.schedule', 'Пн-Пт: 9:00-18:00')}
+                {t('requirementsCitizensKG.contact.schedule')}
               </p>
             </div>
           </div>

@@ -6,315 +6,319 @@ const RequirementsForeignCitizens = () => {
 
   // Статичные данные для перевода документов
   const documentTranslation = [
-    t('reqForeign.docs.diploma', 'Диплом/аттестат об образовании'),
-    t('reqForeign.docs.transcript', 'Академическая справка (транскрипт)'),
-    t('reqForeign.docs.passport', 'Паспорт или документ, удостоверяющий личность'),
-    t('reqForeign.docs.birthCert', 'Свидетельство о рождении'),
-    t('reqForeign.docs.photos', 'Фотографии 3x4 см (6 штук)'),
+    t('reqForeign.docs.diploma'),
+    t('reqForeign.docs.transcript'),
+    t('reqForeign.docs.passport'),
+    t('reqForeign.docs.birthCert'),
+    t('reqForeign.docs.photos'),
   ];
 
   // Статичные данные для языковых требований
   const languageRequirements = [
     { 
-      language: t('reqForeign.lang.russian', 'Русский язык'), 
-      level: t('reqForeign.lang.russianLevel', 'B2 и выше'),
+      language: t('reqForeign.lang.russian'), 
+      level: t('reqForeign.lang.russianLevel'),
       certificates: ['ТРКИ-2', 'TORFL-2']
     },
     { 
-      language: t('reqForeign.lang.english', 'Английский язык'), 
-      level: t('reqForeign.lang.englishLevel', 'B2 и выше'),
+      language: t('reqForeign.lang.english'), 
+      level: t('reqForeign.lang.englishLevel'),
       certificates: ['IELTS 6.0+', 'TOEFL 80+', 'Cambridge FCE']
     },
   ];
 
   // Статичные данные для визовых требований
   const visaRequirements = [
-    t('reqForeign.visa.invitation', 'Приглашение от университета'),
-    t('reqForeign.visa.passport', 'Действующий загранпаспорт'),
-    t('reqForeign.visa.medical', 'Медицинская справка с переводом'),
-    t('reqForeign.visa.insurance', 'Медицинская страховка'),
-    t('reqForeign.visa.photos', 'Фотографии для визы'),
-    t('reqForeign.visa.fee', 'Оплата консульского сбора'),
+    t('reqForeign.visa.invitation'),
+    t('reqForeign.visa.passport'),
+    t('reqForeign.visa.medical'),
+    t('reqForeign.visa.insurance'),
+    t('reqForeign.visa.photos'),
+    t('reqForeign.visa.fee'),
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-green-600 to-green-800 text-white py-16">
-        <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-bold mb-4">
-            {t('reqForeign.title', 'Требования для иностранных граждан')}
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <div className="bg-white w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+            <svg className="w-10 h-10 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
+          </div>
+          <h1 className="text-4xl font-bold text-gray-800 mb-4">
+            {t('reqForeign.title')}
           </h1>
-          <p className="text-xl opacity-90">
-            {t('reqForeign.subtitle', 'Академические требования, визовое оформление и поддержка для международных студентов')}
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            {t('reqForeign.subtitle')}
           </p>
         </div>
-      </div>
 
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid gap-8">
-          
-          {/* Перевод и нострификация документов */}
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <div className="flex items-center mb-6">
-              <div className="bg-blue-100 p-3 rounded-full mr-4">
-                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-              </div>
+        {/* Документы */}
+        <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
+          <div className="flex items-center mb-6">
+            <div className="bg-blue-100 p-3 rounded-full mr-4">
+              <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+            <div>
               <h2 className="text-2xl font-bold text-gray-800">
-                {t('reqForeign.translation.title', 'Перевод и нострификация документов')}
+                {t('reqForeign.translation.title')}
               </h2>
-            </div>
-            
-            <div className="grid md:grid-cols-2 gap-6">
-              {/* Документы для перевода */}
-              <div>
-                <h3 className="text-lg font-semibold text-gray-800 mb-4">
-                  {t('reqForeign.translation.documents', 'Документы для нотариального перевода:')}
-                </h3>
-                <div className="space-y-3">
-                  {documentTranslation.map((doc, index) => (
-                    <div key={index} className="flex items-start">
-                      <div className="bg-blue-100 p-1 rounded-full mr-3 mt-1">
-                        <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                      </div>
-                      <p className="text-gray-700">{doc}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Процесс нострификации */}
-              <div>
-                <h3 className="text-lg font-semibold text-gray-800 mb-4">
-                  {t('reqForeign.nostrification.title', 'Нострификация документов:')}
-                </h3>
-                <div className="space-y-4">
-                  <div className="border-l-4 border-blue-500 pl-4">
-                    <h4 className="font-semibold text-gray-800">
-                      {t('reqForeign.nostrification.step1', 'Шаг 1: Подача заявления')}
-                    </h4>
-                    <p className="text-gray-600 text-sm">
-                      {t('reqForeign.nostrification.step1desc', 'В Министерство образования и науки КР')}
-                    </p>
-                  </div>
-                  <div className="border-l-4 border-blue-500 pl-4">
-                    <h4 className="font-semibold text-gray-800">
-                      {t('reqForeign.nostrification.step2', 'Шаг 2: Экспертиза')}
-                    </h4>
-                    <p className="text-gray-600 text-sm">
-                      {t('reqForeign.nostrification.step2desc', 'Рассмотрение документов (30-45 дней)')}
-                    </p>
-                  </div>
-                  <div className="border-l-4 border-blue-500 pl-4">
-                    <h4 className="font-semibold text-gray-800">
-                      {t('reqForeign.nostrification.step3', 'Шаг 3: Получение свидетельства')}
-                    </h4>
-                    <p className="text-gray-600 text-sm">
-                      {t('reqForeign.nostrification.step3desc', 'Выдача свидетельства о признании')}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Языковые требования */}
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <div className="flex items-center mb-6">
-              <div className="bg-green-100 p-3 rounded-full mr-4">
-                <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
-                </svg>
-              </div>
-              <h2 className="text-2xl font-bold text-gray-800">
-                {t('reqForeign.language.title', 'Языковые требования')}
-              </h2>
-            </div>
-            
-            <div className="grid md:grid-cols-2 gap-6">
-              {languageRequirements.map((req, index) => (
-                <div key={index} className="border-2 border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-                  <h3 className="text-xl font-semibold text-gray-800 mb-3">{req.language}</h3>
-                  <div className="mb-4">
-                    <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold">
-                      {t('reqForeign.language.level', 'Уровень')}: {req.level}
-                    </span>
-                  </div>
-                  <h4 className="font-medium text-gray-700 mb-2">
-                    {t('reqForeign.language.certificates', 'Принимаемые сертификаты:')}
-                  </h4>
-                  <ul className="space-y-1">
-                    {req.certificates.map((cert, certIndex) => (
-                      <li key={certIndex} className="flex items-center text-gray-600">
-                        <span className="text-green-600 mr-2">•</span>
-                        {cert}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-6 p-4 bg-yellow-50 border-l-4 border-yellow-400">
-              <p className="text-sm text-yellow-800">
-                <strong>{t('reqForeign.language.note', 'Примечание:')}</strong> {' '}
-                {t('reqForeign.language.noteText', 'Студенты без языковых сертификатов могут пройти языковой тест в университете или пройти подготовительные курсы.')}
+              <p className="text-gray-600 mt-1">
+                {t('reqForeign.translation.documents')}
               </p>
             </div>
           </div>
 
-          {/* Визовые требования */}
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <div className="flex items-center mb-6">
-              <div className="bg-purple-100 p-3 rounded-full mr-4">
-                <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                </svg>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div>
+              <div className="space-y-4">
+                {documentTranslation.map((doc, index) => (
+                  <div key={index} className="flex items-center">
+                    <div className="bg-green-100 p-2 rounded-full mr-4">
+                      <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <span className="text-gray-700">{doc}</span>
+                  </div>
+                ))}
               </div>
-              <h2 className="text-2xl font-bold text-gray-800">
-                {t('reqForeign.visa.title', 'Визовые требования')}
-              </h2>
             </div>
-            
-            <div className="grid md:grid-cols-2 gap-6">
-              {/* Документы для визы */}
-              <div>
-                <h3 className="text-lg font-semibold text-gray-800 mb-4">
-                  {t('reqForeign.visa.documentsTitle', 'Необходимые документы:')}
-                </h3>
-                <div className="space-y-3">
-                  {visaRequirements.map((req, index) => (
-                    <div key={index} className="flex items-start">
-                      <div className="bg-purple-100 p-1 rounded-full mr-3 mt-1">
-                        <svg className="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                      </div>
-                      <p className="text-gray-700">{req}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
 
-              {/* Сроки оформления */}
-              <div>
-                <h3 className="text-lg font-semibold text-gray-800 mb-4">
-                  {t('reqForeign.visa.timelineTitle', 'Сроки оформления:')}
-                </h3>
-                <div className="space-y-4">
-                  <div className="flex items-center p-3 bg-blue-50 rounded-lg">
-                    <div className="bg-blue-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mr-3">
-                      1
-                    </div>
-                    <div>
-                      <p className="font-semibold text-gray-800">
-                        {t('reqForeign.visa.timeline1', 'Приглашение от университета')}
-                      </p>
-                      <p className="text-sm text-gray-600">5-7 рабочих дней</p>
-                    </div>
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-lg">
+              <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                {t('reqForeign.nostrification.title')}
+              </h3>
+              <div className="space-y-4">
+                <div className="flex items-start">
+                  <div className="bg-blue-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mr-3 mt-1">
+                    1
                   </div>
-                  <div className="flex items-center p-3 bg-green-50 rounded-lg">
-                    <div className="bg-green-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mr-3">
-                      2
-                    </div>
-                    <div>
-                      <p className="font-semibold text-gray-800">
-                        {t('reqForeign.visa.timeline2', 'Подача в консульство')}
-                      </p>
-                      <p className="text-sm text-gray-600">10-15 рабочих дней</p>
-                    </div>
+                  <div>
+                    <h4 className="font-medium text-gray-800">{t('reqForeign.nostrification.step1')}</h4>
+                    <p className="text-sm text-gray-600 mt-1">{t('reqForeign.nostrification.step1desc')}</p>
                   </div>
-                  <div className="flex items-center p-3 bg-purple-50 rounded-lg">
-                    <div className="bg-purple-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mr-3">
-                      3
-                    </div>
-                    <div>
-                      <p className="font-semibold text-gray-800">
-                        {t('reqForeign.visa.timeline3', 'Получение визы')}
-                      </p>
-                      <p className="text-sm text-gray-600">1-2 рабочих дня</p>
-                    </div>
+                </div>
+                <div className="flex items-start">
+                  <div className="bg-green-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mr-3 mt-1">
+                    2
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-gray-800">{t('reqForeign.nostrification.step2')}</h4>
+                    <p className="text-sm text-gray-600 mt-1">{t('reqForeign.nostrification.step2desc')}</p>
+                  </div>
+                </div>
+                <div className="flex items-start">
+                  <div className="bg-purple-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mr-3 mt-1">
+                    3
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-gray-800">{t('reqForeign.nostrification.step3')}</h4>
+                    <p className="text-sm text-gray-600 mt-1">{t('reqForeign.nostrification.step3desc')}</p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Поддержка международных студентов */}
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <div className="flex items-center mb-6">
-              <div className="bg-orange-100 p-3 rounded-full mr-4">
-                <svg className="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
+        {/* Языковые требования */}
+        <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
+          <div className="flex items-center mb-6">
+            <div className="bg-green-100 p-3 rounded-full mr-4">
+              <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              </svg>
+            </div>
+            <h2 className="text-2xl font-bold text-gray-800">
+              {t('reqForeign.language.title')}
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {languageRequirements.map((req, index) => (
+              <div key={index} className="border border-gray-200 rounded-lg p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-lg font-semibold text-gray-800">{req.language}</h3>
+                  <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold">
+                    {t('reqForeign.language.level')}: {req.level}
+                  </span>
+                </div>
+                <h4 className="font-medium text-gray-700 mb-2">
+                  {t('reqForeign.language.certificates')}
+                </h4>
+                <ul className="space-y-2">
+                  {req.certificates.map((cert, certIndex) => (
+                    <li key={certIndex} className="flex items-center">
+                      <div className="bg-blue-100 p-1 rounded-full mr-2">
+                        <svg className="w-3 h-3 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <span className="text-sm text-gray-600">{cert}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
+            ))}
+          </div>
+
+          <div className="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+            <p className="text-sm text-gray-700">
+              <strong>{t('reqForeign.language.note')}</strong> {' '}
+              {t('reqForeign.language.noteText')}
+            </p>
+          </div>
+        </div>
+
+        {/* Визовые требования */}
+        <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
+          <div className="flex items-center mb-6">
+            <div className="bg-purple-100 p-3 rounded-full mr-4">
+              <svg className="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+            </div>
+            <div>
               <h2 className="text-2xl font-bold text-gray-800">
-                {t('reqForeign.support.title', 'Поддержка международных студентов')}
+                {t('reqForeign.visa.title')}
               </h2>
             </div>
-            
-            <div className="grid md:grid-cols-3 gap-6">
-              <div className="text-center p-6 border border-gray-200 rounded-lg">
-                <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                  </svg>
-                </div>
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">
-                  {t('reqForeign.support.housing.title', 'Помощь с жильем')}
-                </h3>
-                <p className="text-gray-600 text-sm">
-                  {t('reqForeign.support.housing.desc', 'Содействие в поиске общежития или квартиры')}
-                </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* Документы для визы */}
+            <div>
+              <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                {t('reqForeign.visa.documentsTitle')}
+              </h3>
+              <div className="space-y-3">
+                {visaRequirements.map((req, index) => (
+                  <div key={index} className="flex items-start">
+                    <div className="bg-purple-100 p-1 rounded-full mr-3 mt-1">
+                      <svg className="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <p className="text-gray-700">{req}</p>
+                  </div>
+                ))}
               </div>
+            </div>
 
-              <div className="text-center p-6 border border-gray-200 rounded-lg">
-                <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
+            {/* Сроки оформления */}
+            <div>
+              <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                {t('reqForeign.visa.timelineTitle')}
+              </h3>
+              <div className="space-y-4">
+                <div className="flex items-center p-3 bg-blue-50 rounded-lg">
+                  <div className="bg-blue-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mr-3">
+                    1
+                  </div>
+                  <div>
+                    <p className="font-semibold text-gray-800">
+                      {t('reqForeign.visa.timeline1')}
+                    </p>
+                    <p className="text-sm text-gray-600">{t('reqForeign.visa.timeline1days')}</p>
+                  </div>
                 </div>
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">
-                  {t('reqForeign.support.curator.title', 'Назначение куратора')}
-                </h3>
-                <p className="text-gray-600 text-sm">
-                  {t('reqForeign.support.curator.desc', 'Персональный куратор для адаптации')}
-                </p>
+                <div className="flex items-center p-3 bg-green-50 rounded-lg">
+                  <div className="bg-green-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mr-3">
+                    2
+                  </div>
+                  <div>
+                    <p className="font-semibold text-gray-800">
+                      {t('reqForeign.visa.timeline2')}
+                    </p>
+                    <p className="text-sm text-gray-600">{t('reqForeign.visa.timeline2days')}</p>
+                  </div>
+                </div>
+                <div className="flex items-center p-3 bg-purple-50 rounded-lg">
+                  <div className="bg-purple-500 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mr-3">
+                    3
+                  </div>
+                  <div>
+                    <p className="font-semibold text-gray-800">
+                      {t('reqForeign.visa.timeline3')}
+                    </p>
+                    <p className="text-sm text-gray-600">{t('reqForeign.visa.timeline3days')}</p>
+                  </div>
+                </div>
               </div>
+            </div>
+          </div>
+        </div>
 
-              <div className="text-center p-6 border border-gray-200 rounded-lg">
-                <div className="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">
-                  {t('reqForeign.support.consultation.title', 'Консультации 24/7')}
-                </h3>
-                <p className="text-gray-600 text-sm">
-                  {t('reqForeign.support.consultation.desc', 'Круглосуточная поддержка по любым вопросам')}
-                </p>
+        {/* Поддержка международных студентов */}
+        <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-bold text-gray-800 mb-2">
+              {t('reqForeign.support.title')}
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="text-center p-6 border border-gray-200 rounded-lg">
+              <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
               </div>
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                {t('reqForeign.support.housing.title')}
+              </h3>
+              <p className="text-gray-600 text-sm">
+                {t('reqForeign.support.housing.desc')}
+              </p>
+            </div>
+
+            <div className="text-center p-6 border border-gray-200 rounded-lg">
+              <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                {t('reqForeign.support.curator.title')}
+              </h3>
+              <p className="text-gray-600 text-sm">
+                {t('reqForeign.support.curator.desc')}
+              </p>
+            </div>
+
+            <div className="text-center p-6 border border-gray-200 rounded-lg">
+              <div className="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                {t('reqForeign.support.consultation.title')}
+              </h3>
+              <p className="text-gray-600 text-sm">
+                {t('reqForeign.support.consultation.desc')}
+              </p>
             </div>
           </div>
         </div>
 
         {/* Контактная информация */}
-        <div className="mt-12 bg-white rounded-lg shadow-lg p-6">
+        <div className="bg-white rounded-xl shadow-lg p-8">
           <div className="text-center mb-8">
             <h2 className="text-2xl font-bold text-gray-800 mb-2">
-              {t('reqForeign.contact.title', 'Международный отдел')}
+              {t('reqForeign.contact.title')}
             </h2>
             <p className="text-gray-600">
-              {t('reqForeign.contact.subtitle', 'Свяжитесь с нами для получения подробной информации')}
+              {t('reqForeign.contact.subtitle')}
             </p>
           </div>
-          
-          <div className="grid md:grid-cols-3 gap-6 text-center">
+
+          <div className="grid md:grid-cols-3 gap-6">
             <div className="p-4">
               <div className="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
                 <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -322,9 +326,9 @@ const RequirementsForeignCitizens = () => {
                 </svg>
               </div>
               <h3 className="font-semibold text-gray-800 mb-1">
-                {t('reqForeign.contact.phone', 'Телефон')}
+                {t('reqForeign.contact.phone')}
               </h3>
-              <p className="text-gray-600">+996 312 545 001</p>
+              <p className="text-gray-600">+996 312 625 000</p>
             </div>
             
             <div className="p-4">
@@ -334,7 +338,7 @@ const RequirementsForeignCitizens = () => {
                 </svg>
               </div>
               <h3 className="font-semibold text-gray-800 mb-1">
-                {t('reqForeign.contact.email', 'Email')}
+                {t('reqForeign.contact.email')}
               </h3>
               <p className="text-gray-600">international@su.edu.kg</p>
             </div>
@@ -347,10 +351,10 @@ const RequirementsForeignCitizens = () => {
                 </svg>
               </div>
               <h3 className="font-semibold text-gray-800 mb-1">
-                {t('reqForeign.contact.address', 'Адрес')}
+                {t('reqForeign.contact.address')}
               </h3>
               <p className="text-gray-600">
-                {t('reqForeign.contact.addressText', 'г. Бишкек, ул. Интергельпо 720000')}
+                {t('reqForeign.contact.addressText')}
               </p>
             </div>
           </div>

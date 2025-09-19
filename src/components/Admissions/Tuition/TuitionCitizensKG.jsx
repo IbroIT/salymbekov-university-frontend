@@ -36,7 +36,7 @@ const TuitionCitizensKG = () => {
         {
           program: t('tuitionCitizens.dentistry.prog2', 'Ортодонтия (специализация)'),
           budget: t('tuitionCitizens.noBudget', 'Нет'),
-          contract: '350,000',
+          contract: '300,000',
           currency: t('tuitionCitizens.som', 'сом/год')
         }
       ]
@@ -53,7 +53,7 @@ const TuitionCitizensKG = () => {
         {
           program: t('tuitionCitizens.pharmacy.prog2', 'Клиническая фармация'),
           budget: t('tuitionCitizens.limitedBudget', 'Ограничено'),
-          contract: '220,000',
+          contract: '200,000',
           currency: t('tuitionCitizens.som', 'сом/год')
         }
       ]
@@ -70,7 +70,7 @@ const TuitionCitizensKG = () => {
         {
           program: t('tuitionCitizens.nursing.prog2', 'Сестринское дело (магистратура)'),
           budget: t('tuitionCitizens.limitedBudget', 'Ограничено'),
-          contract: '200,000',
+          contract: '180,000',
           currency: t('tuitionCitizens.som', 'сом/год')
         }
       ]
