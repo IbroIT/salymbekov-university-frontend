@@ -74,14 +74,7 @@ const FacultyCard = ({ faculty, language, index }) => {
             </div>
           } 
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-          <button 
-            onClick={() => setIsExpanded(!isExpanded)}
-            className="text-white text-sm font-medium bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded-full transition-colors"
-          >
-            {isExpanded ? t('hsm.see_less', 'Свернуть') : t('hsm.see_more', 'Подробнее')}
-          </button>
-        </div>
+       
       </div>
       
       <div className="p-5">
@@ -105,20 +98,6 @@ const FacultyCard = ({ faculty, language, index }) => {
               className="overflow-hidden"
             >
               <div className="pt-3 border-t border-gray-100 mt-3 space-y-2">
-                {faculty.email && (
-                  <div className="flex items-center">
-                    <span className="text-gray-500 mr-2">✉️</span>
-                    <a className="text-blue-600 hover:text-blue-800 transition-colors" href={`mailto:${faculty.email}`}>
-                      {faculty.email}
-                    </a>
-                  </div>
-                )}
-                {faculty.office && (
-                  <div className="flex items-center">
-                    <span className="text-gray-500 mr-2">🚪</span>
-                    <span>{t('hsm.office', 'Кабинет')}: {faculty.office}</span>
-                  </div>
-                )}
                 {faculty.interests && (
                   <div className="flex items-start">
                     <span className="text-gray-500 mr-2 mt-1">🔬</span>
@@ -148,13 +127,35 @@ const HSMAcademicStuff = () => {
   });
   const [showFilters, setShowFilters] = useState(false);
 
-  // Extract unique positions and degrees for filtering
+  // Extract unique positions and degrees for filtering with proper translations
   const filterOptions = useMemo(() => {
-    const positions = [...new Set(allFaculty.map(f => f.position_display || f.position).filter(Boolean))];
-    const degrees = [...new Set(allFaculty.map(f => f.academic_degree_display || f.academic_degree).filter(Boolean))];
+    const getPositionForLanguage = (faculty) => {
+      switch (i18n.language) {
+        case 'kg':
+          return faculty.position_kg || faculty.position_display || faculty.position;
+        case 'en':
+          return faculty.position_en || faculty.position_display || faculty.position;
+        default:
+          return faculty.position_display || faculty.position;
+      }
+    };
+
+    const getDegreeForLanguage = (faculty) => {
+      switch (i18n.language) {
+        case 'kg':
+          return faculty.academic_degree_kg || faculty.academic_degree_display || faculty.academic_degree;
+        case 'en':
+          return faculty.academic_degree_en || faculty.academic_degree_display || faculty.academic_degree;
+        default:
+          return faculty.academic_degree_display || faculty.academic_degree;
+      }
+    };
+
+    const positions = [...new Set(allFaculty.map(getPositionForLanguage).filter(Boolean))];
+    const degrees = [...new Set(allFaculty.map(getDegreeForLanguage).filter(Boolean))];
     
     return { positions, degrees };
-  }, [allFaculty]);
+  }, [allFaculty, i18n.language]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -185,25 +186,48 @@ const HSMAcademicStuff = () => {
     
     const q = search.toLowerCase();
     const res = allFaculty.filter(f => {
+      // Helper functions to get translated values
+      const getPositionForLanguage = (faculty) => {
+        switch (i18n.language) {
+          case 'kg':
+            return faculty.position_kg || faculty.position_display || faculty.position;
+          case 'en':
+            return faculty.position_en || faculty.position_display || faculty.position;
+          default:
+            return faculty.position_display || faculty.position;
+        }
+      };
+
+      const getDegreeForLanguage = (faculty) => {
+        switch (i18n.language) {
+          case 'kg':
+            return faculty.academic_degree_kg || faculty.academic_degree_display || faculty.academic_degree;
+          case 'en':
+            return faculty.academic_degree_en || faculty.academic_degree_display || faculty.academic_degree;
+          default:
+            return faculty.academic_degree_display || faculty.academic_degree;
+        }
+      };
+
       // Search filter
       const name = (f.full_name || `${f.first_name || ''} ${f.last_name || ''}`).toLowerCase();
-      const pos = (f.position_display || f.position || '').toLowerCase();
-      const deg = (f.academic_degree_display || f.academic_degree || '').toLowerCase();
+      const pos = getPositionForLanguage(f).toLowerCase();
+      const deg = getDegreeForLanguage(f).toLowerCase();
       const matchesSearch = !search || name.includes(q) || pos.includes(q) || deg.includes(q);
       
       // Position filter
       const matchesPosition = !activeFilters.position || 
-        (f.position_display || f.position) === activeFilters.position;
+        getPositionForLanguage(f) === activeFilters.position;
       
       // Degree filter
       const matchesDegree = !activeFilters.degree || 
-        (f.academic_degree_display || f.academic_degree) === activeFilters.degree;
+        getDegreeForLanguage(f) === activeFilters.degree;
       
       return matchesSearch && matchesPosition && matchesDegree;
     });
     
     setFiltered(res);
-  }, [search, allFaculty, activeFilters]);
+  }, [search, allFaculty, activeFilters, i18n.language]);
 
   const clearFilters = () => {
     setSearch('');
@@ -445,25 +469,39 @@ const HSMAcademicStuff = () => {
           </AnimatePresence>
         ) : (
           Object.keys(facultyByPosition).length > 0 ? (
-            Object.entries(facultyByPosition).map(([code, group]) => (
-              <motion.div 
-                key={code} 
-                className="mb-16"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-              >
-                <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-2 border-b border-gray-200 flex items-center">
-                  <BookOpenIcon className="w-6 h-6 text-blue-600 mr-2" />
-                  {group.name}
-                </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                  {group.faculty.map((f, index) => (
-                    <FacultyCard key={f.id} faculty={f} language={i18n.language} index={index} />
-                  ))}
-                </div>
-              </motion.div>
-            ))
+            Object.entries(facultyByPosition).map(([code, group]) => {
+              // Получаем название группы в зависимости от языка
+              const getGroupName = () => {
+                switch (i18n.language) {
+                  case 'kg':
+                    return group.name_kg || group.name;
+                  case 'en':
+                    return group.name_en || group.name;
+                  default:
+                    return group.name;
+                }
+              };
+
+              return (
+                <motion.div 
+                  key={code} 
+                  className="mb-16"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <h2 className="text-2xl font-bold text-gray-900 mb-6 pb-2 border-b border-gray-200 flex items-center">
+                    <BookOpenIcon className="w-6 h-6 text-blue-600 mr-2" />
+                    {getGroupName()}
+                  </h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    {group.faculty.map((f, index) => (
+                      <FacultyCard key={f.id} faculty={f} language={i18n.language} index={index} />
+                    ))}
+                  </div>
+                </motion.div>
+              );
+            })
           ) : (
             <motion.div 
               className="text-center py-12"

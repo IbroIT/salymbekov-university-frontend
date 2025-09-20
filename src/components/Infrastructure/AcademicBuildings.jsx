@@ -228,11 +228,11 @@ const AcademicBuildings = () => {
                   <img
                     src={building.photo || building.photo_url ||
                       (building.photos && building.photos.find(p => p.type === 'facade')?.url) ||
-                      `https://via.placeholder.com/400x300?text=${encodeURIComponent(getTranslatedField(building, 'name'))}`}
+                      `data:image/svg+xml;base64,${btoa(`<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="300" fill="#f3f4f6"/><text x="200" y="150" text-anchor="middle" fill="#6b7280" font-family="Arial" font-size="16">${getTranslatedField(building, 'name')}</text></svg>`)}`}
                     alt={getTranslatedField(building, 'name')}
                     className={`w-full ${viewMode === 'list' ? 'h-48' : 'h-48 md:h-56'} object-cover`}
                     onError={(e) => {
-                      e.target.src = 'https://via.placeholder.com/400x300?text=Building+Photo';
+                      e.target.src = `data:image/svg+xml;base64,${btoa('<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="300" fill="#f3f4f6"/><text x="200" y="150" text-anchor="middle" fill="#6b7280" font-family="Arial" font-size="16">Building Photo</text></svg>')}`;
                     }}
                   />
                   <div className="absolute top-4 left-4 bg-blue-600 text-white text-xs font-semibold px-2 py-1 rounded">
@@ -374,47 +374,59 @@ const AcademicBuildings = () => {
                   {activeTab === 'facilities' && (
                     <div>
                       <h3 className="text-lg font-semibold text-gray-800 mb-4">{t('academicBuildings.detailedFacilities', 'Подробное описание помещений')}</h3>
-                      <div className="grid md:grid-cols-2 gap-4">
-                        {building.facilities.map((facility, index) => (
-                          <div key={index} className="bg-gray-50 p-4 rounded-lg flex items-start">
-                            <span className="text-2xl mr-3">{facility.icon || '📌'}</span>
-                            <div>
-                              <h4 className="font-semibold text-gray-800">
-                                {getTranslatedField(facility, 'name')}
-                              </h4>
-                              <div className="flex justify-between text-sm text-gray-600 mt-1">
-                                <span>{facility.count} {t('academicBuildings.units', 'ед.')}</span>
-                                <span>{facility.capacity}</span>
+                      {(building.facilities && building.facilities.length > 0) ? (
+                        <div className="grid md:grid-cols-2 gap-4">
+                          {building.facilities.map((facility, index) => (
+                            <div key={index} className="bg-gray-50 p-4 rounded-lg flex items-start">
+                              <span className="text-2xl mr-3">{facility.icon || '📌'}</span>
+                              <div>
+                                <h4 className="font-semibold text-gray-800">
+                                  {getTranslatedField(facility, 'name')}
+                                </h4>
+                                <div className="flex justify-between text-sm text-gray-600 mt-1">
+                                  <span>{facility.count} {t('academicBuildings.units', 'ед.')}</span>
+                                  <span>{facility.capacity}</span>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        ))}
-                      </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="text-center py-8 text-gray-500">
+                          <p>Информация о помещениях пока недоступна</p>
+                        </div>
+                      )}
                     </div>
                   )}
 
                   {activeTab === 'gallery' && (
                     <div>
                       <h3 className="text-lg font-semibold text-gray-800 mb-4">{t('academicBuildings.photoGallery', 'Фотогалерея')}</h3>
-                      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                        {building.photos.map((photo, index) => (
-                          <div key={index} className="relative group cursor-pointer">
-                            <img
-                              src={photo.url}
-                              alt={getTranslatedField(photo, 'caption') || `Photo ${index + 1}`}
-                              className="w-full h-40 object-cover rounded-lg"
-                              onError={(e) => {
-                                e.target.src = 'https://via.placeholder.com/300x200?text=Photo';
-                              }}
-                            />
-                            <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-60 rounded-lg flex items-center justify-center transition-all duration-300">
-                              <div className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-center">
-                                <div className="font-medium">{getTranslatedField(photo, 'caption')}</div>
+                      {(building.photos && building.photos.length > 0) ? (
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                          {building.photos.map((photo, index) => (
+                            <div key={index} className="relative group cursor-pointer">
+                              <img
+                                src={photo.photo_url || photo.url || `data:image/svg+xml;base64,${btoa('<svg width="300" height="200" xmlns="http://www.w3.org/2000/svg"><rect width="300" height="200" fill="#f3f4f6"/><text x="150" y="100" text-anchor="middle" fill="#6b7280" font-family="Arial" font-size="14">Photo</text></svg>')}`}
+                                alt={getTranslatedField(photo, 'title') || `Photo ${index + 1}`}
+                                className="w-full h-40 object-cover rounded-lg"
+                                onError={(e) => {
+                                  e.target.src = `data:image/svg+xml;base64,${btoa('<svg width="300" height="200" xmlns="http://www.w3.org/2000/svg"><rect width="300" height="200" fill="#f3f4f6"/><text x="150" y="100" text-anchor="middle" fill="#6b7280" font-family="Arial" font-size="14">Photo</text></svg>')}`;
+                                }}
+                              />
+                              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-60 rounded-lg flex items-center justify-center transition-all duration-300">
+                                <div className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-center">
+                                  <div className="font-medium">{getTranslatedField(photo, 'title')}</div>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        ))}
-                      </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="text-center py-8 text-gray-500">
+                          <p>Фотографии пока недоступны</p>
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>

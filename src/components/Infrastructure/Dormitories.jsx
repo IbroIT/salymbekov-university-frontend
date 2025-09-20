@@ -14,8 +14,26 @@ import {
   HomeModernIcon,
   ArrowRightIcon,
   ChevronDownIcon,
-  ChevronUpIcon
+  ChevronUpIcon,
+  ExclamationTriangleIcon
 } from '@heroicons/react/24/outline';
+
+// Error Boundary Component
+const ErrorBoundary = ({ children, fallback }) => {
+  try {
+    return children;
+  } catch (error) {
+    console.error('Component error:', error);
+    return fallback || (
+      <div className="bg-red-50 border border-red-200 rounded-lg p-4 m-4">
+        <div className="flex items-center">
+          <ExclamationTriangleIcon className="w-5 h-5 text-red-500 mr-2" />
+          <span className="text-red-700">Something went wrong. Please try refreshing the page.</span>
+        </div>
+      </div>
+    );
+  }
+};
 
 // Анимированные компоненты
 const FadeIn = ({ children, delay = 0 }) => (
@@ -65,8 +83,56 @@ const Dormitories = () => {
         const response = await fetch('http://localhost:8000/api/infrastructure/dormitories/');
         if (response.ok) {
           const data = await response.json();
-          const dormitoriesData = data.results || data;
-          setDormitories(dormitoriesData);
+          const dormitoriesData = Array.isArray(data.results) ? data.results : Array.isArray(data) ? data : [];
+          
+          // Ensure each dormitory has required properties
+          const processedData = dormitoriesData.map(dorm => ({
+            ...dorm,
+            rooms: dorm.rooms || (dorm.type === 'family' ? [
+              {
+                type: "studio",
+                name: { ru: "Студия", kg: "Студия", en: "Studio" },
+                price: { ru: "8000 сом/месяц", kg: "8000 сом/ай", en: "8000 som/month" },
+                features: { ru: "Спальня, кухня, санузел, Wi-Fi", kg: "Уктоочу бөлмө, ашкана, даарет, Wi-Fi", en: "Bedroom, kitchen, bathroom, Wi-Fi" }
+              },
+              {
+                type: "one_bedroom",
+                name: { ru: "Однокомнатная", kg: "Бир бөлмөлүү", en: "One bedroom" },
+                price: { ru: "12000 сом/месяц", kg: "12000 сом/ай", en: "12000 som/month" },
+                features: { ru: "Отдельная спальня, кухня, санузел, Wi-Fi", kg: "Өзүнчө спальня, ашкана, даарет, Wi-Fi", en: "Separate bedroom, kitchen, bathroom, Wi-Fi" }
+              }
+            ] : [
+              {
+                type: "double",
+                name: { ru: "Двухместная комната", kg: "Эки жактуу бөлмө", en: "Double room" },
+                price: { ru: "3500 сом/месяц", kg: "3500 сом/ай", en: "3500 som/month" },
+                features: { ru: "2 кровати, 2 стола, шкаф, Wi-Fi", kg: "2 керебет, 2 стол, шкаф, Wi-Fi", en: "2 beds, 2 desks, wardrobe, Wi-Fi" }
+              },
+              {
+                type: "triple",
+                name: { ru: "Трёхместная комната", kg: "Үч жактуу бөлмө", en: "Triple room" },
+                price: { ru: "2800 сом/месяц", kg: "2800 сом/ай", en: "2800 som/month" },
+                features: { ru: "3 кровати, 3 стола, шкаф, Wi-Fi", kg: "3 керебет, 3 стол, шкаф, Wi-Fi", en: "3 beds, 3 desks, wardrobe, Wi-Fi" }
+              }
+            ]),
+            facilities: dorm.facilities || (dorm.type === 'family' ? [
+              { ru: "Детская игровая площадка", kg: "Балдар оюн аянты", en: "Children's playground" },
+              { ru: "Общая прачечная", kg: "Жалпы кир жуучу жай", en: "Shared laundry" },
+              { ru: "Парковочные места", kg: "Унаа токтотуу жерлери", en: "Parking spaces" },
+              { ru: "Круглосуточная охрана", kg: "Тун-күн коргоо", en: "24/7 security" }
+            ] : [
+              { ru: "Общая кухня на этаже", kg: "Кабатта жалпы ашкана", en: "Shared kitchen per floor" },
+              { ru: "Прачечная", kg: "Кир жуучу жай", en: "Laundry room" },
+              { ru: "Комната отдыха", kg: "Эс алуу бөлмөсү", en: "Recreation room" },
+              { ru: "Круглосуточная охрана", kg: "Тун-күн коргоо", en: "24/7 security" },
+              { ru: "Wi-Fi интернет", kg: "Wi-Fi интернет", en: "Wi-Fi internet" }
+            ]),
+            photos: dorm.photos || [],
+            available: dorm.available || 0,
+            capacity: dorm.capacity || 0
+          }));
+          
+          setDormitories(processedData);
         } else {
           throw new Error('Failed to fetch dormitories');
         }
@@ -234,8 +300,46 @@ const Dormitories = () => {
   };
 
   const getTranslatedField = (obj, fieldPrefix) => {
+    if (!obj) return '';
+    
     const lang = getCurrentLanguage();
-    return obj[`${fieldPrefix}_${lang}`] || obj[`${fieldPrefix}_ru`] || '';
+    
+    // If obj is a string, return it directly
+    if (typeof obj === 'string') return obj;
+    
+    // Handle backend API format (name_ru, name_kg, name_en)
+    const backendFormat = obj[`${fieldPrefix}_${lang}`] || obj[`${fieldPrefix}_ru`];
+    if (backendFormat) return backendFormat;
+    
+    // Handle nested object format (name.ru, name.kg, name.en)
+    if (obj[fieldPrefix] && typeof obj[fieldPrefix] === 'object') {
+      return obj[fieldPrefix][lang] || obj[fieldPrefix]['ru'] || '';
+    }
+    
+    // Try different field name patterns
+    const patterns = [
+      `${fieldPrefix}_${lang}`,
+      `${fieldPrefix}_ru`,
+      fieldPrefix,
+      lang,
+      'ru',
+      'name',
+      'title'
+    ];
+    
+    for (const pattern of patterns) {
+      if (obj[pattern] && typeof obj[pattern] === 'string') {
+        return obj[pattern];
+      }
+    }
+    
+    // If obj has the language directly as a property
+    if (obj[lang]) return obj[lang];
+    if (obj.ru) return obj.ru;
+    if (obj.en) return obj.en;
+    if (obj.kg) return obj.kg;
+    
+    return '';
   };
 
   // Поиск общежитий
@@ -243,14 +347,19 @@ const Dormitories = () => {
     if (!searchTerm) return dormitories;
     
     return dormitories.filter(dorm => {
-      const name = getTranslatedField(dorm, 'name').toLowerCase();
-      const description = getTranslatedField(dorm, 'description').toLowerCase();
-      const address = getTranslatedField(dorm, 'address').toLowerCase();
-      const search = searchTerm.toLowerCase();
-      
-      return name.includes(search) || description.includes(search) || address.includes(search);
+      try {
+        const name = getTranslatedField(dorm, 'name').toLowerCase();
+        const description = getTranslatedField(dorm, 'description').toLowerCase();
+        const address = getTranslatedField(dorm, 'address').toLowerCase();
+        const search = searchTerm.toLowerCase();
+        
+        return name.includes(search) || description.includes(search) || address.includes(search);
+      } catch (error) {
+        console.warn('Error filtering dormitory:', error, dorm);
+        return false;
+      }
     });
-  }, [dormitories, searchTerm]);
+  }, [dormitories, searchTerm, i18n.language]);
 
   if (loading) {
     return (
@@ -408,11 +517,11 @@ const Dormitories = () => {
                       <div className="md:flex">
                         <div className="md:w-2/5 relative group">
                           <motion.img
-                            src={dorm.photos?.[0]?.url || `https://via.placeholder.com/600x400?text=${encodeURIComponent(getTranslatedField(dorm, 'name'))}`}
+                            src={dorm.photos?.[0]?.url || `https://picsum.photos/600/400?random=${dorm.id}`}
                             alt={getTranslatedField(dorm, 'name')}
                             className="w-full h-72 md:h-full object-cover transition-transform duration-700 group-hover:scale-110"
                             onError={(e) => {
-                              e.target.src = 'https://via.placeholder.com/600x400?text=Dormitory+Photo';
+                              e.target.src = `https://picsum.photos/600/400?random=${Math.floor(Math.random() * 1000)}`;
                             }}
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -423,40 +532,40 @@ const Dormitories = () => {
                               dorm.type === 'male' ? 'bg-blue-100 text-blue-800' :
                               'bg-green-100 text-green-800'
                             }`}>
-                              {t(`dormitories.types.${dorm.type}`, dorm.type)}
+                              {t(`dormitories.types.${dorm.type}`, dorm.type || 'dormitory')}
                             </span>
                           </div>
                           
                           <div className="absolute top-4 right-4 bg-white rounded-full p-2 shadow-lg">
-                            <div className={`w-4 h-4 rounded-full ${dorm.available > 0 ? 'bg-green-500' : 'bg-red-500'}`} />
+                            <div className={`w-4 h-4 rounded-full ${(dorm.available || 0) > 0 ? 'bg-green-500' : 'bg-red-500'}`} />
                           </div>
                         </div>
                         
                         <div className="md:w-3/5 p-8">
                           <div className="flex justify-between items-start mb-6">
                             <h2 className="text-3xl font-bold text-gray-900">
-                              {getTranslatedField(dorm, 'name')}
+                              {getTranslatedField(dorm, 'name') || 'Dormitory'}
                             </h2>
                             <div className="text-right">
                               <div className="text-sm text-gray-500 mb-1">{t('dormitories.available', 'Свободно')}</div>
-                              <div className={`text-2xl font-bold ${dorm.available > 0 ? 'text-green-600' : 'text-red-600'}`}>
-                                {dorm.available} / {dorm.capacity}
+                              <div className={`text-2xl font-bold ${(dorm.available || 0) > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                                {dorm.available || 0} / {dorm.capacity || 0}
                               </div>
                             </div>
                           </div>
 
                           <p className="text-gray-600 mb-8 leading-relaxed text-lg">
-                            {getTranslatedField(dorm, 'description')}
+                            {getTranslatedField(dorm, 'description') || 'No description available'}
                           </p>
 
                           <div className="grid md:grid-cols-2 gap-6 mb-8">
                             <div className="flex items-center text-gray-700">
                               <MapPinIcon className="w-6 h-6 text-blue-500 mr-4" />
-                              <span>{getTranslatedField(dorm, 'address')}</span>
+                              <span>{getTranslatedField(dorm, 'address') || 'Address not available'}</span>
                             </div>
                             <div className="flex items-center text-gray-700">
                               <UsersIcon className="w-6 h-6 text-green-500 mr-4" />
-                              <span>{dorm.capacity} {t('dormitories.capacity', 'мест')}</span>
+                              <span>{dorm.capacity || 0} {t('dormitories.capacity', 'мест')}</span>
                             </div>
                           </div>
 
@@ -501,56 +610,71 @@ const Dormitories = () => {
                             className="bg-gradient-to-r from-blue-50 to-purple-50 p-8 border-t"
                           >
                             <div className="grid lg:grid-cols-2 gap-12">
-                              <div>
-                                <h3 className="text-2xl font-bold text-gray-900 mb-8 flex items-center">
-                                  <AcademicCapIcon className="w-8 h-8 text-blue-600 mr-4" />
-                                  {t('dormitories.roomDetails', 'Типы комнат и цены')}
-                                </h3>
-                                <div className="space-y-6">
-                                  {dorm.rooms.map((room, index) => (
-                                    <motion.div
-                                      key={index}
-                                      whileHover={{ scale: 1.02, y: -2 }}
-                                      className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100"
-                                    >
-                                      <h4 className="font-bold text-gray-900 text-xl mb-3">
-                                        {room.name[getCurrentLanguage()]}
-                                      </h4>
-                                      <p className="text-blue-600 font-bold text-2xl mb-3">
-                                        {room.price[getCurrentLanguage()]}
-                                      </p>
-                                      <p className="text-gray-600">
-                                        {room.features[getCurrentLanguage()]}
-                                      </p>
-                                    </motion.div>
-                                  ))}
+                              <ErrorBoundary fallback={
+                                <div className="text-center py-8">
+                                  <p className="text-gray-500">Room information temporarily unavailable</p>
                                 </div>
-                              </div>
+                              }>
+                                <div>
+                                  <h3 className="text-2xl font-bold text-gray-900 mb-8 flex items-center">
+                                    <AcademicCapIcon className="w-8 h-8 text-blue-600 mr-4" />
+                                    {t('dormitories.roomDetails', 'Типы комнат и цены')}
+                                  </h3>
+                                  <div className="space-y-6">
+                                    {(dorm.rooms || []).map((room, index) => (
+                                      <motion.div
+                                        key={index}
+                                        whileHover={{ scale: 1.02, y: -2 }}
+                                        className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100"
+                                      >
+                                        <h4 className="font-bold text-gray-900 text-xl mb-3">
+                                          {room?.name?.[getCurrentLanguage()] || 'Room'}
+                                        </h4>
+                                        <p className="text-blue-600 font-bold text-2xl mb-3">
+                                          {room?.price?.[getCurrentLanguage()] || 'Price not available'}
+                                        </p>
+                                        <p className="text-gray-600">
+                                          {room?.features?.[getCurrentLanguage()] || 'Features not available'}
+                                        </p>
+                                      </motion.div>
+                                    ))}
+                                  </div>
+                                </div>
+                              </ErrorBoundary>
 
-                              <div>
-                                <h3 className="text-2xl font-bold text-gray-900 mb-8 flex items-center">
-                                  <CheckBadgeIcon className="w-8 h-8 text-green-600 mr-4" />
-                                  {t('dormitories.allFacilities', 'Все удобства')}
-                                </h3>
-                                <div className="grid grid-cols-1 gap-4">
-                                  {dorm.facilities.map((facility, index) => (
-                                    <motion.div
-                                      key={index}
-                                      initial={{ opacity: 0, x: 20 }}
-                                      animate={{ opacity: 1, x: 0 }}
-                                      transition={{ delay: index * 0.1 }}
-                                      className="flex items-center p-4 bg-white rounded-xl shadow-sm border border-gray-200"
-                                    >
-                                      <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-4">
-                                        <CheckBadgeIcon className="w-5 h-5 text-green-600" />
-                                      </div>
-                                      <span className="text-gray-700 font-medium">
-                                        {typeof facility === 'string' ? facility : getTranslatedField(facility, 'name')}
-                                      </span>
-                                    </motion.div>
-                                  ))}
+                              <ErrorBoundary fallback={
+                                <div className="text-center py-8">
+                                  <p className="text-gray-500">Facilities information temporarily unavailable</p>
                                 </div>
-                              </div>
+                              }>
+                                <div>
+                                  <h3 className="text-2xl font-bold text-gray-900 mb-8 flex items-center">
+                                    <CheckBadgeIcon className="w-8 h-8 text-green-600 mr-4" />
+                                    {t('dormitories.allFacilities', 'Все удобства')}
+                                  </h3>
+                                  <div className="grid grid-cols-1 gap-4">
+                                    {(dorm.facilities || []).map((facility, index) => (
+                                      <motion.div
+                                        key={index}
+                                        initial={{ opacity: 0, x: 20 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{ delay: index * 0.1 }}
+                                        className="flex items-center p-4 bg-white rounded-xl shadow-sm border border-gray-200"
+                                      >
+                                        <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                                          <CheckBadgeIcon className="w-5 h-5 text-green-600" />
+                                        </div>
+                                        <span className="text-gray-700 font-medium">
+                                          {typeof facility === 'string' ? 
+                                            facility : 
+                                            (facility[getCurrentLanguage()] || facility.ru || facility.en || getTranslatedField(facility, 'name'))
+                                          }
+                                        </span>
+                                      </motion.div>
+                                    ))}
+                                  </div>
+                                </div>
+                              </ErrorBoundary>
                             </div>
                           </motion.div>
                         )}

@@ -1,186 +1,41 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { infrastructureApi } from '../../services/infrastructureApi';
 
 const Hospitals = () => {
   const { t, i18n } = useTranslation();
   const [hospitals, setHospitals] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [selectedHospital, setSelectedHospital] = useState(null);
   const [activeTab, setActiveTab] = useState('departments');
   const [viewMode, setViewMode] = useState('grid');
   const [expandedHospital, setExpandedHospital] = useState(null);
 
   useEffect(() => {
-    // Используем моковые данные напрямую для простоты
-    setHospitals(getMockHospitals());
-    setLoading(false);
+    fetchHospitals();
   }, []);
 
-  const getMockHospitals = () => {
-    return [
-      {
-        id: 1,
-        name: {
-          ru: "Клиника Салымбеков Университета",
-          kg: "Салымбеков университетинин клиникасы",
-          en: "Salymbekov University Clinic"
-        },
-        photo: "/images/hospital1.jpg",
-        description: {
-          ru: "Главная клиническая база университета для подготовки медицинских кадров",
-          kg: "Медициналык кадрларды даярдоо үчүн университеттин негизги клиникалык базасы",
-          en: "Main clinical base of the university for medical training"
-        },
-        departments: [
-          {
-            name: { ru: "Терапевтическое отделение", kg: "Терапевтикалык бөлүм", en: "Therapeutic Department" },
-            description: { ru: "Практика в общей терапии", kg: "Жалпы терапиядагы практика", en: "General therapy practice" },
-            icon: "🩺",
-            beds: 40,
-            doctors: 15
-          },
-          {
-            name: { ru: "Хирургическое отделение", kg: "Хирургиялык бөлүм", en: "Surgical Department" },
-            description: { ru: "Работа в операционных", kg: "Операция бөлмөсүндө иштөө", en: "Operating room work" },
-            icon: "🔪",
-            beds: 30,
-            doctors: 12
-          },
-          {
-            name: { ru: "Педиатрическое отделение", kg: "Педиатриялык бөлүм", en: "Pediatric Department" },
-            description: { ru: "Работа с детьми", kg: "Балдар менен иштөө", en: "Working with children" },
-            icon: "👶",
-            beds: 35,
-            doctors: 10
-          }
-        ],
-        practiceOpportunities: {
-          ru: "Студенты могут участвовать в обходах врачей, наблюдать операции, работать с пациентами под контролем преподавателей",
-          kg: "Студенттер дарыгерлердин айланышына катыша алышат, операцияларды көрө алышат, мугалимдердин көзөмөлү астында пациенттер менен иштей алышат",
-          en: "Students can participate in medical rounds, observe surgeries, work with patients under supervision"
-        },
-        address: {
-          ru: "г. Бишкек, ул. Медицинская, 1",
-          kg: "Бишкек шаары, Медициналык көчөсү, 1",
-          en: "Bishkek, Medical Street, 1"
-        },
-        contact: "+996 312 123-456",
-        workingHours: {
-          ru: "Круглосуточно, практика: 8:00-16:00",
-          kg: "Кун бою, практика: 8:00-16:00",
-          en: "24/7, practice: 8:00-16:00"
-        },
-        totalBeds: 130,
-        totalDoctors: 45,
-        specialties: ["Терапия", "Хирургия", "Педиатрия", "Кардиология", "Неврология"]
-      },
-      {
-        id: 2,
-        name: {
-          ru: "Детская клиническая больница",
-          kg: "Балдар клиникалык ооруканасы",
-          en: "Children's Clinical Hospital"
-        },
-        photo: "/images/hospital2.jpg",
-        description: {
-          ru: "Специализированная детская больница для педиатрической практики",
-          kg: "Педиатриялык практика үчүн адистештирилген балдар ооруканасы",
-          en: "Specialized children's hospital for pediatric practice"
-        },
-        departments: [
-          {
-            name: { ru: "Неонатология", kg: "Неонатология", en: "Neonatology" },
-            description: { ru: "Работа с новорожденными", kg: "Жаңы төрөлгөн балдар менен иштөө", en: "Working with newborns" },
-            icon: "🍼",
-            beds: 20,
-            doctors: 6
-          },
-          {
-            name: { ru: "Детская хирургия", kg: "Балдар хирургиясы", en: "Pediatric Surgery" },
-            description: { ru: "Хирургические вмешательства у детей", kg: "Балдарда хирургиялык кийлигишүүлөр", en: "Surgical interventions in children" },
-            icon: "👨‍⚕️",
-            beds: 25,
-            doctors: 8
-          }
-        ],
-        practiceOpportunities: {
-          ru: "Практика по детской медицине, участие в лечении детей различных возрастов",
-          kg: "Балдар медицинасы боюнча практика, ар түрдүү курактагы балдарды дарылоого катышуу",
-          en: "Pediatric medicine practice, participation in treating children of various ages"
-        },
-        address: {
-          ru: "г. Бишкек, ул. Детская, 15",
-          kg: "Бишкек шаары, Балдар көчөсү, 15",
-          en: "Bishkek, Children's Street, 15"
-        },
-        contact: "+996 312 654-321",
-        workingHours: {
-          ru: "Круглосуточно, практика: 9:00-17:00",
-          kg: "Кун бою, практика: 9:00-17:00",
-          en: "24/7, practice: 9:00-17:00"
-        },
-        totalBeds: 85,
-        totalDoctors: 26,
-        specialties: ["Педиатрия", "Неонатология", "Детская хирургия", "Детская терапия"]
-      },
-      {
-        id: 3,
-        name: {
-          ru: "Городская клиническая больница №1",
-          kg: "Биринчи шаардык клиникалык оорукана",
-          en: "City Clinical Hospital No. 1"
-        },
-        photo: "/images/hospital3.jpg",
-        description: {
-          ru: "Крупнейшая многопрофильная больница города для комплексной практики",
-          kg: "Комплекстүү практика үчүн шаардын эң ири көп тармактуу ооруканасы",
-          en: "The largest multidisciplinary city hospital for comprehensive practice"
-        },
-        departments: [
-          {
-            name: { ru: "Неврология", kg: "Неврология", en: "Neurology" },
-            description: { ru: "Диагностика и лечение заболеваний нервной системы", kg: "Нерв системасынын ооруларын диагноздоо жана дарылоо", en: "Diagnosis and treatment of nervous system diseases" },
-            icon: "🧠",
-            beds: 35,
-            doctors: 10
-          },
-          {
-            name: { ru: "Травматология", kg: "Травматология", en: "Traumatology" },
-            description: { ru: "Лечение травм и повреждений опорно-двигательного аппарата", kg: "Сөөк-булчуң системасынын травмаларын жана зыяндарын дарылоо", en: "Treatment of injuries and damage to the musculoskeletal system" },
-            icon: "🦴",
-            beds: 40,
-            doctors: 12
-          },
-          {
-            name: { ru: "Гинекология", kg: "Гинекология", en: "Gynecology" },
-            description: { ru: "Лечение заболеваний женской репродуктивной системы", kg: "Аялдардын репродуктивдик системасынын ооруларын дарылоо", en: "Treatment of diseases of the female reproductive system" },
-            icon: "🌸",
-            beds: 30,
-            doctors: 9
-          }
-        ],
-        practiceOpportunities: {
-          ru: "Широкая практика по различным медицинским специальностям, работа в отделениях интенсивной терапии",
-          kg: "Ар түрдүү медициналык адистиктер боюнча кеңири практика, интенсивдик дарылоо бөлүмдөрүндө иштөө",
-          en: "Extensive practice in various medical specialties, work in intensive care units"
-        },
-        address: {
-          ru: "г. Бишкек, ул. Центральная, 25",
-          kg: "Бишкек шаары, Борбордук көчө, 25",
-          en: "Bishkek, Central Street, 25"
-        },
-        contact: "+996 312 789-012",
-        workingHours: {
-          ru: "Круглосуточно, практика: 8:00-18:00",
-          kg: "Кун бою, практика: 8:00-18:00",
-          en: "24/7, practice: 8:00-18:00"
-        },
-        totalBeds: 250,
-        totalDoctors: 85,
-        specialties: ["Неврология", "Травматология", "Гинекология", "Терапия", "Хирургия", "Кардиология"]
-      }
-    ];
+  const fetchHospitals = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      console.log('Fetching hospitals from API...');
+      const response = await infrastructureApi.getHospitals();
+      console.log('API response:', response.data);
+      setHospitals(response.data.results || response.data);
+    } catch (err) {
+      console.error('Error fetching hospitals:', err);
+      setError(err.message || 'Failed to load hospitals');
+      // Fallback to mock data if API fails
+      console.log('Falling back to mock data');
+      setHospitals(getMockHospitals());
+    } finally {
+      setLoading(false);
+    }
   };
+
+ 
 
   const getCurrentLanguage = () => {
     return ['ru', 'kg', 'en'].includes(i18n.language) ? i18n.language : 'ru';
@@ -188,14 +43,29 @@ const Hospitals = () => {
 
   // Helper function to get translated field value
   const getTranslatedField = (obj, fieldPrefix) => {
+    if (!obj) return '';
+    
     const lang = getCurrentLanguage();
-    if (obj[`${fieldPrefix}_${lang}`]) return obj[`${fieldPrefix}_${lang}`];
+    
+    // Check for direct field names with language suffix (backend format)
+    const directField = `${fieldPrefix}_${lang}`;
+    if (obj[directField]) return obj[directField];
+    
+    // Check for nested object format (legacy mock data)
     if (obj[fieldPrefix] && typeof obj[fieldPrefix] === 'object' && obj[fieldPrefix][lang]) {
       return obj[fieldPrefix][lang];
     }
+    
+    // Fallback to Russian if current language not available
+    const fallbackField = `${fieldPrefix}_ru`;
+    if (obj[fallbackField]) return obj[fallbackField];
+    
+    // Fallback to nested Russian
     if (obj[fieldPrefix] && typeof obj[fieldPrefix] === 'object' && obj[fieldPrefix]['ru']) {
       return obj[fieldPrefix]['ru'];
     }
+    
+    // Last resort - return the field itself if it's a string
     return obj[fieldPrefix] || '';
   };
 
@@ -215,7 +85,26 @@ const Hospitals = () => {
       <div className="min-h-screen pt-20 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-500 mx-auto"></div>
-          <p className="mt-4 text-gray-600">{t('loading')}</p>
+          <p className="mt-4 text-gray-600">{t('loading', 'Загрузка...')}</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen pt-20 flex items-center justify-center">
+        <div className="text-center">
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+            <strong className="font-bold">{t('error', 'Ошибка')}: </strong>
+            <span className="block sm:inline">{error}</span>
+          </div>
+          <button 
+            onClick={fetchHospitals}
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            {t('retry', 'Попробовать снова')}
+          </button>
         </div>
       </div>
     );
@@ -232,6 +121,9 @@ const Hospitals = () => {
           <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
             {t('hospitals.subtitle', 'Клинические базы для практической подготовки студентов-медиков')}
           </p>
+          
+          {/* Debug info */}
+         
           
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
             <div className="bg-white rounded-lg p-1 shadow-md flex">
@@ -263,16 +155,16 @@ const Hospitals = () => {
               <div className="text-sm opacity-90">{t('hospitals.hospitals', 'Больниц')}</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold">{hospitals.reduce((sum, h) => sum + (h.totalBeds || 0), 0)}</div>
-              <div className="text-sm opacity-90">{t('hospitals.beds', 'Коечных мест')}</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold">{hospitals.reduce((sum, h) => sum + (h.totalDoctors || 0), 0)}</div>
-              <div className="text-sm opacity-90">{t('hospitals.doctors', 'Врачей')}</div>
-            </div>
-            <div className="text-center">
               <div className="text-3xl font-bold">{hospitals.reduce((sum, h) => sum + (h.departments?.length || 0), 0)}</div>
               <div className="text-sm opacity-90">{t('hospitals.departments', 'Отделений')}</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold">24/7</div>
+              <div className="text-sm opacity-90">{t('hospitals.availability', 'Доступность')}</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold">{hospitals.filter(h => h.is_active).length}</div>
+              <div className="text-sm opacity-90">{t('hospitals.active', 'Активных')}</div>
             </div>
           </div>
         </div>
@@ -288,12 +180,12 @@ const Hospitals = () => {
                 <div className={viewMode === 'list' ? 'w-1/3' : ''}>
                   <div className="relative">
                     <img
-                      src={hospital.photo || `https://via.placeholder.com/400x300/3B82F6/FFFFFF?text=${encodeURIComponent(getTranslatedField(hospital, 'name'))}`}
+                      src={hospital.photo_url || `https://via.placeholder.com/400x300/3B82F6/FFFFFF?text=${encodeURIComponent(getTranslatedField(hospital, 'name'))}`}
                       alt={getTranslatedField(hospital, 'name')}
                       className={`w-full ${viewMode === 'list' ? 'h-48' : 'h-48'} object-cover`}
                     />
                     <div className="absolute top-4 left-4 bg-blue-600 text-white text-xs font-semibold px-2 py-1 rounded">
-                      {hospital.totalBeds || 0} {t('hospitals.bedsShort', 'коек')}
+                      {hospital.departments?.length || 0} {t('hospitals.departmentsShort', 'отд.')}
                     </div>
                   </div>
                 </div>
@@ -328,16 +220,18 @@ const Hospitals = () => {
                       </svg>
                     </button>
                     
-                    <a 
-                      href={`tel:${hospital.contact}`}
-                      className="text-gray-500 hover:text-blue-600 flex items-center"
-                      title={t('hospitals.call', 'Позвонить')}
-                    >
-                      <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                      </svg>
-                      {hospital.contact}
-                    </a>
+                    {hospital.contact_phone && (
+                      <a 
+                        href={`tel:${hospital.contact_phone}`}
+                        className="text-gray-500 hover:text-blue-600 flex items-center"
+                        title={t('hospitals.call', 'Позвонить')}
+                      >
+                        <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                        </svg>
+                        {hospital.contact_phone}
+                      </a>
+                    )}
                   </div>
                 </div>
               </div>
@@ -368,23 +262,25 @@ const Hospitals = () => {
 
                   {activeTab === 'departments' && (
                     <div className="grid md:grid-cols-2 gap-4">
-                      {hospital.departments.map((dept, index) => (
-                        <div key={index} className="bg-gray-50 p-4 rounded-lg flex items-start">
-                          <span className="text-2xl mr-3">{dept.icon || '🏥'}</span>
-                          <div className="flex-1">
-                            <h4 className="font-semibold text-gray-800">
-                              {getTranslatedField(dept, 'name')}
-                            </h4>
-                            <p className="text-gray-600 text-sm mt-1">
-                              {getTranslatedField(dept, 'description')}
-                            </p>
-                            <div className="flex justify-between text-xs text-gray-500 mt-2">
-                              <span>{dept.beds} {t('hospitals.bedsShort', 'коек')}</span>
-                              <span>{dept.doctors} {t('hospitals.doctorsShort', 'врачей')}</span>
+                      {hospital.departments && hospital.departments.length > 0 ? (
+                        hospital.departments.map((dept, index) => (
+                          <div key={index} className="bg-gray-50 p-4 rounded-lg flex items-start">
+                            <span className="text-2xl mr-3">🏥</span>
+                            <div className="flex-1">
+                              <h4 className="font-semibold text-gray-800">
+                                {getTranslatedField(dept, 'name')}
+                              </h4>
+                              <p className="text-gray-600 text-sm mt-1">
+                                {getTranslatedField(dept, 'description')}
+                              </p>
                             </div>
                           </div>
+                        ))
+                      ) : (
+                        <div className="col-span-2 text-center py-8">
+                          <p className="text-gray-500">{t('hospitals.noDepartments', 'Информация об отделениях не доступна')}</p>
                         </div>
-                      ))}
+                      )}
                     </div>
                   )}
 
@@ -397,7 +293,6 @@ const Hospitals = () => {
                         <div className="bg-blue-50 p-4 rounded-lg">
                           <p className="text-gray-700">
                             {getTranslatedField(hospital, 'practice_opportunities') ||
-                              (hospital.practiceOpportunities && hospital.practiceOpportunities[getCurrentLanguage()]) ||
                               t('hospitals.defaultPractice', 'Возможности для практики в данной больнице')}
                           </p>
                         </div>
@@ -433,11 +328,17 @@ const Hospitals = () => {
                           {t('hospitals.specialties', 'Специализации')}
                         </h3>
                         <div className="flex flex-wrap gap-2">
-                          {hospital.specialties?.map((specialty, index) => (
-                            <span key={index} className="bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded-full">
-                              {specialty}
-                            </span>
-                          ))}
+                          {hospital.specialties && hospital.specialties.length > 0 ? (
+                            hospital.specialties.map((specialty, index) => (
+                              <span key={index} className="bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded-full">
+                                {specialty}
+                              </span>
+                            ))
+                          ) : (
+                            <div className="text-gray-500">
+                              {t('hospitals.noSpecialties', 'Информация о специализациях не доступна')}
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -456,18 +357,22 @@ const Hospitals = () => {
                             </svg>
                             <span>{getTranslatedField(hospital, 'address')}</span>
                           </div>
-                          <div className="flex items-center">
-                            <svg className="w-5 h-5 text-gray-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                            </svg>
-                            <span>{hospital.contact}</span>
-                          </div>
-                          <div className="flex items-center">
-                            <svg className="w-5 h-5 text-gray-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            <span>{getTranslatedField(hospital, 'workingHours')}</span>
-                          </div>
+                          {hospital.contact_phone && (
+                            <div className="flex items-center">
+                              <svg className="w-5 h-5 text-gray-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                              </svg>
+                              <span>{hospital.contact_phone}</span>
+                            </div>
+                          )}
+                          {hospital.contact_email && (
+                            <div className="flex items-center">
+                              <svg className="w-5 h-5 text-gray-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                              </svg>
+                              <span>{hospital.contact_email}</span>
+                            </div>
+                          )}
                         </div>
                       </div>
                       <div>
@@ -476,12 +381,12 @@ const Hospitals = () => {
                         </h3>
                         <div className="grid grid-cols-2 gap-4">
                           <div className="bg-blue-50 p-3 rounded-lg text-center">
-                            <div className="text-xl font-bold text-blue-600">{hospital.totalBeds || 0}</div>
-                            <div className="text-sm text-gray-600">{t('hospitals.beds', 'Коечных мест')}</div>
+                            <div className="text-xl font-bold text-blue-600">{hospital.departments?.length || 0}</div>
+                            <div className="text-sm text-gray-600">{t('hospitals.departments', 'Отделений')}</div>
                           </div>
                           <div className="bg-green-50 p-3 rounded-lg text-center">
-                            <div className="text-xl font-bold text-green-600">{hospital.totalDoctors || 0}</div>
-                            <div className="text-sm text-gray-600">{t('hospitals.doctors', 'Врачей')}</div>
+                            <div className="text-xl font-bold text-green-600">{hospital.is_active ? t('hospitals.active', 'Активна') : t('hospitals.inactive', 'Неактивна')}</div>
+                            <div className="text-sm text-gray-600">{t('hospitals.status', 'Статус')}</div>
                           </div>
                         </div>
                       </div>

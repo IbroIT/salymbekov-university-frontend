@@ -36,6 +36,17 @@ const AccreditationCard = ({ accreditation, language }) => {
     }
   };
 
+  const getAccreditationType = () => {
+    switch (language) {
+      case 'kg':
+        return accreditation.accreditation_type_kg || accreditation.accreditation_type_display;
+      case 'en':
+        return accreditation.accreditation_type_en || accreditation.accreditation_type_display;
+      default:
+        return accreditation.accreditation_type_display;
+    }
+  };
+
   const getTypeColor = () => {
     switch (accreditation.accreditation_type) {
       case 'national':
@@ -69,7 +80,7 @@ const AccreditationCard = ({ accreditation, language }) => {
         {/* Header */}
         <div className="flex justify-between items-start mb-4">
           <span className={`px-3 py-1 rounded-full text-sm font-medium ${getTypeColor()}`}>
-            {accreditation.accreditation_type_display}
+            {getAccreditationType()}
           </span>
           <div className="flex items-center">
             {accreditation.is_valid ? (
@@ -201,54 +212,6 @@ const HSMAccreditation = () => {
   const [error, setError] = useState(null);
 
   // Fallback данные для аккредитаций медицинской школы
-  const fallbackAccreditations = {
-    national: {
-      name: 'Национальные аккредитации',
-      accreditations: [
-        {
-          id: 1,
-          name: 'Государственная аккредитация образовательных программ',
-          name_en: 'State Accreditation of Educational Programs',
-          name_kg: 'Билим берүү программаларынын мамлекеттик аккредитациясы',
-          organization: 'Министерство образования и науки КР',
-          organization_en: 'Ministry of Education and Science of the KR',
-          organization_kg: 'КР Билим берүү жана илим министрлиги',
-          description: 'Официальное признание качества медицинских образовательных программ',
-          description_en: 'Official recognition of the quality of medical educational programs',
-          description_kg: 'Медициналык билим берүү программаларынын сапатынын расмий таануу',
-          accreditation_type: 'national',
-          accreditation_type_display: 'Национальная',
-          is_valid: true,
-          issue_date: '2023-01-15',
-          expiry_date: '2028-01-15',
-          certificate_number: 'ACC-MED-2023-001'
-        }
-      ]
-    },
-    international: {
-      name: 'Международные аккредитации',
-      accreditations: [
-        {
-          id: 2,
-          name: 'Аккредитация WFME',
-          name_en: 'WFME Accreditation',
-          name_kg: 'WFME аккредитациясы',
-          organization: 'Всемирная федерация медицинского образования',
-          organization_en: 'World Federation for Medical Education',
-          organization_kg: 'Дүйнөлүк медициналык билим берүү федерациясы',
-          description: 'Международное признание стандартов медицинского образования',
-          description_en: 'International recognition of medical education standards',
-          description_kg: 'Медициналык билим берүү стандарттарынын эларалык таануу',
-          accreditation_type: 'international',
-          accreditation_type_display: 'Международная',
-          is_valid: true,
-          issue_date: '2022-09-10',
-          expiry_date: '2027-09-10',
-          certificate_number: 'WFME-2022-KG-001'
-        }
-      ]
-    }
-  };
 
   useEffect(() => {
     const fetchAccreditations = async () => {
@@ -319,14 +282,28 @@ const HSMAccreditation = () => {
 
         {/* Accreditation Sections */}
         <div className="space-y-12">
-          {Object.entries(accreditationData).map(([typeCode, typeData]) => (
-            <AccreditationSection
-              key={typeCode}
-              title={typeData.name}
-              accreditations={typeData.accreditations}
-              language={i18n.language}
-            />
-          ))}
+          {Object.entries(accreditationData).map(([typeCode, typeData]) => {
+            // Получаем название типа в зависимости от языка
+            const getTypeName = () => {
+              switch (i18n.language) {
+                case 'kg':
+                  return typeData.name_kg || typeData.name;
+                case 'en':
+                  return typeData.name_en || typeData.name;
+                default:
+                  return typeData.name;
+              }
+            };
+
+            return (
+              <AccreditationSection
+                key={typeCode}
+                title={getTypeName()}
+                accreditations={typeData.accreditations}
+                language={i18n.language}
+              />
+            );
+          })}
         </div>
 
         {/* Empty State */}

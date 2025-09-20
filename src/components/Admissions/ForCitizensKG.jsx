@@ -244,7 +244,9 @@ const ForCitizensKG = () => {
                   <td className="border border-gray-300 px-4 py-3 text-center">
                     <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm font-semibold">120+</span>
                   </td>
-                  <td className="border border-gray-300 px-4 py-3 text-center text-gray-700">6 лет</td>
+                  <td className="border border-gray-300 px-4 py-3 text-center text-gray-700">
+                    {t('forCitizensKG.minScores.duration6', '6 лет')}
+                  </td>
                 </tr>
                 <tr className="hover:bg-gray-50">
                   <td className="border border-gray-300 px-4 py-3 text-gray-800">
@@ -256,7 +258,9 @@ const ForCitizensKG = () => {
                   <td className="border border-gray-300 px-4 py-3 text-center">
                     <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm font-semibold">115+</span>
                   </td>
-                  <td className="border border-gray-300 px-4 py-3 text-center text-gray-700">5 лет</td>
+                  <td className="border border-gray-300 px-4 py-3 text-center text-gray-700">
+                    {t('forCitizensKG.minScores.duration5', '5 лет')}
+                  </td>
                 </tr>
                 <tr className="hover:bg-gray-50">
                   <td className="border border-gray-300 px-4 py-3 text-gray-800">
@@ -268,7 +272,9 @@ const ForCitizensKG = () => {
                   <td className="border border-gray-300 px-4 py-3 text-center">
                     <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm font-semibold">110+</span>
                   </td>
-                  <td className="border border-gray-300 px-4 py-3 text-center text-gray-700">5 лет</td>
+                  <td className="border border-gray-300 px-4 py-3 text-center text-gray-700">
+                    {t('forCitizensKG.minScores.duration5', '5 лет')}
+                  </td>
                 </tr>
                 <tr className="hover:bg-gray-50">
                   <td className="border border-gray-300 px-4 py-3 text-gray-800">
@@ -280,7 +286,9 @@ const ForCitizensKG = () => {
                   <td className="border border-gray-300 px-4 py-3 text-center">
                     <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm font-semibold">100+</span>
                   </td>
-                  <td className="border border-gray-300 px-4 py-3 text-center text-gray-700">4 года</td>
+                  <td className="border border-gray-300 px-4 py-3 text-center text-gray-700">
+                    {t('forCitizensKG.minScores.duration4', '4 года')}
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -311,11 +319,11 @@ const ForCitizensKG = () => {
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span className="text-gray-600">{t('forCitizensKG.calendar.start', 'Начало:')}</span>
-                  <span className="font-semibold">15 июня</span>
+                  <span className="font-semibold">{t('forCitizensKG.calendar.phase1Start', '15 июня')}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">{t('forCitizensKG.calendar.end', 'Окончание:')}</span>
-                  <span className="font-semibold">25 июля</span>
+                  <span className="font-semibold">{t('forCitizensKG.calendar.phase1End', '25 июля')}</span>
                 </div>
               </div>
             </div>
@@ -330,11 +338,11 @@ const ForCitizensKG = () => {
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span className="text-gray-600">{t('forCitizensKG.calendar.start', 'Начало:')}</span>
-                  <span className="font-semibold">1 августа</span>
+                  <span className="font-semibold">{t('forCitizensKG.calendar.phase2Start', '1 августа')}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">{t('forCitizensKG.calendar.end', 'Окончание:')}</span>
-                  <span className="font-semibold">15 августа</span>
+                  <span className="font-semibold">{t('forCitizensKG.calendar.phase2End', '15 августа')}</span>
                 </div>
               </div>
             </div>
@@ -349,11 +357,11 @@ const ForCitizensKG = () => {
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span className="text-gray-600">{t('forCitizensKG.calendar.start', 'Начало:')}</span>
-                  <span className="font-semibold">20 августа</span>
+                  <span className="font-semibold">{t('forCitizensKG.calendar.phase3Start', '20 августа')}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">{t('forCitizensKG.calendar.end', 'Окончание:')}</span>
-                  <span className="font-semibold">5 сентября</span>
+                  <span className="font-semibold">{t('forCitizensKG.calendar.phase3End', '5 сентября')}</span>
                 </div>
               </div>
             </div>
@@ -442,50 +450,12 @@ const ForCitizensKG = () => {
             </div>
           </div>
 
-          {/* Карта и подробный адрес */}
-          <div className="border-t border-gray-200 pt-8">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4 text-center">
-              {t('forCitizensKG.contact.location', 'Расположение приемной комиссии')}
-            </h3>
 
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="space-y-4">
-                <div className="p-4 bg-gray-50 rounded-lg">
-                  <h4 className="font-semibold text-gray-800 mb-2">
-                    {t('forCitizensKG.contact.fullAddress', 'Полный адрес:')}
-                  </h4>
-                  <p className="text-gray-700">
-                    720040, Кыргызская Республика,<br />
-                    г. Бишкек, ул. Интергельпо, 2<br />
-                    {t('forCitizensKG.contact.building', 'Административное здание, 1 этаж')}
-                  </p>
-                </div>
-
-                <div className="p-4 bg-blue-50 rounded-lg">
-                  <h4 className="font-semibold text-blue-800 mb-2">
-                    {t('forCitizensKG.contact.publicTransport', 'Общественный транспорт:')}
-                  </h4>
-                  <p className="text-blue-700 text-sm">
-                    {t('forCitizensKG.contact.busRoutes', 'Автобусы: №12, №18, №22')} <br />
-                    {t('forCitizensKG.contact.trolleyRoutes', 'Троллейбусы: №4, №6')} <br />
-                    {t('forCitizensKG.contact.nearestStop', 'Остановка: "Университет"')}
-                  </p>
-                </div>
-              </div>
-
-              <div className="bg-gray-100 rounded-lg p-4 text-center">
-                <svg className="w-16 h-16 text-gray-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-1.447-.894L15 4m0 13V4m0 0L9 7" />
-                </svg>
-                <p className="text-gray-600 text-sm">
-                  {t('forCitizensKG.contact.mapPlaceholder', 'Интерактивная карта будет добавлена')}
-                </p>
-              </div>
+            
             </div>
           </div>
         </div>
-      </div>
-    </div>
+
   );
 };
 

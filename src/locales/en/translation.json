@@ -92,6 +92,9 @@
     "subtitle": "List of university clinics and hospitals for student practice",
     "address": "Address",
     "contact": "Contact",
+    "hospitals": "Hospitals",
+    "beds": "Beds",
+    "doctors": "Doctors",
     "departments": "Departments",
     "practiceOpportunities": "Practice Opportunities",
     "hideDetails": "Hide Details",
@@ -110,7 +113,16 @@
     "feature1": "Working with real patients",
     "feature2": "Observing surgeries",
     "feature3": "Supervision by experienced doctors",
-    "feature4": "Access to medical equipment"
+    "feature4": "Access to medical equipment",
+    "specialties": "Specialties",
+    "noSpecialties": "Information about specialties is not available",
+    "active": "Active",
+    "inactive": "Inactive",
+    "status": "Status",
+    "contactInfo": "Contact Information",
+    "statistics": "Statistics",
+    "practice": "Practice",
+    "info": "Information"
   },
   "laboratories": {
     "title": "University Laboratories",
@@ -152,6 +164,10 @@
     "detailedFacilities": "Detailed Room Description",
     "capacity": "Capacity",
     "photoGallery": "Photo Gallery",
+    "overview": "Overview",
+    "buildingInfo": "Building Information",
+    "quickStats": "Quick Statistics",
+    "units": "units",
     "navigationInfo": "Navigation and Contacts",
     "howToReach": "How to Get There",
     "transport1": "Buses: #10, #15, #22 to 'University' stop",
@@ -168,6 +184,10 @@
     "dormitoriesTab": "Dormitories",
     "applicationTab": "Application Process",
     "available": "Available",
+    "applyNow": "Apply Now",
+    "searchPlaceholder": "Search for dormitory...",
+    "searchHint": "Enter name or address...",
+    "findDormitory": "Find Dormitory",
     "address": "Address",
     "roomTypes": "Room Types",
     "mainFacilities": "Main Facilities",
@@ -2861,7 +2881,20 @@
     "ortScores": {
       "title": "Minimum ORT Scores",
       "specialty": "Specialty",
-      "minScore": "Min. Score"
+      "minScore": "Min. Score",
+      "generalMedicine": "General Medicine",
+      "dentistry": "Dentistry",
+      "pharmacy": "Pharmacy",
+      "nursing": "Nursing",
+      "publicHealth": "Public Health"
+    },
+    "medicalReqs": {
+      "generalHealth": "Health certificate (form 086/u)",
+      "vaccination": "Vaccination certificate",
+      "fluorography": "Fluorography",
+      "bloodTest": "Blood test (general)",
+      "urineTest": "Urine test (general)",
+      "psychologist": "Psychologist's conclusion"
     },
     "medical": {
       "title": "Medical Requirements",
@@ -2871,10 +2904,16 @@
     "admission": {
       "title": "Admission Conditions",
       "budget": {
-        "title": "Budget Places"
+        "title": "Budget Places",
+        "citizenship": "KR citizenship",
+        "highScores": "High ORT scores",
+        "competition": "Competitive selection"
       },
       "contract": {
-        "title": "Contract Places"
+        "title": "Contract Places",
+        "minScore": "Minimum passing score",
+        "payment": "Tuition payment",
+        "guarantee": "Guaranteed place when meeting requirements"
       }
     },
     "contact": {
@@ -2889,6 +2928,19 @@
   "reqForeign": {
     "title": "Requirements for Foreign Citizens",
     "subtitle": "Academic requirements, visa processing and support for international students",
+    "docs": {
+      "diploma": "Diploma/certificate of education",
+      "transcript": "Academic transcript",
+      "passport": "Passport or identity document",
+      "birthCert": "Birth certificate",
+      "photos": "3x4 cm photos (6 pieces)"
+    },
+    "lang": {
+      "russian": "Russian language",
+      "russianLevel": "B2 and above",
+      "english": "English language",
+      "englishLevel": "B2 and above"
+    },
     "translation": {
       "title": "Translation and Nostrification of Documents",
       "documents": "Documents for notarized translation:"
@@ -2916,12 +2968,15 @@
       "timeline1": "University invitation",
       "timeline2": "Consulate application",
       "timeline3": "Visa receipt",
+      "timeline1days": "5-7 business days",
+      "timeline2days": "10-15 business days",
+      "timeline3days": "1-2 business days",
       "invitation": "University invitation",
-  "passport": "Valid international passport",
-  "medical": "Medical certificate with translation",
-  "insurance": "Medical insurance",
-  "photos": "Visa photos",
-  "fee": "Consular fee payment"
+      "passport": "Valid foreign passport",
+      "medical": "Medical certificate with translation",
+      "insurance": "Medical insurance",
+      "photos": "Visa photos",
+      "fee": "Consular fee payment"
     },
     "support": {
       "title": "International Student Support",
@@ -3005,6 +3060,16 @@
       "title": "Required Documents",
       "note": "Important:",
       "noteText": "All documents must be originals with notarized copies."
+    },
+    "docs": {
+      "passport": "KR Citizen Passport",
+      "passportDesc": "Original + copy",
+      "certificate": "Secondary Education Certificate",
+      "certificateDesc": "Original + notarized copy",
+      "medical": "Medical Certificate",
+      "medicalDesc": "Form 086/u with fluorography",
+      "photos": "Photographs",
+      "photosDesc": "6 pieces 3x4 cm"
     },
     "calendar": {
       "title": "Application Deadlines",
@@ -3095,35 +3160,63 @@
       "note": "Important:",
       "noteText": "All documents must be translated into Kyrgyz or Russian and notarized."
     },
+    "visa": {
+      "invitation": "University invitation",
+      "invitationDesc": "Official invitation for studies",
+      "passport": "Valid foreign passport",
+      "passportDesc": "Valid for at least 1 year",
+      "medical": "Medical certificate",
+      "medicalDesc": "With notarized translation",
+      "insurance": "Medical insurance",
+      "insuranceDesc": "For the entire study period",
+      "photos": "Photographs",
+      "photosDesc": "4 pieces 3x4 cm",
+      "fee": "Payment receipt",
+      "feeDesc": "Consular fee"
+    },
     "timeline": {
       "title": "Admission Calendar",
       "completed": "Completed",
       "active": "Active",
-      "upcoming": "Upcoming"
+      "upcoming": "Upcoming",
+      "jan": "January",
+      "janAction": "Start of application acceptance",
+      "mar": "March",
+      "marAction": "Document submission for spring semester",
+      "jun": "June",
+      "junAction": "Main admission for autumn semester",
+      "aug": "August",
+      "augAction": "Final stage of admission"
     },
     "support": {
       "title": "International Student Support",
-      "subtitle": "We provide full support at all stages of education",
+      "subtitle": "We will help you adapt to life in Kyrgyzstan",
       "housing": {
         "title": "Housing Assistance",
-        "desc": "Help with finding dormitory or apartment",
-        "feature1": "Dormitory room reservation",
-        "feature2": "Apartment rental assistance",
-        "feature3": "City district consultations"
+        "dormitory": "Places in university dormitory",
+        "rental": "Help with finding rental housing",
+        "temporary": "Temporary accommodation upon arrival",
+        "safe": "Safe districts for students"
       },
       "curator": {
         "title": "Personal Curator",
-        "desc": "Individual support in adaptation",
-        "feature1": "Airport pickup",
-        "feature2": "Document processing assistance",
-        "feature3": "Study process adaptation"
+        "assignment": "Assignment on the first day",
+        "help": "Help with adaptation",
+        "academic": "Academic support",
+        "cultural": "Cultural adaptation"
       },
-      "legal": {
-        "title": "Legal Support",
-        "desc": "Help with processing all necessary documents",
-        "feature1": "Residence registration",
-        "feature2": "Student ID processing",
-        "feature3": "Legal consultations"
+      "documents": {
+        "title": "Document Assistance",
+        "registration": "MVD registration",
+        "visa": "Visa extension",
+        "permits": "Work permits",
+        "medical": "Medical certificates"
+      },
+      "international": {
+        "title": "International Department",
+        "subtitle": "Your support 24/7",
+        "office": "Office",
+        "room": "Main building, 205"
       }
     },
     "contact": {
@@ -3171,6 +3264,26 @@
       "soc2": "Disabled: 30% discount",
       "soc3": "Large families: 20% discount"
     },
+    "general": {
+      "name": "General Medicine",
+      "prog1": "General Medicine (6 years)",
+      "prog2": "General Medicine (in English)"
+    },
+    "dentistry": {
+      "name": "Dentistry",
+      "prog1": "Dentistry (5 years)",
+      "prog2": "Orthodontics (specialization)"
+    },
+    "pharmacy": {
+      "name": "Pharmacy",
+      "prog1": "Pharmacy (5 years)",
+      "prog2": "Clinical Pharmacy"
+    },
+    "nursing": {
+      "name": "Nursing",
+      "prog1": "Nursing (4 years)",
+      "prog2": "Nursing (Master's degree)"
+    },
     "bankDetails": {
       "title": "Bank Details",
       "download": "Download PDF",
@@ -3183,7 +3296,9 @@
       "important": "Important!",
       "rule1": "In payment purpose, be sure to indicate student's full name and course",
       "rule2": "Keep payment receipt until graduation",
-      "rule3": "When paying through ATM, check the correctness of details"
+      "rule3": "When paying through ATM, check the correctness of details",
+      "downloadPDF": "Download details",
+      "downloadNote": "File with bank details for printing"
     },
     "bank": {
       "name": "Commercial Bank KYRGYZSTAN",
@@ -3204,6 +3319,26 @@
     "subtitle": "Complete information about program costs, additional expenses and scholarships",
     "tuition": {
       "title": "Study Program Costs"
+    },
+    "general": {
+      "name": "General Medicine",
+      "prog1": "General Medicine (6 years)",
+      "prog2": "General Medicine (in English)"
+    },
+    "dentistry": {
+      "name": "Dentistry",
+      "prog1": "Dentistry (5 years)",
+      "prog2": "Orthodontics (specialization)"
+    },
+    "pharmacy": {
+      "name": "Pharmacy",
+      "prog1": "Pharmacy (5 years)",
+      "prog2": "Clinical Pharmacy"
+    },
+    "nursing": {
+      "name": "Nursing",
+      "prog1": "Nursing (4 years)",
+      "prog2": "Nursing (Master's degree)"
     },
     "som": "SOM",
     "perYear": "/year",
@@ -3368,8 +3503,27 @@
       "dentistry": "Dentistry",
       "pharmacy": "Pharmacy",
       "nursing": "Nursing",
+      "duration6": "6 years",
+      "duration5": "5 years",
+      "duration4": "4 years",
       "note": "Note:",
       "noteText": "Passing scores may vary depending on competition and admission year."
+    },
+    "calendar": {
+      "title": "Document Acceptance Calendar",
+      "start": "Start:",
+      "end": "End:",
+      "phase1": "Document Submission",
+      "phase2": "ORT and Exams",
+      "phase3": "Enrollment",
+      "phase1Start": "June 1",
+      "phase1End": "July 1",
+      "phase2Start": "July 15", 
+      "phase2End": "August 1",
+      "phase3Start": "August 15",
+      "phase3End": "September 1",
+      "warning": "Attention!",
+      "warningText": "Deadlines may change. Follow updates on the official website and university social media."
     },
     "contact": {
       "title": "Admissions Committee",
@@ -3478,6 +3632,37 @@
       "other": "Others"
     },
     "totalStudents": "More than 450 international students from 25+ countries",
+    "support": {
+      "title": "International Student Support",
+      "subtitle": "We will help you adapt to life in Kyrgyzstan",
+      "housing": {
+        "title": "Housing Assistance",
+        "dormitory": "Places in university dormitory",
+        "rental": "Help with finding rental housing",
+        "temporary": "Temporary accommodation upon arrival",
+        "safe": "Safe districts for students"
+      },
+      "curator": {
+        "title": "Personal Curator",
+        "assignment": "Assignment on the first day",
+        "help": "Help with adaptation",
+        "academic": "Academic support",
+        "cultural": "Cultural adaptation"
+      },
+      "documents": {
+        "title": "Document Assistance",
+        "registration": "MVD registration",
+        "visa": "Visa extension",
+        "permits": "Work permits",
+        "medical": "Medical certificates"
+      },
+      "international": {
+        "title": "International Department",
+        "subtitle": "Your support 24/7",
+        "office": "Office",
+        "room": "Main building, 205"
+      }
+    },
     "contact": {
       "title": "International Department",
       "subtitle": "Our team speaks different languages and is ready to help 24/7",
