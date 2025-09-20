@@ -183,7 +183,7 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
         isScrolled 
           ? 'bg-white py-2' 
-          : 'bg-gradient-to-r from-blue-900 to-blue-800 py-4'
+          : 'bg-gradient-to-r from-blue-900 to-blue-800 py-1'
       }`}
       ref={menuRef}
     >

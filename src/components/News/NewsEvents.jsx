@@ -213,11 +213,7 @@ const NewsEvents = () => {
                   >
                     {t('newsanon.readMore')} →
                   </Link>
-                  {event.status === 'upcoming' && (
-                    <button className="bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-green-700 transition-colors">
-                      {t('newsanon.participate')}
-                    </button>
-                  )}
+                  
                 </div>
               </div>
             </div>
