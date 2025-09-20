@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from './LanguageSwitcher';
-import DefaultLogo from "../assets/logo-salymbekov-university-site.jpg";
-import ScrolledLogo  from "../assets/Logo_white.png";
+import DefaultLogo from "../assets/logo-salymbekov-university-site2.png";
+import ScrolledLogo  from "../assets/Logo_white3.png";
 
 const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
   const { t, i18n } = useTranslation();
@@ -324,7 +324,7 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
             {/* Кнопка подачи заявки - скрыта на мобильных */}
             <div className="hidden md:block">
               <a
-                href="/apply"
+                href="/admissions/apply"
                 className={`px-4 py-2 rounded-lg font-semibold transition-all duration-300 hover:shadow-lg hover:scale-105 ${
                   isScrolled
                     ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800'
@@ -385,7 +385,7 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
             {/* Кнопка подачи заявки в мобильном меню */}
             <div className="md:hidden px-4 py-2">
               <a
-                href="/apply"
+                href="/admissions/apply"
                 className="block w-full text-center px-4 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold transition-all duration-300 hover:shadow-lg"
                 onClick={() => setIsMenuOpen(false)}
               >

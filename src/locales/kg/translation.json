@@ -2,8 +2,8 @@
   "nav": {
     "home": "Башкы бет",
     "about": "Биз жөнүндө",
-  "HSM": "Жогорку Медицина Мектеби",
-    "admission": "Кабыл алуу",
+  "HSM": "ЖМ Мектеби",
+    "admission": "Тапшыруу",
     "research": "Изилдөөлөр",
     "campus_life": "Студенттерге",
     "news": "Жаңылыктар",
@@ -43,7 +43,7 @@
     "feedback": "Кери байланыш",
     "mission": "Миссия",
     "regulations": "НУА",
-    "about_HSM": "ББМ жөнүндө",
+    "about_HSM": "ЖММ жөнүндө",
     "faculty": "Окутуучу курам",
     "accreditation": "Аккредитация",
     "learning_goals": "Окуу максаттары",
@@ -59,7 +59,7 @@
     "management_body": "Башкаруу органы",
     "scientific_journals": "Илимий журналдар",
     
-    "student": "Студенттер үчүн",
+    "student": "Студенттер",
     "internships": "Практика",
     "academic_mobility": "Академиялык мобилдүүлүк",
     "instructions": "Нускамалар",

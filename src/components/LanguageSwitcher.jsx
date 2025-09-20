@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-
+import EnIcon from '../assets/En_icon.png';
+import RuIcon from '../assets/Ru_icon.svg';
+import KgIcon from '../assets/Kg_icon.svg';
 const LanguageSwitcher = ({ 
   position = 'bottom-right',
   showText = true,
@@ -13,9 +15,9 @@ const LanguageSwitcher = ({
 
   // Языки с флагами и названиями
   const languages = [
-    { code: 'en', name: 'English', icon: '/flags/en.svg' },
-    { code: 'ru', name: 'Русский', icon: '/flags/ru.svg' },
-    { code: 'kg', name: 'Кыргызча', icon: '/flags/kg.svg' }
+    { code: 'en', name: 'English', icon: EnIcon },
+    { code: 'ru', name: 'Русский', icon: RuIcon },
+    { code: 'kg', name: 'Кыргызча', icon: KgIcon }
   ];
 
   // Получение текущего языка
