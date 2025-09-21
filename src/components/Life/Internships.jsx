@@ -108,7 +108,7 @@ const Internships = () => {
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-blue-600 rounded-full animate-ping"></div>
           </div>
           <p className="text-gray-600 font-medium text-lg mt-4">{t('studentLife.internships.loading')}</p>
-          <p className="text-gray-400 mt-2">Загружаем информацию о партнерах...</p>
+          <p className="text-gray-400 mt-2">...</p>
         </div>
       </div>
     );
@@ -197,35 +197,6 @@ const Internships = () => {
         <div className="transition-all duration-500">
           {activeTab === 'partners' && (
             <div className="space-y-8 animate-fade-in">
-              {/* Поиск и фильтры */}
-              <div className="bg-white rounded-2xl shadow-lg p-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" />
-                    </div>
-                    <input
-                      type="text"
-                      placeholder="Поиск организаций..."
-                      className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                    />
-                  </div>
-                  <div>
-                    <select
-                      className="block w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                      value={selectedSpecialization}
-                      onChange={(e) => setSelectedSpecialization(e.target.value)}
-                    >
-                      <option value="all">Все специализации</option>
-                      {allSpecializations.map((spec, index) => (
-                        <option key={index} value={spec}>{spec}</option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-              </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {filteredOrganizations?.map((org, index) => (

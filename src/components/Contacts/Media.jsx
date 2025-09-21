@@ -449,46 +449,6 @@ const Media = () => {
             </div>
           ))}
         </div>
-
-        {/* Призыв к действию */}
-        <div className="mt-16 bg-gradient-to-r from-blue-600 to-blue-800 rounded-2xl p-8 text-center text-white">
-          <h3 className="text-2xl md:text-3xl font-bold mb-4">
-            {getLocalizedContent({
-              ru: 'Хотите узнать больше?',
-              en: 'Want to learn more?',
-              kg: 'Көбүрөөк билгиңиз келеби?'
-            })}
-          </h3>
-          <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
-            {getLocalizedContent({
-              ru: 'Следите за нашими новостями и достижениями в социальных сетях и на официальном сайте университета',
-              en: 'Follow our news and achievements on social media and the university\'s official website',
-              kg: 'Биздин жаңылыктарды жана жетишкендиктерди социалдык тармактарда жана университеттин расмий сайтында көзөмөлдөңүз'
-            })}
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <a 
-              href="#" 
-              className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
-            >
-              {getLocalizedContent({
-                ru: 'Наш сайт',
-                en: 'Our website',
-                kg: 'Биздин сайт'
-              })}
-            </a>
-            <a 
-              href="#" 
-              className="border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors"
-            >
-              {getLocalizedContent({
-                ru: 'Социальные сети',
-                en: 'Social media',
-                kg: 'Социалдык тармактар'
-              })}
-            </a>
-          </div>
-        </div>
       </div>
     </div>
   );

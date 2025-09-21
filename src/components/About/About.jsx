@@ -410,22 +410,16 @@ const About = () => {
               <h3 className="text-xl font-semibold text-blue-900 group-hover:text-blue-700 transition-colors duration-300 mb-3">
                 {t('about.management')}
               </h3>
-              <p className="text-gray-600 text-sm group-hover:text-gray-800 transition-colors duration-300 mb-4">
-                Руководство университета и административный состав
-              </p>
               <div className="w-0 group-hover:w-full h-1 bg-gradient-to-r from-blue-500 to-blue-700 transition-all duration-500 mx-auto rounded-full"></div>
             </a>
             
-            <a href="/about/documents" className="group bg-gradient-to-br from-white to-blue-50 p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 text-center transform hover:-translate-y-4 border border-blue-100 hover:border-blue-200">
+            <a href="/hsm/accreditation" className="group bg-gradient-to-br from-white to-blue-50 p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 text-center transform hover:-translate-y-4 border border-blue-100 hover:border-blue-200">
               <div className="text-6xl mb-6 transform group-hover:scale-125 group-hover:rotate-12 transition-all duration-500">
                 📋
               </div>
               <h3 className="text-xl font-semibold text-blue-900 group-hover:text-blue-700 transition-colors duration-300 mb-3">
                 {t('about.charter_documents')}
               </h3>
-              <p className="text-gray-600 text-sm group-hover:text-gray-800 transition-colors duration-300 mb-4">
-                Устав, положения и официальные документы
-              </p>
               <div className="w-0 group-hover:w-full h-1 bg-gradient-to-r from-blue-500 to-blue-700 transition-all duration-500 mx-auto rounded-full"></div>
             </a>
             
@@ -436,9 +430,6 @@ const About = () => {
               <h3 className="text-xl font-semibold text-blue-900 group-hover:text-blue-700 transition-colors duration-300 mb-3">
                 {t('about.careers')}
               </h3>
-              <p className="text-gray-600 text-sm group-hover:text-gray-800 transition-colors duration-300 mb-4">
-                Открытые позиции для преподавателей и сотрудников
-              </p>
               <div className="w-0 group-hover:w-full h-1 bg-gradient-to-r from-blue-500 to-blue-700 transition-all duration-500 mx-auto rounded-full"></div>
             </a>
           </div>

@@ -404,9 +404,6 @@ const About = () => {
               <h3 className="text-xl font-semibold text-blue-900 group-hover:text-blue-700 transition-colors duration-300 mb-3">
                 {t('about.management')}
               </h3>
-              <p className="text-gray-600 text-sm group-hover:text-gray-800 transition-colors duration-300 mb-4">
-                Руководство университета и административный состав
-              </p>
               <div className="w-0 group-hover:w-full h-1 bg-gradient-to-r from-blue-500 to-blue-700 transition-all duration-500 mx-auto rounded-full"></div>
             </a>
             
@@ -417,9 +414,6 @@ const About = () => {
               <h3 className="text-xl font-semibold text-blue-900 group-hover:text-blue-700 transition-colors duration-300 mb-3">
                 {t('about.charter_documents')}
               </h3>
-              <p className="text-gray-600 text-sm group-hover:text-gray-800 transition-colors duration-300 mb-4">
-                Устав, положения и официальные документы
-              </p>
               <div className="w-0 group-hover:w-full h-1 bg-gradient-to-r from-blue-500 to-blue-700 transition-all duration-500 mx-auto rounded-full"></div>
             </a>
             
@@ -430,9 +424,6 @@ const About = () => {
               <h3 className="text-xl font-semibold text-blue-900 group-hover:text-blue-700 transition-colors duration-300 mb-3">
                 {t('about.careers')}
               </h3>
-              <p className="text-gray-600 text-sm group-hover:text-gray-800 transition-colors duration-300 mb-4">
-                Открытые позиции для преподавателей и сотрудников
-              </p>
               <div className="w-0 group-hover:w-full h-1 bg-gradient-to-r from-blue-500 to-blue-700 transition-all duration-500 mx-auto rounded-full"></div>
             </a>
           </div>

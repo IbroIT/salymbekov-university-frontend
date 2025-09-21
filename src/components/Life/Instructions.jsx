@@ -548,9 +548,6 @@ const Instructions = () => {
                 <h2 className="text-2xl font-bold text-gray-900">
                   {t('studentLife.instructions.availableInstructions')}
                 </h2>
-                <span className="text-sm text-gray-500">
-                  {filteredGuides.length} {t('studentLife.instructions.of')} {studentGuides.length}
-                </span>
               </div>
               
               {filteredGuides.length > 0 ? (
