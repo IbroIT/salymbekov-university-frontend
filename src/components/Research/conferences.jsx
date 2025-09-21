@@ -429,16 +429,6 @@ const Conferences = () => {
                       🌐 {t('research.conferences.visitOfficialSite') || 'Перейти на официальный сайт'}
                     </a>
                   )}
-                  
-                  {activeTab === 'upcoming' && (
-                    <button className="flex-1 bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 transform hover:scale-105">
-                      📝 {t('research.conferences.submitAbstract') || 'Подать тезисы'}
-                    </button>
-                  )}
-                  
-                  <button className="flex-1 bg-gray-500 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 transform hover:scale-105">
-                    📅 {t('research.conferences.addToCalendar') || 'Добавить в календарь'}
-                  </button>
                 </div>
               </div>
             </div>

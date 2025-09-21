@@ -134,31 +134,7 @@ const LearningGoalCard = ({ goal, language, index }) => {
             )}
 
             {/* Related Programs */}
-            {goal.programs && goal.programs.length > 0 && (
-              <AnimatedSection delay={0.4}>
-                <div className="pt-5 border-t border-gray-200">
-                  <h4 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
-                    <IconWrapper color="orange">
-                      <svg fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                    </IconWrapper>
-                    {t('hsm.related_programs', 'Связанные программы')}
-                  </h4>
-                  <div className="flex flex-wrap gap-2 pl-9">
-                    {goal.programs.map((program) => (
-                      <motion.span
-                        key={program.id}
-                        whileHover={{ scale: 1.05 }}
-                        className="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full font-medium transition-colors hover:bg-blue-200"
-                      >
-                        {program.name}
-                      </motion.span>
-                    ))}
-                  </div>
-                </div>
-              </AnimatedSection>
-            )}
+            
           </motion.div>
         )}
       </AnimatePresence>

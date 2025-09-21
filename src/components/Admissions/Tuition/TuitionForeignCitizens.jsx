@@ -378,9 +378,7 @@ const TuitionForeignCitizens = () => {
             <h2 className="text-2xl font-bold text-gray-800">
               {t('tuitionForeign.bankDetails.title', 'Банковские реквизиты для международных переводов')}
             </h2>
-            <button className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors">
-              {t('tuitionForeign.bankDetails.download', 'Скачать PDF')}
-            </button>
+   
           </div>
           
           <div className="grid md:grid-cols-2 gap-8">
