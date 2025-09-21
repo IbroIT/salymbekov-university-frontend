@@ -19,6 +19,9 @@ const StudentRegulations = () => {
     downloadable_files: []
   });
 
+  // Анимация переключения табов
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
   // Загрузка данных с API
   useEffect(() => {
     fetchRegulationsData();
@@ -95,6 +98,14 @@ const StudentRegulations = () => {
     }
   };
 
+  const handleTabChange = (tab) => {
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setActiveTab(tab);
+      setIsTransitioning(false);
+    }, 200);
+  };
+
   const handleDownload = (url, filename) => {
     if (url && url.startsWith('http')) {
       // Если это полный URL из API
@@ -109,10 +120,12 @@ const StudentRegulations = () => {
   // Показать загрузку
   if (loading) {
     return (
-      <div className="min-h-screen pt-20 flex items-center justify-center">
+      <div className="min-h-screen pt-20 flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-50">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">{t('studentLife.regulations.loading')}</p>
+          <div className="relative">
+            <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-600 mx-auto mb-4"></div>
+            <DocumentTextIcon className="w-8 h-8 text-blue-600 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+          </div>
         </div>
       </div>
     );
@@ -121,18 +134,19 @@ const StudentRegulations = () => {
   // Показать ошибку
   if (error) {
     return (
-      <div className="min-h-screen pt-20 flex items-center justify-center">
-        <div className="text-center max-w-md mx-auto">
+      <div className="min-h-screen pt-20 flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-50">
+        <div className="text-center max-w-md mx-auto p-6 bg-white rounded-xl shadow-lg">
           <div className="text-red-500 mb-4">
-            <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
-            </svg>
+            <div className="relative w-16 h-16 mx-auto">
+              <div className="absolute inset-0 bg-red-100 rounded-full animate-ping"></div>
+              <ExclamationTriangleIcon className="w-16 h-16 relative" />
+            </div>
           </div>
           <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('studentLife.regulations.errorTitle')}</h3>
           <p className="text-gray-600 mb-4">{error}</p>
           <button
             onClick={fetchRegulationsData}
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+            className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
           >
             {t('studentLife.regulations.tryAgain')}
           </button>
@@ -142,197 +156,274 @@ const StudentRegulations = () => {
   }
 
   return (
-    <div className="min-h-screen pt-20">
+    <div className="min-h-screen pt-20 bg-gradient-to-br from-blue-50 to-indigo-50">
       <div className="container mx-auto px-4 py-8">
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">{t('studentLife.regulations.title')}</h1>
-          <p className="text-lg text-gray-600">
+        <div className="mb-8 text-center">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+            {t('studentLife.regulations.title')}
+          </h1>
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
             {t('studentLife.regulations.subtitle')}
           </p>
         </div>
 
-        {/* Табы */}
+        {/* Табы с улучшенным дизайном */}
         <div className="mb-8">
-          <div className="border-b border-gray-200">
-            <nav className="-mb-px flex space-x-8">
+          <div className="bg-white rounded-xl p-1 shadow-inner max-w-2xl mx-auto">
+            <div className="flex space-x-1">
               <button
-                onClick={() => setActiveTab('rules')}
-                className={`py-2 px-1 border-b-2 font-medium text-sm ${
+                onClick={() => handleTabChange('rules')}
+                className={`flex-1 py-3 px-4 rounded-xl font-medium text-sm transition-all duration-300 ${
                   activeTab === 'rules'
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md'
+                    : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
                 }`}
               >
                 {t('studentLife.regulations.tabs.rules')}
               </button>
               <button
-                onClick={() => setActiveTab('academic')}
-                className={`py-2 px-1 border-b-2 font-medium text-sm ${
+                onClick={() => handleTabChange('academic')}
+                className={`flex-1 py-3 px-4 rounded-xl font-medium text-sm transition-all duration-300 ${
                   activeTab === 'academic'
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md'
+                    : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
                 }`}
               >
                 {t('studentLife.regulations.tabs.academic')}
               </button>
               <button
-                onClick={() => setActiveTab('documents')}
-                className={`py-2 px-1 border-b-2 font-medium text-sm ${
+                onClick={() => handleTabChange('documents')}
+                className={`flex-1 py-3 px-4 rounded-xl font-medium text-sm transition-all duration-300 ${
                   activeTab === 'documents'
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md'
+                    : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
                 }`}
               >
                 {t('studentLife.regulations.tabs.documents')}
               </button>
-            </nav>
+            </div>
           </div>
         </div>
 
-        {/* Контент табов */}
-        {activeTab === 'rules' && (
-          <div className="space-y-6">
-            {data.internal_rules?.map((section, index) => (
-              <div key={index} className="bg-white rounded-lg shadow-md p-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
-                  <DocumentTextIcon className="w-5 h-5 mr-2 text-blue-600" />
-                  {section.title}
-                </h3>
-                <ul className="space-y-3">
-                  {section.content?.map((item, itemIndex) => (
-                    <li key={itemIndex} className="flex items-start">
-                      <div className="w-2 h-2 bg-blue-600 rounded-full mr-3 mt-2 flex-shrink-0"></div>
-                      <span className="text-gray-700">{item.text}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-
-            {data.internal_rules?.length === 0 && (
-              <div className="text-center py-8">
-                <p className="text-gray-500">{t('studentLife.regulations.noData.rules')}</p>
-              </div>
-            )}
-
-            <div className="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded">
-              <div className="flex items-start">
-                <ExclamationTriangleIcon className="w-6 h-6 text-yellow-600 mr-3 flex-shrink-0 mt-0.5" />
-                <div>
-                  <h3 className="text-lg font-semibold text-yellow-800 mb-2">{t('studentLife.regulations.importantInfo.title')}</h3>
-                  <ul className="text-yellow-700 space-y-1 text-sm">
-                    <li>• {t('studentLife.regulations.importantInfo.ignoranceNotExcused')}</li>
-                    <li>• {t('studentLife.regulations.importantInfo.disciplinaryMeasures')}</li>
-                    <li>• {t('studentLife.regulations.importantInfo.contactDean')}</li>
-                    <li>• {t('studentLife.regulations.importantInfo.rulesCanChange')}</li>
+        {/* Контент табов с анимацией */}
+        <div className={`transition-opacity duration-300 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
+          {activeTab === 'rules' && (
+            <div className="space-y-6">
+              {data.internal_rules?.map((section, index) => (
+                <div 
+                  key={index} 
+                  className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 border border-gray-100"
+                >
+                  <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                    <div className="p-2 bg-blue-100 rounded-lg mr-3">
+                      <DocumentTextIcon className="w-6 h-6 text-blue-600" />
+                    </div>
+                    {section.title}
+                  </h3>
+                  <ul className="space-y-3">
+                    {section.content?.map((item, itemIndex) => (
+                      <li 
+                        key={itemIndex} 
+                        className="flex items-start p-3 rounded-lg hover:bg-blue-50 transition-colors duration-200"
+                      >
+                        <div className="w-2 h-2 bg-blue-600 rounded-full mr-3 mt-2 flex-shrink-0"></div>
+                        <span className="text-gray-700">{item.text}</span>
+                      </li>
+                    ))}
                   </ul>
+                </div>
+              ))}
+
+              {data.internal_rules?.length === 0 && (
+                <div className="text-center py-8 bg-white rounded-2xl shadow">
+                  <p className="text-gray-500">{t('studentLife.regulations.noData.rules')}</p>
+                </div>
+              )}
+
+              <div className="bg-gradient-to-r from-amber-50 to-orange-50 border-l-4 border-amber-400 p-6 rounded-2xl shadow">
+                <div className="flex items-start">
+                  <div className="p-2 bg-amber-100 rounded-lg mr-4">
+                    <ExclamationTriangleIcon className="w-6 h-6 text-amber-600" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-amber-800 mb-2">{t('studentLife.regulations.importantInfo.title')}</h3>
+                    <ul className="text-amber-700 space-y-2">
+                      <li className="flex items-center">
+                        <div className="w-1.5 h-1.5 bg-amber-500 rounded-full mr-2"></div>
+                        {t('studentLife.regulations.importantInfo.ignoranceNotExcused')}
+                      </li>
+                      <li className="flex items-center">
+                        <div className="w-1.5 h-1.5 bg-amber-500 rounded-full mr-2"></div>
+                        {t('studentLife.regulations.importantInfo.disciplinaryMeasures')}
+                      </li>
+                      <li className="flex items-center">
+                        <div className="w-1.5 h-1.5 bg-amber-500 rounded-full mr-2"></div>
+                        {t('studentLife.regulations.importantInfo.contactDean')}
+                      </li>
+                      <li className="flex items-center">
+                        <div className="w-1.5 h-1.5 bg-amber-500 rounded-full mr-2"></div>
+                        {t('studentLife.regulations.importantInfo.rulesCanChange')}
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {activeTab === 'academic' && (
-          <div className="space-y-6">
-            {data.academic_regulations?.map((regulation, index) => (
-              <div key={index} className="bg-white rounded-lg shadow-md p-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-6">{regulation.title}</h3>
-                
-                {regulation.sections?.map((section, sectionIndex) => (
-                  <div key={sectionIndex} className="mb-6 last:mb-0">
-                    <h4 className="text-lg font-medium text-gray-800 mb-3">{section.subtitle}</h4>
-                    <ul className="space-y-2">
-                      {section.rules?.map((rule, ruleIndex) => (
-                        <li key={ruleIndex} className="flex items-start">
-                          <ClockIcon className="w-4 h-4 text-green-500 mr-3 mt-1 flex-shrink-0" />
-                          <span className="text-gray-700">{rule.text}</span>
-                        </li>
-                      ))}
-                    </ul>
+          {activeTab === 'academic' && (
+            <div className="space-y-6">
+              {data.academic_regulations?.map((regulation, index) => (
+                <div 
+                  key={index} 
+                  className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 border border-gray-100"
+                >
+                  <h3 className="text-xl font-semibold text-gray-900 mb-6">{regulation.title}</h3>
+                  
+                  {regulation.sections?.map((section, sectionIndex) => (
+                    <div key={sectionIndex} className="mb-6 last:mb-0 p-4 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors">
+                      <h4 className="text-lg font-medium text-gray-800 mb-3 flex items-center">
+                        <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+                        {section.subtitle}
+                      </h4>
+                      <ul className="space-y-3">
+                        {section.rules?.map((rule, ruleIndex) => (
+                          <li key={ruleIndex} className="flex items-start p-2 rounded-lg hover:bg-green-50 transition-colors">
+                            <ClockIcon className="w-4 h-4 text-green-500 mr-3 mt-1 flex-shrink-0" />
+                            <span className="text-gray-700">{rule.text}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              ))}
+
+              {data.academic_regulations?.length === 0 && (
+                <div className="text-center py-8 bg-white rounded-2xl shadow">
+                  <p className="text-gray-500">{t('studentLife.regulations.noData.academic')}</p>
+                </div>
+              )}
+
+              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl p-6 shadow">
+                <h3 className="text-lg font-semibold text-blue-900 mb-3">{t('studentLife.regulations.contact.title')}</h3>
+                <div className="text-blue-800 space-y-3">
+                  <p className="flex items-center">
+                    <span className="font-medium mr-2">{t('studentLife.regulations.contact.dean')}:</span> 
+                    {t('studentLife.regulations.contact.deanAddress')}
+                  </p>
+                  <p className="flex items-center">
+                    <span className="font-medium mr-2">{t('studentLife.regulations.contact.phone')}:</span> 
+                    +996 312 123-456 (доб. 105)
+                  </p>
+                  <p className="flex items-center">
+                    <span className="font-medium mr-2">Email:</span> 
+                    <a href="mailto:dean@su.edu.kg" className="underline hover:text-blue-600 transition-colors">dean@su.edu.kg</a>
+                  </p>
+                  <p className="flex items-center">
+                    <span className="font-medium mr-2">{t('studentLife.regulations.contact.hours')}:</span> 
+                    {t('studentLife.regulations.contact.hoursTime')}
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'documents' && (
+            <div className="space-y-6">
+              <div className="bg-gradient-to-r from-gray-50 to-blue-50 border border-gray-200 rounded-2xl p-6 shadow">
+                <h3 className="text-lg font-semibold text-gray-900 mb-3">{t('studentLife.regulations.documentsInfo.title')}</h3>
+                <div className="text-gray-700 space-y-2 text-sm">
+                  <p className="flex items-center">
+                    <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></div>
+                    {t('studentLife.regulations.documentsInfo.currentVersion')}
+                  </p>
+                  <p className="flex items-center">
+                    <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></div>
+                    {t('studentLife.regulations.documentsInfo.readerRequired')}
+                  </p>
+                  <p className="flex items-center">
+                    <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></div>
+                    {t('studentLife.regulations.documentsInfo.contactIT')}
+                  </p>
+                  <p className="flex items-center">
+                    <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></div>
+                    {t('studentLife.regulations.documentsInfo.mayUpdate')}
+                  </p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {data.downloadable_files?.map((file, index) => (
+                  <div 
+                    key={index} 
+                    className="bg-white rounded-2xl shadow-md p-5 border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col"
+                  >
+                    <div className="mb-4 flex-grow">
+                      <div className="flex items-start justify-between mb-3">
+                        <h3 className="text-lg font-semibold text-gray-900 pr-4">{file.title}</h3>
+                        <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full flex-shrink-0">
+                          {file.type}
+                        </span>
+                      </div>
+                      <p className="text-gray-600 text-sm mb-4">{file.description}</p>
+                      
+                      <div className="flex flex-wrap gap-2 text-xs text-gray-500 mb-4">
+                        <span className="bg-gray-100 px-2 py-1 rounded-full">{t('studentLife.regulations.fileInfo.format')}: {file.format}</span>
+                        <span className="bg-gray-100 px-2 py-1 rounded-full">{t('studentLife.regulations.fileInfo.size')}: {file.file_size}</span>
+                        <span className="bg-gray-100 px-2 py-1 rounded-full">{t('studentLife.regulations.fileInfo.updated')}: {file.last_updated}</span>
+                      </div>
+                    </div>
+                    
+                    <button
+                      onClick={() => handleDownload(file.download_url, file.title)}
+                      className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-3 rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md hover:shadow-lg flex items-center justify-center mt-auto"
+                    >
+                      <DocumentArrowDownIcon className="w-5 h-5 mr-2" />
+                      {t('studentLife.regulations.downloadDocument')}
+                    </button>
                   </div>
                 ))}
               </div>
-            ))}
 
-            {data.academic_regulations?.length === 0 && (
-              <div className="text-center py-8">
-                <p className="text-gray-500">{t('studentLife.regulations.noData.academic')}</p>
-              </div>
-            )}
-
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-blue-900 mb-3">{t('studentLife.regulations.contact.title')}</h3>
-              <div className="text-blue-800 space-y-2">
-                <p><strong>{t('studentLife.regulations.contact.dean')}:</strong> {t('studentLife.regulations.contact.deanAddress')}</p>
-                <p><strong>{t('studentLife.regulations.contact.phone')}:</strong> +996 312 123-456 (доб. 105)</p>
-                <p><strong>Email:</strong> <a href="mailto:dean@su.edu.kg" className="underline">dean@su.edu.kg</a></p>
-                <p><strong>{t('studentLife.regulations.contact.hours')}:</strong> {t('studentLife.regulations.contact.hoursTime')}</p>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {activeTab === 'documents' && (
-          <div className="space-y-6">
-            <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-3">{t('studentLife.regulations.documentsInfo.title')}</h3>
-              <div className="text-gray-700 space-y-2 text-sm">
-                <p>• {t('studentLife.regulations.documentsInfo.currentVersion')}</p>
-                <p>• {t('studentLife.regulations.documentsInfo.readerRequired')}</p>
-                <p>• {t('studentLife.regulations.documentsInfo.contactIT')}</p>
-                <p>• {t('studentLife.regulations.documentsInfo.mayUpdate')}</p>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {data.downloadable_files?.map((file, index) => (
-                <div key={index} className="bg-white rounded-lg shadow-md p-6 border">
-                  <div className="mb-4">
-                    <div className="flex items-start justify-between mb-2">
-                      <h3 className="text-lg font-semibold text-gray-900 pr-4">{file.title}</h3>
-                      <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded flex-shrink-0">
-                        {file.type}
-                      </span>
-                    </div>
-                    <p className="text-gray-600 text-sm mb-3">{file.description}</p>
-                    
-                    <div className="flex items-center justify-between text-xs text-gray-500 mb-4">
-                      <div className="space-x-4">
-                        <span>{t('studentLife.regulations.fileInfo.format')}: {file.format}</span>
-                        <span>{t('studentLife.regulations.fileInfo.size')}: {file.file_size}</span>
-                      </div>
-                      <span>{t('studentLife.regulations.fileInfo.updated')}: {file.last_updated}</span>
-                    </div>
-                  </div>
-                  
-                  <button
-                    onClick={() => handleDownload(file.download_url, file.title)}
-                    className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center"
-                  >
-                    <DocumentArrowDownIcon className="w-4 h-4 mr-2" />
-                    {t('studentLife.regulations.downloadDocument')}
-                  </button>
+              {data.downloadable_files?.length === 0 && (
+                <div className="text-center py-8 bg-white rounded-2xl shadow">
+                  <p className="text-gray-500">{t('studentLife.regulations.noData.documents')}</p>
                 </div>
-              ))}
-            </div>
+              )}
 
-            {data.downloadable_files?.length === 0 && (
-              <div className="text-center py-8">
-                <p className="text-gray-500">{t('studentLife.regulations.noData.documents')}</p>
-              </div>
-            )}
-
-            <div className="bg-green-50 border border-green-200 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-green-800 mb-3">{t('studentLife.regulations.usefulLinks.title')}</h3>
-              <div className="space-y-2 text-green-700">
-                <p>• <a href="#" className="underline hover:no-underline">{t('studentLife.regulations.usefulLinks.ministry')}</a></p>
-                <p>• <a href="#" className="underline hover:no-underline">{t('studentLife.regulations.usefulLinks.accreditation')}</a></p>
-                <p>• <a href="#" className="underline hover:no-underline">{t('studentLife.regulations.usefulLinks.testingCenter')}</a></p>
-                <p>• <a href="#" className="underline hover:no-underline">{t('studentLife.regulations.usefulLinks.studentPortal')}</a></p>
+              <div className="bg-gradient-to-r from-green-50 to-teal-50 border border-green-200 rounded-2xl p-6 shadow">
+                <h3 className="text-lg font-semibold text-green-800 mb-3">{t('studentLife.regulations.usefulLinks.title')}</h3>
+                <div className="space-y-2 text-green-700">
+                  <p className="hover:underline hover:text-green-600 transition-all">
+                    <a href="#" className="flex items-center">
+                      <div className="w-1.5 h-1.5 bg-green-500 rounded-full mr-2"></div>
+                      {t('studentLife.regulations.usefulLinks.ministry')}
+                    </a>
+                  </p>
+                  <p className="hover:underline hover:text-green-600 transition-all">
+                    <a href="#" className="flex items-center">
+                      <div className="w-1.5 h-1.5 bg-green-500 rounded-full mr-2"></div>
+                      {t('studentLife.regulations.usefulLinks.accreditation')}
+                    </a>
+                  </p>
+                  <p className="hover:underline hover:text-green-600 transition-all">
+                    <a href="#" className="flex items-center">
+                      <div className="w-1.5 h-1.5 bg-green-500 rounded-full mr-2"></div>
+                      {t('studentLife.regulations.usefulLinks.testingCenter')}
+                    </a>
+                  </p>
+                  <p className="hover:underline hover:text-green-600 transition-all">
+                    <a href="#" className="flex items-center">
+                      <div className="w-1.5 h-1.5 bg-green-500 rounded-full mr-2"></div>
+                      {t('studentLife.regulations.usefulLinks.studentPortal')}
+                    </a>
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

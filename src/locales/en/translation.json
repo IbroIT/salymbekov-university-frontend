@@ -215,6 +215,9 @@
     "note4": "Smoking and alcohol consumption are prohibited in rooms"
   },
   "news": {
+    "latestNews": "Latest News",
+"previewSubtitle": "Stay up to date with the news",
+"viewAllNews": "View all news",
     "title": "University News",
     "subtitle": "Stay updated with the latest events and announcements of Salymbekov University",
     "featured": "Important News",
@@ -1267,7 +1270,9 @@
   "HSM": "High School of Medicine",
     "departments": "Departments",
     "about": "About us",
-    "partners": "Partners"
+    "partners": "Partners",
+    "home":"Home",
+    "academics": "High School of Medicine"
   },
   "partners": {
     "title": "Our Partners",
@@ -2299,7 +2304,7 @@
     "dormitory_desc": "Comfortable living conditions for students",
     "quick_links": "Quick Links",
     "management": "Management",
-    "charter_documents": "Charter Documents",
+    "charter_documents": "Accreditation",
     "careers": "Careers",
     "partners_link": "Partners",
     "org_structure": "Organizational Structure",
@@ -2677,6 +2682,7 @@
     }
   },
   "careers": {
+    "conditions": "Working conditions",
     "title": "Career at University",
     "subtitle": "Join the team of professionals at Salymbekov University. Find your place in an educational environment where knowledge, innovation and the desire to develop are valued.",
     "breadcrumbs": {
@@ -3837,6 +3843,7 @@
     ]
   },
   "regulations": {
+    "documentsAbout": "All submitted documents are official regulatory acts of the university. The documents are regularly updated in accordance with changes in legislation and the internal policy of the university.",
     "title": "Legal and Regulatory Acts",
     "pageTitle": "Regulations",
     "subtitle": "Documents governing university activities",
@@ -3954,7 +3961,13 @@
         "Учебная часть:": "Academic Office:",
         "Приемная комиссия:": "Admissions Committee:",
         "Канцелярия:": "Chancellery:"
-      }
+      },
+      "availableInstructions": "Available instructions:",
+"searchPlaceholder": "Enter the program name...",
+"allCategories": "All categories",
+"steps": "steps",
+"backToInstructions": "Back"
+
     },
     "regulations": {
       "title": "Legal and Regulatory Acts",
@@ -4009,6 +4022,7 @@
       }
     },
     "academicMobility": {
+      "advantages": "Advantages",
       "title": "Academic Mobility",
       "subtitle": "International exchange opportunities for medical university students",
       "loading": "Loading data...",
@@ -4069,32 +4083,44 @@
       "supportInfo": "Support and Consultations"
     },
     "internships": {
-      "title": "Internships and Placements",
-      "subtitle": "Internship sites, requirements and documents",
-      "loading": "Loading internship data...",
-      "error": "Loading Error",
-      "errorMessage": "Failed to load data. Please try again later.",
-      "tryAgain": "Try Again",
-      "tabs": {
-        "partners": "Internship Sites",
-        "requirements": "Requirements",
-        "documents": "Documents"
-      },
-      "noPartners": "No internship sites",
-      "noRequirements": "No requirements",
-      "noDocuments": "No documents",
-      "contact": "Contact",
-      "phone": "Phone",
-      "email": "Email",
-      "address": "Address",
-      "downloadDocument": "Download Document",
-      "format": "Format",
-      "size": "Size",
-      "updated": "Updated",
-      "importantInfo": "Important Information",
-      "practiceCoordinator": "Practice Coordinator",
-      "emergencyContact": "Emergency Contact"
-    },
+  "title": "Internships and Practice",
+  "subtitle": "Practice locations, requirements, and documents",
+  "loading": "Loading practice data...",
+  "error": "Loading error",
+  "errorMessage": "Failed to load data. Please try again later.",
+  "tryAgain": "Try again",
+  "tabs": {
+    "partners": "Practice locations",
+    "requirements": "Requirements",
+    "documents": "Documents"
+  },
+  "noPartners": "No practice locations",
+  "noRequirements": "No requirements",
+  "noDocuments": "No documents",
+  "contact": "Contact",
+  "phone": "Phone",
+  "email": "Email",
+  "address": "Address",
+  "downloadDocument": "Download document",
+  "format": "Format",
+  "size": "Size",
+  "updated": "Updated",
+  "importantInfo": "Important information",
+  "practiceCoordinator": "Practice Coordinator",
+  "emergencyContact": "Emergency contact",
+  "docDeadline": "All documents must be submitted 2 weeks before the start of the practice",
+  "medExamValidity": "Medical examination is valid for 6 months",
+  "rulesCompliance": "Students must comply with the internal regulations of the medical institution",
+  "reportDeadline": "Upon completion of the practice, a report must be submitted within 1 week",
+  "reportRequirements": "Report requirements",
+  "reportFormat": "The report must be formatted according to the established requirements",
+  "reportLength": "Report length: 15-25 pages (excluding appendices)",
+  "reportFont": "Font: Times New Roman, size 14, line spacing 1.5",
+  "reportSignatures": "Signatures of practice supervisors from the university and the organization are required",
+  "templatesInfo": "All templates are developed in accordance with the department requirements",
+  "contactCoordinator": "If you have questions about formatting, contact the practice coordinator",
+  "submissionFormat": "Final reports must be submitted in both electronic and printed form"
+},
     "appealForm": {
       "title": "Appeal Form",
       "subtitle": "Submit a complaint, suggestion or question to the university administration",
