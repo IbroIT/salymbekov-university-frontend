@@ -15,6 +15,7 @@ const Publications = () => {
   const [researchCenters, setResearchCenters] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   const [filters, setFilters] = useState({
     yearRange: [2018, 2024],
@@ -29,6 +30,16 @@ const Publications = () => {
   const [selectedPublications, setSelectedPublications] = useState(new Set());
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const [expandedPublication, setExpandedPublication] = useState(null);
+
+  // Handle window resize for responsive pie chart
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Функции для получения данных на текущем языке
   const getPublicationTitle = (publication) => {
@@ -151,17 +162,23 @@ const Publications = () => {
     if (publicationsData.length === 0) return [];
     
     const centerCounts = publicationsData.reduce((acc, pub) => {
-      const centerName = getCenterName(pub.research_center) || pub.center_name;
-      if (centerName) {
-        acc[centerName] = (acc[centerName] || 0) + 1;
-      }
+      // Get center name from multiple possible fields
+      const centerName = getCenterName(pub.research_center) || 
+                         pub.research_center_name || 
+                         pub.center_name || 
+                         'Не указано';
+      
+      acc[centerName] = (acc[centerName] || 0) + 1;
       return acc;
     }, {});
 
-    return Object.entries(centerCounts).map(([center, count]) => ({
-      center,
-      count
-    }));
+    return Object.entries(centerCounts)
+      .map(([center, count]) => ({
+        name: center,
+        value: count,
+        center: center.length > 20 ? center.substring(0, 20) + '...' : center
+      }))
+      .sort((a, b) => b.value - a.value); // Sort by count descending
   }, [publicationsData, currentLang]);
 
   const handleSort = (key) => {
@@ -171,43 +188,32 @@ const Publications = () => {
     }));
   };
 
-  const handleExport = async (format) => {
+  const handleFileDownload = async (publicationId, fileName) => {
     try {
-      const params = new URLSearchParams({
-        publication_date__year__gte: filters.yearRange[0],
-        publication_date__year__lte: filters.yearRange[1],
-        citations_count__gte: filters.minCitations
-      });
-
-      if (filters.author) params.append('authors__icontains', filters.author);
-      if (filters.journal) params.append('journal__icontains', filters.journal);
-      if (filters.center) params.append('research_center__name__icontains', filters.center);
-
-      const response = await fetch(`http://127.0.0.1:8000/research/api/publications/?${params}`);
+      // Fetch the detailed publication data to get the file URL
+      const response = await fetch(`http://127.0.0.1:8000/research/api/publications/${publicationId}/`);
       
       if (!response.ok) {
-        throw new Error('Failed to fetch export data');
+        throw new Error('Failed to fetch publication details');
       }
       
-      const result = await response.json();
-      const data = result.results || result;
-
-      if (format === 'csv') {
-        const csvContent = [
-          'Title,Authors,Journal,Year,Citations,DOI,Center',
-          ...data.map(pub => `"${getPublicationTitle(pub)}","${pub.authors || ''}","${pub.journal || ''}",${pub.publication_year || pub.year},${pub.citation_count || 0},"${pub.doi || ''}","${getCenterName(pub.research_center) || pub.center_name || ''}"`)
-        ].join('\n');
-
-        const blob = new Blob([csvContent], { type: 'text/csv' });
-        const url = URL.createObjectURL(blob);
+      const publication = await response.json();
+      
+      if (publication.file) {
+        // Create a temporary link to download the file
         const link = document.createElement('a');
-        link.href = url;
-        link.download = 'publications.csv';
+        link.href = publication.file;
+        link.download = fileName || `publication_${publicationId}.pdf`;
+        link.target = '_blank';
+        document.body.appendChild(link);
         link.click();
+        document.body.removeChild(link);
+      } else {
+        alert(t('research.publications.fileNotAvailable') || 'Файл недоступен для скачивания');
       }
     } catch (err) {
-      console.error('Export error:', err);
-      alert(t('research.publications.exportError') || 'Ошибка при экспорте данных');
+      console.error('Download error:', err);
+      alert(t('research.publications.downloadError') || 'Ошибка при скачивании файла');
     }
   };
 
@@ -267,12 +273,20 @@ const Publications = () => {
       {expandedPublication === pub.id && (
         <div className="mt-3 pt-3 border-t">
           <div className="text-xs text-gray-600 mb-2">
-            <strong>{t('research.publications.center') || 'Центр'}:</strong> {getCenterName(pub.research_center) || pub.center_name || t('research.publications.noCenter') || 'Не указано'}
+            <strong>{t('research.publications.center') || 'Центр'}:</strong> {getCenterName(pub.research_center) || pub.research_center_name || pub.center_name || t('research.publications.noCenter') || 'Не указано'}
           </div>
           <div className="text-xs text-gray-600 mb-2">
             <strong>DOI:</strong> {pub.doi || t('research.publications.noDoi') || 'Не указано'}
           </div>
-          <p className="text-xs text-gray-600 italic">{getPublicationAbstract(pub) || t('research.publications.noAbstract') || 'Аннотация недоступна'}</p>
+          <p className="text-xs text-gray-600 italic mb-3">{getPublicationAbstract(pub) || t('research.publications.noAbstract') || 'Аннотация недоступна'}</p>
+          
+          {/* Download button for mobile */}
+          <button
+            onClick={() => handleFileDownload(pub.id, `${getPublicationTitle(pub)}.pdf`)}
+            className="w-full px-3 py-2 bg-blue-600 text-white rounded-lg text-xs font-medium hover:bg-blue-700 transition-colors"
+          >
+            {t('research.publications.downloadFile') || 'Скачать файл'}
+          </button>
         </div>
       )}
     </div>
@@ -490,24 +504,37 @@ const Publications = () => {
                   <Tooltip />
                   <Line type="monotone" dataKey="publications" stroke="#10B981" strokeWidth={2} />
                 </LineChart>
-              ) : (
+              ) : centerData.length > 0 ? (
                 <PieChart>
                   <Pie
                     data={centerData}
                     cx="50%"
                     cy="50%"
                     labelLine={false}
-                    label={({ center, count }) => `${center}: ${count}`}
-                    outerRadius={60}
+                    label={({ name, value, percent }) => 
+                      `${name.length > 15 ? name.substring(0, 15) + '...' : name}: ${value} (${(percent * 100).toFixed(0)}%)`
+                    }
+                    outerRadius={isMobile ? 80 : 120}
                     fill="#8884d8"
-                    dataKey="count"
+                    dataKey="value"
                   >
                     {centerData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                     ))}
                   </Pie>
-                  <Tooltip />
+                  <Tooltip formatter={(value, name) => [value, name]} />
                 </PieChart>
+              ) : (
+                <div className="flex items-center justify-center h-full">
+                  <div className="text-center text-gray-500">
+                    <p className="text-sm md:text-base">
+                      {t('research.publications.noCenterData') || 'Нет данных для отображения круговой диаграммы'}
+                    </p>
+                    <p className="text-xs md:text-sm mt-2">
+                      {t('research.publications.tryFiltering') || 'Попробуйте изменить фильтры'}
+                    </p>
+                  </div>
+                </div>
               )}
             </ResponsiveContainer>
           </div>
@@ -519,20 +546,6 @@ const Publications = () => {
             <h2 className="text-lg md:text-2xl font-semibold">
               {t('research.publications.title') || 'Публикации'} ({publicationsData.length})
             </h2>
-            <div className="flex space-x-2 md:space-x-4 overflow-x-auto pb-2">
-              <button
-                onClick={() => handleExport('csv')}
-                className="px-3 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors text-xs md:text-sm whitespace-nowrap"
-              >
-                {t('research.publications.export.csv') || 'Экспорт CSV'}
-              </button>
-              <button
-                onClick={() => handleExport('bibtex')}
-                className="px-3 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-xs md:text-sm whitespace-nowrap"
-              >
-                {t('research.publications.export.bibtex') || 'Экспорт BibTeX'}
-              </button>
-            </div>
           </div>
 
           {/* Мобильная версия */}
@@ -584,6 +597,9 @@ const Publications = () => {
                   >
                     {t('research.publications.table.citations') || 'Цитаты'} {sortConfig.key === 'citation_index' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
                   </th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    {t('research.publications.table.actions') || 'Действия'}
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
@@ -598,8 +614,8 @@ const Publications = () => {
                       />
                     </td>
                     <td className="px-4 py-3">
-                      <div className="text-sm font-medium text-gray-900">{pub.title}</div>
-                      <div className="text-sm text-gray-500">{pub.center_name || pub.center?.name}</div>
+                      <div className="text-sm font-medium text-gray-900">{getPublicationTitle(pub)}</div>
+                      <div className="text-sm text-gray-500">{getCenterName(pub.research_center) || pub.research_center_name || pub.center_name || 'Не указано'}</div>
                     </td>
                     <td className="px-4 py-3">
                       <div className="text-sm text-gray-900">
@@ -612,6 +628,14 @@ const Publications = () => {
                       <span className="px-2 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-full">
                         {pub.citations_count || pub.citation_count || pub.citation_index || 0}
                       </span>
+                    </td>
+                    <td className="px-4 py-3">
+                      <button
+                        onClick={() => handleFileDownload(pub.id, `${getPublicationTitle(pub)}.pdf`)}
+                        className="px-3 py-1.5 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
+                      >
+                        {t('research.publications.downloadFile') || 'Скачать'}
+                      </button>
                     </td>
                   </tr>
                 ))}

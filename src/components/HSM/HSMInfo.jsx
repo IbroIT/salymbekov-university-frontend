@@ -83,6 +83,7 @@ const HSMInfo = () => {
 
   const quickLinks = [
     {
+      href:'/hsm/programs',
       URL: "https://storage.yandexcloud.net/mdschool1/a1706028859740-picture",
       icon: <AcademicCapIcon className="w-6 h-6" />,
       title: t('hsm.programs', 'Программы'),

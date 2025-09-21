@@ -589,13 +589,7 @@ const Dormitories = () => {
                               )}
                             </motion.button>
                             
-                            <motion.button
-                              whileHover={{ scale: 1.05 }}
-                              whileTap={{ scale: 0.95 }}
-                              className="px-8 py-4 border-2 border-blue-600 text-blue-600 rounded-xl hover:bg-blue-50 transition-all duration-300 font-semibold text-lg"
-                            >
-                              {t('dormitories.applyNow', 'Подать заявку')}
-                            </motion.button>
+                          
                           </div>
                         </div>
                       </div>

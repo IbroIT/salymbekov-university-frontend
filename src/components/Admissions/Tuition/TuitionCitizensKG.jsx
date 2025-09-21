@@ -244,9 +244,7 @@ const TuitionCitizensKG = () => {
             <h2 className="text-2xl font-bold text-gray-800">
               {t('tuitionCitizens.bankDetails.title')}
             </h2>
-            <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors">
-              {t('tuitionCitizens.bankDetails.download')}
-            </button>
+          
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">

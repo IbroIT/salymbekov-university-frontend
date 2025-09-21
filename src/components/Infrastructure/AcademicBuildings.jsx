@@ -393,7 +393,7 @@ const AcademicBuildings = () => {
                         </div>
                       ) : (
                         <div className="text-center py-8 text-gray-500">
-                          <p>Информация о помещениях пока недоступна</p>
+                          <p>{t('academicBuildings.noFacilities', 'Информация о помещениях пока недоступна')}</p>
                         </div>
                       )}
                     </div>
@@ -424,7 +424,7 @@ const AcademicBuildings = () => {
                         </div>
                       ) : (
                         <div className="text-center py-8 text-gray-500">
-                          <p>Фотографии пока недоступны</p>
+                          <p>{t('academicBuildings.noPhotos', 'Фотографии пока недоступны')}</p>
                         </div>
                       )}
                     </div>

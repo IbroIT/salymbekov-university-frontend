@@ -93,9 +93,11 @@
     "address": "Address",
     "contact": "Contact",
     "hospitals": "Hospitals",
+    "searchPlaceholder": "Search for hospital...",
     "beds": "Beds",
     "doctors": "Doctors",
     "departments": "Departments",
+    "noDepartments": "Information about departments is not available",
     "practiceOpportunities": "Practice Opportunities",
     "hideDetails": "Hide Details",
     "showDetails": "Show Details",
@@ -176,7 +178,9 @@
     "contactInfo": "Contact Information",
     "security": "Security Service",
     "maintenance": "Maintenance Service",
-    "reception": "General Information"
+    "reception": "General Information",
+    "noFacilities": "Information about facilities is not available",
+    "noPhotos": "Photos are not available"
   },
   "dormitories": {
     "title": "University Dormitories",
@@ -204,6 +208,7 @@
     "workingHours": "Working Hours",
     "schedule": "Mon-Fri: 9:00-17:00",
     "phone": "Phone",
+    "capacity": "Capacity",
     "adminOffice": "Dormitory Administration",
     "emergencyContact": "Emergency Contact",
     "administrator": "Administrator",
@@ -1124,6 +1129,11 @@
     "backToAlbums": "Back to albums",
     "searchPlaceholder": "Search by tags or title...",
     "noResults": "Nothing found for your request",
+    "noSearchResults": "Nothing found for your request",
+    "noAlbums": "No albums created yet",
+    "noPhotos": "No photos in this album yet",
+    "error": "Error loading data",
+    "retry": "Try again",
     "download": "Download",
     "downloadError": "Error downloading:",
     "albums": {
@@ -1149,6 +1159,51 @@
           "science",
           "conference",
           "reports"
+        ]
+      },
+      "album1": {
+        "title": "New Students Orientation 2023",
+        "tags": [
+          "orientation",
+          "students",
+          "university",
+          "acquaintance"
+        ]
+      },
+      "album2": {
+        "title": "Graduation 2023",
+        "tags": [
+          "graduation",
+          "diploma",
+          "ceremony",
+          "graduates"
+        ]
+      },
+      "album3": {
+        "title": "Young Scientists Symposium",
+        "tags": [
+          "science",
+          "research",
+          "conference",
+          "young scientists"
+        ]
+      },
+      "album4": {
+        "title": "Sports Events",
+        "tags": [
+          "sports",
+          "competitions",
+          "health",
+          "activity"
+        ]
+      },
+      "album5": {
+        "title": "Cultural Events",
+        "tags": [
+          "culture",
+          "concert",
+          "creativity",
+          "arts"
         ]
       }
     },
@@ -1223,6 +1278,70 @@
           "posters",
           "research",
           "session"
+        ]
+      },
+      "photo1": {
+        "title": "Rector's welcome",
+        "tags": [
+          "rector",
+          "welcome",
+          "speech"
+        ]
+      },
+      "photo2": {
+        "title": "Meeting the faculties",
+        "tags": [
+          "faculties",
+          "acquaintance",
+          "students"
+        ]
+      },
+      "photo3": {
+        "title": "University tour",
+        "tags": [
+          "tour",
+          "university",
+          "buildings"
+        ]
+      },
+      "photo4": {
+        "title": "Ceremonial procession",
+        "tags": [
+          "procession",
+          "graduates",
+          "gowns"
+        ]
+      },
+      "photo5": {
+        "title": "Diploma presentation",
+        "tags": [
+          "diploma",
+          "presentation",
+          "award"
+        ]
+      },
+      "photo6": {
+        "title": "Family photos",
+        "tags": [
+          "family",
+          "graduates",
+          "joy"
+        ]
+      },
+      "photo7": {
+        "title": "Research presentations",
+        "tags": [
+          "research",
+          "presentation",
+          "science"
+        ]
+      },
+      "photo8": {
+        "title": "Poster session",
+        "tags": [
+          "posters",
+          "research",
+          "discussion"
         ]
       }
     }
@@ -1790,7 +1909,9 @@
     "months": {
       "jun": "JUN",
       "aug": "AUG"
-    }
+    },
+    "show_more": "Show more",
+    "show_less": "Show less"
   },
   "research": {
     "title": "Research",
@@ -2045,7 +2166,8 @@
         "authors": "Authors",
         "journal": "Journal",
         "year": "Year",
-        "citations": "Citations"
+        "citations": "Citations",
+        "actions": "Actions"
       },
       "sort": {
         "year": "Year",
@@ -2066,11 +2188,7 @@
         "averageCitations": "Average Citations"
       },
       "export": {
-        "selected": "Export Selected",
-        "all": "Export All",
-        "format": "Format",
-        "csv": "CSV",
-        "bibtex": "BibTeX"
+        "title": "Publications"
       },
       "viewDetails": "View Details",
       "cite": "Cite",
@@ -2081,6 +2199,11 @@
       "year": "Year",
       "citations": "Citations",
       "keywords": "Keywords",
+      "download": "Download File",
+      "downloadFile": "Download",
+      "downloadError": "Error downloading file",
+      "fileNotAvailable": "File not available",
+      "downloadSuccess": "File downloaded successfully",
       "loadError": "Error loading publications",
       "noResults": "No publications found matching your criteria"
     },
@@ -2163,7 +2286,9 @@
       "reset": "Reset",
       "joinResearch": "Join Our Research",
       "joinResearchDesc": "Become part of our scientific community and contribute to important research projects",
-      "participateInResearch": "Participate in Research"
+      "participateInResearch": "Participate in Research",
+      "show_more": "Show More",
+      "show_less": "Show Less"
     }
   },
   "reviews": {

@@ -12,6 +12,7 @@ const Grants = () => {
   const [activeTab, setActiveTab] = useState('all');
   const [selectedGrant, setSelectedGrant] = useState(null);
   const [showApplicationForm, setShowApplicationForm] = useState(false);
+  const [loadingDetails, setLoadingDetails] = useState(false);
   
   // State для формы заявки
   const [formData, setFormData] = useState({
@@ -54,6 +55,33 @@ const Grants = () => {
     }
   };
 
+  // Функция для получения детальной информации о гранте
+  const fetchGrantDetails = async (grantId) => {
+    try {
+      setLoadingDetails(true);
+      const response = await fetch(`http://127.0.0.1:8000/research/api/grants/${grantId}/`);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      console.log('Grant details loaded:', data);
+      setSelectedGrant(data); // Обновляем выбранный грант с полными данными
+    } catch (err) {
+      console.error('Error fetching grant details:', err);
+      alert(t('research.grants.errorLoadingDetails') || 'Ошибка загрузки детальной информации');
+    } finally {
+      setLoadingDetails(false);
+    }
+  };
+
+  // Функция для закрытия модального окна
+  const closeModal = () => {
+    setSelectedGrant(null);
+    setLoadingDetails(false);
+  };
+
   // Загрузка данных при монтировании компонента
   useEffect(() => {
     fetchGrants();
@@ -77,6 +105,11 @@ const Grants = () => {
   // Функция для получения срока реализации на текущем языке
   const getGrantDuration = (grant) => {
     return grant[`duration_${currentLang}`] || grant.duration_ru;
+  };
+
+  // Функция для получения организации на текущем языке
+  const getGrantOrganization = (grant) => {
+    return grant[`organization_${currentLang}`] || grant.organization_ru;
   };
 
   // Фильтрация грантов по активной вкладке
@@ -209,7 +242,6 @@ const Grants = () => {
         <div className="text-red-600 text-lg mb-4">{error}</div>
         <button 
           onClick={() => fetchGrants()}
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
         >
           {t('research.grants.retry') || 'Попробовать снова'}
         </button>
@@ -286,7 +318,7 @@ const Grants = () => {
 
                 {/* Организация */}
                 <p className="text-gray-600 text-sm mb-2">
-                  <span className="font-medium">{t('research.grants.organization') || 'Организация'}:</span> {grant.organization}
+                  <span className="font-medium">{t('research.grants.organization') || 'Организация'}:</span> {getGrantOrganization(grant)}
                 </p>
 
                 {/* Сумма */}
@@ -305,20 +337,35 @@ const Grants = () => {
                 {/* Кнопки */}
                 <div className="flex space-x-2">
                   <button
-                    onClick={() => setSelectedGrant(grant)}
+                    onClick={() => {
+                      setSelectedGrant(grant); // Сначала показываем основную информацию
+                      fetchGrantDetails(grant.id); // Затем загружаем детали
+                    }}
                     className="flex-1 bg-blue-600 text-white py-2 px-4 rounded text-sm hover:bg-blue-700 transition-colors"
+                    disabled={loadingDetails}
                   >
-                    {t('research.grants.viewDetails') || 'Подробнее'}
+                    {loadingDetails ? (t('research.grants.loading') || 'Загрузка...') : (t('research.grants.viewDetails') || 'Подробнее')}
                   </button>
                   {grant.status === 'active' && (
                     <button
                       onClick={() => {
-                        setFormData(prev => ({ ...prev, grant: grant.id }));
-                        setShowApplicationForm(true);
+                        if (grant.application_url) {
+                          // Если есть внешняя ссылка для подачи заявки, открываем её
+                          window.open(grant.application_url, '_blank');
+                        } else {
+                          // Иначе открываем внутреннюю форму
+                          setFormData(prev => ({ ...prev, grant: grant.id }));
+                          setShowApplicationForm(true);
+                        }
                       }}
-                      className="bg-green-600 text-white py-2 px-4 rounded text-sm hover:bg-green-700 transition-colors"
+                      className="bg-green-600 text-white py-2 px-4 rounded text-sm hover:bg-green-700 transition-colors flex items-center justify-center gap-1"
                     >
                       {t('research.grants.apply') || 'Подать заявку'}
+                      {grant.application_url && (
+                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                      )}
                     </button>
                   )}
                 </div>
@@ -339,7 +386,7 @@ const Grants = () => {
                   {getGrantTitle(selectedGrant)}
                 </h2>
                 <button
-                  onClick={() => setSelectedGrant(null)}
+                  onClick={closeModal}
                   className="text-gray-400 hover:text-gray-600 text-2xl font-bold"
                 >
                   ×
@@ -350,7 +397,7 @@ const Grants = () => {
               <div className="space-y-4 mb-6">
                 <div>
                   <span className="font-medium text-gray-700">{t('research.grants.organization') || 'Организация'}:</span>
-                  <span className="ml-2 text-gray-900">{selectedGrant.organization}</span>
+                  <span className="ml-2 text-gray-900">{getGrantOrganization(selectedGrant)}</span>
                 </div>
                 
                 <div>
@@ -372,13 +419,27 @@ const Grants = () => {
               {/* Описание */}
               <div className="mb-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('research.grants.description') || 'Описание'}</h3>
-                <p className="text-gray-700 leading-relaxed">{getGrantDescription(selectedGrant)}</p>
+                {loadingDetails ? (
+                  <div className="flex items-center">
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600 mr-2"></div>
+                    <span className="text-gray-500">{t('research.grants.loading') || 'Загрузка...'}</span>
+                  </div>
+                ) : (
+                  <p className="text-gray-700 leading-relaxed">{getGrantDescription(selectedGrant)}</p>
+                )}
               </div>
 
               {/* Требования */}
               <div className="mb-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('research.grants.requirements') || 'Требования'}</h3>
-                <p className="text-gray-700 leading-relaxed">{getGrantRequirements(selectedGrant)}</p>
+                {loadingDetails ? (
+                  <div className="flex items-center">
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600 mr-2"></div>
+                    <span className="text-gray-500">{t('research.grants.loading') || 'Загрузка...'}</span>
+                  </div>
+                ) : (
+                  <p className="text-gray-700 leading-relaxed">{getGrantRequirements(selectedGrant)}</p>
+                )}
               </div>
 
               {/* Контакты */}
@@ -404,13 +465,29 @@ const Grants = () => {
                       </a>
                     </p>
                   )}
+                  {selectedGrant.application_url && (
+                    <p>
+                      <span className="font-medium text-gray-700">{t('research.grants.applicationSite') || 'Подача заявки'}:</span>
+                      <a 
+                        href={selectedGrant.application_url} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="ml-2 text-blue-600 hover:text-blue-800 flex items-center gap-1"
+                      >
+                        {selectedGrant.application_url}
+                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                      </a>
+                    </p>
+                  )}
                 </div>
               </div>
 
               {/* Кнопки действий */}
               <div className="flex justify-end space-x-3">
                 <button
-                  onClick={() => setSelectedGrant(null)}
+                  onClick={closeModal}
                   className="px-4 py-2 border border-gray-300 text-gray-700 rounded hover:bg-gray-50"
                 >
                   {t('research.grants.close') || 'Закрыть'}
@@ -418,13 +495,24 @@ const Grants = () => {
                 {selectedGrant.status === 'active' && (
                   <button
                     onClick={() => {
-                      setFormData(prev => ({ ...prev, grant: selectedGrant.id }));
-                      setSelectedGrant(null);
-                      setShowApplicationForm(true);
+                      if (selectedGrant.application_url) {
+                        // Если есть внешняя ссылка для подачи заявки, открываем её
+                        window.open(selectedGrant.application_url, '_blank');
+                      } else {
+                        // Иначе открываем внутреннюю форму
+                        setFormData(prev => ({ ...prev, grant: selectedGrant.id }));
+                        closeModal();
+                        setShowApplicationForm(true);
+                      }
                     }}
-                    className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+                    className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 flex items-center gap-1"
                   >
                     {t('research.grants.apply') || 'Подать заявку'}
+                    {selectedGrant.application_url && (
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                    )}
                   </button>
                 )}
               </div>
