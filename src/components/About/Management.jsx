@@ -76,84 +76,129 @@ const Management = () => {
     children: []
   };
 
-const renderMemberCard = (member, level = 0) => {
-  const cardSizes = {
-    0: 'inline-block text-center w-full md:w-96 flex-none',
-    1: 'inline-block text-center w-full md:w-80 flex-none',
-    2: 'inline-block text-center w-full md:w-72 flex-none',
-    3: 'inline-block text-center w-full md:w-64 flex-none',
-  };
+  const renderMemberCard = (member, level = 0) => {
+    const cardSizes = {
+      0: 'inline-block text-center w-full md:w-96 flex-none transform hover:scale-105 transition-transform duration-300',
+      1: 'inline-block text-center w-full md:w-80 flex-none transform hover:scale-105 transition-transform duration-300',
+      2: 'inline-block text-center w-full md:w-72 flex-none transform hover:scale-105 transition-transform duration-300',
+      3: 'inline-block text-center w-full md:w-64 flex-none transform hover:scale-105 transition-transform duration-300',
+    };
 
-  const avatarSizes = {
-    0: 'w-28 h-28',
-    1: 'w-24 h-24',
-    2: 'w-20 h-20',
-    3: 'w-16 h-16',
-  };
+    const avatarSizes = {
+      0: 'w-32 h-32 ring-4 ring-white ring-offset-2 ring-offset-blue-100 shadow-lg',
+      1: 'w-28 h-28 ring-3 ring-white ring-offset-2 ring-offset-blue-100 shadow-md',
+      2: 'w-24 h-24 ring-2 ring-white ring-offset-1 ring-offset-blue-100 shadow-sm',
+      3: 'w-20 h-20 ring-1 ring-white',
+    };
 
-  return (
-    <div className="flex flex-col items-center" key={member.id}>
-      <div
-        className={`
-          ${cardSizes[level] || cardSizes[3]} 
-          h-80 flex flex-col justify-between items-center text-center
-          bg-white rounded-2xl p-6 shadow-md 
-          hover:shadow-lg transition duration-300
-        `}
-      >
-        {/* Фото */}
-        <div className="relative">
-          {member.avatar ? (
-            <img
-              src={member.avatar}
-              alt={member.head}
-              className={`${avatarSizes[level] || avatarSizes[3]} rounded-full mx-auto border-2 border-gray-200 object-cover`}
-            />
-          ) : (
-            <div
-              className={`
-                ${avatarSizes[level] || avatarSizes[3]} 
-                flex items-center justify-center rounded-full bg-blue-500 text-white text-lg font-bold mx-auto
-              `}
-            >
-              {member.he?.split(' ')
-                .map((n) => n[0])
-                .slice(0, 2)
-                .join('')
-                .toUpperCase()}
-            </div>
-          )}
-        </div>
+    const cardGradients = {
+      0: 'bg-gradient-to-br from-blue-600 to-purple-700',
+      1: 'bg-gradient-to-br from-blue-500 to-purple-600',
+      2: 'bg-gradient-to-br from-blue-400 to-purple-500',
+      3: 'bg-gradient-to-br from-blue-300 to-purple-400',
+    };
 
-        {/* Имя и должность */}
-        <div>
-          <h3 className="text-lg font-bold text-gray-900">{member.head}</h3>
-          <p className="text-sm text-gray-600">{member.position}</p>
-        </div>
-
-        {/* Контакты */}
-        <div className="text-xs text-gray-500 space-y-1">
-          {member.email && <p>📧 {member.email}</p>}
-          {member.phone && <p>📞 {member.phone}</p>}
-          {member.experience && <p>⏰ {member.experience}</p>}
-        </div>
-
-        {/* Статистика (если есть) */}
-        {(member.studentCount || member.teacherCount) && (
-          <div className="pt-3 border-t border-gray-200 w-full">
-            <div className="flex justify-center space-x-6 text-xs text-gray-600">
-              {member.studentCount && <span>👨‍🎓 {member.studentCount}</span>}
-              {member.teacherCount && <span>👨‍🏫 {member.teacherCount}</span>}
+    return (
+      <div className="flex flex-col items-center group" key={member.id}>
+        <div
+          className={`
+            ${cardSizes[level] || cardSizes[3]} 
+            h-96 flex flex-col justify-between items-center text-center
+            ${cardGradients[level] || cardGradients[3]} 
+            rounded-2xl p-6 shadow-xl 
+            hover:shadow-2xl transition-all duration-300
+            text-white
+            relative overflow-hidden
+          `}
+        >
+          {/* Декоративные элементы */}
+          <div className="absolute top-0 left-0 w-full h-1 bg-white opacity-20"></div>
+          <div className="absolute -top-4 -right-4 w-24 h-24 rounded-full bg-white opacity-10"></div>
+          <div className="absolute -bottom-4 -left-4 w-16 h-16 rounded-full bg-white opacity-10"></div>
+          
+          {/* Фото */}
+          <div className="relative mt-2 mb-4">
+            {member.avatar ? (
+              <img
+                src={member.avatar}
+                alt={member.head}
+                className={`${avatarSizes[level] || avatarSizes[3]} rounded-full mx-auto object-cover transition-all duration-300 group-hover:ring-offset-blue-200`}
+              />
+            ) : (
+              <div
+                className={`
+                  ${avatarSizes[level] || avatarSizes[3]} 
+                  flex items-center justify-center rounded-full bg-white/20 text-white text-lg font-bold mx-auto
+                `}
+              >
+                {member.head?.split(' ')
+                  .map((n) => n[0])
+                  .slice(0, 2)
+                  .join('')
+                  .toUpperCase()}
+              </div>
+            )}
+            
+            {/* Индикатор уровня/статуса */}
+            <div className="absolute -bottom-2 -right-2 bg-white text-blue-700 px-2 py-1 rounded-full text-xs font-bold shadow-md">
+              {level === 0 ? '👑' : level === 1 ? '⭐' : '🔷'}
             </div>
           </div>
-        )}
+
+          {/* Имя и должность */}
+          <div className="mb-4">
+            <h3 className="text-xl font-bold mb-2 drop-shadow-md">{member.head}</h3>
+            <p className="text-sm opacity-90 font-medium">{member.position}</p>
+          </div>
+
+          {/* Контакты */}
+          <div className="text-xs space-y-2 opacity-90 w-full">
+            {member.email && (
+              <div className="flex items-center justify-center bg-white/10 rounded-lg p-2">
+                <span className="mr-2">📧</span>
+                <p className="truncate">{member.email}</p>
+              </div>
+            )}
+            {member.phone && (
+              <div className="flex items-center justify-center bg-white/10 rounded-lg p-2">
+                <span className="mr-2">📞</span>
+                <p>{member.phone}</p>
+              </div>
+            )}
+            {member.experience && (
+              <div className="flex items-center justify-center">
+                <span className="mr-2">⏰</span>
+                <p>{member.experience}</p>
+              </div>
+            )}
+          </div>
+
+          {/* Статистика (если есть) */}
+          {(member.studentCount || member.teacherCount) && (
+            <div className="pt-4 border-t border-white/20 w-full mt-4">
+              <div className="flex justify-center space-x-6 text-xs">
+                {member.studentCount && (
+                  <span className="flex items-center">
+                    <span className="mr-1">👨‍🎓</span> 
+                    {member.studentCount}
+                  </span>
+                )}
+                {member.teacherCount && (
+                  <span className="flex items-center">
+                    <span className="mr-1">👨‍🏫</span> 
+                    {member.teacherCount}
+                  </span>
+                )}
+              </div>
+            </div>
+          )}
+          
+          {/* Индикатор наведения */}
+          <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-400 to-blue-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        </div>
       </div>
-
-    </div>
-  );
-};
-
-
+    );
+  };
 
   // Функция для отображения карточки учителя
   const renderTeacherCard = (teacher) => {
@@ -173,33 +218,46 @@ const renderMemberCard = (member, level = 0) => {
     return (
       <div 
         key={teacher.id} 
-        className="bg-white rounded-xl shadow-sm p-6 transition-shadow duration-200 hover:shadow-lg cursor-pointer"
+        className="bg-gradient-to-br from-green-500 to-teal-600 rounded-2xl shadow-lg p-6 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 cursor-pointer group relative overflow-hidden"
         onClick={() => {
           setSelectedPerson(teacherData);
           setIsModalOpen(true);
         }}
       >
-        <div className="text-center">
-          <div className="relative mb-4">
+        {/* Декоративные элементы */}
+        <div className="absolute top-0 left-0 w-full h-1 bg-white opacity-20"></div>
+        <div className="absolute -top-4 -right-4 w-24 h-24 rounded-full bg-white opacity-10"></div>
+        
+        <div className="text-center relative z-10">
+          <div className="relative mb-5">
             <img
               src={teacherData.avatar}
               alt={teacherData.head}
-              className="w-20 h-20 rounded-full mx-auto border-2 border-gray-100 shadow-sm object-cover"
+              className="w-24 h-24 rounded-full mx-auto border-4 border-white/80 shadow-lg object-cover group-hover:scale-110 transition-transform duration-300"
             />
-            <div className="absolute -bottom-2 -right-2 bg-green-100 text-green-800 px-2 py-0.5 rounded-full text-xs font-semibold shadow-sm">
+            <div className="absolute -bottom-2 -right-2 bg-white text-green-700 px-2 py-1 rounded-full text-xs font-bold shadow-md">
               🎓
             </div>
           </div>
-          <h3 className="text-lg font-bold mb-2 text-gray-900">{teacherData.head}</h3>
-          <p className="text-sm text-gray-600 mb-3">{teacherData.position}</p>
-          <div className="text-xs space-y-1 text-gray-500">
-            <p>📧 {teacherData.email}</p>
-            <p>📞 {teacherData.phone}</p>
+          <h3 className="text-lg font-bold mb-2 text-white drop-shadow-md">{teacherData.head}</h3>
+          <p className="text-sm text-white/90 mb-4 font-medium">{teacherData.position}</p>
+          <div className="text-xs space-y-2 text-white/90">
+            <div className="flex items-center justify-center bg-white/10 rounded-lg p-2">
+              <span className="mr-2">📧</span>
+              <p className="truncate">{teacherData.email}</p>
+            </div>
+            <div className="flex items-center justify-center bg-white/10 rounded-lg p-2">
+              <span className="mr-2">📞</span>
+              <p>{teacherData.phone}</p>
+            </div>
           </div>
           {teacherData.bio && (
-            <p className="text-xs text-gray-600 mt-2 line-clamp-2">{teacherData.bio}</p>
+            <p className="text-xs text-white/80 mt-4 line-clamp-2 bg-white/10 rounded-lg p-2">{teacherData.bio}</p>
           )}
         </div>
+        
+        {/* Индикатор наведения */}
+        <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-400 to-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
       </div>
     );
   };
@@ -275,12 +333,12 @@ const renderMemberCard = (member, level = 0) => {
 
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-        <div ref={modalRef} className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-          <div className="sticky top-0 bg-white border-b border-gray-200 p-6 flex justify-between items-center rounded-t-2xl">
-            <h2 className="text-2xl font-bold text-gray-900">{person.head}</h2>
+        <div ref={modalRef} className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-gray-200">
+          <div className="sticky top-0 bg-gradient-to-r from-blue-600 to-purple-700 text-white p-6 flex justify-between items-center rounded-t-2xl shadow-md">
+            <h2 className="text-2xl font-bold">{person.head}</h2>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-gray-600 text-2xl font-bold"
+              className="text-white hover:text-gray-200 text-2xl font-bold transition-colors duration-200"
             >
               ×
             </button>
@@ -299,12 +357,12 @@ const renderMemberCard = (member, level = 0) => {
         {/* Основная информация */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Фото и основные данные */}
-          <div className="bg-white rounded-xl shadow-lg p-6">
+          <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl shadow-lg p-6">
             <div className="text-center">
               <img
                 src={member.avatar}
                 alt={member.head}
-                className="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-blue-100 shadow-lg"
+                className="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-white shadow-lg"
               />
               <h3 className="text-xl font-bold text-gray-800 mb-2">{member.head}</h3>
               <p className="text-blue-600 font-medium mb-1">{member.position}</p>
@@ -313,7 +371,7 @@ const renderMemberCard = (member, level = 0) => {
           </div>
 
           {/* Контактная информация */}
-          <div className="bg-white rounded-xl shadow-lg p-6">
+          <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl shadow-lg p-6">
             <h4 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
               <span className="mr-2">📞</span>
               {t('management.contactInfo')}
@@ -339,7 +397,7 @@ const renderMemberCard = (member, level = 0) => {
           </div>
 
           {/* Дополнительная информация */}
-          <div className="bg-white rounded-xl shadow-lg p-6">
+          <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl shadow-lg p-6">
             <h4 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
               <span className="mr-2">🎓</span>
               {t('management.additionalInfo')}
@@ -367,7 +425,7 @@ const renderMemberCard = (member, level = 0) => {
 
         {/* Биография */}
         {member.bio && (
-          <div className="bg-white rounded-xl shadow-lg p-6">
+          <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl shadow-lg p-6">
             <h4 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
               <span className="mr-2">📖</span>
               {t('management.biography')}
@@ -378,7 +436,7 @@ const renderMemberCard = (member, level = 0) => {
 
         {/* Достижения */}
         {member.achievements && member.achievements.length > 0 && (
-          <div className="bg-white rounded-xl shadow-lg p-6">
+          <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl shadow-lg p-6">
             <h4 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
               <span className="mr-2">🏆</span>
               {t('management.achievements')}
@@ -396,14 +454,14 @@ const renderMemberCard = (member, level = 0) => {
 
         {/* Сотрудники отдела */}
         {member.staff && member.staff.length > 0 && (
-          <div className="bg-white rounded-xl shadow-lg p-6">
+          <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl shadow-lg p-6">
             <h4 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
               <span className="mr-2">👥</span>
               {t('management.staff')}
             </h4>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {member.staff.map((staffMember, index) => (
-                <div key={index} className="bg-gray-50 rounded-lg p-4">
+                <div key={index} className="bg-white rounded-lg p-4 shadow-sm">
                   <h5 className="font-medium text-gray-800 mb-2">{staffMember.name}</h5>
                   <p className="text-sm text-blue-600 mb-1">{staffMember.position}</p>
                   <p className="text-sm text-gray-600 mb-2">{staffMember.specialization}</p>
