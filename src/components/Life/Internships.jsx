@@ -41,9 +41,17 @@ const Internships = () => {
       description: getMultilingualText(org, 'description', org.description)
     }));
 
+    // Адаптируем report_templates
+    const adaptedReportTemplates = rawData.report_templates.map(template => ({
+      ...template,
+      title: getMultilingualText(template, 'title', template.title),
+      description: getMultilingualText(template, 'description', template.description)
+    }));
+
     setData({
       ...rawData,
-      partner_organizations: adaptedPartnerOrganizations
+      partner_organizations: adaptedPartnerOrganizations,
+      report_templates: adaptedReportTemplates
     });
   };
 
@@ -71,14 +79,17 @@ const Internships = () => {
     }
   };
 
-  const handleDownload = (url, filename) => {
-    if (url && url.startsWith('http')) {
-      // Если это полный URL из API
-      window.open(url, '_blank');
+  const handleDownload = (template) => {
+    if (template.download_url) {
+      // Используем специальный download endpoint для правильной UTF-8 кодировки
+      window.open(template.download_url, '_blank');
+    } else if (template.file && (template.file.startsWith('http') || template.file.startsWith('/media'))) {
+      // Fallback для старых файлов
+      const downloadUrl = template.file.startsWith('http') ? template.file : `http://localhost:8000${template.file}`;
+      window.open(downloadUrl, '_blank');
     } else {
-      // Fallback для демо
-      console.log(`Downloading: ${filename} from ${url}`);
-      alert(`Загрузка файла: ${filename}`);
+      // Показываем сообщение, что файл недоступен
+      alert('Файл временно недоступен для загрузки');
     }
   };
 
@@ -189,6 +200,7 @@ const Internships = () => {
                 <DocumentArrowDownIcon className="w-5 h-5 mr-2" />
                 {t('studentLife.internships.tabs.documents')}
               </button>
+             
             </nav>
           </div>
         </div>
@@ -228,7 +240,7 @@ const Internships = () => {
                     
                     <div className="p-6">
                       <div className="mb-4">
-                        <h4 className="font-medium text-gray-900 mb-2">Специализации:</h4>
+                        <h4 className="font-medium text-gray-900 mb-2">{t('studentLife.internships.specializations')}:</h4>
                         <div className="flex flex-wrap gap-2">
                           {org.specializations?.map((spec, index) => (
                             <span 
@@ -253,10 +265,7 @@ const Internships = () => {
                         </div>
                       </div>
                       
-                      <button className="mt-6 w-full bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-600 px-4 py-2 rounded-lg hover:from-blue-100 hover:to-indigo-100 transition-all duration-300 flex items-center justify-center group-hover:shadow-inner">
-                        <span>Подробнее</span>
-                        <ArrowRightIcon className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                      </button>
+                   
                     </div>
                   </div>
                 ))}
@@ -284,17 +293,24 @@ const Internships = () => {
                 >
                   <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
                     <div className="p-2 bg-blue-100 rounded-lg mr-3">
-                      <ClockIcon className="w-6 h-6 text-blue-600" />
+                      {category === 'academic' && <CheckCircleIcon className="w-6 h-6 text-blue-600" />}
+                      {category === 'documents' && <DocumentArrowDownIcon className="w-6 h-6 text-blue-600" />}
+                      {category === 'duration' && <ClockIcon className="w-6 h-6 text-blue-600" />}
                     </div>
-                    {requirements[0]?.title || category}
+                    {getMultilingualText(requirements[0], 'title', requirements[0]?.title || category)}
                   </h3>
+                  <p className="text-gray-600 mb-4 text-sm">
+                    {getMultilingualText(requirements[0], 'description', requirements[0]?.description)}
+                  </p>
                   <ul className="space-y-3">
                     {requirements[0]?.items?.map((item, itemIndex) => (
                       <li key={itemIndex} className="flex items-start group">
                         <div className="p-1 bg-green-100 rounded-full mr-3 mt-0.5 flex-shrink-0 group-hover:scale-110 transition-transform">
                           <CheckCircleIcon className="w-5 h-5 text-green-500" />
                         </div>
-                        <span className="text-gray-700 group-hover:text-gray-900 transition-colors">{item.text}</span>
+                        <span className="text-gray-700 group-hover:text-gray-900 transition-colors">
+                          {getMultilingualText(item, 'text', item.text)}
+                        </span>
                       </li>
                     ))}
                   </ul>
@@ -366,16 +382,20 @@ const Internships = () => {
                   >
                     <div className="flex items-start justify-between mb-4">
                       <div className="flex-1">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-2">{template.title}</h3>
-                        <p className="text-gray-600 text-sm mb-3">{template.description}</p>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                          {getMultilingualText(template, 'title', template.title)}
+                        </h3>
+                        <p className="text-gray-600 text-sm mb-3">
+                          {getMultilingualText(template, 'description', template.description)}
+                        </p>
                         <div className="flex items-center text-xs text-gray-500 space-x-4">
-                          <span className="bg-gray-100 px-2 py-1 rounded">Формат: {template.format}</span>
-                          <span className="bg-gray-100 px-2 py-1 rounded">Размер: {template.file_size}</span>
+                          <span className="bg-gray-100 px-2 py-1 rounded">{t('studentLife.internships.format')}: {template.format}</span>
+                          <span className="bg-gray-100 px-2 py-1 rounded">{t('studentLife.internships.size')}: {template.file_size}</span>
                         </div>
                       </div>
                     </div>
                     <button
-                      onClick={() => handleDownload(template.file, template.title)}
+                      onClick={() => handleDownload(template)}
                       className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-3 rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 transform hover:-translate-y-0.5 shadow-md flex items-center justify-center group-hover:shadow-lg"
                     >
                       <DocumentArrowDownIcon className="w-5 h-5 mr-2 group-hover:animate-bounce" />

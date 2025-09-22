@@ -150,7 +150,7 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
     student: {
       title: t('nav.student'),
       submenu: [
-        { title: t('nav.student_life'), link: '/student' },
+        // { title: t('nav.student_life'), link: '/student' },
         // { title: t('nav.clubs'), link: '/student/clubs' },
         { title: t('nav.gallery'), link: '/student/gallery' },
         { title: t('nav.international'), link: '/student/international' },

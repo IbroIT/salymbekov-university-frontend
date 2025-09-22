@@ -152,8 +152,8 @@ function App() {
             <Route path="/research/journals" element={<ScientificJournals />} />
 
             {/* Student Life */}
-            <Route path="/student" element={<LifeOverview />} />
-            <Route path="/student/life" element={<LifeOverview />} />
+            {/* <Route path="/student" element={<LifeOverview />} />
+            <Route path="/student/life" element={<LifeOverview />} /> */}
             {/* <Route path="/student/clubs" element={<ClubsSection />} /> */}
             <Route path="/student/gallery" element={<Gallery />} />
             <Route path="/student/international" element={<InternationalStudents />} />

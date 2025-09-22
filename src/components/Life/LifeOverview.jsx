@@ -14,8 +14,9 @@ const LifeOverview = () => {
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [imageLoadStatus, setImageLoadStatus] = useState({});
 
-  // Fetch life overview data from API
+    // Fetch life overview data from API
   useEffect(() => {
     const fetchLifeData = async () => {
       try {
@@ -37,10 +38,50 @@ const LifeOverview = () => {
     fetchLifeData();
   }, []);
 
+  // Генерируем SVG placeholder
+  const generatePlaceholder = (text, width = 400, height = 250, type = 'photo') => {
+    const iconSvg = type === 'video' 
+      ? `<circle cx="200" cy="125" r="30" fill="white"/><polygon points="190,110 190,140 215,125" fill="#3B82F6"/>`
+      : '';
+    
+    const svgContent = `<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100%" height="100%" fill="#3B82F6"/>
+      ${iconSvg}
+      <text x="50%" y="${type === 'video' ? '80%' : '50%'}" text-anchor="middle" dy=".3em" font-family="Arial" font-size="16" fill="white">${text}</text>
+    </svg>`;
+    
+    // Безопасная кодировка для UTF-8 символов
+    try {
+      return `data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(svgContent)))}`;
+    } catch (e) {
+      // Fallback без русских символов
+      const fallbackText = `Image ${type === 'video' ? 'Video' : 'Photo'}`;
+      const fallbackSvg = `<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
+        <rect width="100%" height="100%" fill="#3B82F6"/>
+        ${iconSvg}
+        <text x="50%" y="${type === 'video' ? '80%' : '50%'}" text-anchor="middle" dy=".3em" font-family="Arial" font-size="16" fill="white">${fallbackText}</text>
+      </svg>`;
+      return `data:image/svg+xml;base64,${btoa(fallbackSvg)}`;
+    }
+  };
+
+  // Временные локальные изображения для демонстрации
+  const fallbackPhotos = [
+    'http://localhost:8000/media/news/images/IMG_0249.JPG',
+    'http://localhost:8000/media/news/images/scholarship.jpg',
+    // Добавляем placeholder'ы для остальных
+    generatePlaceholder('Student Life 1'),
+    generatePlaceholder('Student Life 2'),
+    generatePlaceholder('Student Life 3'),
+    generatePlaceholder('Student Life 4'),
+    generatePlaceholder('Student Life 5'),
+    generatePlaceholder('Student Life 6')
+  ];
+
   // Use video data from API
   const videoData = lifeData.video_data.map((video, index) => ({
     ...video,
-    thumbnail: video.thumbnail || `https://picsum.photos/400/250?random=${13 + index}`,
+    thumbnail: fallbackPhotos[index] || generatePlaceholder(`Video ${index + 1}`, 400, 250, 'video'),
     url: video.url || "#"
   }));
 
@@ -48,6 +89,13 @@ const LifeOverview = () => {
   const stats = lifeData.stats;
 
   const handleVideoPlay = (index) => {
+    const video = videoData[index];
+    // Проверяем, есть ли URL для видео
+    if (!video.url || !video.url.trim()) {
+      console.warn('No video URL available for video:', video.title);
+      return;
+    }
+
     if (activeVideo === index) {
       // Если кликаем на уже активное видео, останавливаем его
       videoRefs[index].current.pause();
@@ -60,6 +108,17 @@ const LifeOverview = () => {
       setActiveVideo(index);
       setTimeout(() => videoRefs[index].current.play(), 100);
     }
+  };
+
+  const handleImageError = (e, index, type = 'photo') => {
+    console.log(`Failed to load ${type} ${index}:`, e.target.src);
+    setImageLoadStatus(prev => ({ ...prev, [`${type}_${index}`]: 'error' }));
+    e.target.src = generatePlaceholder(type === 'photo' ? `Photo ${index + 1}` : `Video ${index + 1}`, 400, 250, type);
+  };
+
+  const handleImageLoad = (e, index, type = 'photo') => {
+    console.log(`Successfully loaded ${type} ${index}:`, e.target.src);
+    setImageLoadStatus(prev => ({ ...prev, [`${type}_${index}`]: 'loaded' }));
   };
 
   return (
@@ -94,6 +153,14 @@ const LifeOverview = () => {
         {/* Content */}
         {!loading && !error && (
           <>
+            {/* Debug info */}
+                        <div className="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded mb-4">
+              <strong>Debug info:</strong><br/>
+              Photos: {lifeData.photo_urls ? lifeData.photo_urls.length : 'none'}<br/>
+              Videos: {lifeData.video_data ? lifeData.video_data.length : 'none'}<br/>
+              Stats: {lifeData.stats ? lifeData.stats.length : 'none'}<br/>
+              Image Load Status: {JSON.stringify(imageLoadStatus, null, 2)}
+            </div>
         
         {/* Фото-коллаж */}
         <div className="mb-16">
@@ -108,9 +175,14 @@ const LifeOverview = () => {
                   className="relative overflow-hidden rounded-lg shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl"
                 >
                   <img 
-                    src={url} 
+                    src={fallbackPhotos[index] || generatePlaceholder(`Фото ${index + 1}`)} 
                     alt={t('life.photoCollage.alt', { number: index + 1 })} 
                     className="w-full h-48 object-cover"
+                    onError={(e) => {
+                      console.log(`Fallback for photo ${index} also failed, using placeholder`);
+                      e.target.src = generatePlaceholder(`Фото ${index + 1}`);
+                    }}
+                    onLoad={(e) => handleImageLoad(e, index, 'photo')}
                   />
                   <div className="absolute inset-0 bg-blue-900 bg-opacity-0 hover:bg-opacity-20 transition-all duration-300 cursor-pointer"></div>
                 </div>
@@ -120,6 +192,9 @@ const LifeOverview = () => {
             <div className="text-center py-12 bg-gray-100 rounded-lg">
               <div className="text-gray-500 text-lg">
                 {t('life.photoCollage.noPhotos', 'Фотографии пока не загружены')}
+              </div>
+              <div className="text-sm text-gray-400 mt-2">
+                Debug: photos array length = {lifeData.photo_urls ? lifeData.photo_urls.length : 'undefined'}
               </div>
             </div>
           )}
@@ -142,33 +217,60 @@ const LifeOverview = () => {
                       src={video.thumbnail} 
                       alt={t(video.titleKey)} 
                       className="w-full h-48 object-cover"
+                      onError={(e) => {
+                        console.log(`Video thumbnail ${index} failed, using placeholder`);
+                        e.target.src = generatePlaceholder(`Video ${index + 1}`, 400, 250, 'video');
+                      }}
+                      onLoad={(e) => handleImageLoad(e, index, 'video')}
                     />
-                    <div 
-                      className={`absolute inset-0 flex items-center justify-center bg-blue-900 bg-opacity-50 transition-all duration-300 ${activeVideo === index ? 'opacity-0' : 'opacity-100 cursor-pointer'}`}
-                      onClick={() => handleVideoPlay(index)}
-                    >
-                      <div className="w-16 h-16 bg-blue-700 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors">
-                        <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
-                        </svg>
+                    {video.url && video.url.trim() ? (
+                      // Показываем кнопку воспроизведения только если есть URL видео
+                      <div 
+                        className={`absolute inset-0 flex items-center justify-center bg-blue-900 bg-opacity-50 transition-all duration-300 ${activeVideo === index ? 'opacity-0' : 'opacity-100 cursor-pointer'}`}
+                        onClick={() => handleVideoPlay(index)}
+                      >
+                        <div className="w-16 h-16 bg-blue-700 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors">
+                          <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
+                          </svg>
+                        </div>
                       </div>
-                    </div>
-                    <video
-                      ref={videoRefs[index]}
-                      className={`w-full h-48 object-cover ${activeVideo === index ? 'block' : 'hidden'}`}
-                      controls={activeVideo === index}
-                    >
-                      <source src={video.url} type="video/mp4" />
-                      {t('life.videos.browserSupport')}
-                    </video>
+                    ) : (
+                      // Показываем placeholder если нет URL видео
+                      <div className="absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-70">
+                        <div className="text-center text-white">
+                          <div className="w-16 h-16 bg-gray-600 rounded-full flex items-center justify-center mb-2 mx-auto">
+                            <svg className="w-8 h-8 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
+                            </svg>
+                          </div>
+                          <p className="text-sm">Видео скоро будет доступно</p>
+                        </div>
+                      </div>
+                    )}
+                    {video.url && video.url.trim() && (
+                      <video
+                        ref={videoRefs[index]}
+                        className={`w-full h-48 object-cover ${activeVideo === index ? 'block' : 'hidden'}`}
+                        controls={activeVideo === index}
+                      >
+                        <source src={video.url} type="video/mp4" />
+                        {t('life.videos.browserSupport')}
+                      </video>
+                    )}
                   </div>
                   <div className="p-4">
                     <h4 className="text-lg font-medium text-blue-900">
                       {t(video.titleKey)}
                     </h4>
                     <p className="text-blue-600">
-                      {t(video.durationKey)}
+                      {t(video.durationKey)} {video.duration && `- ${video.duration}`}
                     </p>
+                    {!video.url || !video.url.trim() && (
+                      <p className="text-gray-500 text-sm mt-1">
+                        Видео в процессе загрузки
+                      </p>
+                    )}
                   </div>
                 </div>
               ))}
@@ -177,6 +279,9 @@ const LifeOverview = () => {
             <div className="text-center py-12 bg-gray-100 rounded-lg">
               <div className="text-gray-500 text-lg">
                 {t('life.videos.noVideos', 'Видео пока не загружены')}
+              </div>
+              <div className="text-sm text-gray-400 mt-2">
+                Debug: videos array length = {lifeData.video_data ? lifeData.video_data.length : 'undefined'}
               </div>
             </div>
           )}

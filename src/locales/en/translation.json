@@ -4212,6 +4212,7 @@
   "subtitle": "Practice locations, requirements, and documents",
   "loading": "Loading practice data...",
   "error": "Loading error",
+  "specializations": "Specializations",
   "errorMessage": "Failed to load data. Please try again later.",
   "tryAgain": "Try again",
   "tabs": {
@@ -4244,7 +4245,23 @@
   "reportSignatures": "Signatures of practice supervisors from the university and the organization are required",
   "templatesInfo": "All templates are developed in accordance with the department requirements",
   "contactCoordinator": "If you have questions about formatting, contact the practice coordinator",
-  "submissionFormat": "Final reports must be submitted in both electronic and printed form"
+  "submissionFormat": "Final reports must be submitted in both electronic and printed form",
+  "academicRequirements": "Academic Requirements",
+  "minGPA": "Minimum GPA of 3.0",
+  "completedSubjects": "Successful completion of all mandatory subjects of the current course",
+  "noDebts": "No academic debts",
+  "programCompletion": "Completion of at least 50% of the curriculum",
+  "practiceDocuments": "Practice Documents",
+  "practiceApplication": "Application for practice participation",
+  "studyCertificate": "Study certificate indicating course and specialty",
+  "medicalCertificate": "Medical health certificate",
+  "universityDirection": "Direction from the university academic department",
+  "accidentInsurance": "Accident insurance",
+  "practiceDuration": "Practice Duration",
+  "academicPractice": "Academic practice: 2-4 weeks",
+  "productionPractice": "Production practice: 4-6 weeks",
+  "prediploмaPractice": "Pre-diploma practice: 6-8 weeks",
+  "specialtyInternship": "Specialty internship: 1-3 months"
 },
     "appealForm": {
       "title": "Appeal Form",

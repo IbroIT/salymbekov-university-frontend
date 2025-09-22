@@ -2,16 +2,11 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { 
   GlobeAltIcon, 
-  DocumentCheckIcon, 
   CalendarDaysIcon, 
   StarIcon, 
   AcademicCapIcon,
   ArrowPathIcon,
-  ChevronRightIcon,
-  MapPinIcon,
-  EnvelopeIcon,
-  PhoneIcon,
-  ClockIcon
+  MapPinIcon
 } from '@heroicons/react/24/outline';
 import { getMultilingualText } from '../../utils/multilingualUtils';
 
@@ -22,13 +17,11 @@ const AcademicMobility = () => {
   const [error, setError] = useState(null);
   const [data, setData] = useState({
     partner_universities: [],
-    exchange_opportunities: [],
-    participation_requirements: []
+    exchange_opportunities: []
   });
   const [rawData, setRawData] = useState({
     partner_universities: [],
-    exchange_opportunities: [],
-    participation_requirements: []
+    exchange_opportunities: []
   });
 
   useEffect(() => {
@@ -39,8 +32,7 @@ const AcademicMobility = () => {
   useEffect(() => {
     if (rawData && (
       (rawData.partner_universities && rawData.partner_universities.length > 0) || 
-      (rawData.exchange_opportunities && rawData.exchange_opportunities.length > 0) || 
-      (rawData.participation_requirements && rawData.participation_requirements.length > 0)
+      (rawData.exchange_opportunities && rawData.exchange_opportunities.length > 0)
     )) {
       updateDataForCurrentLanguage();
     }
@@ -68,20 +60,9 @@ const AcademicMobility = () => {
       )
     }));
 
-    // Адаптируем participation_requirements
-    const adaptedParticipationRequirements = (rawData.participation_requirements || []).map(req => ({
-      ...req,
-      title: getMultilingualText(req, 'title', req.title),
-      description: getMultilingualText(req, 'description', req.description),
-      items: (req.items || []).map(item => 
-        getMultilingualText(item, 'text', item.text || item)
-      )
-    }));
-
     setData({
       partner_universities: adaptedPartnerUniversities,
-      exchange_opportunities: adaptedExchangeOpportunities,
-      participation_requirements: adaptedParticipationRequirements
+      exchange_opportunities: adaptedExchangeOpportunities
     });
   };
 
@@ -102,12 +83,11 @@ const AcademicMobility = () => {
       setError(null);
     } catch (err) {
       console.error('Error fetching academic mobility data:', err);
-      setError('Ошибка загрузки данных. Попробуйте обновить страницу.');
-      // Fallback to static data in case of error
+      setError('Ошибка загрузки данных с сервера. Проверьте подключение к API.');
+      // Устанавливаем пустые данные в случае ошибки
       setData({
         partner_universities: [],
-        exchange_opportunities: [],
-        participation_requirements: []
+        exchange_opportunities: []
       });
     } finally {
       setLoading(false);
@@ -198,17 +178,6 @@ const AcademicMobility = () => {
                 <AcademicCapIcon className="w-5 h-5 mr-2" />
                 {t('studentLife.academicMobility.tabs.partners')}
               </button>
-              <button
-                onClick={() => setActiveTab('requirements')}
-                className={`py-3 px-6 rounded-full font-medium text-sm flex items-center transition-all duration-300 ${
-                  activeTab === 'requirements'
-                    ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-md'
-                    : 'text-gray-600 hover:text-blue-600'
-                }`}
-              >
-                <DocumentCheckIcon className="w-5 h-5 mr-2" />
-                {t('studentLife.academicMobility.tabs.requirements')}
-              </button>
             </div>
           </div>
         </div>
@@ -220,7 +189,7 @@ const AcademicMobility = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {data.exchange_opportunities && data.exchange_opportunities.length > 0 ? (
                   data.exchange_opportunities.map((opportunity, index) => (
-                    <div 
+                      <div 
                       key={opportunity.id || index} 
                       className="bg-white rounded-2xl shadow-xl p-6 border border-gray-100 transform transition-all duration-300 hover:scale-105 hover:shadow-2xl"
                     >
@@ -228,11 +197,9 @@ const AcademicMobility = () => {
                         <div className="w-14 h-14 bg-gradient-to-br from-blue-100 to-purple-100 rounded-xl flex items-center justify-center mb-4">
                           <GlobeAltIcon className="w-8 h-8 text-blue-600" />
                         </div>
-                        <h3 className="text-xl font-bold text-gray-900 mb-3">{opportunity.title || 'Возможность обмена'}</h3>
-                        <p className="text-gray-600 mb-4 leading-relaxed">{opportunity.description || 'Описание не указано'}</p>
-                      </div>
-                      
-                      <div className="mb-5 p-4 bg-blue-50 rounded-xl">
+                        <h3 className="text-xl font-bold text-gray-900 mb-3">{opportunity.title}</h3>
+                        <p className="text-gray-600 mb-4 leading-relaxed">{opportunity.description}</p>
+                      </div>                      <div className="mb-5 p-4 bg-blue-50 rounded-xl">
                         <div className="flex items-center text-sm text-blue-700 font-medium">
                           <CalendarDaysIcon className="w-5 h-5 mr-2" />
                           <span>{t('studentLife.academicMobility.duration')}: {opportunity.duration}</span>
@@ -249,12 +216,10 @@ const AcademicMobility = () => {
                             opportunity.benefits.map((benefit, benefitIndex) => (
                               <li key={benefit.id || benefitIndex} className="flex items-start text-sm text-gray-700">
                                 <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                                {benefit.text || benefit || 'Преимущество'}
+                                {benefit.text || benefit}
                               </li>
                             ))
-                          ) : (
-                            <li className="text-gray-500 text-sm">Преимущества не указаны</li>
-                          )}
+                          ) : null}
                         </ul>
                       </div>
                     </div>
@@ -264,7 +229,7 @@ const AcademicMobility = () => {
                     <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
                       <GlobeAltIcon className="w-12 h-12 text-gray-400" />
                     </div>
-                    <p className="text-gray-500 text-lg">Данные о возможностях обмена пока не загружены</p>
+                    <p className="text-gray-500 text-lg">Нет данных о возможностях академической мобильности</p>
                   </div>
                 )}
               </div>
@@ -306,10 +271,10 @@ const AcademicMobility = () => {
                           )}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <h3 className="text-xl font-bold text-gray-900 mb-2 truncate">{university.name || 'Название университета'}</h3>
+                          <h3 className="text-xl font-bold text-gray-900 mb-2 truncate">{university.name}</h3>
                           <div className="flex items-center text-sm text-gray-600">
                             <MapPinIcon className="w-4 h-4 mr-1 flex-shrink-0" />
-                            <span className="truncate">{university.city || 'Город'}, {university.country || 'Страна'}</span>
+                            <span className="truncate">{university.city}, {university.country}</span>
                           </div>
                         </div>
                       </div>
@@ -324,43 +289,48 @@ const AcademicMobility = () => {
                                   key={program.id || index} 
                                   className="bg-gradient-to-r from-green-100 to-emerald-100 text-emerald-800 text-xs px-3 py-1.5 rounded-full font-medium"
                                 >
-                                  {program.name || 'Программа'}
+                                  {getMultilingualText(program, 'name', program.name)}
                                 </span>
                               ))
-                            ) : (
-                              <span className="text-gray-500 text-sm">Программы не указаны</span>
-                            )}
+                            ) : null}
                           </div>
                         </div>
 
-                        <div className="grid grid-cols-2 gap-4 text-sm">
-                          <div className="bg-gray-50 p-3 rounded-lg">
-                            <span className="font-medium text-gray-900">{t('studentLife.academicMobility.duration')}:</span>
-                            <p className="text-gray-600">{university.duration || 'Не указано'}</p>
-                          </div>
-                          <div className="bg-gray-50 p-3 rounded-lg">
-                            <span className="font-medium text-gray-900 block mb-1">{t('studentLife.academicMobility.universityCard.language')}:</span>
-                            <p className="text-gray-600">{university.language || 'Не указано'}</p>
-                          </div>
-                        </div>
-
-                        {university.requirements && (
-                          <div className="bg-blue-50 p-4 rounded-xl">
-                            <h4 className="font-semibold text-blue-900 mb-2">{t('studentLife.academicMobility.universityCard.requirements')}:</h4>
-                            <div className="text-sm text-blue-800 space-y-1.5">
-                              <p>• GPA: {university.requirements.gpa || 'Не указано'}+</p>
-                              <p>• {t('studentLife.academicMobility.universityCard.languageCert')}: {university.requirements.language_cert || 'Не указано'}</p>
-                              <p>• {t('studentLife.academicMobility.universityCard.recommendations')}: {university.requirements.recommendation || 'Не указано'}</p>
+                        <div className="grid grid-cols-1 gap-4 text-sm">
+                          {university.programs && university.programs.length > 0 && (
+                            <div className="bg-blue-50 p-4 rounded-xl">
+                              <h4 className="font-semibold text-blue-900 mb-3">Детали программ:</h4>
+                              <div className="space-y-3">
+                                {university.programs.map((program, idx) => (
+                                  <div key={idx} className="flex justify-between items-center text-sm">
+                                    <span className="font-medium text-blue-800">
+                                      {getMultilingualText(program, 'name', program.name)}
+                                    </span>
+                                    <div className="flex gap-4 text-blue-700">
+                                      <span>📅 {program.duration}</span>
+                                      <span>🌐 {program.language}</span>
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
                             </div>
+                          )}
+                          
+                          <div className="bg-gray-50 p-3 rounded-lg">
+                            <span className="font-medium text-gray-900">{t('studentLife.academicMobility.universityCard.website')}:</span>
+                            <p className="text-gray-600">
+                              <a href={university.website} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                                {university.website}
+                              </a>
+                            </p>
                           </div>
-                        )}
+                        </div>
 
                         <div className="pt-4 border-t border-gray-200">
                           <div className="flex items-center text-sm">
-                            <EnvelopeIcon className="w-4 h-4 text-gray-500 mr-2" />
-                            <span className="font-medium text-gray-900 mr-2">{t('studentLife.academicMobility.universityCard.contact')}:</span>
-                            <a href={`mailto:${university.contact_email}`} className="text-blue-600 hover:underline truncate">
-                              {university.contact_email || 'Не указано'}
+                            <span className="font-medium text-gray-900 mr-2">🌐 Веб-сайт:</span>
+                            <a href={university.website} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline truncate">
+                              {university.website}
                             </a>
                           </div>
                         </div>
@@ -372,140 +342,9 @@ const AcademicMobility = () => {
                     <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
                       <AcademicCapIcon className="w-12 h-12 text-gray-400" />
                     </div>
-                    <p className="text-gray-500 text-lg">Данные о университетах-партнерах пока не загружены</p>
+                    <p className="text-gray-500 text-lg">Нет данных об университетах-партнерах</p>
                   </div>
                 )}
-              </div>
-            </div>
-          )}
-
-          {activeTab === 'requirements' && (
-            <div className="space-y-8">
-              {data.participation_requirements && data.participation_requirements.length > 0 ? (
-                data.participation_requirements.map((section, index) => {
-                  const getIconComponent = (iconName) => {
-                    switch(iconName) {
-                      case 'AcademicCapIcon': return AcademicCapIcon;
-                      case 'GlobeAltIcon': return GlobeAltIcon;
-                      case 'DocumentCheckIcon': return DocumentCheckIcon;
-                      default: return DocumentCheckIcon;
-                    }
-                  };
-                  
-                  const IconComponent = getIconComponent(section.icon);
-                  
-                  return (
-                    <div 
-                      key={index} 
-                      className="bg-white rounded-2xl shadow-lg p-7 border border-gray-100 transform transition-all duration-300 hover:shadow-xl"
-                    >
-                      <div className="flex items-center mb-6">
-                        <div className="w-14 h-14 bg-gradient-to-br from-blue-100 to-purple-100 rounded-xl flex items-center justify-center mr-5">
-                          <IconComponent className="w-8 h-8 text-blue-600" />
-                        </div>
-                        <h3 className="text-xl font-bold text-gray-900">
-                          {section.category || section.title || 'Требования'}
-                        </h3>
-                      </div>
-                      
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                        {section.requirements && section.requirements.length > 0 ? (
-                          section.requirements.map((requirement, reqIndex) => (
-                            <div key={reqIndex} className="flex items-start p-3 bg-gray-50 rounded-lg">
-                              <div className="w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-xs font-bold mr-3 flex-shrink-0">
-                                {reqIndex + 1}
-                              </div>
-                              <span className="text-gray-700">{requirement}</span>
-                            </div>
-                          ))
-                        ) : section.items && section.items.length > 0 ? (
-                          section.items.map((item, itemIndex) => (
-                            <div key={itemIndex} className="flex items-start p-3 bg-gray-50 rounded-lg">
-                              <div className="w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-xs font-bold mr-3 flex-shrink-0">
-                                {itemIndex + 1}
-                              </div>
-                              <span className="text-gray-700">{item}</span>
-                            </div>
-                          ))
-                        ) : (
-                          <p className="text-gray-500 col-span-full text-center py-4">Требования не указаны</p>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })
-              ) : (
-                <div className="text-center py-12 bg-white rounded-2xl shadow-lg">
-                  <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <DocumentCheckIcon className="w-12 h-12 text-gray-400" />
-                  </div>
-                  <p className="text-gray-500 text-lg">Данные о требованиях пока не загружены</p>
-                </div>
-              )}
-
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div className="bg-gradient-to-r from-amber-500 to-orange-600 rounded-2xl shadow-xl p-7 text-white">
-                  <h3 className="text-xl font-bold mb-5 flex items-center">
-                    <CalendarDaysIcon className="w-6 h-6 mr-3" />
-                    {t('studentLife.academicMobility.importantDates.title')}
-                  </h3>
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-center p-3 bg-white/10 rounded-lg backdrop-blur-sm">
-                      <span className="font-medium">{t('studentLife.academicMobility.importantDates.fall')}</span>
-                      <span className="font-semibold">{t('studentLife.academicMobility.importantDates.fallDeadline')}</span>
-                    </div>
-                    <div className="flex justify-between items-center p-3 bg-white/10 rounded-lg backdrop-blur-sm">
-                      <span className="font-medium">{t('studentLife.academicMobility.importantDates.spring')}</span>
-                      <span className="font-semibold">{t('studentLife.academicMobility.importantDates.springDeadline')}</span>
-                    </div>
-                    <div className="flex justify-between items-center p-3 bg-white/10 rounded-lg backdrop-blur-sm">
-                      <span className="font-medium">{t('studentLife.academicMobility.importantDates.summer')}</span>
-                      <span className="font-semibold">{t('studentLife.academicMobility.importantDates.summerDeadline')}</span>
-                    </div>
-                    <div className="flex justify-between items-center p-3 bg-white/10 rounded-lg backdrop-blur-sm">
-                      <span className="font-medium">{t('studentLife.academicMobility.importantDates.selection')}</span>
-                      <span className="font-semibold">{t('studentLife.academicMobility.importantDates.selectionTime')}</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-gradient-to-r from-gray-700 to-gray-800 rounded-2xl shadow-xl p-7 text-white">
-                  <h3 className="text-xl font-bold mb-5 flex items-center">
-                    <EnvelopeIcon className="w-6 h-6 mr-3" />
-                    {t('studentLife.academicMobility.contact.title')}
-                  </h3>
-                  <div className="space-y-4">
-                    <div className="flex items-start">
-                      <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
-                        <EnvelopeIcon className="w-4 h-4" />
-                      </div>
-                      <div>
-                        <p className="font-semibold">{t('studentLife.academicMobility.contact.department')}</p>
-                        <a href="mailto:international@su.edu.kg" className="text-blue-300 hover:underline break-all">
-                          international@su.edu.kg
-                        </a>
-                      </div>
-                    </div>
-                    <div className="flex items-center">
-                      <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
-                        <PhoneIcon className="w-4 h-4" />
-                      </div>
-                      <span>+996 312 123-456 (доб. 123)</span>
-                    </div>
-                    <div className="flex items-start">
-                      <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
-                        <MapPinIcon className="w-4 h-4" />
-                      </div>
-                      <span>{t('studentLife.academicMobility.contact.officeLocation')}</span>
-                    </div>
-                    <div className="flex items-center">
-                      <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
-                        <ClockIcon className="w-4 h-4" />
-                      </div>
-                      <span>{t('studentLife.academicMobility.contact.workingHours')}</span>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           )}
