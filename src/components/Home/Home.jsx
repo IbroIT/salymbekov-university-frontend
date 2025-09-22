@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
-const API_BASE_URL = 'http://localhost:8000/api';
+const API_BASE_URL = 'https://su-med-backend-35d3d951c74b.herokuapp.com/';
 
 const HeroSlider = () => {
   const { i18n } = useTranslation();
@@ -158,13 +158,13 @@ const HeroSlider = () => {
     
     // Для медиафайлов Django
     if (imagePath.startsWith('/media/')) {
-      const url = `http://localhost:8000${imagePath}`;
+      const url = `https://su-med-backend-35d3d951c74b.herokuapp.com/${imagePath}`;
       console.log('Media file URL:', url);
       return url;
     }
     
     // Для любых других путей
-    const url = `http://localhost:8000${imagePath.startsWith('/') ? imagePath : '/' + imagePath}`;
+    const url = `https://su-med-backend-35d3d951c74b.herokuapp.com/${imagePath.startsWith('/') ? imagePath : '/' + imagePath}`;
     console.log('Other path URL:', url);
     return url;
   };

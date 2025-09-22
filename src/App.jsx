@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import Navbar from './components/Navbar';
@@ -88,12 +88,15 @@ function App() {
   }, [i18n]);
 
   return (
-    <Router>
+    <BrowserRouter>
       <div className="App">
         <Navbar />
         <div className="pt-16">
           <Routes>
+<<<<<<< HEAD
             {/* Главная страница */}
+=======
+>>>>>>> 142d297404087155ab1d7ebcfcdef88ed6bf8c9b
             <Route path="/" element={<Hero />} />
 
             {/* About */}
@@ -135,12 +138,21 @@ function App() {
             <Route path="/admissions/tuition/citizens-kg" element={<TuitionCitizensKG />} />
             <Route path="/admissions/tuition/foreign-citizens" element={<TuitionForeignCitizens />} />
 
+<<<<<<< HEAD
             {/* Infrastructure */}
             <Route path="/infrastructure" element={<Infrastructure />} />
             <Route path="/infrastructure/hospitals" element={<Hospitals />} />
             <Route path="/infrastructure/laboratories" element={<Laboratories />} />
             <Route path="/infrastructure/academic-buildings" element={<AcademicBuildings />} />
             <Route path="/infrastructure/dormitories" element={<Dormitories />} />
+=======
+            {/* Legacy admission routes */}
+            <Route path="/admission" element={<AdmissionsOverview />} />
+            <Route path="/admission/requirements" element={<Requirements />} />
+            <Route path="/admission/tuition" element={<Tuition />} />
+            <Route path="/admission/scholarships" element={<Page title="Scholarships" />} />
+            <Route path="/admission/apply" element={<OnlineApplication />} />
+>>>>>>> 142d297404087155ab1d7ebcfcdef88ed6bf8c9b
 
             {/* Research */}
             <Route path="/research" element={<Research />} />
@@ -151,6 +163,7 @@ function App() {
             <Route path="/research/management" element={<ResearchManagement />} />
             <Route path="/research/journals" element={<ScientificJournals />} />
 
+<<<<<<< HEAD
             {/* Student Life */}
             <Route path="/student" element={<LifeOverview />} />
             <Route path="/student/life" element={<LifeOverview />} />
@@ -162,6 +175,14 @@ function App() {
             <Route path="/student/regulations" element={<StudentRegulations />} />
             <Route path="/student/instructions" element={<Instructions />} />
             <Route path="/student/appeal" element={<AppealForm />} />
+=======
+            {/* Campus Life */}
+            <Route path="/campus-life" element={<LifeOverview />} />
+            <Route path="/campus-life/events" element={<Page title="Campus Events" />} />
+            <Route path="/campus-life/clubs" element={<ClubsSection />} />
+            <Route path="/campus-life/gallery" element={<Gallery />} />
+            <Route path="/campus-life/international" element={<InternationalStudents />} />
+>>>>>>> 142d297404087155ab1d7ebcfcdef88ed6bf8c9b
 
             {/* News */}
             <Route path="/news" element={<News />} />
@@ -191,7 +212,7 @@ function App() {
         </div>
         <Footer />
       </div>
-    </Router>
+    </BrowserRouter>
   );
 }
 

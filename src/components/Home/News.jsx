@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { localizeItems } from '../../utils/i18nHelpers';
 
 
-const API_BASE_URL = 'http://localhost:8000/api';
+const API_BASE_URL = 'https://su-med-backend-35d3d951c74b.herokuapp.com/api';
 
 const NewsPreview = ({ maxItems = 3 }) => {
   const { t, i18n } = useTranslation();
