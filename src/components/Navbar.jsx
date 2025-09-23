@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from './LanguageSwitcher';
 import DefaultLogo from "../assets/logo-salymbekov-university-site2.png";
 import ScrolledLogo  from "../assets/Logo_white3.png";
-
 const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
   const { t, i18n } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,7 +14,6 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
   const menuRef = useRef(null);
   const langRef = useRef(null);
 
-  // Синхронизируем язык i18n с пропсом currentLanguage
   useEffect(() => {
     if (currentLanguage && i18n.language !== currentLanguage) {
       i18n.changeLanguage(currentLanguage);
@@ -207,7 +205,7 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
 
           {/* Центральное меню - скрыто на мобильных */}
           <div className="flex items-center space-x-6">
-            <div className="hidden xl:flex flex-1 justify-center">
+            <div className="hidden max-[1430px]:hidden flex-1 justify-center min-[1431px]:flex">
               {Object.entries(menuData).map(([key, item]) => (
                 <div 
                   key={key}
@@ -347,7 +345,7 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
             </div>
             
             {/* Кнопка мобильного меню */}
-            <div className="xl:hidden">
+            <div className="max-[1430px]:block hidden">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className={`inline-flex items-center justify-center p-3 rounded-xl transition-all duration-300 hover:scale-110 ${

@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { localizeItems } from '../../utils/i18nHelpers';
 
-
 const API_BASE_URL = 'https://su-med-backend-35d3d951c74b.herokuapp.com/api';
 
 const NewsPreview = ({ maxItems = 3 }) => {
@@ -25,16 +24,17 @@ const NewsPreview = ({ maxItems = 3 }) => {
           'Content-Type': 'application/json'
         }
       });
-      
+
       if (!response.ok) {
         throw new Error(t('news.loadingError'));
       }
-      
+
       const data = await response.json();
       const localizedNews = localizeItems(data.results || data, 'news', i18n.language);
       setNewsData(localizedNews.slice(0, maxItems));
     } catch (err) {
       setError(err.message);
+
       // Fallback данные
       setNewsData([
         {
@@ -59,6 +59,13 @@ const NewsPreview = ({ maxItems = 3 }) => {
     } finally {
       setLoading(false);
     }
+  };
+
+  // Формируем полный URL картинки
+  const getImageUrl = (imagePath) => {
+    if (!imagePath) return null;
+    if (imagePath.startsWith('http')) return imagePath; // уже полный URL
+    return `https://su-med-backend-35d3d951c74b.herokuapp.com${imagePath.startsWith('/') ? '' : '/'}${imagePath}`;
   };
 
   const formatDate = (dateString) => {
@@ -111,7 +118,6 @@ const NewsPreview = ({ maxItems = 3 }) => {
   return (
     <section className="py-12 bg-gray-50">
       <div className="container mx-auto px-4">
-        {/* Заголовок секции */}
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
             {t('news.latestNews')}
@@ -121,7 +127,6 @@ const NewsPreview = ({ maxItems = 3 }) => {
           </p>
         </div>
 
-        {/* Сетка новостей */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
           {newsData.map((item) => (
             <Link 
@@ -132,7 +137,7 @@ const NewsPreview = ({ maxItems = 3 }) => {
               <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 h-full">
                 <div className="aspect-w-16 aspect-h-9">
                   <img 
-                    src={item.image_url || item.image} 
+                    src={getImageUrl(item.image_url || item.image)} 
                     alt={item.title}
                     className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                   />
@@ -162,7 +167,6 @@ const NewsPreview = ({ maxItems = 3 }) => {
           ))}
         </div>
 
-        {/* Кнопка "Все новости" */}
         <div className="text-center">
           <Link 
             to="/news"

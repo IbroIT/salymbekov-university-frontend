@@ -72,6 +72,7 @@ import Dormitories from "./components/Infrastructure/Dormitories";
 
 import Contacts from "./components/Contacts/contacts";
 import Media from "./components/Contacts/Media";
+import MainRoutes from "./routes";
 
 // Страницы-заглушки для временно отсутствующих компонентов
 const Page = ({ title }) => <div className="min-h-screen pt-20"><h1 className="text-2xl font-bold p-8">{title}</h1></div>;
@@ -153,8 +154,8 @@ function App() {
 
             {/* Student Life */}
             <Route path="/student" element={<LifeOverview />} />
-            <Route path="/student/life" element={<LifeOverview />} />
-            {/* <Route path="/student/clubs" element={<ClubsSection />} /> */}
+            <Route path="/student/life" element={<LifeOverview />} /> 
+            <Route path="/student/clubs" element={<ClubsSection />} />
             <Route path="/student/gallery" element={<Gallery />} />
             <Route path="/student/international" element={<InternationalStudents />} />
             <Route path="/student/internships" element={<Internships />} />
@@ -186,7 +187,7 @@ function App() {
             <Route path="/campus-life/international" element={<InternationalStudents />} />
 
             {/* 404 Page */}
-            <Route path="*" element={<Page title="Страница не найдена" />} />
+            <Route path="*" element={<Page title="Страница не найдена" />} /> 
           </Routes>
         </div>
         <Footer />
