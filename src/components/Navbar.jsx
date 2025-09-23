@@ -205,7 +205,7 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
 
           {/* Центральное меню - скрыто на мобильных */}
           <div className="flex items-center space-x-6">
-            <div className="hidden max-[1430px]:hidden flex-1 justify-center min-[1431px]:flex">
+            <div className="hidden min-[1431px]:flex flex-1 justify-center">
               {Object.entries(menuData).map(([key, item]) => (
                 <div 
                   key={key}
@@ -345,7 +345,7 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
             </div>
             
             {/* Кнопка мобильного меню */}
-            <div className="max-[1430px]:block hidden">
+            <div className="block min-[1431px]:hidden">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className={`inline-flex items-center justify-center p-3 rounded-xl transition-all duration-300 hover:scale-110 ${
@@ -374,7 +374,7 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
       {/* Мобильное меню с анимацией */}
       {isMenuOpen && (
         <div 
-          className="xl:hidden bg-white/95 backdrop-blur-md shadow-xl transform transition-all duration-300 ease-out"
+          className="block min-[1431px]:hidden bg-white/95 backdrop-blur-md shadow-xl transform transition-all duration-300 ease-out"
           style={{
             animation: 'slideDown 0.3s ease-out'
           }}
