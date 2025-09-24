@@ -15,7 +15,7 @@ class PartnersService {
   static async getAllPartners(language = 'ru') {
     try {
       const endpoint = API_CONFIG.ENDPOINTS.ABOUT_SECTION.PARTNERS_FRONTEND;
-      const url = `${API_CONFIG.BASE_URL}${endpoint}`;
+      const url = `${API_CONFIG.BASE_URL}${endpoint}?lang=${language}`;
       
       const response = await fetch(url, {
         headers: {
