@@ -72,7 +72,7 @@ const Partners = () => {
             email: partner.email || '',
             phone: partner.phone || '',
             address: partner.address || `${partner.city || 'Бишкек'}, ${partner.country || 'Кыргызстан'}`,
-            logo: partner.logo ? `http://localhost:8000${partner.logo}` : '/api/placeholder/100/100',
+            logo: partner.logo ? `https://su-med-backend-35d3d951c74b.herokuapp.com/${partner.logo}` : '/api/placeholder/100/100',
             coordinates: [
               partner.latitude || 42.8746,
               partner.longitude || 74.5698

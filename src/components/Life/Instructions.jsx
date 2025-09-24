@@ -143,7 +143,7 @@ const Instructions = () => {
       // Имитация задержки для демонстрации анимации загрузки
       await new Promise(resolve => setTimeout(resolve, 800));
       
-      const response = await fetch('http://localhost:8000/api/student-life/api/data/instructions_data/');
+      const response = await fetch('https://su-med-backend-35d3d951c74b.herokuapp.com/api/student-life/api/data/instructions_data/');
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);

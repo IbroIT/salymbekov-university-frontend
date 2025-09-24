@@ -161,7 +161,7 @@ const NewsEvents = () => {
               {event.image_url ? (
                 <div className="relative">
                   <img 
-                    src={event.image_url?.startsWith('http') ? event.image_url : `http://localhost:8000${event.image_url}`} 
+                    src={event.image_url?.startsWith('http') ? event.image_url : `https://su-med-backend-35d3d951c74b.herokuapp.com${event.image_url}`} 
                     alt={event.title}
                     className="w-full h-48 object-cover"
                   />

@@ -11,7 +11,7 @@ const Media = () => {
   const [error, setError] = useState(null);
 
   // API базовый URL
-  const API_BASE_URL = 'http://localhost:8000/api/media-coverage';
+  const API_BASE_URL = 'https://su-med-backend-35d3d951c74b.herokuapp.com/api/media-coverage';
 
   // Функции для работы с API
   const fetchMediaArticles = async (categoryId = null) => {
@@ -352,7 +352,7 @@ const Media = () => {
               {/* Изображение или тип медиа */}
               {article.image ? (
                 <img 
-                  src={`http://localhost:8000${article.image}`} 
+                  src={`https://su-med-backend-35d3d951c74b.herokuapp.com${article.image}`} 
                   alt={article.title}
                   className="w-full h-48 object-cover"
                 />

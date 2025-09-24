@@ -20,9 +20,9 @@ const ResearchManagement = () => {
       console.log('Fetching management data...');
       setLoading(true);
       const [managementResponse, councilsResponse, commissionsResponse] = await Promise.all([
-        fetch('http://localhost:8000/research/api/management/by_type/'),
-        fetch('http://localhost:8000/research/api/councils/'),
-        fetch('http://localhost:8000/research/api/commissions/by_type/')
+        fetch('https://su-med-backend-35d3d951c74b.herokuapp.com/research/api/management/by_type/'),
+        fetch('https://su-med-backend-35d3d951c74b.herokuapp.com/research/api/councils/'),
+        fetch('https://su-med-backend-35d3d951c74b.herokuapp.com/research/api/commissions/by_type/')
       ]);
 
       console.log('Response statuses:', {

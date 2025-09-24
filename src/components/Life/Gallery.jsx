@@ -19,7 +19,7 @@ const Gallery = () => {
     const fetchGalleryData = async () => {
       try {
         setLoading(true);
-        const response = await fetch('http://localhost:8000/api/student-life/api/data/gallery_data/');
+        const response = await fetch('https://su-med-backend-35d3d951c74b.herokuapp.com/api/student-life/api/data/gallery_data/');
         if (!response.ok) {
           throw new Error('Failed to fetch gallery data');
         }
