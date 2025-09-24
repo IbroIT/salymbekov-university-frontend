@@ -58,7 +58,7 @@ const Partners = () => {
       country: t('partners.list.1.country'),
       city: t('partners.list.1.city'),
       logo: '/src/assets/partners/rkb-logo.svg',
-      coordinates: [42.8746, 74.5975],
+      coordinates: [42.8546, 74.5875],
       website: 'https://rkb.kg',
       established: '2015',
       students: 245,
@@ -72,7 +72,6 @@ const Partners = () => {
         phone: '+996 312 666-000'
       }
     },
-    // Остальные партнеры с использованием t() аналогично
   ];
 
   const partnerTypes = [
@@ -396,7 +395,7 @@ const Partners = () => {
         
         <div className="rounded-lg overflow-hidden shadow-lg">
           <MapContainer
-            center={[42.8746, 74.5975]} // Bishkek coordinates
+            center={[42.8742887, 74.5972753]} // Bishkek coordinates
             zoom={2}
             style={{ height: '500px', width: '100%' }}
             className="z-0"
