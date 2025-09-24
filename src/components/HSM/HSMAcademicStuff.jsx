@@ -63,7 +63,7 @@ const FacultyCard = ({ faculty, language, index }) => {
     >
       <div className="relative group">
         <SafeImage 
-          src={faculty.photo} 
+          src={faculty.photo_url || faculty.photo} 
           alt={getName()} 
           className="w-full h-72 object-cover group-hover:scale-105 transition-transform duration-500" 
           fallback={

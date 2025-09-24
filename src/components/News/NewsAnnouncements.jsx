@@ -45,7 +45,9 @@ const NewsAnnouncements = () => {
         // Имя вложения
         attachment: announcement.attachment_name,
         // Приближается дедлайн
-        deadlineApproaching: announcement.is_deadline_approaching
+        deadlineApproaching: announcement.is_deadline_approaching,
+        // Изображение из API (теперь всегда есть благодаря стоковым фото)
+        image: announcement.image_url,
       }));
       setAnnouncements(mappedAnnouncements);
     } catch (err) {
@@ -223,59 +225,79 @@ const NewsAnnouncements = () => {
               {pinnedAnnouncements.map((item) => {
                 const typeInfo = getTypeInfo(item.type);
                 return (
-                  <div key={item.id} className={`bg-white rounded-xl shadow-md p-6 border-l-4 ${getPriorityColor(item.priority)}`}>
-                    <div className="flex flex-wrap items-start justify-between gap-4">
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-3 mb-3">
-                          <span className="text-2xl">{typeInfo.icon}</span>
-                          <span className={`px-3 py-1 rounded-full text-sm font-semibold ${typeInfo.color}`}>
-                            {typeInfo.name}
-                          </span>
-                          {isDeadlineApproaching(item.deadline) && (
-                            <span className="bg-red-100 text-red-800 px-2 py-1 rounded text-xs font-semibold animate-pulse">
-                              {t('news.announcements.urgent')}
-                            </span>
-                          )}
+                  <div key={item.id} className={`bg-white rounded-xl shadow-md overflow-hidden border-l-4 ${getPriorityColor(item.priority)}`}>
+                    <div className="md:flex">
+                      {item.image_url ? (
+                        <div className="md:w-1/4">
+                          <img 
+                            src={item.image_url?.startsWith('http') ? item.image_url : `http://localhost:8000${item.image_url}`} 
+                            alt={item.title}
+                            className="w-full h-48 md:h-full object-cover"
+                          />
                         </div>
-                        
-                        <h3 className="text-xl font-bold text-gray-800 mb-2">
-                          {item.title}
-                        </h3>
-                        
-                        <p className="text-gray-600 mb-4">
-                          {item.content}
-                        </p>
-                        
-                        <div className="flex flex-wrap items-center gap-4 text-sm">
-                          {item.deadline ? (
-                            <div className={`flex items-center ${isDeadlineApproaching(item.deadline) ? 'text-red-600 font-semibold' : 'text-gray-700'}`}>
-                              <Bell className="w-4 h-4 mr-2" />
-                              <span className="font-medium">{t('news.announcements.deadline')}:</span>
-                              <span className="ml-1">{formatDeadline(item.deadline)}</span>
-                            </div>
-                          ) : (
-                            <div className="flex items-center text-gray-500">
-                              <Calendar className="w-4 h-4 mr-2" />
-                              <span>{formatDateTime(item.date)}</span>
-                            </div>
-                          )}
+                      ) : (
+                        <div className="md:w-1/4 bg-gray-200 h-48 md:h-auto flex items-center justify-center">
+                          <div className="text-gray-400 text-center">
+                            <Bell className="w-8 h-8 mx-auto mb-1" />
+                            <p className="text-xs">{t('news.announcements.noImage', 'Изображение не добавлено')}</p>
+                          </div>
                         </div>
-                      </div>
-                      
-                      <div className="flex flex-col gap-2">
-                        {item.attachment && (
-                          <button className="flex items-center text-blue-600 hover:text-blue-800 text-sm font-semibold transition-colors">
-                            <Download className="w-4 h-4 mr-1" />
-                            {t('news.announcements.download')}
-                          </button>
-                        )}
-                        <Link 
-                          to={`/news/detail/${item.id}`}
-                          className="flex items-center text-gray-600 hover:text-gray-800 text-sm transition-colors"
-                        >
-                          <ExternalLink className="w-4 h-4 mr-1" />
-                          {t('news.announcements.details')}
-                        </Link>
+                      )}
+                      <div className={`${item.image_url ? 'md:w-3/4' : 'w-full'} p-6`}>
+                        <div className="flex flex-wrap items-start justify-between gap-4">
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-3 mb-3">
+                              <span className="text-2xl">{typeInfo.icon}</span>
+                              <span className={`px-3 py-1 rounded-full text-sm font-semibold ${typeInfo.color}`}>
+                                {typeInfo.name}
+                              </span>
+                              {isDeadlineApproaching(item.deadline) && (
+                                <span className="bg-red-100 text-red-800 px-2 py-1 rounded text-xs font-semibold animate-pulse">
+                                  {t('news.announcements.urgent')}
+                                </span>
+                              )}
+                            </div>
+                            
+                            <h3 className="text-xl font-bold text-gray-800 mb-2">
+                              {item.title}
+                            </h3>
+                            
+                            <p className="text-gray-600 mb-4">
+                              {item.content}
+                            </p>
+                            
+                            <div className="flex flex-wrap items-center gap-4 text-sm">
+                              {item.deadline ? (
+                                <div className={`flex items-center ${isDeadlineApproaching(item.deadline) ? 'text-red-600 font-semibold' : 'text-gray-700'}`}>
+                                  <Bell className="w-4 h-4 mr-2" />
+                                  <span className="font-medium">{t('news.announcements.deadline')}:</span>
+                                  <span className="ml-1">{formatDeadline(item.deadline)}</span>
+                                </div>
+                              ) : (
+                                <div className="flex items-center text-gray-500">
+                                  <Calendar className="w-4 h-4 mr-2" />
+                                  <span>{formatDateTime(item.date)}</span>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                          
+                          <div className="flex flex-col gap-2">
+                            {item.attachment && (
+                              <button className="flex items-center text-blue-600 hover:text-blue-800 text-sm font-semibold transition-colors">
+                                <Download className="w-4 h-4 mr-1" />
+                                {t('news.announcements.download')}
+                              </button>
+                            )}
+                            <Link 
+                              to={`/news/detail/${item.id}`}
+                              className="flex items-center text-gray-600 hover:text-gray-800 text-sm transition-colors"
+                            >
+                              <ExternalLink className="w-4 h-4 mr-1" />
+                              {t('news.announcements.details')}
+                            </Link>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -334,59 +356,79 @@ const NewsAnnouncements = () => {
           {regularAnnouncements.map((item) => {
             const typeInfo = getTypeInfo(item.type);
             return (
-              <div key={item.id} className={`bg-white rounded-xl shadow-sm p-6 border-l-4 ${getPriorityColor(item.priority)} hover:shadow-md transition-shadow`}>
-                <div className="flex flex-wrap items-start justify-between gap-4">
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-3 mb-3">
-                      <span className="text-lg">{typeInfo.icon}</span>
-                      <span className={`px-2 py-1 rounded-full text-xs font-semibold ${typeInfo.color}`}>
-                        {typeInfo.name}
-                      </span>
-                      {isDeadlineApproaching(item.deadline) && (
-                        <span className="bg-red-100 text-red-800 px-2 py-1 rounded text-xs font-semibold">
-                          {t('news.announcements.urgent')}
-                        </span>
-                      )}
+              <div key={item.id} className={`bg-white rounded-xl shadow-sm overflow-hidden border-l-4 ${getPriorityColor(item.priority)} hover:shadow-md transition-shadow`}>
+                <div className="md:flex">
+                  {item.image_url ? (
+                    <div className="md:w-1/4">
+                      <img 
+                        src={item.image_url?.startsWith('http') ? item.image_url : `http://localhost:8000${item.image_url}`} 
+                        alt={item.title}
+                        className="w-full h-48 md:h-full object-cover"
+                      />
                     </div>
-                    
-                    <h3 className="text-lg font-bold text-gray-800 mb-2">
-                      {item.title}
-                    </h3>
-                    
-                    <p className="text-gray-600 mb-3 text-sm">
-                      {item.description}
-                    </p>
-                    
-                    <div className="flex flex-wrap items-center gap-4 text-sm">
-                      {item.deadline ? (
-                        <div className={`flex items-center ${isDeadlineApproaching(item.deadline) ? 'text-red-600 font-semibold' : 'text-gray-700'}`}>
-                          <Bell className="w-4 h-4 mr-2" />
-                          <span className="font-medium">{t('news.announcements.deadline')}:</span>
-                          <span className="ml-1">{formatDeadline(item.deadline)}</span>
-                        </div>
-                      ) : (
-                        <div className="flex items-center text-gray-500">
-                          <Calendar className="w-4 h-4 mr-2" />
-                          <span>{formatDateTime(item.date)}</span>
-                        </div>
-                      )}
+                  ) : (
+                    <div className="md:w-1/4 bg-gray-200 h-48 md:h-auto flex items-center justify-center">
+                      <div className="text-gray-400 text-center">
+                        <Bell className="w-8 h-8 mx-auto mb-1" />
+                        <p className="text-xs">{t('news.announcements.noImage', 'Изображение не добавлено')}</p>
+                      </div>
                     </div>
-                  </div>
-                  
-                  <div className="flex flex-col gap-2">
-                    {item.attachment && (
-                      <button className="flex items-center text-blue-600 hover:text-blue-800 text-sm font-semibold transition-colors">
-                        <Download className="w-4 h-4 mr-1" />
-                        {item.attachment}
-                      </button>
-                    )}
-                    <Link 
-                      to={`/news/detail/${item.id}`}
-                      className="flex items-center text-gray-600 hover:text-gray-800 text-sm transition-colors"
-                    >
-                      <ExternalLink className="w-4 h-4 mr-1" />
-                      {t('news.announcements.details')}
-                    </Link>
+                  )}
+                  <div className={`${item.image_url ? 'md:w-3/4' : 'w-full'} p-6`}>
+                    <div className="flex flex-wrap items-start justify-between gap-4">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-3 mb-3">
+                          <span className="text-lg">{typeInfo.icon}</span>
+                          <span className={`px-2 py-1 rounded-full text-xs font-semibold ${typeInfo.color}`}>
+                            {typeInfo.name}
+                          </span>
+                          {isDeadlineApproaching(item.deadline) && (
+                            <span className="bg-red-100 text-red-800 px-2 py-1 rounded text-xs font-semibold">
+                              {t('news.announcements.urgent')}
+                            </span>
+                          )}
+                        </div>
+                        
+                        <h3 className="text-lg font-bold text-gray-800 mb-2">
+                          {item.title}
+                        </h3>
+                        
+                        <p className="text-gray-600 mb-3 text-sm">
+                          {item.description}
+                        </p>
+                        
+                        <div className="flex flex-wrap items-center gap-4 text-sm">
+                          {item.deadline ? (
+                            <div className={`flex items-center ${isDeadlineApproaching(item.deadline) ? 'text-red-600 font-semibold' : 'text-gray-700'}`}>
+                              <Bell className="w-4 h-4 mr-2" />
+                              <span className="font-medium">{t('news.announcements.deadline')}:</span>
+                              <span className="ml-1">{formatDeadline(item.deadline)}</span>
+                            </div>
+                          ) : (
+                            <div className="flex items-center text-gray-500">
+                              <Calendar className="w-4 h-4 mr-2" />
+                              <span>{formatDateTime(item.date)}</span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      
+                      <div className="flex flex-col gap-2">
+                        {item.attachment && (
+                          <button className="flex items-center text-blue-600 hover:text-blue-800 text-sm font-semibold transition-colors">
+                            <Download className="w-4 h-4 mr-1" />
+                            {item.attachment}
+                          </button>
+                        )}
+                        <Link 
+                          to={`/news/detail/${item.id}`}
+                          className="flex items-center text-gray-600 hover:text-gray-800 text-sm transition-colors"
+                        >
+                          <ExternalLink className="w-4 h-4 mr-1" />
+                          {t('news.announcements.details')}
+                        </Link>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

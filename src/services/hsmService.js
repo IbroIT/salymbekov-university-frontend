@@ -2,6 +2,8 @@
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
+console.log('HSM Service: API_BASE_URL =', API_BASE_URL);
+
 class HSMService {
   /**
    * Получить информацию о ВШМ (Высшая школа медицины)
@@ -92,11 +94,15 @@ class HSMService {
   async getFaculty(params = {}) {
     try {
       const queryParams = new URLSearchParams(params);
-      const response = await fetch(`${API_BASE_URL}/api/hsm/faculty/?${queryParams}`);
+      const url = `${API_BASE_URL}/api/hsm/faculty/?${queryParams}`;
+      console.log('HSM Service: Fetching faculty from URL:', url);
+      const response = await fetch(url);
+      console.log('HSM Service: Response status:', response.status);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
+      console.log('HSM Service: Faculty data received:', data);
       return data.results || data;
     } catch (error) {
       console.error('Error fetching faculty:', error);
@@ -109,11 +115,16 @@ class HSMService {
    */
   async getFacultyByPosition() {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/hsm/faculty/by_position/`);
+      const url = `${API_BASE_URL}/api/hsm/faculty/by_position/`;
+      console.log('HSM Service: Fetching faculty by position from URL:', url);
+      const response = await fetch(url);
+      console.log('HSM Service: Response status for by_position:', response.status);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      return await response.json();
+      const data = await response.json();
+      console.log('HSM Service: Faculty by position data received:', data);
+      return data;
     } catch (error) {
       console.error('Error fetching faculty by position:', error);
       throw error;

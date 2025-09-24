@@ -29,14 +29,14 @@ const StudentRegulations = () => {
 
   // Обновление данных при смене языка
   useEffect(() => {
-    if (rawData.internal_rules.length > 0 || rawData.academic_regulations.length > 0 || rawData.downloadable_files.length > 0) {
+    if (rawData && (rawData.internal_rules?.length > 0 || rawData.academic_regulations?.length > 0 || rawData.downloadable_files?.length > 0)) {
       updateDataForCurrentLanguage();
     }
   }, [i18n.language, rawData]);
 
   const updateDataForCurrentLanguage = () => {
     // Адаптируем internal_rules
-    const adaptedInternalRules = rawData.internal_rules.map(rule => ({
+    const adaptedInternalRules = (rawData.internal_rules || []).map(rule => ({
       ...rule,
       title: getMultilingualText(rule, 'title', rule.title),
       content: rule.content?.map(item => ({
@@ -46,7 +46,7 @@ const StudentRegulations = () => {
     }));
 
     // Адаптируем academic_regulations  
-    const adaptedAcademicRegulations = rawData.academic_regulations.map(regulation => ({
+    const adaptedAcademicRegulations = (rawData.academic_regulations || []).map(regulation => ({
       ...regulation,
       title: getMultilingualText(regulation, 'title', regulation.title),
       sections: regulation.sections?.map(section => ({
@@ -60,7 +60,7 @@ const StudentRegulations = () => {
     }));
 
     // Адаптируем downloadable_files
-    const adaptedDownloadableFiles = rawData.downloadable_files.map(file => ({
+    const adaptedDownloadableFiles = (rawData.downloadable_files || []).map(file => ({
       ...file,
       title: getMultilingualText(file, 'title', file.title),
       description: getMultilingualText(file, 'description', file.description)
@@ -86,8 +86,15 @@ const StudentRegulations = () => {
       
       const result = await response.json();
       
+      // Обеспечиваем, что все свойства существуют с правильными значениями по умолчанию
+      const processedResult = {
+        internal_rules: result.internal_rules || [],
+        academic_regulations: result.academic_regulations || [],
+        downloadable_files: result.downloadable_files || []
+      };
+      
       // Сохраняем оригинальные данные
-      setRawData(result);
+      setRawData(processedResult);
       
       // Первоначальная адаптация будет выполнена через useEffect
     } catch (err) {
@@ -107,13 +114,13 @@ const StudentRegulations = () => {
   };
 
   const handleDownload = (url, filename) => {
-    if (url && url.startsWith('http')) {
-      // Если это полный URL из API
-      window.open(url, '_blank');
+    if (url && (url.startsWith('http') || url.startsWith('/media'))) {
+      // Создаем правильный URL для скачивания
+      const downloadUrl = url.startsWith('http') ? url : `http://localhost:8000${url}`;
+      window.open(downloadUrl, '_blank');
     } else {
-      // Fallback для демо
-      console.log(`Downloading: ${filename} from ${url}`);
-      alert(`Загрузка файла: ${filename}`);
+      // Показываем сообщение, что файл недоступен
+      alert('Файл временно недоступен для загрузки');
     }
   };
 
@@ -308,22 +315,22 @@ const StudentRegulations = () => {
               <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl p-6 shadow">
                 <h3 className="text-lg font-semibold text-blue-900 mb-3">{t('studentLife.regulations.contact.title')}</h3>
                 <div className="text-blue-800 space-y-3">
-                  <p className="flex items-center">
+                  <div className="flex items-center">
                     <span className="font-medium mr-2">{t('studentLife.regulations.contact.dean')}:</span> 
                     {t('studentLife.regulations.contact.deanAddress')}
-                  </p>
-                  <p className="flex items-center">
+                  </div>
+                  <div className="flex items-center">
                     <span className="font-medium mr-2">{t('studentLife.regulations.contact.phone')}:</span> 
                     +996 312 123-456 (доб. 105)
-                  </p>
-                  <p className="flex items-center">
+                  </div>
+                  <div className="flex items-center">
                     <span className="font-medium mr-2">Email:</span> 
                     <a href="mailto:dean@su.edu.kg" className="underline hover:text-blue-600 transition-colors">dean@su.edu.kg</a>
-                  </p>
-                  <p className="flex items-center">
+                  </div>
+                  <div className="flex items-center">
                     <span className="font-medium mr-2">{t('studentLife.regulations.contact.hours')}:</span> 
                     {t('studentLife.regulations.contact.hoursTime')}
-                  </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -334,22 +341,22 @@ const StudentRegulations = () => {
               <div className="bg-gradient-to-r from-gray-50 to-blue-50 border border-gray-200 rounded-2xl p-6 shadow">
                 <h3 className="text-lg font-semibold text-gray-900 mb-3">{t('studentLife.regulations.documentsInfo.title')}</h3>
                 <div className="text-gray-700 space-y-2 text-sm">
-                  <p className="flex items-center">
+                  <div className="flex items-center">
                     <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></div>
                     {t('studentLife.regulations.documentsInfo.currentVersion')}
-                  </p>
-                  <p className="flex items-center">
+                  </div>
+                  <div className="flex items-center">
                     <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></div>
                     {t('studentLife.regulations.documentsInfo.readerRequired')}
-                  </p>
-                  <p className="flex items-center">
+                  </div>
+                  <div className="flex items-center">
                     <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></div>
                     {t('studentLife.regulations.documentsInfo.contactIT')}
-                  </p>
-                  <p className="flex items-center">
+                  </div>
+                  <div className="flex items-center">
                     <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></div>
                     {t('studentLife.regulations.documentsInfo.mayUpdate')}
-                  </p>
+                  </div>
                 </div>
               </div>
 
@@ -395,30 +402,30 @@ const StudentRegulations = () => {
               <div className="bg-gradient-to-r from-green-50 to-teal-50 border border-green-200 rounded-2xl p-6 shadow">
                 <h3 className="text-lg font-semibold text-green-800 mb-3">{t('studentLife.regulations.usefulLinks.title')}</h3>
                 <div className="space-y-2 text-green-700">
-                  <p className="hover:underline hover:text-green-600 transition-all">
+                  <div className="hover:underline hover:text-green-600 transition-all">
                     <a href="#" className="flex items-center">
                       <div className="w-1.5 h-1.5 bg-green-500 rounded-full mr-2"></div>
                       {t('studentLife.regulations.usefulLinks.ministry')}
                     </a>
-                  </p>
-                  <p className="hover:underline hover:text-green-600 transition-all">
+                  </div>
+                  <div className="hover:underline hover:text-green-600 transition-all">
                     <a href="#" className="flex items-center">
                       <div className="w-1.5 h-1.5 bg-green-500 rounded-full mr-2"></div>
                       {t('studentLife.regulations.usefulLinks.accreditation')}
                     </a>
-                  </p>
-                  <p className="hover:underline hover:text-green-600 transition-all">
+                  </div>
+                  <div className="hover:underline hover:text-green-600 transition-all">
                     <a href="#" className="flex items-center">
                       <div className="w-1.5 h-1.5 bg-green-500 rounded-full mr-2"></div>
                       {t('studentLife.regulations.usefulLinks.testingCenter')}
                     </a>
-                  </p>
-                  <p className="hover:underline hover:text-green-600 transition-all">
+                  </div>
+                  <div className="hover:underline hover:text-green-600 transition-all">
                     <a href="#" className="flex items-center">
                       <div className="w-1.5 h-1.5 bg-green-500 rounded-full mr-2"></div>
                       {t('studentLife.regulations.usefulLinks.studentPortal')}
                     </a>
-                  </p>
+                  </div>
                 </div>
               </div>
             </div>

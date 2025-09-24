@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import Navbar from './components/Navbar';
@@ -89,10 +89,10 @@ function App() {
   }, [i18n]);
 
   return (
-    <BrowserRouter>
-      <div className="App">
+    <Router>
+      <div className="App min-h-screen flex flex-col">
         <Navbar />
-        <div className="pt-16">
+        <main className="flex-1 pt-16">
           <Routes>
             {/* Главная страница */}
             <Route path="/" element={<Hero />} />
@@ -105,7 +105,6 @@ function App() {
             <Route path="/about/careers/:id" element={<VacancyDetail />} />
             <Route path="/about/partners" element={<Partners />} />
             <Route path="/about/mission" element={<Mission />} />
-            <Route path="/about/regulations" element={<Regulations />} />
 
             {/* HSM */}
             <Route path="/hsm/programs" element={<HSM />} />
@@ -153,9 +152,9 @@ function App() {
             <Route path="/research/journals" element={<ScientificJournals />} />
 
             {/* Student Life */}
-            <Route path="/student" element={<LifeOverview />} />
-            <Route path="/student/life" element={<LifeOverview />} /> 
-            <Route path="/student/clubs" element={<ClubsSection />} />
+            {/* <Route path="/student" element={<LifeOverview />} />
+            <Route path="/student/life" element={<LifeOverview />} /> */}
+            {/* <Route path="/student/clubs" element={<ClubsSection />} /> */}
             <Route path="/student/gallery" element={<Gallery />} />
             <Route path="/student/international" element={<InternationalStudents />} />
             <Route path="/student/internships" element={<Internships />} />
@@ -189,10 +188,10 @@ function App() {
             {/* 404 Page */}
             <Route path="*" element={<Page title="Страница не найдена" />} /> 
           </Routes>
-        </div>
+        </main>
         <Footer />
       </div>
-    </BrowserRouter>
+    </Router>
   );
 }
 

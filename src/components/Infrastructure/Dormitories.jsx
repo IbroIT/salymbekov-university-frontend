@@ -164,6 +164,8 @@ const Dormitories = () => {
         type: "female",
         capacity: 200,
         available: 15,
+        main_photo: "/images/dorm1_exterior.jpg",
+        exterior_photo: "/images/dorm1_exterior.jpg",
         description: {
           ru: "Комфортабельное общежитие для студенток с современными удобствами",
           kg: "Заманбап ыңгайлуулуктары бар студенттер үчүн ыңгайлуу жатакана",
@@ -191,8 +193,28 @@ const Dormitories = () => {
           { ru: "Wi-Fi интернет", kg: "Wi-Fi интернет", en: "Wi-Fi internet" }
         ],
         photos: [
-          { type: "exterior", url: "/images/dorm1_exterior.jpg" },
-          { type: "room", url: "/images/dorm1_room.jpg" },
+          { 
+            id: 1, 
+            type: "exterior", 
+            url: "/images/dorm1_exterior.jpg",
+            photo_url: "/images/dorm1_exterior.jpg",
+            type_display: "Внешний вид",
+            title_ru: "Внешний вид общежития",
+            title_kg: "Жатакананын сырткы көрүнүшү", 
+            title_en: "Dormitory exterior",
+            order: 1
+          },
+          { 
+            id: 2, 
+            type: "room", 
+            url: "/images/dorm1_room.jpg",
+            photo_url: "/images/dorm1_room.jpg",
+            type_display: "Комната",
+            title_ru: "Жилая комната",
+            title_kg: "Жашоо бөлмөсү",
+            title_en: "Living room", 
+            order: 2
+          },
           { type: "kitchen", url: "/images/dorm1_kitchen.jpg" },
           { type: "common", url: "/images/dorm1_common.jpg" }
         ]
@@ -517,7 +539,7 @@ const Dormitories = () => {
                       <div className="md:flex">
                         <div className="md:w-2/5 relative group">
                           <motion.img
-                            src={dorm.photos?.[0]?.url || `https://picsum.photos/600/400?random=${dorm.id}`}
+                            src={dorm.main_photo || dorm.exterior_photo || dorm.photos?.[0]?.url || `https://picsum.photos/600/400?random=${dorm.id}`}
                             alt={getTranslatedField(dorm, 'name')}
                             className="w-full h-72 md:h-full object-cover transition-transform duration-700 group-hover:scale-110"
                             onError={(e) => {

@@ -274,14 +274,7 @@ const Research = () => {
     });
   };
 
-  const getDaysUntil = (dateString) => {
-    if (!dateString) return 0;
-    const today = new Date();
-    const targetDate = new Date(dateString);
-    if (isNaN(targetDate.getTime())) return 0;
-    const diffTime = targetDate - today;
-    return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  };
+
 
   // Анимированный счетчик для статистики
   const Counter = ({ value, label }) => {
@@ -468,7 +461,7 @@ const Research = () => {
                           </span>
                         )}
                         {pub.doi && (
-                          <a href={`https://doi.org/${pub.doi}`} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-700">
+                          <a href='research/publications'  className="text-blue-500 hover:text-blue-700">
                             <ExternalLink className="w-4 h-4" />
                           </a>
                         )}
@@ -507,66 +500,49 @@ const Research = () => {
                   <p className="text-gray-600">{t('research.conferences.noUpcoming')}</p>
                 </div>
               ) : (
-                conferences.map((conf) => {
-                  const daysUntil = getDaysUntil(conf.start_date);
-                  return (
-                    <div 
-                      key={conf.id} 
-                      className="p-4 border border-gray-100 rounded-xl hover:border-orange-200 hover:bg-orange-50/30 transition-all duration-300 group"
-                    >
-                      <div className="flex justify-between items-start mb-3">
-                        <h3 className="font-semibold text-gray-800 flex-1 mr-4 group-hover:text-orange-700 transition-colors">
-                          {getConferenceTitle(conf)}
-                        </h3>
-                        {daysUntil > 0 && (
-                          <span className="text-xs font-medium text-orange-600 bg-orange-100 px-2 py-1 rounded-full whitespace-nowrap">
-                            {t('research.conferences.daysUntil', { days: daysUntil })}
-                          </span>
-                        )}
-                      </div>
-
-                      <div className="space-y-2 text-sm">
-                        <div className="flex items-center text-gray-600">
-                          <Calendar className="w-4 h-4 mr-2 text-blue-500" />
-                          {conf.start_date && conf.end_date ? 
-                            `${formatDate(conf.start_date)} - ${formatDate(conf.end_date)}` :
-                            conf.start_date ? formatDate(conf.start_date) : t('research.common.noDate')
-                          }{conf.time && `, ${conf.time}`}
-                        </div>
-                        
-                        <div className="flex items-center text-gray-600">
-                          <MapPin className="w-4 h-4 mr-2 text-red-500" />
-                          {conf.location}
-                        </div>
-                        
-                        {conf.speaker_count > 0 && (
-                          <div className="flex items-center text-gray-600">
-                            <Users className="w-4 h-4 mr-2 text-purple-500" />
-                            {conf.speaker_count} {t('research.conferences.speakers')}
-                          </div>
-                        )}
-                      </div>
-
-                      <div className="flex justify-between items-center mt-4 pt-3 border-t border-gray-100">
-                        {conf.registration_deadline && (
-                          <span className="text-xs text-gray-500">
-                            {t('research.conferences.registrationDeadline')}: {formatDate(conf.registration_deadline)}
-                          </span>
-                        )}
-                        {conf.registration_link && (
-                          <a
-                            href={conf.registration_link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center group/link"
-                          >
-                            {t('research.conferences.register')} <ArrowRight className="w-4 h-4 ml-1 group-hover/link:translate-x-1 transition-transform" />
-                          </a>
-                        )}
-                      </div>
+                conferences.map((conf) => (
+                  <Link 
+                    key={conf.id}
+                    to="/research/conferences"
+                    className="block p-4 border border-gray-100 rounded-xl hover:border-orange-200 hover:bg-orange-50/30 transition-all duration-300 group"
+                  >
+                    <div className="flex justify-between items-start mb-3">
+                      <h3 className="font-semibold text-gray-800 flex-1 mr-4 group-hover:text-orange-700 transition-colors">
+                        {getConferenceTitle(conf)}
+                      </h3>
                     </div>
-                  );
-                })
+
+                    <div className="space-y-2 text-sm">
+                      <div className="flex items-center text-gray-600">
+                        <Calendar className="w-4 h-4 mr-2 text-blue-500" />
+                        {conf.start_date && conf.end_date ? 
+                          `${formatDate(conf.start_date)} - ${formatDate(conf.end_date)}` :
+                          conf.start_date ? formatDate(conf.start_date) : t('research.common.noDate')
+                        }{conf.time && `, ${conf.time}`}
+                      </div>
+                      
+                      <div className="flex items-center text-gray-600">
+                        <MapPin className="w-4 h-4 mr-2 text-red-500" />
+                        {conf.location}
+                      </div>
+                      
+                      {conf.speaker_count > 0 && (
+                        <div className="flex items-center text-gray-600">
+                          <Users className="w-4 h-4 mr-2 text-purple-500" />
+                          {conf.speaker_count} {t('research.conferences.speakers')}
+                        </div>
+                      )}
+                    </div>
+
+                    {conf.registration_deadline && (
+                      <div className="mt-4 pt-3 border-t border-gray-100">
+                        <span className="text-xs text-gray-500">
+                          {t('research.conferences.registrationDeadline')}: {formatDate(conf.registration_deadline)}
+                        </span>
+                      </div>
+                    )}
+                  </Link>
+                ))
               )}
             </div>
           </section>

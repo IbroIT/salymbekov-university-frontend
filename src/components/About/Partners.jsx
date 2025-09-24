@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import './About.css';
+import PartnersService from '../../services/partnersService';
 
 // Fix for default markers in react-leaflet
 delete L.Icon.Default.prototype._getIconUrl;
@@ -45,12 +46,67 @@ const createCustomMarker = (type) => {
 };
 
 const Partners = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [selectedPartner, setSelectedPartner] = useState(null);
   const [filterType, setFilterType] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
+  const [partners, setPartners] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const partners = [
+  // Fetch partners data from API
+  useEffect(() => {
+    const fetchPartners = async () => {
+      try {
+        setLoading(true);
+        const partnersData = await PartnersService.getAllPartners(i18n.language);
+        const formattedPartners = partnersData.map(partner => {
+          return {
+            id: partner.id,
+            name: partner.name,
+            type: partner.partner_type || 'academic',
+            country: partner.country || 'Кыргызстан',
+            city: partner.city || 'Бишкек',
+            description: partner.description || '',
+            website: partner.website || '',
+            email: partner.email || '',
+            phone: partner.phone || '',
+            address: partner.address || `${partner.city || 'Бишкек'}, ${partner.country || 'Кыргызстан'}`,
+            logo: partner.logo ? `http://localhost:8000${partner.logo}` : '/api/placeholder/100/100',
+            coordinates: [
+              partner.latitude || 42.8746,
+              partner.longitude || 74.5698
+            ],
+            stats: {
+              students: '',  // Remove fake numbers
+              exchanges: '',
+              projects: ''
+            },
+            established: partner.established_year || '',
+            cooperation_since: partner.cooperation_since || '',
+            cooperation: partner.partnership_areas ? 
+              partner.partnership_areas.split(',').map(area => area.trim()) : 
+              [],
+            contact: {
+              email: partner.email || '',
+              phone: partner.phone || ''
+            }
+          };
+        });
+        setPartners(formattedPartners);
+      } catch (err) {
+        setError('Failed to load partners data');
+        console.error('Error fetching partners:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPartners();
+  }, [i18n.language]); // Re-fetch when language changes
+
+  // Fallback partners data (backup)
+  const fallbackPartners = [
     {
       id: 1,
       name: t('partners.list.1.name'),
@@ -75,11 +131,12 @@ const Partners = () => {
   ];
 
   const partnerTypes = [
-    { value: 'all', label: t('partners.filter.all'), icon: '🤝' },
-    { value: 'clinical', label: t('partners.filter.clinical'), icon: '🏥' },
-    { value: 'university', label: t('partners.filter.university'), icon: '🎓' },
-    { value: 'organization', label: t('partners.filter.organization'), icon: '🔬' },
-    { value: 'business', label: t('partners.filter.business'), icon: '💼' }
+    { value: 'all', label: 'Все партнеры', icon: '🤝' },
+    { value: 'clinical', label: 'Клинические базы', icon: '🏥' },
+    { value: 'university', label: 'Университеты', icon: '🎓' },
+    { value: 'organization', label: 'Организации', icon: '🔬' },
+    { value: 'business', label: 'Бизнес-партнеры', icon: '💼' },
+    { value: 'academic', label: 'Академические', icon: '�' }
   ];
 
   const filteredPartners = partners.filter(partner =>
@@ -91,7 +148,14 @@ const Partners = () => {
   );
 
   const getTypeLabel = (type) => {
-    return t(`partners.types.${type}`);
+    const typeLabels = {
+      'clinical': 'Клиническая база',
+      'university': 'Университет', 
+      'organization': 'Организация',
+      'business': 'Бизнес-партнер',
+      'academic': 'Академический партнер'
+    };
+    return typeLabels[type] || 'Партнер';
   };
 
   const getTypeBadgeColor = (type) => {
@@ -138,22 +202,6 @@ const Partners = () => {
               >
                 ×
               </button>
-            </div>
-
-            {/* Statistics */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 p-4 bg-gray-50 rounded-lg">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-blue-600">{partner.students}</div>
-                <div className="text-sm text-gray-600">{t('partners.stats.students')}</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-green-600">{partner.exchanges}</div>
-                <div className="text-sm text-gray-600">{t('partners.stats.exchanges')}</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-purple-600">{partner.projects}</div>
-                <div className="text-sm text-gray-600">{t('partners.stats.projects')}</div>
-              </div>
             </div>
 
             {/* Description */}
@@ -219,6 +267,35 @@ const Partners = () => {
       </div>
     );
   };
+
+  // Loading state
+  if (loading) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="flex justify-center items-center min-h-64">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+          <span className="ml-3 text-lg text-gray-600">{t('partners.loading', 'Загрузка партнеров...')}</span>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="text-center">
+          <div className="text-red-600 text-xl mb-4">⚠️ {error}</div>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+          >
+            {t('partners.retry', 'Повторить попытку')}
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -349,21 +426,22 @@ const Partners = () => {
               {partner.description}
             </p>
 
-            {/* Statistics */}
-            <div className="grid grid-cols-3 gap-2 mb-4 text-center">
-              <div>
-                <div className="text-lg font-bold text-blue-600">{partner.students}</div>
-                <div className="text-xs text-gray-500">{t('partners.stats.students')}</div>
+            {/* Partnership areas */}
+            {partner.cooperation && partner.cooperation.length > 0 && (
+              <div className="mb-4">
+                <h4 className="text-sm font-medium text-gray-900 mb-2">Направления сотрудничества:</h4>
+                <div className="flex flex-wrap gap-1">
+                  {partner.cooperation.map((area, index) => (
+                    <span 
+                      key={index}
+                      className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full"
+                    >
+                      {area}
+                    </span>
+                  ))}
+                </div>
               </div>
-              <div>
-                <div className="text-lg font-bold text-green-600">{partner.exchanges}</div>
-                <div className="text-xs text-gray-500">{t('partners.stats.exchanges')}</div>
-              </div>
-              <div>
-                <div className="text-lg font-bold text-purple-600">{partner.projects}</div>
-                <div className="text-xs text-gray-500">{t('partners.stats.projects')}</div>
-              </div>
-            </div>
+            )}
 
             {/* Actions */}
             <div className="flex space-x-3">
@@ -441,21 +519,25 @@ const Partners = () => {
                       {partner.description}
                     </p>
                     
-                    {/* Statistics */}
-                    <div className="grid grid-cols-3 gap-2 mb-3 text-center text-xs">
-                      <div>
-                        <div className="font-bold text-blue-600">{partner.students}</div>
-                        <div className="text-gray-500">{t('partners.stats.students')}</div>
+                    {/* Partnership areas */}
+                    {partner.cooperation && partner.cooperation.length > 0 && (
+                      <div className="mb-3">
+                        <div className="text-xs font-medium text-gray-900 mb-1">Сотрудничество:</div>
+                        <div className="flex flex-wrap gap-1">
+                          {partner.cooperation.slice(0, 2).map((area, index) => (
+                            <span 
+                              key={index}
+                              className="px-1 py-0.5 bg-gray-100 text-gray-600 text-xs rounded"
+                            >
+                              {area}
+                            </span>
+                          ))}
+                          {partner.cooperation.length > 2 && (
+                            <span className="text-xs text-gray-500">+{partner.cooperation.length - 2}</span>
+                          )}
+                        </div>
                       </div>
-                      <div>
-                        <div className="font-bold text-green-600">{partner.exchanges}</div>
-                        <div className="text-gray-500">{t('partners.stats.exchanges')}</div>
-                      </div>
-                      <div>
-                        <div className="font-bold text-purple-600">{partner.projects}</div>
-                        <div className="text-gray-500">{t('partners.stats.projects')}</div>
-                      </div>
-                    </div>
+                    )}
                     
                     {/* Actions */}
                     <div className="flex space-x-2">
@@ -501,31 +583,13 @@ const Partners = () => {
         </div>
       </div>
 
-      {/* Statistics */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-12">
-        <div className="bg-white rounded-lg shadow-lg p-6 text-center">
+      {/* Simple Partners Count */}
+      <div className="text-center mt-12">
+        <div className="bg-white rounded-lg shadow-lg p-6 inline-block">
           <div className="text-3xl font-bold text-blue-600 mb-2">
             {partners.length}
           </div>
-          <div className="text-gray-600">{t('partners.stats.partners')}</div>
-        </div>
-        <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-          <div className="text-3xl font-bold text-green-600 mb-2">
-            {partners.reduce((sum, p) => sum + (p.students || 0), 0)}
-          </div>
-          <div className="text-gray-600">{t('partners.stats.totalStudents')}</div>
-        </div>
-        <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-          <div className="text-3xl font-bold text-purple-600 mb-2">
-            {partners.reduce((sum, p) => sum + (p.exchanges || 0), 0)}
-          </div>
-          <div className="text-gray-600">{t('partners.stats.totalExchanges')}</div>
-        </div>
-        <div className="bg-white rounded-lg shadow-lg p-6 text-center">
-          <div className="text-3xl font-bold text-orange-600 mb-2">
-            {partners.reduce((sum, p) => sum + (p.projects || 0), 0)}
-          </div>
-          <div className="text-gray-600">{t('partners.stats.totalProjects')}</div>
+          <div className="text-gray-600">Активных партнеров</div>
         </div>
       </div>
 

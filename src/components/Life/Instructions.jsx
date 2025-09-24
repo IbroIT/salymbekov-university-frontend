@@ -97,12 +97,29 @@ const Instructions = () => {
     // Также адаптируем вложенные структуры
     const fullyAdaptedGuides = adaptedGuides.map(guide => ({
       ...guide,
+      requirements: Array.isArray(guide.requirements) 
+        ? guide.requirements.map(req => {
+            if (typeof req === 'string') return req;
+            if (typeof req === 'object' && req !== null) {
+              return getMultilingualText(req, 'text', req.text || String(req));
+            }
+            return String(req);
+          })
+        : [],
       steps: guide.steps?.map(step => ({
         ...step,
         title: getMultilingualText(step, 'title', step.title),
         description: getMultilingualText(step, 'description', step.description),
         timeframe: getMultilingualText(step, 'timeframe', step.timeframe),
-        details: getMultilingualText(step, 'details', step.details) || []
+        details: Array.isArray(step.details) 
+          ? step.details.map(detail => {
+              if (typeof detail === 'string') return detail;
+              if (typeof detail === 'object' && detail !== null) {
+                return getMultilingualText(detail, 'text', detail.text || String(detail));
+              }
+              return String(detail);
+            })
+          : []
       })) || []
     }));
     
@@ -524,21 +541,7 @@ const Instructions = () => {
                   )}
                 </div>
                 
-                <div className="flex flex-wrap gap-2">
-                  {getCategories().map(category => (
-                    <button
-                      key={category}
-                      onClick={() => setActiveCategory(category)}
-                      className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                        activeCategory === category 
-                          ? 'bg-blue-600 text-white' 
-                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                      }`}
-                    >
-                      {category === 'all' ? t('studentLife.instructions.allCategories') : category}
-                    </button>
-                  ))}
-                </div>
+                
               </div>
             </motion.div>
 
