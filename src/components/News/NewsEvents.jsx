@@ -41,8 +41,8 @@ const NewsEvents = () => {
         participants: event.participants_info,
         // Описание из summary (уже локализовано на бэкенде)
         description: event.summary,
-        // Изображение с fallback
-        image: event.image_url || "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=400&h=250&fit=crop",
+        // Изображение из API (теперь всегда есть благодаря стоковым фото)
+        image: event.image_url,
         // title, location, author уже локализованы на бэкенде через сериализатор
       }));
       setEvents(mappedEvents);
@@ -158,25 +158,46 @@ const NewsEvents = () => {
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredEvents.map((event) => (
             <div key={event.id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
-              <div className="relative">
-                <img 
-                  src={event.image} 
-                  alt={event.title}
-                  className="w-full h-48 object-cover"
-                />
-                <div className="absolute top-4 left-4">
-                  <span className={`px-3 py-1 rounded-full text-sm font-semibold ${getCategoryColor(event.category)}`}>
-                    {getCategoryName(event.category)}
-                  </span>
-                </div>
-                {event.status === 'upcoming' && (
-                  <div className="absolute top-4 right-4">
-                    <span className="bg-red-500 text-white px-2 py-1 rounded text-xs font-semibold">
-                      {t('newsanon.soon')}
+              {event.image_url ? (
+                <div className="relative">
+                  <img 
+                    src={event.image_url?.startsWith('http') ? event.image_url : `http://localhost:8000${event.image_url}`} 
+                    alt={event.title}
+                    className="w-full h-48 object-cover"
+                  />
+                  <div className="absolute top-4 left-4">
+                    <span className={`px-3 py-1 rounded-full text-sm font-semibold ${getCategoryColor(event.category)}`}>
+                      {getCategoryName(event.category)}
                     </span>
                   </div>
-                )}
-              </div>
+                  {event.status === 'upcoming' && (
+                    <div className="absolute top-4 right-4">
+                      <span className="bg-red-500 text-white px-2 py-1 rounded text-xs font-semibold">
+                        {t('newsanon.soon')}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="relative bg-gray-200 h-48 flex items-center justify-center">
+                  <div className="text-gray-400 text-center">
+                    <Calendar className="w-12 h-12 mx-auto mb-2" />
+                    <p className="text-sm">{t('newsanon.noImage', 'Изображение не добавлено')}</p>
+                  </div>
+                  <div className="absolute top-4 left-4">
+                    <span className={`px-3 py-1 rounded-full text-sm font-semibold ${getCategoryColor(event.category)}`}>
+                      {getCategoryName(event.category)}
+                    </span>
+                  </div>
+                  {event.status === 'upcoming' && (
+                    <div className="absolute top-4 right-4">
+                      <span className="bg-red-500 text-white px-2 py-1 rounded text-xs font-semibold">
+                        {t('newsanon.soon')}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              )}
               
               <div className="p-6">
                 <h3 className="text-xl font-bold text-gray-800 mb-3">

@@ -18,6 +18,8 @@ const AcademicBuildings = () => {
         if (response.ok) {
           const data = await response.json();
           const buildingsData = data.results || data;
+          console.log('API Response:', data);
+          console.log('Buildings data:', buildingsData);
           setBuildings(buildingsData);
         } else {
           console.error('Failed to fetch academic buildings:', response.statusText);
@@ -111,15 +113,45 @@ const AcademicBuildings = () => {
 
   // Helper function to get translated field value
   const getTranslatedField = (obj, fieldPrefix) => {
+    if (!obj) return '';
+    
     const lang = getCurrentLanguage();
-    if (obj[`${fieldPrefix}_${lang}`]) return obj[`${fieldPrefix}_${lang}`];
-    if (obj[fieldPrefix] && typeof obj[fieldPrefix] === 'object' && obj[fieldPrefix][lang]) {
-      return obj[fieldPrefix][lang];
+    
+    // Try direct field access with language suffix (e.g., title_en, name_ru)
+    const directField = obj[`${fieldPrefix}_${lang}`];
+    if (directField) return directField;
+    
+    // Try nested object access (e.g., obj.title.en, obj.name.ru)
+    if (obj[fieldPrefix] && typeof obj[fieldPrefix] === 'object') {
+      const nestedField = obj[fieldPrefix][lang];
+      if (nestedField) return nestedField;
+      
+      // Fallback to Russian if current language not available
+      const fallbackField = obj[fieldPrefix]['ru'];
+      if (fallbackField) return fallbackField;
     }
-    if (obj[fieldPrefix] && typeof obj[fieldPrefix] === 'object' && obj[fieldPrefix]['ru']) {
-      return obj[fieldPrefix]['ru'];
-    }
+    
+    // Final fallback to the field itself
     return obj[fieldPrefix] || '';
+  };
+
+  // Safe base64 encoding function that handles Unicode characters
+  const safeBase64Encode = (str) => {
+    try {
+      // Use encodeURIComponent and then btoa to handle Unicode characters
+      return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (match, p1) => {
+        return String.fromCharCode('0x' + p1);
+      }));
+    } catch (error) {
+      console.warn('Error encoding string to base64:', error);
+      return btoa('Invalid text');
+    }
+  };
+
+  // Create placeholder SVG with safe encoding
+  const createPlaceholderSVG = (width, height, text) => {
+    const svgContent = `<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg"><rect width="${width}" height="${height}" fill="#f3f4f6"/><text x="${width/2}" y="${height/2}" text-anchor="middle" fill="#6b7280" font-family="Arial" font-size="16">${text.replace(/[<>&"']/g, '')}</text></svg>`;
+    return `data:image/svg+xml;base64,${safeBase64Encode(svgContent)}`;
   };
 
   if (loading) {
@@ -226,13 +258,12 @@ const AcademicBuildings = () => {
               <div className={viewMode === 'list' ? 'w-1/3' : ''}>
                 <div className="relative">
                   <img
-                    src={building.photo || building.photo_url ||
-                      (building.photos && building.photos.find(p => p.type === 'facade')?.url) ||
-                      `data:image/svg+xml;base64,${btoa(`<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="300" fill="#f3f4f6"/><text x="200" y="150" text-anchor="middle" fill="#6b7280" font-family="Arial" font-size="16">${getTranslatedField(building, 'name')}</text></svg>`)}`}
+                    src={building.photo_url || building.facade_photo ||
+                      createPlaceholderSVG(400, 300, getTranslatedField(building, 'name') || 'Building')}
                     alt={getTranslatedField(building, 'name')}
                     className={`w-full ${viewMode === 'list' ? 'h-48' : 'h-48 md:h-56'} object-cover`}
                     onError={(e) => {
-                      e.target.src = `data:image/svg+xml;base64,${btoa('<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="300" fill="#f3f4f6"/><text x="200" y="150" text-anchor="middle" fill="#6b7280" font-family="Arial" font-size="16">Building Photo</text></svg>')}`;
+                      e.target.src = createPlaceholderSVG(400, 300, 'Building Photo');
                     }}
                   />
                   <div className="absolute top-4 left-4 bg-blue-600 text-white text-xs font-semibold px-2 py-1 rounded">
@@ -385,7 +416,7 @@ const AcademicBuildings = () => {
                                 </h4>
                                 <div className="flex justify-between text-sm text-gray-600 mt-1">
                                   <span>{facility.count} {t('academicBuildings.units', 'ед.')}</span>
-                                  <span>{facility.capacity}</span>
+                                  <span>{getTranslatedField(facility, 'capacity') || facility.capacity}</span>
                                 </div>
                               </div>
                             </div>
@@ -405,26 +436,52 @@ const AcademicBuildings = () => {
                       {(building.photos && building.photos.length > 0) ? (
                         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                           {building.photos.map((photo, index) => (
-                            <div key={index} className="relative group cursor-pointer">
-                              <img
-                                src={photo.photo_url || photo.url || `data:image/svg+xml;base64,${btoa('<svg width="300" height="200" xmlns="http://www.w3.org/2000/svg"><rect width="300" height="200" fill="#f3f4f6"/><text x="150" y="100" text-anchor="middle" fill="#6b7280" font-family="Arial" font-size="14">Photo</text></svg>')}`}
-                                alt={getTranslatedField(photo, 'title') || `Photo ${index + 1}`}
-                                className="w-full h-40 object-cover rounded-lg"
-                                onError={(e) => {
-                                  e.target.src = `data:image/svg+xml;base64,${btoa('<svg width="300" height="200" xmlns="http://www.w3.org/2000/svg"><rect width="300" height="200" fill="#f3f4f6"/><text x="150" y="100" text-anchor="middle" fill="#6b7280" font-family="Arial" font-size="14">Photo</text></svg>')}`;
-                                }}
-                              />
-                              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-60 rounded-lg flex items-center justify-center transition-all duration-300">
-                                <div className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-center">
-                                  <div className="font-medium">{getTranslatedField(photo, 'title')}</div>
-                                </div>
+                            <div key={photo.id || index} className="border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
+                              <div className="bg-gray-100">
+                                <img
+                                  src={photo.photo_url}
+                                  alt={getTranslatedField(photo, 'title') || `Photo ${index + 1}`}
+                                  className="w-full h-40 object-cover"
+                                  loading="lazy"
+                                  onLoad={(e) => {
+                                    console.log('✅ Gallery image loaded successfully:', photo.photo_url);
+                                    e.target.parentElement.classList.remove('bg-gray-100');
+                                    e.target.parentElement.classList.add('bg-white');
+                                  }}
+                                  onError={(e) => {
+                                    console.error('❌ Gallery image failed:', photo.photo_url);
+                                    e.target.parentElement.classList.remove('bg-gray-100');
+                                    e.target.parentElement.classList.add('bg-red-50');
+                                    // Create a simple error placeholder
+                                    const errorSvg = `data:image/svg+xml;base64,${btoa(`
+                                      <svg width="300" height="200" xmlns="http://www.w3.org/2000/svg">
+                                        <rect width="300" height="200" fill="#fef2f2"/>
+                                        <text x="150" y="90" text-anchor="middle" fill="#dc2626" font-family="Arial" font-size="14">Unable to load image</text>
+                                        <text x="150" y="110" text-anchor="middle" fill="#9ca3af" font-family="Arial" font-size="12">${photo.type_display || 'Photo'}</text>
+                                      </svg>
+                                    `)}`;
+                                    e.target.src = errorSvg;
+                                  }}
+                                />
+                              </div>
+                              <div className="p-3 bg-white">
+                                <h4 className="font-medium text-sm text-gray-800 truncate">
+                                  {getTranslatedField(photo, 'title') || `Photo ${index + 1}`}
+                                </h4>
+                                <p className="text-xs text-gray-500 mt-1">
+                                  {photo.type_display || photo.type}
+                                </p>
                               </div>
                             </div>
                           ))}
                         </div>
                       ) : (
-                        <div className="text-center py-8 text-gray-500">
+                        <div className="text-center py-8 text-gray-500 border-2 border-dashed border-gray-300 rounded-lg">
+                          <div className="text-4xl mb-2">📸</div>
                           <p>{t('academicBuildings.noPhotos', 'Фотографии пока недоступны')}</p>
+                          <p className="text-sm text-gray-400 mt-2">
+                            {building.photos ? `Found ${building.photos.length} photos` : 'No photos array found'}
+                          </p>
                         </div>
                       )}
                     </div>

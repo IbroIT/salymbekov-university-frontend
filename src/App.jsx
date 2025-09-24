@@ -89,9 +89,9 @@ function App() {
 
   return (
     <Router>
-      <div className="App">
+      <div className="App min-h-screen flex flex-col">
         <Navbar />
-        <div className="pt-16">
+        <main className="flex-1 pt-16">
           <Routes>
             {/* Главная страница */}
             <Route path="/" element={<Hero />} />
@@ -104,7 +104,6 @@ function App() {
             <Route path="/about/careers/:id" element={<VacancyDetail />} />
             <Route path="/about/partners" element={<Partners />} />
             <Route path="/about/mission" element={<Mission />} />
-            <Route path="/about/regulations" element={<Regulations />} />
 
             {/* HSM */}
             <Route path="/hsm/programs" element={<HSM />} />
@@ -188,7 +187,7 @@ function App() {
             {/* 404 Page */}
             <Route path="*" element={<Page title="Страница не найдена" />} />
           </Routes>
-        </div>
+        </main>
         <Footer />
       </div>
     </Router>

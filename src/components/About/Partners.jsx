@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import './About.css';
+import PartnersService from '../../services/partnersService';
 
 // Fix for default markers in react-leaflet
 delete L.Icon.Default.prototype._getIconUrl;
@@ -49,8 +50,75 @@ const Partners = () => {
   const [selectedPartner, setSelectedPartner] = useState(null);
   const [filterType, setFilterType] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
+  const [partners, setPartners] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const partners = [
+  // Fetch partners data from API
+  useEffect(() => {
+    const fetchPartners = async () => {
+      try {
+        setLoading(true);
+        const partnersData = await PartnersService.getAllPartners();
+        const formattedPartners = partnersData.map(partner => {
+          // Determine partner type based on name or use academic as default
+          let partnerType = 'academic';
+          const name = partner.name || partner.nameKey || `Partner ${partner.id}`;
+          
+          if (name.includes('больница') || name.includes('Hospital') || name.includes('клиника')) {
+            partnerType = 'clinical';
+          } else if (name.includes('университет') || name.includes('University') || name.includes('институт')) {
+            partnerType = 'university';
+          } else if (name.includes('организация') || name.includes('Organization') || name.includes('ассоциация')) {
+            partnerType = 'organization';
+          }
+          
+          return {
+            id: partner.id,
+            name: name,
+            type: partner.partner_type || partner.type || partnerType,
+            country: partner.country || 'Кыргызстан',
+            city: partner.city || 'Бишкек',
+            description: partner.description || '',
+            website: partner.website || '',
+            email: partner.email || '',
+            phone: partner.phone || '',
+            address: partner.address || partner.city || 'Бишкек, Кыргызстан',
+            logo: partner.logo ? `http://localhost:8000${partner.logo}` : '/api/placeholder/100/100',
+            coordinates: {
+              lat: partner.latitude || (42.8746 + (Math.random() - 0.5) * 0.1),
+              lng: partner.longitude || (74.5698 + (Math.random() - 0.5) * 0.1)
+            },
+            stats: {
+              students: partner.students_count || Math.floor(Math.random() * 3000) + 500,
+              exchanges: partner.programs_count || Math.floor(Math.random() * 50) + 10,
+              projects: partner.research_projects || Math.floor(Math.random() * 100) + 20
+            },
+            established: partner.established_year || 1990 + Math.floor(Math.random() * 30),
+            cooperation_since: partner.cooperation_since || 2010 + Math.floor(Math.random() * 10),
+            cooperation: partner.partnership_areas ? 
+              partner.partnership_areas.split(',').map(area => area.trim()) : 
+              ['Медицинское образование', 'Научные исследования', 'Обмен студентами', 'Повышение квалификации'],
+            contact: {
+              email: partner.email || 'info@partner.kg',
+              phone: partner.phone || '+996 312 000-000'
+            }
+          };
+        });
+        setPartners(formattedPartners);
+      } catch (err) {
+        setError('Failed to load partners data');
+        console.error('Error fetching partners:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPartners();
+  }, []);
+
+  // Fallback partners data (backup)
+  const fallbackPartners = [
     {
       id: 1,
       name: t('partners.list.1.name'),
@@ -144,16 +212,16 @@ const Partners = () => {
             {/* Statistics */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 p-4 bg-gray-50 rounded-lg">
               <div className="text-center">
-                <div className="text-2xl font-bold text-blue-600">{partner.students}</div>
-                <div className="text-sm text-gray-600">{t('partners.stats.students')}</div>
+                <div className="text-2xl font-bold text-blue-600">{partner.stats.students}</div>
+                <div className="text-sm text-gray-600">Студентов</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-green-600">{partner.exchanges}</div>
-                <div className="text-sm text-gray-600">{t('partners.stats.exchanges')}</div>
+                <div className="text-2xl font-bold text-green-600">{partner.stats.exchanges}</div>
+                <div className="text-sm text-gray-600">Обменов</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-purple-600">{partner.projects}</div>
-                <div className="text-sm text-gray-600">{t('partners.stats.projects')}</div>
+                <div className="text-2xl font-bold text-purple-600">{partner.stats.projects}</div>
+                <div className="text-sm text-gray-600">Проектов</div>
               </div>
             </div>
 
@@ -220,6 +288,35 @@ const Partners = () => {
       </div>
     );
   };
+
+  // Loading state
+  if (loading) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="flex justify-center items-center min-h-64">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+          <span className="ml-3 text-lg text-gray-600">{t('partners.loading', 'Загрузка партнеров...')}</span>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="text-center">
+          <div className="text-red-600 text-xl mb-4">⚠️ {error}</div>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+          >
+            {t('partners.retry', 'Повторить попытку')}
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -353,16 +450,16 @@ const Partners = () => {
             {/* Statistics */}
             <div className="grid grid-cols-3 gap-2 mb-4 text-center">
               <div>
-                <div className="text-lg font-bold text-blue-600">{partner.students}</div>
-                <div className="text-xs text-gray-500">{t('partners.stats.students')}</div>
+                <div className="text-lg font-bold text-blue-600">{partner.stats.students}</div>
+                <div className="text-xs text-gray-500">Студентов</div>
               </div>
               <div>
-                <div className="text-lg font-bold text-green-600">{partner.exchanges}</div>
-                <div className="text-xs text-gray-500">{t('partners.stats.exchanges')}</div>
+                <div className="text-lg font-bold text-green-600">{partner.stats.exchanges}</div>
+                <div className="text-xs text-gray-500">Обменов</div>
               </div>
               <div>
-                <div className="text-lg font-bold text-purple-600">{partner.projects}</div>
-                <div className="text-xs text-gray-500">{t('partners.stats.projects')}</div>
+                <div className="text-lg font-bold text-purple-600">{partner.stats.projects}</div>
+                <div className="text-xs text-gray-500">Проектов</div>
               </div>
             </div>
 
@@ -445,16 +542,16 @@ const Partners = () => {
                     {/* Statistics */}
                     <div className="grid grid-cols-3 gap-2 mb-3 text-center text-xs">
                       <div>
-                        <div className="font-bold text-blue-600">{partner.students}</div>
-                        <div className="text-gray-500">{t('partners.stats.students')}</div>
+                        <div className="font-bold text-blue-600">{partner.stats.students}</div>
+                        <div className="text-gray-500">Студентов</div>
                       </div>
                       <div>
-                        <div className="font-bold text-green-600">{partner.exchanges}</div>
-                        <div className="text-gray-500">{t('partners.stats.exchanges')}</div>
+                        <div className="font-bold text-green-600">{partner.stats.exchanges}</div>
+                        <div className="text-gray-500">Обменов</div>
                       </div>
                       <div>
-                        <div className="font-bold text-purple-600">{partner.projects}</div>
-                        <div className="text-gray-500">{t('partners.stats.projects')}</div>
+                        <div className="font-bold text-purple-600">{partner.stats.projects}</div>
+                        <div className="text-gray-500">Проектов</div>
                       </div>
                     </div>
                     

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { localizeNewsItem, localizeItems } from '../../utils/i18nHelpers';
 
-const API_BASE_URL = 'http://localhost:8000/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api';
+const MEDIA_BASE_URL = import.meta.env.VITE_MEDIA_BASE_URL || 'http://localhost:8000';
 
 const News = () => {
   const { t, i18n } = useTranslation();
@@ -21,6 +21,7 @@ const News = () => {
   const fetchNews = async () => {
     try {
       setLoading(true);
+      setError(null);
       const response = await fetch(`${API_BASE_URL}/news/`, {
         headers: {
           'Accept-Language': i18n.language === 'kg' ? 'ky' : i18n.language,
@@ -31,32 +32,12 @@ const News = () => {
         throw new Error(t('news.loadingError'));
       }
       const data = await response.json();
-      // Локализуем данные с сервера
-      const localizedNews = localizeItems(data.results || data, 'news', i18n.language);
-      setNewsData(localizedNews);
+      // Получаем данные с сервера (без fallback)
+      const newsResults = data.results || data;
+      setNewsData(newsResults);
     } catch (err) {
       setError(err.message);
-      // Fallback данные если API недоступен
-      setNewsData([
-        {
-          id: 1,
-          title: t('news.fallbackNews.0.title'),
-          summary: t('news.fallbackNews.0.summary'),
-          published_at: "2024-12-01",
-          category: { name: "news" },
-          image_url: "https://images.unsplash.com/photo-1582719471384-894e35a4b48f?w=400&h=250&fit=crop",
-          is_featured: true
-        },
-        {
-          id: 2,
-          title: t('news.fallbackNews.1.title'),
-          summary: t('news.fallbackNews.1.summary'),
-          published_at: "2024-11-28",
-          category: { name: "events" },
-          image_url: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=400&h=250&fit=crop",
-          is_featured: false
-        }
-      ]);
+      setNewsData([]); // Показываем пустой массив вместо fallback данных
     } finally {
       setLoading(false);
     }
@@ -72,12 +53,11 @@ const News = () => {
       });
       if (response.ok) {
         const data = await response.json();
-        // Локализуем данные с сервера
-        const localizedFeatured = localizeItems(data, 'news', i18n.language);
-        setFeaturedNews(localizedFeatured);
+        setFeaturedNews(data);
       }
     } catch (err) {
       console.error(t('news.featuredError'), err);
+      setFeaturedNews([]); // Показываем пустой массив при ошибке
     }
   };
 
@@ -86,6 +66,28 @@ const News = () => {
     : newsData.filter(item => item.category?.name === activeTab);
 
   const displayFeaturedNews = featuredNews.length > 0 ? featuredNews : newsData.filter(item => item.is_featured);
+
+  const getLocalizedTitle = (item) => {
+    const currentLang = i18n.language === 'kg' ? 'kg' : i18n.language;
+    return item[`title_${currentLang}`] || item.title_ru || item.title || 'Без названия';
+  };
+
+  const getLocalizedSummary = (item) => {
+    const currentLang = i18n.language === 'kg' ? 'kg' : i18n.language;
+    return item[`summary_${currentLang}`] || item.summary_ru || item.summary || 'Краткое описание недоступно';
+  };
+
+  const getImageUrl = (item) => {
+    if (item.image_url && item.image_url !== 'null' && item.image_url !== null) {
+      // Если URL уже полный, возвращаем как есть
+      if (item.image_url.startsWith('http')) {
+        return item.image_url;
+      }
+      // Если URL относительный, добавляем базовый URL
+      return `${MEDIA_BASE_URL}${item.image_url}`;
+    }
+    return null; // Возвращаем null если изображения нет
+  };
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -121,11 +123,54 @@ const News = () => {
             onClick={() => {
               setError(null);
               fetchNews();
+              fetchFeaturedNews();
             }}
             className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
           >
             {t('news.tryAgain')}
           </button>
+        </div>
+      </div>
+    );
+  }
+
+  // Если нет данных и нет загрузки и нет ошибки
+  if (!loading && newsData.length === 0) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        {/* Hero Section */}
+        <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16">
+          <div className="container mx-auto px-4">
+            <div className="text-center">
+              <h1 className="text-4xl md:text-5xl font-bold mb-4">
+                {t('news.title')}
+              </h1>
+              <p className="text-xl text-blue-100 max-w-2xl mx-auto">
+                {t('news.subtitle')}
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <div className="container mx-auto px-4 py-12">
+          <div className="text-center">
+            <div className="mb-8">
+              <svg className="w-24 h-24 mx-auto text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M2 5a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 002 2H4a2 2 0 01-2-2V5zm3 1h6v4H5V6zm6 6H5v2h6v-2z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <h3 className="text-xl font-semibold text-gray-600 mb-4">Новостей пока нет</h3>
+            <p className="text-gray-500 mb-6">В данный момент нет опубликованных новостей. Проверьте позже.</p>
+            <button 
+              onClick={() => {
+                fetchNews();
+                fetchFeaturedNews();
+              }}
+              className="bg-blue-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-blue-700 transition-colors"
+            >
+              Обновить
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -163,11 +208,25 @@ const News = () => {
                 >
                   <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
                     <div className="aspect-w-16 aspect-h-9 relative">
-                      <img 
-                        src={item.image_url || item.image} 
-                        alt={item.title}
-                        className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
+                      {getImageUrl(item) ? (
+                        <img 
+                          src={getImageUrl(item)} 
+                          alt={getLocalizedTitle(item)}
+                          className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+                          onError={(e) => {
+                            e.target.style.display = 'none';
+                            e.target.nextSibling.style.display = 'flex';
+                          }}
+                        />
+                      ) : null}
+                      <div 
+                        className="w-full h-64 bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center text-gray-500"
+                        style={{ display: getImageUrl(item) ? 'none' : 'flex' }}
+                      >
+                        <svg className="w-16 h-16" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
+                        </svg>
+                      </div>
                       <div className="absolute top-4 left-4">
                         <span className="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
                           {t('news.important')}
@@ -179,10 +238,10 @@ const News = () => {
                         {formatDate(item.published_at || item.date)}
                       </div>
                       <h3 className="text-xl font-bold text-gray-800 mb-3 group-hover:text-blue-600 transition-colors">
-                        {item.title}
+                        {getLocalizedTitle(item)}
                       </h3>
                       <p className="text-gray-600 line-clamp-2">
-                        {item.summary}
+                        {getLocalizedSummary(item)}
                       </p>
                     </div>
                   </div>
@@ -193,62 +252,81 @@ const News = () => {
         )}
 
         {/* Filter Tabs */}
-        <div className="flex flex-wrap justify-center gap-2 mb-8">
-          {['all', 'news', 'events', 'announcements'].map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`px-6 py-3 rounded-full font-semibold transition-colors ${
-                activeTab === tab
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-white text-gray-600 hover:bg-blue-50'
-              }`}
-            >
-              {t(`news.tabs.${tab}`)}
-            </button>
-          ))}
-        </div>
+        
 
         {/* News Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredNews.map((item) => (
-            <Link 
-              key={item.id} 
-              to={`/news/detail/${item.slug || item.id}`}
-              className="group block"
-            >
-              <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                <div className="aspect-w-16 aspect-h-9">
-                  <img 
-                    src={item.image_url || item.image} 
-                    alt={item.title}
-                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-                <div className="p-6">
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm text-gray-500">
-                      {formatDate(item.published_at || item.date)}
-                    </span>
-                    <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                      (item.category?.name || item.category) === 'news' ? 'bg-blue-100 text-blue-800' :
-                      (item.category?.name || item.category) === 'events' ? 'bg-green-100 text-green-800' :
-                      'bg-yellow-100 text-yellow-800'
-                    }`}>
-                      {getCategoryName(item.category?.name || item.category)}
-                    </span>
+        {filteredNews.length > 0 ? (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredNews.map((item) => (
+              <Link 
+                key={item.id} 
+                to={`/news/detail/${item.slug || item.id}`}
+                className="group block"
+              >
+                <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                  <div className="aspect-w-16 aspect-h-9">
+                    {getImageUrl(item) ? (
+                      <img 
+                        src={getImageUrl(item)} 
+                        alt={getLocalizedTitle(item)}
+                        className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                          e.target.nextSibling.style.display = 'flex';
+                        }}
+                      />
+                    ) : null}
+                    <div 
+                      className="w-full h-48 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center text-gray-400"
+                      style={{ display: getImageUrl(item) ? 'none' : 'flex' }}
+                    >
+                      <svg className="w-12 h-12" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
+                      </svg>
+                    </div>
                   </div>
-                  <h3 className="text-lg font-bold text-gray-800 mb-3 group-hover:text-blue-600 transition-colors">
-                    {item.title}
-                  </h3>
-                  <p className="text-gray-600 text-sm line-clamp-3">
-                    {item.summary}
-                  </p>
+                  <div className="p-6">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-sm text-gray-500">
+                        {formatDate(item.published_at || item.date)}
+                      </span>
+                      <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                        (item.category?.name || item.category) === 'news' ? 'bg-blue-100 text-blue-800' :
+                        (item.category?.name || item.category) === 'events' ? 'bg-green-100 text-green-800' :
+                        'bg-yellow-100 text-yellow-800'
+                      }`}>
+                        {getCategoryName(item.category?.name || item.category)}
+                      </span>
+                    </div>
+                    <h3 className="text-lg font-bold text-gray-800 mb-3 group-hover:text-blue-600 transition-colors">
+                      {getLocalizedTitle(item)}
+                    </h3>
+                    <p className="text-gray-600 text-sm line-clamp-3">
+                      {getLocalizedSummary(item)}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </Link>
-          ))}
-        </div>
+              </Link>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-12">
+            <div className="mb-6">
+              <svg className="w-16 h-16 mx-auto text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <h3 className="text-lg font-semibold text-gray-600 mb-2">
+              {activeTab === 'all' ? 'Новостей пока нет' : `Нет новостей в категории "${t(`news.tabs.${activeTab}`)}"`}
+            </h3>
+            <p className="text-gray-500">
+              {activeTab === 'all' 
+                ? 'В данный момент нет опубликованных новостей.' 
+                : 'Попробуйте выбрать другую категорию или посмотрите все новости.'
+              }
+            </p>
+          </div>
+        )}
 
         {/* Load More Button */}
         <div className="text-center mt-12">

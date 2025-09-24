@@ -219,7 +219,7 @@ const Internships = () => {
                   >
                     <div className="relative h-48 overflow-hidden">
                       <img 
-                        src={org.image || `https://source.unsplash.com/random/600x400?company,office,${index}`} 
+                        src={org.logo_url || `https://source.unsplash.com/random/600x400?company,office,${index}`} 
                         alt={org.name}
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                       />

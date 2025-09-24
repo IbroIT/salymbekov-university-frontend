@@ -233,12 +233,6 @@
     "error": "Loading error",
     "tryAgain": "Try again",
     "loadMore": "Load more",
-    "tabs": {
-      "all": "All News",
-      "news": "News",
-      "events": "Events",
-      "announcements": "Announcements"
-    },
     "categories": {
       "news": "News",
       "events": "Events",

@@ -72,7 +72,6 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
         { title: t('nav.vacancies'), link: '/about/vacancies' },
         { title: t('nav.partners'), link: '/about/partners' },
         { title: t('nav.mission'), link: '/about/mission' },
-        { title: t('nav.regulations'), link: '/about/regulations' },
       ]
     },
     HSM: {
