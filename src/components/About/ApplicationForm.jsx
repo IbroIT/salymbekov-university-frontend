@@ -67,11 +67,6 @@ const ApplicationForm = ({ vacancy, onClose }) => {
       // Имитация отправки формы
       await new Promise(resolve => setTimeout(resolve, 2000));
       
-      // Здесь была бы реальная отправка данных на сервер
-      console.log('Отправка заявки:', {
-        vacancy: vacancy.title,
-        candidate: formData
-      });
 
       alert(`Спасибо за отклик на вакансию "${vacancy.title}"! Ваша заявка отправлена. Мы свяжемся с вами в ближайшее время.`);
       onClose();

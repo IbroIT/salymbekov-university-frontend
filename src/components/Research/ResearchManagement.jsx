@@ -11,25 +11,17 @@ const ResearchManagement = () => {
   const [activeTab, setActiveTab] = useState('management');
 
   useEffect(() => {
-    console.log('ResearchManagement component loaded');
     fetchData();
   }, []);
 
   const fetchData = async () => {
     try {
-      console.log('Fetching management data...');
       setLoading(true);
       const [managementResponse, councilsResponse, commissionsResponse] = await Promise.all([
         fetch('https://su-med-backend-35d3d951c74b.herokuapp.com/research/api/management/by_type/'),
         fetch('https://su-med-backend-35d3d951c74b.herokuapp.com/research/api/councils/'),
         fetch('https://su-med-backend-35d3d951c74b.herokuapp.com/research/api/commissions/by_type/')
       ]);
-
-      console.log('Response statuses:', {
-        management: managementResponse.status,
-        councils: councilsResponse.status,
-        commissions: commissionsResponse.status
-      });
 
       if (!managementResponse.ok || !councilsResponse.ok || !commissionsResponse.ok) {
         throw new Error('Failed to fetch data');
@@ -38,8 +30,6 @@ const ResearchManagement = () => {
       const managementData = await managementResponse.json();
       const councilsData = await councilsResponse.json();
       const commissionsData = await commissionsResponse.json();
-
-      console.log('Fetched data:', { managementData, councilsData, commissionsData });
 
       setManagementData(managementData);
       setCouncilsData(councilsData.results || councilsData);

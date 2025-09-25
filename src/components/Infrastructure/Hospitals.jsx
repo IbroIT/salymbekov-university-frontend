@@ -20,15 +20,12 @@ const Hospitals = () => {
     try {
       setLoading(true);
       setError(null);
-      console.log('Fetching hospitals from API...');
       const response = await infrastructureApi.getHospitals();
-      console.log('API response:', response.data);
       setHospitals(response.data.results || response.data);
     } catch (err) {
       console.error('Error fetching hospitals:', err);
       setError(err.message || 'Failed to load hospitals');
       // Fallback to mock data if API fails
-      console.log('Falling back to mock data');
       setHospitals(getMockHospitals());
     } finally {
       setLoading(false);

@@ -199,8 +199,6 @@ const FAQ = () => {
       // Simulate API call - replace with actual endpoint
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // Here you would typically send the question to your backend
-      console.log('New question submitted:', newQuestion);
       
       setNewQuestion({ name: '', email: '', question: '' });
       setShowQuestionForm(false);

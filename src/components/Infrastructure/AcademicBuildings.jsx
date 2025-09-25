@@ -18,11 +18,8 @@ const AcademicBuildings = () => {
         if (response.ok) {
           const data = await response.json();
           const buildingsData = data.results || data;
-          console.log('API Response:', data);
-          console.log('Buildings data:', buildingsData);
           setBuildings(buildingsData);
         } else {
-          console.error('Failed to fetch academic buildings:', response.statusText);
           // Fallback to mock data if API fails
           setBuildings(getMockBuildings());
         }
@@ -444,7 +441,6 @@ const AcademicBuildings = () => {
                                   className="w-full h-40 object-cover"
                                   loading="lazy"
                                   onLoad={(e) => {
-                                    console.log('✅ Gallery image loaded successfully:', photo.photo_url);
                                     e.target.parentElement.classList.remove('bg-gray-100');
                                     e.target.parentElement.classList.add('bg-white');
                                   }}

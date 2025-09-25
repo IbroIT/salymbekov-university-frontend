@@ -19,10 +19,6 @@ const NewsDetail = () => {
 
       const apiUrl = `${API_BASE_URL}/news/${id}/`;
 
-      console.log("Fetching article from:", apiUrl);
-      console.log("Current language:", currentLanguage);
-      console.log("ID/slug:", id);
-
       const response = await fetch(apiUrl, {
         headers: {
           "Accept-Language": currentLanguage,
@@ -30,7 +26,6 @@ const NewsDetail = () => {
         },
       });
 
-      console.log("Response status:", response.status);
 
       if (!response.ok) {
         throw new Error(t("news.detail.notFound", "Новость не найдена"));
@@ -38,14 +33,11 @@ const NewsDetail = () => {
 
       const data = await response.json();
 
-      console.log("Raw API response:", data);
-      console.log("Is array:", Array.isArray(data));
 
       if (!data || typeof data !== "object" || Array.isArray(data)) {
         throw new Error(t("news.detail.notFound", "Новость не найдена"));
       }
 
-      console.log("Setting article:", data);
       setArticle(data);
     } catch (err) {
       console.error("Error fetching article:", err);

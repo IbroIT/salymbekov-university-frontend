@@ -11,9 +11,6 @@ const EmailSettings = () => {
   const [saved, setSaved] = useState(false);
 
   const handleSave = () => {
-    // В реальном приложении здесь был бы API вызов для сохранения настроек
-    console.log('Новые email адреса:', emails);
-    
     // Для демонстрации просто показываем сообщение
     setSaved(true);
     setTimeout(() => setSaved(false), 3000);

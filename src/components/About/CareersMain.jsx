@@ -32,15 +32,11 @@ const CareersMain = () => {
   const loadInitialData = async () => {
     try {
       setLoading(true);
-      console.log('Loading data with language:', i18n.language);
       
       const [categoriesData, vacanciesData] = await Promise.all([
         careersAPI.getCategories(),
         careersAPI.getVacancies()
       ]);
-      
-      console.log('categoriesData:', categoriesData);
-      console.log('vacanciesData:', vacanciesData);
       
       // Handle categories data - ensure it's an array
       const categories = Array.isArray(categoriesData) 

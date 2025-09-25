@@ -208,7 +208,6 @@ const Instructions = () => {
           url: window.location.href,
         });
       } catch (err) {
-        console.log('Ошибка при использовании Web Share API:', err);
       }
     } else {
       // Fallback: копирование в буфер обмена

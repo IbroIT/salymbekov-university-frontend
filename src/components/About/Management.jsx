@@ -13,19 +13,16 @@ const Management = () => {
   // Загружаем данные с API
   useEffect(() => {
     const fetchData = async () => {
-      console.log('Fetching management and teachers data...');
       setLoading(true);
       
       // Загружаем данные руководства
       const managementData = await getManagement();
-      console.log('Management data received:', managementData);
       if (managementData && managementData.length > 0) {
         setManagementData(managementData[0]);
       }
       
       // Загружаем данные учителей
       const teachersData = await getTeachers();
-      console.log('Teachers data received:', teachersData);
       setTeachersData(teachersData);
       
       setLoading(false);

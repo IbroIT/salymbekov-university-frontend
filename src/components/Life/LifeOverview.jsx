@@ -111,13 +111,11 @@ const LifeOverview = () => {
   };
 
   const handleImageError = (e, index, type = 'photo') => {
-    console.log(`Failed to load ${type} ${index}:`, e.target.src);
     setImageLoadStatus(prev => ({ ...prev, [`${type}_${index}`]: 'error' }));
     e.target.src = generatePlaceholder(type === 'photo' ? `Photo ${index + 1}` : `Video ${index + 1}`, 400, 250, type);
   };
 
   const handleImageLoad = (e, index, type = 'photo') => {
-    console.log(`Successfully loaded ${type} ${index}:`, e.target.src);
     setImageLoadStatus(prev => ({ ...prev, [`${type}_${index}`]: 'loaded' }));
   };
 
@@ -179,7 +177,6 @@ const LifeOverview = () => {
                     alt={t('life.photoCollage.alt', { number: index + 1 })} 
                     className="w-full h-48 object-cover"
                     onError={(e) => {
-                      console.log(`Fallback for photo ${index} also failed, using placeholder`);
                       e.target.src = generatePlaceholder(`Фото ${index + 1}`);
                     }}
                     onLoad={(e) => handleImageLoad(e, index, 'photo')}
@@ -218,7 +215,6 @@ const LifeOverview = () => {
                       alt={t(video.titleKey)} 
                       className="w-full h-48 object-cover"
                       onError={(e) => {
-                        console.log(`Video thumbnail ${index} failed, using placeholder`);
                         e.target.src = generatePlaceholder(`Video ${index + 1}`, 400, 250, 'video');
                       }}
                       onLoad={(e) => handleImageLoad(e, index, 'video')}

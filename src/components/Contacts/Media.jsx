@@ -131,8 +131,6 @@ const Media = () => {
     if (dashboardStats) {
       // Подсчитываем статистику по категориям из articles_by_category
       const categoryStats = dashboardStats.articles_by_category || {};
-      console.log('Dashboard stats:', dashboardStats);
-      console.log('Category stats:', categoryStats);
       
       const stats = {
         tv: categoryStats['Телевидение'] || 0,
@@ -142,7 +140,6 @@ const Media = () => {
         magazine: categoryStats['Журналы'] || 0
       };
       
-      console.log('Calculated stats:', stats);
       return stats;
     }
     

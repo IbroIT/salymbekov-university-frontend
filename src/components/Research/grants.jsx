@@ -66,7 +66,6 @@ const Grants = () => {
       }
       
       const data = await response.json();
-      console.log('Grant details loaded:', data);
       setSelectedGrant(data); // Обновляем выбранный грант с полными данными
     } catch (err) {
       console.error('Error fetching grant details:', err);

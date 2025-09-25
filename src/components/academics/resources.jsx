@@ -61,7 +61,6 @@ const Resources = () => {
     
     try {
       await new Promise(resolve => setTimeout(resolve, 2000));
-      console.log('Login attempt:', moodleCredentials);
       alert(t('resources.forms.login_success'));
       setMoodleCredentials({ username: '', password: '' });
     } catch (error) {

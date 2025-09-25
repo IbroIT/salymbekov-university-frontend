@@ -56,9 +56,6 @@ const Faculties = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleApply = useCallback(() => {
-    console.log('Подача заявки на программу');
-  }, []);
 
   const handleDownloadBrochure = useCallback(() => {
     const link = document.createElement('a');

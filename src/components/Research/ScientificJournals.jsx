@@ -12,23 +12,19 @@ const ScientificJournals = () => {
   const [activeView, setActiveView] = useState('journals');
 
   useEffect(() => {
-    console.log('ScientificJournals component loaded');
     fetchJournals();
   }, []);
 
   const fetchJournals = async () => {
     try {
-      console.log('Fetching journals...');
       setLoading(true);
       const response = await fetch('https://su-med-backend-35d3d951c74b.herokuapp.com/research/api/journals/');
-      console.log('Response status:', response.status);
       
       if (!response.ok) {
         throw new Error('Failed to fetch journals');
       }
 
       const data = await response.json();
-      console.log('Journals data:', data);
       setJournalsData(data.results || data);
       setError(null);
     } catch (err) {

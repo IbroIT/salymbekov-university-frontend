@@ -12,16 +12,13 @@ const NewsDetailTest = () => {
   useEffect(() => {
     const fetchArticle = async () => {
       try {
-        console.log('Fetching news with ID:', id);
         const response = await fetch(`${API_BASE_URL}/news/${id}/`);
-        console.log('Response status:', response.status);
         
         if (!response.ok) {
           throw new Error('Новость не найдена');
         }
         
         const data = await response.json();
-        console.log('Received data:', data);
         setArticle(data);
       } catch (err) {
         console.error('Error:', err);
