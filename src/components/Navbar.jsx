@@ -79,9 +79,9 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
       submenu: [
         { title: t('nav.about_HSM'), link: '/hsm/about' },
         { title: t('nav.programs'), link: '/hsm/programs' },
+        { title: t('nav.eduprograms'), link: '/hsm/eduprograms' },
         { title: t('nav.faculties'), link: '/hsm/faculties' },
         { title: t('nav.academic_stuff'), link: '/hsm/AS' },
-        { title: t('nav.accreditation'), link: '/hsm/accreditation' },
         { title: t('nav.learning_goals'), link: '/hsm/learning-goals' },
         { title: t('nav.departments'), link: '/hsm/departments' },
         { title: t('nav.calendar'), link: '/hsm/calendar' },

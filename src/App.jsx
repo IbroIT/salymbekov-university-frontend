@@ -22,6 +22,7 @@ import Deparments from './components/academics/departments'
 import Calendar from './components/academics/calendar'
 import Resources from "./components/academics/resources";
 import HSMInfo from "./components/HSM/HSMInfo";
+import Programs from "./components/HSM/Programs";
 import HSMLearningGoals from "./components/HSM/HSMLearningGoals";
 import HSMAccreditation from "./components/HSM/HSMAccreditation";
 import HSMAcademicStuff from "./components/HSM/HSMAcademicStuff";
@@ -112,6 +113,7 @@ function App() {
 
             {/* HSM */}
             <Route path="/hsm/programs" element={<HSM />} />
+            <Route path="/hsm/eduprograms" element={<Programs />} />
             <Route path="/hsm/faculties" element={<Faculties />} />
             <Route path="/hsm/departments" element={<Deparments />} />
             <Route path="/hsm/calendar" element={<Calendar />} />

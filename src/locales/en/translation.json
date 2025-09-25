@@ -1,8 +1,10 @@
 {
   "nav": {
+    "advices": "Council",
+    "status": "Status"  ,
     "home": "Home",
     "about": "About",
-  "HSM": "High School of Medicine",
+    "HSM": "High School of Medicine",
     "admission": "Admission",
     "research": "Research",
     "campus_life": "For Students",
@@ -15,7 +17,8 @@
     "vacancies": "Vacancies",
     "academic_stuff": "Academic Staff",
     "partners": "Partners",
-    "programs": "Educational Programs",
+    "programs": "Programs",
+    "eduprograms": "Educational Programs",
     "faculties": "Faculties",
     "departments": "Departments",
     "calendar": "Academic Calendar",
@@ -56,10 +59,10 @@
     "laboratories": "Laboratories",
     "academic_buildings": "Academic Buildings",
     "dormitories": "Dormitories",
-    
+
     "management_body": "Management Body",
     "scientific_journals": "Scientific Journals",
-    
+
     "student": "Student",
     "internships": "Internships",
     "academic_mobility": "Academic Mobility",
@@ -221,8 +224,8 @@
   },
   "news": {
     "latestNews": "Latest News",
-"previewSubtitle": "Stay up to date with the news",
-"viewAllNews": "View all news",
+    "previewSubtitle": "Stay up to date with the news",
+    "viewAllNews": "View all news",
     "title": "University News",
     "subtitle": "Stay updated with the latest events and announcements of Salymbekov University",
     "featured": "Important News",
@@ -233,6 +236,10 @@
     "error": "Loading error",
     "tryAgain": "Try again",
     "loadMore": "Load more",
+    "detail": {
+      "share": "Share",
+      "backToNews": "Back to News"
+    },
     "categories": {
       "news": "News",
       "events": "Events",
@@ -1133,210 +1140,105 @@
     "albums": {
       "orientation2023": {
         "title": "Orientation 2023",
-        "tags": [
-          "students",
-          "event",
-          "acquaintance"
-        ]
+        "tags": ["students", "event", "acquaintance"]
       },
       "graduation2023": {
         "title": "Graduation 2023",
-        "tags": [
-          "graduation",
-          "celebration",
-          "graduates"
-        ]
+        "tags": ["graduation", "celebration", "graduates"]
       },
       "symposium": {
         "title": "Scientific Symposium",
-        "tags": [
-          "science",
-          "conference",
-          "reports"
-        ]
+        "tags": ["science", "conference", "reports"]
       },
       "album1": {
         "title": "New Students Orientation 2023",
-        "tags": [
-          "orientation",
-          "students",
-          "university",
-          "acquaintance"
-        ]
+        "tags": ["orientation", "students", "university", "acquaintance"]
       },
       "album2": {
         "title": "Graduation 2023",
-        "tags": [
-          "graduation",
-          "diploma",
-          "ceremony",
-          "graduates"
-        ]
+        "tags": ["graduation", "diploma", "ceremony", "graduates"]
       },
       "album3": {
         "title": "Young Scientists Symposium",
-        "tags": [
-          "science",
-          "research",
-          "conference",
-          "young scientists"
-        ]
+        "tags": ["science", "research", "conference", "young scientists"]
       },
       "album4": {
         "title": "Sports Events",
-        "tags": [
-          "sports",
-          "competitions",
-          "health",
-          "activity"
-        ]
+        "tags": ["sports", "competitions", "health", "activity"]
       },
       "album5": {
         "title": "Cultural Events",
-        "tags": [
-          "culture",
-          "concert",
-          "creativity",
-          "arts"
-        ]
+        "tags": ["culture", "concert", "creativity", "arts"]
       }
     },
     "photos": {
       "orientation101": {
         "title": "Introduction to the university",
-        "tags": [
-          "students",
-          "event",
-          "acquaintance"
-        ]
+        "tags": ["students", "event", "acquaintance"]
       },
       "orientation102": {
         "title": "Campus tour",
-        "tags": [
-          "campus",
-          "excursion",
-          "students"
-        ]
+        "tags": ["campus", "excursion", "students"]
       },
       "orientation103": {
         "title": "Meeting with teachers",
-        "tags": [
-          "teachers",
-          "acquaintance",
-          "communication"
-        ]
+        "tags": ["teachers", "acquaintance", "communication"]
       },
       "graduation201": {
         "title": "Diploma awarding",
-        "tags": [
-          "graduation",
-          "diplomas",
-          "ceremony"
-        ]
+        "tags": ["graduation", "diplomas", "ceremony"]
       },
       "graduation202": {
         "title": "Graduation ball",
-        "tags": [
-          "celebration",
-          "ball",
-          "graduates"
-        ]
+        "tags": ["celebration", "ball", "graduates"]
       },
       "graduation203": {
         "title": "Photo with classmates",
-        "tags": [
-          "friends",
-          "group",
-          "memory"
-        ]
+        "tags": ["friends", "group", "memory"]
       },
       "symposium301": {
         "title": "Report at the symposium",
-        "tags": [
-          "science",
-          "report",
-          "conference"
-        ]
+        "tags": ["science", "report", "conference"]
       },
       "symposium302": {
         "title": "Discussion of research",
-        "tags": [
-          "discussion",
-          "science",
-          "research"
-        ]
+        "tags": ["discussion", "science", "research"]
       },
       "symposium303": {
         "title": "Poster session",
-        "tags": [
-          "posters",
-          "research",
-          "session"
-        ]
+        "tags": ["posters", "research", "session"]
       },
       "photo1": {
         "title": "Rector's welcome",
-        "tags": [
-          "rector",
-          "welcome",
-          "speech"
-        ]
+        "tags": ["rector", "welcome", "speech"]
       },
       "photo2": {
         "title": "Meeting the faculties",
-        "tags": [
-          "faculties",
-          "acquaintance",
-          "students"
-        ]
+        "tags": ["faculties", "acquaintance", "students"]
       },
       "photo3": {
         "title": "University tour",
-        "tags": [
-          "tour",
-          "university",
-          "buildings"
-        ]
+        "tags": ["tour", "university", "buildings"]
       },
       "photo4": {
         "title": "Ceremonial procession",
-        "tags": [
-          "procession",
-          "graduates",
-          "gowns"
-        ]
+        "tags": ["procession", "graduates", "gowns"]
       },
       "photo5": {
         "title": "Diploma presentation",
-        "tags": [
-          "diploma",
-          "presentation",
-          "award"
-        ]
+        "tags": ["diploma", "presentation", "award"]
       },
       "photo6": {
         "title": "Family photos",
-        "tags": [
-          "family",
-          "graduates",
-          "joy"
-        ]
+        "tags": ["family", "graduates", "joy"]
       },
       "photo7": {
         "title": "Research presentations",
-        "tags": [
-          "research",
-          "presentation",
-          "science"
-        ]
+        "tags": ["research", "presentation", "science"]
       },
       "photo8": {
         "title": "Poster session",
-        "tags": [
-          "posters",
-          "research",
-          "discussion"
-        ]
+        "tags": ["posters", "research", "discussion"]
       }
     }
   },
@@ -1380,11 +1282,11 @@
     }
   },
   "breadcrumbs": {
-  "HSM": "High School of Medicine",
+    "HSM": "High School of Medicine",
     "departments": "Departments",
     "about": "About us",
     "partners": "Partners",
-    "home":"Home",
+    "home": "Home",
     "academics": "High School of Medicine"
   },
   "partners": {
@@ -1687,7 +1589,6 @@
     }
   },
   "faculties": {
-    
     "breadcrumbs": {
       "home": "Home",
       "academics": "Academics",
@@ -1727,54 +1628,53 @@
       "partners": "International partners"
     },
     "careers": {
-    "therapist": {
-      "title": "Therapist",
-      "desc": "A specialist in diagnosing and treating a wide range of diseases."
+      "therapist": {
+        "title": "Therapist",
+        "desc": "A specialist in diagnosing and treating a wide range of diseases."
+      },
+      "emergency": {
+        "title": "Emergency Physician",
+        "desc": "Provides urgent medical care in critical situations."
+      },
+      "researcher": {
+        "title": "Medical Researcher",
+        "desc": "Conducts research and develops new treatment methods."
+      },
+      "surgeon": {
+        "title": "Surgeon",
+        "desc": "Performs surgeries and provides surgical treatment for patients."
+      },
+      "family_doctor": {
+        "title": "Family Doctor",
+        "desc": "Provides long-term healthcare for the entire family."
+      },
+      "medical_manager": {
+        "title": "Medical Manager",
+        "desc": "Organizes and manages healthcare institutions."
+      }
     },
-    "emergency": {
-      "title": "Emergency Physician",
-      "desc": "Provides urgent medical care in critical situations."
-    },
-    "researcher": {
-      "title": "Medical Researcher",
-      "desc": "Conducts research and develops new treatment methods."
-    },
-    "surgeon": {
-      "title": "Surgeon",
-      "desc": "Performs surgeries and provides surgical treatment for patients."
-    },
-    "family_doctor": {
-      "title": "Family Doctor",
-      "desc": "Provides long-term healthcare for the entire family."
-    },
-    "medical_manager": {
-      "title": "Medical Manager",
-      "desc": "Organizes and manages healthcare institutions."
+    "subjects": {
+      "anatomy": "Anatomy",
+      "biology": "Biology",
+      "chemistry": "Chemistry",
+      "latin": "Latin",
+      "histology": "Histology",
+      "biochemistry": "Biochemistry",
+      "physics": "Physics",
+      "philosophy": "Philosophy",
+      "physiology": "Physiology",
+      "microbiology": "Microbiology",
+      "pathological_anatomy": "Pathological Anatomy",
+      "pharmacology": "Pharmacology",
+      "propaedeutics": "Propaedeutics",
+      "immunology": "Immunology",
+      "internal_diseases": "Internal Diseases",
+      "surgery": "Surgery",
+      "pediatrics": "Pediatrics",
+      "obstetrics": "Obstetrics",
+      "gynecology": "Gynecology",
+      "neurology": "Neurology"
     }
-  },
-  "subjects": {
-  "anatomy": "Anatomy",
-  "biology": "Biology",
-  "chemistry": "Chemistry",
-  "latin": "Latin",
-  "histology": "Histology",
-  "biochemistry": "Biochemistry",
-  "physics": "Physics",
-  "philosophy": "Philosophy",
-  "physiology": "Physiology",
-  "microbiology": "Microbiology",
-  "pathological_anatomy": "Pathological Anatomy",
-  "pharmacology": "Pharmacology",
-  "propaedeutics": "Propaedeutics",
-  "immunology": "Immunology",
-  "internal_diseases": "Internal Diseases",
-  "surgery": "Surgery",
-  "pediatrics": "Pediatrics",
-  "obstetrics": "Obstetrics",
-  "gynecology": "Gynecology",
-  "neurology": "Neurology"
-}
-
   },
   "departments": {
     "title": "Faculties & Departments",
@@ -2034,28 +1934,27 @@
     "conferences": {
       "dates": "Dates",
       "location": "Location",
-  "basicInfo": "Basic Information",
-  "description": "Description",
-  "visitOfficialSite": "Visit Official Website",
-  "submitAbstract": "Submit Abstract",
-  "addToCalendar": "Add to Calendar",
-  "visitWebsite": "Visit Website",
-  "upcoming": "Upcoming Conferences",
-  "daysUntil": " days left",
-  "title": "Scientific Conferences",
-  "subtitle": "International conferences to discuss the latest achievements in medical science",
-  "viewDetails": "View Details",
-  "tabs": {
-    "upcoming": "Upcoming",
-    "past": "Past"
-  },
-  "statusLabels": {
-    "registrationOpen": "Registration Open",
-    "registrationClosed": "Registration Closed",
-    "callForPapers": "Call for Papers"
-  }
-}
-,
+      "basicInfo": "Basic Information",
+      "description": "Description",
+      "visitOfficialSite": "Visit Official Website",
+      "submitAbstract": "Submit Abstract",
+      "addToCalendar": "Add to Calendar",
+      "visitWebsite": "Visit Website",
+      "upcoming": "Upcoming Conferences",
+      "daysUntil": " days left",
+      "title": "Scientific Conferences",
+      "subtitle": "International conferences to discuss the latest achievements in medical science",
+      "viewDetails": "View Details",
+      "tabs": {
+        "upcoming": "Upcoming",
+        "past": "Past"
+      },
+      "statusLabels": {
+        "registrationOpen": "Registration Open",
+        "registrationClosed": "Registration Closed",
+        "callForPapers": "Call for Papers"
+      }
+    },
     "grants": {
       "title": "Research Grants",
       "subtitle": "Funding opportunities for scientific research",
@@ -2154,7 +2053,7 @@
         "apply": "Apply Filters",
         "reset": "Reset"
       },
-      "table":{
+      "table": {
         "select": "Select",
         "title": "Title",
         "authors": "Authors",
@@ -2222,7 +2121,7 @@
       "types": {
         "leadership": "Leadership",
         "institute": "Institute",
-        "center": "Center", 
+        "center": "Center",
         "department": "Department",
         "ethics": "Ethics Committee",
         "qualification": "Qualification Committee",
@@ -2268,7 +2167,7 @@
       "yearLabel": "year"
     },
     "common": {
-    "currency": "USD",
+      "currency": "USD",
       "showMore": "Show More",
       "showLess": "Show Less",
       "loadMore": "Load More",
@@ -2566,12 +2465,7 @@
         "databases": {
           "title": "Scientific Databases",
           "description": "Access to international scientific databases for research and academic work.",
-          "features": [
-            "PubMed",
-            "Scopus",
-            "Web of Science",
-            "Google Scholar"
-          ]
+          "features": ["PubMed", "Scopus", "Web of Science", "Google Scholar"]
         },
         "materials": {
           "title": "Methodological Materials",
@@ -2951,12 +2845,7 @@
       "databases": {
         "title": "Scientific Databases",
         "description": "Access to international scientific databases for research and academic work.",
-        "features": [
-          "PubMed",
-          "Scopus",
-          "Web of Science",
-          "Google Scholar"
-        ]
+        "features": ["PubMed", "Scopus", "Web of Science", "Google Scholar"]
       },
       "materials": {
         "title": "Methodological Materials",
@@ -3127,18 +3016,16 @@
       "addressText": "Bishkek, Intergelpo St. 720000"
     },
     "numbers": {
-  "invitation": "5-7 working days",
-  "application": "10-15 working days",
-  "visa": "1-2 working days"
-}
-,
+      "invitation": "5-7 working days",
+      "application": "10-15 working days",
+      "visa": "1-2 working days"
+    },
     "lang": {
       "russian": "Russian",
       "english": "English",
-  "russianLevel": "B2 and above",
-  "englishLevel": "B2 and above"
-}
-
+      "russianLevel": "B2 and above",
+      "englishLevel": "B2 and above"
+    }
   },
   "applyCitizens": {
     "title": "Application for KR Citizens",
@@ -3643,7 +3530,7 @@
       "phase3": "Enrollment",
       "phase1Start": "June 1",
       "phase1End": "July 1",
-      "phase2Start": "July 15", 
+      "phase2Start": "July 15",
       "phase2End": "August 1",
       "phase3Start": "August 15",
       "phase3End": "September 1",
@@ -3857,7 +3744,7 @@
     "hero_subtitle": "Training future medical leaders with innovative educational approach",
     "title": "High School of Medicine",
     "subtitle": "Advanced medical education at international level",
-    "about_hsm": "About High School of Medicine", 
+    "about_hsm": "About High School of Medicine",
     "description": "Our specialists train doctors of the new generation",
     "history": "History",
     "main_directions": "Main Directions",
@@ -3882,6 +3769,7 @@
     "error": "Error",
     "no_data": "No data",
     "accreditations_title": "Accreditations and Certificates",
+    "University_name": "Salymbekov University",
     "accreditations_description": "Our accreditations confirm the high quality of medical education and compliance with international standards",
     "valid": "Valid",
     "expired": "Expired",
@@ -3891,6 +3779,43 @@
     "certificate_number": "Certificate Number",
     "no_accreditations": "Accreditations not found",
     "no_accreditations_description": "Information about accreditations will appear on the site soon",
+    "quality_first": "Quality of education is our main priority",
+    "quality_description": "All accreditations of Salymbekov University confirm compliance with international standards of medical education and ensure high quality training of specialists in demand both in Kyrgyzstan and abroad.",
+    "international_standards": "International standards",
+    "modern_methods": "Modern methods",
+    "practical_training": "Practical training",
+    "graduate_employment": "Graduate employment",
+    "years_of_success": "Years of successful work",
+    "teachers": "Teachers",
+    "all": "All",
+    "government": "Government",
+    "regional": "Regional",
+    "professional": "Professional",
+    "benefits": "Benefits:",
+    "validity_period": "Validity period",
+    "level": "Level",
+    "active_status": "Active",
+    "inactive_status": "Inactive",
+    "accreditations": "Accreditations",
+    "loading_error": "Data loading error",
+    "refresh_page": "Refresh page",
+
+    "councils": {
+      "title": "Public Management Bodies",
+      "subtitle": "Collegial bodies managing the university, ensuring the development of educational, scientific and educational activities.",
+      "sections": "Sections",
+      "composition": "Composition",
+      "documents": "Documents",
+      "download": "Download",
+      "publish_date": "Publication date",
+      "loading_error": "Data loading error",
+      "refresh_page": "Refresh page",
+      "preparing_info": "Information is being prepared",
+      "content_in_progress": "The content of this section is in the process of being filled.",
+      "email": "Email",
+      "phone": "Phone",
+      "department": "Department"
+    },
     "faculty_title": "Faculty Members",
     "faculty_description": "Highly qualified teachers and researchers of the High School of Medicine",
     "office": "Office",
@@ -3908,40 +3833,39 @@
     "format": "Format",
     "admission_requirements": "Admission Requirements",
     "career_opportunities": "Career Opportunities",
-    "years": "years"
-  ,
-  "head": "Head",
-  "academic_degree": "Academic Degree",
-  "academic_title": "Academic Title",
-  "reception_hours": "Reception Hours",
-  "specialization": "Specialization",
-  "search_faculty": "Search faculty...",
-  "search_results": "Search Results",
-  "faculty_found": "faculty members found",
-  "no_search_results": "No faculty members found",
-  "try_different_search": "Try changing your search query",
-  "faculty_statistics": "Faculty Statistics",
-  "total_faculty": "Total Faculty",
-  "professors": "Professors",
-  "associate_professors": "Associate Professors",
-  "doctors": "Doctors of Science",
-  "filters": "Filters",
-  "filter_by_position": "Position",
-  "all_positions": "All positions",
-  "filter_by_degree": "Academic Degree",
-  "all_degrees": "All degrees",
-  "clear_filters": "Clear filters",
-  "active_filters": "Active filters",
-  "search": "Search",
-  "loading_faculty": "Loading faculty...",
-  "error_loading": "Error loading data",
-  "try_again": "Please try refreshing the page or try again later.",
-  "retry": "Retry",
-  "see_less": "Show less",
-  "see_more": "Show more",
-  "research_interests": "Research interests",
-  "no_results": "No results matching your criteria",
-  "results_count": "Found {{count}} faculty members"
+    "years": "years",
+    "head": "Head",
+    "academic_degree": "Academic Degree",
+    "academic_title": "Academic Title",
+    "reception_hours": "Reception Hours",
+    "specialization": "Specialization",
+    "search_faculty": "Search faculty...",
+    "search_results": "Search Results",
+    "faculty_found": "faculty members found",
+    "no_search_results": "No faculty members found",
+    "try_different_search": "Try changing your search query",
+    "faculty_statistics": "Faculty Statistics",
+    "total_faculty": "Total Faculty",
+    "professors": "Professors",
+    "associate_professors": "Associate Professors",
+    "doctors": "Doctors of Science",
+    "filters": "Filters",
+    "filter_by_position": "Position",
+    "all_positions": "All positions",
+    "filter_by_degree": "Academic Degree",
+    "all_degrees": "All degrees",
+    "clear_filters": "Clear filters",
+    "active_filters": "Active filters",
+    "search": "Search",
+    "loading_faculty": "Loading faculty...",
+    "error_loading": "Error loading data",
+    "try_again": "Please try refreshing the page or try again later.",
+    "retry": "Retry",
+    "see_less": "Show less",
+    "see_more": "Show more",
+    "research_interests": "Research interests",
+    "no_results": "No results matching your criteria",
+    "results_count": "Found {{count}} faculty members"
   },
   "mission": {
     "title": "University Mission and Vision",
@@ -4099,11 +4023,10 @@
         "Канцелярия:": "Chancellery:"
       },
       "availableInstructions": "Available instructions:",
-"searchPlaceholder": "Enter the program name...",
-"allCategories": "All categories",
-"steps": "steps",
-"backToInstructions": "Back"
-
+      "searchPlaceholder": "Enter the program name...",
+      "allCategories": "All categories",
+      "steps": "steps",
+      "backToInstructions": "Back"
     },
     "regulations": {
       "title": "Legal and Regulatory Acts",
@@ -4219,61 +4142,61 @@
       "supportInfo": "Support and Consultations"
     },
     "internships": {
-  "title": "Internships and Practice",
-  "subtitle": "Practice locations, requirements, and documents",
-  "loading": "Loading practice data...",
-  "error": "Loading error",
-  "specializations": "Specializations",
-  "errorMessage": "Failed to load data. Please try again later.",
-  "tryAgain": "Try again",
-  "tabs": {
-    "partners": "Practice locations",
-    "requirements": "Requirements",
-    "documents": "Documents"
-  },
-  "noPartners": "No practice locations",
-  "noRequirements": "No requirements",
-  "noDocuments": "No documents",
-  "contact": "Contact",
-  "phone": "Phone",
-  "email": "Email",
-  "address": "Address",
-  "downloadDocument": "Download document",
-  "format": "Format",
-  "size": "Size",
-  "updated": "Updated",
-  "importantInfo": "Important information",
-  "practiceCoordinator": "Practice Coordinator",
-  "emergencyContact": "Emergency contact",
-  "docDeadline": "All documents must be submitted 2 weeks before the start of the practice",
-  "medExamValidity": "Medical examination is valid for 6 months",
-  "rulesCompliance": "Students must comply with the internal regulations of the medical institution",
-  "reportDeadline": "Upon completion of the practice, a report must be submitted within 1 week",
-  "reportRequirements": "Report requirements",
-  "reportFormat": "The report must be formatted according to the established requirements",
-  "reportLength": "Report length: 15-25 pages (excluding appendices)",
-  "reportFont": "Font: Times New Roman, size 14, line spacing 1.5",
-  "reportSignatures": "Signatures of practice supervisors from the university and the organization are required",
-  "templatesInfo": "All templates are developed in accordance with the department requirements",
-  "contactCoordinator": "If you have questions about formatting, contact the practice coordinator",
-  "submissionFormat": "Final reports must be submitted in both electronic and printed form",
-  "academicRequirements": "Academic Requirements",
-  "minGPA": "Minimum GPA of 3.0",
-  "completedSubjects": "Successful completion of all mandatory subjects of the current course",
-  "noDebts": "No academic debts",
-  "programCompletion": "Completion of at least 50% of the curriculum",
-  "practiceDocuments": "Practice Documents",
-  "practiceApplication": "Application for practice participation",
-  "studyCertificate": "Study certificate indicating course and specialty",
-  "medicalCertificate": "Medical health certificate",
-  "universityDirection": "Direction from the university academic department",
-  "accidentInsurance": "Accident insurance",
-  "practiceDuration": "Practice Duration",
-  "academicPractice": "Academic practice: 2-4 weeks",
-  "productionPractice": "Production practice: 4-6 weeks",
-  "prediploмaPractice": "Pre-diploma practice: 6-8 weeks",
-  "specialtyInternship": "Specialty internship: 1-3 months"
-},
+      "title": "Internships and Practice",
+      "subtitle": "Practice locations, requirements, and documents",
+      "loading": "Loading practice data...",
+      "error": "Loading error",
+      "specializations": "Specializations",
+      "errorMessage": "Failed to load data. Please try again later.",
+      "tryAgain": "Try again",
+      "tabs": {
+        "partners": "Practice locations",
+        "requirements": "Requirements",
+        "documents": "Documents"
+      },
+      "noPartners": "No practice locations",
+      "noRequirements": "No requirements",
+      "noDocuments": "No documents",
+      "contact": "Contact",
+      "phone": "Phone",
+      "email": "Email",
+      "address": "Address",
+      "downloadDocument": "Download document",
+      "format": "Format",
+      "size": "Size",
+      "updated": "Updated",
+      "importantInfo": "Important information",
+      "practiceCoordinator": "Practice Coordinator",
+      "emergencyContact": "Emergency contact",
+      "docDeadline": "All documents must be submitted 2 weeks before the start of the practice",
+      "medExamValidity": "Medical examination is valid for 6 months",
+      "rulesCompliance": "Students must comply with the internal regulations of the medical institution",
+      "reportDeadline": "Upon completion of the practice, a report must be submitted within 1 week",
+      "reportRequirements": "Report requirements",
+      "reportFormat": "The report must be formatted according to the established requirements",
+      "reportLength": "Report length: 15-25 pages (excluding appendices)",
+      "reportFont": "Font: Times New Roman, size 14, line spacing 1.5",
+      "reportSignatures": "Signatures of practice supervisors from the university and the organization are required",
+      "templatesInfo": "All templates are developed in accordance with the department requirements",
+      "contactCoordinator": "If you have questions about formatting, contact the practice coordinator",
+      "submissionFormat": "Final reports must be submitted in both electronic and printed form",
+      "academicRequirements": "Academic Requirements",
+      "minGPA": "Minimum GPA of 3.0",
+      "completedSubjects": "Successful completion of all mandatory subjects of the current course",
+      "noDebts": "No academic debts",
+      "programCompletion": "Completion of at least 50% of the curriculum",
+      "practiceDocuments": "Practice Documents",
+      "practiceApplication": "Application for practice participation",
+      "studyCertificate": "Study certificate indicating course and specialty",
+      "medicalCertificate": "Medical health certificate",
+      "universityDirection": "Direction from the university academic department",
+      "accidentInsurance": "Accident insurance",
+      "practiceDuration": "Practice Duration",
+      "academicPractice": "Academic practice: 2-4 weeks",
+      "productionPractice": "Production practice: 4-6 weeks",
+      "prediploмaPractice": "Pre-diploma practice: 6-8 weeks",
+      "specialtyInternship": "Specialty internship: 1-3 months"
+    },
     "appealForm": {
       "title": "Appeal Form",
       "subtitle": "Submit a complaint, suggestion or question to the university administration",
@@ -4283,7 +4206,7 @@
           "description": "Report violations or wrongful actions"
         },
         "suggestion": {
-          "label": "Suggestion", 
+          "label": "Suggestion",
           "description": "Propose improvements to the educational process"
         },
         "question": {
@@ -4301,7 +4224,7 @@
           "description": "Response within 10-14 days"
         },
         "medium": {
-          "label": "Medium", 
+          "label": "Medium",
           "description": "Response within 5-7 days"
         },
         "high": {
