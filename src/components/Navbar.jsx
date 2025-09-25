@@ -69,7 +69,7 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
         { title: t('nav.management'), link: '/about/management' },
         { title: t('nav.partners'), link: '/about/partners' },
         { title: t('nav.mission'), link: '/about/mission' },
-        { title: t('nav.regulations'), link: '/student/regulations' },
+        { title: t('nav.regulations'), link: 'https://salymbekov.com/kg/npa/' },
         { title: t('nav.advices'), link: '/about/advices' },
         { title: t('nav.status'), link: '/about/status' },
       ]

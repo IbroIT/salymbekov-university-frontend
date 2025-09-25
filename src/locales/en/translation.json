@@ -4387,5 +4387,194 @@
       }
     }
   },
-  "locale": "en"
+  "locale": "en",
+  "mededu": {
+  "title": "Bachelor of Medicine and Surgery",
+  "code": "(N/MED/6/0007) (08/29) (MQA/PA 17411)",
+  "duration": "Duration",
+  "fullTime": "Full-time: 6 years",
+  "partTime": "Part-time: 8 years",
+  "intakes": "Intakes",
+  "intakeMonths": "September, January",
+  "brochure": "Brochure",
+  "download": "Download",
+  "online": "Online",
+  "application": "Apply Now",
+  "overview": "Program Overview",
+  "overviewText": "The program prepares students for a career in medicine and healthcare. Key areas include: fundamental medical sciences, clinical practice, medical ethics and communication. The curriculum covers anatomy, physiology, pathology, pharmacology, clinical disciplines, and research work. Students may choose specializations in senior years (therapy, surgery, pediatrics, etc.). Mandatory clinical practice is provided in leading medical institutions. Upon graduation: eligibility for a medical license and employment in hospitals, clinics, and research institutes.",
+  "details": "Program Details",
+  "subjectHighlights": "Key Subjects",
+  "entryRequirements": "Entry Requirements",
+  "careerOpportunities": "Career Opportunities",
+  "programAim": "Program Aims",
+  "faq": "Frequently Asked Questions",
+  "structure": "Program Structure",
+  "clinicalTraining": "Clinical Training",
+  "internationalOpportunities": "International Opportunities",
+
+  "subjects": {
+    "firstSecondYear": "Basic Disciplines (Years 1-2):",
+    "thirdFourthYear": "Clinical Disciplines (Years 3-4):",
+    "fifthSixthYear": "Specialized Modules (Years 5-6):",
+    "subjectsList": {
+      "anatomy": "Human Anatomy with Topographic Anatomy",
+      "histology": "Histology, Embryology, Cytology",
+      "biochemistry": "Biochemistry and Molecular Biology",
+      "physiology": "Physiology with Basics of Pathophysiology",
+      "microbiology": "Microbiology, Virology and Immunology",
+      "latin": "Latin Language and Medical Terminology",
+      "pharmacology": "Pharmacology and Clinical Pharmacology",
+      "internalDiseases": "Propaedeutics of Internal Medicine",
+      "surgery": "General Surgery with Topographic Anatomy",
+      "pediatrics": "Pediatrics with Childhood Infections",
+      "obstetrics": "Obstetrics and Gynecology",
+      "neurology": "Neurology and Medical Genetics",
+      "infectious": "Infectious Diseases and Epidemiology",
+      "oncology": "Oncology and Radiology",
+      "emergency": "Emergency Medicine and Disaster Medicine",
+      "dermatology": "Dermatology and Venereology",
+      "psychiatry": "Psychiatry and Narcology",
+      "forensic": "Forensic Medicine"
+    }
+  },
+
+  "requirements": {
+    "academic": "Academic Requirements:",
+    "language": "Language Requirements:",
+    "additional": "Additional Requirements:",
+    "academicList": {
+      "diploma": "High school diploma with GPA not less than 4.5",
+      "grades": "High grades in Biology, Chemistry, Physics and Mathematics",
+      "exams": "Results of national/university entrance exams in core subjects",
+      "foreign": "For international students - recognition of foreign education documents"
+    },
+    "languageList": {
+      "russian": "Russian language: B2 level for international students",
+      "english": "English language: IELTS 6.0 or equivalent",
+      "latin": "Latin: basic knowledge recommended"
+    },
+    "additionalList": {
+      "motivation": "Motivation letter (500–700 words)",
+      "interview": "Interview with the admission committee",
+      "medical": "Medical certificate of health condition",
+      "criminal": "Certificate of no criminal record"
+    }
+  },
+
+  "careers": {
+    "clinical": "Clinical Practice:",
+    "research": "Research Activity:",
+    "public": "Public Health:",
+    "clinicalList": {
+      "therapist": "General Practitioner (Therapist) in hospitals and clinics",
+      "pediatrician": "Pediatrician in children’s medical institutions",
+      "surgeon": "Surgeon (general or specialized)",
+      "gynecologist": "Obstetrician-Gynecologist in maternity hospitals",
+      "emergencyDoctor": "Emergency Medicine Doctor",
+      "familyDoctor": "Family Doctor / General Practitioner"
+    },
+    "researchList": {
+      "researcher": "Junior Researcher in medical research institutes",
+      "labResearcher": "Laboratory Researcher in medical labs",
+      "clinicalResearcher": "Clinical Researcher in pharmaceutical companies",
+      "medicalWriter": "Medical Writer and Editor"
+    },
+    "publicList": {
+      "healthOfficial": "Health Administration Specialist",
+      "epidemiologist": "Epidemiologist in public health centers",
+      "methodist": "Medical Methodologist in information centers",
+      "pharmaRep": "Pharmaceutical Representative"
+    }
+  },
+
+  "aims": {
+    "mainGoals": "Main Goals of the Program:",
+    "learningObjectives": "Learning Objectives:",
+    "goalsList": {
+      "quality": "Train highly qualified doctors capable of providing quality healthcare",
+      "standards": "Form professional competencies in accordance with international standards",
+      "thinking": "Develop clinical thinking and medical decision-making skills",
+      "ethics": "Instill ethical principles and humanistic values in medicine"
+    },
+    "objectivesList": {
+      "knowledge": "Acquire fundamental medical knowledge and clinical skills",
+      "communication": "Develop communication skills for effective patient interaction",
+      "research": "Form research competencies for scientific activity",
+      "continuous": "Prepare for lifelong medical education throughout career"
+    }
+  },
+
+  "structureDetails": {
+    "stages": "Stages of Study:",
+    "controls": "Forms of Assessment:",
+    "stagesList": {
+      "first": "Years 1-2: Preclinical training – fundamental medical sciences",
+      "second": "Years 3-4: Initial clinical training – propaedeutics and basics of diagnostics",
+      "third": "Year 5: Advanced clinical training – specialized disciplines",
+      "fourth": "Year 6: Subinternship – practical preparation before internship"
+    },
+    "controlsList": {
+      "exams": "Semester exams and credits",
+      "tests": "Interim module tests",
+      "practical": "Practical skills exams (OSCE)",
+      "coursework": "Course projects and research work",
+      "final": "State final certification"
+    }
+  },
+
+  "clinical": {
+    "bases": "Clinical Training Bases:",
+    "stages": "Internship Stages:",
+    "basesList": {
+      "hospital": "City Clinical Hospital No.1 – 500 beds, all main departments",
+      "children": "Regional Children’s Hospital – specialized pediatric care",
+      "cardiology": "Research Institute of Cardiology",
+      "maternity": "Perinatal Center and Maternity Hospital",
+      "ambulance": "Emergency Medical Services Station"
+    },
+    "practiceStages": {
+      "thirdYear": "Year 3: Patient care – 4 weeks",
+      "fourthYear": "Year 4: Therapeutic and surgical practice – 8 weeks",
+      "fifthYear": "Year 5: Specialized departments – 12 weeks",
+      "sixthYear": "Year 6: Subinternship – 24 weeks"
+    }
+  },
+
+  "international": {
+    "exchange": "Exchange Programs:",
+    "recognition": "International Recognition:",
+    "exchangeList": {
+      "erasmus": "Erasmus+ with European medical universities",
+      "mobility": "Academic mobility with universities in the USA and Canada",
+      "internships": "Clinical internships in leading medical centers worldwide",
+      "summer": "Summer schools and research internships abroad"
+    },
+    "recognitionList": {
+      "wfme": "WFME Accreditation (World Federation for Medical Education)",
+      "diploma": "Diploma recognition in EU and CIS countries",
+      "exams": "Eligibility for international exams (USMLE, PLAB)",
+      "projects": "Participation in international research projects"
+    }
+  },
+
+  "faqContent": {
+    "general": "General Questions:",
+    "admission": "Admission Questions:",
+    "questions": {
+      "duration": "What is the duration of the program?",
+      "internship": "Is there an opportunity for internships abroad?",
+      "specializations": "What specializations are available?",
+      "exams": "What exams are required?",
+      "budget": "Are there state-funded (budget) places?"
+    },
+    "answers": {
+      "duration": "6 years full-time, including clinical practice.",
+      "internship": "Yes, the program includes international exchanges and clinical internships.",
+      "specializations": "In years 5–6 students may choose specialization: therapy, surgery, pediatrics, obstetrics-gynecology, etc.",
+      "exams": "Biology, Chemistry, Russian language, plus professional test and interview.",
+      "budget": "Yes, 50 state-funded places are allocated annually based on competition."
+    }
+  }
+}
+
 }
