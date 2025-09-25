@@ -221,8 +221,8 @@
   },
   "news": {
     "latestNews": "Latest News",
-"previewSubtitle": "Stay up to date with the news",
-"viewAllNews": "View all news",
+    "previewSubtitle": "Stay up to date with the news",
+    "viewAllNews": "View all news",
     "title": "University News",
     "subtitle": "Stay updated with the latest events and announcements of Salymbekov University",
     "featured": "Important News",
@@ -233,6 +233,10 @@
     "error": "Loading error",
     "tryAgain": "Try again",
     "loadMore": "Load more",
+    "detail": {
+      "share": "Share",
+      "backToNews": "Back to News"
+    },
     "categories": {
       "news": "News",
       "events": "Events",
