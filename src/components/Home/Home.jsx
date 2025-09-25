@@ -134,15 +134,19 @@ const HeroSlider = () => {
         <>
           <button
             onClick={prevSlide}
-            className="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-30 hover:bg-opacity-100 text-blue-900 p-2 sm:p-3 rounded-full transition-all duration-300 z-20"
+            className="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 text-blue-900 p-3 sm:p-4 rounded-full shadow-lg transition-all duration-300 z-20 hover:scale-110"
           >
-            ◀
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M15 18l-6-6 6-6"/>
+            </svg>
           </button>
           <button
             onClick={nextSlide}
-            className="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-30 hover:bg-opacity-100 text-blue-900 p-2 sm:p-3 rounded-full transition-all duration-300 z-20"
+            className="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 text-blue-900 p-3 sm:p-4 rounded-full shadow-lg transition-all duration-300 z-20 hover:scale-110"
           >
-            ▶
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M9 18l6-6-6-6"/>
+            </svg>
           </button>
         </>
       )}
