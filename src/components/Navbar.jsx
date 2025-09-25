@@ -67,9 +67,9 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
       submenu: [
         { title: t('nav.about_university'), link: '/about' },
         { title: t('nav.management'), link: '/about/management' },
-        { title: t('nav.vacancies'), link: '/about/vacancies' },
         { title: t('nav.partners'), link: '/about/partners' },
         { title: t('nav.mission'), link: '/about/mission' },
+        { title: t('nav.regulations'), link: '/student/regulations' },
         { title: t('nav.advices'), link: '/about/advices' },
         { title: t('nav.status'), link: '/about/status' },
       ]
@@ -155,7 +155,6 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
         { title: t('nav.international'), link: '/student/international' },
         { title: t('nav.internships'), link: '/student/internships' },
         { title: t('nav.academic_mobility'), link: '/student/academic-mobility' },
-        { title: t('nav.regulations'), link: '/student/regulations' },
         { title: t('nav.instructions'), link: '/student/instructions' },
         { title: t('nav.appeal_form'), link: '/student/appeal' },
       ]
@@ -172,6 +171,7 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
       title: t('nav.contacts'),
       submenu: [
         { title: t('nav.contacts'), link: '/contacts' },
+        { title: t('nav.vacancies'), link: '/about/vacancies' },
         { title: t('nav.media'), link: '/media' },
       ]
     }
