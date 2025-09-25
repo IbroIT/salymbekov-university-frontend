@@ -114,7 +114,7 @@ function App() {
             {/* HSM */}
             <Route path="/hsm/programs" element={<HSM />} />
             <Route path="/hsm/eduprograms" element={<Programs />} />
-            <Route path="/hsm/faculties" element={<Faculties />} />
+            {/* <Route path="/hsm/faculties" element={<Faculties />} /> */}
             <Route path="/hsm/departments" element={<Deparments />} />
             <Route path="/hsm/calendar" element={<Calendar />} />
             <Route path="/hsm/resources" element={<Resources />} />
