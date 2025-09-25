@@ -70,6 +70,8 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
         { title: t('nav.vacancies'), link: '/about/vacancies' },
         { title: t('nav.partners'), link: '/about/partners' },
         { title: t('nav.mission'), link: '/about/mission' },
+        { title: t('nav.advices'), link: '/about/advices' },
+        { title: t('nav.status'), link: '/about/status' },
       ]
     },
     HSM: {
