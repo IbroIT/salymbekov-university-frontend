@@ -13,6 +13,8 @@ import VacancyDetail from "./components/About/VacancyDetail";
 import Partners from "./components/About/Partners";
 import Mission from "./components/About/Mission";
 import Regulations from "./components/About/Regulations";
+import Status from "./components/About/Status";
+import Advices from "./components/About/Advices";
 
 import HSM from './components/academics/academics'
 import Faculties from './components/academics/faculties'
@@ -72,6 +74,7 @@ import Dormitories from "./components/Infrastructure/Dormitories";
 
 import Contacts from "./components/Contacts/contacts";
 import Media from "./components/Contacts/Media";
+import MainRoutes from "./routes";
 
 // Страницы-заглушки для временно отсутствующих компонентов
 const Page = ({ title }) => <div className="min-h-screen pt-20"><h1 className="text-2xl font-bold p-8">{title}</h1></div>;
@@ -104,6 +107,8 @@ function App() {
             <Route path="/about/careers/:id" element={<VacancyDetail />} />
             <Route path="/about/partners" element={<Partners />} />
             <Route path="/about/mission" element={<Mission />} />
+            <Route path="/about/advices" element={<Advices />} />
+            <Route path="/about/status" element={<Status />} />
 
             {/* HSM */}
             <Route path="/hsm/programs" element={<HSM />} />
@@ -185,7 +190,7 @@ function App() {
             <Route path="/campus-life/international" element={<InternationalStudents />} />
 
             {/* 404 Page */}
-            <Route path="*" element={<Page title="Страница не найдена" />} />
+            <Route path="*" element={<Page title="Страница не найдена" />} /> 
           </Routes>
         </main>
         <Footer />

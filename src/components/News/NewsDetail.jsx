@@ -3,10 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { ArrowLeft, Calendar, Tag, Share2 } from "lucide-react";
 
-const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api";
-const MEDIA_BASE_URL =
-  import.meta.env.VITE_MEDIA_BASE_URL || "http://localhost:8000";
+const API_BASE_URL = 'https://su-med-backend-35d3d951c74b.herokuapp.com/api';
 
 const NewsDetail = () => {
   const { id } = useParams();

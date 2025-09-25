@@ -1,0 +1,17 @@
+@media (max-width: 1340px) {
+  .desktop-menu {
+    display: none !important;
+  }
+  .burger-menu {
+    display: flex !important;
+  }
+}
+
+@media (min-width: 1341px) {
+  .desktop-menu {
+    display: flex !important;
+  }
+  .burger-menu {
+    display: none !important;
+  }
+}

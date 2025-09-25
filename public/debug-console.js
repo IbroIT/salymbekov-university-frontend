@@ -16,7 +16,7 @@ try {
 
 // Проверяем API endpoints
 const testEndpoints = async () => {
-  const baseURL = 'http://localhost:8000/api';
+  const baseURL = 'https://su-med-backend-35d3d951c74b.herokuapp.com/api';
   const endpoints = [
     '/hsm/info/',
     '/hsm/programs/',

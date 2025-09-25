@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from './LanguageSwitcher';
 import DefaultLogo from "../assets/logo-salymbekov-university-site2.png";
 import ScrolledLogo  from "../assets/Logo_white3.png";
-
 const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
   const { t, i18n } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,7 +14,6 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
   const menuRef = useRef(null);
   const langRef = useRef(null);
 
-  // Синхронизируем язык i18n с пропсом currentLanguage
   useEffect(() => {
     if (currentLanguage && i18n.language !== currentLanguage) {
       i18n.changeLanguage(currentLanguage);
@@ -69,9 +67,11 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
       submenu: [
         { title: t('nav.about_university'), link: '/about' },
         { title: t('nav.management'), link: '/about/management' },
-        { title: t('nav.vacancies'), link: '/about/vacancies' },
         { title: t('nav.partners'), link: '/about/partners' },
         { title: t('nav.mission'), link: '/about/mission' },
+        { title: t('nav.regulations'), link: '/student/regulations' },
+        { title: t('nav.advices'), link: '/about/advices' },
+        { title: t('nav.status'), link: '/about/status' },
       ]
     },
     HSM: {
@@ -155,7 +155,6 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
         { title: t('nav.international'), link: '/student/international' },
         { title: t('nav.internships'), link: '/student/internships' },
         { title: t('nav.academic_mobility'), link: '/student/academic-mobility' },
-        { title: t('nav.regulations'), link: '/student/regulations' },
         { title: t('nav.instructions'), link: '/student/instructions' },
         { title: t('nav.appeal_form'), link: '/student/appeal' },
       ]
@@ -172,6 +171,7 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
       title: t('nav.contacts'),
       submenu: [
         { title: t('nav.contacts'), link: '/contacts' },
+        { title: t('nav.vacancies'), link: '/about/vacancies' },
         { title: t('nav.media'), link: '/media' },
       ]
     }
@@ -206,7 +206,7 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
 
           {/* Центральное меню - скрыто на мобильных */}
           <div className="flex items-center space-x-6">
-            <div className="hidden xl:flex flex-1 justify-center">
+            <div className="hidden min-[1431px]:flex flex-1 justify-center">
               {Object.entries(menuData).map(([key, item]) => (
                 <div 
                   key={key}
@@ -346,7 +346,7 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
             </div>
             
             {/* Кнопка мобильного меню */}
-            <div className="xl:hidden">
+            <div className="block min-[1431px]:hidden">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className={`inline-flex items-center justify-center p-3 rounded-xl transition-all duration-300 hover:scale-110 ${
@@ -375,7 +375,7 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
       {/* Мобильное меню с анимацией */}
       {isMenuOpen && (
         <div 
-          className="xl:hidden bg-white/95 backdrop-blur-md shadow-xl transform transition-all duration-300 ease-out"
+          className="block min-[1431px]:hidden bg-white/95 backdrop-blur-md shadow-xl transform transition-all duration-300 ease-out"
           style={{
             animation: 'slideDown 0.3s ease-out'
           }}

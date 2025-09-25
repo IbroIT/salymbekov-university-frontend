@@ -20,7 +20,7 @@ const ScientificJournals = () => {
     try {
       console.log('Fetching journals...');
       setLoading(true);
-      const response = await fetch('http://localhost:8000/research/api/journals/');
+      const response = await fetch('https://su-med-backend-35d3d951c74b.herokuapp.com/research/api/journals/');
       console.log('Response status:', response.status);
       
       if (!response.ok) {
@@ -43,8 +43,8 @@ const ScientificJournals = () => {
     try {
       setIssuesLoading(true);
       const [journalResponse, issuesResponse] = await Promise.all([
-        fetch(`http://localhost:8000/research/api/journals/${journalId}/`),
-        fetch(`http://localhost:8000/research/api/journal-issues/by_journal/?journal_id=${journalId}`)
+        fetch(`https://su-med-backend-35d3d951c74b.herokuapp.com/research/api/journals/${journalId}/`),
+        fetch(`https://su-med-backend-35d3d951c74b.herokuapp.com/research/api/journal-issues/by_journal/?journal_id=${journalId}`)
       ]);
 
       if (!journalResponse.ok || !issuesResponse.ok) {

@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:8000/api/admissions';
+const API_BASE_URL = 'https://su-med-backend-35d3d951c74b.herokuapp.com/api/admissions';
 
 const admissionsAPI = {
   submitWithAttachments: async (data) => {

@@ -131,7 +131,7 @@ const Research = () => {
   // Функции для получения данных из API
   const fetchPublications = async () => {
     try {
-      const response = await fetch('http://127.0.0.1:8000/research/api/publications/');
+      const response = await fetch('https://su-med-backend-35d3d951c74b.herokuapp.com/research/api/publications/');
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -147,7 +147,7 @@ const Research = () => {
 
   const fetchConferences = async () => {
     try {
-      const response = await fetch('http://127.0.0.1:8000/research/api/conferences/upcoming/');
+      const response = await fetch('https://su-med-backend-35d3d951c74b.herokuapp.com/research/api/conferences/upcoming/');
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -164,7 +164,7 @@ const Research = () => {
   const fetchResearchAreas = async () => {
     try {
       // Получаем все публикации для анализа
-      const response = await fetch('http://127.0.0.1:8000/research/api/publications/');
+      const response = await fetch('https://su-med-backend-35d3d951c74b.herokuapp.com/research/api/publications/');
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }

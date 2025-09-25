@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 const Contacts = () => {
   const { t } = useTranslation();
+  const universityAddress = 'ул. Фучика, 3, Бишкек';
   const [activeTab, setActiveTab] = useState('general');
   const [isMapLoaded, setIsMapLoaded] = useState(false);
   const [showContactForm, setShowContactForm] = useState(false);
@@ -17,7 +18,7 @@ const Contacts = () => {
   }, []);
 
   // Правильный URL для встраивания карты
-  const mapEmbedUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2923.836236396766!2d74.5693123154662!3d42.87489097915548!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x389eb7d8665c9707%3A0x6f8baf32986b4b0c!2sSalymbekov%20University!5e0!3m2!1sen!2skg!4v1645541234567!5m2!1sen!2skg";
+    const mapEmbedUrl = 'https://www.google.com/maps?q=42.878791,74.561372&z=17&output=embed';
 
   const departments = [
     {
@@ -233,7 +234,7 @@ const Contacts = () => {
               </div>
             ) : (
               <div className="h-140 rounded-xl relative overflow-hidden">
-                <iframe
+                  <iframe
                   src={mapEmbedUrl}
                   width="100%"
                   height="100%"
@@ -242,8 +243,8 @@ const Contacts = () => {
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
                   className="rounded-xl"
-                  aria-label={t('contacts.map.ariaLabel')}
-                  title="Google Maps - Salymbekov University"
+                  aria-label={`Карта: ${universityAddress}`}
+                  title={`Google Maps - Salymbekov University — ${universityAddress}`}
                 />
                 
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/80 to-transparent p-4 pt-6">
