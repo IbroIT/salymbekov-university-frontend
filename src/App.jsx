@@ -145,7 +145,7 @@ function App() {
             <Route path="/infrastructure" element={<Infrastructure />} />
             <Route path="/infrastructure/hospitals" element={<Hospitals />} />
             <Route path="/infrastructure/laboratories" element={<Laboratories />} />
-            <Route path="/infrastructure/academic-buildings" element={<AcademicBuildings />} />
+            {/* <Route path="/infrastructure/academic-buildings" element={<AcademicBuildings />} /> */}
             <Route path="/infrastructure/dormitories" element={<Dormitories />} />
 
             {/* Research */}

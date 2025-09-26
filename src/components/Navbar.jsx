@@ -129,7 +129,7 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
       submenu: [
         { title: t('nav.hospitals'), link: '/infrastructure/hospitals' },
         { title: t('nav.laboratories'), link: '/infrastructure/laboratories' },
-        { title: t('nav.academic_buildings'), link: '/infrastructure/academic-buildings' },
+        // { title: t('nav.academic_buildings'), link: '/infrastructure/academic-buildings' },
         { title: t('nav.dormitories'), link: '/infrastructure/dormitories' },
       ]
     },
