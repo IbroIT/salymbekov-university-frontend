@@ -100,7 +100,7 @@ const renderMemberCard = (member, level = 0) => {
       <div
         className={`
           ${cardSizes[level] || cardSizes[3]} 
-          h-63 flex flex-col justify-between items-center text-center
+          h-69 flex flex-col justify-between items-center text-center
           ${cardGradients[level] || cardGradients[3]} 
           rounded-2xl p-6 shadow-xl 
           hover:shadow-2xl transition-all duration-300
