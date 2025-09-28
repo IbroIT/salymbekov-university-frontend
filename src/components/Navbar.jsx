@@ -65,63 +65,100 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
     about: {
       title: t('nav.about'),
       submenu: [
-        { title: t('nav.about_university'), link: '/about' },
-        { title: t('nav.management'), link: '/about/management' },
-        { title: t('nav.partners'), link: '/about/partners' },
+        // { title: t('nav.about_university'), link: '/about' },
+        { title: t('nav.founders'), link: '/about/founders' },
         { title: t('nav.mission'), link: '/about/mission' },
-        { title: t('nav.regulations'), link: 'https://salymbekov.com/kg/npa/' },
-        { title: t('nav.advices'), link: '/about/advices' },
+        { title: t('nav.management'), link: '/about/management' },
+        { title: t('nav.structure'), link: '/about/structure' },
         { title: t('nav.status'), link: '/about/status' },
+        { title: t('nav.regulations'), link: 'https://salymbekov.com/npa/' },
+        { title: t('nav.advices'), link: '/about/advices' },
       ]
     },
     HSM: {
       title: t('nav.HSM'),
       submenu: [
         { title: t('nav.about_HSM'), link: '/hsm/about' },
+        { title: t('nav.management'), link: '/hsm/manage' },
         { title: t('nav.programs'), link: '/hsm/programs' },
         { title: t('nav.eduprograms'), link: '/hsm/eduprograms' },
         { title: t('nav.academic_stuff'), link: '/hsm/AS' },
-        { title: t('nav.learning_goals'), link: '/hsm/learning-goals' },
-        { title: t('nav.departments'), link: '/hsm/departments' },
-        { title: t('nav.calendar'), link: '/hsm/calendar' },
+        { title: t('nav.partners'), link: '/hsm/partners' },
         { title: t('nav.resources'), link: '/hsm/resources' },
+        { title: t('nav.cmk'), link: '/hsm/cmk' },
+        // { title: t('nav.learning_goals'), link: '/hsm/learning-goals' },
+        // { title: t('nav.departments'), link: '/hsm/departments' },
+      ]
+    },
+    student: {
+      title: t('nav.student'),
+      submenu: [
+        { title: t('nav.instructions'), link: '/student/instructions' },
+        // { title: t('nav.student_life'), link: '/student' },
+        { title: t('nav.clubs'), link: '/student/clubs' },
+        { title: t('nav.calendar'), link: '/student/calendar' },
+        { title: t('nav.eresources'), link: '/student/eresources' },
+        { title: t('nav.acadop'), link: '/student/acadop' },
+        { title: t('nav.socop'), link: '/student/socop' },
+        // { title: t('nav.gallery'), link: '/student/gallery' },
+        // { title: t('nav.international'), link: '/student/international' },
+        // { title: t('nav.internships'), link: '/student/internships' },
+        // { title: t('nav.academic_mobility'), link: '/student/academic-mobility' },
+        // { title: t('nav.appeal_form'), link: '/student/appeal' },
       ]
     },
     admission: {
       title: t('nav.admission'),
       submenu: [
-        { 
-          title: t('nav.for_applicants'), 
-          hasNested: true,
-          nestedItems: [
-            { title: t('nav.for_citizens_kg'), link: '/admissions/applicants/citizens-kg' },
-            { title: t('nav.for_foreign_citizens'), link: '/admissions/applicants/foreign-citizens' },
-          ]
-        },
-        { 
-          title: t('nav.requirements'), 
-          hasNested: true,
-          nestedItems: [
-            { title: t('nav.for_citizens_kg'), link: '/admissions/requirements/citizens-kg' },
-            { title: t('nav.for_foreign_citizens'), link: '/admissions/requirements/foreign-citizens' },
-          ]
-        },
-        { 
-          title: t('nav.apply_online'), 
-          hasNested: true,
-          nestedItems: [
-            { title: t('nav.for_citizens_kg'), link: '/admissions/apply/citizens-kg' },
-            { title: t('nav.for_foreign_citizens'), link: '/admissions/apply/foreign-citizens' },
-          ]
-        },
-        { 
-          title: t('nav.tuition'), 
-          hasNested: true,
-          nestedItems: [
-            { title: t('nav.for_citizens_kg'), link: '/admissions/tuition/citizens-kg' },
-            { title: t('nav.for_foreign_citizens'), link: '/admissions/tuition/foreign-citizens' },
-          ]
-        },
+        { title: t('nav.committee'), link: '/admissions/committee' },
+        { title: t('nav.courses'), link: '/admissions/courses' },
+        { title: t('nav.procedure'), link: '/admissions/procedure' },
+        { title: t('nav.payments'), link: '/admissions/payments' },
+        { title: t('nav.partners'), link: '/hsm/partners' },
+        // { 
+        //   title: t('nav.for_applicants'), 
+        //   hasNested: true,
+        //   nestedItems: [
+        //     { title: t('nav.for_citizens_kg'), link: '/admissions/applicants/citizens-kg' },
+        //     { title: t('nav.for_foreign_citizens'), link: '/admissions/applicants/foreign-citizens' },
+        //   ]
+        // },
+        // { 
+        //   title: t('nav.requirements'), 
+        //   hasNested: true,
+        //   nestedItems: [
+        //     { title: t('nav.for_citizens_kg'), link: '/admissions/requirements/citizens-kg' },
+        //     { title: t('nav.for_foreign_citizens'), link: '/admissions/requirements/foreign-citizens' },
+        //   ]
+        // },
+        // { 
+        //   title: t('nav.apply_online'), 
+        //   hasNested: true,
+        //   nestedItems: [
+        //     { title: t('nav.for_citizens_kg'), link: '/admissions/apply/citizens-kg' },
+        //     { title: t('nav.for_foreign_citizens'), link: '/admissions/apply/foreign-citizens' },
+        //   ]
+        // },
+        // { 
+        //   title: t('nav.tuition'), 
+        //   hasNested: true,
+        //   nestedItems: [
+        //     { title: t('nav.for_citizens_kg'), link: '/admissions/tuition/citizens-kg' },
+        //     { title: t('nav.for_foreign_citizens'), link: '/admissions/tuition/foreign-citizens' },
+        //   ]
+        // },
+      ]
+    },
+    research: {
+      title: t('nav.research'),
+      submenu: [
+        { title: t('nav.management_body'), link: '/research/management' },
+        { title: t('nav.scientific_journals'), link: '/research/journals' },
+        { title: t('nav.publications'), link: '/research/publications' },
+        { title: t('nav.grants'), link: '/research/grants' },
+        // { title: t('nav.research_areas'), link: '/research' },
+        // { title: t('nav.research_centers'), link: '/research/centers' },
+        { title: t('nav.conferences'), link: '/research/conferences' },
       ]
     },
     infrastructure: {
@@ -129,35 +166,14 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
       submenu: [
         { title: t('nav.hospitals'), link: '/infrastructure/hospitals' },
         { title: t('nav.laboratories'), link: '/infrastructure/laboratories' },
+        { title: t('nav.audience'), link: '/infrastructure/audience' },
+        { title: t('nav.startups'), link: '/infrastructure/startups' },
         // { title: t('nav.academic_buildings'), link: '/infrastructure/academic-buildings' },
-        { title: t('nav.dormitories'), link: '/infrastructure/dormitories' },
+        // { title: t('nav.dormitories'), link: '/infrastructure/dormitories' },
       ]
     },
-    research: {
-      title: t('nav.research'),
-      submenu: [
-        { title: t('nav.research_areas'), link: '/research' },
-        { title: t('nav.research_centers'), link: '/research/centers' },
-        { title: t('nav.publications'), link: '/research/publications' },
-        { title: t('nav.conferences'), link: '/research/conferences' },
-        { title: t('nav.grants'), link: '/research/grants' },
-        { title: t('nav.management_body'), link: '/research/management' },
-        { title: t('nav.scientific_journals'), link: '/research/journals' },
-      ]
-    },
-    student: {
-      title: t('nav.student'),
-      submenu: [
-        // { title: t('nav.student_life'), link: '/student' },
-        // { title: t('nav.clubs'), link: '/student/clubs' },
-        { title: t('nav.gallery'), link: '/student/gallery' },
-        { title: t('nav.international'), link: '/student/international' },
-        { title: t('nav.internships'), link: '/student/internships' },
-        { title: t('nav.academic_mobility'), link: '/student/academic-mobility' },
-        { title: t('nav.instructions'), link: '/student/instructions' },
-        { title: t('nav.appeal_form'), link: '/student/appeal' },
-      ]
-    },
+    
+    
     news: {
       title: t('nav.news'),
       submenu: [
@@ -205,7 +221,7 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
 
           {/* Центральное меню - скрыто на мобильных */}
           <div className="flex items-center space-x-6">
-            <div className="hidden min-[1431px]:flex flex-1 justify-center">
+            <div className="hidden min-[1475px]:flex flex-1 justify-center">
               {Object.entries(menuData).map(([key, item]) => (
                 <div 
                   key={key}
@@ -345,7 +361,7 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
             </div>
             
             {/* Кнопка мобильного меню */}
-            <div className="block min-[1431px]:hidden">
+            <div className="block min-[1475px]:hidden">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className={`inline-flex items-center justify-center p-3 rounded-xl transition-all duration-300 hover:scale-110 ${
@@ -374,7 +390,7 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
       {/* Мобильное меню с анимацией */}
       {isMenuOpen && (
         <div 
-          className="block min-[1431px]:hidden bg-white/95 backdrop-blur-md shadow-xl transform transition-all duration-300 ease-out"
+          className="block min-[1475px]:hidden bg-white/95 backdrop-blur-md shadow-xl transform transition-all duration-300 ease-out"
           style={{
             animation: 'slideDown 0.3s ease-out'
           }}

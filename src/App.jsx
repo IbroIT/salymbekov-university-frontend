@@ -15,18 +15,21 @@ import Mission from "./components/About/Mission";
 import Regulations from "./components/About/Regulations";
 import Status from "./components/About/Status";
 import Advices from "./components/About/Advices";
+import Founders from "./components/About/Founders";
+import Structure from "./components/About/Structure";
 
-import HSM from './components/academics/academics'
-import Faculties from './components/academics/faculties'
-import Deparments from './components/academics/departments'
-import Calendar from './components/academics/calendar'
+import HSM from './components/academics/academics';
+import Faculties from './components/academics/faculties';
+import Deparments from './components/academics/departments';
+import Calendar from './components/academics/calendar';
 import Resources from "./components/academics/resources";
 import HSMInfo from "./components/HSM/HSMInfo";
 import Programs from "./components/HSM/Programs";
 import HSMLearningGoals from "./components/HSM/HSMLearningGoals";
 import HSMAccreditation from "./components/HSM/HSMAccreditation";
 import HSMAcademicStuff from "./components/HSM/HSMAcademicStuff";
-
+import HSMManagement from "./components/HSM/HSMManagement";
+import HSMCMK from "./components/HSM/HSMCMK";
 
 import LifeOverview from "./components/Life/LifeOverview";
 import ClubsSection from "./components/Life/ClubsSection";
@@ -37,6 +40,10 @@ import AcademicMobility from "./components/Life/AcademicMobility";
 import StudentRegulations from "./components/Life/StudentRegulations";
 import Instructions from "./components/Life/Instructions";
 import AppealForm from "./components/Life/AppealForm";
+import StudentCalendar from "./components/academics/calendar";
+import StudentEResources from "./components/Life/EResources";
+import AcadOp from "./components/Life/AcadOp";
+import SocOp from "./components/Life/SocOp";
 
 import AdmissionsOverview from "./components/Admissions/AdmissionsOverview";
 import Requirements from "./components/Admissions/Requirements";
@@ -53,6 +60,10 @@ import ApplyCitizensKG from "./components/Admissions/Apply/ApplyCitizensKG";
 import ApplyForeignCitizens from "./components/Admissions/Apply/ApplyForeignCitizens";
 import TuitionCitizensKG from "./components/Admissions/Tuition/TuitionCitizensKG";
 import TuitionForeignCitizens from "./components/Admissions/Tuition/TuitionForeignCitizens";
+import Committee from "./components/Admissions/Committee";
+import Courses from "./components/Admissions/Courses";
+import Procedure from "./components/Admissions/Procedure";
+import Payments from "./components/Admissions/Payments";
 
 import News from "./components/News/News";
 import NewsDetail from "./components/News/NewsDetail";
@@ -72,18 +83,19 @@ import Hospitals from "./components/Infrastructure/Hospitals";
 import Laboratories from "./components/Infrastructure/Laboratories";
 import AcademicBuildings from "./components/Infrastructure/AcademicBuildings";
 import Dormitories from "./components/Infrastructure/Dormitories";
+import Audience from "./components/Infrastructure/Audience";
+import Startups from "./components/Infrastructure/Startups";
 
 import Contacts from "./components/Contacts/contacts";
 import Media from "./components/Contacts/Media";
 import MainRoutes from "./routes";
 
-// Страницы-заглушки для временно отсутствующих компонентов
+// Заглушка для временных страниц
 const Page = ({ title }) => <div className="min-h-screen pt-20"><h1 className="text-2xl font-bold p-8">{title}</h1></div>;
 
 function App() {
   const { i18n } = useTranslation();
 
-  // Инициализация сохраненного языка при загрузке приложения
   useEffect(() => {
     const savedLanguage = localStorage.getItem('i18nextLng');
     if (savedLanguage && ['ru', 'kg', 'en'].includes(savedLanguage)) {
@@ -97,7 +109,7 @@ function App() {
         <Navbar />
         <main className="flex-1 pt-16">
           <Routes>
-            {/* Главная страница */}
+            {/* Главная */}
             <Route path="/" element={<Hero />} />
 
             {/* About */}
@@ -110,11 +122,12 @@ function App() {
             <Route path="/about/mission" element={<Mission />} />
             <Route path="/about/advices" element={<Advices />} />
             <Route path="/about/status" element={<Status />} />
+            <Route path="/about/founders" element={<Founders />} />
+            <Route path="/about/structure" element={<Structure />} />
 
             {/* HSM */}
             <Route path="/hsm/programs" element={<HSM />} />
             <Route path="/hsm/eduprograms" element={<Programs />} />
-            {/* <Route path="/hsm/faculties" element={<Faculties />} /> */}
             <Route path="/hsm/departments" element={<Deparments />} />
             <Route path="/hsm/calendar" element={<Calendar />} />
             <Route path="/hsm/resources" element={<Resources />} />
@@ -122,7 +135,9 @@ function App() {
             <Route path="/hsm/learning-goals" element={<HSMLearningGoals />} />
             <Route path="/hsm/about" element={<HSMInfo />} />
             <Route path="/hsm/AS" element={<HSMAcademicStuff />} />
-
+            <Route path="/hsm/manage" element={<HSMManagement />} />
+            <Route path="/hsm/partners" element={<Partners />} />
+            <Route path="/hsm/cmk" element={<HSMCMK />} />
 
             {/* Admission */}
             <Route path="/admissions" element={<AdmissionsOverview />} />
@@ -140,13 +155,18 @@ function App() {
             <Route path="/admissions/apply/foreign-citizens" element={<ApplyForeignCitizens />} />
             <Route path="/admissions/tuition/citizens-kg" element={<TuitionCitizensKG />} />
             <Route path="/admissions/tuition/foreign-citizens" element={<TuitionForeignCitizens />} />
+            <Route path="/admissions/committee" element={<Committee />} />
+            <Route path="/admissions/courses" element={<Courses />} />
+            <Route path="/admissions/procedure" element={<Procedure />} />
+            <Route path="/admissions/payments" element={<Payments />} />
 
             {/* Infrastructure */}
             <Route path="/infrastructure" element={<Infrastructure />} />
             <Route path="/infrastructure/hospitals" element={<Hospitals />} />
             <Route path="/infrastructure/laboratories" element={<Laboratories />} />
-            {/* <Route path="/infrastructure/academic-buildings" element={<AcademicBuildings />} /> */}
             <Route path="/infrastructure/dormitories" element={<Dormitories />} />
+            <Route path="/infrastructure/audience" element={<Audience />} />
+            <Route path="/infrastructure/startups" element={<Startups />} />
 
             {/* Research */}
             <Route path="/research" element={<Research />} />
@@ -158,9 +178,6 @@ function App() {
             <Route path="/research/journals" element={<ScientificJournals />} />
 
             {/* Student Life */}
-            {/* <Route path="/student" element={<LifeOverview />} />
-            <Route path="/student/life" element={<LifeOverview />} /> */}
-            {/* <Route path="/student/clubs" element={<ClubsSection />} /> */}
             <Route path="/student/gallery" element={<Gallery />} />
             <Route path="/student/international" element={<InternationalStudents />} />
             <Route path="/student/internships" element={<Internships />} />
@@ -168,6 +185,11 @@ function App() {
             <Route path="/student/regulations" element={<StudentRegulations />} />
             <Route path="/student/instructions" element={<Instructions />} />
             <Route path="/student/appeal" element={<AppealForm />} />
+            <Route path="/student/clubs" element={<ClubsSection />} />
+            <Route path="/student/calendar" element={<StudentCalendar />} />
+            <Route path="/student/eresources" element={<StudentEResources />} />
+            <Route path="/student/acadop" element={<AcadOp />} />
+            <Route path="/student/socop" element={<SocOp />} />
 
             {/* News */}
             <Route path="/news" element={<News />} />
@@ -177,9 +199,9 @@ function App() {
 
             {/* Contacts */}
             <Route path="/contacts" element={<Contacts />} />
-            <Route path="/media" element={<Media/>} />
+            <Route path="/media" element={<Media />} />
 
-            {/* Legacy routes for compatibility */}
+            {/* Legacy routes */}
             <Route path="/admission" element={<AdmissionsOverview />} />
             <Route path="/admission/requirements" element={<Requirements />} />
             <Route path="/admission/tuition" element={<Tuition />} />
@@ -191,8 +213,8 @@ function App() {
             <Route path="/campus-life/gallery" element={<Gallery />} />
             <Route path="/campus-life/international" element={<InternationalStudents />} />
 
-            {/* 404 Page */}
-            <Route path="*" element={<Page title="Страница не найдена" />} /> 
+            {/* 404 */}
+            <Route path="*" element={<Page title="Страница не найдена" />} />
           </Routes>
         </main>
         <Footer />
