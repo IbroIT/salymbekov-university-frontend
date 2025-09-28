@@ -9,13 +9,18 @@ import {
   LightBulbIcon,
   ArrowPathIcon,
   ChartBarIcon,
-  SparklesIcon
+  SparklesIcon,
+  CalendarIcon,
+  MapPinIcon,
+  UsersIcon,
+  BuildingLibraryIcon
 } from '@heroicons/react/24/outline';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 
 const Mission = () => {
   const { t } = useTranslation();
   const [activeValue, setActiveValue] = useState(0);
+  const [activeMilestone, setActiveMilestone] = useState(0);
   
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
@@ -35,6 +40,14 @@ const Mission = () => {
     LightBulbIcon,
     ArrowPathIcon,
     ChartBarIcon
+  ];
+
+  const historyIcons = [
+    BuildingLibraryIcon,
+    UsersIcon,
+    RocketLaunchIcon,
+    MapPinIcon,
+    CalendarIcon
   ];
 
   return (
@@ -141,6 +154,143 @@ const Mission = () => {
                 {t('mission.missionText')}
               </p>
             </div>
+          </div>
+        </motion.div>
+
+        {/* История развития */}
+        <motion.div 
+          className="mb-28"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.7, delay: 0.3 }}
+          viewport={{ once: true, amount: 0.3 }}
+        >
+          <motion.h2 
+            className="text-4xl font-bold text-center text-blue-900 mb-16"
+            initial={{ y: 30, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+          >
+            {t('mission.historyTitle', 'Наша история')}
+          </motion.h2>
+          
+          <div className="max-w-6xl mx-auto">
+            {/* Timeline */}
+            <div className="relative">
+              {/* Линия таймлайна */}
+              <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-blue-400 to-blue-600 rounded-full" />
+              
+              {/* Вехи истории */}
+              <div className="space-y-12">
+                {[0, 1, 2, 3, 4].map((milestone, index) => {
+                  const IconComponent = historyIcons[index] || CalendarIcon;
+                  const isLeft = index % 2 === 0;
+                  
+                  return (
+                    <motion.div 
+                      key={index}
+                      initial={{ opacity: 0, x: isLeft ? -50 : 50 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.7, delay: index * 0.2 }}
+                      viewport={{ once: true, amount: 0.5 }}
+                      className={`relative flex items-center ${
+                        isLeft ? 'flex-row' : 'flex-row-reverse'
+                      }`}
+                    >
+                      {/* Контент */}
+                      <div className={`w-1/2 ${isLeft ? 'pr-12' : 'pl-12'}`}>
+                        <motion.div 
+                          className={`bg-white/80 backdrop-blur-md rounded-2xl p-6 border border-blue-100 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group ${
+                            activeMilestone === index 
+                              ? 'ring-2 ring-blue-500 shadow-xl' 
+                              : ''
+                          }`}
+                          whileHover={{ scale: 1.02 }}
+                          onClick={() => setActiveMilestone(index)}
+                        >
+                          <div className="flex items-start space-x-4">
+                            <motion.div 
+                              className="flex-shrink-0 p-3 bg-blue-100 rounded-xl"
+                              whileHover={{ rotate: 360 }}
+                              transition={{ duration: 0.7 }}
+                            >
+                              <IconComponent className="h-6 w-6 text-blue-600" />
+                            </motion.div>
+                            <div className="flex-1">
+                              <h3 className="text-xl font-semibold text-blue-900 mb-2 group-hover:text-blue-700 transition-colors">
+                                {t(`mission.history.milestone${index + 1}.title`, `Веха ${index + 1}`)}
+                              </h3>
+                              <p className="text-blue-700 leading-relaxed text-sm">
+                                {t(`mission.history.milestone${index + 1}.description`, `Описание вехи ${index + 1}`)}
+                              </p>
+                              <div className="flex items-center mt-3 text-blue-600 text-sm">
+                                <CalendarIcon className="h-4 w-4 mr-1" />
+                                <span>
+                                  {t(`mission.history.milestone${index + 1}.year`, `${2000 + index * 5}`)}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </motion.div>
+                      </div>
+                      
+                      {/* Точка на линии */}
+                      <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-blue-600 rounded-full border-4 border-white shadow-lg" />
+                    </motion.div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Достижения */}
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.5 }}
+              viewport={{ once: true }}
+              className="mt-20 bg-gradient-to-r from-blue-600 to-blue-700 rounded-3xl p-8 text-white"
+            >
+              <div className="text-center mb-8">
+                <h3 className="text-3xl font-bold mb-4">
+                  {t('mission.achievementsTitle', 'Наши достижения')}
+                </h3>
+                <p className="text-blue-100 text-lg max-w-2xl mx-auto">
+                  {t('mission.achievementsSubtitle', 'За годы работы мы достигли значительных результатов')}
+                </p>
+              </div>
+              
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                {[
+                  { number: '50+', label: t('mission.achievements.programs', 'Образовательных программ') },
+                  { number: '1000+', label: t('mission.achievements.students', 'Выпускников') },
+                  { number: '200+', label: t('mission.achievements.projects', 'Исследовательских проектов') },
+                  { number: '15+', label: t('mission.achievements.partners', 'Партнерских организаций') }
+                ].map((achievement, index) => (
+                  <motion.div 
+                    key={index}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                    className="text-center p-4"
+                  >
+                    <motion.div 
+                      className="text-3xl md:text-4xl font-bold mb-2"
+                      initial={{ y: 20 }}
+                      whileInView={{ y: 0 }}
+                      transition={{ duration: 0.5, delay: index * 0.2 }}
+                      viewport={{ once: true }}
+                    >
+                      {achievement.number}
+                    </motion.div>
+                    <div className="text-blue-100 text-sm md:text-base">
+                      {achievement.label}
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
           </div>
         </motion.div>
 

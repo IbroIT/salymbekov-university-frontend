@@ -73,6 +73,7 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
         { title: t('nav.status'), link: '/about/status' },
         { title: t('nav.regulations'), link: 'https://salymbekov.com/npa/' },
         { title: t('nav.advices'), link: '/about/advices' },
+        { title: t('nav.achievements'), link: '/about/achievements' },
       ]
     },
     HSM: {
@@ -81,7 +82,7 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
         { title: t('nav.about_HSM'), link: '/hsm/about' },
         { title: t('nav.management'), link: '/hsm/manage' },
         { title: t('nav.programs'), link: '/hsm/programs' },
-        { title: t('nav.eduprograms'), link: '/hsm/eduprograms' },
+        // { title: t('nav.eduprograms'), link: '/hsm/eduprograms' },
         { title: t('nav.academic_stuff'), link: '/hsm/AS' },
         { title: t('nav.partners'), link: '/hsm/partners' },
         { title: t('nav.resources'), link: '/hsm/resources' },
@@ -113,7 +114,15 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
         { title: t('nav.committee'), link: '/admissions/committee' },
         { title: t('nav.courses'), link: '/admissions/courses' },
         { title: t('nav.procedure'), link: '/admissions/procedure' },
-        { title: t('nav.payments'), link: '/admissions/payments' },
+        // { title: t('nav.payments'), link: '/admissions/payments' },
+        { 
+          title: t('nav.tuition'), 
+          hasNested: true,
+          nestedItems: [
+            { title: t('nav.for_citizens_kg'), link: '/admissions/tuition/citizens-kg' },
+            { title: t('nav.for_foreign_citizens'), link: '/admissions/tuition/foreign-citizens' },
+          ]
+        },
         { title: t('nav.partners'), link: '/hsm/partners' },
         // { 
         //   title: t('nav.for_applicants'), 
@@ -139,14 +148,7 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
         //     { title: t('nav.for_foreign_citizens'), link: '/admissions/apply/foreign-citizens' },
         //   ]
         // },
-        // { 
-        //   title: t('nav.tuition'), 
-        //   hasNested: true,
-        //   nestedItems: [
-        //     { title: t('nav.for_citizens_kg'), link: '/admissions/tuition/citizens-kg' },
-        //     { title: t('nav.for_foreign_citizens'), link: '/admissions/tuition/foreign-citizens' },
-        //   ]
-        // },
+        
       ]
     },
     research: {

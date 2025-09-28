@@ -17,6 +17,7 @@ import Status from "./components/About/Status";
 import Advices from "./components/About/Advices";
 import Founders from "./components/About/Founders";
 import Structure from "./components/About/Structure";
+import Achievements from "./components/About/Achievements";
 
 import HSM from './components/academics/academics';
 import Faculties from './components/academics/faculties';
@@ -113,7 +114,7 @@ function App() {
             <Route path="/" element={<Hero />} />
 
             {/* About */}
-            <Route path="/about" element={<About />} />
+            {/* <Route path="/about" element={<About />} /> */}
             <Route path="/about/management" element={<Management />} />
             <Route path="/about/vacancies" element={<Careers />} />
             <Route path="/about/careers" element={<Careers />} />
@@ -124,6 +125,7 @@ function App() {
             <Route path="/about/status" element={<Status />} />
             <Route path="/about/founders" element={<Founders />} />
             <Route path="/about/structure" element={<Structure />} />
+            <Route path="/about/achievements" element={<Achievements />} />
 
             {/* HSM */}
             <Route path="/hsm/programs" element={<HSM />} />

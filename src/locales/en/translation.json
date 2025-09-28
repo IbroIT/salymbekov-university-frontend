@@ -17,6 +17,7 @@
   "payments": "Payments",
   "audience": "Lecture Rooms",
   "startups": "Startups",
+  "achievements": "Achievements",
   
   "admission": "For Applicants",
   "research": "Research",
@@ -2238,6 +2239,7 @@
     }
   },
   "programs": {
+    
     "title": "Key Programs",
     "subtitle": "Choose the program that matches your professional goals",
     "learnMore": "Learn More",
@@ -3884,6 +3886,43 @@
     "results_count": "Found {{count}} faculty members"
   },
   "mission": {
+    "historyTitle": "Our History",
+"achievementsTitle": "Our Achievements",
+"achievementsSubtitle": "Over the years, we have achieved significant results",
+"achievements": {
+  "programs": "Educational Programs",
+  "students": "Graduates",
+  "projects": "Research Projects",
+  "partners": "Partner Organizations"
+},
+"history": {
+  "milestone1": {
+    "title": "University Foundation",
+    "description": "Establishment of an educational institution to train highly qualified specialists",
+    "year": "2000"
+  },
+  "milestone2": {
+    "title": "Faculty Expansion",
+    "description": "Opening new academic directions and increasing the number of students",
+    "year": "2005"
+  },
+  "milestone3": {
+    "title": "Scientific Breakthrough",
+    "description": "Launching major research projects and establishing international cooperation",
+    "year": "2010"
+  },
+  "milestone4": {
+    "title": "Modern Campus",
+    "description": "Construction of a new campus with advanced infrastructure and laboratories",
+    "year": "2015"
+  },
+  "milestone5": {
+    "title": "Digital Transformation",
+    "description": "Introducing innovative technologies into education and scientific research",
+    "year": "2020"
+  }
+}
+,
     "title": "University Mission and Vision",
     "pageTitle": "Mission",
     "subtitle": "Our purpose and values",
@@ -4514,6 +4553,685 @@
       "budget": "Yes, 50 state-funded places are allocated annually based on competition."
     }
   }
-}
-
+},
+"achievement": {
+    "title": "University Achievements",
+    "subtitle": "We are proud of our successes in medical education, scientific research and innovative developments that are changing the future of medicine",
+    
+    "filters": {
+      "all": "All Achievements",
+      "education": "Education",
+      "science": "Science",
+      "international": "International",
+      "infrastructure": "Infrastructure"
+    },
+    
+    "categories": {
+      "education": "education",
+      "science": "science",
+      "international": "international",
+      "infrastructure": "infrastructure"
+    },
+    
+    "stats": {
+      "publications": "Scientific Publications",
+      "partners": "International Partners",
+      "employment": "Employment Rate",
+      "clinicalBases": "Clinical Bases"
+    },
+    
+    "achievements": {
+      "achievement1": {
+        "title": "First Place in Medical University Rankings",
+        "description": "Our university took first place in the national ranking of medical educational institutions"
+      },
+      
+      "achievement2": {
+        "title": "Breakthrough in Cardiac Surgery",
+        "description": "Development of an innovative technique for minimally invasive heart surgery"
+      },
+      
+      "achievement3": {
+        "title": "International Recognition",
+        "description": "Accreditation of educational programs according to European standards"
+      },
+      
+      "achievement4": {
+        "title": "Best Scientific Publication",
+        "description": "Our researchers' article was recognized as the best in an international medical journal"
+      },
+      
+      "achievement5": {
+        "title": "Innovative Training Center",
+        "description": "Opening of a modern simulation center with VR technologies"
+      },
+      
+      "achievement6": {
+        "title": "Research Grant",
+        "description": "Received a major government grant for research in oncology"
+      }
+    },
+    
+    "cta": {
+      "title": "Become Part of Our Achievements",
+      "description": "Join our university and contribute to the development of medicine",
+      "applyButton": "Apply Now",
+      "learnMoreButton": "Learn More"
+    }
+  },
+  "founders": {
+  "title": "University Founders",
+  "subtitle": "Outstanding scientists and doctors whose names are forever written in the history of medical education",
+  "achievementsTitle": "Key Achievements:",
+  "previousButton": "Previous",
+  "nextButton": "Next",
+  "quote": {
+    "text": "Medicine is not just a profession, it is a calling that requires full dedication and continuous improvement. A true doctor must combine the knowledge of a scientist, the hands of a surgeon, and the heart of a humanist.",
+    "author": "— Professor Ivan Petrov, University Founder"
+  },
+  "founder1": {
+    "name": "Professor Ivan Petrov",
+    "position": "Founder and First Rector",
+    "years": "1920-1985",
+    "description": "An outstanding medical scientist, Doctor of Medical Sciences, Academician of the RAMS. Founded the university in 1955 to train highly qualified medical personnel.",
+    "achievements": [
+      "Author of 15 monographs on cardiology",
+      "Recipient of the State Prize",
+      "Founder of the School of Cardiology",
+      "Corresponding member of 5 international academies"
+    ]
+  },
+  "founder2": {
+    "name": "Academician Maria Sidorova",
+    "position": "Co-founder, Dean of the Faculty of Medicine",
+    "years": "1925-1998",
+    "description": "The first female academician in the field of surgery, a pioneer in the development of cardiovascular surgery in our country.",
+    "achievements": [
+      "Developer of unique surgical techniques",
+      "Author of the first textbook on cardiac surgery",
+      "Awarded the Order 'For Merit to the Fatherland'",
+      "Trained 35 doctors of science"
+    ]
+  },
+  "founder3": {
+    "name": "Professor Alexander Kozlov",
+    "position": "Co-founder, Head of Department",
+    "years": "1918-2001",
+    "description": "An outstanding organizer of medical education, creator of the modern system of training doctors.",
+    "achievements": [
+      "Developed the concept of continuous medical education",
+      "Founder of the university’s clinical base",
+      "Initiator of international cooperation",
+      "Author of educational standards"
+    ]
+  },
+  "founder4": {
+    "name": "Professor Elena Vasnetsova",
+    "position": "Co-founder, Scientific Director",
+    "years": "1930-2005",
+    "description": "An outstanding scientist in medical biochemistry, founder of the research institute at the university.",
+    "achievements": [
+      "Discovery of new biochemical disease markers",
+      "Creation of a unique laboratory base",
+      "Author of 200 scientific works",
+      "Founder of the journal 'Medical Biochemistry'"
+    ]
+  }
+},
+"structure": {
+  "title": "University Structure",
+  "description": "Learn about the organizational structure of our medical university, including leadership, faculties, and administrative departments",
+  "head": "Head:",
+  "phone": "Phone:",
+  "expand": "Expand",
+  "collapse": "Collapse",
+  "facultyDepartments": "Faculty Departments:",
+  "leadership": {
+    "title": "University Leadership",
+    "items": {
+      "rector": {
+        "name": "Rector",
+        "head": "Ivanov I.I.",
+        "phone": "+7 (XXX) XXX-XX-XX"
+      },
+      "academicViceRector": {
+        "name": "Vice Rector for Academic Affairs",
+        "head": "Petrova A.S.",
+        "phone": "+7 (XXX) XXX-XX-XX"
+      },
+      "researchViceRector": {
+        "name": "Vice Rector for Research",
+        "head": "Sidorov V.P.",
+        "phone": "+7 (XXX) XXX-XX-XX"
+      },
+      "clinicalViceRector": {
+        "name": "Vice Rector for Clinical Affairs",
+        "head": "Kozlova E.V.",
+        "phone": "+7 (XXX) XXX-XX-XX"
+      }
+    }
+  },
+  "faculties": {
+    "title": "Faculties",
+    "items": {
+      "medical": {
+        "name": "Faculty of Medicine",
+        "head": "Doctor of Medical Sciences, Professor Smirnov A.V.",
+        "departments": {
+          "therapy": "Department of Therapy",
+          "surgery": "Department of Surgery",
+          "pediatrics": "Department of Pediatrics",
+          "obstetrics": "Department of Obstetrics and Gynecology"
+        }
+      },
+      "pediatric": {
+        "name": "Faculty of Pediatrics",
+        "head": "Doctor of Medical Sciences, Professor Nikolaeva T.M.",
+        "departments": {
+          "childrenDiseases": "Department of Children's Diseases",
+          "neonatology": "Department of Neonatology",
+          "childrenSurgery": "Department of Pediatric Surgery"
+        }
+      },
+      "dental": {
+        "name": "Faculty of Dentistry",
+        "head": "Doctor of Medical Sciences, Professor Orlova L.P.",
+        "departments": {
+          "therapeuticDentistry": "Department of Therapeutic Dentistry",
+          "orthopedicDentistry": "Department of Orthopedic Dentistry",
+          "surgicalDentistry": "Department of Surgical Dentistry"
+        }
+      },
+      "pharmaceutical": {
+        "name": "Faculty of Pharmacy",
+        "head": "Doctor of Pharmaceutical Sciences, Professor Belov S.K.",
+        "departments": {
+          "pharmaceuticalChemistry": "Department of Pharmaceutical Chemistry",
+          "pharmacognosy": "Department of Pharmacognosy",
+          "drugTechnology": "Department of Drug Technology"
+        }
+      }
+    }
+  },
+  "administrative": {
+    "title": "Administrative Departments",
+    "items": {
+      "academicOffice": {
+        "name": "Academic Office",
+        "head": "Vasilieva O.I.",
+        "phone": "+7 (XXX) XXX-XX-XX"
+      },
+      "researchOffice": {
+        "name": "Research Office",
+        "head": "Grigoriev P.S.",
+        "phone": "+7 (XXX) XXX-XX-XX"
+      },
+      "hrDepartment": {
+        "name": "Human Resources Department",
+        "head": "Fedorova M.K.",
+        "phone": "+7 (XXX) XXX-XX-XX"
+      },
+      "accounting": {
+        "name": "Accounting Department",
+        "head": "Andreeva S.V.",
+        "phone": "+7 (XXX) XXX-XX-XX"
+      }
+    }
+  }
+},
+"leadership": {
+  "title": "Medical University Leadership",
+  "subtitle": "A professional team of leaders ensuring high quality medical education and scientific research",
+  "directorate": "University Directorate",
+  "departmentHeads": "Heads of Departments",
+  "experience": "Experience",
+  "achievements": "Key Achievements",
+  "specialization": "Specialization",
+  "ivanov": {
+    "name": "Ivanov Ivan Ivanovich",
+    "position": "Director of the Medical University",
+    "degree": "Doctor of Medical Sciences, Professor",
+    "experience": "25 years",
+    "bio": "An outstanding cardiology scientist, author of over 200 scientific works. Under his leadership, the university achieved significant advances in medical science and education.",
+    "achievements": [
+      "Honored Doctor of the Russian Federation",
+      "Corresponding Member of the Russian Academy of Sciences",
+      "Government of the Russian Federation Awardee",
+      "Author of 15 monographs",
+      "Supervisor of 30 dissertations"
+    ]
+  },
+  "petrova": {
+    "name": "Petrova Anna Sergeevna",
+    "position": "Deputy Director for Academic Affairs",
+    "degree": "Doctor of Medical Sciences, Professor",
+    "experience": "20 years",
+    "bio": "Specialist in medical education organization. Under her leadership, modern educational technologies and digital learning platforms were implemented.",
+    "achievements": [
+      "Honored Worker of Higher Education of the Russian Federation",
+      "Expert of the Ministry of Health of the Russian Federation",
+      "Author of educational standards"
+    ]
+  },
+  "sidorov": {
+    "name": "Sidorov Alexey Vladimirovich",
+    "position": "Deputy Director for Scientific Work",
+    "degree": "Doctor of Medical Sciences, Professor",
+    "experience": "22 years",
+    "bio": "Leading scientist in molecular medicine. Organizer of international scientific conferences and research projects.",
+    "achievements": [
+      "State Prize winner in science",
+      "Member of the European Academy of Sciences",
+      "Head of Russian Science Foundation grants"
+    ]
+  },
+  "kozlova": {
+    "name": "Kozlova Maria Dmitrievna",
+    "position": "Head of the Department of Therapy",
+    "degree": "Doctor of Medical Sciences, Professor",
+    "experience": "18 years",
+    "bio": "Specialist in cardiology and internal medicine. Under her leadership, the department became a leading educational center.",
+    "achievements": [
+      "Chief therapist of the region",
+      "Author of clinical recommendations",
+      "Mentor of young scientists"
+    ],
+    "staff": "15 lecturers",
+    "specialization": "Cardiology, Gastroenterology, Pulmonology"
+  },
+  "nikolaev": {
+    "name": "Nikolaev Dmitry Petrovich",
+    "position": "Head of the Department of Surgery",
+    "degree": "Doctor of Medical Sciences, Professor",
+    "experience": "24 years",
+    "bio": "Top-level surgeon specializing in abdominal surgery. Has performed over 5,000 complex operations.",
+    "achievements": [
+      "Honored Doctor of the Russian Federation",
+      "Board member of the Russian Society of Surgeons",
+      "Developer of new surgical methods"
+    ],
+    "staff": "18 lecturers",
+    "specialization": "General Surgery, Oncosurgery, Traumatology"
+  },
+  "orlova": {
+    "name": "Orlova Elena Viktorovna",
+    "position": "Head of the Department of Pediatrics",
+    "degree": "Doctor of Medical Sciences, Professor",
+    "experience": "19 years",
+    "bio": "Specialist in pediatric cardiology and neonatology. Author of unique treatment methods for congenital heart defects in children.",
+    "achievements": [
+      "Chief pediatrician of the city",
+      "WHO expert in child health",
+      "Founder of the School of Pediatric Cardiology"
+    ],
+    "staff": "12 lecturers",
+    "specialization": "Neonatology, Pediatric Infections, Cardiology"
+  },
+  "vasiliev": {
+    "name": "Vasiliev Sergey Igorevich",
+    "position": "Head of the Department of Neurology",
+    "degree": "Doctor of Medical Sciences, Professor",
+    "experience": "21 years",
+    "bio": "Leading neurologist in the country, specialist in cerebrovascular diseases and neurorehabilitation.",
+    "achievements": [
+      "President of the Association of Neurologists",
+      "Developer of national stroke treatment standards",
+      "Scientific Director of the Clinic"
+    ],
+    "staff": "10 lecturers",
+    "specialization": "Neurology, Neurosurgery, Rehabilitation"
+  },
+  "smirnova": {
+    "name": "Smirnova Olga Vasilievna",
+    "position": "Head of the Department of Dentistry",
+    "degree": "Doctor of Medical Sciences, Professor",
+    "experience": "17 years",
+    "bio": "Specialist in orthodontics and aesthetic dentistry. Developer of innovative prosthetic methods.",
+    "achievements": [
+      "Member of the International Association of Dentists",
+      "Holder of patents for dental structures",
+      "Chief dentist of the region"
+    ],
+    "staff": "14 lecturers",
+    "specialization": "Therapeutic Dentistry, Orthodontics, Surgery"
+  },
+  "departments": {
+    "directorate": "Directorate",
+    "studyDepartment": "Academic Office",
+    "scienceDepartment": "Research Office",
+    "therapy": "Department of Therapy",
+    "surgery": "Department of Surgery",
+    "pediatrics": "Department of Pediatrics",
+    "neurology": "Department of Neurology",
+    "dentistry": "Department of Dentistry"
+  }
+},
+"admission": {
+    "title": "Admission Committee",
+    "heroTitle": "Start Your Medical Career With Us",
+    "heroSubtitle": "Join the best medical university in the region",
+    "applyNow": "Apply Now",
+    "welcome": "Welcome to the Admission Committee",
+    "introduction": "Our medical university offers world-class education with modern facilities and experienced teaching staff. We prepare highly qualified specialists ready to meet the challenges of modern medicine.",
+    "requirements": "Admission Requirements",
+    "documents": "Required Documents",
+    "documentsDesc": "Passport, educational documents, medical certificate, photos",
+    "exams": "Entrance Exams",
+    "examsDesc": "Biology, Chemistry, and language proficiency tests",
+    "deadlines": "Application Deadlines",
+    "deadlinesDesc": "Submit your application before the announced deadlines",
+    "consultation": "Professional Consultation",
+    "consultationDesc": "Get detailed consultation about specialties and admission process",
+    "contact": "Contact Information",
+    "contactInfo": "Our Contacts",
+    "phone": "Phone",
+    "email": "Email",
+    "address": "Address",
+    "addressValue": "123 Medical Street, Bishkek, Kyrgyzstan",
+    "hours": "Working Hours",
+    "hoursValue": "Mon-Fri: 9:00-18:00, Sat: 9:00-14:00",
+    "startApplication": "Start Your Application",
+    "step1": "Submit online application",
+    "step2": "Prepare required documents",
+    "step3": "Pass entrance examinations",
+    "startNow": "Start Application",
+    "importantDates": "Important Dates",
+    "date1Title": "Application Start",
+    "date1Desc": "June 1, 2024",
+    "date2Title": "Deadline",
+    "date2Desc": "August 15, 2024",
+    "date3Title": "Exams Start",
+    "date3Desc": "August 20, 2024",
+    "faq": "Frequently Asked Questions",
+    "faq1Question": "What are the tuition fees?",
+    "faq1Answer": "Tuition fees vary by specialty. Please contact our admission office for detailed information.",
+    "faq2Question": "Are there dormitories for students?",
+    "faq2Answer": "Yes, we provide comfortable dormitories for all non-resident students.",
+    "faq3Question": "What specialties are available?",
+    "faq3Answer": "We offer General Medicine, Pediatrics, Dentistry, Pharmacy, and Nursing programs.",
+    "footerText": "We are always happy to help you with any questions about admission",
+    "medicalUniversity": "Medical University"
+  },
+  "admissionProcess": {
+    "title": "Admission Process",
+    "heroTitle": "Admission Procedure",
+    "heroSubtitle": "Step-by-step guide to joining our medical university",
+    "steps": "Steps",
+    "months": "Months",
+    "transparent": "Transparent Process",
+    "processTitle": "Admission Process Steps",
+    "step1Title": "Application Submission",
+    "step1Desc": "Submit your application and required documents",
+    "step1Details": "Complete the online application form and upload all required documents. Make sure all information is accurate and documents are clear and readable.",
+    "step2Title": "Entrance Exams",
+    "step2Desc": "Take the required entrance examinations",
+    "step2Details": "Prepare for and take the entrance exams in core subjects. Results are typically available within 2 weeks after the exam date.",
+    "step3Title": "Interview",
+    "step3Desc": "Participate in the admission interview",
+    "step3Details": "The interview assesses your motivation, communication skills, and suitability for the medical profession. Be prepared to discuss your career goals.",
+    "step4Title": "Document Review",
+    "step4Desc": "Final review and decision",
+    "step4Details": "The admission committee reviews all submitted materials and makes the final decision. You will be notified by email and official letter.",
+    "step5Title": "Enrollment",
+    "step5Desc": "Complete enrollment and registration",
+    "step5Details": "After acceptance, complete the enrollment process by paying tuition fees and registering for classes. Welcome to our medical university!",
+    "details": "Detailed Information",
+    "requiredDocuments": "Required Documents",
+    "examSubjects": "Exam Subjects",
+    "interviewCriteria": "Interview Assessment Criteria",
+    "passport": "Passport or ID card",
+    "diploma": "High school diploma",
+    "photos": "3x4 photos",
+    "medicalCert": "Medical certificate",
+    "biology": "Biology",
+    "chemistry": "Chemistry",
+    "language": "Language proficiency",
+    "motivation": "Motivation and career goals",
+    "communication": "Communication skills",
+    "aptitude": "Aptitude for medicine",
+    "documentsCheck": "Document verification",
+    "resultsCheck": "Exam results review",
+    "quotaCheck": "Quota compliance",
+    "payment": "Tuition fee payment",
+    "registration": "Student registration",
+    "orientation": "Orientation program",
+    "requiredDocumentsTitle": "Required Documents",
+    "identityDocs": "Identity Documents",
+    "educationDocs": "Education Documents",
+    "medicalDocs": "Medical Documents",
+    "otherDocs": "Other Documents",
+    "birthCertificate": "Birth certificate",
+    "idPhotos": "ID photos (4 pieces)",
+    "highSchoolDiploma": "High school diploma",
+    "transcript": "Academic transcript",
+    "universityDiploma": "University diploma (if applicable)",
+    "healthCertificate": "Health certificate form 086",
+    "vaccinationCard": "Vaccination card",
+    "fluorography": "Fluorography results",
+    "militaryCard": "Military registration card",
+    "applicationForm": "Completed application form",
+    "recommendationLetters": "Recommendation letters",
+    "deadlinesTitle": "Important Deadlines",
+    "june": "June",
+    "juneEvent1": "Application period begins",
+    "juneEvent2": "Early admission deadline",
+    "july": "July",
+    "julyEvent1": "Main entrance exams",
+    "julyEvent2": "Interview sessions",
+    "august": "August",
+    "augustEvent1": "Final application deadline",
+    "augustEvent2": "Enrollment completion",
+    "contactTitle": "Contact Admission Office",
+    "phone": "Phone",
+    "email": "Email",
+    "address": "Address",
+    "addressValue": "123 Medical Street, Bishkek",
+    "hours": "Working Hours",
+    "hoursValue": "Mon-Fri: 9:00-18:00, Sat: 9:00-14:00",
+    "faqTitle": "Frequently Asked Questions",
+    "faq1Question": "When does the application period start?",
+    "faq1Answer": "The application period typically starts on June 1st and ends on August 15th each year.",
+    "faq2Question": "Can I apply with international documents?",
+    "faq2Answer": "Yes, we accept international educational documents after they have been properly legalized and translated.",
+    "faq3Question": "Are there preparation courses for entrance exams?",
+    "faq3Answer": "Yes, we offer preparatory courses from April to June each year to help applicants prepare for entrance exams.",
+    "faq4Question": "What is the passing score for entrance exams?",
+    "faq4Answer": "The minimum passing score is 60% for each subject, but competitive programs may require higher scores.",
+    "footerText": "We are here to help you through every step of the admission process",
+    "medicalUniversity": "Medical University"
+  },
+   "classrooms": {
+    "title": "Classrooms",
+    "heroTitle": "Modern Learning Spaces",
+    "heroSubtitle": "State-of-the-art classrooms and laboratories for medical education",
+    "totalRooms": "Total Rooms",
+    "totalCapacity": "Total Capacity",
+    "equipped": "Equipped",
+    "access": "Access",
+    "categories": "Room Categories",
+    "allRooms": "All Rooms",
+    "lectureHalls": "Lecture Halls",
+    "laboratories": "Laboratories",
+    "practiceRooms": "Practice Rooms",
+    "rooms": "rooms",
+    "availableRooms": "Available Classrooms",
+    "room101": "Lecture Hall 101",
+    "room201": "Biology Laboratory",
+    "room301": "Medical Practice Room",
+    "room102": "Lecture Hall 102",
+    "room202": "Chemistry Laboratory",
+    "room302": "Dental Practice Room",
+    "room101Desc": "Large lecture hall with modern multimedia equipment, suitable for large groups and presentations",
+    "room201Desc": "Fully equipped biology laboratory with microscopes and research equipment",
+    "room301Desc": "Practical training room for medical procedures and patient care simulations",
+    "room102Desc": "Medium-sized lecture hall with comfortable seating and modern teaching aids",
+    "room202Desc": "Chemistry laboratory with safety equipment and modern analytical instruments",
+    "room302Desc": "Dental practice room with professional dental chairs and equipment",
+    "capacity": "Capacity",
+    "floor": "Floor",
+    "viewDetails": "View Details",
+    "lectureRooms": "Lecture Hall",
+    "laboratoryRooms": "Laboratory",
+    "practiceRooms": "Practice Room",
+    "description": "Description",
+    "features": "Features",
+    "roomSpecs": "Room Specifications",
+    "students": "students",
+    "area": "Area",
+    "type": "Type",
+    "equipment": "Equipment",
+    "booking": "Room Booking",
+    "bookingDesc": "This room is available for booking by students and faculty members",
+    "bookNow": "Book Now",
+    "modernEquipment": "Modern Equipment",
+    "digitalClassrooms": "Digital Classrooms",
+    "digitalClassroomsDesc": "Interactive whiteboards, projectors, and audio systems in all lecture halls",
+    "laboratoryEquipment": "Laboratory Equipment",
+    "laboratoryEquipmentDesc": "Modern microscopes, analyzers, and research equipment in laboratories",
+    "simulationEquipment": "Simulation Equipment",
+    "simulationEquipmentDesc": "Medical phantoms, simulation equipment for practical training",
+    "projector": "Multimedia Projector",
+    "soundSystem": "Sound System",
+    "microphones": "Wireless Microphones",
+    "documentCamera": "Document Camera",
+    "microscopes": "Microscopes",
+    "labEquipment": "Laboratory Equipment",
+    "computers": "Computers",
+    "specimens": "Biological Specimens",
+    "hospitalBeds": "Hospital Beds",
+    "medicalPhantoms": "Medical Phantoms",
+    "simulationEquipment": "Simulation Equipment",
+    "monitors": "Patient Monitors",
+    "whiteboard": "Interactive Whiteboard",
+    "chemistryEquipment": "Chemistry Equipment",
+    "safetyCabinets": "Safety Cabinets",
+    "dentalChairs": "Dental Chairs",
+    "dentalEquipment": "Dental Equipment",
+    "simulationTools": "Simulation Tools",
+    "wifi": "Wi-Fi Internet",
+    "airConditioning": "Air Conditioning",
+    "disabledAccess": "Disabled Access",
+    "ventilation": "Ventilation System",
+    "safetyEquipment": "Safety Equipment",
+    "storage": "Storage Cabinets",
+    "emergencyShower": "Emergency Shower",
+    "waterSupply": "Water Supply",
+    "footerText": "Creating the best learning environment for future medical professionals",
+    "medicalUniversity": "Medical University"
+  },
+  "startups": {
+    "title": "Startups",
+    "heroTitle": "Medical Innovation Hub",
+    "heroSubtitle": "Transforming healthcare through student and faculty startups",
+    "activeStartups": "Active Startups",
+    "totalFunding": "Total Funding",
+    "teamMembers": "Team Members",
+    "patents": "Patents Filed",
+    "categories": "Startup Categories",
+    "allStartups": "All Startups",
+    "medtech": "MedTech",
+    "biotech": "BioTech",
+    "digitalHealth": "Digital Health",
+    "projects": "projects",
+    "ourStartups": "Our Startups",
+    "medAppName": "MedAssist App",
+    "bioSensorName": "BioSensor Pro",
+    "drugDiscoveryName": "DrugDiscovery AI",
+    "telemedName": "TeleMed Platform",
+    "prostheticName": "Smart Prosthetic",
+    "geneTherapyName": "GeneTherapy Solutions",
+    "seedStage": "Seed Stage",
+    "seriesA": "Series A",
+    "research": "Research Phase",
+    "growth": "Growth Stage",
+    "medAppDesc": "AI-powered mobile application for patient monitoring and medication management",
+    "bioSensorDesc": "Wearable biosensor for real-time health monitoring and early disease detection",
+    "drugDiscoveryDesc": "Artificial intelligence platform for accelerating drug discovery process",
+    "telemedDesc": "Comprehensive telemedicine platform connecting patients with specialists",
+    "prostheticDesc": "Advanced prosthetic limbs with neural interface technology",
+    "geneTherapyDesc": "Innovative gene therapy solutions for rare genetic diseases",
+    "funding": "Funding",
+    "learnMore": "Learn More",
+    "description": "Project Description",
+    "achievements": "Key Achievements",
+    "fundingInfo": "Funding Information",
+    "currentStage": "Current Stage",
+    "status": "Status",
+    "team": "Team Members",
+    "investors": "Investors",
+    "close": "Close",
+    "contactTeam": "Contact Team",
+    "active": "Active",
+    "scaling": "Scaling",
+    "development": "In Development",
+    "prototype": "Prototype",
+    "research": "Research",
+    "successStories": "Success Stories",
+    "supportPrograms": "Support Programs",
+    "fundingSupport": "Funding Support",
+    "mentorship": "Mentorship",
+    "labAccess": "Lab Access",
+    "fundingSupportDesc": "Grants, seed funding, and investor connections for promising projects",
+    "mentorshipDesc": "Experienced mentors from medical and business communities",
+    "labAccessDesc": "Access to state-of-the-art laboratories and research facilities",
+    "ctaTitle": "Have a Medical Innovation Idea?",
+    "ctaDescription": "Join our startup ecosystem and turn your innovative ideas into reality with our support and resources",
+    "submitProject": "Submit Project",
+    "contactUs": "Contact Us",
+    "footerText": "Building the future of healthcare through innovation and entrepreneurship",
+    "medicalUniversity": "Medical University",
+    "medAppFullDesc": "MedAssist is a comprehensive mobile healthcare platform that uses artificial intelligence to help patients manage their medications, track symptoms, and connect with healthcare providers. The app features smart reminders, drug interaction checks, and telehealth consultations.",
+    "bioSensorFullDesc": "BioSensor Pro is a breakthrough wearable device that continuously monitors vital signs and biomarkers. Using advanced sensors and machine learning algorithms, it can detect early signs of cardiovascular diseases and other health conditions.",
+    "drugDiscoveryFullDesc": "Our AI platform analyzes molecular structures and predicts drug efficacy, significantly reducing the time and cost of drug development. The system has already identified several promising compounds for further research.",
+    "telemedFullDesc": "TeleMed Platform provides secure video consultations, electronic prescriptions, and remote patient monitoring. It's designed to improve healthcare access in rural areas and reduce hospital visit costs.",
+    "prostheticFullDesc": "Smart Prosthetic incorporates advanced sensors and machine learning to provide natural movement and tactile feedback. The technology allows users to control prosthetic limbs with their neural signals.",
+    "geneTherapyFullDesc": "We're developing innovative gene editing techniques to treat rare genetic disorders. Our approach shows promising results in preclinical trials for several inherited conditions.",
+    "drSmith": "Dr. Sarah Smith - Chief Medical Officer",
+    "profJohnson": "Prof. Michael Johnson - AI Specialist",
+    "engineerKim": "Lisa Kim - Software Engineer",
+    "profBrown": "Prof. Robert Brown - Biomedical Engineer",
+    "drWilson": "Dr. Emily Wilson - Clinical Researcher",
+    "researcherLee": "David Lee - Sensor Technology Expert",
+    "drGarcia": "Dr. Maria Garcia - Pharmaceutical Scientist",
+    "profChen": "Prof. James Chen - Data Scientist",
+    "scientistPatel": "Dr. Amit Patel - Research Scientist",
+    "drMiller": "Dr. Jennifer Miller - Telemedicine Expert",
+    "engineerDavis": "Mark Davis - Full Stack Developer",
+    "designerTaylor": "Sarah Taylor - UX Designer",
+    "profAnderson": "Prof. Thomas Anderson - Prosthetic Specialist",
+    "drWhite": "Dr. Jessica White - Neurologist",
+    "bioengineerSingh": "Raj Singh - Bioengineer",
+    "drRoberts": "Dr. Kevin Roberts - Geneticist",
+    "profMartinez": "Prof. Anna Martinez - Molecular Biologist",
+    "geneticistWang": "Dr. Wei Wang - Genetic Researcher",
+    "achievement1": "10,000+ app downloads",
+    "achievement2": "Clinical trial approved",
+    "achievement3": "Partnership with major hospital",
+    "achievement4": "FDA approval pending",
+    "achievement5": "5 patents filed",
+    "achievement6": "Clinical validation completed",
+    "achievement7": "Novel compound identified",
+    "achievement8": "Research paper published",
+    "achievement9": "50,000+ consultations conducted",
+    "achievement10": "Integrated with hospital systems",
+    "achievement11": "Expanded to 3 countries",
+    "achievement12": "Prototype testing successful",
+    "achievement13": "User trials completed",
+    "achievement14": "Gene editing technique perfected",
+    "achievement15": "Preclinical studies positive",
+    "universityFund": "University Innovation Fund",
+    "angelGroup": "MedTech Angels Group",
+    "ventureCapital": "BioVenture Capital",
+    "techFund": "HealthTech Fund",
+    "researchGrant": "National Research Grant",
+    "healthFund": "Digital Health Fund",
+    "innovationGrant": "Innovation Development Grant",
+    "bioFund": "Biotechnology Investment Fund",
+    "story1Name": "Dr. Alex Thompson",
+    "story1Role": "Founder of MedInnovate",
+    "story1Quote": "The university's startup program provided not just funding, but crucial mentorship that helped us navigate the complex healthcare regulatory landscape.",
+    "story2Name": "Prof. Maria Rodriguez",
+    "story2Role": "Co-founder of BioSense",
+    "story2Quote": "Access to advanced laboratories and expert guidance transformed our research project into a viable medical device company."
+  }
 }
