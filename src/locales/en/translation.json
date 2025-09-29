@@ -5233,5 +5233,535 @@
     "story2Name": "Prof. Maria Rodriguez",
     "story2Role": "Co-founder of BioSense",
     "story2Quote": "Access to advanced laboratories and expert guidance transformed our research project into a viable medical device company."
+  },
+  "smk": {
+  "hero": {
+    "certified": "Certified Quality System",
+    "title": "Quality Management System",
+    "description": "An innovative management system ensuring high quality of educational services and continuous improvement of the university’s activities"
+  },
+  "statistics": {
+    "documents": "QMS Documents",
+    "processes": "Management Processes",
+    "principles": "Quality Principles",
+    "certificates": "Certificates"
+  },
+  "tabs": {
+    "about": "About the System",
+    "principles": "Principles",
+    "documents": "Documents",
+    "processes": "Processes"
+  },
+  "about": {
+    "title": "About the Quality Management System",
+    "description1": "Our quality management system is an integrated approach to university management based on international standard ISO 9001:2015.",
+    "description2": "The QMS covers all aspects of the university’s activities — from the educational process to research and international cooperation.",
+    "description3": "We strive to create an environment where quality becomes an integral part of corporate culture.",
+    "standard": "International Standard",
+    "compliance": "Compliance with Requirements",
+    "advantages": "Our Advantages"
+  },
+  "advantages": {
+    "studentSatisfaction": "Increased student satisfaction",
+    "processOptimization": "Optimization of management processes",
+    "academicResults": "Improved academic results",
+    "internationalRecognition": "Strengthened international recognition",
+    "resourceEfficiency": "Efficient use of resources"
+  },
+  "principles": {
+    "title": "Principles of the Quality Management System",
+    "customerOrientation": {
+      "title": "Customer Orientation",
+      "description": "Understanding current and future needs of students, employers, and society"
+    },
+    "leadership": {
+      "title": "Leadership of Management",
+      "description": "Unity of goals and creating an environment for full employee involvement"
+    },
+    "engagement": {
+      "title": "Staff Engagement",
+      "description": "Full use of the abilities and potential of all university employees"
+    },
+    "processApproach": {
+      "title": "Process Approach",
+      "description": "Managing activities and related resources as a process"
+    },
+    "systemApproach": {
+      "title": "System Approach",
+      "description": "Identifying, understanding, and managing interrelated processes as a system"
+    },
+    "continuousImprovement": {
+      "title": "Continuous Improvement",
+      "description": "Ongoing improvement of the university’s overall performance"
+    }
+  },
+  "documents": {
+    "title": "QMS Documentation",
+    "structure": {
+      "title": "Documentation Structure",
+      "qualityPolicy": "Quality Policy",
+      "strategicDirections": "Strategic Directions",
+      "qualityManual": "Quality Manual",
+      "foundationalDocument": "Foundational Document",
+      "procedures": "Procedures and Regulations",
+      "keyProcesses": "Description of Key Processes",
+      "workInstructions": "Work Instructions",
+      "detailedGuidance": "Detailed Guidelines",
+      "records": "Records and Reports",
+      "resultsDocumentation": "Results Documentation"
+    },
+    "downloads": "Documents for Download",
+    "download": "Download",
+    "list": [
+      {
+        "title": "Quality Policy",
+        "date": "15.03.2023",
+        "size": "2.1 MB",
+        "type": "pdf",
+        "category": "Core Documents"
+      },
+      {
+        "title": "Quality Manual",
+        "date": "20.03.2023",
+        "size": "3.4 MB",
+        "type": "pdf",
+        "category": "Core Documents"
+      }
+    ]
+  },
+  "processes": {
+    "title": "Processes of the Quality Management System",
+    "main": {
+      "title": "Core Processes",
+      "educational": "Educational Activities",
+      "research": "Research Work",
+      "educationalWork": "Educational and Social Activities",
+      "international": "International Cooperation"
+    },
+    "support": {
+      "title": "Supporting Processes",
+      "hr": "Human Resources Management",
+      "technical": "Material and Technical Support",
+      "information": "Information Support",
+      "financial": "Financial Management"
+    },
+    "management": {
+      "title": "Management Processes",
+      "strategic": "Strategic Planning",
+      "monitoring": "Monitoring and Measurement",
+      "audits": "Internal Audits",
+      "managementReview": "Management Review"
+    },
+    "improvement": {
+      "title": "Improvement Processes",
+      "nonConformity": "Nonconformity Management",
+      "corrective": "Corrective Actions",
+      "preventive": "Preventive Actions",
+      "continuous": "Continuous Improvement"
+    }
   }
+},
+"eresources": {
+  "hero": {
+    "badge": "DYNAMIC RESOURCES",
+    "title": "Electronic",
+    "highlight": "Resources",
+    "description": "A modern digital ecosystem for effective learning, research, and academic development"
+  },
+  "statistics": {
+    "total": "Total Resources",
+    "online": "Online",
+    "users": "Active Users",
+    "popular": "Popular"
+  },
+  "search": {
+    "placeholder": "Search resources..."
+  },
+  "categories": {
+    "list": [
+      { "id": "all", "name": "All Resources", "count": 8, "icon": "🔄" },
+      { "id": "library", "name": "Library", "count": 1, "icon": "📚" },
+      { "id": "education", "name": "Education", "count": 1, "icon": "🎓" },
+      { "id": "research", "name": "Research", "count": 1, "icon": "🔬" },
+      { "id": "labs", "name": "Labs", "count": 1, "icon": "🧪" },
+      { "id": "mobile", "name": "Mobile", "count": 1, "icon": "📱" }
+    ]
+  },
+  "resources": {
+    "popularBadge": "POPULAR",
+    "status": {
+      "online": "ONLINE",
+      "maintenance": "MAINTENANCE"
+    },
+    "users": "users",
+    "featuresTitle": "Key Features:",
+    "accessButton": "Go to Resource",
+    "list": [
+      {
+        "id": 1,
+        "title": "Electronic Library",
+        "description": "Access to more than 50,000 scientific publications, textbooks, and journals",
+        "category": "library",
+        "icon": "📚",
+        "color": "from-purple-500 to-purple-600",
+        "status": "online",
+        "users": "2,500+",
+        "features": ["Catalog Search", "Electronic Order", "Remote Access", "Mobile App"],
+        "link": "#",
+        "popular": true
+      },
+      {
+        "id": 2,
+        "title": "Distance Learning System",
+        "description": "Platform for online courses, webinars, and virtual classrooms",
+        "category": "education",
+        "icon": "🎓",
+        "color": "from-blue-500 to-blue-600",
+        "status": "online",
+        "users": "3,200+",
+        "features": ["Video Lectures", "Interactive Tests", "Discussion Forum", "Learning Progress"],
+        "link": "#",
+        "popular": true
+      },
+      {
+        "id": 3,
+        "title": "Scientific Database",
+        "description": "Access to international scientific databases and journals",
+        "category": "research",
+        "icon": "🔬",
+        "color": "from-green-500 to-green-600",
+        "status": "online",
+        "users": "1,800+",
+        "features": ["PubMed", "Scopus", "Web of Science", "Google Scholar"],
+        "link": "#",
+        "popular": false
+      },
+      {
+        "id": 4,
+        "title": "Virtual Labs",
+        "description": "3D simulators of medical procedures and diagnostics",
+        "category": "labs",
+        "icon": "🧪",
+        "color": "from-orange-500 to-orange-600",
+        "status": "online",
+        "users": "900+",
+        "features": ["Anatomical Atlases", "Surgical Simulators", "Diagnostic Cases", "VR Trainers"],
+        "link": "#",
+        "popular": true
+      },
+      {
+        "id": 5,
+        "title": "Testing System",
+        "description": "Platform for conducting exams and knowledge testing",
+        "category": "testing",
+        "icon": "📝",
+        "color": "from-red-500 to-red-600",
+        "status": "maintenance",
+        "users": "2,100+",
+        "features": ["Automatic Checking", "Exam Timing", "Result Analytics", "Cheating Protection"],
+        "link": "#",
+        "popular": false
+      },
+      {
+        "id": 6,
+        "title": "Mobile App",
+        "description": "Access all university resources from mobile devices",
+        "category": "mobile",
+        "icon": "📱",
+        "color": "from-indigo-500 to-indigo-600",
+        "status": "online",
+        "users": "4,500+",
+        "features": ["Push Notifications", "Offline Access", "Personal Account", "Schedule"],
+        "link": "#",
+        "popular": true
+      },
+      {
+        "id": 7,
+        "title": "Cloud Storage",
+        "description": "Secure storage and sharing of learning materials",
+        "category": "storage",
+        "icon": "☁️",
+        "color": "from-teal-500 to-teal-600",
+        "status": "online",
+        "users": "3,800+",
+        "features": ["1 TB Storage", "Collaboration", "Version Control", "Encryption"],
+        "link": "#",
+        "popular": false
+      },
+      {
+        "id": 8,
+        "title": "Video Conferences",
+        "description": "Platform for online classes and meetings",
+        "category": "conference",
+        "icon": "🎥",
+        "color": "from-pink-500 to-pink-600",
+        "status": "online",
+        "users": "2,700+",
+        "features": ["HD Video", "Session Recording", "Interactive Whiteboard", "Up to 100 Participants"],
+        "link": "#",
+        "popular": true
+      }
+    ]
+  },
+  "noResults": {
+    "title": "No Resources Found",
+    "description": "Try changing the search parameters or choose another category"
+  }
+},
+"acadop": {
+  "hero": {
+    "badge": "ACADEMIC PROSPECTS",
+    "title": "Academic",
+    "highlight": "opportunities",
+    "description": "Discover a world of unique opportunities for your academic growth, professional development, and international recognition"
+  },
+  "statistics": {
+    "total": "Total programs",
+    "available": "Available now",
+    "students": "Participants",
+    "popular": "Popular"
+  },
+  "search": {
+    "placeholder": "Search opportunities..."
+  },
+  "categories": {
+    "list": [
+      { "id": "all", "name": "All opportunities", "count": 9, "icon": "🔄" },
+      { "id": "education", "name": "Education", "count": 2, "icon": "🎓" },
+      { "id": "international", "name": "International", "count": 2, "icon": "🌍" },
+      { "id": "research", "name": "Research", "count": 2, "icon": "🔬" },
+      { "id": "career", "name": "Career", "count": 1, "icon": "💼" },
+      { "id": "innovation", "name": "Innovation", "count": 2, "icon": "🚀" }
+    ]
+  },
+  "opportunities": {
+    "popularBadge": "POPULAR",
+    "status": {
+      "available": "AVAILABLE",
+      "comingSoon": "COMING SOON"
+    },
+    "students": "students",
+    "featuresTitle": "Key benefits:",
+    "detailsButton": "Learn more",
+    "list": [
+      {
+        "id": 1,
+        "title": "Dual Degrees",
+        "description": "Earn diplomas from two universities simultaneously with international partners",
+        "category": "education",
+        "icon": "🎓",
+        "color": "from-purple-500 to-purple-600",
+        "status": "available",
+        "students": "350+",
+        "features": ["International recognition", "Two diplomas", "Global experience", "Career advantages"],
+        "link": "#",
+        "popular": true
+      },
+      {
+        "id": 2,
+        "title": "Internships Abroad",
+        "description": "Gain practical experience in leading international companies and research centers",
+        "category": "international",
+        "icon": "✈️",
+        "color": "from-blue-500 to-blue-600",
+        "status": "available",
+        "students": "280+",
+        "features": ["Work experience", "International networking", "Language practice", "Professional growth"],
+        "link": "#",
+        "popular": true
+      },
+      {
+        "id": 3,
+        "title": "Research Grants",
+        "description": "Funding for student research projects and scientific initiatives",
+        "category": "research",
+        "icon": "💰",
+        "color": "from-green-500 to-green-600",
+        "status": "available",
+        "students": "150+",
+        "features": ["Financial support", "Publications", "Equipment", "Conferences"],
+        "link": "#",
+        "popular": false
+      },
+      {
+        "id": 4,
+        "title": "Career Center",
+        "description": "Comprehensive support in employment and career building",
+        "category": "career",
+        "icon": "🎯",
+        "color": "from-orange-500 to-orange-600",
+        "status": "available",
+        "students": "1,200+",
+        "features": ["Employment", "Career counseling", "Job fairs", "Partner companies"],
+        "link": "#",
+        "popular": true
+      },
+      {
+        "id": 5,
+        "title": "Modern Laboratories",
+        "description": "Access to cutting-edge research equipment and technologies",
+        "category": "innovation",
+        "icon": "🔬",
+        "color": "from-cyan-500 to-cyan-600",
+        "status": "available",
+        "students": "900+",
+        "features": ["High-tech equipment", "Research", "Experiments", "Innovative projects"],
+        "link": "#",
+        "popular": true
+      },
+      {
+        "id": 6,
+        "title": "Online Courses",
+        "description": "Distance learning with modern programs and methods",
+        "category": "education",
+        "icon": "💻",
+        "color": "from-indigo-500 to-indigo-600",
+        "status": "available",
+        "students": "2,500+",
+        "features": ["Flexible schedule", "Accessibility", "Modern technologies", "Interactivity"],
+        "link": "#",
+        "popular": false
+      },
+      {
+        "id": 7,
+        "title": "International Conferences",
+        "description": "Participation in world-class scientific events and symposiums",
+        "category": "research",
+        "icon": "🎤",
+        "color": "from-pink-500 to-pink-600",
+        "status": "available",
+        "students": "180+",
+        "features": ["Global experience", "Research networking", "Publications", "Professional community"],
+        "link": "#",
+        "popular": false
+      },
+      {
+        "id": 8,
+        "title": "Startup Incubator",
+        "description": "Support for student business projects and innovative initiatives",
+        "category": "innovation",
+        "icon": "💡",
+        "color": "from-teal-500 to-teal-600",
+        "status": "available",
+        "students": "75+",
+        "features": ["Funding", "Mentorship", "Business angels", "Pitch sessions"],
+        "link": "#",
+        "popular": true
+      },
+      {
+        "id": 9,
+        "title": "Language Programs",
+        "description": "Learn foreign languages at a professional level with native speakers",
+        "category": "international",
+        "icon": "🗣️",
+        "color": "from-amber-500 to-amber-600",
+        "status": "available",
+        "students": "1,800+",
+        "features": ["International certificates", "Native speakers", "Practice", "Cultural exchange"],
+        "link": "#",
+        "popular": false
+      }
+    ]
+  },
+  "noResults": {
+    "title": "No opportunities found",
+    "description": "Try adjusting your search or choose another category"
+  },
+  "successStories": {
+    "title": "Success",
+    "highlight": "stories",
+    "description": "Our students achieve outstanding results thanks to the university’s academic opportunities",
+    "list": [
+      {
+        "name": "Anna Petrova",
+        "program": "International Business",
+        "achievement": "Internship at Google, USA",
+        "image": "👩‍💼",
+        "quote": "The dual degree program gave me unique international experience"
+      },
+      {
+        "name": "Maxim Ivanov",
+        "program": "Computer Science",
+        "achievement": "Founder of IT Startup",
+        "image": "👨‍💻",
+        "quote": "The university’s startup incubator helped turn an idea into a successful business"
+      },
+      {
+        "name": "Elena Sidorova",
+        "program": "Biotechnology",
+        "achievement": "Research work in Germany",
+        "image": "👩‍🔬",
+        "quote": "Research grants enabled me to conduct world-class research"
+      }
+    ]
+  }
+},"socop": {
+  "hero": {
+    "badge": "SOCIAL ACTIVITY",
+    "title": "Social",
+    "highlight": "opportunities",
+    "description": "Discover the world beyond the classroom — join events, clubs, and create your own projects with us"
+  },
+  "statistics": {
+    "members": "Active members",
+    "projects": "Ongoing projects",
+    "events": "Upcoming events",
+    "clubs": "Clubs and communities"
+  },
+  "search": {
+    "placeholder": "Search opportunities..."
+  },
+  "categories": {
+    "list": [
+      { "id": "all", "name": "All opportunities", "icon": "🔄", "count": 9 },
+      { "id": "events", "name": "Events", "icon": "📅", "count": 3 },
+      { "id": "clubs", "name": "Clubs", "icon": "👥", "count": 3 },
+      { "id": "projects", "name": "Projects", "icon": "🚀", "count": 3 }
+    ]
+  },
+  "featuredEvents": {
+    "title": "Featured events"
+  },
+  "events": {
+    "types": {
+      "forum": "Forum",
+      "conference": "Conference",
+      "career": "Career"
+    },
+    "registration": {
+      "open": "Registration open",
+      "closed": "Registration closed"
+    }
+  },
+  "status": {
+    "upcoming": "UPCOMING",
+    "active": "ACTIVE",
+    "paused": "PAUSED"
+  },
+  "popularBadge": "POPULAR",
+  "membersCount": "{{count}} members",
+  "teamSize": "Team: {{size}}",
+  "participantsCount": "{{count}} participants",
+  "duration": "Duration",
+  "leader": "Leader",
+  "organizer": "Organizer",
+  "achievements": "Achievements:",
+  "requirements": "Requirements:",
+  "progress": {
+    "title": "Project progress"
+  },
+  "actions": {
+    "participate": "Participate",
+    "joinClub": "Join club",
+    "joinProject": "Join project"
+  },
+  "noResults": {
+    "title": "No opportunities found",
+    "description": "Try changing your search parameters or select another category"
+  }
+}
+
+
+
+
 }
