@@ -3,16 +3,29 @@ import { useTranslation } from 'react-i18next';
 
 const Conferences = () => {
   const { t, i18n } = useTranslation();
-  const currentLang = i18n.language; // 'ru', 'en', или 'kg'
-  
-  // State для данных из API
+  const [isVisible, setIsVisible] = useState(false);
+  const [activeSection, setActiveSection] = useState('upcoming');
   const [conferences, setConferences] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [activeTab, setActiveTab] = useState('upcoming');
   const [selectedConference, setSelectedConference] = useState(null);
 
-  // Функция для получения конференций из API
+  // Animation on mount
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
+
+  const sections = [
+    { id: 'upcoming', name: t('research.conferences.tabs.upcoming'), icon: '📅' },
+    { id: 'archive', name: t('research.conferences.tabs.archive'), icon: '📚' },
+    { id: 'international', name: t('research.conferences.types.international'), icon: '🌍' },
+    { id: 'national', name: t('research.conferences.types.national'), icon: '🏛️' }
+  ];
+
+  useEffect(() => {
+    fetchConferences(activeSection);
+  }, []);
+
   const fetchConferences = async (status = 'upcoming') => {
     try {
       setLoading(true);
@@ -31,8 +44,6 @@ const Conferences = () => {
       }
       
       const data = await response.json();
-      
-      // API может возвращать paginated результаты
       const conferencesData = data.results || data;
       setConferences(conferencesData);
       setError(null);
@@ -45,35 +56,29 @@ const Conferences = () => {
     }
   };
 
-  // Загрузка данных при монтировании компонента
-  useEffect(() => {
-    fetchConferences(activeTab);
-  }, []);
+  const changeActiveSection = (sectionId) => {
+    setActiveSection(sectionId);
+    fetchConferences(sectionId);
+  };
 
-  // Функция для получения названия конференции на текущем языке
   const getConferenceTitle = (conference) => {
+    const currentLang = i18n.language;
     return conference[`title_${currentLang}`] || conference.title_ru;
   };
 
-  // Функция для получения описания конференции на текущем языке
   const getConferenceDescription = (conference) => {
+    const currentLang = i18n.language;
     return conference[`description_${currentLang}`] || conference.description_ru;
   };
 
-  // Функция для получения местоположения на текущем языке
   const getConferenceLocation = (conference) => {
+    const currentLang = i18n.language;
     return conference[`location_${currentLang}`] || conference.location_ru;
   };
 
-  // Обработчик смены вкладки с загрузкой соответствующих данных
-  const handleTabChange = async (tab) => {
-    setActiveTab(tab);
-    await fetchConferences(tab);
-  };
-
-  // Форматирование даты
   const formatDate = (dateString) => {
     const date = new Date(dateString);
+    const currentLang = i18n.language;
     return date.toLocaleDateString(currentLang === 'ru' ? 'ru-RU' : currentLang === 'kg' ? 'ky-KG' : 'en-US');
   };
 
@@ -107,333 +112,439 @@ const Conferences = () => {
     return statusConfig[status] || { text: status, color: 'bg-gray-100 text-gray-800' };
   };
 
-  // Показать индикатор загрузки
+  const renderUpcomingContent = () => (
+    <div className="space-y-6">
+      <div className="flex items-center mb-6">
+        <div className="p-3 bg-blue-100 rounded-xl mr-4">
+          <span className="text-2xl">📅</span>
+        </div>
+        <h2 className="text-3xl font-bold text-gray-900">
+          {t('research.conferences.tabs.upcoming')}
+        </h2>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {conferences.map((conference) => {
+          const statusBadge = getStatusBadge(conference.status);
+          
+          return (
+            <div 
+              key={conference.id}
+              className="bg-white rounded-xl p-6 border border-blue-100 hover:shadow-lg transition-all duration-300"
+            >
+              <div className="flex justify-between items-start mb-4">
+                <div className="text-4xl">
+                  {conference.conference_type === 'international' ? '🌍' : 
+                   conference.conference_type === 'national' ? '🏛️' :
+                   conference.conference_type === 'workshop' ? '🛠️' :
+                   conference.conference_type === 'symposium' ? '🎯' : '📚'}
+                </div>
+                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${statusBadge.color}`}>
+                  {statusBadge.text}
+                </span>
+              </div>
+
+              <h3 className="text-xl font-semibold text-gray-800 mb-3">
+                {getConferenceTitle(conference)}
+              </h3>
+
+              <div className="space-y-2 mb-4">
+                <div className="flex items-center text-sm text-gray-600">
+                  <span className="font-medium mr-2">Даты:</span>
+                  <span>{formatDate(conference.start_date)} - {formatDate(conference.end_date)}</span>
+                </div>
+                <div className="flex items-center text-sm text-gray-600">
+                  <span className="font-medium mr-2">Место:</span>
+                  <span>{getConferenceLocation(conference)}</span>
+                </div>
+                {conference.registration_deadline && (
+                  <div className="flex items-center text-sm text-gray-600">
+                    <span className="font-medium mr-2">Дедлайн:</span>
+                    <span className="text-red-600">{formatDate(conference.registration_deadline)}</span>
+                  </div>
+                )}
+              </div>
+
+              <p className="text-gray-600 text-sm mb-4 leading-relaxed">
+                {getConferenceDescription(conference)?.substring(0, 120)}...
+              </p>
+
+              <div className="flex space-x-2">
+                <button
+                  onClick={() => setSelectedConference(conference)}
+                  className="flex-1 bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors text-sm font-medium"
+                >
+                  {t('research.conferences.viewDetails') || 'Подробнее'}
+                </button>
+                {conference.website && (
+                  <button
+                    onClick={() => window.open(conference.website, '_blank')}
+                    className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition-colors text-sm font-medium"
+                  >
+                    Сайт
+                  </button>
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+
+  const renderArchiveContent = () => (
+    <div className="space-y-6">
+      <div className="flex items-center mb-6">
+        <div className="p-3 bg-blue-100 rounded-xl mr-4">
+          <span className="text-2xl">📚</span>
+        </div>
+        <h2 className="text-3xl font-bold text-gray-900">
+          {t('research.conferences.tabs.archive')}
+        </h2>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {conferences.map((conference) => (
+          <div 
+            key={conference.id}
+            className="bg-gradient-to-br from-gray-50 to-slate-50 rounded-xl p-6 border border-gray-100 hover:shadow-lg transition-all duration-300"
+          >
+            <div className="flex justify-between items-start mb-4">
+              <div className="text-4xl">
+                {conference.conference_type === 'international' ? '🌍' : 
+                 conference.conference_type === 'national' ? '🏛️' : '📚'}
+              </div>
+              <span className="text-gray-500 text-sm">
+                {new Date(conference.start_date).getFullYear()}
+              </span>
+            </div>
+
+            <h3 className="text-xl font-semibold text-gray-800 mb-3">
+              {getConferenceTitle(conference)}
+            </h3>
+
+            <div className="space-y-2 mb-4">
+              <div className="flex items-center text-sm text-gray-600">
+                <span className="font-medium mr-2">Даты:</span>
+                <span>{formatDate(conference.start_date)} - {formatDate(conference.end_date)}</span>
+              </div>
+              <div className="flex items-center text-sm text-gray-600">
+                <span className="font-medium mr-2">Место:</span>
+                <span>{getConferenceLocation(conference)}</span>
+              </div>
+              {conference.participants_count && (
+                <div className="flex items-center text-sm text-gray-600">
+                  <span className="font-medium mr-2">Участников:</span>
+                  <span>{conference.participants_count}</span>
+                </div>
+              )}
+            </div>
+
+            <div className="flex space-x-2">
+              <button
+                onClick={() => setSelectedConference(conference)}
+                className="flex-1 bg-gray-500 text-white py-2 px-4 rounded-lg hover:bg-gray-600 transition-colors text-sm font-medium"
+              >
+                {t('research.conferences.viewDetails') || 'Подробнее'}
+              </button>
+              {conference.proceedings_url && (
+                <button
+                  onClick={() => window.open(conference.proceedings_url, '_blank')}
+                  className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors text-sm font-medium"
+                >
+                  Материалы
+                </button>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
+  const renderInternationalContent = () => (
+    <div className="space-y-6">
+      <div className="flex items-center mb-6">
+        <div className="p-3 bg-blue-100 rounded-xl mr-4">
+          <span className="text-2xl">🌍</span>
+        </div>
+        <h2 className="text-3xl font-bold text-gray-900">
+          {t('research.conferences.types.international')}
+        </h2>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {conferences.filter(conf => conf.conference_type === 'international').map((conference) => (
+          <div 
+            key={conference.id}
+            className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100 hover:shadow-lg transition-all duration-300"
+          >
+            <div className="flex justify-between items-start mb-4">
+              <div className="text-4xl">🌍</div>
+              <span className="text-blue-600 text-sm font-medium">
+                Международная
+              </span>
+            </div>
+
+            <h3 className="text-xl font-semibold text-gray-800 mb-3">
+              {getConferenceTitle(conference)}
+            </h3>
+
+            <div className="space-y-2 mb-4">
+              <div className="flex items-center text-sm text-gray-600">
+                <span className="font-medium mr-2">Даты:</span>
+                <span>{formatDate(conference.start_date)} - {formatDate(conference.end_date)}</span>
+              </div>
+              <div className="flex items-center text-sm text-gray-600">
+                <span className="font-medium mr-2">Место:</span>
+                <span>{getConferenceLocation(conference)}</span>
+              </div>
+            </div>
+
+            <button
+              onClick={() => setSelectedConference(conference)}
+              className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors text-sm font-medium"
+            >
+              {t('research.conferences.viewDetails') || 'Подробнее'}
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
+  const renderNationalContent = () => (
+    <div className="space-y-6">
+      <div className="flex items-center mb-6">
+        <div className="p-3 bg-blue-100 rounded-xl mr-4">
+          <span className="text-2xl">🏛️</span>
+        </div>
+        <h2 className="text-3xl font-bold text-gray-900">
+          {t('research.conferences.types.national')}
+        </h2>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {conferences.filter(conf => conf.conference_type === 'national').map((conference) => (
+          <div 
+            key={conference.id}
+            className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6 border border-green-100 hover:shadow-lg transition-all duration-300"
+          >
+            <div className="flex justify-between items-start mb-4">
+              <div className="text-4xl">🏛️</div>
+              <span className="text-green-600 text-sm font-medium">
+                Национальная
+              </span>
+            </div>
+
+            <h3 className="text-xl font-semibold text-gray-800 mb-3">
+              {getConferenceTitle(conference)}
+            </h3>
+
+            <div className="space-y-2 mb-4">
+              <div className="flex items-center text-sm text-gray-600">
+                <span className="font-medium mr-2">Даты:</span>
+                <span>{formatDate(conference.start_date)} - {formatDate(conference.end_date)}</span>
+              </div>
+              <div className="flex items-center text-sm text-gray-600">
+                <span className="font-medium mr-2">Место:</span>
+                <span>{getConferenceLocation(conference)}</span>
+              </div>
+            </div>
+
+            <button
+              onClick={() => setSelectedConference(conference)}
+              className="w-full bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition-colors text-sm font-medium"
+            >
+              {t('research.conferences.viewDetails') || 'Подробнее'}
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
+  const renderConferenceDetail = (conference) => (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center">
+          <div className="p-3 bg-blue-100 rounded-xl mr-4">
+            <span className="text-2xl">
+              {conference.conference_type === 'international' ? '🌍' : 
+               conference.conference_type === 'national' ? '🏛️' : '📚'}
+            </span>
+          </div>
+          <h2 className="text-3xl font-bold text-gray-900">
+            {getConferenceTitle(conference)}
+          </h2>
+        </div>
+        <button
+          onClick={() => setSelectedConference(null)}
+          className="text-gray-500 hover:text-gray-700"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100">
+        <p className="text-gray-700 leading-relaxed">
+          {getConferenceDescription(conference)}
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="bg-white rounded-xl p-4 border border-blue-100">
+          <h3 className="font-semibold text-gray-800 mb-2">Даты проведения</h3>
+          <p className="text-gray-600">{formatDate(conference.start_date)} - {formatDate(conference.end_date)}</p>
+        </div>
+
+        <div className="bg-white rounded-xl p-4 border border-blue-100">
+          <h3 className="font-semibold text-gray-800 mb-2">Место проведения</h3>
+          <p className="text-gray-600">{getConferenceLocation(conference)}</p>
+        </div>
+
+        {conference.registration_deadline && (
+          <div className="bg-white rounded-xl p-4 border border-blue-100">
+            <h3 className="font-semibold text-gray-800 mb-2">Дедлайн регистрации</h3>
+            <p className="text-red-600 font-medium">{formatDate(conference.registration_deadline)}</p>
+          </div>
+        )}
+      </div>
+
+      {conference.contact_email && (
+        <div className="bg-white rounded-xl p-6 border border-blue-100">
+          <h3 className="text-xl font-semibold text-gray-800 mb-4">Контакты</h3>
+          <p className="text-gray-600">
+            <span className="font-medium">Email:</span> {conference.contact_email}
+          </p>
+        </div>
+      )}
+
+      {conference.website && (
+        <div className="flex justify-end">
+          <button
+            onClick={() => window.open(conference.website, '_blank')}
+            className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors font-medium"
+          >
+            Перейти на сайт конференции
+          </button>
+        </div>
+      )}
+    </div>
+  );
+
+  const renderContent = () => {
+    if (selectedConference) {
+      return renderConferenceDetail(selectedConference);
+    }
+
+    switch (activeSection) {
+      case 'upcoming':
+        return renderUpcomingContent();
+      case 'archive':
+        return renderArchiveContent();
+      case 'international':
+        return renderInternationalContent();
+      case 'national':
+        return renderNationalContent();
+      default:
+        return renderUpcomingContent();
+    }
+  };
+
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-        <span className="ml-3 text-lg">{t('research.conferences.loading') || 'Загрузка...'}</span>
+      <div
+        className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+        }`}
+      >
+        <div className="max-w-7xl mx-auto">
+          <div className="flex justify-center items-center min-h-[400px]">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+          </div>
+        </div>
       </div>
     );
   }
 
-  // Показать ошибку
   if (error) {
     return (
-      <div className="text-center py-12">
-        <div className="text-red-600 text-lg mb-4">{error}</div>
-        <button 
-          onClick={() => fetchConferences(activeTab)}
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-        >
-          {t('research.conferences.retry') || 'Попробовать снова'}
-        </button>
+      <div
+        className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+        }`}
+      >
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center py-12">
+            <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-lg max-w-md mx-auto">
+              {error}
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100 py-8 px-4">
+    <div
+      className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+      }`}
+    >
       <div className="max-w-7xl mx-auto">
         {/* Заголовок */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-800 mb-4">
+        <div className="text-center mb-8">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             {t('research.conferences.title') || 'Конференции и симпозиумы'}
           </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-lg text-gray-700 max-w-3xl mx-auto">
             {t('research.conferences.subtitle') || 'Научные мероприятия и академические события'}
           </p>
         </div>
 
-        {/* Табы */}
-        <div className="flex justify-center mb-8">
-          <div className="bg-white rounded-2xl shadow-lg p-1 inline-flex">
-            <button
-              className={`px-8 py-3 rounded-xl text-lg font-semibold transition-all duration-300 ${
-                activeTab === 'upcoming'
-                  ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg'
-                  : 'text-gray-600 hover:text-gray-800'
-              }`}
-            >
-              📅 {t('research.conferences.tabs.upcoming') || 'Предстоящие'}
-            </button>
-          </div>
-        </div>
-
-        {/* Сетка конференций */}
-        {conferences.length === 0 ? (
-          <div className="text-center py-12">
-            <p className="text-gray-500 text-lg">{t('research.conferences.noConferences') || 'Нет доступных конференций'}</p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-            {conferences.map((conference) => {
-              const statusBadge = getStatusBadge(conference.status);
-              
-              return (
-                <div
-                  key={conference.id}
-                  className="bg-white rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl group cursor-pointer"
-                  onClick={() => setSelectedConference(conference)}
-                >
-                  {/* Верхняя часть с изображением и статусом */}
-                  <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-6 text-white relative">
-                    <div className="text-6xl mb-4 text-center">
-                      {conference.conference_type === 'international' ? '🌍' : 
-                       conference.conference_type === 'national' ? '🏛️' :
-                       conference.conference_type === 'workshop' ? '🛠️' :
-                       conference.conference_type === 'symposium' ? '🎯' : '📚'}
-                    </div>
-                    {conference.status && (
-                      <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-sm font-semibold ${statusBadge.color}`}>
-                        {statusBadge.text}
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Контент карточки */}
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold text-gray-800 mb-4 group-hover:text-blue-600 transition-colors line-clamp-2">
-                      {getConferenceTitle(conference)}
-                    </h3>
-
-                    {/* Даты */}
-                    <div className="flex items-center mb-3">
-                      <span className="text-gray-500 mr-3">📅</span>
-                      <span className="text-sm text-gray-600">
-                        {formatDate(conference.start_date)} - {formatDate(conference.end_date)}
-                      </span>
-                    </div>
-
-                    {/* Место проведения */}
-                    <div className="flex items-center mb-3">
-                      <span className="text-gray-500 mr-3">📍</span>
-                      <span className="text-sm text-gray-600">{getConferenceLocation(conference)}</span>
-                    </div>
-
-                    {/* Дедлайн */}
-                    {conference.registration_deadline && (
-                      <div className="flex items-center mb-4">
-                        <span className="text-gray-500 mr-3">⏰</span>
-                        <div>
-                          <span className="text-sm text-gray-600">{t('research.conferences.deadline') || 'Дедлайн'}: </span>
-                          <span className="text-sm font-semibold text-red-600">
-                            {formatDate(conference.registration_deadline)}
-                          </span>
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Описание */}
-                    <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-                      {getConferenceDescription(conference)}
-                    </p>
-
-                    {/* Для архивных конференций */}
-                    {activeTab === 'archive' && conference.participants_count && (
-                      <div className="bg-gray-50 rounded-lg p-3 mb-4">
-                        <div className="flex justify-between text-sm text-gray-600">
-                          <span>{t('research.conferences.participants') || 'Участников'}: <strong>{conference.participants_count}</strong></span>
-                          <span>{t('research.conferences.year') || 'Год'}: <strong>{new Date(conference.start_date).getFullYear()}</strong></span>
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Кнопка */}
-                    <div className="flex justify-between items-center">
-                      {conference.website ? (
-                        <a
-                          href={conference.website}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={(e) => e.stopPropagation()}
-                          className="text-blue-600 hover:text-blue-800 font-semibold text-sm flex items-center"
-                        >
-                          🌐 {t('research.conferences.visitWebsite') || 'Посетить сайт'}
-                          <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                          </svg>
-                        </a>
-                      ) : (
-                        <span className="text-gray-400 text-sm">{t('research.conferences.noWebsite') || 'Сайт недоступен'}</span>
-                      )}
-                      <button className="text-gray-400 hover:text-gray-600 group-hover:text-blue-500 transition-colors">
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                        </svg>
+        <div className="flex flex-col lg:flex-row gap-6">
+          {/* Боковая навигация */}
+          <div className="lg:w-1/4">
+            <div className="bg-white rounded-xl shadow-lg overflow-hidden sticky top-6">
+              <div className="bg-gradient-to-r from-blue-600 to-indigo-700 p-4 text-white font-bold text-lg">
+                {t('research.conferences.categories')}
+              </div>
+              <nav className="p-2">
+                <ul className="space-y-1">
+                  {sections.map((section) => (
+                    <li key={section.id}>
+                      <button
+                        className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 flex items-center ${
+                          activeSection === section.id
+                            ? "bg-blue-100 text-blue-700 font-medium shadow-sm"
+                            : "text-gray-700 hover:bg-gray-100"
+                        }`}
+                        onClick={() => changeActiveSection(section.id)}
+                      >
+                        <span className="text-lg mr-3">{section.icon}</span>
+                        {section.name}
                       </button>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        )}
-
-        {/* Модальное окно с деталями */}
-        {selectedConference && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-            <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-              {/* Заголовок */}
-              <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-8 text-white">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h2 className="text-3xl font-bold mb-2">{getConferenceTitle(selectedConference)}</h2>
-                    <div className="text-6xl mb-4">
-                      {selectedConference.conference_type === 'international' ? '🌍' : 
-                       selectedConference.conference_type === 'national' ? '🏛️' :
-                       selectedConference.conference_type === 'workshop' ? '🛠️' :
-                       selectedConference.conference_type === 'symposium' ? '🎯' : '📚'}
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => setSelectedConference(null)}
-                    className="text-white hover:text-gray-200 text-2xl"
-                  >
-                    ×
-                  </button>
-                </div>
-              </div>
-
-              {/* Контент */}
-              <div className="p-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                  {/* Основная информация */}
-                  <div className="space-y-4">
-                    <h3 className="text-xl font-semibold text-gray-800">
-                      {t('research.conferences.basicInfo') || 'Основная информация'}
-                    </h3>
-                    
-                    <div className="flex items-center">
-                      <span className="text-gray-500 mr-3 text-xl">📅</span>
-                      <div>
-                        <p className="text-sm text-gray-600">{t('research.conferences.dates') || 'Даты проведения'}</p>
-                        <p className="font-semibold">
-                          {formatDate(selectedConference.start_date)} - {formatDate(selectedConference.end_date)}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center">
-                      <span className="text-gray-500 mr-3 text-xl">📍</span>
-                      <div>
-                        <p className="text-sm text-gray-600">{t('research.conferences.location') || 'Место проведения'}</p>
-                        <p className="font-semibold">{getConferenceLocation(selectedConference)}</p>
-                      </div>
-                    </div>
-
-                    {selectedConference.registration_deadline && (
-                      <div className="flex items-center">
-                        <span className="text-gray-500 mr-3 text-xl">⏰</span>
-                        <div>
-                          <p className="text-sm text-gray-600">{t('research.conferences.registrationDeadline') || 'Дедлайн регистрации'}</p>
-                          <p className="font-semibold text-red-600">
-                            {formatDate(selectedConference.registration_deadline)}
-                          </p>
-                        </div>
-                      </div>
-                    )}
-
-                    {selectedConference.registration_fee && (
-                      <div className="flex items-center">
-                        <span className="text-gray-500 mr-3 text-xl">💰</span>
-                        <div>
-                          <p className="text-sm text-gray-600">{t('research.conferences.registrationFee') || 'Регистрационный взнос'}</p>
-                          <p className="font-semibold">{selectedConference.registration_fee}</p>
-                        </div>
-                      </div>
-                    )}
-
-                    {selectedConference.contact_email && (
-                      <div className="flex items-center">
-                        <span className="text-gray-500 mr-3 text-xl">📧</span>
-                        <div>
-                          <p className="text-sm text-gray-600">{t('research.conferences.contact') || 'Контакт'}</p>
-                          <a href={`mailto:${selectedConference.contact_email}`} className="font-semibold text-blue-600 hover:text-blue-800">
-                            {selectedConference.contact_email}
-                          </a>
-                        </div>
-                      </div>
-                    )}
-
-                    {activeTab === 'archive' && selectedConference.participants_count && (
-                      <>
-                        <div className="flex items-center">
-                          <span className="text-gray-500 mr-3 text-xl">👥</span>
-                          <div>
-                            <p className="text-sm text-gray-600">{t('research.conferences.participants') || 'Участников'}</p>
-                            <p className="font-semibold">{selectedConference.participants_count}</p>
-                          </div>
-                        </div>
-                        {selectedConference.proceedings_url && (
-                          <div className="flex items-center">
-                            <span className="text-gray-500 mr-3 text-xl">📁</span>
-                            <div>
-                              <p className="text-sm text-gray-600">{t('research.conferences.proceedings') || 'Материалы конференции'}</p>
-                              <a href={selectedConference.proceedings_url} target="_blank" rel="noopener noreferrer" className="font-semibold text-blue-600 hover:underline">
-                                {t('research.conferences.downloadProceedings') || 'Скачать proceedings'}
-                              </a>
-                            </div>
-                          </div>
-                        )}
-                      </>
-                    )}
-                  </div>
-
-                  {/* Дополнительная информация */}
-                  <div>
-                    <h3 className="text-xl font-semibold text-gray-800 mb-4">
-                      {t('research.conferences.description') || 'Описание'}
-                    </h3>
-                    <p className="text-gray-600 mb-6">{getConferenceDescription(selectedConference)}</p>
-
-                    {selectedConference.topics && selectedConference.topics.length > 0 && (
-                      <>
-                        <h4 className="font-semibold text-gray-800 mb-3">
-                          {t('research.conferences.topics') || 'Основные темы'}:
-                        </h4>
-                        <div className="flex flex-wrap gap-2 mb-6">
-                          {selectedConference.topics.split(',').map((topic, index) => (
-                            <span key={index} className="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">
-                              {topic.trim()}
-                            </span>
-                          ))}
-                        </div>
-                      </>
-                    )}
-
-                    {selectedConference.keynote_speakers && selectedConference.keynote_speakers.length > 0 && (
-                      <>
-                        <h4 className="font-semibold text-gray-800 mb-3">
-                          {t('research.conferences.keynoteSpeakers') || 'Ключевые спикеры'}:
-                        </h4>
-                        <ul className="space-y-2">
-                          {selectedConference.keynote_speakers.split(',').map((speaker, index) => (
-                            <li key={index} className="text-gray-600">• {speaker.trim()}</li>
-                          ))}
-                        </ul>
-                      </>
-                    )}
-                  </div>
-                </div>
-
-                {/* Кнопки действий */}
-                <div className="flex flex-col sm:flex-row gap-4 pt-6 border-t border-gray-200">
-                  {selectedConference.website && (
-                    <a
-                      href={selectedConference.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-3 px-6 rounded-lg text-center transition-all duration-200 transform hover:scale-105"
-                    >
-                      🌐 {t('research.conferences.visitOfficialSite') || 'Перейти на официальный сайт'}
-                    </a>
-                  )}
-                </div>
-              </div>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
             </div>
           </div>
-        )}
+
+          {/* Основной контент */}
+          <div className="lg:w-3/4">
+            <div className="bg-white rounded-xl shadow-xl p-6 transition-all duration-500">
+              {conferences.length > 0 ? (
+                renderContent()
+              ) : (
+                <div className="text-center py-12">
+                  <p className="text-gray-500 text-lg">{t('research.conferences.noConferences') || 'Нет доступных конференций'}</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

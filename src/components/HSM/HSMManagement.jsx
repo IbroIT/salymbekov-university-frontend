@@ -1,8 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const LeadershipPage = () => {
   const { t } = useTranslation();
+  const [isVisible, setIsVisible] = useState(false);
+  const [activeSection, setActiveSection] = useState('directorate');
+
+  // Animation on mount
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
+
+  const sections = [
+    { id: 'directorate', name: t('leadership.directorate'), icon: '👑' },
+    { id: 'departmentHeads', name: t('leadership.departmentHeads'), icon: '🎓' },
+    { id: 'administration', name: t('leadership.administration'), icon: '🏢' }
+  ];
 
   // Данные руководства
   const leadershipData = [
@@ -128,146 +141,262 @@ const LeadershipPage = () => {
   const directors = leadershipData.filter(person => person.isDirector);
   const departmentHeads = leadershipData.filter(person => !person.isDirector);
 
+  const changeActiveSection = (sectionId) => {
+    setActiveSection(sectionId);
+  };
+
+  const renderDirectorateContent = () => (
+    <div className="space-y-6">
+      <div className="flex items-center mb-6">
+        <div className="p-3 bg-blue-100 rounded-xl mr-4">
+          <span className="text-2xl">👑</span>
+        </div>
+        <h2 className="text-3xl font-bold text-gray-900">
+          {t('leadership.directorate')}
+        </h2>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {directors.map((director) => (
+          <div 
+            key={director.id}
+            className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100 hover:shadow-lg transition-all duration-300"
+          >
+            <div className="text-center mb-4">
+              <div className="w-24 h-24 rounded-full overflow-hidden mx-auto mb-4 border-4 border-white shadow-md">
+                <img
+                  src={director.image}
+                  alt={director.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">
+                {director.name}
+              </h3>
+              <p className="text-blue-600 font-semibold mb-2">
+                {director.position}
+              </p>
+              <p className="text-gray-600 text-sm mb-3">
+                {director.degree}
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              <div className="flex items-center text-sm text-gray-600">
+                <span className="mr-2">📅</span>
+                <span>{t('leadership.experience')}: {director.experience}</span>
+              </div>
+              <div className="flex items-center text-sm text-gray-600">
+                <span className="mr-2">📧</span>
+                <span>{director.email}</span>
+              </div>
+              <div className="flex items-center text-sm text-gray-600">
+                <span className="mr-2">📞</span>
+                <span>{director.phone}</span>
+              </div>
+            </div>
+
+            <div className="mt-4 pt-4 border-t border-blue-200">
+              <h4 className="font-semibold text-gray-800 mb-3 text-sm">
+                {t('leadership.achievements')}:
+              </h4>
+              <ul className="space-y-2">
+                {director.achievements.slice(0, 3).map((achievement, index) => (
+                  <li key={index} className="flex items-start text-sm text-gray-600">
+                    <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-1.5 mr-2 flex-shrink-0"></span>
+                    <span>{achievement}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
+  const renderDepartmentHeadsContent = () => (
+    <div className="space-y-6">
+      <div className="flex items-center mb-6">
+        <div className="p-3 bg-blue-100 rounded-xl mr-4">
+          <span className="text-2xl">🎓</span>
+        </div>
+        <h2 className="text-3xl font-bold text-gray-900">
+          {t('leadership.departmentHeads')}
+        </h2>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {departmentHeads.map((head) => (
+          <div 
+            key={head.id}
+            className="bg-white rounded-xl p-6 border border-blue-100 hover:shadow-lg transition-all duration-300"
+          >
+            <div className="flex items-start mb-4">
+              <div className="w-16 h-16 rounded-full overflow-hidden mr-4 border-2 border-blue-200">
+                <img
+                  src={head.image}
+                  alt={head.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="flex-1">
+                <h3 className="text-lg font-bold text-gray-900 mb-1">
+                  {head.name}
+                </h3>
+                <p className="text-blue-600 font-semibold text-sm mb-1">
+                  {head.position}
+                </p>
+                <p className="text-gray-600 text-xs">
+                  {head.department}
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-2 mb-4">
+              <div className="flex items-center text-xs text-gray-600">
+                <span className="mr-2">🎓</span>
+                <span>{head.degree}</span>
+              </div>
+              <div className="flex items-center text-xs text-gray-600">
+                <span className="mr-2">📅</span>
+                <span>{t('leadership.experience')}: {head.experience}</span>
+              </div>
+              <div className="flex items-center text-xs text-gray-600">
+                <span className="mr-2">👥</span>
+                <span>{head.staff}</span>
+              </div>
+            </div>
+
+            <div className="mb-4">
+              <p className="text-xs text-gray-700 font-semibold mb-1">
+                {t('leadership.specialization')}:
+              </p>
+              <p className="text-xs text-gray-600 leading-relaxed">
+                {head.specialization}
+              </p>
+            </div>
+
+            <div className="border-t border-gray-200 pt-3">
+              <div className="flex items-center text-xs text-gray-600">
+                <span className="mr-2">📧</span>
+                <span className="truncate">{head.email}</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
+  const renderAdministrationContent = () => (
+    <div className="space-y-6">
+      <div className="flex items-center mb-6">
+        <div className="p-3 bg-blue-100 rounded-xl mr-4">
+          <span className="text-2xl">🏢</span>
+        </div>
+        <h2 className="text-3xl font-bold text-gray-900">
+          {t('leadership.administration')}
+        </h2>
+      </div>
+
+      <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h3 className="text-xl font-semibold text-gray-800 mb-4">
+              Административный состав
+            </h3>
+            <p className="text-gray-600 mb-4">
+              Наша административная команда обеспечивает эффективное функционирование 
+              университета и поддержку учебного процесса.
+            </p>
+          </div>
+          
+          <div className="space-y-4">
+            <div className="flex items-center justify-between p-3 bg-white rounded-lg border border-blue-100">
+              <span className="text-gray-700">Учебный отдел</span>
+              <span className="text-blue-600 font-semibold">8 сотрудников</span>
+            </div>
+            <div className="flex items-center justify-between p-3 bg-white rounded-lg border border-blue-100">
+              <span className="text-gray-700">Научный отдел</span>
+              <span className="text-blue-600 font-semibold">6 сотрудников</span>
+            </div>
+            <div className="flex items-center justify-between p-3 bg-white rounded-lg border border-blue-100">
+              <span className="text-gray-700">Международный отдел</span>
+              <span className="text-blue-600 font-semibold">4 сотрудника</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderContent = () => {
+    switch (activeSection) {
+      case 'directorate':
+        return renderDirectorateContent();
+      case 'departmentHeads':
+        return renderDepartmentHeadsContent();
+      case 'administration':
+        return renderAdministrationContent();
+      default:
+        return renderDirectorateContent();
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-cyan-100 py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div
+      className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto">
         {/* Заголовок */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+        <div className="text-center mb-8">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             {t('leadership.title')}
           </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-lg text-gray-700 max-w-3xl mx-auto">
             {t('leadership.subtitle')}
           </p>
         </div>
 
-        {/* Директор */}
-        <section className="mb-16">
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">
-            {t('leadership.directorate')}
-          </h2>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {directors.map((director) => (
-              <div 
-                key={director.id}
-                className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
-              >
-                <div className="p-6">
-                  <div className="flex flex-col items-center text-center">
-                    <div className="w-32 h-32 rounded-full overflow-hidden shadow-md mb-4">
-                      <img
-                        src={director.image}
-                        alt={director.name}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">
-                      {director.name}
-                    </h3>
-                    <p className="text-blue-600 font-semibold mb-2">
-                      {director.position}
-                    </p>
-                    <p className="text-gray-600 text-sm mb-3">
-                      {director.degree}
-                    </p>
-                    <p className="text-gray-500 text-sm mb-4">
-                      {t('leadership.experience')}: {director.experience}
-                    </p>
-                  </div>
-                  
-                  <div className="mt-4 space-y-3">
-                    <div className="flex items-center justify-center text-sm text-gray-600">
-                      <span className="mr-2">📧</span>
-                      {director.email}
-                    </div>
-                  </div>
-
-                  <div className="mt-4 pt-4 border-t border-gray-200">
-                    <div className="text-sm text-gray-700">
-                      <p className="font-semibold mb-2">{t('leadership.achievements')}:</p>
-                      <ul className="space-y-1">
-                        {director.achievements.slice(0, 3).map((achievement, index) => (
-                          <li key={index} className="flex items-start">
-                            <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-1.5 mr-2 flex-shrink-0"></span>
-                            <span className="text-xs">{achievement}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
+        <div className="flex flex-col lg:flex-row gap-6">
+          {/* Боковая навигация */}
+          <div className="lg:w-1/4">
+            <div className="bg-white rounded-xl shadow-lg overflow-hidden sticky top-6">
+              <div className="bg-gradient-to-r from-blue-600 to-indigo-700 p-4 text-white font-bold text-lg">
+                {t('leadership.sections')}
               </div>
-            ))}
+              <nav className="p-2">
+                <ul className="space-y-1">
+                  {sections.map((section) => (
+                    <li key={section.id}>
+                      <button
+                        className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 flex items-center ${
+                          activeSection === section.id
+                            ? "bg-blue-100 text-blue-700 font-medium shadow-sm"
+                            : "text-gray-700 hover:bg-gray-100"
+                        }`}
+                        onClick={() => changeActiveSection(section.id)}
+                      >
+                        <span className="text-lg mr-3">{section.icon}</span>
+                        {section.name}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            </div>
           </div>
-        </section>
 
-        {/* Заведующие кафедрами */}
-        <section>
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">
-            {t('leadership.departmentHeads')}
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {departmentHeads.map((head) => (
-              <div 
-                key={head.id}
-                className="bg-gradient-to-br from-white to-blue-50 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-blue-100"
-              >
-                <div className="p-5">
-                  <div className="flex flex-col items-center text-center mb-4">
-                    <div className="w-20 h-20 rounded-full overflow-hidden shadow-md mb-3">
-                      <img
-                        src={head.image}
-                        alt={head.name}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <h3 className="text-lg font-bold text-gray-900">
-                      {head.name}
-                    </h3>
-                    <p className="text-blue-600 font-semibold text-sm mb-1">
-                      {head.position}
-                    </p>
-                    <p className="text-gray-600 text-xs">
-                      {head.department}
-                    </p>
-                  </div>
-                  
-                  <div className="space-y-2 mb-4">
-                    <div className="flex items-center text-xs text-gray-600">
-                      <span className="mr-2">🎓</span>
-                      <span>{head.degree}</span>
-                    </div>
-                    <div className="flex items-center text-xs text-gray-600">
-                      <span className="mr-2">📅</span>
-                      <span>{t('leadership.experience')}: {head.experience}</span>
-                    </div>
-                    <div className="flex items-center text-xs text-gray-600">
-                      <span className="mr-2">👥</span>
-                      <span>{head.staff}</span>
-                    </div>
-                  </div>
-
-                  <div className="mb-4">
-                    <p className="text-xs text-gray-700 font-semibold mb-1">{t('leadership.specialization')}:</p>
-                    <p className="text-xs text-gray-600 leading-tight">
-                      {head.specialization}
-                    </p>
-                  </div>
-
-                  <div className="border-t border-gray-200 pt-3">
-                    <div className="flex flex-col space-y-2">
-                      <div className="flex items-center text-xs text-gray-600">
-                        <span className="mr-2">📧</span>
-                        <span className="truncate">{head.email}</span>
-                      </div>    
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
+          {/* Основной контент */}
+          <div className="lg:w-3/4">
+            <div className="bg-white rounded-xl shadow-xl p-6 transition-all duration-500">
+              {renderContent()}
+            </div>
           </div>
-        </section>
-        
+        </div>
       </div>
     </div>
   );

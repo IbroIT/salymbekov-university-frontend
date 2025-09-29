@@ -1,15 +1,25 @@
-// StructurePage.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const StructurePage = () => {
   const { t } = useTranslation();
-  const [activeDepartment, setActiveDepartment] = useState(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const [activeSection, setActiveSection] = useState('leadership');
   const [expandedFaculties, setExpandedFaculties] = useState([]);
-  const [hoveredCard, setHoveredCard] = useState(null);
+
+  // Animation on mount
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
+
+  const sections = [
+    { id: 'leadership', name: t('structure.leadership.title'), icon: '👑' },
+    { id: 'faculties', name: t('structure.faculties.title'), icon: '🎓' },
+    { id: 'administrative', name: t('structure.administrative.title'), icon: '🏢' }
+  ];
 
   const structureData = {
-    руководство: {
+    leadership: {
       title: t('structure.leadership.title'),
       icon: "👑",
       items: [
@@ -35,7 +45,7 @@ const StructurePage = () => {
         }
       ]
     },
-    факультеты: {
+    faculties: {
       title: t('structure.faculties.title'),
       icon: "🎓",
       items: [
@@ -78,7 +88,7 @@ const StructurePage = () => {
         }
       ]
     },
-    административные: {
+    administrative: {
       title: t('structure.administrative.title'),
       icon: "🏢",
       items: [
@@ -106,6 +116,10 @@ const StructurePage = () => {
     }
   };
 
+  const changeActiveSection = (sectionId) => {
+    setActiveSection(sectionId);
+  };
+
   const toggleFaculty = (facultyName) => {
     setExpandedFaculties(prev =>
       prev.includes(facultyName)
@@ -114,171 +128,252 @@ const StructurePage = () => {
     );
   };
 
-  const DepartmentCard = ({ department, category, index }) => {
-    const isFaculty = category === 'факультеты';
-    const isExpanded = isFaculty && expandedFaculties.includes(department.name);
-    const isHovered = hoveredCard === `${category}-${index}`;
-
+  const renderLeadershipContent = () => {
+    const currentData = structureData.leadership;
+    
     return (
-      <div 
-        className={`relative bg-white rounded-2xl p-6 mb-6 transition-all duration-500 transform hover:scale-[1.02] ${
-          activeDepartment === department.name 
-            ? 'ring-4 ring-blue-400 shadow-2xl' 
-            : 'shadow-lg hover:shadow-xl'
-        } ${
-          isHovered ? 'bg-gradient-to-br from-white to-blue-50' : ''
-        }`}
-        onMouseEnter={() => setHoveredCard(`${category}-${index}`)}
-        onMouseLeave={() => setHoveredCard(null)}
-      >
-        
-        <div className="relative z-10">
-          <div className="flex justify-between items-start">
-            <div className="flex-1">
-              <div className="flex items-center mb-3">
-                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mr-4 shadow-lg">
-                  <span className="text-white font-bold text-lg">{index + 1}</span>
-                </div>
-                <h3 className="text-xl font-bold text-gray-800">{department.name}</h3>
-              </div>
-              
-              <div className="ml-16 space-y-2">
-                <p className="text-gray-600 flex items-center">
-                  <span className="w-2 h-2 bg-blue-400 rounded-full mr-3"></span>
-                  <span className="font-semibold">{t('structure.head')}</span> 
-                  <span className="ml-2 text-blue-600 font-medium">{department.head}</span>
-                </p>
-                {department.phone && (
-                  <p className="text-gray-600 flex items-center">
-                    <span className="w-2 h-2 bg-blue-400 rounded-full mr-3"></span>
-                    <span className="font-semibold">{t('structure.phone')}</span> 
-                    <span className="ml-2 text-blue-500">{department.phone}</span>
-                  </p>
-                )}
-              </div>
-            </div>
-            
-            {isFaculty && (
-              <button
-                onClick={() => toggleFaculty(department.name)}
-                className="ml-4 p-3 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-xl transition-all duration-300 hover:scale-110 shadow-md"
-                aria-label={isExpanded ? t('structure.collapse') : t('structure.expand')}
-              >
-                <svg 
-                  className={`w-5 h-5 transform transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
-                  fill="none" 
-                  stroke="currentColor" 
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-            )}
+      <div className="space-y-6">
+        <div className="flex items-center mb-6">
+          <div className="p-3 bg-blue-100 rounded-xl mr-4">
+            <span className="text-2xl">👑</span>
           </div>
+          <h2 className="text-3xl font-bold text-gray-900">
+            {currentData.title}
+          </h2>
+        </div>
 
-          {isFaculty && isExpanded && (
-            <div className="mt-6 ml-16 pl-6 border-l-4 border-blue-300 animate-fadeIn">
-              <h4 className="font-bold text-gray-700 mb-4 flex items-center">
-                <span className="w-3 h-3 bg-blue-400 rounded-full mr-3"></span>
-                {t('structure.facultyDepartments')}
-              </h4>
-              <div className="grid md:grid-cols-2 gap-3">
-                {department.departments.map((dept, deptIndex) => (
-                  <div 
-                    key={deptIndex}
-                    className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 border border-blue-200 transition-all duration-300 hover:shadow-md hover:border-blue-300"
-                  >
-                    <div className="flex items-center">
-                      <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
-                        <span className="text-blue-600 font-bold text-sm">{deptIndex + 1}</span>
-                      </div>
-                      <span className="text-blue-800 font-medium">{dept}</span>
-                    </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {currentData.items.map((item, index) => (
+            <div 
+              key={index}
+              className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100 hover:shadow-md transition-all duration-300"
+            >
+              <div className="flex items-start mb-4">
+                <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center text-white font-bold text-lg mr-4">
+                  {index + 1}
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                    {item.name}
+                  </h3>
+                  <div className="space-y-2">
+                    <p className="text-gray-600 flex items-center">
+                      <span className="font-medium mr-2">Руководитель:</span>
+                      <span className="text-blue-600">{item.head}</span>
+                    </p>
+                    <p className="text-gray-600 flex items-center">
+                      <span className="font-medium mr-2">Телефон:</span>
+                      <span className="text-blue-500">{item.phone}</span>
+                    </p>
                   </div>
-                ))}
+                </div>
               </div>
             </div>
-          )}
+          ))}
         </div>
       </div>
     );
   };
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 py-8 px-4">
-      <div className="max-w-7xl mx-auto">
-        {/* Анимированный заголовок */}
-        <div className="text-center mb-16">
-          <div className="relative inline-block">
-            <div className="absolute -inset-4 opacity-20 animate-pulse"></div>
-            <h1 className="relative text-5xl md:text-6xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent mb-6">
-              {t('structure.title')}
-            </h1>
+  const renderFacultiesContent = () => {
+    const currentData = structureData.faculties;
+    
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center mb-6">
+          <div className="p-3 bg-blue-100 rounded-xl mr-4">
+            <span className="text-2xl">🎓</span>
           </div>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <h2 className="text-3xl font-bold text-gray-900">
+            {currentData.title}
+          </h2>
+        </div>
+
+        <div className="space-y-6">
+          {currentData.items.map((faculty, index) => {
+            const isExpanded = expandedFaculties.includes(faculty.name);
+            
+            return (
+              <div 
+                key={index}
+                className="bg-white rounded-xl border border-blue-100 hover:shadow-md transition-all duration-300"
+              >
+                <div className="p-6">
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-start flex-1">
+                      <div className="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center text-white font-bold text-lg mr-4">
+                        {index + 1}
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                          {faculty.name}
+                        </h3>
+                        <p className="text-gray-600">
+                          <span className="font-medium">Декан:</span> {faculty.head}
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <button
+                      onClick={() => toggleFaculty(faculty.name)}
+                      className="ml-4 p-2 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-lg transition-all duration-300"
+                    >
+                      <svg 
+                        className={`w-5 h-5 transform transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                  </div>
+
+                  {isExpanded && (
+                    <div className="mt-6 pl-16">
+                      <h4 className="font-semibold text-gray-800 mb-4">
+                        Кафедры факультета:
+                      </h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        {faculty.departments.map((department, deptIndex) => (
+                          <div 
+                            key={deptIndex}
+                            className="bg-blue-50 rounded-lg p-3 border border-blue-200"
+                          >
+                            <div className="flex items-center">
+                              <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs font-bold mr-3">
+                                {deptIndex + 1}
+                              </div>
+                              <span className="text-blue-800">{department}</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  };
+
+  const renderAdministrativeContent = () => {
+    const currentData = structureData.administrative;
+    
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center mb-6">
+          <div className="p-3 bg-blue-100 rounded-xl mr-4">
+            <span className="text-2xl">🏢</span>
+          </div>
+          <h2 className="text-3xl font-bold text-gray-900">
+            {currentData.title}
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {currentData.items.map((item, index) => (
+            <div 
+              key={index}
+              className="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-xl p-6 border border-purple-100 hover:shadow-md transition-all duration-300"
+            >
+              <div className="flex items-start mb-4">
+                <div className="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center text-white font-bold text-lg mr-4">
+                  {index + 1}
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                    {item.name}
+                  </h3>
+                  <div className="space-y-2">
+                    <p className="text-gray-600 flex items-center">
+                      <span className="font-medium mr-2">Руководитель:</span>
+                      <span className="text-purple-600">{item.head}</span>
+                    </p>
+                    <p className="text-gray-600 flex items-center">
+                      <span className="font-medium mr-2">Телефон:</span>
+                      <span className="text-purple-500">{item.phone}</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
+  const renderContent = () => {
+    switch (activeSection) {
+      case 'leadership':
+        return renderLeadershipContent();
+      case 'faculties':
+        return renderFacultiesContent();
+      case 'administrative':
+        return renderAdministrativeContent();
+      default:
+        return renderLeadershipContent();
+    }
+  };
+
+  return (
+    <div
+      className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto">
+        {/* Заголовок */}
+        <div className="text-center mb-8">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            {t('structure.title')}
+          </h1>
+          <p className="text-lg text-gray-700 max-w-3xl mx-auto">
             {t('structure.description')}
           </p>
         </div>
 
-        {/* Содержимое структуры */}
-        <div className="space-y-16">
-          {Object.entries(structureData).map(([category, data]) => (
-            <section 
-              key={category} 
-              id={category} 
-              className="scroll-mt-24 animate-fadeInUp"
-            >
-              <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-2xl border border-white/50">
-                <div className="flex items-center mb-10">
-                  <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl flex items-center justify-center shadow-lg mr-6">
-                    <span className="text-2xl text-white">{data.icon}</span>
-                  </div>
-                  <div>
-                    <h2 className="text-4xl font-bold text-gray-800">
-                      {data.title}
-                    </h2>
-                    <div className="w-20 h-1 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full mt-3"></div>
-                  </div>
-                </div>
-                
-                <div className="grid lg:grid-cols-2 gap-8">
-                  {data.items.map((department, index) => (
-                    <DepartmentCard
-                      key={index}
-                      department={department}
-                      category={category}
-                      index={index}
-                    />
-                  ))}
-                </div>
+        <div className="flex flex-col lg:flex-row gap-6">
+          {/* Боковая навигация */}
+          <div className="lg:w-1/4">
+            <div className="bg-white rounded-xl shadow-lg overflow-hidden sticky top-6">
+              <div className="bg-gradient-to-r from-blue-600 to-indigo-700 p-4 text-white font-bold text-lg">
+                {t('structure.sections')}
               </div>
-            </section>
-          ))}
+              <nav className="p-2">
+                <ul className="space-y-1">
+                  {sections.map((section) => (
+                    <li key={section.id}>
+                      <button
+                        className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 flex items-center ${
+                          activeSection === section.id
+                            ? "bg-blue-100 text-blue-700 font-medium shadow-sm"
+                            : "text-gray-700 hover:bg-gray-100"
+                        }`}
+                        onClick={() => changeActiveSection(section.id)}
+                      >
+                        <span className="text-lg mr-3">{section.icon}</span>
+                        {section.name}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            </div>
+          </div>
+
+          {/* Основной контент */}
+          <div className="lg:w-3/4">
+            <div className="bg-white rounded-xl shadow-xl p-6 transition-all duration-500">
+              {renderContent()}
+            </div>
+          </div>
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-        .animate-fadeInUp {
-          animation: fadeInUp 0.6s ease-out;
-        }
-        .animate-fadeIn {
-          animation: fadeIn 0.5s ease-out;
-        }
-      `}</style>
     </div>
   );
 };
