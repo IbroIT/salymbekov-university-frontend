@@ -1,142 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const AcadOp = () => {
+  const { t } = useTranslation();
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [isVisible, setIsVisible] = useState(false);
   const [hoveredCard, setHoveredCard] = useState(null);
   const sectionRef = useRef(null);
 
-  // Данные академических возможностей
-  const opportunitiesData = [
-    {
-      id: 1,
-      title: "Двойные дипломы",
-      description: "Получите дипломы двух университетов одновременно с международными партнерами",
-      category: "education",
-      icon: "🎓",
-      color: "from-purple-500 to-purple-600",
-      status: "available",
-      students: "350+",
-      features: ["Международное признание", "Два диплома", "Интернациональный опыт", "Карьерные преимущества"],
-      link: "#",
-      popular: true
-    },
-    {
-      id: 2,
-      title: "Стажировки за рубежом",
-      description: "Прохождение практики в ведущих международных компаниях и исследовательских центрах",
-      category: "international",
-      icon: "✈️",
-      color: "from-blue-500 to-blue-600",
-      status: "available",
-      students: "280+",
-      features: ["Опыт работы", "Международные контакты", "Языковая практика", "Профессиональный рост"],
-      link: "#",
-      popular: true
-    },
-    {
-      id: 3,
-      title: "Научные гранты",
-      description: "Финансирование исследовательских проектов и научных инициатив студентов",
-      category: "research",
-      icon: "💰",
-      color: "from-green-500 to-green-600",
-      status: "available",
-      students: "150+",
-      features: ["Финансовая поддержка", "Научные публикации", "Оборудование", "Конференции"],
-      link: "#",
-      popular: false
-    },
-    {
-      id: 4,
-      title: "Карьерный центр",
-      description: "Комплексная поддержка в трудоустройстве и построении профессиональной карьеры",
-      category: "career",
-      icon: "🎯",
-      color: "from-orange-500 to-orange-600",
-      status: "available",
-      students: "1,200+",
-      features: ["Трудоустройство", "Карьерные консультации", "Ярмарки вакансий", "Партнерские компании"],
-      link: "#",
-      popular: true
-    },
-    {
-      id: 5,
-      title: "Современные лаборатории",
-      description: "Доступ к передовому исследовательскому оборудованию и технологиям",
-      category: "innovation",
-      icon: "🔬",
-      color: "from-cyan-500 to-cyan-600",
-      status: "available",
-      students: "900+",
-      features: ["High-tech оборудование", "Исследования", "Эксперименты", "Инновационные проекты"],
-      link: "#",
-      popular: true
-    },
-    {
-      id: 6,
-      title: "Онлайн-курсы",
-      description: "Дистанционное обучение по современным программам и методикам",
-      category: "education",
-      icon: "💻",
-      color: "from-indigo-500 to-indigo-600",
-      status: "available",
-      students: "2,500+",
-      features: ["Гибкий график", "Доступность", "Современные технологии", "Интерактивность"],
-      link: "#",
-      popular: false
-    },
-    {
-      id: 7,
-      title: "Международные конференции",
-      description: "Участие в научных мероприятиях и симпозиумах мирового уровня",
-      category: "research",
-      icon: "🎤",
-      color: "from-pink-500 to-pink-600",
-      status: "available",
-      students: "180+",
-      features: ["Международный опыт", "Научные связи", "Публикации", "Профессиональное сообщество"],
-      link: "#",
-      popular: false
-    },
-    {
-      id: 8,
-      title: "Стартап-инкубатор",
-      description: "Поддержка студенческих бизнес-проектов и инновационных инициатив",
-      category: "innovation",
-      icon: "💡",
-      color: "from-teal-500 to-teal-600",
-      status: "available",
-      students: "75+",
-      features: ["Финансирование", "Менторство", "Бизнес-ангелы", "Питч-сессии"],
-      link: "#",
-      popular: true
-    },
-    {
-      id: 9,
-      title: "Языковые программы",
-      description: "Изучение иностранных языков на профессиональном уровне с носителями",
-      category: "international",
-      icon: "🗣️",
-      color: "from-amber-500 to-amber-600",
-      status: "available",
-      students: "1,800+",
-      features: ["Международные сертификаты", "Носители языка", "Практика", "Культурный обмен"],
-      link: "#",
-      popular: false
-    }
-  ];
-
-  // Категории
-  const categories = [
-    { id: 'all', name: 'Все возможности', count: opportunitiesData.length, icon: '🔄' },
-    { id: 'education', name: 'Образование', count: opportunitiesData.filter(r => r.category === 'education').length, icon: '🎓' },
-    { id: 'international', name: 'Международные', count: opportunitiesData.filter(r => r.category === 'international').length, icon: '🌍' },
-    { id: 'research', name: 'Наука', count: opportunitiesData.filter(r => r.category === 'research').length, icon: '🔬' },
-    { id: 'career', name: 'Карьера', count: opportunitiesData.filter(r => r.category === 'career').length, icon: '💼' },
-    { id: 'innovation', name: 'Инновации', count: opportunitiesData.filter(r => r.category === 'innovation').length, icon: '🚀' }
-  ];
+  // Получение данных из переводов
+  const opportunitiesData = t('acadop.opportunities.list', { returnObjects: true });
+  const categories = t('acadop.categories.list', { returnObjects: true });
+  const successStories = t('acadop.successStories.list', { returnObjects: true });
 
   // Фильтрация данных
   const filteredData = opportunitiesData.filter(opportunity => {
@@ -159,6 +35,29 @@ const AcadOp = () => {
     popular: opportunitiesData.filter(r => r.popular).length
   };
 
+  const statistics = [
+    { 
+      label: t('acadop.statistics.total'), 
+      value: stats.total, 
+      color: 'from-purple-500 to-purple-600' 
+    },
+    { 
+      label: t('acadop.statistics.available'), 
+      value: stats.available, 
+      color: 'from-green-500 to-green-600' 
+    },
+    { 
+      label: t('acadop.statistics.students'), 
+      value: `${stats.students}+`, 
+      color: 'from-blue-500 to-blue-600' 
+    },
+    { 
+      label: t('acadop.statistics.popular'), 
+      value: stats.popular, 
+      color: 'from-orange-500 to-orange-600' 
+    }
+  ];
+
   return (
     <section ref={sectionRef} className="relative py-20 overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900">
 
@@ -167,26 +66,20 @@ const AcadOp = () => {
         <div className={`text-center mb-16 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <div className="inline-flex items-center bg-white/10 backdrop-blur-lg rounded-full px-6 py-2 text-white/80 text-sm font-medium mb-6 border border-white/20">
             <span className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></span>
-            АКАДЕМИЧЕСКИЕ ПЕРСПЕКТИВЫ
+            {t('acadop.hero.badge')}
           </div>
           <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
-            Академические <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">возможности</span>
+            {t('acadop.hero.title')} <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">{t('acadop.hero.highlight')}</span>
           </h1>
           <div className="w-24 h-1 bg-gradient-to-r from-cyan-400 to-blue-400 mx-auto mb-8 rounded-full"></div>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Откройте мир уникальных возможностей для вашего академического роста, 
-            профессионального развития и международного признания
+            {t('acadop.hero.description')}
           </p>
         </div>
 
         {/* Статистика */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
-          {[
-            { label: 'Всего программ', value: stats.total, color: 'from-purple-500 to-purple-600' },
-            { label: 'Доступно сейчас', value: stats.available, color: 'from-green-500 to-green-600' },
-            { label: 'Участников', value: `${stats.students}+`, color: 'from-blue-500 to-blue-600' },
-            { label: 'Популярных', value: stats.popular, color: 'from-orange-500 to-orange-600' }
-          ].map((stat, index) => (
+          {statistics.map((stat, index) => (
             <div 
               key={index}
               className={`bg-gradient-to-br ${stat.color} rounded-2xl p-6 text-white shadow-2xl transform hover:scale-105 transition-all duration-300 ${
@@ -207,7 +100,7 @@ const AcadOp = () => {
             <div className="relative">
               <input
                 type="text"
-                placeholder="Поиск возможностей..."
+                placeholder={t('acadop.search.placeholder')}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl px-6 py-4 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent transition-all duration-300"
@@ -257,7 +150,7 @@ const AcadOp = () => {
               {/* Бейдж популярности */}
               {opportunity.popular && (
                 <div className="absolute top-4 right-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold z-10 shadow-lg">
-                  ПОПУЛЯРНО
+                  {t('acadop.opportunities.popularBadge')}
                 </div>
               )}
 
@@ -267,7 +160,10 @@ const AcadOp = () => {
                   opportunity.status === 'available' ? 'bg-green-400 animate-pulse' : 'bg-yellow-400'
                 }`}></div>
                 <span className="text-xs text-white/80 font-medium">
-                  {opportunity.status === 'available' ? 'ДОСТУПНО' : 'СКОРО'}
+                  {opportunity.status === 'available' 
+                    ? t('acadop.opportunities.status.available') 
+                    : t('acadop.opportunities.status.comingSoon')
+                  }
                 </span>
               </div>
 
@@ -285,7 +181,7 @@ const AcadOp = () => {
                         <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                           <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z" />
                         </svg>
-                        <span className="text-sm">{opportunity.students} студентов</span>
+                        <span className="text-sm">{opportunity.students} {t('acadop.opportunities.students')}</span>
                       </div>
                     </div>
                   </div>
@@ -302,7 +198,7 @@ const AcadOp = () => {
                     <svg className="w-4 h-4 mr-2 text-cyan-400" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
-                    Ключевые преимущества:
+                    {t('acadop.opportunities.featuresTitle')}
                   </h4>
                   <div className="space-y-2">
                     {opportunity.features.map((feature, idx) => (
@@ -317,7 +213,7 @@ const AcadOp = () => {
                 {/* Кнопка доступа */}
                 <button className={`w-full bg-gradient-to-r ${opportunity.color} text-white py-3 rounded-xl font-semibold transition-all duration-300 hover:shadow-lg transform hover:scale-105 flex items-center justify-center group relative overflow-hidden`}>
                   <span className="relative z-10 flex items-center">
-                    Узнать подробнее
+                    {t('acadop.opportunities.detailsButton')}
                     <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                     </svg>
@@ -333,8 +229,8 @@ const AcadOp = () => {
         {filteredData.length === 0 && (
           <div className="text-center py-16 bg-white/5 rounded-2xl backdrop-blur-lg border border-white/20">
             <div className="text-6xl mb-4">🔍</div>
-            <h3 className="text-2xl font-bold text-white mb-2">Возможности не найдены</h3>
-            <p className="text-gray-400">Попробуйте изменить параметры поиска или выбрать другую категорию</p>
+            <h3 className="text-2xl font-bold text-white mb-2">{t('acadop.noResults.title')}</h3>
+            <p className="text-gray-400">{t('acadop.noResults.description')}</p>
           </div>
         )}
 
@@ -342,37 +238,15 @@ const AcadOp = () => {
         <div className="mt-20">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-white mb-4">
-              Истории <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">успеха</span>
+              {t('acadop.successStories.title')} <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">{t('acadop.successStories.highlight')}</span>
             </h2>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              Наши студенты достигают выдающихся результатов благодаря академическим возможностям университета
+              {t('acadop.successStories.description')}
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                name: "Анна Петрова",
-                program: "Международный бизнес",
-                achievement: "Стажировка в Google, США",
-                image: "👩‍💼",
-                quote: "Благодаря программе двойных дипломов я получила уникальный международный опыт"
-              },
-              {
-                name: "Максим Иванов",
-                program: "Компьютерные науки",
-                achievement: "Основатель IT-стартапа",
-                image: "👨‍💻",
-                quote: "Стартап-инкубатор университета помог превратить идею в успешный бизнес"
-              },
-              {
-                name: "Елена Сидорова",
-                program: "Биотехнологии",
-                achievement: "Научная работа в Германии",
-                image: "👩‍🔬",
-                quote: "Научные гранты позволили провести исследования мирового уровня"
-              }
-            ].map((story, index) => (
+            {successStories.map((story, index) => (
               <div
                 key={index}
                 className={`bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 p-6 text-center transition-all duration-500 ${
@@ -413,4 +287,4 @@ const AcadOp = () => {
   );
 };
 
-export default AcadOp
+export default AcadOp;

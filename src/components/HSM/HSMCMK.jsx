@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const HSMCMK = () => {
+  const { t } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
   const [activeTab, setActiveTab] = useState('about');
   const [animatedCounters, setAnimatedCounters] = useState({
@@ -76,137 +78,115 @@ const HSMCMK = () => {
   };
 
   const statistics = [
-    { number: animatedCounters.documents, label: 'Документов СМК', suffix: '+' },
-    { number: animatedCounters.processes, label: 'Процессов управления', suffix: '+' },
-    { number: animatedCounters.principles, label: 'Принципов качества', suffix: '' },
-    { number: animatedCounters.certificates, label: 'Сертификатов', suffix: '+' }
+    { number: animatedCounters.documents, label: t('smk.statistics.documents'), suffix: '+' },
+    { number: animatedCounters.processes, label: t('smk.statistics.processes'), suffix: '+' },
+    { number: animatedCounters.principles, label: t('smk.statistics.principles'), suffix: '' },
+    { number: animatedCounters.certificates, label: t('smk.statistics.certificates'), suffix: '+' }
   ];
 
   const principles = [
     {
-      title: "Ориентация на потребителя",
-      description: "Понимание текущих и будущих потребностей студентов, работодателей и общества",
+      title: t('smk.principles.customerOrientation.title'),
+      description: t('smk.principles.customerOrientation.description'),
       icon: "👥",
       gradient: "from-blue-500 to-cyan-500"
     },
     {
-      title: "Лидерство руководства",
-      description: "Единство целей и создание среды для полного вовлечения сотрудников",
+      title: t('smk.principles.leadership.title'),
+      description: t('smk.principles.leadership.description'),
       icon: "🌟",
       gradient: "from-purple-500 to-pink-500"
     },
     {
-      title: "Вовлечение персонала",
-      description: "Полное использование способностей и потенциала всех сотрудников университета",
+      title: t('smk.principles.engagement.title'),
+      description: t('smk.principles.engagement.description'),
       icon: "🤝",
       gradient: "from-green-500 to-emerald-500"
     },
     {
-      title: "Процессный подход",
-      description: "Управление деятельностью и соответствующими ресурсами как процессом",
+      title: t('smk.principles.processApproach.title'),
+      description: t('smk.principles.processApproach.description'),
       icon: "🔄",
       gradient: "from-orange-500 to-red-500"
     },
     {
-      title: "Системный подход",
-      description: "Выявление, понимание и управление взаимосвязанными процессами как системой",
+      title: t('smk.principles.systemApproach.title'),
+      description: t('smk.principles.systemApproach.description'),
       icon: "📊",
       gradient: "from-indigo-500 to-blue-500"
     },
     {
-      title: "Постоянное улучшение",
-      description: "Непрерывное совершенствование деятельности университета в целом",
+      title: t('smk.principles.continuousImprovement.title'),
+      description: t('smk.principles.continuousImprovement.description'),
       icon: "📈",
       gradient: "from-teal-500 to-green-500"
     }
   ];
 
-  const documents = [
-    { 
-      title: "Политика в области качества", 
-      date: "15.03.2023", 
-      size: "2.1 МБ",
-      type: "pdf",
-      category: "Основные документы"
-    },
-    { 
-      title: "Руководство по качеству", 
-      date: "20.03.2023", 
-      size: "3.4 МБ",
-      type: "pdf",
-      category: "Основные документы"
-    },
-    { 
-      title: "Процедура внутреннего аудита", 
-      date: "10.04.2023", 
-      size: "1.2 МБ",
-      type: "doc",
-      category: "Процедуры"
-    },
-    { 
-      title: "Процедура управления несоответствиями", 
-      date: "15.04.2023", 
-      size: "1.5 МБ",
-      type: "doc",
-      category: "Процедуры"
-    },
-    { 
-      title: "Регламент мониторинга", 
-      date: "25.04.2023", 
-      size: "1.8 МБ",
-      type: "pdf",
-      category: "Регламенты"
-    },
-    { 
-      title: "Положение о комиссии по качеству", 
-      date: "05.05.2023", 
-      size: "2.0 МБ",
-      type: "doc",
-      category: "Положения"
-    }
+  const tabs = [
+    { id: 'about', label: t('smk.tabs.about') },
+    { id: 'principles', label: t('smk.tabs.principles') },
+    { id: 'documents', label: t('smk.tabs.documents') },
+    { id: 'processes', label: t('smk.tabs.processes') },
+  ];
+
+  const advantages = [
+    t('smk.advantages.studentSatisfaction'),
+    t('smk.advantages.processOptimization'),
+    t('smk.advantages.academicResults'),
+    t('smk.advantages.internationalRecognition'),
+    t('smk.advantages.resourceEfficiency')
+  ];
+
+  const documentStructure = [
+    { level: t('smk.documents.structure.qualityPolicy'), desc: t('smk.documents.structure.strategicDirections'), step: "1" },
+    { level: t('smk.documents.structure.qualityManual'), desc: t('smk.documents.structure.foundationalDocument'), step: "2" },
+    { level: t('smk.documents.structure.procedures'), desc: t('smk.documents.structure.keyProcesses'), step: "3" },
+    { level: t('smk.documents.structure.workInstructions'), desc: t('smk.documents.structure.detailedGuidance'), step: "4" },
+    { level: t('smk.documents.structure.records'), desc: t('smk.documents.structure.resultsDocumentation'), step: "5" }
   ];
 
   const processGroups = [
     {
-      title: "Основные процессы",
+      title: t('smk.processes.main.title'),
       processes: [
-        "Образовательная деятельность",
-        "Научно-исследовательская работа",
-        "Воспитательная деятельность",
-        "Международное сотрудничество"
+        t('smk.processes.main.educational'),
+        t('smk.processes.main.research'),
+        t('smk.processes.main.educationalWork'),
+        t('smk.processes.main.international')
       ],
       color: "blue",
       icon: "🎯"
     },
     {
-      title: "Вспомогательные процессы",
+      title: t('smk.processes.support.title'),
       processes: [
-        "Управление персоналом",
-        "Материально-техническое обеспечение",
-        "Информационное обеспечение",
-        "Финансовое управление"
+        t('smk.processes.support.hr'),
+        t('smk.processes.support.technical'),
+        t('smk.processes.support.information'),
+        t('smk.processes.support.financial')
       ],
       color: "green",
       icon: "⚙️"
     },
     {
-      title: "Процессы управления",
+      title: t('smk.processes.management.title'),
       processes: [
-        "Стратегическое планирование",
-        "Мониторинг и измерение",
-        "Внутренние аудиты",
-        "Анализ со стороны руководства"
+        t('smk.processes.management.strategic'),
+        t('smk.processes.management.monitoring'),
+        t('smk.processes.management.audits'),
+        t('smk.processes.management.managementReview')
       ],
       color: "purple",
       icon: "📋"
     },
     {
-      title: "Процессы улучшения",
+      title: t('smk.processes.improvement.title'),
       processes: [
-        "Управление несоответствиями",
-        "Корректирующие действия",
-        "Профилактические действия",
-        "Постоянное улучшение"
+        t('smk.processes.improvement.nonConformity'),
+        t('smk.processes.improvement.corrective'),
+        t('smk.processes.improvement.preventive'),
+        t('smk.processes.improvement.continuous')
       ],
       color: "orange",
       icon: "🚀"
@@ -221,16 +201,15 @@ const HSMCMK = () => {
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-3 bg-white/80 backdrop-blur-sm rounded-full px-6 py-3 shadow-lg border border-blue-100 mb-6">
             <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-            <span className="text-sm font-medium text-gray-700">Сертифицированная система качества</span>
+            <span className="text-sm font-medium text-gray-700">{t('smk.hero.certified')}</span>
           </div>
           
           <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            Система менеджмента качества
+            {t('smk.hero.title')}
           </h1>
           
           <p className="text-xl text-gray-700 max-w-4xl mx-auto leading-relaxed">
-            Инновационная система управления, обеспечивающая <span className="font-semibold text-blue-600">высокое качество</span> образовательных услуг 
-            и <span className="font-semibold text-purple-600">непрерывное совершенствование</span> деятельности университета
+            {t('smk.hero.description')}
           </p>
         </div>
 
@@ -254,12 +233,7 @@ const HSMCMK = () => {
 
         {/* Navigation Tabs */}
         <div className="flex flex-wrap gap-2 mb-8 bg-white/80 backdrop-blur-sm rounded-2xl p-2 shadow-lg border border-gray-100">
-          {[
-            { id: 'about', label: 'О системе' },
-            { id: 'principles', label: 'Принципы' },
-            { id: 'documents', label: 'Документы' },
-            { id: 'processes', label: 'Процессы' },
-          ].map(tab => (
+          {tabs.map(tab => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
@@ -283,46 +257,31 @@ const HSMCMK = () => {
               <div className="grid lg:grid-cols-2 gap-12 items-center">
                 <div>
                   <h2 className="text-4xl font-bold text-gray-900 mb-6">
-                    О системе менеджмента качества
+                    {t('smk.about.title')}
                   </h2>
                   <div className="space-y-4 text-gray-700 text-lg leading-relaxed">
-                    <p>
-                      Наша система менеджмента качества представляет собой <span className="font-semibold text-blue-600">интегрированный подход</span> 
-                      к управлению университетом, основанный на международных стандартах ISO 9001:2015.
-                    </p>
-                    <p>
-                      СМК охватывает все аспекты деятельности вуза — от образовательного процесса до научных исследований 
-                      и международного сотрудничества.
-                    </p>
-                    <p>
-                      Мы стремимся к созданию среды, где качество становится <span className="font-semibold text-purple-600">неотъемлемой частью</span> 
-                      корпоративной культуры.
-                    </p>
+                    <p>{t('smk.about.description1')}</p>
+                    <p>{t('smk.about.description2')}</p>
+                    <p>{t('smk.about.description3')}</p>
                   </div>
                   
                   <div className="mt-8 grid grid-cols-2 gap-4">
                     <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-4 border border-blue-100">
                       <div className="text-2xl font-bold text-blue-600 mb-2">ISO 9001:2015</div>
-                      <div className="text-sm text-gray-600">Международный стандарт</div>
+                      <div className="text-sm text-gray-600">{t('smk.about.standard')}</div>
                     </div>
                     <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-4 border border-green-100">
                       <div className="text-2xl font-bold text-green-600 mb-2">100%</div>
-                      <div className="text-sm text-gray-600">Соответствие требованиям</div>
+                      <div className="text-sm text-gray-600">{t('smk.about.compliance')}</div>
                     </div>
                   </div>
                 </div>
                 
                 <div className="relative">
                   <div className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl p-8 text-white">
-                    <h3 className="text-2xl font-bold mb-4">Наши преимущества</h3>
+                    <h3 className="text-2xl font-bold mb-4">{t('smk.about.advantages')}</h3>
                     <ul className="space-y-3">
-                      {[
-                        "Повышение удовлетворенности студентов",
-                        "Оптимизация процессов управления",
-                        "Улучшение академических результатов",
-                        "Усиление международного признания",
-                        "Эффективное использование ресурсов"
-                      ].map((item, index) => (
+                      {advantages.map((item, index) => (
                         <li key={index} className="flex items-center gap-3">
                           <div className="w-2 h-2 bg-white rounded-full"></div>
                           {item}
@@ -339,7 +298,7 @@ const HSMCMK = () => {
           {activeTab === 'principles' && (
             <div className="p-8">
               <h2 className="text-4xl font-bold text-gray-900 mb-8 text-center">
-                Принципы системы менеджмента качества
+                {t('smk.principles.title')}
               </h2>
               
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -368,20 +327,14 @@ const HSMCMK = () => {
           {activeTab === 'documents' && (
             <div className="p-8">
               <h2 className="text-4xl font-bold text-gray-900 mb-8">
-                Документация СМК
+                {t('smk.documents.title')}
               </h2>
               
               <div className="grid lg:grid-cols-2 gap-8">
                 <div>
-                  <h3 className="text-2xl font-bold text-gray-800 mb-6">Структура документации</h3>
+                  <h3 className="text-2xl font-bold text-gray-800 mb-6">{t('smk.documents.structure.title')}</h3>
                   <div className="space-y-4">
-                    {[
-                      { level: "Политика качества", desc: "Стратегические направления", step: "1" },
-                      { level: "Руководство по качеству", desc: "Основополагающий документ", step: "2" },
-                      { level: "Процедуры и регламенты", desc: "Описание ключевых процессов", step: "3" },
-                      { level: "Рабочие инструкции", desc: "Детальные указания", step: "4" },
-                      { level: "Записи и отчеты", desc: "Документирование результатов", step: "5" }
-                    ].map((doc, index) => (
+                    {documentStructure.map((doc, index) => (
                       <div 
                         key={index}
                         ref={el => setSectionRef(el, `doc-structure-${index}`)}
@@ -400,9 +353,9 @@ const HSMCMK = () => {
                 </div>
                 
                 <div>
-                  <h3 className="text-2xl font-bold text-gray-800 mb-6">Документы для скачивания</h3>
+                  <h3 className="text-2xl font-bold text-gray-800 mb-6">{t('smk.documents.downloads')}</h3>
                   <div className="space-y-3 max-h-96 overflow-y-auto pr-4">
-                    {documents.map((doc, index) => (
+                    {t('smk.documents.list', { returnObjects: true }).map((doc, index) => (
                       <div
                         key={index}
                         ref={el => setSectionRef(el, `doc-item-${index}`)}
@@ -431,7 +384,7 @@ const HSMCMK = () => {
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                           </svg>
-                          Скачать
+                          {t('smk.documents.download')}
                         </button>
                       </div>
                     ))}
@@ -445,7 +398,7 @@ const HSMCMK = () => {
           {activeTab === 'processes' && (
             <div className="p-8">
               <h2 className="text-4xl font-bold text-gray-900 mb-8 text-center">
-                Процессы системы менеджмента качества
+                {t('smk.processes.title')}
               </h2>
               
               <div className="grid md:grid-cols-2 gap-8">

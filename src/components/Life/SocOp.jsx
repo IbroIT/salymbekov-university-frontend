@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const SocOp = () => {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState('all');
   const [isVisible, setIsVisible] = useState(false);
   const [hoveredCard, setHoveredCard] = useState(null);
@@ -8,161 +10,14 @@ const SocOp = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const sectionRef = useRef(null);
 
-  // Данные социальных возможностей
+  // Получение данных из переводов
   const socialData = {
-    events: [
-      {
-        id: 1,
-        title: "Международный студенческий форум",
-        description: "Крупнейшее событие года для студентов со всего мира с участием ведущих экспертов",
-        date: "15-17 Марта 2024",
-        location: "Главный кампус",
-        type: "forum",
-        participants: "500+",
-        status: "upcoming",
-        image: "🎪",
-        color: "from-purple-500 to-purple-600",
-        organizer: "Студенческий совет",
-        registration: "open",
-        category: "events",
-        popular: true
-      },
-      {
-        id: 2,
-        title: "Научная весна 2024",
-        description: "Ежегодная конференция студенческих научных работ с международным жюри",
-        date: "22-24 Апреля 2024",
-        location: "Научная библиотека",
-        type: "conference",
-        participants: "300+",
-        status: "upcoming",
-        image: "🔬",
-        color: "from-blue-500 to-blue-600",
-        organizer: "Научное общество",
-        registration: "open",
-        category: "events",
-        popular: false
-      },
-      {
-        id: 3,
-        title: "Карьерный экспресс",
-        description: "Встреча с ведущими работодателями и компаниями-партнерами",
-        date: "10 Мая 2024",
-        location: "Бизнес-инкубатор",
-        type: "career",
-        participants: "50+ компаний",
-        status: "upcoming",
-        image: "💼",
-        color: "from-green-500 to-green-600",
-        organizer: "Центр карьеры",
-        registration: "open",
-        category: "events",
-        popular: true
-      }
-    ],
-    clubs: [
-      {
-        id: 1,
-        title: "IT-сообщество",
-        description: "Клуб для разработчиков и tech-энтузиастов с регулярными митапами",
-        members: "150+",
-        category: "technology",
-        meetings: "Каждую среду 18:00",
-        image: "💻",
-        color: "from-indigo-500 to-indigo-600",
-        leader: "Айгерим Садыкова",
-        achievements: ["Hackathon 2023", "Startup Weekend", "Tech Talks"],
-        status: "active",
-        category: "clubs",
-        popular: true
-      },
-      {
-        id: 2,
-        title: "Волонтерский центр",
-        description: "Социальные проекты и благотворительные акции для помощи обществу",
-        members: "200+",
-        category: "social",
-        meetings: "По субботам 10:00",
-        image: "🤝",
-        color: "from-orange-500 to-orange-600",
-        leader: "Данияр Жуманов",
-        achievements: ["Помощь детям", "Эко-проекты", "Социальные акции"],
-        status: "active",
-        category: "clubs",
-        popular: true
-      },
-      {
-        id: 3,
-        title: "Творческая мастерская",
-        description: "Искусство, музыка и театральные постановки для творческих личностей",
-        members: "80+",
-        category: "art",
-        meetings: "Пн/Ср/Пт 19:00",
-        image: "🎭",
-        color: "from-pink-500 to-pink-600",
-        leader: "Айнура Калыкова",
-        achievements: ["Театральный фестиваль", "Арт-выставка", "Музыкальные вечера"],
-        status: "active",
-        category: "clubs",
-        popular: false
-      }
-    ],
-    projects: [
-      {
-        id: 1,
-        title: "Умный кампус",
-        description: "Разработка цифровой экосистемы для автоматизации процессов университета",
-        team: "15 человек",
-        duration: "6 месяцев",
-        category: "technology",
-        image: "🏫",
-        color: "from-teal-500 to-teal-600",
-        progress: 75,
-        needs: ["Разработчики", "Дизайнеры", "Аналитики", "Тестировщики"],
-        status: "active",
-        category: "projects",
-        popular: true
-      },
-      {
-        id: 2,
-        title: "Зеленый университет",
-        description: "Экологическая инициатива по озеленению кампуса и снижению углеродного следа",
-        team: "25 человек",
-        duration: "Постоянный",
-        category: "ecology",
-        image: "🌿",
-        color: "from-lime-500 to-lime-600",
-        progress: 40,
-        needs: ["Волонтеры", "Биологи", "Организаторы", "Экологи"],
-        status: "active",
-        category: "projects",
-        popular: false
-      },
-      {
-        id: 3,
-        title: "Спортивная лига",
-        description: "Организация турниров и спортивных мероприятий для всех студентов",
-        team: "30 человек",
-        duration: "Весь год",
-        category: "sports",
-        image: "⚽",
-        color: "from-amber-500 to-amber-600",
-        progress: 90,
-        needs: ["Спортсмены", "Судьи", "Фотографы", "Волонтеры"],
-        status: "active",
-        category: "projects",
-        popular: true
-      }
-    ]
+    events: t('socop.events.list', { returnObjects: true }),
+    clubs: t('socop.clubs.list', { returnObjects: true }),
+    projects: t('socop.projects.list', { returnObjects: true })
   };
 
-  // Категории
-  const categories = [
-    { id: 'all', name: 'Все возможности', icon: '🔄', count: Object.values(socialData).flat().length },
-    { id: 'events', name: 'Мероприятия', icon: '📅', count: socialData.events.length },
-    { id: 'clubs', name: 'Клубы', icon: '👥', count: socialData.clubs.length },
-    { id: 'projects', name: 'Проекты', icon: '🚀', count: socialData.projects.length }
-  ];
+  const categories = t('socop.categories.list', { returnObjects: true });
 
   // Фильтрация данных
   const getFilteredData = () => {
@@ -189,7 +44,7 @@ const SocOp = () => {
       setCurrentEventIndex((prev) => (prev + 1) % socialData.events.length);
     }, 5000);
     return () => clearInterval(timer);
-  }, []);
+  }, [socialData.events.length]);
 
   useEffect(() => {
     setIsVisible(true);
@@ -203,6 +58,62 @@ const SocOp = () => {
     clubsCount: socialData.clubs.length
   };
 
+  const statistics = [
+    { 
+      label: t('socop.statistics.members'), 
+      value: `${stats.totalMembers}+`, 
+      color: 'from-purple-500 to-purple-600' 
+    },
+    { 
+      label: t('socop.statistics.projects'), 
+      value: stats.activeProjects, 
+      color: 'from-blue-500 to-blue-600' 
+    },
+    { 
+      label: t('socop.statistics.events'), 
+      value: stats.upcomingEvents, 
+      color: 'from-green-500 to-green-600' 
+    },
+    { 
+      label: t('socop.statistics.clubs'), 
+      value: stats.clubsCount, 
+      color: 'from-orange-500 to-orange-600' 
+    }
+  ];
+
+  const getEventTypeLabel = (type) => {
+    const types = {
+      forum: t('socop.events.types.forum'),
+      conference: t('socop.events.types.conference'),
+      career: t('socop.events.types.career')
+    };
+    return types[type] || type;
+  };
+
+  const getStatusLabel = (status) => {
+    const statuses = {
+      upcoming: t('socop.status.upcoming'),
+      active: t('socop.status.active'),
+      paused: t('socop.status.paused')
+    };
+    return statuses[status] || status;
+  };
+
+  const getRegistrationLabel = (registration) => {
+    return registration === 'open' 
+      ? t('socop.events.registration.open')
+      : t('socop.events.registration.closed');
+  };
+
+  const getActionButtonText = (category) => {
+    const actions = {
+      events: t('socop.actions.participate'),
+      clubs: t('socop.actions.joinClub'),
+      projects: t('socop.actions.joinProject')
+    };
+    return actions[category] || t('socop.actions.participate');
+  };
+
   return (
     <section ref={sectionRef} className="relative py-20 overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900">
       
@@ -212,26 +123,20 @@ const SocOp = () => {
         <div className={`text-center mb-16 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <div className="inline-flex items-center bg-white/10 backdrop-blur-lg rounded-full px-6 py-2 text-white/80 text-sm font-medium mb-6 border border-white/20">
             <span className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></span>
-            СОЦИАЛЬНАЯ АКТИВНОСТЬ
+            {t('socop.hero.badge')}
           </div>
           <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
-            Социальные <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">возможности</span>
+            {t('socop.hero.title')} <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">{t('socop.hero.highlight')}</span>
           </h1>
           <div className="w-24 h-1 bg-gradient-to-r from-cyan-400 to-blue-400 mx-auto mb-8 rounded-full"></div>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Откройте для себя мир вне учебной аудитории - участвуйте в мероприятиях, 
-            вступайте в клубы и реализуйте собственные проекты вместе с нами
+            {t('socop.hero.description')}
           </p>
         </div>
 
         {/* Статистика */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
-          {[
-            { label: 'Активных участников', value: `${stats.totalMembers}+`, color: 'from-purple-500 to-purple-600' },
-            { label: 'Текущих проектов', value: stats.activeProjects, color: 'from-blue-500 to-blue-600' },
-            { label: 'Предстоящих событий', value: stats.upcomingEvents, color: 'from-green-500 to-green-600' },
-            { label: 'Клубов и сообществ', value: stats.clubsCount, color: 'from-orange-500 to-orange-600' }
-          ].map((stat, index) => (
+          {statistics.map((stat, index) => (
             <div 
               key={index}
               className={`bg-gradient-to-br ${stat.color} rounded-2xl p-6 text-white shadow-2xl transform hover:scale-105 transition-all duration-300 ${
@@ -252,7 +157,7 @@ const SocOp = () => {
             <div className="relative">
               <input
                 type="text"
-                placeholder="Поиск возможностей..."
+                placeholder={t('socop.search.placeholder')}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl px-6 py-4 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent transition-all duration-300"
@@ -267,7 +172,7 @@ const SocOp = () => {
         {/* Слайдер главных событий */}
         <div className="mb-12">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-3xl font-bold text-white">Главные события</h2>
+            <h2 className="text-3xl font-bold text-white">{t('socop.featuredEvents.title')}</h2>
             <div className="flex gap-2">
               {socialData.events.map((_, index) => (
                 <button
@@ -296,7 +201,7 @@ const SocOp = () => {
                   <div className="flex-1">
                     <div className="flex items-center gap-4 mb-4 flex-wrap">
                       <span className="bg-cyan-500/20 text-cyan-400 px-3 py-1 rounded-full text-sm font-medium border border-cyan-400/30">
-                        {event.type === 'forum' ? 'Форум' : event.type === 'conference' ? 'Конференция' : 'Карьера'}
+                        {getEventTypeLabel(event.type)}
                       </span>
                       <span className="text-gray-300">{event.date}</span>
                       <span className="text-gray-500">•</span>
@@ -321,11 +226,11 @@ const SocOp = () => {
                         <span className={`px-3 py-1 rounded-full text-xs font-medium ${
                           event.registration === 'open' ? 'bg-green-500/20 text-green-400 border border-green-400/30' : 'bg-gray-500/20 text-gray-400 border border-gray-400/30'
                         }`}>
-                          {event.registration === 'open' ? 'Регистрация открыта' : 'Регистрация закрыта'}
+                          {getRegistrationLabel(event.registration)}
                         </span>
                       </div>
                       <button className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center gap-2 whitespace-nowrap">
-                        Участвовать
+                        {t('socop.actions.participate')}
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                         </svg>
@@ -353,7 +258,7 @@ const SocOp = () => {
               {/* Бейдж популярности */}
               {item.popular && (
                 <div className="absolute top-4 right-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold z-10 shadow-lg">
-                  ПОПУЛЯРНО
+                  {t('socop.popularBadge')}
                 </div>
               )}
 
@@ -363,7 +268,7 @@ const SocOp = () => {
                   item.status === 'upcoming' || item.status === 'active' ? 'bg-green-400 animate-pulse' : 'bg-yellow-400'
                 }`}></div>
                 <span className="text-xs text-white/80 font-medium">
-                  {item.status === 'upcoming' ? 'СКОРО' : item.status === 'active' ? 'АКТИВНО' : 'ПАУЗА'}
+                  {getStatusLabel(item.status)}
                 </span>
               </div>
 
@@ -382,9 +287,9 @@ const SocOp = () => {
                           <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z" />
                         </svg>
                         <span className="text-sm">
-                          {'members' in item ? `${item.members} участников` : 
-                           'team' in item ? `Команда: ${item.team}` : 
-                           `${item.participants} участников`}
+                          {'members' in item ? t('socop.membersCount', { count: item.members }) : 
+                           'team' in item ? t('socop.teamSize', { size: item.team }) : 
+                           t('socop.participantsCount', { count: item.participants })}
                         </span>
                       </div>
                     </div>
@@ -407,19 +312,19 @@ const SocOp = () => {
                   {'duration' in item && (
                     <div className="flex items-center text-gray-300 text-sm">
                       <div className="w-2 h-2 bg-cyan-400 rounded-full mr-3"></div>
-                      <span className="font-medium">Длительность: {item.duration}</span>
+                      <span className="font-medium">{t('socop.duration')}: {item.duration}</span>
                     </div>
                   )}
                   {'leader' in item && (
                     <div className="flex items-center text-gray-300 text-sm">
                       <div className="w-2 h-2 bg-cyan-400 rounded-full mr-3"></div>
-                      <span className="font-medium">Руководитель: {item.leader}</span>
+                      <span className="font-medium">{t('socop.leader')}: {item.leader}</span>
                     </div>
                   )}
                   {'organizer' in item && (
                     <div className="flex items-center text-gray-300 text-sm">
                       <div className="w-2 h-2 bg-cyan-400 rounded-full mr-3"></div>
-                      <span className="font-medium">Организатор: {item.organizer}</span>
+                      <span className="font-medium">{t('socop.organizer')}: {item.organizer}</span>
                     </div>
                   )}
                 </div>
@@ -430,7 +335,7 @@ const SocOp = () => {
                     <svg className="w-4 h-4 mr-2 text-cyan-400" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
-                    {item.achievements ? 'Достижения:' : 'Требуются:'}
+                    {item.achievements ? t('socop.achievements') : t('socop.requirements')}
                   </h4>
                   <div className="flex flex-wrap gap-2">
                     {(item.achievements || item.needs || []).map((text, idx) => (
@@ -448,7 +353,7 @@ const SocOp = () => {
                 {item.progress && (
                   <div className="mb-6">
                     <div className="flex justify-between text-sm text-gray-300 mb-1">
-                      <span>Прогресс проекта</span>
+                      <span>{t('socop.progress.title')}</span>
                       <span>{item.progress}%</span>
                     </div>
                     <div className="w-full bg-white/10 rounded-full h-2">
@@ -463,9 +368,7 @@ const SocOp = () => {
                 {/* Кнопка действия */}
                 <button className={`w-full bg-gradient-to-r ${item.color} text-white py-3 rounded-xl font-semibold transition-all duration-300 hover:shadow-lg transform hover:scale-105 flex items-center justify-center group relative overflow-hidden`}>
                   <span className="relative z-10 flex items-center">
-                    {item.category === 'events' ? 'Участвовать' : 
-                     item.category === 'clubs' ? 'Вступить в клуб' : 
-                     'Присоединиться к проекту'}
+                    {getActionButtonText(item.category)}
                     <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                     </svg>
@@ -481,8 +384,8 @@ const SocOp = () => {
         {getFilteredData().length === 0 && (
           <div className="text-center py-16 bg-white/5 rounded-2xl backdrop-blur-lg border border-white/20">
             <div className="text-6xl mb-4">🔍</div>
-            <h3 className="text-2xl font-bold text-white mb-2">Возможности не найдены</h3>
-            <p className="text-gray-400">Попробуйте изменить параметры поиска или выбрать другую категорию</p>
+            <h3 className="text-2xl font-bold text-white mb-2">{t('socop.noResults.title')}</h3>
+            <p className="text-gray-400">{t('socop.noResults.description')}</p>
           </div>
         )}
       </div>
