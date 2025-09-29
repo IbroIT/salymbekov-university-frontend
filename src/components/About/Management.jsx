@@ -14,17 +14,17 @@ const Management = () => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      
+
       // Загружаем данные руководства
       const managementData = await getManagement();
       if (managementData && managementData.length > 0) {
         setManagementData(managementData[0]);
       }
-      
+
       // Загружаем данные учителей
       const teachersData = await getTeachers();
       setTeachersData(teachersData);
-      
+
       setLoading(false);
     };
     fetchData();
@@ -33,14 +33,14 @@ const Management = () => {
   // Функция для получения локализованного текста
   const getLocalizedText = (obj, field) => {
     if (!obj) return '';
-    const lang = i18n.language === 'ky' ? 'kg' : i18n.language;
+    const lang = i18n.language === 'kg' ? 'kg' : i18n.language;
     return obj[`${field}_${lang}`] || obj[`${field}_ru`] || obj[`${field}_en`] || '';
   };
 
   // Трансформируем данные из API для использования в компоненте
   const transformApiData = (apiNode) => {
     if (!apiNode) return null;
-    
+
     return {
       id: apiNode.id.toString(),
       name: getLocalizedText(apiNode, 'position'),
@@ -73,32 +73,32 @@ const Management = () => {
     children: []
   };
 
-const renderMemberCard = (member, level = 0) => {
-  const cardSizes = {
-    0: 'inline-block text-center w-full md:w-96 flex-none transform hover:scale-105 transition-transform duration-300',
-    1: 'inline-block text-center w-full md:w-80 flex-none transform hover:scale-105 transition-transform duration-300',
-    2: 'inline-block text-center w-full md:w-72 flex-none transform hover:scale-105 transition-transform duration-300',
-    3: 'inline-block text-center w-full md:w-64 flex-none transform hover:scale-105 transition-transform duration-300',
-  };
+  const renderMemberCard = (member, level = 0) => {
+    const cardSizes = {
+      0: 'inline-block text-center w-full md:w-96 flex-none transform hover:scale-105 transition-transform duration-300',
+      1: 'inline-block text-center w-full md:w-80 flex-none transform hover:scale-105 transition-transform duration-300',
+      2: 'inline-block text-center w-full md:w-72 flex-none transform hover:scale-105 transition-transform duration-300',
+      3: 'inline-block text-center w-full md:w-64 flex-none transform hover:scale-105 transition-transform duration-300',
+    };
 
-  const avatarSizes = {
-    0: 'w-32 h-32 ring-4 ring-white ring-offset-2 ring-offset-blue-100 shadow-lg',
-    1: 'w-28 h-28 ring-3 ring-white ring-offset-2 ring-offset-blue-100 shadow-md',
-    2: 'w-24 h-24 ring-2 ring-white ring-offset-1 ring-offset-blue-100 shadow-sm',
-    3: 'w-20 h-20 ring-1 ring-white',
-  };
+    const avatarSizes = {
+      0: 'w-32 h-32 ring-4 ring-white ring-offset-2 ring-offset-blue-100 shadow-lg',
+      1: 'w-28 h-28 ring-3 ring-white ring-offset-2 ring-offset-blue-100 shadow-md',
+      2: 'w-24 h-24 ring-2 ring-white ring-offset-1 ring-offset-blue-100 shadow-sm',
+      3: 'w-20 h-20 ring-1 ring-white',
+    };
 
-  const cardGradients = {
-    0: 'bg-gradient-to-br from-blue-600 to-purple-700',
-    1: 'bg-gradient-to-br from-blue-500 to-purple-600',
-    2: 'bg-gradient-to-br from-blue-400 to-purple-500',
-    3: 'bg-gradient-to-br from-blue-300 to-purple-400',
-  };
+    const cardGradients = {
+      0: 'bg-gradient-to-br from-blue-600 to-purple-700',
+      1: 'bg-gradient-to-br from-blue-500 to-purple-600',
+      2: 'bg-gradient-to-br from-blue-400 to-purple-500',
+      3: 'bg-gradient-to-br from-blue-300 to-purple-400',
+    };
 
-  return (
-    <div className="flex flex-col items-center group" key={member.id}>
-      <div
-        className={`
+    return (
+      <div className="flex flex-col items-center group" key={member.id}>
+        <div
+          className={`
           ${cardSizes[level] || cardSizes[3]} 
           h-69 flex flex-col justify-between items-center text-center
           ${cardGradients[level] || cardGradients[3]} 
@@ -107,78 +107,78 @@ const renderMemberCard = (member, level = 0) => {
           text-white
           relative overflow-hidden
         `}
-      >
-        {/* Фото */}
-        <div className="relative mt-2 mb-4">
-          {member.avatar ? (
-            <img
-              src={member.avatar}
-              alt={member.head}
-              className={`${avatarSizes[level] || avatarSizes[3]} rounded-full mx-auto object-cover transition-all duration-300 group-hover:ring-offset-blue-200`}
-            />
-          ) : (
-            <div
-              className={`
+        >
+          {/* Фото */}
+          <div className="relative mt-2 mb-4">
+            {member.avatar ? (
+              <img
+                src={member.avatar}
+                alt={member.head}
+                className={`${avatarSizes[level] || avatarSizes[3]} rounded-full mx-auto object-cover transition-all duration-300 group-hover:ring-offset-blue-200`}
+              />
+            ) : (
+              <div
+                className={`
                 ${avatarSizes[level] || avatarSizes[3]} 
                 flex items-center justify-center rounded-full bg-white/20 text-white text-lg font-bold mx-auto
               `}
-            >
-              {member.head?.split(' ')
-                .map((n) => n[0])
-                .slice(0, 2)
-                .join('')
-                .toUpperCase()}
-            </div>
-          )}
-        </div>
+              >
+                {member.head?.split(' ')
+                  .map((n) => n[0])
+                  .slice(0, 2)
+                  .join('')
+                  .toUpperCase()}
+              </div>
+            )}
+          </div>
 
-        {/* Имя и должность */}
-        <div className="mb-2">
-          <h3 className="text-xl font-bold mb-2 drop-shadow-md">{member.head}</h3>
-          <p className="text-sm opacity-90 font-medium">{member.position}</p>
+          {/* Имя и должность */}
+          <div className="mb-2">
+            <h3 className="text-xl font-bold mb-2 drop-shadow-md">{member.head}</h3>
+            <p className="text-sm opacity-90 font-medium">{member.position}</p>
+          </div>
         </div>
       </div>
-    </div>
-  );
-};
+    );
+  };
 
 
   // Функция для отображения карточки учителя
-const renderTeacherCard = (teacher) => {
-  const teacherData = {
-    id: teacher.id.toString(),
-    head: getLocalizedText(teacher, 'full_name'),
-    position: getLocalizedText(teacher, 'position'),
-    avatar: teacher.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(getLocalizedText(teacher, 'full_name'))}&size=400&background=16a085&color=fff&rounded=true`,
-    type: 'teacher'
-  };
+  const renderTeacherCard = (teacher) => {
+    const teacherData = {
+      id: teacher.id.toString(),
+      head: getLocalizedText(teacher, 'full_name'),
+      position: getLocalizedText(teacher, 'position'),
+      avatar: teacher.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(getLocalizedText(teacher, 'full_name'))}&size=400&background=16a085&color=fff&rounded=true`,
+      type: 'teacher'
+    };
 
-  return (
-    <div 
-      key={teacher.id} 
-      className="bg-gradient-to-br from-green-500 to-teal-600 rounded-2xl shadow-lg p-6 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 cursor-default group relative overflow-hidden"
-    >
-      {/* Декор */}
-      <div className="absolute top-0 left-0 w-full h-1 bg-white opacity-20"></div>
-      <div className="absolute -top-4 -right-4 w-24 h-24 rounded-full bg-white opacity-10"></div>
-      
-      <div className="text-center relative z-10">
-        <div className="relative mb-5">
-          <img
-            src={teacherData.avatar}
-            alt={teacherData.head}
-            className="w-24 h-24 rounded-full mx-auto border-4 border-white/80 shadow-lg object-cover group-hover:scale-110 transition-transform duration-300"
-          />
-          <div className="absolute -bottom-2 -right-2 bg-white text-green-700 px-2 py-1 rounded-full text-xs font-bold shadow-md">
-            🎓
+    return (
+      <div
+        key={teacher.id}
+        className="bg-gradient-to-br from-green-500 to-teal-600 rounded-2xl shadow-lg p-6 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 cursor-default group relative overflow-hidden"
+      >
+        {/* Декор */}
+        <div className="absolute top-0 left-0 w-full h-1 bg-white opacity-20"></div>
+        <div className="absolute -top-4 -right-4 w-24 h-24 rounded-full bg-white opacity-10"></div>
+
+        <div className="text-center relative z-10">
+          <div className="relative mb-5">
+            <img
+              src={teacherData.avatar}
+              alt={teacherData.head}
+              className="w-24 h-24 rounded-full mx-auto border-4 border-white/80 shadow-lg object-cover group-hover:scale-110 transition-transform duration-300"
+            />
+            <div className="absolute -bottom-2 -right-2 bg-white text-green-700 px-2 py-1 rounded-full text-xs font-bold shadow-md">
+              🎓
+            </div>
           </div>
+          <h3 className="text-lg font-bold mb-2 text-white drop-shadow-md">{teacherData.head}</h3>
+          <p className="text-sm text-white/90 mb-2 font-medium">{teacherData.position}</p>
         </div>
-        <h3 className="text-lg font-bold mb-2 text-white drop-shadow-md">{teacherData.head}</h3>
-        <p className="text-sm text-white/90 mb-2 font-medium">{teacherData.position}</p>
       </div>
-    </div>
-  );
-};
+    );
+  };
 
 
   const renderPyramidStructure = () => {
@@ -342,7 +342,7 @@ const renderTeacherCard = (teacher) => {
             <span className="mx-2">→</span>
             <span className="text-white">{t('management.title')}</span>
           </nav>
-          
+
           <div className="text-center">
             <h1 className="text-5xl font-bold mb-6 opacity-95">
               {t('management.title')}
@@ -350,7 +350,7 @@ const renderTeacherCard = (teacher) => {
             <p className="text-xl text-blue-200 max-w-3xl mx-auto leading-relaxed">
               {t('management.description')}
             </p>
-            
+
             {/* Statistics */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 max-w-4xl mx-auto">
               <div className="text-center bg-white/10 backdrop-blur-sm rounded-2xl p-6">
@@ -383,7 +383,7 @@ const renderTeacherCard = (teacher) => {
             <p className="text-gray-600 text-lg max-w-2xl mx-auto">{t('management.organizationSubtitle')}</p>
             <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mt-4 rounded-full"></div>
           </div>
-          
+
           <div className="max-w-7xl mx-auto">
             {renderPyramidStructure()}
           </div>
@@ -395,7 +395,7 @@ const renderTeacherCard = (teacher) => {
             <h2 className="text-4xl font-bold text-gray-900 mb-2">Преподаватели</h2>
             <p className="text-gray-600 text-lg">Наши квалифицированные преподаватели</p>
           </div>
-          
+
           {loading ? (
             <div className="text-center py-12">
               <div className="inline-block w-8 h-8 rounded-full bg-green-200/60 animate-pulse"></div>

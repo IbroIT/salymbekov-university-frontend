@@ -1,110 +1,77 @@
 // StructurePage.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { newAboutAPI } from '../../services/newAboutAPI';
 
 const StructurePage = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [activeDepartment, setActiveDepartment] = useState(null);
   const [expandedFaculties, setExpandedFaculties] = useState([]);
   const [hoveredCard, setHoveredCard] = useState(null);
+  const [structureData, setStructureData] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const structureData = {
-    руководство: {
-      title: t('structure.leadership.title'),
-      icon: "👑",
-      items: [
-        { 
-          name: t('structure.leadership.items.rector.name'), 
-          head: t('structure.leadership.items.rector.head'), 
-          phone: t('structure.leadership.items.rector.phone') 
-        },
-        { 
-          name: t('structure.leadership.items.academicViceRector.name'), 
-          head: t('structure.leadership.items.academicViceRector.head'), 
-          phone: t('structure.leadership.items.academicViceRector.phone') 
-        },
-        { 
-          name: t('structure.leadership.items.researchViceRector.name'), 
-          head: t('structure.leadership.items.researchViceRector.head'), 
-          phone: t('structure.leadership.items.researchViceRector.phone') 
-        },
-        { 
-          name: t('structure.leadership.items.clinicalViceRector.name'), 
-          head: t('structure.leadership.items.clinicalViceRector.head'), 
-          phone: t('structure.leadership.items.clinicalViceRector.phone') 
+  // Fetch structure data from API
+  useEffect(() => {
+    const fetchStructure = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        // Map language codes for API
+        const langMapping = {
+          'ru': 'ru',
+          'kg': 'kg',
+          'en': 'en'
+        };
+        const apiLang = langMapping[i18n.language] || 'ru';
+
+        const response = await newAboutAPI.getStructure(apiLang);
+
+        if (response.data && response.data.success && response.data.data && Object.keys(response.data.data).length > 0) {
+          // Data is already in the correct format from backend
+          setStructureData(response.data.data);
+        } else {
+          // Set empty structure if no API data
+          setStructureData({});
         }
-      ]
-    },
-    факультеты: {
-      title: t('structure.faculties.title'),
-      icon: "🎓",
-      items: [
-        {
-          name: t('structure.faculties.items.medical.name'),
-          head: t('structure.faculties.items.medical.head'),
-          departments: [
-            t('structure.faculties.items.medical.departments.therapy'),
-            t('structure.faculties.items.medical.departments.surgery'),
-            t('structure.faculties.items.medical.departments.pediatrics'),
-            t('structure.faculties.items.medical.departments.obstetrics')
-          ]
-        },
-        {
-          name: t('structure.faculties.items.pediatric.name'),
-          head: t('structure.faculties.items.pediatric.head'),
-          departments: [
-            t('structure.faculties.items.pediatric.departments.childrenDiseases'),
-            t('structure.faculties.items.pediatric.departments.neonatology'),
-            t('structure.faculties.items.pediatric.departments.childrenSurgery')
-          ]
-        },
-        {
-          name: t('structure.faculties.items.dental.name'),
-          head: t('structure.faculties.items.dental.head'),
-          departments: [
-            t('structure.faculties.items.dental.departments.therapeuticDentistry'),
-            t('structure.faculties.items.dental.departments.orthopedicDentistry'),
-            t('structure.faculties.items.dental.departments.surgicalDentistry')
-          ]
-        },
-        {
-          name: t('structure.faculties.items.pharmaceutical.name'),
-          head: t('structure.faculties.items.pharmaceutical.head'),
-          departments: [
-            t('structure.faculties.items.pharmaceutical.departments.pharmaceuticalChemistry'),
-            t('structure.faculties.items.pharmaceutical.departments.pharmacognosy'),
-            t('structure.faculties.items.pharmaceutical.departments.drugTechnology')
-          ]
-        }
-      ]
-    },
-    административные: {
-      title: t('structure.administrative.title'),
-      icon: "🏢",
-      items: [
-        { 
-          name: t('structure.administrative.items.academicOffice.name'), 
-          head: t('structure.administrative.items.academicOffice.head'), 
-          phone: t('structure.administrative.items.academicOffice.phone') 
-        },
-        { 
-          name: t('structure.administrative.items.researchOffice.name'), 
-          head: t('structure.administrative.items.researchOffice.head'), 
-          phone: t('structure.administrative.items.researchOffice.phone') 
-        },
-        { 
-          name: t('structure.administrative.items.hrDepartment.name'), 
-          head: t('structure.administrative.items.hrDepartment.head'), 
-          phone: t('structure.administrative.items.hrDepartment.phone') 
-        },
-        { 
-          name: t('structure.administrative.items.accounting.name'), 
-          head: t('structure.administrative.items.accounting.head'), 
-          phone: t('structure.administrative.items.accounting.phone') 
-        }
-      ]
-    }
-  };
+      } catch (err) {
+        console.error('Error fetching structure data:', err);
+        setError(err.message);
+        // Set empty structure on error
+        setStructureData({});
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStructure();
+  }, [i18n.language]);
+
+  // Display loading state
+  if (loading) {
+    return (
+      <section className="py-16 bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div className="container mx-auto px-4 text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
+          <p className="mt-4 text-gray-600">{t('common.loading', 'Загрузка...')}</p>
+        </div>
+      </section>
+    );
+  }
+
+  // Display error state
+  if (error && Object.keys(structureData).length === 0) {
+    return (
+      <section className="py-16 bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div className="container mx-auto px-4 text-center">
+          <div className="text-red-500 mb-4">❌</div>
+          <p className="text-gray-600">{t('common.error', 'Произошла ошибка при загрузке данных')}</p>
+        </div>
+      </section>
+    );
+  }
 
   const toggleFaculty = (facultyName) => {
     setExpandedFaculties(prev =>
@@ -120,18 +87,16 @@ const StructurePage = () => {
     const isHovered = hoveredCard === `${category}-${index}`;
 
     return (
-      <div 
-        className={`relative bg-white rounded-2xl p-6 mb-6 transition-all duration-500 transform hover:scale-[1.02] ${
-          activeDepartment === department.name 
-            ? 'ring-4 ring-blue-400 shadow-2xl' 
-            : 'shadow-lg hover:shadow-xl'
-        } ${
-          isHovered ? 'bg-gradient-to-br from-white to-blue-50' : ''
-        }`}
+      <div
+        className={`relative bg-white rounded-2xl p-6 mb-6 transition-all duration-500 transform hover:scale-[1.02] ${activeDepartment === department.name
+          ? 'ring-4 ring-blue-400 shadow-2xl'
+          : 'shadow-lg hover:shadow-xl'
+          } ${isHovered ? 'bg-gradient-to-br from-white to-blue-50' : ''
+          }`}
         onMouseEnter={() => setHoveredCard(`${category}-${index}`)}
         onMouseLeave={() => setHoveredCard(null)}
       >
-        
+
         <div className="relative z-10">
           <div className="flex justify-between items-start">
             <div className="flex-1">
@@ -141,33 +106,33 @@ const StructurePage = () => {
                 </div>
                 <h3 className="text-xl font-bold text-gray-800">{department.name}</h3>
               </div>
-              
+
               <div className="ml-16 space-y-2">
                 <p className="text-gray-600 flex items-center">
                   <span className="w-2 h-2 bg-blue-400 rounded-full mr-3"></span>
-                  <span className="font-semibold">{t('structure.head')}</span> 
+                  <span className="font-semibold">{t('structure.head')}</span>
                   <span className="ml-2 text-blue-600 font-medium">{department.head}</span>
                 </p>
                 {department.phone && (
                   <p className="text-gray-600 flex items-center">
                     <span className="w-2 h-2 bg-blue-400 rounded-full mr-3"></span>
-                    <span className="font-semibold">{t('structure.phone')}</span> 
+                    <span className="font-semibold">{t('structure.phone')}</span>
                     <span className="ml-2 text-blue-500">{department.phone}</span>
                   </p>
                 )}
               </div>
             </div>
-            
+
             {isFaculty && (
               <button
                 onClick={() => toggleFaculty(department.name)}
                 className="ml-4 p-3 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-xl transition-all duration-300 hover:scale-110 shadow-md"
                 aria-label={isExpanded ? t('structure.collapse') : t('structure.expand')}
               >
-                <svg 
+                <svg
                   className={`w-5 h-5 transform transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
-                  fill="none" 
-                  stroke="currentColor" 
+                  fill="none"
+                  stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" />
@@ -184,7 +149,7 @@ const StructurePage = () => {
               </h4>
               <div className="grid md:grid-cols-2 gap-3">
                 {department.departments.map((dept, deptIndex) => (
-                  <div 
+                  <div
                     key={deptIndex}
                     className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 border border-blue-200 transition-all duration-300 hover:shadow-md hover:border-blue-300"
                   >
@@ -223,9 +188,9 @@ const StructurePage = () => {
         {/* Содержимое структуры */}
         <div className="space-y-16">
           {Object.entries(structureData).map(([category, data]) => (
-            <section 
-              key={category} 
-              id={category} 
+            <section
+              key={category}
+              id={category}
               className="scroll-mt-24 animate-fadeInUp"
             >
               <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-2xl border border-white/50">
@@ -240,7 +205,7 @@ const StructurePage = () => {
                     <div className="w-20 h-1 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full mt-3"></div>
                   </div>
                 </div>
-                
+
                 <div className="grid lg:grid-cols-2 gap-8">
                   {data.items.map((department, index) => (
                     <DepartmentCard

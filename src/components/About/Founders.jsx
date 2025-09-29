@@ -1,68 +1,75 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { newAboutAPI } from '../../services/newAboutAPI';
 
 const Founders = () => {
   const [activeFounder, setActiveFounder] = useState(0);
-  const { t } = useTranslation();
+  const [foundersData, setFoundersData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const { t, i18n } = useTranslation();
 
-  const foundersData = [
-    {
-      id: 1,
-      name: t('founders.founder1.name'),
-      position: t('founders.founder1.position'),
-      years: t('founders.founder1.years'),
-      image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&h=400&fit=crop&crop=face",
-      description: t('founders.founder1.description'),
-      achievements: [
-        t('founders.founder1.achievements.0'),
-        t('founders.founder1.achievements.1'),
-        t('founders.founder1.achievements.2'),
-        t('founders.founder1.achievements.3')
-      ]
-    },
-    {
-      id: 2,
-      name: t('founders.founder2.name'),
-      position: t('founders.founder2.position'),
-      years: t('founders.founder2.years'),
-      image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&h=400&fit=crop&crop=face",
-      description: t('founders.founder2.description'),
-      achievements: [
-        t('founders.founder2.achievements.0'),
-        t('founders.founder2.achievements.1'),
-        t('founders.founder2.achievements.2'),
-        t('founders.founder2.achievements.3')
-      ]
-    },
-    {
-      id: 3,
-      name: t('founders.founder3.name'),
-      position: t('founders.founder3.position'),
-      years: t('founders.founder3.years'),
-      image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&h=400&fit=crop&crop=face",
-      description: t('founders.founder3.description'),
-      achievements: [
-        t('founders.founder3.achievements.0'),
-        t('founders.founder3.achievements.1'),
-        t('founders.founder3.achievements.2'),
-        t('founders.founder3.achievements.3')
-      ]
-    },
-    {
-      id: 4,
-      name: t('founders.founder4.name'),
-      position: t('founders.founder4.position'),
-      years: t('founders.founder4.years'),
-      image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&h=400&fit=crop&crop=face",
-      description: t('founders.founder4.description'),
-      achievements: [
-        t('founders.founder4.achievements.0'),
-        t('founders.founder4.achievements.1'),
-        t('founders.founder4.achievements.2'),
-        t('founders.founder4.achievements.3')
-      ]
-    }
-  ];
+  // Fetch founders data from API
+  useEffect(() => {
+    const fetchFounders = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        // Map language codes for API
+        const langMapping = {
+          'ru': 'ru',
+          'kg': 'kg',
+          'en': 'en'
+        };
+        const apiLang = langMapping[i18n.language] || 'ru';
+
+        const response = await newAboutAPI.getFounders(apiLang);
+
+        if (response.data && response.data.success && response.data.results && response.data.results.length > 0) {
+          // Data is already in the correct format from backend
+          setFoundersData(response.data.results);
+          setActiveFounder(0);
+        } else {
+          // Set empty data if no API data
+          setFoundersData([]);
+        }
+      } catch (err) {
+        console.error('Error fetching founders data:', err);
+        setError(err.message);
+        // Set empty data on error
+        setFoundersData([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFounders();
+  }, [i18n.language]);
+
+  // Display loading state
+  if (loading) {
+    return (
+      <section className="py-16 bg-gradient-to-br from-white to-blue-50">
+        <div className="container mx-auto px-4 text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
+          <p className="mt-4 text-gray-600">{t('common.loading', 'Загрузка...')}</p>
+        </div>
+      </section>
+    );
+  }
+
+  // Display error state
+  if (error && foundersData.length === 0) {
+    return (
+      <section className="py-16 bg-gradient-to-br from-white to-blue-50">
+        <div className="container mx-auto px-4 text-center">
+          <div className="text-red-500 mb-4">❌</div>
+          <p className="text-gray-600">{t('common.error', 'Произошла ошибка при загрузке данных')}</p>
+        </div>
+      </section>
+    );
+  }
 
   const nextFounder = () => {
     setActiveFounder((prev) => (prev + 1) % foundersData.length);
@@ -96,8 +103,8 @@ const Founders = () => {
           <div className="bg-white rounded-2xl shadow-xl p-8 transform transition-all duration-500 hover:shadow-2xl">
             <div className="flex flex-col sm:flex-row items-center mb-6">
               <div className="relative mb-4 sm:mb-0 sm:mr-6">
-                <img 
-                  src={foundersData[activeFounder].image} 
+                <img
+                  src={foundersData[activeFounder].image}
                   alt={foundersData[activeFounder].name}
                   className="w-32 h-32 rounded-full object-cover border-4 border-blue-100 shadow-lg"
                 />
@@ -111,11 +118,11 @@ const Founders = () => {
                 <p className="text-gray-500 text-sm">{foundersData[activeFounder].years}</p>
               </div>
             </div>
-            
+
             <p className="text-gray-700 mb-6 leading-relaxed border-l-4 border-blue-200 pl-4">
               {foundersData[activeFounder].description}
             </p>
-            
+
             <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-6 border border-blue-100">
               <h4 className="font-bold text-gray-800 mb-4 flex items-center">
                 <span className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2">✓</span>
@@ -136,13 +143,12 @@ const Founders = () => {
           <div className="relative">
             <div className="grid grid-cols-2 gap-6">
               {foundersData.map((founder, index) => (
-                <div 
+                <div
                   key={founder.id}
-                  className={`bg-white rounded-xl shadow-lg p-6 cursor-pointer transform transition-all duration-300 ${
-                    index === activeFounder 
-                      ? 'ring-4 ring-blue-500 scale-105 relative' 
-                      : 'hover:scale-102 hover:shadow-xl opacity-90 hover:opacity-100'
-                  }`}
+                  className={`bg-white rounded-xl shadow-lg p-6 cursor-pointer transform transition-all duration-300 ${index === activeFounder
+                    ? 'ring-4 ring-blue-500 scale-105 relative'
+                    : 'hover:scale-102 hover:shadow-xl opacity-90 hover:opacity-100'
+                    }`}
                   onClick={() => selectFounder(index)}
                 >
                   {index === activeFounder && (
@@ -151,12 +157,11 @@ const Founders = () => {
                     </div>
                   )}
                   <div className="flex flex-col items-center text-center">
-                    <img 
-                      src={founder.image} 
+                    <img
+                      src={founder.image}
                       alt={founder.name}
-                      className={`w-20 h-20 rounded-full object-cover mb-3 border-4 ${
-                        index === activeFounder ? 'border-blue-500' : 'border-gray-200'
-                      }`}
+                      className={`w-20 h-20 rounded-full object-cover mb-3 border-4 ${index === activeFounder ? 'border-blue-500' : 'border-gray-200'
+                        }`}
                     />
                     <h4 className="font-semibold text-gray-800 text-sm leading-tight">
                       {founder.name.split(' ')[1]}
@@ -171,16 +176,16 @@ const Founders = () => {
                 </div>
               ))}
             </div>
-            
+
             {/* Навигационные кнопки для мобильных устройств */}
             <div className="flex justify-center mt-8 space-x-4 lg:hidden">
-              <button 
+              <button
                 onClick={prevFounder}
                 className="bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 transition-colors flex items-center justify-center w-12 h-12"
               >
                 ←
               </button>
-              <button 
+              <button
                 onClick={nextFounder}
                 className="bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 transition-colors flex items-center justify-center w-12 h-12"
               >
@@ -196,11 +201,10 @@ const Founders = () => {
             <button
               key={index}
               onClick={() => selectFounder(index)}
-              className={`flex items-center justify-center rounded-full transition-all duration-300 ${
-                index === activeFounder 
-                  ? 'bg-blue-500 text-white scale-110' 
-                  : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
-              } w-10 h-10`}
+              className={`flex items-center justify-center rounded-full transition-all duration-300 ${index === activeFounder
+                ? 'bg-blue-500 text-white scale-110'
+                : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+                } w-10 h-10`}
             >
               {index + 1}
             </button>
@@ -209,14 +213,14 @@ const Founders = () => {
 
         {/* Навигационные кнопки для десктопа */}
         <div className="hidden lg:flex justify-center space-x-4 mb-8">
-          <button 
+          <button
             onClick={prevFounder}
             className="bg-white text-blue-500 px-6 py-3 rounded-full shadow-lg hover:bg-blue-50 transition-colors flex items-center space-x-2 border border-blue-200"
           >
             <span>←</span>
             <span>{t('founders.previousButton')}</span>
           </button>
-          <button 
+          <button
             onClick={nextFounder}
             className="bg-blue-500 text-white px-6 py-3 rounded-full shadow-lg hover:bg-blue-600 transition-colors flex items-center space-x-2"
           >

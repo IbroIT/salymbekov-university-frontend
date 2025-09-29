@@ -28,14 +28,14 @@ const Management = () => {
   // Функция для получения локализованного текста
   const getLocalizedText = (obj, field) => {
     if (!obj) return '';
-    const lang = i18n.language === 'ky' ? 'kg' : i18n.language;
+    const lang = i18n.language === 'kg' ? 'kg' : i18n.language;
     return obj[`${field}_${lang}`] || obj[`${field}_ru`] || obj[`${field}_en`] || '';
   };
 
   // Трансформируем данные из API для использования в компоненте
   const transformApiData = (apiNode) => {
     if (!apiNode) return null;
-    
+
     return {
       id: apiNode.id.toString(),
       name: getLocalizedText(apiNode, 'position'),
@@ -103,7 +103,7 @@ const Management = () => {
             <p>📞 {member.phone}</p>
             <p>⏰ {member.experience}</p>
           </div>
-          
+
           {/* Дополнительная информация для деканов и заведующих */}
           {(member.studentCount || member.teacherCount) && (
             <div className="mt-3 pt-3 border-t border-white/20">
@@ -339,7 +339,7 @@ const Management = () => {
             <span className="mx-2">→</span>
             <span className="text-white">{t('management.title')}</span>
           </nav>
-          
+
           <div className="text-center">
             <h1 className="text-5xl font-bold mb-6 animate-fade-in">
               {t('management.title')}
@@ -347,7 +347,7 @@ const Management = () => {
             <p className="text-xl text-blue-200 max-w-3xl mx-auto leading-relaxed animate-fade-in-up">
               {t('management.description')}
             </p>
-            
+
             {/* Statistics */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 max-w-4xl mx-auto">
               <div className="text-center animate-fade-in stats-counter">
@@ -379,19 +379,19 @@ const Management = () => {
             <h2 className="text-4xl font-bold text-gray-900 mb-2">{t('management.organizationTitle')}</h2>
             <p className="text-gray-600 text-lg">{t('management.organizationSubtitle')}</p>
           </div>
-          
+
           {renderPyramidStructure()}
         </div>
       </div>
 
       {/* Person Details Modal */}
       {isModalOpen && selectedPerson && (
-        <PersonModal 
-          person={selectedPerson} 
+        <PersonModal
+          person={selectedPerson}
           onClose={() => {
             setIsModalOpen(false);
             setSelectedPerson(null);
-          }} 
+          }}
         />
       )}
     </div>

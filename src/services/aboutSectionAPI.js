@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const API_BASE_URL = "https://su-med-backend-35d3d951c74b.herokuapp.com/api";
+const API_BASE_URL = "http://localhost:8000/api/about-section";
 
-// Create axios instance with default config
+// Create axios instance with default config - Updated 2025-09-29
 const api = axios.create({
   baseURL: API_BASE_URL,
   timeout: 10000,
@@ -334,6 +334,116 @@ export const aboutUtils = {
       // Fallback: open in new tab
       window.open(fileUrl, "_blank");
     }
+  },
+
+  // New API methods for About section
+
+  /**
+   * Get founders data
+   * @param {string} language - Language code (ru, kg, en)
+   * @returns {Promise} Axios response with founders data
+   */
+  getFounders: (language = null) => {
+    const endpoint = `/founders/frontend/`;
+    return api.get(endpoint);
+  },
+
+  /**
+   * Get university structure
+   * @param {string} language - Language code (ru, kg, en)
+   * @param {string} type - Department type filter
+   * @returns {Promise} Axios response with structure data
+   */
+  getStructure: (language = null, type = null) => {
+    let endpoint = `/structure/frontend/`;
+    const params = [];
+
+    if (type) {
+      params.push(`type=${type}`);
+    }
+
+    if (params.length > 0) {
+      endpoint += `?${params.join('&')}`;
+    }
+
+    return api.get(endpoint);
+  },
+
+  /**
+   * Get structure hierarchy
+   * @param {string} language - Language code (ru, kg, en)
+   * @returns {Promise} Axios response with hierarchy data
+   */
+  getStructureHierarchy: (language = null) => {
+    const endpoint = language
+      ? `/structure/hierarchy/?lang=${language}`
+      : `/structure/hierarchy/`;
+    return api.get(endpoint);
+  },
+
+  /**
+   * Get achievements data
+   * @param {string} language - Language code (ru, kg, en)
+   * @param {string} category - Achievement category filter
+   * @returns {Promise} Axios response with achievements data
+   */
+  getAchievements: (language = null, category = 'all') => {
+    let endpoint = `/achievements/frontend/`;
+    const params = [];
+
+    if (category && category !== 'all') {
+      params.push(`category=${category}`);
+    }
+
+    if (params.length > 0) {
+      endpoint += `?${params.join('&')}`;
+    }
+
+    return api.get(endpoint);
+  },
+
+  /**
+   * Get featured achievements
+   * @param {string} language - Language code (ru, kg, en)
+   * @returns {Promise} Axios response with featured achievements
+   */
+  getFeaturedAchievements: (language = null) => {
+    const endpoint = language
+      ? `/achievements/featured/?lang=${language}`
+      : `/achievements/featured/`;
+    return api.get(endpoint);
+  },
+
+  /**
+   * Get achievement categories
+   * @returns {Promise} Axios response with categories list
+   */
+  getAchievementCategories: () => {
+    return api.get(`/achievements/categories/`);
+  },
+
+  /**
+   * Get university statistics
+   * @param {string} language - Language code (ru, kg, en)
+   * @returns {Promise} Axios response with statistics data
+   */
+  getStatistics: (language = null) => {
+    const endpoint = `/statistics/frontend/`;
+    return api.get(endpoint);
+  },
+
+  /**
+   * Get structure departments by type
+   * @param {string} departmentType - Type of departments (leadership, faculty, etc.)
+   * @param {string} language - Language code (ru, kg, en)
+   * @returns {Promise} Axios response with departments data
+   */
+  getDepartmentsByType: (departmentType, language = null) => {
+    let endpoint = `/structure/by_type/?type=${departmentType}`;
+    if (language) {
+      endpoint += `&lang=${language}`;
+    }
+    return api.get(endpoint);
   },
 };
 
