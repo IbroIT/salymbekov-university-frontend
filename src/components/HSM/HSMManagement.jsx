@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { leadershipAPI } from '../../services/leadershipService';
+import { getLocalizedValue, getLocalizedArray, getCurrentLanguage } from '../../utils/localization';
 
 const LeadershipPage = () => {
   const { t } = useTranslation();

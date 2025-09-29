@@ -19,17 +19,17 @@ const Management = () => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      
+
       // Загружаем данные руководства
       const managementData = await getManagement();
       if (managementData && managementData.length > 0) {
         setManagementData(managementData[0]);
       }
-      
+
       // Загружаем данные учителей
       const teachersData = await getTeachers();
       setTeachersData(teachersData);
-      
+
       setLoading(false);
     };
     fetchData();
@@ -44,7 +44,7 @@ const Management = () => {
   // Функция для получения локализованного текста
   const getLocalizedText = (obj, field) => {
     if (!obj) return '';
-    const lang = i18n.language === 'ky' ? 'kg' : i18n.language;
+    const lang = i18n.language === 'kg' ? 'kg' : i18n.language;
     return obj[`${field}_${lang}`] || obj[`${field}_ru`] || obj[`${field}_en`] || '';
   };
 

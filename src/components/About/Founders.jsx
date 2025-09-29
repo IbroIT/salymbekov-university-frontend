@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { newAboutAPI } from '../../services/newAboutAPI';
 
 const Founders = () => {
   const { t } = useTranslation();
