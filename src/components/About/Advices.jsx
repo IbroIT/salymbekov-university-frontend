@@ -5,7 +5,7 @@ import { useCouncils } from "../../hooks/useCouncils";
 const Advices = () => {
   const { t } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
-
+  
   // Use custom hook for councils
   const {
     sectionsData,
@@ -19,13 +19,65 @@ const Advices = () => {
     sectionHasDocuments,
   } = useCouncils();
 
-  // Get current section data
-  const currentSectionData = getCurrentSectionData();
+  // Get current section data with fallbacks
+  const currentSectionData = getCurrentSectionData() || {
+    title: t("hsm.councils.no_data") || "No data available",
+    description: "",
+    members: [],
+    documents: []
+  };
 
   // Animation on mount
   useEffect(() => {
     setIsVisible(true);
   }, []);
+
+  // Safe checks for content
+  const hasMembers = sectionHasMembers() && 
+    Array.isArray(currentSectionData.members) && 
+    currentSectionData.members.length > 0;
+
+  const hasDocuments = sectionHasDocuments() && 
+    Array.isArray(currentSectionData.documents) && 
+    currentSectionData.documents.length > 0;
+
+  // Format member initials safely
+  const getMemberInitials = (name) => {
+    if (!name || typeof name !== 'string') return '??';
+    const initials = name
+      .split(" ")
+      .filter(n => n && n.length > 0)
+      .map(n => n[0])
+      .join("")
+      .toUpperCase();
+    return initials || '??';
+  };
+
+  // Safe member data getter
+  const getSafeMemberData = (member, index) => {
+    return {
+      id: member?.id || `member-${index}`,
+      name: member?.name || t("hsm.councils.unnamed_member") || "Unnamed Member",
+      position: member?.position || "",
+      department: member?.department || "",
+      bio: member?.bio || "",
+      email: member?.email || "",
+      phone: member?.phone || "",
+      photo: member?.photo || null
+    };
+  };
+
+  // Safe document data getter
+  const getSafeDocumentData = (doc, index) => {
+    return {
+      id: doc?.id || `doc-${index}`,
+      title: doc?.title || t("hsm.councils.unnamed_document") || "Unnamed Document",
+      date: doc?.date || "",
+      description: doc?.description || "",
+      size: doc?.size || "",
+      file_url: doc?.file_url || ""
+    };
+  };
 
   // Loading state
   if (loading) {
@@ -37,7 +89,9 @@ const Advices = () => {
       >
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-center items-center min-h-[400px]">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -71,15 +125,52 @@ const Advices = () => {
                 </svg>
               </div>
               <h3 className="text-lg font-medium text-gray-900 mb-2">
-                {t("hsm.councils.loading_error")}
+                {t("hsm.councils.loading_error") || "Loading Error"}
               </h3>
               <p className="text-gray-600 mb-4">{error}</p>
               <button
                 onClick={() => window.location.reload()}
                 className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
               >
-                {t("hsm.councils.refresh_page")}
+                {t("hsm.councils.refresh_page") || "Refresh Page"}
               </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // No data state
+  if (!sectionsList || sectionsList.length === 0) {
+    return (
+      <div
+        className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+        }`}
+      >
+        <div className="max-w-7xl mx-auto">
+          <div className="flex justify-center items-center min-h-[400px]">
+            <div className="text-center">
+              <svg
+                className="mx-auto h-16 w-16 text-gray-400 mb-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              <h3 className="text-lg font-medium text-gray-900 mb-2">
+                {t("hsm.councils.no_councils") || "No Councils Available"}
+              </h3>
+              <p className="text-gray-600">
+                {t("hsm.councils.no_councils_description") || "There are no councils to display at the moment."}
+              </p>
             </div>
           </div>
         </div>
@@ -94,36 +185,36 @@ const Advices = () => {
       }`}
     >
       <div className="max-w-7xl mx-auto">
-        {/* Заголовок */}
+        {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            {t("hsm.councils.title")}
+            {t("hsm.councils.title") || "Councils"}
           </h1>
           <p className="text-lg text-gray-700 max-w-3xl mx-auto">
-            {t("hsm.councils.subtitle")}
+            {t("hsm.councils.subtitle") || "Expert councils and committees"}
           </p>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-6">
-          {/* Боковая навигация */}
+          {/* Sidebar Navigation */}
           <div className="lg:w-1/4">
             <div className="bg-white rounded-xl shadow-lg overflow-hidden sticky top-6">
               <div className="bg-gradient-to-r from-blue-600 to-indigo-700 p-4 text-white font-bold text-lg">
-                {t("hsm.councils.sections")}
+                {t("hsm.councils.sections") || "Sections"}
               </div>
               <nav className="p-2">
                 <ul className="space-y-1">
-                  {sectionsList.map((section) => (
-                    <li key={section.id}>
+                  {sectionsList.map((section, index) => (
+                    <li key={section?.id || `section-${index}`}>
                       <button
                         className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 ${
                           activeSection === section.id
                             ? "bg-blue-100 text-blue-700 font-medium shadow-sm"
                             : "text-gray-700 hover:bg-gray-100"
                         }`}
-                        onClick={() => changeActiveSection(section.id)}
+                        onClick={() => section?.id && changeActiveSection(section.id)}
                       >
-                        {section.name}
+                        {section?.name || t("hsm.councils.unnamed_section") || "Unnamed Section"}
                       </button>
                     </li>
                   ))}
@@ -132,152 +223,186 @@ const Advices = () => {
             </div>
           </div>
 
-          {/* Основной контент */}
+          {/* Main Content */}
           <div className="lg:w-3/4">
             <div className="bg-white rounded-xl shadow-xl p-6 transition-all duration-500">
-              {/* Заголовок раздела */}
+              {/* Section Header */}
               <div className="mb-6 pb-4 border-b border-gray-200">
                 <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
                   {currentSectionData.title}
                 </h2>
-                <p className="text-gray-600 mt-2">
-                  {currentSectionData.description}
-                </p>
+                {currentSectionData.description && (
+                  <p className="text-gray-600 mt-2">
+                    {currentSectionData.description}
+                  </p>
+                )}
               </div>
 
-              {/* Контент раздела - члены */}
-              {sectionHasMembers() && (
+              {/* Members Content */}
+              {hasMembers && (
                 <div className="space-y-6">
                   <h3 className="text-xl font-bold text-gray-800">
-                    {t("hsm.councils.composition")}
+                    {t("hsm.councils.composition") || "Composition"}
                   </h3>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {currentSectionData.members.map((member, index) => (
-                      <div
-                        key={member.id}
-                        className="bg-gradient-to-br from-white to-blue-50 rounded-xl shadow-md overflow-hidden border border-blue-100 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
-                        style={{ animationDelay: `${index * 100}ms` }}
-                      >
-                        <div className="p-6">
-                          <div className="flex items-center mb-4">
-                            {member.photo ? (
-                              <img
-                                src={member.photo}
-                                alt={member.name}
-                                className="w-16 h-16 rounded-full object-cover mr-4"
-                              />
-                            ) : (
-                              <div className="w-16 h-16 bg-blue-200 rounded-full flex items-center justify-center text-blue-700 font-bold text-xl mr-4">
-                                {member.name
-                                  .split(" ")
-                                  .map((n) => n[0])
-                                  .join("")}
+                    {currentSectionData.members.map((member, index) => {
+                      const safeMember = getSafeMemberData(member, index);
+                      return (
+                        <div
+                          key={safeMember.id}
+                          className="bg-gradient-to-br from-white to-blue-50 rounded-xl shadow-md overflow-hidden border border-blue-100 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
+                        >
+                          <div className="p-6">
+                            <div className="flex items-center mb-4">
+                              {safeMember.photo ? (
+                                <img
+                                  src={safeMember.photo}
+                                  alt={safeMember.name}
+                                  className="w-16 h-16 rounded-full object-cover mr-4"
+                                  onError={(e) => {
+                                    e.target.style.display = 'none';
+                                  }}
+                                />
+                              ) : null}
+                              <div 
+                                className="w-16 h-16 bg-blue-200 rounded-full flex items-center justify-center text-blue-700 font-bold text-xl mr-4"
+                              >
+                                {getMemberInitials(safeMember.name)}
+                              </div>
+                              <div>
+                                <h3 className="font-bold text-lg text-gray-900">
+                                  {safeMember.name}
+                                </h3>
+                                {safeMember.position && (
+                                  <p className="text-blue-600 text-sm">
+                                    {safeMember.position}
+                                  </p>
+                                )}
+                              </div>
+                            </div>
+                            
+                            {safeMember.department && (
+                              <div className="mb-3">
+                                <span className="text-xs font-medium bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
+                                  {safeMember.department}
+                                </span>
                               </div>
                             )}
-                            <div>
-                              <h3 className="font-bold text-lg text-gray-900">
-                                {member.name}
-                              </h3>
-                              <p className="text-blue-600 text-sm">
-                                {member.position}
-                              </p>
-                            </div>
-                          </div>
-                          <div className="mb-3">
-                            <span className="text-xs font-medium bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
-                              {member.department}
-                            </span>
-                          </div>
-                          <p className="text-gray-700 text-sm">{member.bio}</p>
+                            
+                            {safeMember.bio && (
+                              <p className="text-gray-700 text-sm">{safeMember.bio}</p>
+                            )}
 
-                          {/* Контактная информация */}
-                          {(member.email || member.phone) && (
-                            <div className="mt-3 pt-3 border-t border-gray-100">
-                              {member.email && (
-                                <p className="text-xs text-gray-600 mb-1">
-                                  <strong>{t("hsm.councils.email")}:</strong>{" "}
-                                  {member.email}
-                                </p>
-                              )}
-                              {member.phone && (
-                                <p className="text-xs text-gray-600">
-                                  <strong>{t("hsm.councils.phone")}:</strong>{" "}
-                                  {member.phone}
-                                </p>
-                              )}
-                            </div>
-                          )}
+                            {/* Contact Information */}
+                            {(safeMember.email || safeMember.phone) && (
+                              <div className="mt-3 pt-3 border-t border-gray-100">
+                                {safeMember.email && (
+                                  <p className="text-xs text-gray-600 mb-1">
+                                    <strong>{t("hsm.councils.email") || "Email"}:</strong>{" "}
+                                    <a 
+                                      href={`mailto:${safeMember.email}`} 
+                                      className="text-blue-600 hover:text-blue-800"
+                                    >
+                                      {safeMember.email}
+                                    </a>
+                                  </p>
+                                )}
+                                {safeMember.phone && (
+                                  <p className="text-xs text-gray-600">
+                                    <strong>{t("hsm.councils.phone") || "Phone"}:</strong>{" "}
+                                    <a 
+                                      href={`tel:${safeMember.phone}`} 
+                                      className="text-blue-600 hover:text-blue-800"
+                                    >
+                                      {safeMember.phone}
+                                    </a>
+                                  </p>
+                                )}
+                              </div>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
               )}
 
-              {/* Контент раздела - документы */}
-              {sectionHasDocuments() && (
-                <div className="space-y-6">
+              {/* Documents Content */}
+              {hasDocuments && (
+                <div className="space-y-6 mt-8">
                   <h3 className="text-xl font-bold text-gray-800">
-                    {t("hsm.councils.documents")}
+                    {t("hsm.councils.documents") || "Documents"}
                   </h3>
 
                   <div className="space-y-4">
-                    {currentSectionData.documents.map((doc, index) => (
-                      <div
-                        key={doc.id}
-                        className="flex flex-col md:flex-row md:items-center justify-between p-4 bg-blue-50 rounded-lg border border-blue-100 hover:bg-blue-100 transition-colors duration-300"
-                        style={{ animationDelay: `${index * 100}ms` }}
-                      >
-                        <div className="mb-2 md:mb-0">
-                          <h4 className="font-medium text-gray-900">
-                            {doc.title}
-                          </h4>
-                          <p className="text-sm text-gray-600">
-                            {t("hsm.councils.publish_date")}: {doc.date}
-                          </p>
-                          {doc.description && (
-                            <p className="text-sm text-gray-500 mt-1">
-                              {doc.description}
-                            </p>
-                          )}
-                        </div>
-                        <div className="flex items-center space-x-4">
-                          <span className="text-sm text-gray-500">
-                            {doc.size}
-                          </span>
-                          <button
-                            className="flex items-center text-blue-600 hover:text-blue-800 font-medium"
-                            onClick={() => {
-                              if (doc.file_url) {
-                                window.open(doc.file_url, "_blank");
+                    {currentSectionData.documents.map((doc, index) => {
+                      const safeDoc = getSafeDocumentData(doc, index);
+                      return (
+                        <div
+                          key={safeDoc.id}
+                          className="flex flex-col md:flex-row md:items-center justify-between p-4 bg-blue-50 rounded-lg border border-blue-100 hover:bg-blue-100 transition-colors duration-300"
+                        >
+                          <div className="mb-2 md:mb-0">
+                            <h4 className="font-medium text-gray-900">
+                              {safeDoc.title}
+                            </h4>
+                            {safeDoc.date && (
+                              <p className="text-sm text-gray-600">
+                                {t("hsm.councils.publish_date") || "Published"}: {safeDoc.date}
+                              </p>
+                            )}
+                            {safeDoc.description && (
+                              <p className="text-sm text-gray-500 mt-1">
+                                {safeDoc.description}
+                              </p>
+                            )}
+                          </div>
+                          <div className="flex items-center space-x-4">
+                            {safeDoc.size && (
+                              <span className="text-sm text-gray-500">
+                                {safeDoc.size}
+                              </span>
+                            )}
+                            <button
+                              className="flex items-center text-blue-600 hover:text-blue-800 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                              onClick={() => {
+                                if (safeDoc.file_url) {
+                                  window.open(safeDoc.file_url, "_blank");
+                                }
+                              }}
+                              disabled={!safeDoc.file_url}
+                              title={safeDoc.file_url ? 
+                                (t("hsm.councils.download") || "Download") : 
+                                (t("hsm.councils.no_file") || "File not available")
                               }
-                            }}
-                          >
-                            <svg
-                              className="w-5 h-5 mr-1"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
                             >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                              />
-                            </svg>
-                            {t("hsm.councils.download")}
-                          </button>
+                              <svg
+                                className="w-5 h-5 mr-1"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                                />
+                              </svg>
+                              {t("hsm.councils.download") || "Download"}
+                            </button>
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
               )}
 
-              {/* Сообщение, если в разделе нет контента */}
-              {!sectionHasMembers() && !sectionHasDocuments() && (
+              {/* Empty section message */}
+              {!hasMembers && !hasDocuments && (
                 <div className="text-center py-10">
                   <svg
                     className="mx-auto h-16 w-16 text-gray-300"
@@ -293,10 +418,10 @@ const Advices = () => {
                     />
                   </svg>
                   <h3 className="mt-4 text-lg font-medium text-gray-900">
-                    {t("hsm.councils.preparing_info")}
+                    {t("hsm.councils.preparing_info") || "Information in Preparation"}
                   </h3>
                   <p className="mt-2 text-gray-500">
-                    {t("hsm.councils.content_in_progress")}
+                    {t("hsm.councils.content_in_progress") || "Content for this section is currently being prepared."}
                   </p>
                 </div>
               )}

@@ -260,6 +260,7 @@ export const councilsAPI = {
   getCouncils: async () => {
     try {
       const response = await researchAPI.get("/councils/");
+      console.log("API Response:", response.data); // Debug log
 
       if (response.data && response.data.results) {
         const councils = response.data.results;
@@ -268,7 +269,7 @@ export const councilsAPI = {
         const sectionsData = {};
         const sectionsList = [];
 
-        councils.forEach((council) => {
+        councils.forEach((council, index) => {
           const councilId = council.id.toString();
 
           // Get current language
@@ -279,19 +280,55 @@ export const councilsAPI = {
 
           // Map language suffixes
           const langSuffix = currentLanguage === "en" ? "_en" :
-            currentLanguage === "kg" ? "_kg" : "_ru";
+                            currentLanguage === "kg" ? "_kg" : "_ru";
 
-          // Transform members from JSON array to objects with required fields
-          const members = (council[`members${langSuffix}`] || []).map((member, index) => ({
-            id: `${councilId}_member_${index}`,
-            name: typeof member === "string" ? member : member.name || member,
-            position: typeof member === "object" ? member.position || "" : "",
-            department: typeof member === "object" ? member.department || "" : "",
-            bio: typeof member === "object" ? member.bio || "" : "",
-            email: typeof member === "object" ? member.email || "" : "",
-            phone: typeof member === "object" ? member.phone || "" : "",
-            photo: typeof member === "object" ? member.photo || null : null,
-          }));
+          // FIX: Safely handle members data - the main issue
+          let members = [];
+          try {
+            // Check if members data exists in the language-specific field
+            const membersData = council[`members${langSuffix}`];
+            
+            if (Array.isArray(membersData)) {
+              // If it's already an array, use it directly
+              members = membersData.map((member, memberIndex) => ({
+                id: `${councilId}_member_${memberIndex}`,
+                name: typeof member === "string" ? member : member.name || member || `Member ${memberIndex + 1}`,
+                position: typeof member === "object" ? member.position || "" : "",
+                department: typeof member === "object" ? member.department || "" : "",
+                bio: typeof member === "object" ? member.bio || "" : "",
+                email: typeof member === "object" ? member.email || "" : "",
+                phone: typeof member === "object" ? member.phone || "" : "",
+                photo: typeof member === "object" ? member.photo || null : null,
+              }));
+            } else if (membersData && typeof membersData === 'object') {
+              // If it's a single object, wrap it in array
+              members = [{
+                id: `${councilId}_member_0`,
+                name: membersData.name || membersData || "Member",
+                position: membersData.position || "",
+                department: membersData.department || "",
+                bio: membersData.bio || "",
+                email: membersData.email || "",
+                phone: membersData.phone || "",
+                photo: membersData.photo || null,
+              }];
+            } else if (typeof membersData === 'string') {
+              // If it's a string, create a basic member object
+              members = [{
+                id: `${councilId}_member_0`,
+                name: membersData,
+                position: "",
+                department: "",
+                bio: "",
+                email: "",
+                phone: "",
+                photo: null,
+              }];
+            }
+          } catch (error) {
+            console.warn(`Error processing members for council ${councilId}:`, error);
+            members = [];
+          }
 
           // Add chairman and secretary as members if they exist
           const chairman = council[`chairman${langSuffix}`];
@@ -302,7 +339,7 @@ export const councilsAPI = {
               id: `${councilId}_chairman`,
               name: chairman,
               position: currentLanguage === "en" ? "Chairman" :
-                currentLanguage === "kg" ? "Төрага" : "Председатель",
+                      currentLanguage === "kg" ? "Төрага" : "Председатель",
               department: "",
               bio: "",
               email: council.contact_email || "",
@@ -316,7 +353,7 @@ export const councilsAPI = {
               id: `${councilId}_secretary`,
               name: secretary,
               position: currentLanguage === "en" ? "Secretary" :
-                currentLanguage === "kg" ? "Катчы" : "Секретарь",
+                      currentLanguage === "kg" ? "Катчы" : "Секретарь",
               department: "",
               bio: "",
               email: council.contact_email || "",
@@ -328,8 +365,8 @@ export const councilsAPI = {
           // Create section data
           sectionsData[councilId] = {
             id: councilId,
-            title: council[`name${langSuffix}`] || council.name_ru,
-            description: council[`description${langSuffix}`] || council.description_ru,
+            title: council[`name${langSuffix}`] || council.name_ru || `Council ${index + 1}`,
+            description: council[`description${langSuffix}`] || council.description_ru || "",
             members: members,
             documents: [], // No documents in the current model
             responsibilities: council[`responsibilities${langSuffix}`] || "",
@@ -339,9 +376,11 @@ export const councilsAPI = {
           // Create section list item
           sectionsList.push({
             id: councilId,
-            name: council[`name${langSuffix}`] || council.name_ru,
+            name: council[`name${langSuffix}`] || council.name_ru || `Council ${index + 1}`,
           });
         });
+
+        console.log("Processed sections data:", { sectionsData, sectionsList }); // Debug log
 
         return {
           sectionsData: sectionsData,
@@ -349,78 +388,22 @@ export const councilsAPI = {
           count: councils.length,
         };
       } else {
-        throw new Error("Failed to fetch councils - invalid response format");
+        console.warn("No results in API response:", response.data);
+        // Return empty data structure instead of throwing error
+        return {
+          sectionsData: {},
+          sectionsList: [],
+          count: 0,
+        };
       }
     } catch (error) {
       console.error("Error fetching councils:", error);
-      throw error;
-    }
-  },
-
-  /**
-   * Get detailed information about specific council
-   * @param {string} id - Council ID
-   * @returns {Promise<Object>} Council data object
-   */
-  getCouncilDetail: async (id) => {
-    try {
-      const response = await researchAPI.get(`/councils/${id}/`);
-
-      if (response.data) {
-        const council = response.data;
-
-        // Get current language
-        let currentLanguage = "ru";
-        if (typeof localStorage !== "undefined") {
-          currentLanguage = localStorage.getItem("i18nextLng") || "ru";
-        }
-
-        // Map language suffixes
-        const langSuffix = currentLanguage === "en" ? "_en" :
-          currentLanguage === "kg" ? "_kg" : "_ru";
-
-        return {
-          id: council.id,
-          name: council[`name${langSuffix}`] || council.name_ru,
-          description: council[`description${langSuffix}`] || council.description_ru,
-          chairman: council[`chairman${langSuffix}`] || "",
-          secretary: council[`secretary${langSuffix}`] || "",
-          members: council[`members${langSuffix}`] || [],
-          responsibilities: council[`responsibilities${langSuffix}`] || "",
-          meeting_schedule: council[`meeting_schedule${langSuffix}`] || "",
-          contact_email: council.contact_email || "",
-          contact_phone: council.contact_phone || "",
-        };
-      } else {
-        throw new Error("Failed to fetch council details");
-      }
-    } catch (error) {
-      console.error("Error fetching council details:", error);
-      throw error;
-    }
-  },
-
-  /**
-   * Get council types list for navigation
-   * @returns {Promise<Array>} Array of council types
-   */
-  getCouncilTypes: async () => {
-    try {
-      const response = await researchAPI.get("/councils/");
-
-      if (response.data && response.data.results) {
-        return response.data.results.map(council => ({
-          id: council.id,
-          name: council.name_ru,
-          name_en: council.name_en,
-          name_kg: council.name_kg,
-        }));
-      } else {
-        return [];
-      }
-    } catch (error) {
-      console.error("Error fetching council types:", error);
-      return [];
+      // Return empty data structure on error
+      return {
+        sectionsData: {},
+        sectionsList: [],
+        count: 0,
+      };
     }
   },
 };

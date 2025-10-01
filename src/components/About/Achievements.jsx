@@ -174,7 +174,6 @@ const AchievementsPage = () => {
       <section className="py-16 bg-gradient-to-br from-white to-blue-50">
         <div className="container mx-auto px-4 text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
-          <p className="mt-4 text-gray-600">{t('common.loading', 'Загрузка...')}</p>
         </div>
       </section>
     );
@@ -186,7 +185,6 @@ const AchievementsPage = () => {
       <section className="py-16 bg-gradient-to-br from-white to-blue-50">
         <div className="container mx-auto px-4 text-center">
           <div className="text-red-500 mb-4">❌</div>
-          <p className="text-gray-600">{t('common.error', 'Произошла ошибка при загрузке данных')}</p>
         </div>
       </section>
     );
@@ -276,24 +274,6 @@ const AchievementsPage = () => {
                 t={t}
               />
             ))}
-          </div>
-        </section>
-
-        {/* Призыв к действию */}
-        <section className="text-center bg-white rounded-2xl shadow-xl p-12 max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold text-gray-800 mb-4">
-            {t('achievement.cta.title')}
-          </h2>
-          <p className="text-gray-600 mb-8 text-lg">
-            {t('achievement.cta.description')}
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full font-medium transition-all duration-300 transform hover:scale-105 shadow-lg">
-              {t('achievement.cta.applyButton')}
-            </button>
-            <button className="border-2 border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-3 rounded-full font-medium transition-all duration-300 transform hover:scale-105">
-              {t('achievement.cta.learnMoreButton')}
-            </button>
           </div>
         </section>
       </div>

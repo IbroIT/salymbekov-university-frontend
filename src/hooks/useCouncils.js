@@ -13,23 +13,53 @@ export const useCouncils = () => {
   const [error, setError] = useState(null);
   const [activeSection, setActiveSection] = useState("");
 
-  // Fetch councils data
+  // Fetch councils data with error handling
   const fetchCouncils = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
 
       const data = await councilsAPI.getCouncils();
-      setSectionsData(data.sectionsData);
-      setSectionsList(data.sectionsList);
+      
+      // Validate and sanitize the data
+      const sanitizedSectionsData = {};
+      const dataSections = data?.sectionsData || {};
+      
+      Object.entries(dataSections).forEach(([key, section]) => {
+        if (section && typeof section === 'object') {
+          sanitizedSectionsData[key] = {
+            title: section.title || '',
+            description: section.description || '',
+            members: Array.isArray(section.members) ? section.members : [],
+            documents: Array.isArray(section.documents) ? section.documents : []
+          };
+        }
+      });
+
+      const sanitizedSectionsList = Array.isArray(data?.sectionsList) 
+        ? data.sectionsList
+            .filter(section => section && section.id && section.name)
+            .map(section => ({
+              id: section.id,
+              name: section.name || 'Unnamed Section'
+            }))
+        : [];
+
+      setSectionsData(sanitizedSectionsData);
+      setSectionsList(sanitizedSectionsList);
 
       // Set first section as active if none selected
-      if (!activeSection && data.sectionsList.length > 0) {
-        setActiveSection(data.sectionsList[0].id);
+      if (!activeSection && sanitizedSectionsList.length > 0) {
+        setActiveSection(sanitizedSectionsList[0].id);
       }
     } catch (err) {
-      setError(err.message || "Failed to fetch councils");
+      const errorMessage = err?.message || "Failed to fetch councils data";
+      setError(errorMessage);
       console.error("Error in useCouncils:", err);
+      
+      // Set empty state on error
+      setSectionsData({});
+      setSectionsList([]);
     } finally {
       setLoading(false);
     }
@@ -42,19 +72,22 @@ export const useCouncils = () => {
 
   // Get current section data
   const getCurrentSectionData = () => {
-    return sectionsData[activeSection] || null;
+    if (!activeSection || !sectionsData[activeSection]) {
+      return null;
+    }
+    return sectionsData[activeSection];
   };
 
   // Check if section has members
   const sectionHasMembers = (sectionId = activeSection) => {
     const section = sectionsData[sectionId];
-    return section && section.members && section.members.length > 0;
+    return section && Array.isArray(section.members) && section.members.length > 0;
   };
 
   // Check if section has documents
   const sectionHasDocuments = (sectionId = activeSection) => {
     const section = sectionsData[sectionId];
-    return section && section.documents && section.documents.length > 0;
+    return section && Array.isArray(section.documents) && section.documents.length > 0;
   };
 
   // Get section by ID
@@ -64,7 +97,7 @@ export const useCouncils = () => {
 
   // Search sections by name
   const searchSections = (query) => {
-    if (!query) return sectionsList;
+    if (!query || !Array.isArray(sectionsList)) return sectionsList;
 
     const lowercaseQuery = query.toLowerCase();
     return sectionsList.filter((section) =>
@@ -120,9 +153,17 @@ export const useCouncilDetail = (slug) => {
       setError(null);
 
       const data = await councilsAPI.getCouncilDetail(councilSlug);
-      setCouncilData(data);
+      
+      // Sanitize the data
+      const sanitizedData = data ? {
+        ...data,
+        members: Array.isArray(data.members) ? data.members : [],
+        documents: Array.isArray(data.documents) ? data.documents : []
+      } : null;
+      
+      setCouncilData(sanitizedData);
     } catch (err) {
-      setError(err.message || "Failed to fetch council details");
+      setError(err?.message || "Failed to fetch council details");
       console.error("Error in useCouncilDetail:", err);
     } finally {
       setLoading(false);
@@ -139,14 +180,12 @@ export const useCouncilDetail = (slug) => {
 
   // Check if council has members
   const hasMembers = () => {
-    return councilData && councilData.members && councilData.members.length > 0;
+    return councilData && Array.isArray(councilData.members) && councilData.members.length > 0;
   };
 
   // Check if council has documents
   const hasDocuments = () => {
-    return (
-      councilData && councilData.documents && councilData.documents.length > 0
-    );
+    return councilData && Array.isArray(councilData.documents) && councilData.documents.length > 0;
   };
 
   // Get members count

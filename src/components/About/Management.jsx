@@ -35,11 +35,12 @@ const Management = () => {
     fetchData();
   }, []);
 
-  const sections = [
-    { id: 'management', name: t('management.organizationTitle'), icon: '👑' },
-    { id: 'teachers', name: 'Преподаватели', icon: '🎓' },
-    { id: 'statistics', name: t('management.statistics'), icon: '📊' }
-  ];
+const sections = [
+  { id: 'management', name: t('management.organizationTitle'), icon: '👑' },
+  { id: 'teachers', name: t('management.teachersTitle'), icon: '🎓' },
+  { id: 'statistics', name: t('management.statistics'), icon: '📊' }
+];
+
 
   // Функция для получения локализованного текста
   const getLocalizedText = (obj, field) => {
@@ -57,7 +58,8 @@ const Management = () => {
       return (
         <div className="text-center py-12">
           <div className="inline-block w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 animate-pulse"></div>
-          <p className="mt-6 text-gray-600 text-lg">Загрузка структуры...</p>
+          <p className="mt-6 text-gray-600 text-lg">{t('management.loadingStructure')}</p>
+
         </div>
       );
     }
@@ -123,16 +125,9 @@ const Management = () => {
                           alt={member.head}
                           className="w-24 h-24 rounded-full mx-auto border-4 border-white/80 shadow-lg object-cover"
                         />
-                        <div className="absolute -bottom-2 -right-2 bg-white text-blue-600 px-2 py-1 rounded-full text-xs font-bold shadow-md">
-                          {levelIndex === 0 ? '👑' : '💼'}
-                        </div>
                       </div>
                       <h3 className="text-xl font-bold mb-2">{member.head}</h3>
                       <p className="text-blue-100 text-sm mb-3">{member.position}</p>
-                      <div className="text-xs text-blue-200 space-y-1">
-                        <p>📧 {member.email}</p>
-                        <p>📞 {member.phone}</p>
-                      </div>
                     </div>
                   </div>
                 ))}
@@ -177,14 +172,13 @@ const Management = () => {
     return (
       <div className="space-y-6">
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Преподаватели</h2>
-          <p className="text-gray-600">Наши квалифицированные преподаватели</p>
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">{t('management.teachersTitle')}</h2>
+          <p className="text-gray-600">{t('management.teachersSubtitle')}</p>
         </div>
         
         {loading ? (
           <div className="text-center py-12">
             <div className="inline-block w-8 h-8 rounded-full bg-green-200/60 animate-pulse"></div>
-            <p className="mt-4 text-gray-600">Загрузка преподавателей...</p>
           </div>
         ) : teachersData.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -192,7 +186,6 @@ const Management = () => {
           </div>
         ) : (
           <div className="text-center py-12">
-            <p className="text-gray-600">Данные о преподавателях не найдены</p>
           </div>
         )}
       </div>
@@ -211,7 +204,8 @@ const Management = () => {
       <div className="space-y-6">
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold text-gray-900 mb-4">{t('management.statistics')}</h2>
-          <p className="text-gray-600">Ключевые показатели университета</p>
+          <p className="text-gray-600"> {t('management.statisticsSubtitle')} </p>
+
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -229,17 +223,19 @@ const Management = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
           <div className="bg-white rounded-xl p-6 border border-blue-100 shadow-sm">
-            <h3 className="text-xl font-semibold text-gray-800 mb-4">О университете</h3>
+            <h3 className="text-xl font-semibold text-gray-800 mb-4">{t('management.aboutUniversityTitle')}</h3>
             <p className="text-gray-600 leading-relaxed">
-              {t('management.description')}
+              {t('management.aboutUniversityText')}
             </p>
+
           </div>
           
           <div className="bg-white rounded-xl p-6 border border-blue-100 shadow-sm">
-            <h3 className="text-xl font-semibold text-gray-800 mb-4">Наша миссия</h3>
+           <h3 className="text-xl font-semibold text-gray-800 mb-4">{t('management.missionTitle')}</h3>
             <p className="text-gray-600 leading-relaxed">
-              Подготовка высококвалифицированных специалистов в области медицины и здравоохранения
+              {t('management.missionText')}
             </p>
+
           </div>
         </div>
       </div>
@@ -281,7 +277,7 @@ const Management = () => {
           <div className="lg:w-1/4">
             <div className="bg-white rounded-xl shadow-lg overflow-hidden sticky top-6">
               <div className="bg-gradient-to-r from-blue-600 to-indigo-700 p-4 text-white font-bold text-lg">
-                Разделы
+                {t('management.sections')}
               </div>
               <nav className="p-2">
                 <ul className="space-y-1">

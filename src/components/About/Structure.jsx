@@ -158,7 +158,7 @@ const StructurePage = () => {
       return (
         <div className="text-center py-12">
           <div className="inline-block w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 animate-pulse"></div>
-          <p className="mt-6 text-gray-600 text-lg">Загрузка структуры руководства...</p>
+          <p className="mt-6 text-gray-600 text-lg">{t('structure.leadership.loading')}</p>
         </div>
       );
     }
@@ -166,7 +166,7 @@ const StructurePage = () => {
     if (!managementData) {
       return (
         <div className="text-center py-12">
-          <p className="text-gray-600">Данные о руководстве не найдены</p>
+          <p className="text-gray-600">{t('structure.leadership.notFound')}</p>
         </div>
       );
     }
@@ -211,7 +211,8 @@ const StructurePage = () => {
                   </h3>
                   <div className="space-y-2">
                     <p className="text-gray-600 flex items-center">
-                      <span className="font-medium mr-2">Руководитель:</span>
+                      <span className="font-medium mr-2">{t('structure.labels.leader')}:</span>
+
                       <span className="text-blue-600">{getLocalizedText(member, 'full_name')}</span>
                     </p>
                   </div>
@@ -258,7 +259,7 @@ const StructurePage = () => {
                           {faculty.name}
                         </h3>
                         <p className="text-gray-600">
-                          <span className="font-medium">Декан:</span> {faculty.head}
+                          <span className="font-medium">{t('structure.labels.dean')}:</span> {faculty.head}
                         </p>
                       </div>
                     </div>
@@ -280,9 +281,7 @@ const StructurePage = () => {
 
                   {isExpanded && (
                     <div className="mt-6 pl-16">
-                      <h4 className="font-semibold text-gray-800 mb-4">
-                        Кафедры факультета:
-                      </h4>
+                      <h4 className="font-semibold text-gray-800 mb-4">{t('structure.labels.departments')}:</h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                         {faculty.departments.map((department, deptIndex) => (
                           <div
@@ -339,11 +338,11 @@ const StructurePage = () => {
                   </h3>
                   <div className="space-y-2">
                     <p className="text-gray-600 flex items-center">
-                      <span className="font-medium mr-2">Руководитель:</span>
+                      <span className="font-medium mr-2">{t('structure.labels.leader')}:</span>
                       <span className="text-purple-600">{item.head}</span>
                     </p>
                     <p className="text-gray-600 flex items-center">
-                      <span className="font-medium mr-2">Телефон:</span>
+                      <span className="font-medium mr-2">{t('structure.labels.phone')}:</span>
                       <span className="text-purple-500">{item.phone}</span>
                     </p>
                   </div>
