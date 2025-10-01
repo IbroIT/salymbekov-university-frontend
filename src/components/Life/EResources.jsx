@@ -17,7 +17,7 @@ const EResources = () => {
   const filteredData = resourcesData.filter(resource => {
     const matchesCategory = activeCategory === 'all' || resource.category === activeCategory;
     const matchesSearch = resource.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         resource.description.toLowerCase().includes(searchTerm.toLowerCase());
+      resource.description.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
@@ -35,25 +35,25 @@ const EResources = () => {
   };
 
   const statistics = [
-    { 
-      label: t('eresources.statistics.total'), 
-      value: stats.total, 
-      color: 'from-purple-500 to-purple-600' 
+    {
+      label: t('eresources.statistics.total'),
+      value: stats.total,
+      color: 'from-purple-500 to-purple-600'
     },
-    { 
-      label: t('eresources.statistics.online'), 
-      value: stats.online, 
-      color: 'from-green-500 to-green-600' 
+    {
+      label: t('eresources.statistics.online'),
+      value: stats.online,
+      color: 'from-green-500 to-green-600'
     },
-    { 
-      label: t('eresources.statistics.users'), 
-      value: `${stats.users}+`, 
-      color: 'from-blue-500 to-blue-600' 
+    {
+      label: t('eresources.statistics.users'),
+      value: `${stats.users}+`,
+      color: 'from-blue-500 to-blue-600'
     },
-    { 
-      label: t('eresources.statistics.popular'), 
-      value: stats.popular, 
-      color: 'from-orange-500 to-orange-600' 
+    {
+      label: t('eresources.statistics.popular'),
+      value: stats.popular,
+      color: 'from-orange-500 to-orange-600'
     }
   ];
 
@@ -79,11 +79,10 @@ const EResources = () => {
         {/* Статистика */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
           {statistics.map((stat, index) => (
-            <div 
+            <div
               key={index}
-              className={`bg-gradient-to-br ${stat.color} rounded-2xl p-6 text-white shadow-2xl transform hover:scale-105 transition-all duration-300 ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-              }`}
+              className={`bg-gradient-to-br ${stat.color} rounded-2xl p-6 text-white shadow-2xl transform hover:scale-105 transition-all duration-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+                }`}
               style={{ transitionDelay: `${index * 100}ms` }}
             >
               <div className="text-3xl font-bold mb-2">{stat.value}</div>
@@ -116,17 +115,15 @@ const EResources = () => {
               <button
                 key={category.id}
                 onClick={() => setActiveCategory(category.id)}
-                className={`flex items-center px-4 py-3 rounded-xl transition-all duration-300 transform hover:scale-105 ${
-                  activeCategory === category.id
+                className={`flex items-center px-4 py-3 rounded-xl transition-all duration-300 transform hover:scale-105 ${activeCategory === category.id
                     ? 'bg-cyan-500 text-white shadow-lg'
                     : 'bg-white/10 backdrop-blur-lg text-gray-300 hover:bg-white/20 border border-white/20'
-                }`}
+                  }`}
               >
                 <span className="mr-2">{category.icon}</span>
                 <span className="font-medium">{category.name}</span>
-                <span className={`ml-2 px-2 py-1 rounded-full text-xs ${
-                  activeCategory === category.id ? 'bg-white/20' : 'bg-black/20'
-                }`}>
+                <span className={`ml-2 px-2 py-1 rounded-full text-xs ${activeCategory === category.id ? 'bg-white/20' : 'bg-black/20'
+                  }`}>
                   {category.count}
                 </span>
               </button>
@@ -139,9 +136,8 @@ const EResources = () => {
           {filteredData.map((resource, index) => (
             <div
               key={resource.id}
-              className={`group bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 overflow-hidden shadow-2xl transition-all duration-500 transform hover:-translate-y-3 ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-              } ${hoveredCard === resource.id ? 'scale-105 shadow-3xl' : ''}`}
+              className={`group bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 overflow-hidden shadow-2xl transition-all duration-500 transform hover:-translate-y-3 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+                } ${hoveredCard === resource.id ? 'scale-105 shadow-3xl' : ''}`}
               style={{ transitionDelay: `${index * 100}ms` }}
               onMouseEnter={() => setHoveredCard(resource.id)}
               onMouseLeave={() => setHoveredCard(null)}
@@ -155,12 +151,11 @@ const EResources = () => {
 
               {/* Статус */}
               <div className="absolute top-4 left-4 flex items-center">
-                <div className={`w-3 h-3 rounded-full mr-2 ${
-                  resource.status === 'online' ? 'bg-green-400 animate-pulse' : 'bg-yellow-400'
-                }`}></div>
+                <div className={`w-3 h-3 rounded-full mr-2 ${resource.status === 'online' ? 'bg-green-400 animate-pulse' : 'bg-yellow-400'
+                  }`}></div>
                 <span className="text-xs text-white/80 font-medium">
-                  {resource.status === 'online' 
-                    ? t('eresources.resources.status.online') 
+                  {resource.status === 'online'
+                    ? t('eresources.resources.status.online')
                     : t('eresources.resources.status.maintenance')
                   }
                 </span>
@@ -234,25 +229,6 @@ const EResources = () => {
           </div>
         )}
       </div>
-
-      {/* CSS анимации */}
-      <style jsx>{`
-        @keyframes blob {
-          0% { transform: translate(0px, 0px) scale(1); }
-          33% { transform: translate(30px, -50px) scale(1.1); }
-          66% { transform: translate(-20px, 20px) scale(0.9); }
-          100% { transform: translate(0px, 0px) scale(1); }
-        }
-        .animate-blob {
-          animation: blob 7s infinite;
-        }
-        .animation-delay-2000 {
-          animation-delay: 2s;
-        }
-        .animation-delay-4000 {
-          animation-delay: 4s;
-        }
-      `}</style>
     </section>
   );
 };

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission API Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .result {
+            margin: 20px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background: #f9f9f9;
+        }
+
+        .error {
+            border-color: #dc3545;
+            background: #f8d7da;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Mission API Test</h1>
+    <button onclick="testApi()">Test API Call</button>
+    <div id="result" class="result"></div>
+
+    <script>
+        async function testApi() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = 'Testing...';
+            resultDiv.className = 'result';
+
+            try {
+                console.log('Starting API test');
+
+                const response = await fetch('http://localhost:8000/api/mission/api/complete/', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                    }
+                });
+
+                console.log('Response:', response);
+                console.log('Status:', response.status);
+                console.log('Headers:', response.headers);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+                console.log('Data:', data);
+
+                resultDiv.innerHTML = `
+                    <h3>✅ Success!</h3>
+                    <p><strong>Status:</strong> ${response.status}</p>
+                    <p><strong>Mission Title:</strong> ${data.mission?.title || 'N/A'}</p>
+                    <p><strong>History Items:</strong> ${data.history?.length || 0}</p>
+                    <p><strong>Values:</strong> ${data.values?.length || 0}</p>
+                    <p><strong>Priorities:</strong> ${data.priorities?.length || 0}</p>
+                    <p><strong>Achievements:</strong> ${data.achievements?.length || 0}</p>
+                    <details>
+                        <summary>Raw Data</summary>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    </details>
+                `;
+
+            } catch (error) {
+                console.error('Error:', error);
+                resultDiv.innerHTML = `
+                    <h3>❌ Error</h3>
+                    <p><strong>Message:</strong> ${error.message}</p>
+                    <p><strong>Stack:</strong></p>
+                    <pre>${error.stack}</pre>
+                `;
+                resultDiv.className = 'result error';
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,89 +1,78 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import axios from 'axios';
 
 const ClubsSection = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
   const [activeSection, setActiveSection] = useState('all');
   const [clubs, setClubs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   // Animation on mount
   useEffect(() => {
     setIsVisible(true);
   }, []);
 
+  // Загрузка данных с API
   useEffect(() => {
-    // Имитация загрузки данных
-    const loadedClubs = [
-      {
-        id: 1,
-        name: t('clubs.medical.name'),
-        members: 50,
-        description: t('clubs.medical.description'),
-        icon: "🩺",
-        category: 'academic',
-        leader: t('clubs.medical.leader'),
-        schedule: t('clubs.medical.schedule'),
-        location: t('clubs.medical.location')
-      },
-      {
-        id: 2,
-        name: t('clubs.science.name'),
-        members: 35,
-        description: t('clubs.science.description'),
-        icon: "🔬",
-        category: 'academic',
-        leader: t('clubs.science.leader'),
-        schedule: t('clubs.science.schedule'),
-        location: t('clubs.science.location')
-      },
-      {
-        id: 3,
-        name: t('clubs.sports.name'),
-        members: 120,
-        description: t('clubs.sports.description'),
-        icon: "⚽",
-        category: 'sports',
-        leader: t('clubs.sports.leader'),
-        schedule: t('clubs.sports.schedule'),
-        location: t('clubs.sports.location')
-      },
-      {
-        id: 4,
-        name: t('clubs.cultural.name'),
-        members: 45,
-        description: t('clubs.cultural.description'),
-        icon: "🎭",
-        category: 'cultural',
-        leader: t('clubs.cultural.leader'),
-        schedule: t('clubs.cultural.schedule'),
-        location: t('clubs.cultural.location')
-      },
-      {
-        id: 5,
-        name: t('clubs.volunteer.name'),
-        members: 60,
-        description: t('clubs.volunteer.description'),
-        icon: "🤝",
-        category: 'social',
-        leader: t('clubs.volunteer.leader'),
-        schedule: t('clubs.volunteer.schedule'),
-        location: t('clubs.volunteer.location')
-      },
-      {
-        id: 6,
-        name: t('clubs.art.name'),
-        members: 30,
-        description: t('clubs.art.description'),
-        icon: "🎨",
-        category: 'cultural',
-        leader: t('clubs.art.leader'),
-        schedule: t('clubs.art.schedule'),
-        location: t('clubs.art.location')
+    const fetchClubs = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        const response = await axios.get('http://localhost:8000/api/social-opportunities/clubs/');
+        setClubs(response.data.results || response.data);
+      } catch (err) {
+        console.error('Error fetching clubs:', err);
+        setError('Ошибка загрузки данных клубов');
+      } finally {
+        setLoading(false);
       }
-    ];
-    setClubs(loadedClubs);
-  }, [t]);
+    };
+
+    fetchClubs();
+  }, []);
+
+  // Функция для получения правильного поля в зависимости от языка
+  const getLocalizedField = (item, fieldName) => {
+    const currentLang = i18n.language;
+
+    if (currentLang === 'en' && item[`${fieldName}_en`]) {
+      return item[`${fieldName}_en`];
+    } else if (currentLang === 'kg' && item[`${fieldName}_ky`]) {
+      return item[`${fieldName}_ky`];
+    }
+
+    return item[fieldName] || '';
+  };
+
+  // Функция для обработки массивов переводов
+  const getLocalizedArray = (item, fieldName) => {
+    const currentLang = i18n.language;
+
+    if (currentLang === 'en' && item[`${fieldName}_en`] && Array.isArray(item[`${fieldName}_en`])) {
+      return item[`${fieldName}_en`];
+    } else if (currentLang === 'kg' && item[`${fieldName}_ky`] && Array.isArray(item[`${fieldName}_ky`])) {
+      return item[`${fieldName}_ky`];
+    }
+
+    return Array.isArray(item[fieldName]) ? item[fieldName] : [];
+  };
+
+  // Обработка данных клубов с локализацией
+  const processedClubs = clubs.map(club => ({
+    ...club,
+    name: getLocalizedField(club, 'title'), // API использует 'title', а компонент ожидает 'name'
+    description: getLocalizedField(club, 'description'),
+    leader: getLocalizedField(club, 'leader'),
+    schedule: getLocalizedField(club, 'meetings'), // API использует 'meetings', а компонент ожидает 'schedule'
+    achievements: getLocalizedArray(club, 'achievements'),
+    icon: club.image || "👥", // API использует 'image', а компонент ожидает 'icon'
+    location: getLocalizedField(club, 'location') || t('clubs.defaultLocation', 'Университет'), // fallback location
+    social_media_link: club.social_media_link // Ссылка на социальные сети
+  }));
 
   const sections = [
     { id: 'all', name: t('clubs.categories.all'), icon: '🌟' },
@@ -97,9 +86,9 @@ const ClubsSection = () => {
     setActiveSection(sectionId);
   };
 
-  const filteredClubs = activeSection === 'all' 
-    ? clubs 
-    : clubs.filter(club => club.category === activeSection);
+  const filteredClubs = activeSection === 'all'
+    ? processedClubs
+    : processedClubs.filter(club => club.category === activeSection);
 
   const renderAllClubsContent = () => (
     <div className="space-y-6">
@@ -114,7 +103,7 @@ const ClubsSection = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredClubs.map((club) => (
-          <div 
+          <div
             key={club.id}
             className="bg-white rounded-xl p-6 border border-blue-100 hover:shadow-lg transition-all duration-300"
           >
@@ -155,9 +144,18 @@ const ClubsSection = () => {
               </div>
             </div>
 
-            <button className="w-full mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-300 font-medium">
-              {t('clubs.detailsButton')}
-            </button>
+            <a
+              href={club.social_media_link || '#'}
+              target={club.social_media_link ? '_blank' : '_self'}
+              rel={club.social_media_link ? 'noopener noreferrer' : ''}
+              className={`w-full mt-4 px-4 py-2 rounded-lg transition-colors duration-300 font-medium text-center block ${club.social_media_link
+                  ? 'bg-blue-500 text-white hover:bg-blue-600 cursor-pointer'
+                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                }`}
+              onClick={!club.social_media_link ? (e) => e.preventDefault() : undefined}
+            >
+              {club.social_media_link ? t('clubs.joinButton') : t('clubs.comingSoon')}
+            </a>
           </div>
         ))}
       </div>
@@ -177,7 +175,7 @@ const ClubsSection = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {filteredClubs.map((club) => (
-          <div 
+          <div
             key={club.id}
             className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100 hover:shadow-lg transition-all duration-300"
           >
@@ -205,9 +203,18 @@ const ClubsSection = () => {
               <div className="text-sm text-gray-600">
                 <span className="font-medium">{t('clubs.leader')}:</span> {club.leader}
               </div>
-              <button className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-300 text-sm font-medium">
-                {t('clubs.joinButton')}
-              </button>
+              <a
+                href={club.social_media_link || '#'}
+                target={club.social_media_link ? '_blank' : '_self'}
+                rel={club.social_media_link ? 'noopener noreferrer' : ''}
+                className={`px-4 py-2 rounded-lg transition-colors duration-300 text-sm font-medium ${club.social_media_link
+                    ? 'bg-blue-500 text-white hover:bg-blue-600 cursor-pointer'
+                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                  }`}
+                onClick={!club.social_media_link ? (e) => e.preventDefault() : undefined}
+              >
+                {club.social_media_link ? t('clubs.joinButton') : t('clubs.comingSoon')}
+              </a>
             </div>
           </div>
         ))}
@@ -228,7 +235,7 @@ const ClubsSection = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {filteredClubs.map((club) => (
-          <div 
+          <div
             key={club.id}
             className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6 border border-green-100 hover:shadow-lg transition-all duration-300"
           >
@@ -262,6 +269,21 @@ const ClubsSection = () => {
                 <span className="font-medium">{club.location}</span>
               </div>
             </div>
+
+            <div className="mt-4 flex justify-end">
+              <a
+                href={club.social_media_link || '#'}
+                target={club.social_media_link ? '_blank' : '_self'}
+                rel={club.social_media_link ? 'noopener noreferrer' : ''}
+                className={`px-4 py-2 rounded-lg transition-colors duration-300 text-sm font-medium ${club.social_media_link
+                    ? 'bg-green-500 text-white hover:bg-green-600 cursor-pointer'
+                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                  }`}
+                onClick={!club.social_media_link ? (e) => e.preventDefault() : undefined}
+              >
+                {club.social_media_link ? t('clubs.joinButton') : t('clubs.comingSoon')}
+              </a>
+            </div>
           </div>
         ))}
       </div>
@@ -281,7 +303,7 @@ const ClubsSection = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {filteredClubs.map((club) => (
-          <div 
+          <div
             key={club.id}
             className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-6 border border-purple-100 hover:shadow-lg transition-all duration-300"
           >
@@ -309,9 +331,18 @@ const ClubsSection = () => {
               <div className="text-sm text-gray-600">
                 <span className="font-medium">{t('clubs.leader')}:</span> {club.leader}
               </div>
-              <button className="px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors duration-300 text-sm font-medium">
-                {t('clubs.detailsButton')}
-              </button>
+              <a
+                href={club.social_media_link || '#'}
+                target={club.social_media_link ? '_blank' : '_self'}
+                rel={club.social_media_link ? 'noopener noreferrer' : ''}
+                className={`px-4 py-2 rounded-lg transition-colors duration-300 text-sm font-medium ${club.social_media_link
+                    ? 'bg-purple-500 text-white hover:bg-purple-600 cursor-pointer'
+                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                  }`}
+                onClick={!club.social_media_link ? (e) => e.preventDefault() : undefined}
+              >
+                {club.social_media_link ? t('clubs.detailsButton') : t('clubs.comingSoon')}
+              </a>
             </div>
           </div>
         ))}
@@ -332,7 +363,7 @@ const ClubsSection = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {filteredClubs.map((club) => (
-          <div 
+          <div
             key={club.id}
             className="bg-gradient-to-br from-orange-50 to-red-50 rounded-xl p-6 border border-orange-100 hover:shadow-lg transition-all duration-300"
           >
@@ -366,6 +397,21 @@ const ClubsSection = () => {
                 <span className="font-medium">{club.location}</span>
               </div>
             </div>
+
+            <div className="mt-4 flex justify-end">
+              <a
+                href={club.social_media_link || '#'}
+                target={club.social_media_link ? '_blank' : '_self'}
+                rel={club.social_media_link ? 'noopener noreferrer' : ''}
+                className={`px-4 py-2 rounded-lg transition-colors duration-300 text-sm font-medium ${club.social_media_link
+                    ? 'bg-orange-500 text-white hover:bg-orange-600 cursor-pointer'
+                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                  }`}
+                onClick={!club.social_media_link ? (e) => e.preventDefault() : undefined}
+              >
+                {club.social_media_link ? t('clubs.joinButton') : t('clubs.comingSoon')}
+              </a>
+            </div>
           </div>
         ))}
       </div>
@@ -391,57 +437,83 @@ const ClubsSection = () => {
 
   return (
     <div
-      className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-      }`}
+      className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+        }`}
     >
       <div className="max-w-7xl mx-auto">
-        {/* Заголовок */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            {t('clubs.title')}
-          </h1>
-          <p className="text-lg text-gray-700 max-w-3xl mx-auto">
-            {t('clubs.subtitle')}
-          </p>
-        </div>
+        {/* Loading состояние */}
+        {loading && (
+          <div className="text-center py-12">
+            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+            <p className="mt-4 text-gray-600">{t('common.loading', 'Загрузка...')}</p>
+          </div>
+        )}
 
-        <div className="flex flex-col lg:flex-row gap-6">
-          {/* Боковая навигация */}
-          <div className="lg:w-1/4">
-            <div className="bg-white rounded-xl shadow-lg overflow-hidden sticky top-6">
-              <div className="bg-gradient-to-r from-blue-600 to-indigo-700 p-4 text-white font-bold text-lg">
-                {t('clubs.categories.title')}
+        {/* Error состояние */}
+        {error && (
+          <div className="text-center py-12">
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+              {error}
+            </div>
+            <button
+              onClick={() => window.location.reload()}
+              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+            >
+              {t('common.retry', 'Попробовать снова')}
+            </button>
+          </div>
+        )}
+
+        {/* Основной контент */}
+        {!loading && !error && (
+          <>
+            {/* Заголовок */}
+            <div className="text-center mb-8">
+              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                {t('clubs.title')}
+              </h1>
+              <p className="text-lg text-gray-700 max-w-3xl mx-auto">
+                {t('clubs.subtitle')}
+              </p>
+            </div>
+
+            <div className="flex flex-col lg:flex-row gap-6">
+              {/* Боковая навигация */}
+              <div className="lg:w-1/4">
+                <div className="bg-white rounded-xl shadow-lg overflow-hidden sticky top-6">
+                  <div className="bg-gradient-to-r from-blue-600 to-indigo-700 p-4 text-white font-bold text-lg">
+                    {t('clubs.categories.title')}
+                  </div>
+                  <nav className="p-2">
+                    <ul className="space-y-1">
+                      {sections.map((section) => (
+                        <li key={section.id}>
+                          <button
+                            className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 flex items-center ${activeSection === section.id
+                                ? "bg-blue-100 text-blue-700 font-medium shadow-sm"
+                                : "text-gray-700 hover:bg-gray-100"
+                              }`}
+                            onClick={() => changeActiveSection(section.id)}
+                          >
+                            <span className="text-lg mr-3">{section.icon}</span>
+                            {section.name}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </nav>
+                </div>
               </div>
-              <nav className="p-2">
-                <ul className="space-y-1">
-                  {sections.map((section) => (
-                    <li key={section.id}>
-                      <button
-                        className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 flex items-center ${
-                          activeSection === section.id
-                            ? "bg-blue-100 text-blue-700 font-medium shadow-sm"
-                            : "text-gray-700 hover:bg-gray-100"
-                        }`}
-                        onClick={() => changeActiveSection(section.id)}
-                      >
-                        <span className="text-lg mr-3">{section.icon}</span>
-                        {section.name}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
-            </div>
-          </div>
 
-          {/* Основной контент */}
-          <div className="lg:w-3/4">
-            <div className="bg-white rounded-xl shadow-xl p-6 transition-all duration-500">
-              {renderContent()}
+              {/* Основной контент */}
+              <div className="lg:w-3/4">
+                <div className="bg-white rounded-xl shadow-xl p-6 transition-all duration-500">
+                  {renderContent()}
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          </>
+        )}
       </div>
     </div>
   );

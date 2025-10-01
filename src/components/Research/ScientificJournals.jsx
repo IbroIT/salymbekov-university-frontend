@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { useTranslation } from "react-i18next";
+import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { researchAPI } from '../../services/researchService';
 
 const ScientificJournals = () => {
   const { t, i18n } = useTranslation();
@@ -20,41 +21,42 @@ const ScientificJournals = () => {
 
   const fetchJournals = async () => {
     try {
+      console.log('🔍 Journals: Starting to fetch journals...');
       setLoading(true);
-      const response = await fetch('https://su-med-backend-35d3d951c74b.herokuapp.com/research/api/journals/');
-      
-      if (!response.ok) {
-        throw new Error('Failed to fetch journals');
+      const data = await researchAPI.getScientificJournals();
+      console.log('✅ Journals: Received data:', data);
+      console.log('📚 Journals: Data type:', typeof data, 'Array?', Array.isArray(data));
+
+      if (data && data.results) {
+        console.log('📚 Journals: Using data.results:', data.results.length, 'items');
+        setJournalsData(data.results);
+      } else if (Array.isArray(data)) {
+        console.log('📚 Journals: Using data directly:', data.length, 'items');
+        setJournalsData(data);
+      } else {
+        console.log('📚 Journals: Data format unexpected, setting empty array');
+        setJournalsData([]);
       }
 
-      const data = await response.json();
-      setJournalsData(data.results || data);
       setError(null);
     } catch (err) {
-      console.error('Error fetching journals:', err);
-      setError(t('research.journals.noData', 'Не удалось загрузить данные'));
+      console.error('❌ Journals: Error fetching journals:', err);
+      setError('Ошибка загрузки журналов');
+      setJournalsData([]);
     } finally {
       setLoading(false);
     }
-  };
-
-  const fetchJournalDetails = async (journalId) => {
+  }; const fetchJournalDetails = async (journalId) => {
     try {
       setIssuesLoading(true);
-      const [journalResponse, issuesResponse] = await Promise.all([
-        fetch(`https://su-med-backend-35d3d951c74b.herokuapp.com/research/api/journals/${journalId}/`),
-        fetch(`https://su-med-backend-35d3d951c74b.herokuapp.com/research/api/journal-issues/by_journal/?journal_id=${journalId}`)
+
+      const [journalData, issuesData] = await Promise.all([
+        researchAPI.getJournalDetails(journalId),
+        researchAPI.getJournalIssuesByJournal(journalId)
       ]);
 
-      if (!journalResponse.ok || !issuesResponse.ok) {
-        throw new Error('Failed to fetch journal details');
-      }
-
-      const journalData = await journalResponse.json();
-      const issuesData = await issuesResponse.json();
-
       setSelectedJournal(journalData);
-      setJournalIssues(issuesData);
+      setJournalIssues(Array.isArray(issuesData) ? issuesData : []);
       setActiveSection("archive");
     } catch (err) {
       setError(t('research.journals.noData', 'Не удалось загрузить данные'));
@@ -115,9 +117,8 @@ const ScientificJournals = () => {
   if (loading) {
     return (
       <div
-        className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${
-          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-        }`}
+        className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}
       >
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-center items-center min-h-[400px]">
@@ -132,9 +133,8 @@ const ScientificJournals = () => {
   if (error) {
     return (
       <div
-        className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${
-          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-        }`}
+        className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}
       >
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-center items-center min-h-[400px]">
@@ -173,9 +173,8 @@ const ScientificJournals = () => {
 
   return (
     <div
-      className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-      }`}
+      className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+        }`}
     >
       <div className="max-w-7xl mx-auto">
         {/* Заголовок */}
@@ -200,22 +199,24 @@ const ScientificJournals = () => {
                   {sectionsList.map((section) => (
                     <li key={section.id}>
                       <button
-                        className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 ${
-                          activeSection === section.id
+                        className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 flex items-center justify-between ${activeSection === section.id
                             ? "bg-blue-100 text-blue-700 font-medium shadow-sm"
                             : "text-gray-700 hover:bg-gray-100"
-                        }`}
+                          }`}
                         onClick={() => {
                           setActiveSection(section.id);
                           setSelectedJournal(null);
                           setJournalIssues([]);
                         }}
                       >
-                        {section.name}
+                        <span>{section.name}</span>
+                        <span className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded-full">
+                          {journalsData.length}
+                        </span>
                       </button>
                     </li>
                   ))}
-                  
+
                   {/* Кнопка назад для архива */}
                   {activeSection === "archive" && selectedJournal && (
                     <li>
@@ -294,20 +295,20 @@ const ScientificJournals = () => {
                               />
                             </div>
                           )}
-                          
+
                           <div className="p-6">
                             <div className="flex justify-between items-start mb-3">
                               <h3 className="text-lg font-bold text-gray-900">
                                 {getFieldByLanguage(journal, 'title')}
                               </h3>
-                              
+
                               {journal.impact_factor && (
                                 <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-bold">
                                   IF: {journal.impact_factor}
                                 </span>
                               )}
                             </div>
-                            
+
                             <p className="text-gray-700 mb-4 text-sm line-clamp-3">
                               {getFieldByLanguage(journal, 'description')}
                             </p>
@@ -319,7 +320,7 @@ const ScientificJournals = () => {
                                 </span>
                                 <span>{getFieldByLanguage(journal, 'editor_in_chief')}</span>
                               </div>
-                              
+
                               <div className="flex items-center text-sm text-gray-600">
                                 <span className="font-semibold text-blue-600 mr-2">
                                   {t("research.journals.frequency", "Периодичность")}:
@@ -389,12 +390,12 @@ const ScientificJournals = () => {
                           />
                         </div>
                       )}
-                      
+
                       <div className="flex-1">
                         <h3 className="text-2xl font-bold text-gray-800 mb-4">
                           {getFieldByLanguage(selectedJournal, 'title')}
                         </h3>
-                        
+
                         <p className="text-gray-700 mb-4">
                           {getFieldByLanguage(selectedJournal, 'description')}
                         </p>
@@ -445,7 +446,7 @@ const ScientificJournals = () => {
                       <h3 className="text-xl font-bold text-gray-800">
                         {t("research.journals.allIssues", "Все выпуски")}
                       </h3>
-                      
+
                       {journalIssues.length === 0 ? (
                         <div className="text-center py-8">
                           <p className="text-gray-500">
@@ -474,7 +475,7 @@ const ScientificJournals = () => {
                                       </span>
                                     )}
                                   </div>
-                                  
+
                                   {getFieldByLanguage(issue, 'title') && (
                                     <p className="text-gray-600 text-sm mb-3">
                                       {getFieldByLanguage(issue, 'title')}

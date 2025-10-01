@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from './LanguageSwitcher';
 import DefaultLogo from "../assets/logo-salymbekov-university-site2.png";
-import ScrolledLogo  from "../assets/Logo_white3.png";
+import ScrolledLogo from "../assets/Logo_white3.png";
 const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
   const { t, i18n } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -115,8 +115,8 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
         { title: t('nav.courses'), link: '/admissions/courses' },
         { title: t('nav.procedure'), link: '/admissions/procedure' },
         // { title: t('nav.payments'), link: '/admissions/payments' },
-        { 
-          title: t('nav.tuition'), 
+        {
+          title: t('nav.tuition'),
           hasNested: true,
           nestedItems: [
             { title: t('nav.for_citizens_kg'), link: '/admissions/tuition/citizens-kg' },
@@ -148,7 +148,7 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
         //     { title: t('nav.for_foreign_citizens'), link: '/admissions/apply/foreign-citizens' },
         //   ]
         // },
-        
+
       ]
     },
     research: {
@@ -174,8 +174,8 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
         // { title: t('nav.dormitories'), link: '/infrastructure/dormitories' },
       ]
     },
-    
-    
+
+
     news: {
       title: t('nav.news'),
       submenu: [
@@ -195,37 +195,36 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
   };
 
   return (
-    <nav 
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
-        isScrolled 
-          ? 'bg-white py-2' 
+    <nav
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${isScrolled
+          ? 'bg-white py-2'
           : 'bg-gradient-to-r from-blue-900 to-blue-800 py-1'
-      }`}
+        }`}
       ref={menuRef}
     >
       <div className="mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 w-full">
           {/* Логотип - левая часть */}
           <div className="flex-shrink-0">
-      <a href="/" className="flex items-center group">
-        <div
-          className="h-14 px-3 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-105"
-        >
-          <img
-            src={isScrolled ? DefaultLogo : ScrolledLogo}
-            alt="Logo"
-            className="h-10 w-auto object-contain transition-opacity duration-300"
-          />
-        </div>
-      </a>
-    </div>
+            <a href="/" className="flex items-center group">
+              <div
+                className="h-14 px-3 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-105"
+              >
+                <img
+                  src={isScrolled ? DefaultLogo : ScrolledLogo}
+                  alt="Logo"
+                  className="h-10 w-auto object-contain transition-opacity duration-300"
+                />
+              </div>
+            </a>
+          </div>
 
 
           {/* Центральное меню - скрыто на мобильных */}
           <div className="flex items-center space-x-6">
             <div className="hidden min-[1475px]:flex flex-1 justify-center">
               {Object.entries(menuData).map(([key, item]) => (
-                <div 
+                <div
                   key={key}
                   className="relative"
                   onMouseEnter={() => {
@@ -243,23 +242,20 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
                   }}
                 >
                   <button
-                    className={`relative px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-300 group ${
-                      activeMenu === key
+                    className={`relative px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-300 group ${activeMenu === key
                         ? 'text-white bg-blue-600 shadow-lg'
                         : isScrolled
                           ? 'text-blue-800 hover:text-blue-600 hover:bg-blue-50'
                           : 'text-blue-100 hover:text-white hover:bg-blue-700/50'
-                    }`}
+                      }`}
                   >
                     <span className="relative z-10">{item.title}</span>
-                    <div className={`absolute inset-0 bg-gradient-to-r from-blue-600 to-blue-500 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
-                      isScrolled ? '' : 'group-hover:opacity-100'
-                    }`}></div>
-                    
+                    <div className={`absolute inset-0 bg-gradient-to-r from-blue-600 to-blue-500 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${isScrolled ? '' : 'group-hover:opacity-100'
+                      }`}></div>
+
                     {/* Индикатор при наведении */}
-                    <div className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-blue-400 transition-all duration-300 group-hover:w-3/4 ${
-                      activeMenu === key ? 'w-3/4' : ''
-                    }`}></div>
+                    <div className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-blue-400 transition-all duration-300 group-hover:w-3/4 ${activeMenu === key ? 'w-3/4' : ''
+                      }`}></div>
                   </button>
 
                   {/* Выпадающее меню с анимацией */}
@@ -341,19 +337,18 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
             <div className="hidden md:block">
               <a
                 href="/admissions/apply"
-                className={`px-4 py-2 rounded-lg font-semibold transition-all duration-300 hover:shadow-lg hover:scale-105 ${
-                  isScrolled
+                className={`px-4 py-2 rounded-lg font-semibold transition-all duration-300 hover:shadow-lg hover:scale-105 ${isScrolled
                     ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800'
                     : 'bg-white text-blue-800 hover:bg-blue-50'
-                }`}
+                  }`}
               >
                 {t('nav.apply')}
               </a>
             </div>
-            
+
             {/* Переключатель языка */}
             <div className="relative" ref={langRef}>
-              <LanguageSwitcher 
+              <LanguageSwitcher
                 variant={isScrolled ? 'outline' : 'default'}
                 showText={true}
                 onChange={handleLanguageChange}
@@ -361,16 +356,15 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
                 currentLanguage={currentLanguage}
               />
             </div>
-            
+
             {/* Кнопка мобильного меню */}
             <div className="block min-[1475px]:hidden">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className={`inline-flex items-center justify-center p-3 rounded-xl transition-all duration-300 hover:scale-110 ${
-                  isScrolled 
-                    ? 'text-blue-900 hover:bg-blue-100' 
+                className={`inline-flex items-center justify-center p-3 rounded-xl transition-all duration-300 hover:scale-110 ${isScrolled
+                    ? 'text-blue-900 hover:bg-blue-100'
                     : 'text-white hover:bg-white/20'
-                } focus:outline-none backdrop-blur-sm`}
+                  } focus:outline-none backdrop-blur-sm`}
                 aria-expanded="false"
               >
                 <span className="sr-only">Open main menu</span>
@@ -391,11 +385,8 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
 
       {/* Мобильное меню с анимацией */}
       {isMenuOpen && (
-        <div 
-          className="block min-[1475px]:hidden bg-white/95 backdrop-blur-md shadow-xl transform transition-all duration-300 ease-out"
-          style={{
-            animation: 'slideDown 0.3s ease-out'
-          }}
+        <div
+          className="block min-[1475px]:hidden bg-white/95 backdrop-blur-md shadow-xl transform transition-all duration-300 ease-out animate-in slide-in-from-top-2 fade-in"
         >
           <div className="px-4 pt-2 pb-6 space-y-1">
             {/* Кнопка подачи заявки в мобильном меню */}
@@ -408,21 +399,20 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
                 {t('nav.apply')}
               </a>
             </div>
-            
+
             {Object.entries(menuData).map(([key, item]) => (
               <div key={key} className="relative">
                 <button
                   onClick={() => setActiveMenu(activeMenu === key ? null : key)}
-                  className={`w-full text-left flex justify-between items-center px-4 py-4 rounded-xl text-base font-semibold transition-colors duration-200 ${
-                    activeMenu === key
+                  className={`w-full text-left flex justify-between items-center px-4 py-4 rounded-xl text-base font-semibold transition-colors duration-200 ${activeMenu === key
                       ? 'bg-blue-600 text-white shadow-lg'
                       : 'text-blue-900 hover:bg-blue-50 hover:text-blue-700'
-                  }`}
+                    }`}
                 >
                   {item.title}
-                  <svg 
+                  <svg
                     className={`h-5 w-5 transition-transform duration-300 ${activeMenu === key ? 'rotate-180' : ''}`}
-                    fill="currentColor" 
+                    fill="currentColor"
                     viewBox="0 0 20 20"
                   >
                     <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
@@ -440,10 +430,10 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
                               className="w-full text-left flex justify-between items-center px-4 py-3 rounded-lg text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200"
                             >
                               {subItem.title}
-                              <svg 
+                              <svg
                                 className={`h-4 w-4 transition-transform duration-300 ${nestedMenu === `${key}-${index}` ? 'rotate-90' : ''}`}
-                                fill="none" 
-                                viewBox="0 0 24 24" 
+                                fill="none"
+                                viewBox="0 0 24 24"
                                 stroke="currentColor"
                               >
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -483,20 +473,6 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
           </div>
         </div>
       )}
-
-      {/* CSS анимации */}
-      <style jsx>{`
-        @keyframes slideDown {
-          from {
-            opacity: 0;
-            transform: translateY(-10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
     </nav>
   );
 };

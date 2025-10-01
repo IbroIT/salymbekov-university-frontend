@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { 
-  DocumentTextIcon, 
-  ClipboardDocumentListIcon, 
+import { studentLifeAPI } from '../../services/studentLifeService';
+import {
+  DocumentTextIcon,
+  ClipboardDocumentListIcon,
   CalendarDaysIcon,
   UserGroupIcon,
   BookmarkIcon,
@@ -15,15 +16,64 @@ import {
 } from '@heroicons/react/24/outline';
 
 const Instructions = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
   const [activeSection, setActiveSection] = useState('all');
   const [savedGuides, setSavedGuides] = useState([]);
   const [expandedSteps, setExpandedSteps] = useState({});
+  const [instructionsData, setInstructionsData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Helper function to get localized value from API data
+  const getLocalizedField = (item, fieldName) => {
+    if (!item) return '';
+
+    const currentLang = i18n.language;
+    if (currentLang === 'en' && item[`${fieldName}_en`]) {
+      return item[`${fieldName}_en`];
+    } else if (currentLang === 'ky' && item[`${fieldName}_kg`]) {
+      return item[`${fieldName}_kg`];
+    }
+    return item[`${fieldName}_ru`] || item[fieldName] || '';
+  };
 
   // Animation on mount
   useEffect(() => {
     setIsVisible(true);
+  }, []);
+
+  // Fetch instructions data
+  useEffect(() => {
+    const fetchInstructions = async () => {
+      try {
+        setLoading(true);
+        console.log('Fetching instructions data...');
+
+        const response = await studentLifeAPI.getInstructions();
+        console.log('Instructions response:', response.data);
+
+        // Handle response structure
+        let data = [];
+        if (response.data && response.data.student_guides) {
+          data = response.data.student_guides;
+        } else if (Array.isArray(response.data)) {
+          data = response.data;
+        }
+
+        console.log('Processed instructions data:', data);
+        setInstructionsData(data);
+        setError(null);
+      } catch (err) {
+        console.error('Error fetching instructions:', err);
+        setError(err.message || String(err));
+        setInstructionsData([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchInstructions();
   }, []);
 
   // Загрузка сохраненных инструкций из localStorage
@@ -43,124 +93,10 @@ const Instructions = () => {
     { id: 'all', name: t('studentLife.instructions.allInstructions'), icon: '📋' },
     { id: 'academic', name: t('studentLife.instructions.academic'), icon: '🎓' },
     { id: 'administrative', name: t('studentLife.instructions.administrative'), icon: '🏢' },
-    { id: 'studentServices', name: t('studentLife.instructions.studentServices'), icon: '👥' },
+    { id: 'documents', name: t('studentLife.instructions.documents'), icon: '📄' },
+    { id: 'financial', name: t('studentLife.instructions.financial'), icon: '💰' },
+    { id: 'appeals', name: t('studentLife.instructions.appeals'), icon: '📝' },
     { id: 'saved', name: t('studentLife.instructions.savedInstructions'), icon: '⭐' }
-  ];
-
-  // Mock data for instructions
-  const instructionsData = [
-    {
-      id: 1,
-      title: t('studentLife.instructions.enrollment.title'),
-      description: t('studentLife.instructions.enrollment.description'),
-      category: 'academic',
-      icon: 'DocumentTextIcon',
-      requirements: [
-        t('studentLife.instructions.enrollment.requirements.0'),
-        t('studentLife.instructions.enrollment.requirements.1'),
-        t('studentLife.instructions.enrollment.requirements.2')
-      ],
-      estimated_time: t('studentLife.instructions.enrollment.estimatedTime'),
-      contact_info: t('studentLife.instructions.enrollment.contactInfo'),
-      steps: [
-        {
-          step_number: 1,
-          title: t('studentLife.instructions.enrollment.steps.0.title'),
-          description: t('studentLife.instructions.enrollment.steps.0.description'),
-          timeframe: t('studentLife.instructions.enrollment.steps.0.timeframe'),
-          details: [
-            t('studentLife.instructions.enrollment.steps.0.details.0'),
-            t('studentLife.instructions.enrollment.steps.0.details.1')
-          ]
-        },
-        {
-          step_number: 2,
-          title: t('studentLife.instructions.enrollment.steps.1.title'),
-          description: t('studentLife.instructions.enrollment.steps.1.description'),
-          timeframe: t('studentLife.instructions.enrollment.steps.1.timeframe'),
-          details: [
-            t('studentLife.instructions.enrollment.steps.1.details.0'),
-            t('studentLife.instructions.enrollment.steps.1.details.1')
-          ]
-        }
-      ]
-    },
-    {
-      id: 2,
-      title: t('studentLife.instructions.dormitory.title'),
-      description: t('studentLife.instructions.dormitory.description'),
-      category: 'studentServices',
-      icon: 'UserGroupIcon',
-      requirements: [
-        t('studentLife.instructions.dormitory.requirements.0'),
-        t('studentLife.instructions.dormitory.requirements.1')
-      ],
-      estimated_time: t('studentLife.instructions.dormitory.estimatedTime'),
-      contact_info: t('studentLife.instructions.dormitory.contactInfo'),
-      steps: [
-        {
-          step_number: 1,
-          title: t('studentLife.instructions.dormitory.steps.0.title'),
-          description: t('studentLife.instructions.dormitory.steps.0.description'),
-          timeframe: t('studentLife.instructions.dormitory.steps.0.timeframe'),
-          details: [
-            t('studentLife.instructions.dormitory.steps.0.details.0'),
-            t('studentLife.instructions.dormitory.steps.0.details.1')
-          ]
-        }
-      ]
-    },
-    {
-      id: 3,
-      title: t('studentLife.instructions.scholarship.title'),
-      description: t('studentLife.instructions.scholarship.description'),
-      category: 'administrative',
-      icon: 'ClipboardDocumentListIcon',
-      requirements: [
-        t('studentLife.instructions.scholarship.requirements.0'),
-        t('studentLife.instructions.scholarship.requirements.1'),
-        t('studentLife.instructions.scholarship.requirements.2')
-      ],
-      estimated_time: t('studentLife.instructions.scholarship.estimatedTime'),
-      contact_info: t('studentLife.instructions.scholarship.contactInfo'),
-      steps: [
-        {
-          step_number: 1,
-          title: t('studentLife.instructions.scholarship.steps.0.title'),
-          description: t('studentLife.instructions.scholarship.steps.0.description'),
-          timeframe: t('studentLife.instructions.scholarship.steps.0.timeframe'),
-          details: [
-            t('studentLife.instructions.scholarship.steps.0.details.0'),
-            t('studentLife.instructions.scholarship.steps.0.details.1')
-          ]
-        }
-      ]
-    },
-    {
-      id: 4,
-      title: t('studentLife.instructions.academicLeave.title'),
-      description: t('studentLife.instructions.academicLeave.description'),
-      category: 'academic',
-      icon: 'CalendarDaysIcon',
-      requirements: [
-        t('studentLife.instructions.academicLeave.requirements.0'),
-        t('studentLife.instructions.academicLeave.requirements.1')
-      ],
-      estimated_time: t('studentLife.instructions.academicLeave.estimatedTime'),
-      contact_info: t('studentLife.instructions.academicLeave.contactInfo'),
-      steps: [
-        {
-          step_number: 1,
-          title: t('studentLife.instructions.academicLeave.steps.0.title'),
-          description: t('studentLife.instructions.academicLeave.steps.0.description'),
-          timeframe: t('studentLife.instructions.academicLeave.steps.0.timeframe'),
-          details: [
-            t('studentLife.instructions.academicLeave.steps.0.details.0'),
-            t('studentLife.instructions.academicLeave.steps.0.details.1')
-          ]
-        }
-      ]
-    }
   ];
 
   const changeActiveSection = (sectionId) => {
@@ -187,116 +123,191 @@ const Instructions = () => {
       'CalendarDaysIcon': CalendarDaysIcon,
       'UserGroupIcon': UserGroupIcon,
       'ClipboardDocumentListIcon': ClipboardDocumentListIcon,
-      'DocumentTextIcon': DocumentTextIcon
+      'DocumentTextIcon': DocumentTextIcon,
+      'AcademicCapIcon': DocumentTextIcon,
+      'BuildingOfficeIcon': DocumentTextIcon
     };
     return iconMap[iconName] || DocumentTextIcon;
   };
 
-  const filteredInstructions = activeSection === 'saved' 
+  const filteredInstructions = activeSection === 'saved'
     ? instructionsData.filter(guide => savedGuides.includes(guide.id))
-    : activeSection === 'all' 
-    ? instructionsData 
-    : instructionsData.filter(guide => guide.category === activeSection);
+    : activeSection === 'all'
+      ? instructionsData
+      : instructionsData.filter(guide => guide.category === activeSection);
 
-  const renderAllInstructionsContent = () => (
-    <div className="space-y-6">
-      <div className="flex items-center mb-6">
-        <div className="p-3 bg-blue-100 rounded-xl mr-4">
-          <span className="text-2xl">📋</span>
+  const renderAllInstructionsContent = () => {
+    if (loading) {
+      return (
+        <div className="flex justify-center items-center py-12">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
         </div>
-        <h2 className="text-3xl font-bold text-gray-900">
-          {t('studentLife.instructions.allInstructions')}
-        </h2>
-      </div>
+      );
+    }
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {filteredInstructions.map((instruction) => {
-          const IconComponent = getIconComponent(instruction.icon);
-          return (
-            <div 
-              key={instruction.id}
-              className="bg-white rounded-xl p-6 border border-blue-100 hover:shadow-lg transition-all duration-300"
-            >
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex items-center">
-                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 mr-4">
-                    <IconComponent className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-gray-800">
-                      {instruction.title}
-                    </h3>
-                    <div className="flex items-center text-sm text-blue-600 mt-1">
-                      <span className="bg-blue-100 px-2 py-1 rounded-full">
-                        {instruction.category}
-                      </span>
+    if (error) {
+      return (
+        <div className="text-center py-12">
+          <div className="text-red-600 mb-4">
+            <svg className="w-16 h-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h3 className="text-lg font-medium text-gray-900 mb-2">
+            {t("studentLife.instructions.loadingError", "Ошибка загрузки данных")}
+          </h3>
+          <p className="text-gray-600 mb-4">{error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            {t("studentLife.instructions.refreshPage", "Обновить страницу")}
+          </button>
+        </div>
+      );
+    }
+
+    if (filteredInstructions.length === 0) {
+      return (
+        <div className="text-center py-12">
+          <div className="text-gray-400 mb-4">
+            <svg className="w-16 h-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          </div>
+          <h3 className="text-lg font-medium text-gray-900 mb-2">
+            {t("studentLife.instructions.noInstructionsFound", "Инструкции не найдены")}
+          </h3>
+          <p className="text-gray-600">
+            {activeSection === 'saved'
+              ? t("studentLife.instructions.noSavedInstructions", "У вас нет сохраненных инструкций")
+              : t("studentLife.instructions.noInstructionsInCategory", "В этой категории пока нет инструкций")
+            }
+          </p>
+        </div>
+      );
+    }
+
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center mb-6">
+          <div className="p-3 bg-blue-100 rounded-xl mr-4">
+            <span className="text-2xl">📋</span>
+          </div>
+          <h2 className="text-3xl font-bold text-gray-900">
+            {activeSection === 'all'
+              ? t('studentLife.instructions.allInstructions')
+              : sections.find(s => s.id === activeSection)?.name || t('studentLife.instructions.allInstructions')
+            }
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {filteredInstructions.map((instruction) => {
+            const IconComponent = getIconComponent(instruction.icon);
+            return (
+              <div
+                key={instruction.id}
+                className="bg-white rounded-xl p-6 border border-blue-100 hover:shadow-lg transition-all duration-300"
+              >
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex items-center">
+                    <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 mr-4">
+                      <IconComponent className="w-6 h-6" />
                     </div>
-                  </div>
-                </div>
-                <button
-                  onClick={() => toggleSaveGuide(instruction.id)}
-                  className="text-gray-400 hover:text-yellow-500 transition-colors"
-                >
-                  {savedGuides.includes(instruction.id) ? (
-                    <BookmarkSlashIcon className="w-5 h-5 text-yellow-500" />
-                  ) : (
-                    <BookmarkIcon className="w-5 h-5" />
-                  )}
-                </button>
-              </div>
-
-              <p className="text-gray-600 mb-4 leading-relaxed">
-                {instruction.description}
-              </p>
-
-              <div className="space-y-3 mb-4">
-                <div className="flex items-center text-sm text-gray-600">
-                  <ClockIcon className="w-4 h-4 mr-2" />
-                  <span>{t('studentLife.instructions.estimatedTime')}: {instruction.estimated_time}</span>
-                </div>
-                <div className="flex items-center text-sm text-gray-600">
-                  <PhoneIcon className="w-4 h-4 mr-2" />
-                  <span>{instruction.contact_info}</span>
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <h4 className="font-semibold text-gray-800 text-sm">
-                  {t('studentLife.instructions.requirements')}:
-                </h4>
-                <ul className="text-sm text-gray-600 space-y-1">
-                  {instruction.requirements.map((req, index) => (
-                    <li key={index} className="flex items-start">
-                      <CheckCircleIcon className="w-4 h-4 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                      <span>{req}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="mt-4 space-y-3">
-                {instruction.steps.slice(0, 2).map((step, index) => (
-                  <div key={index} className="bg-blue-50 rounded-lg p-3">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center">
-                        <div className="w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-xs font-bold mr-3">
-                          {step.step_number}
-                        </div>
-                        <span className="text-sm font-medium text-gray-800">{step.title}</span>
+                    <div>
+                      <h3 className="text-xl font-semibold text-gray-800">
+                        {getLocalizedField(instruction, 'title')}
+                      </h3>
+                      <div className="flex items-center text-sm text-blue-600 mt-1">
+                        <span className="bg-blue-100 px-2 py-1 rounded-full">
+                          {instruction.category}
+                        </span>
                       </div>
-                      <span className="text-xs text-blue-600 bg-blue-100 px-2 py-1 rounded-full">
-                        {step.timeframe}
-                      </span>
                     </div>
                   </div>
-                ))}
+                  <button
+                    onClick={() => toggleSaveGuide(instruction.id)}
+                    className="text-gray-400 hover:text-yellow-500 transition-colors"
+                  >
+                    {savedGuides.includes(instruction.id) ? (
+                      <BookmarkSlashIcon className="w-5 h-5 text-yellow-500" />
+                    ) : (
+                      <BookmarkIcon className="w-5 h-5" />
+                    )}
+                  </button>
+                </div>
+
+                <p className="text-gray-600 mb-4 leading-relaxed">
+                  {getLocalizedField(instruction, 'description')}
+                </p>
+
+                <div className="space-y-3 mb-4">
+                  {getLocalizedField(instruction, 'estimated_time') && (
+                    <div className="flex items-center text-sm text-gray-600">
+                      <ClockIcon className="w-4 h-4 mr-2" />
+                      <span>{t('studentLife.instructions.estimatedTime')}: {getLocalizedField(instruction, 'estimated_time')}</span>
+                    </div>
+                  )}
+                  {getLocalizedField(instruction, 'contact_info') && (
+                    <div className="flex items-center text-sm text-gray-600">
+                      <PhoneIcon className="w-4 h-4 mr-2" />
+                      <span>{getLocalizedField(instruction, 'contact_info')}</span>
+                    </div>
+                  )}
+                </div>
+
+                {instruction.requirements && instruction.requirements.length > 0 && (
+                  <div className="space-y-2">
+                    <h4 className="font-semibold text-gray-800 text-sm">
+                      {t('studentLife.instructions.requirements')}:
+                    </h4>
+                    <ul className="text-sm text-gray-600 space-y-1">
+                      {instruction.requirements.slice(0, 3).map((req, index) => (
+                        <li key={index} className="flex items-start">
+                          <CheckCircleIcon className="w-4 h-4 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
+                          <span>{getLocalizedField(req, 'text')}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {instruction.steps && instruction.steps.length > 0 && (
+                  <div className="mt-4 space-y-3">
+                    {instruction.steps.slice(0, 2).map((step, index) => (
+                      <div key={index} className="bg-blue-50 rounded-lg p-3">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center">
+                            <div className="w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-xs font-bold mr-3">
+                              {step.step_number}
+                            </div>
+                            <span className="text-sm font-medium text-gray-800">{getLocalizedField(step, 'title')}</span>
+                          </div>
+                          {getLocalizedField(step, 'timeframe') && (
+                            <span className="text-xs text-blue-600 bg-blue-100 px-2 py-1 rounded-full">
+                              {getLocalizedField(step, 'timeframe')}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                    {instruction.steps.length > 2 && (
+                      <div className="text-center">
+                        <span className="text-sm text-blue-600">
+                          +{instruction.steps.length - 2} {t('studentLife.instructions.moreSteps', 'больше шагов')}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   const renderInstructionDetail = (instruction) => (
     <div className="space-y-6">
@@ -309,7 +320,7 @@ const Instructions = () => {
             })()}
           </div>
           <h2 className="text-3xl font-bold text-gray-900">
-            {instruction.title}
+            {getLocalizedField(instruction, 'title')}
           </h2>
         </div>
         <div className="flex space-x-2">
@@ -331,7 +342,7 @@ const Instructions = () => {
 
       <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100">
         <p className="text-gray-700 leading-relaxed">
-          {instruction.description}
+          {getLocalizedField(instruction, 'description')}
         </p>
       </div>
 
@@ -342,10 +353,10 @@ const Instructions = () => {
             {t('studentLife.instructions.requirements')}
           </h3>
           <ul className="text-sm text-gray-600 space-y-2">
-            {instruction.requirements.map((req, index) => (
+            {instruction.requirements?.map((req, index) => (
               <li key={index} className="flex items-start">
                 <div className="w-2 h-2 bg-green-500 rounded-full mr-3 mt-1.5 flex-shrink-0"></div>
-                <span>{req}</span>
+                <span>{getLocalizedField(req, 'text')}</span>
               </li>
             ))}
           </ul>
@@ -357,8 +368,13 @@ const Instructions = () => {
             {t('studentLife.instructions.timeframe')}
           </h3>
           <p className="text-sm text-gray-600">
-            {instruction.estimated_time}
+            {getLocalizedField(instruction, 'estimated_time')}
           </p>
+          {getLocalizedField(instruction, 'max_duration') && (
+            <p className="text-sm text-gray-500 mt-2">
+              <strong>{t('studentLife.instructions.maxDuration')}:</strong> {getLocalizedField(instruction, 'max_duration')}
+            </p>
+          )}
         </div>
 
         <div className="bg-white rounded-xl p-4 border border-blue-100">
@@ -367,51 +383,55 @@ const Instructions = () => {
             {t('studentLife.instructions.contacts')}
           </h3>
           <p className="text-sm text-gray-600">
-            {instruction.contact_info}
+            {getLocalizedField(instruction, 'contact_info')}
           </p>
         </div>
       </div>
 
-      <div className="space-y-4">
-        <h3 className="text-xl font-bold text-gray-900">
-          {t('studentLife.instructions.steps')}
-        </h3>
-        {instruction.steps.map((step, index) => (
-          <div key={index} className="bg-white rounded-xl p-5 border border-blue-100">
-            <div className="flex items-start justify-between mb-3">
-              <div className="flex items-start">
-                <div className="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold text-sm mr-4 flex-shrink-0">
-                  {step.step_number}
+      {instruction.steps && instruction.steps.length > 0 && (
+        <div className="space-y-4">
+          <h3 className="text-xl font-bold text-gray-900">
+            {t('studentLife.instructions.steps')}
+          </h3>
+          {instruction.steps.map((step, index) => (
+            <div key={index} className="bg-white rounded-xl p-5 border border-blue-100">
+              <div className="flex items-start justify-between mb-3">
+                <div className="flex items-start">
+                  <div className="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold text-sm mr-4 flex-shrink-0">
+                    {step.step_number}
+                  </div>
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-800">
+                      {getLocalizedField(step, 'title')}
+                    </h4>
+                    <p className="text-gray-600 text-sm mt-1">
+                      {getLocalizedField(step, 'description')}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="text-lg font-semibold text-gray-800">
-                    {step.title}
-                  </h4>
-                  <p className="text-gray-600 text-sm mt-1">
-                    {step.description}
-                  </p>
-                </div>
+                {getLocalizedField(step, 'timeframe') && (
+                  <span className="text-sm text-blue-600 bg-blue-100 px-3 py-1 rounded-full">
+                    {getLocalizedField(step, 'timeframe')}
+                  </span>
+                )}
               </div>
-              <span className="text-sm text-blue-600 bg-blue-100 px-3 py-1 rounded-full">
-                {step.timeframe}
-              </span>
-            </div>
 
-            {step.details && step.details.length > 0 && (
-              <div className="pl-12">
-                <ul className="space-y-2">
-                  {step.details.map((detail, detailIndex) => (
-                    <li key={detailIndex} className="text-sm text-gray-600 flex items-start">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full mr-3 mt-1.5 flex-shrink-0"></div>
-                      <span>{detail}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
+              {step.details && step.details.length > 0 && (
+                <div className="pl-12">
+                  <ul className="space-y-2">
+                    {step.details.map((detail, detailIndex) => (
+                      <li key={detailIndex} className="text-sm text-gray-600 flex items-start">
+                        <div className="w-2 h-2 bg-blue-500 rounded-full mr-3 mt-1.5 flex-shrink-0"></div>
+                        <span>{getLocalizedField(detail, 'text')}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
 
       <div className="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded-xl">
         <div className="flex items-start">
@@ -435,8 +455,16 @@ const Instructions = () => {
     // For simplicity, showing first instruction as detail view
     // In real app, you would manage selected instruction state
     const selectedInstruction = filteredInstructions[0];
-    
-    if (selectedInstruction && activeSection !== 'saved') {
+
+    if (loading) {
+      return (
+        <div className="flex justify-center items-center py-12">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        </div>
+      );
+    }
+
+    if (selectedInstruction && activeSection !== 'saved' && !error) {
       return renderInstructionDetail(selectedInstruction);
     }
 
@@ -445,9 +473,8 @@ const Instructions = () => {
 
   return (
     <div
-      className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-      }`}
+      className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+        }`}
     >
       <div className="max-w-7xl mx-auto">
         {/* Заголовок */}
@@ -469,21 +496,33 @@ const Instructions = () => {
               </div>
               <nav className="p-2">
                 <ul className="space-y-1">
-                  {sections.map((section) => (
-                    <li key={section.id}>
-                      <button
-                        className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 flex items-center ${
-                          activeSection === section.id
-                            ? "bg-blue-100 text-blue-700 font-medium shadow-sm"
-                            : "text-gray-700 hover:bg-gray-100"
-                        }`}
-                        onClick={() => changeActiveSection(section.id)}
-                      >
-                        <span className="text-lg mr-3">{section.icon}</span>
-                        {section.name}
-                      </button>
-                    </li>
-                  ))}
+                  {sections.map((section) => {
+                    const sectionCount = section.id === 'saved'
+                      ? savedGuides.length
+                      : section.id === 'all'
+                        ? instructionsData.length
+                        : instructionsData.filter(guide => guide.category === section.id).length;
+
+                    return (
+                      <li key={section.id}>
+                        <button
+                          className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 flex items-center justify-between ${activeSection === section.id
+                              ? "bg-blue-100 text-blue-700 font-medium shadow-sm"
+                              : "text-gray-700 hover:bg-gray-100"
+                            }`}
+                          onClick={() => changeActiveSection(section.id)}
+                        >
+                          <div className="flex items-center">
+                            <span className="text-lg mr-3">{section.icon}</span>
+                            {section.name}
+                          </div>
+                          <span className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded-full">
+                            {sectionCount}
+                          </span>
+                        </button>
+                      </li>
+                    );
+                  })}
                 </ul>
               </nav>
             </div>

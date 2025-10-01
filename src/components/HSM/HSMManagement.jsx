@@ -4,13 +4,62 @@ import { leadershipAPI } from '../../services/leadershipService';
 import { getLocalizedValue, getLocalizedArray, getCurrentLanguage } from '../../utils/localization';
 
 const LeadershipPage = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
   const [activeSection, setActiveSection] = useState('directorate');
+  const [leadershipData, setLeadershipData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Helper function to get localized value from API data
+  const getLocalizedField = (item, fieldName) => {
+    const currentLang = i18n.language;
+    if (currentLang === 'en' && item[`${fieldName}_en`]) {
+      return item[`${fieldName}_en`];
+    } else if (currentLang === 'ky' && item[`${fieldName}_kg`]) {
+      return item[`${fieldName}_kg`];
+    }
+    return item[fieldName] || '';
+  };
 
   // Animation on mount
   useEffect(() => {
     setIsVisible(true);
+  }, []);
+
+  // Fetch leadership data
+  useEffect(() => {
+    const fetchLeadershipData = async () => {
+      try {
+        setLoading(true);
+        const response = await leadershipAPI.getAll();
+
+        // Handle different response structures
+        let data = response.data;
+        if (data && data.results) {
+          data = data.results; // Handle paginated response
+        }
+
+        // Ensure data is an array
+        if (Array.isArray(data)) {
+          setLeadershipData(data);
+        } else if (data && typeof data === 'object') {
+          setLeadershipData([data]); // Single object response
+        } else {
+          setLeadershipData([]);
+        }
+
+        setError(null);
+      } catch (err) {
+        console.error('Error fetching leadership data:', err);
+        setError('Failed to load leadership data');
+        setLeadershipData([]); // Set empty array on error
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLeadershipData();
   }, []);
 
   const sections = [
@@ -19,319 +68,265 @@ const LeadershipPage = () => {
     { id: 'administration', name: t('leadership.administration'), icon: '🏢' }
   ];
 
-  // Данные руководства
-  const leadershipData = [
-    {
-      id: 1,
-      name: t('leadership.ivanov.name'),
-      position: t('leadership.ivanov.position'),
-      degree: t('leadership.ivanov.degree'),
-      experience: t('leadership.ivanov.experience'),
-      email: "director@meduniversity.ru",
-      phone: "+7 (495) 123-45-67",
-      image: "/api/placeholder/300/300",
-      bio: t('leadership.ivanov.bio'),
-      achievements: t('leadership.ivanov.achievements', { returnObjects: true }),
-      department: t('departments.directorate'),
-      isDirector: true
-    },
-    {
-      id: 2,
-      name: t('leadership.petrova.name'),
-      position: t('leadership.petrova.position'),
-      degree: t('leadership.petrova.degree'),
-      experience: t('leadership.petrova.experience'),
-      email: "study@meduniversity.ru",
-      phone: "+7 (495) 123-45-68",
-      image: "/api/placeholder/300/300",
-      bio: t('leadership.petrova.bio'),
-      achievements: t('leadership.petrova.achievements', { returnObjects: true }),
-      department: t('departments.studyDepartment'),
-      isDirector: true
-    },
-    {
-      id: 3,
-      name: t('leadership.sidorov.name'),
-      position: t('leadership.sidorov.position'),
-      degree: t('leadership.sidorov.degree'),
-      experience: t('leadership.sidorov.experience'),
-      email: "science@meduniversity.ru",
-      phone: "+7 (495) 123-45-69",
-      image: "/api/placeholder/300/300",
-      bio: t('leadership.sidorov.bio'),
-      achievements: t('leadership.sidorov.achievements', { returnObjects: true }),
-      department: t('departments.scienceDepartment'),
-      isDirector: true
-    },
-    {
-      id: 4,
-      name: t('leadership.kozlova.name'),
-      position: t('leadership.kozlova.position'),
-      degree: t('leadership.kozlova.degree'),
-      experience: t('leadership.kozlova.experience'),
-      email: "therapy@meduniversity.ru",
-      phone: "+7 (495) 123-45-70",
-      image: "/api/placeholder/300/300",
-      bio: t('leadership.kozlova.bio'),
-      achievements: t('leadership.kozlova.achievements', { returnObjects: true }),
-      department: t('departments.therapy'),
-      staff: t('leadership.kozlova.staff'),
-      specialization: t('leadership.kozlova.specialization')
-    },
-    {
-      id: 5,
-      name: t('leadership.nikolaev.name'),
-      position: t('leadership.nikolaev.position'),
-      degree: t('leadership.nikolaev.degree'),
-      experience: t('leadership.nikolaev.experience'),
-      email: "surgery@meduniversity.ru",
-      phone: "+7 (495) 123-45-71",
-      image: "/api/placeholder/300/300",
-      bio: t('leadership.nikolaev.bio'),
-      achievements: t('leadership.nikolaev.achievements', { returnObjects: true }),
-      department: t('departments.surgery'),
-      staff: t('leadership.nikolaev.staff'),
-      specialization: t('leadership.nikolaev.specialization')
-    },
-    {
-      id: 6,
-      name: t('leadership.orlova.name'),
-      position: t('leadership.orlova.position'),
-      degree: t('leadership.orlova.degree'),
-      experience: t('leadership.orlova.experience'),
-      email: "pediatrics@meduniversity.ru",
-      phone: "+7 (495) 123-45-72",
-      image: "/api/placeholder/300/300",
-      bio: t('leadership.orlova.bio'),
-      achievements: t('leadership.orlova.achievements', { returnObjects: true }),
-      department: t('departments.pediatrics'),
-      staff: t('leadership.orlova.staff'),
-      specialization: t('leadership.orlova.specialization')
-    },
-    {
-      id: 7,
-      name: t('leadership.vasiliev.name'),
-      position: t('leadership.vasiliev.position'),
-      degree: t('leadership.vasiliev.degree'),
-      experience: t('leadership.vasiliev.experience'),
-      email: "neurology@meduniversity.ru",
-      phone: "+7 (495) 123-45-73",
-      image: "/api/placeholder/300/300",
-      bio: t('leadership.vasiliev.bio'),
-      achievements: t('leadership.vasiliev.achievements', { returnObjects: true }),
-      department: t('departments.neurology'),
-      staff: t('leadership.vasiliev.staff'),
-      specialization: t('leadership.vasiliev.specialization')
-    },
-    {
-      id: 8,
-      name: t('leadership.smirnova.name'),
-      position: t('leadership.smirnova.position'),
-      degree: t('leadership.smirnova.degree'),
-      experience: t('leadership.smirnova.experience'),
-      email: "dentistry@meduniversity.ru",
-      phone: "+7 (495) 123-45-74",
-      image: "/api/placeholder/300/300",
-      bio: t('leadership.smirnova.bio'),
-      achievements: t('leadership.smirnova.achievements', { returnObjects: true }),
-      department: t('departments.dentistry'),
-      staff: t('leadership.smirnova.staff'),
-      specialization: t('leadership.smirnova.specialization')
-    }
-  ];
-
-  const directors = leadershipData.filter(person => person.isDirector);
-  const departmentHeads = leadershipData.filter(person => !person.isDirector);
+  // Filter directors and department heads from API data
+  const directors = Array.isArray(leadershipData) ? leadershipData.filter(person => person.is_director === true) : [];
+  const departmentHeads = Array.isArray(leadershipData) ? leadershipData.filter(person => person.is_director === false) : [];
 
   const changeActiveSection = (sectionId) => {
     setActiveSection(sectionId);
   };
 
-  const renderDirectorateContent = () => (
-    <div className="space-y-6">
-      <div className="flex items-center mb-6">
-        <div className="p-3 bg-blue-100 rounded-xl mr-4">
-          <span className="text-2xl">👑</span>
+  const renderDirectorateContent = () => {
+    if (loading) {
+      return (
+        <div className="flex justify-center items-center py-12">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
         </div>
-        <h2 className="text-3xl font-bold text-gray-900">
-          {t('leadership.directorate')}
-        </h2>
-      </div>
+      );
+    }
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {directors.map((director) => (
-          <div 
-            key={director.id}
-            className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100 hover:shadow-lg transition-all duration-300"
-          >
-            <div className="text-center mb-4">
-              <div className="w-24 h-24 rounded-full overflow-hidden mx-auto mb-4 border-4 border-white shadow-md">
-                <img
-                  src={director.image}
-                  alt={director.name}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">
-                {director.name}
-              </h3>
-              <p className="text-blue-600 font-semibold mb-2">
-                {director.position}
-              </p>
-              <p className="text-gray-600 text-sm mb-3">
-                {director.degree}
-              </p>
-            </div>
+    if (error) {
+      return (
+        <div className="text-center py-12">
+          <p className="text-red-600">{error}</p>
+        </div>
+      );
+    }
 
-            <div className="space-y-3">
-              <div className="flex items-center text-sm text-gray-600">
-                <span className="mr-2">📅</span>
-                <span>{t('leadership.experience')}: {director.experience}</span>
-              </div>
-              <div className="flex items-center text-sm text-gray-600">
-                <span className="mr-2">📧</span>
-                <span>{director.email}</span>
-              </div>
-              <div className="flex items-center text-sm text-gray-600">
-                <span className="mr-2">📞</span>
-                <span>{director.phone}</span>
-              </div>
-            </div>
-
-            <div className="mt-4 pt-4 border-t border-blue-200">
-              <h4 className="font-semibold text-gray-800 mb-3 text-sm">
-                {t('leadership.achievements')}:
-              </h4>
-              <ul className="space-y-2">
-                {director.achievements.slice(0, 3).map((achievement, index) => (
-                  <li key={index} className="flex items-start text-sm text-gray-600">
-                    <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-1.5 mr-2 flex-shrink-0"></span>
-                    <span>{achievement}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center mb-6">
+          <div className="p-3 bg-blue-100 rounded-xl mr-4">
+            <span className="text-2xl">👑</span>
           </div>
-        ))}
-      </div>
-    </div>
-  );
-
-  const renderDepartmentHeadsContent = () => (
-    <div className="space-y-6">
-      <div className="flex items-center mb-6">
-        <div className="p-3 bg-blue-100 rounded-xl mr-4">
-          <span className="text-2xl">🎓</span>
+          <h2 className="text-3xl font-bold text-gray-900">
+            {t('leadership.directorate')}
+          </h2>
         </div>
-        <h2 className="text-3xl font-bold text-gray-900">
-          {t('leadership.departmentHeads')}
-        </h2>
-      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {departmentHeads.map((head) => (
-          <div 
-            key={head.id}
-            className="bg-white rounded-xl p-6 border border-blue-100 hover:shadow-lg transition-all duration-300"
-          >
-            <div className="flex items-start mb-4">
-              <div className="w-16 h-16 rounded-full overflow-hidden mr-4 border-2 border-blue-200">
-                <img
-                  src={head.image}
-                  alt={head.name}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="flex-1">
-                <h3 className="text-lg font-bold text-gray-900 mb-1">
-                  {head.name}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {directors.map((director) => (
+            <div
+              key={director.id}
+              className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100 hover:shadow-lg transition-all duration-300"
+            >
+              <div className="text-center mb-4">
+                <div className="w-24 h-24 rounded-full overflow-hidden mx-auto mb-4 border-4 border-white shadow-md">
+                  <img
+                    src={director.image_url || "/api/placeholder/300/300"}
+                    alt={getLocalizedField(director, 'name')}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">
+                  {getLocalizedField(director, 'name')}
                 </h3>
-                <p className="text-blue-600 font-semibold text-sm mb-1">
-                  {head.position}
+                <p className="text-blue-600 font-semibold mb-2">
+                  {getLocalizedField(director, 'position')}
                 </p>
-                <p className="text-gray-600 text-xs">
-                  {head.department}
+                <p className="text-gray-600 text-sm mb-3">
+                  {getLocalizedField(director, 'degree')}
                 </p>
               </div>
-            </div>
 
-            <div className="space-y-2 mb-4">
-              <div className="flex items-center text-xs text-gray-600">
-                <span className="mr-2">🎓</span>
-                <span>{head.degree}</span>
+              <div className="space-y-3">
+                <div className="flex items-center text-sm text-gray-600">
+                  <span className="mr-2">📅</span>
+                  <span>{t('leadership.experience')}: {getLocalizedField(director, 'experience')}</span>
+                </div>
+                <div className="flex items-center text-sm text-gray-600">
+                  <span className="mr-2">📧</span>
+                  <span>{director.email}</span>
+                </div>
+                <div className="flex items-center text-sm text-gray-600">
+                  <span className="mr-2">📞</span>
+                  <span>{director.phone}</span>
+                </div>
               </div>
-              <div className="flex items-center text-xs text-gray-600">
-                <span className="mr-2">📅</span>
-                <span>{t('leadership.experience')}: {head.experience}</span>
+
+              <div className="mt-4 pt-4 border-t border-blue-200">
+                <h4 className="font-semibold text-gray-800 mb-3 text-sm">
+                  {t('leadership.achievements')}:
+                </h4>
+                <ul className="space-y-2">
+                  {(() => {
+                    const currentLang = i18n.language;
+                    let achievements = director.achievements;
+                    if (currentLang === 'en' && director.achievements_en) {
+                      achievements = director.achievements_en;
+                    } else if (currentLang === 'ky' && director.achievements_kg) {
+                      achievements = director.achievements_kg;
+                    }
+                    return achievements?.slice(0, 3).map((achievement, index) => (
+                      <li key={index} className="flex items-start text-sm text-gray-600">
+                        <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-1.5 mr-2 flex-shrink-0"></span>
+                        <span>{achievement}</span>
+                      </li>
+                    ));
+                  })()}
+                </ul>
               </div>
-              <div className="flex items-center text-xs text-gray-600">
-                <span className="mr-2">👥</span>
-                <span>{head.staff}</span>
-              </div>
             </div>
-
-            <div className="mb-4">
-              <p className="text-xs text-gray-700 font-semibold mb-1">
-                {t('leadership.specialization')}:
-              </p>
-              <p className="text-xs text-gray-600 leading-relaxed">
-                {head.specialization}
-              </p>
-            </div>
-
-            <div className="border-t border-gray-200 pt-3">
-              <div className="flex items-center text-xs text-gray-600">
-                <span className="mr-2">📧</span>
-                <span className="truncate">{head.email}</span>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-
-  const renderAdministrationContent = () => (
-    <div className="space-y-6">
-      <div className="flex items-center mb-6">
-        <div className="p-3 bg-blue-100 rounded-xl mr-4">
-          <span className="text-2xl">🏢</span>
-        </div>
-        <h2 className="text-3xl font-bold text-gray-900">
-          {t('leadership.administration')}
-        </h2>
-      </div>
-
-      <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <h3 className="text-xl font-semibold text-gray-800 mb-4">
-              Административный состав
-            </h3>
-            <p className="text-gray-600 mb-4">
-              Наша административная команда обеспечивает эффективное функционирование 
-              университета и поддержку учебного процесса.
-            </p>
-          </div>
-          
-          <div className="space-y-4">
-            <div className="flex items-center justify-between p-3 bg-white rounded-lg border border-blue-100">
-              <span className="text-gray-700">Учебный отдел</span>
-              <span className="text-blue-600 font-semibold">8 сотрудников</span>
-            </div>
-            <div className="flex items-center justify-between p-3 bg-white rounded-lg border border-blue-100">
-              <span className="text-gray-700">Научный отдел</span>
-              <span className="text-blue-600 font-semibold">6 сотрудников</span>
-            </div>
-            <div className="flex items-center justify-between p-3 bg-white rounded-lg border border-blue-100">
-              <span className="text-gray-700">Международный отдел</span>
-              <span className="text-blue-600 font-semibold">4 сотрудника</span>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
-    </div>
-  );
+    );
+  };
+
+  const renderDepartmentHeadsContent = () => {
+    if (loading) {
+      return (
+        <div className="flex justify-center items-center py-12">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        </div>
+      );
+    }
+
+    if (error) {
+      return (
+        <div className="text-center py-12">
+          <p className="text-red-600">{error}</p>
+        </div>
+      );
+    }
+
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center mb-6">
+          <div className="p-3 bg-blue-100 rounded-xl mr-4">
+            <span className="text-2xl">🎓</span>
+          </div>
+          <h2 className="text-3xl font-bold text-gray-900">
+            {t('leadership.departmentHeads')}
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {departmentHeads.map((head) => (
+            <div
+              key={head.id}
+              className="bg-white rounded-xl p-6 border border-blue-100 hover:shadow-lg transition-all duration-300"
+            >
+              <div className="flex items-start mb-4">
+                <div className="w-16 h-16 rounded-full overflow-hidden mr-4 border-2 border-blue-200">
+                  <img
+                    src={head.image_url || "/api/placeholder/300/300"}
+                    alt={getLocalizedField(head, 'name')}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-bold text-gray-900 mb-1">
+                    {getLocalizedField(head, 'name')}
+                  </h3>
+                  <p className="text-blue-600 font-semibold text-sm mb-1">
+                    {getLocalizedField(head, 'position')}
+                  </p>
+                  <p className="text-gray-600 text-xs">
+                    {getLocalizedField(head, 'department')}
+                  </p>
+                </div>
+              </div>
+
+              <div className="space-y-2 mb-4">
+                <div className="flex items-center text-xs text-gray-600">
+                  <span className="mr-2">🎓</span>
+                  <span>{getLocalizedField(head, 'degree')}</span>
+                </div>
+                <div className="flex items-center text-xs text-gray-600">
+                  <span className="mr-2">📅</span>
+                  <span>{t('leadership.experience')}: {getLocalizedField(head, 'experience')}</span>
+                </div>
+                {head.staff_count && getLocalizedField(head, 'staff_count') && (
+                  <div className="flex items-center text-xs text-gray-600">
+                    <span className="mr-2">👥</span>
+                    <span>{getLocalizedField(head, 'staff_count')}</span>
+                  </div>
+                )}
+              </div>
+
+              {head.specialization && getLocalizedField(head, 'specialization') && (
+                <div className="mb-4">
+                  <p className="text-xs text-gray-700 font-semibold mb-1">
+                    {t('leadership.specialization')}:
+                  </p>
+                  <p className="text-xs text-gray-600 leading-relaxed">
+                    {getLocalizedField(head, 'specialization')}
+                  </p>
+                </div>
+              )}
+
+              <div className="border-t border-gray-200 pt-3">
+                <div className="flex items-center text-xs text-gray-600">
+                  <span className="mr-2">📧</span>
+                  <span className="truncate">{head.email}</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
+  const renderAdministrationContent = () => {
+    if (loading) {
+      return (
+        <div className="flex justify-center items-center py-12">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        </div>
+      );
+    }
+
+    if (error) {
+      return (
+        <div className="text-center py-12">
+          <p className="text-red-600">{error}</p>
+        </div>
+      );
+    }
+
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center mb-6">
+          <div className="p-3 bg-blue-100 rounded-xl mr-4">
+            <span className="text-2xl">🏢</span>
+          </div>
+          <h2 className="text-3xl font-bold text-gray-900">
+            {t('leadership.administration')}
+          </h2>
+        </div>
+
+        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <h3 className="text-xl font-semibold text-gray-800 mb-4">
+                {t('leadership.administrativeStaff')}
+              </h3>
+              <p className="text-gray-600 mb-4">
+                {t('leadership.administrativeDescription')}
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              <div className="flex items-center justify-between p-3 bg-white rounded-lg border border-blue-100">
+                <span className="text-gray-700">{t('departments.studyDepartment')}</span>
+                <span className="text-blue-600 font-semibold">8 {t('leadership.employees')}</span>
+              </div>
+              <div className="flex items-center justify-between p-3 bg-white rounded-lg border border-blue-100">
+                <span className="text-gray-700">{t('departments.scienceDepartment')}</span>
+                <span className="text-blue-600 font-semibold">6 {t('leadership.employees')}</span>
+              </div>
+              <div className="flex items-center justify-between p-3 bg-white rounded-lg border border-blue-100">
+                <span className="text-gray-700">{t('departments.internationalDepartment')}</span>
+                <span className="text-blue-600 font-semibold">4 {t('leadership.employees')}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   const renderContent = () => {
     switch (activeSection) {
@@ -348,9 +343,8 @@ const LeadershipPage = () => {
 
   return (
     <div
-      className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-      }`}
+      className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+        }`}
     >
       <div className="max-w-7xl mx-auto">
         {/* Заголовок */}
@@ -375,11 +369,10 @@ const LeadershipPage = () => {
                   {sections.map((section) => (
                     <li key={section.id}>
                       <button
-                        className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 flex items-center ${
-                          activeSection === section.id
+                        className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 flex items-center ${activeSection === section.id
                             ? "bg-blue-100 text-blue-700 font-medium shadow-sm"
                             : "text-gray-700 hover:bg-gray-100"
-                        }`}
+                          }`}
                         onClick={() => changeActiveSection(section.id)}
                       >
                         <span className="text-lg mr-3">{section.icon}</span>

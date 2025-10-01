@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Mission API</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: #f8f9fa;
+        }
+
+        .error {
+            border-color: #dc3545;
+            background: #f8d7da;
+        }
+
+        .success {
+            border-color: #28a745;
+            background: #d4edda;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Mission API Test</h1>
+    <button onclick="testMissionAPI()">Test Mission API</button>
+    <div id="result"></div>
+
+    <script>
+        async function testMissionAPI() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '<p>Loading...</p>';
+            resultDiv.className = 'result';
+
+            try {
+                console.log('Starting API test...');
+
+                const response = await fetch('http://localhost:8000/api/mission/api/complete/', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                    }
+                });
+
+                console.log('Response received:', response);
+                console.log('Response status:', response.status);
+                console.log('Response headers:', Object.fromEntries(response.headers.entries()));
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                console.log('Data received:', data);
+
+                resultDiv.className = 'result success';
+                resultDiv.innerHTML = `
+                    <h3>✅ Success!</h3>
+                    <p><strong>Status:</strong> ${response.status}</p>
+                    <p><strong>Mission Title:</strong> ${data.mission?.title || 'N/A'}</p>
+                    <p><strong>History Items:</strong> ${data.history?.length || 0}</p>
+                    <p><strong>Values:</strong> ${data.values?.length || 0}</p>
+                    <p><strong>Priorities:</strong> ${data.priorities?.length || 0}</p>
+                    <p><strong>Achievements:</strong> ${data.achievements?.length || 0}</p>
+                    <details>
+                        <summary>View Raw Data</summary>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    </details>
+                `;
+            } catch (error) {
+                console.error('API test failed:', error);
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML = `
+                    <h3>❌ Error!</h3>
+                    <p><strong>Error:</strong> ${error.message}</p>
+                    <p>Check the console for more details.</p>
+                `;
+            }
+        }
+
+        // Test on page load
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('Page loaded, ready to test API');
+        });
+    </script>
+</body>
+
+</html>

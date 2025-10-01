@@ -12,8 +12,59 @@ const api = axios.create({
   },
 });
 
+// Create a separate instance for research API
+const researchAPI = axios.create({
+  baseURL: "http://localhost:8000/research/api",
+  timeout: 10000,
+  headers: {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+  },
+});
+
 // Add request interceptor to add language parameter and headers
 api.interceptors.request.use(
+  (config) => {
+    // Get current language from localStorage or i18next instance
+    let currentLanguage = "ru";
+
+    // Try to get from i18next first
+    if (typeof window !== "undefined" && window.i18n) {
+      currentLanguage = window.i18n.language || "ru";
+    } else if (typeof localStorage !== "undefined") {
+      currentLanguage =
+        localStorage.getItem("i18nextLng") ||
+        localStorage.getItem("language") ||
+        "ru";
+    }
+
+    // Map language codes
+    const languageMapping = {
+      kg: "ky", // Map Kyrgyz from frontend to backend format
+      en: "en",
+      ru: "ru",
+    };
+
+    const backendLanguage = languageMapping[currentLanguage] || "ru";
+
+    // Add lang parameter to all requests
+    config.params = {
+      ...config.params,
+      lang: backendLanguage,
+    };
+
+    // Add Accept-Language header
+    config.headers["Accept-Language"] = backendLanguage;
+
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// Add the same interceptor for research API
+researchAPI.interceptors.request.use(
   (config) => {
     // Get current language from localStorage or i18next instance
     let currentLanguage = "ru";
@@ -80,7 +131,41 @@ api.interceptors.response.use(
       console.error("Network error - no response received");
     } else {
       // Something else happened
-      console.error("Request setup error:", error.message);
+      console.error("Error setting up request:", error.message);
+    }
+
+    return Promise.reject(error);
+  }
+);
+
+// Add the same response interceptor for research API
+researchAPI.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    console.error("Research API Error:", error);
+
+    if (error.response) {
+      // Server responded with error status
+      const { status, data } = error.response;
+
+      switch (status) {
+        case 404:
+          console.error("Resource not found");
+          break;
+        case 500:
+          console.error("Internal server error");
+          break;
+        default:
+          console.error("Research API Error:", data?.error || error.message);
+      }
+    } else if (error.request) {
+      // Request was made but no response received
+      console.error("Network error - no response received");
+    } else {
+      // Something else happened
+      console.error("Error setting up request:", error.message);
     }
 
     return Promise.reject(error);
@@ -174,16 +259,97 @@ export const councilsAPI = {
    */
   getCouncils: async () => {
     try {
-      const response = await api.get("/about-section/councils/frontend/");
+      const response = await researchAPI.get("/councils/");
 
-      if (response.data.success) {
+      if (response.data && response.data.results) {
+        const councils = response.data.results;
+
+        // Transform the data to match frontend expectations
+        const sectionsData = {};
+        const sectionsList = [];
+
+        councils.forEach((council) => {
+          const councilId = council.id.toString();
+
+          // Get current language
+          let currentLanguage = "ru";
+          if (typeof localStorage !== "undefined") {
+            currentLanguage = localStorage.getItem("i18nextLng") || "ru";
+          }
+
+          // Map language suffixes
+          const langSuffix = currentLanguage === "en" ? "_en" :
+            currentLanguage === "kg" ? "_kg" : "_ru";
+
+          // Transform members from JSON array to objects with required fields
+          const members = (council[`members${langSuffix}`] || []).map((member, index) => ({
+            id: `${councilId}_member_${index}`,
+            name: typeof member === "string" ? member : member.name || member,
+            position: typeof member === "object" ? member.position || "" : "",
+            department: typeof member === "object" ? member.department || "" : "",
+            bio: typeof member === "object" ? member.bio || "" : "",
+            email: typeof member === "object" ? member.email || "" : "",
+            phone: typeof member === "object" ? member.phone || "" : "",
+            photo: typeof member === "object" ? member.photo || null : null,
+          }));
+
+          // Add chairman and secretary as members if they exist
+          const chairman = council[`chairman${langSuffix}`];
+          const secretary = council[`secretary${langSuffix}`];
+
+          if (chairman) {
+            members.unshift({
+              id: `${councilId}_chairman`,
+              name: chairman,
+              position: currentLanguage === "en" ? "Chairman" :
+                currentLanguage === "kg" ? "Төрага" : "Председатель",
+              department: "",
+              bio: "",
+              email: council.contact_email || "",
+              phone: council.contact_phone || "",
+              photo: null,
+            });
+          }
+
+          if (secretary) {
+            members.push({
+              id: `${councilId}_secretary`,
+              name: secretary,
+              position: currentLanguage === "en" ? "Secretary" :
+                currentLanguage === "kg" ? "Катчы" : "Секретарь",
+              department: "",
+              bio: "",
+              email: council.contact_email || "",
+              phone: council.contact_phone || "",
+              photo: null,
+            });
+          }
+
+          // Create section data
+          sectionsData[councilId] = {
+            id: councilId,
+            title: council[`name${langSuffix}`] || council.name_ru,
+            description: council[`description${langSuffix}`] || council.description_ru,
+            members: members,
+            documents: [], // No documents in the current model
+            responsibilities: council[`responsibilities${langSuffix}`] || "",
+            meetingSchedule: council[`meeting_schedule${langSuffix}`] || "",
+          };
+
+          // Create section list item
+          sectionsList.push({
+            id: councilId,
+            name: council[`name${langSuffix}`] || council.name_ru,
+          });
+        });
+
         return {
-          sectionsData: response.data.sections_data,
-          sectionsList: response.data.sections_list,
-          count: response.data.count,
+          sectionsData: sectionsData,
+          sectionsList: sectionsList,
+          count: councils.length,
         };
       } else {
-        throw new Error(response.data.error || "Failed to fetch councils");
+        throw new Error("Failed to fetch councils - invalid response format");
       }
     } catch (error) {
       console.error("Error fetching councils:", error);
@@ -193,21 +359,40 @@ export const councilsAPI = {
 
   /**
    * Get detailed information about specific council
-   * @param {string} slug - Council type slug
+   * @param {string} id - Council ID
    * @returns {Promise<Object>} Council data object
    */
-  getCouncilDetail: async (slug) => {
+  getCouncilDetail: async (id) => {
     try {
-      const response = await api.get(
-        `/about-section/councils/frontend/${slug}/`
-      );
+      const response = await researchAPI.get(`/councils/${id}/`);
 
-      if (response.data.success) {
-        return response.data.data;
+      if (response.data) {
+        const council = response.data;
+
+        // Get current language
+        let currentLanguage = "ru";
+        if (typeof localStorage !== "undefined") {
+          currentLanguage = localStorage.getItem("i18nextLng") || "ru";
+        }
+
+        // Map language suffixes
+        const langSuffix = currentLanguage === "en" ? "_en" :
+          currentLanguage === "kg" ? "_kg" : "_ru";
+
+        return {
+          id: council.id,
+          name: council[`name${langSuffix}`] || council.name_ru,
+          description: council[`description${langSuffix}`] || council.description_ru,
+          chairman: council[`chairman${langSuffix}`] || "",
+          secretary: council[`secretary${langSuffix}`] || "",
+          members: council[`members${langSuffix}`] || [],
+          responsibilities: council[`responsibilities${langSuffix}`] || "",
+          meeting_schedule: council[`meeting_schedule${langSuffix}`] || "",
+          contact_email: council.contact_email || "",
+          contact_phone: council.contact_phone || "",
+        };
       } else {
-        throw new Error(
-          response.data.error || "Failed to fetch council details"
-        );
+        throw new Error("Failed to fetch council details");
       }
     } catch (error) {
       console.error("Error fetching council details:", error);
@@ -221,10 +406,15 @@ export const councilsAPI = {
    */
   getCouncilTypes: async () => {
     try {
-      const response = await api.get("/about-section/councils/");
+      const response = await researchAPI.get("/councils/");
 
       if (response.data && response.data.results) {
-        return response.data.results;
+        return response.data.results.map(council => ({
+          id: council.id,
+          name: council.name_ru,
+          name_en: council.name_en,
+          name_kg: council.name_kg,
+        }));
       } else {
         return [];
       }

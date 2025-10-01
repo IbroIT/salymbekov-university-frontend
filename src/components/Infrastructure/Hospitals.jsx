@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { infrastructureApi } from '../../services/infrastructureApi';
+import { infrastructureAPI } from '../../services/infrastructureApi';
 
 const Hospitals = () => {
   const { t, i18n } = useTranslation();
