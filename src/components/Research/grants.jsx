@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { researchAPI } from '../../services/researchService';
 
 const Grants = () => {
   const { t, i18n } = useTranslation();
@@ -28,19 +29,38 @@ const Grants = () => {
 
   const fetchGrants = async (endpoint = 'grants') => {
     try {
+      console.log('🔍 Grants: Starting to fetch grants with endpoint:', endpoint);
       setLoading(true);
-      const response = await fetch(`https://su-med-backend-35d3d951c74b.herokuapp.com/research/api/${endpoint}/`);
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      let data;
+
+      if (endpoint === 'grants/active') {
+        console.log('📊 Grants: Fetching active grants...');
+        data = await researchAPI.getActiveGrants();
+      } else if (endpoint === 'grants/upcoming') {
+        console.log('📊 Grants: Fetching upcoming grants...');
+        data = await researchAPI.getUpcomingGrants();
+      } else {
+        console.log('📊 Grants: Fetching all grants...');
+        data = await researchAPI.getGrants();
       }
-      
-      const data = await response.json();
-      const grantsData = data.results || data;
-      setGrants(grantsData);
+
+      console.log('✅ Grants: Received data:', data);
+      console.log('📊 Grants: Data type:', typeof data, 'Array?', Array.isArray(data));
+
+      if (data && data.results) {
+        console.log('📊 Grants: Using data.results:', data.results.length, 'items');
+        setGrants(data.results);
+      } else if (Array.isArray(data)) {
+        console.log('📊 Grants: Using data directly:', data.length, 'items');
+        setGrants(data);
+      } else {
+        console.log('📊 Grants: Data format unexpected, setting empty array');
+        setGrants([]);
+      }
+
       setError(null);
     } catch (err) {
-      console.error('Error fetching grants:', err);
+      console.error('❌ Grants: Error fetching grants:', err);
       setError(t('research.grants.errorLoading') || 'Ошибка загрузки');
       setGrants([]);
     } finally {
@@ -50,7 +70,7 @@ const Grants = () => {
 
   const changeActiveSection = (sectionId) => {
     setActiveSection(sectionId);
-    
+
     // Загружаем данные в зависимости от секции
     if (sectionId === 'active') {
       fetchGrants('grants/active');
@@ -74,6 +94,34 @@ const Grants = () => {
   const getGrantOrganization = (grant) => {
     const currentLang = i18n.language;
     return grant[`organization_${currentLang}`] || grant.organization_ru;
+  };
+
+  // Helper function for consistent multilingual field access
+  const getFieldByLanguage = (obj, field) => {
+    if (!obj) return '';
+
+    const currentLang = i18n.language;
+
+    // Handle different language codes
+    let langSuffix = '';
+    if (currentLang === 'en') {
+      langSuffix = '_en';
+    } else if (currentLang === 'ky' || currentLang === 'kg') {
+      langSuffix = '_kg';
+    } else {
+      langSuffix = '_ru';
+    }
+
+    // Try to get localized field
+    const localizedField = obj[`${field}${langSuffix}`];
+    if (localizedField) return localizedField;
+
+    // Fallback to Russian field
+    const russianField = obj[`${field}_ru`];
+    if (russianField) return russianField;
+
+    // Fallback to base field
+    return obj[field] || '';
   };
 
   const filteredGrants = grants.filter(grant => {
@@ -113,9 +161,9 @@ const Grants = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredGrants.map((grant) => {
           const statusBadge = getStatusBadge(grant.status);
-          
+
           return (
-            <div 
+            <div
               key={grant.id}
               className="bg-white rounded-xl p-6 border border-blue-100 hover:shadow-lg transition-all duration-300"
             >
@@ -129,11 +177,11 @@ const Grants = () => {
               </div>
 
               <h3 className="text-xl font-semibold text-gray-800 mb-3">
-                {getGrantTitle(grant)}
+                {getFieldByLanguage(grant, 'title')}
               </h3>
 
               <p className="text-gray-600 mb-4 leading-relaxed">
-                {getGrantOrganization(grant)}
+                {getFieldByLanguage(grant, 'organization')}
               </p>
 
               <div className="space-y-2 mb-4">
@@ -189,7 +237,7 @@ const Grants = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {filteredGrants.map((grant) => (
-          <div 
+          <div
             key={grant.id}
             className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6 border border-green-100 hover:shadow-lg transition-all duration-300"
           >
@@ -203,17 +251,17 @@ const Grants = () => {
             </div>
 
             <h3 className="text-xl font-semibold text-gray-800 mb-3">
-              {getGrantTitle(grant)}
+              {getFieldByLanguage(grant, 'title')}
             </h3>
 
             <p className="text-gray-600 mb-4 leading-relaxed">
-              {getGrantDescription(grant)?.substring(0, 150)}...
+              {getFieldByLanguage(grant, 'description')?.substring(0, 150)}...
             </p>
 
             <div className="space-y-2 mb-4">
               <div className="flex items-center text-sm text-gray-600">
                 <span className="font-medium mr-2">Организация:</span>
-                <span>{getGrantOrganization(grant)}</span>
+                <span>{getFieldByLanguage(grant, 'organization')}</span>
               </div>
               <div className="flex items-center text-sm text-gray-600">
                 <span className="font-medium mr-2">Дедлайн:</span>
@@ -258,7 +306,7 @@ const Grants = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {filteredGrants.map((grant) => (
-          <div 
+          <div
             key={grant.id}
             className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100 hover:shadow-lg transition-all duration-300"
           >
@@ -272,11 +320,11 @@ const Grants = () => {
             </div>
 
             <h3 className="text-xl font-semibold text-gray-800 mb-3">
-              {getGrantTitle(grant)}
+              {getFieldByLanguage(grant, 'title')}
             </h3>
 
             <p className="text-gray-600 mb-4 leading-relaxed">
-              {getGrantOrganization(grant)}
+              {getFieldByLanguage(grant, 'organization')}
             </p>
 
             <div className="space-y-2 mb-4">
@@ -311,7 +359,7 @@ const Grants = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {filteredGrants.map((grant) => (
-          <div 
+          <div
             key={grant.id}
             className="bg-gradient-to-br from-gray-50 to-slate-50 rounded-xl p-6 border border-gray-100 hover:shadow-lg transition-all duration-300"
           >
@@ -325,11 +373,11 @@ const Grants = () => {
             </div>
 
             <h3 className="text-xl font-semibold text-gray-800 mb-3">
-              {getGrantTitle(grant)}
+              {getFieldByLanguage(grant, 'title')}
             </h3>
 
             <p className="text-gray-600 mb-4 leading-relaxed">
-              {getGrantOrganization(grant)}
+              {getFieldByLanguage(grant, 'organization')}
             </p>
 
             <div className="space-y-2 mb-4">
@@ -359,7 +407,7 @@ const Grants = () => {
             <span className="text-2xl">📋</span>
           </div>
           <h2 className="text-3xl font-bold text-gray-900">
-            {getGrantTitle(grant)}
+            {getFieldByLanguage(grant, 'title')}
           </h2>
         </div>
         <button
@@ -372,14 +420,14 @@ const Grants = () => {
 
       <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100">
         <p className="text-gray-700 leading-relaxed">
-          {getGrantDescription(grant)}
+          {getFieldByLanguage(grant, 'description')}
         </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div className="bg-white rounded-xl p-4 border border-blue-100">
           <h3 className="font-semibold text-gray-800 mb-2">Организация</h3>
-          <p className="text-gray-600">{getGrantOrganization(grant)}</p>
+          <p className="text-gray-600">{getFieldByLanguage(grant, 'organization')}</p>
         </div>
 
         <div className="bg-white rounded-xl p-4 border border-blue-100">
@@ -448,9 +496,8 @@ const Grants = () => {
   if (loading) {
     return (
       <div
-        className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${
-          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-        }`}
+        className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}
       >
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-center items-center min-h-[400px]">
@@ -464,9 +511,8 @@ const Grants = () => {
   if (error) {
     return (
       <div
-        className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${
-          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-        }`}
+        className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}
       >
         <div className="max-w-7xl mx-auto">
           <div className="text-center py-12">
@@ -481,9 +527,8 @@ const Grants = () => {
 
   return (
     <div
-      className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-      }`}
+      className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+        }`}
     >
       <div className="max-w-7xl mx-auto">
         {/* Заголовок */}
@@ -505,21 +550,39 @@ const Grants = () => {
               </div>
               <nav className="p-2">
                 <ul className="space-y-1">
-                  {sections.map((section) => (
-                    <li key={section.id}>
-                      <button
-                        className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 flex items-center ${
-                          activeSection === section.id
-                            ? "bg-blue-100 text-blue-700 font-medium shadow-sm"
-                            : "text-gray-700 hover:bg-gray-100"
-                        }`}
-                        onClick={() => changeActiveSection(section.id)}
-                      >
-                        <span className="text-lg mr-3">{section.icon}</span>
-                        {section.name}
-                      </button>
-                    </li>
-                  ))}
+                  {sections.map((section) => {
+                    let sectionCount = 0;
+
+                    if (section.id === 'all') {
+                      sectionCount = grants.length;
+                    } else if (section.id === 'active') {
+                      sectionCount = grants.filter(grant => grant.status === 'active').length;
+                    } else if (section.id === 'upcoming') {
+                      sectionCount = grants.filter(grant => grant.status === 'upcoming').length;
+                    } else if (section.id === 'closed') {
+                      sectionCount = grants.filter(grant => grant.status === 'closed').length;
+                    }
+
+                    return (
+                      <li key={section.id}>
+                        <button
+                          className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 flex items-center justify-between ${activeSection === section.id
+                              ? "bg-blue-100 text-blue-700 font-medium shadow-sm"
+                              : "text-gray-700 hover:bg-gray-100"
+                            }`}
+                          onClick={() => changeActiveSection(section.id)}
+                        >
+                          <div className="flex items-center">
+                            <span className="text-lg mr-3">{section.icon}</span>
+                            {section.name}
+                          </div>
+                          <span className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded-full">
+                            {sectionCount}
+                          </span>
+                        </button>
+                      </li>
+                    );
+                  })}
                 </ul>
               </nav>
             </div>

@@ -59,18 +59,18 @@ const Internships = () => {
     try {
       setLoading(true);
       setError(null);
-      
+
       const response = await fetch('https://su-med-backend-35d3d951c74b.herokuapp.com/api/student-life/api/data/internships_data/');
-      
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      
+
       const result = await response.json();
-      
+
       // Сохраняем оригинальные данные
       setRawData(result);
-      
+
     } catch (err) {
       console.error('Ошибка загрузки данных практики:', err);
       setError('Не удалось загрузить данные. Попробуйте позже.');
@@ -95,17 +95,17 @@ const Internships = () => {
 
   // Получить все специализации для фильтра
   const allSpecializations = [...new Set(
-    data.partner_organizations?.flatMap(org => 
+    data.partner_organizations?.flatMap(org =>
       org.specializations?.map(spec => spec.name)
     ).filter(Boolean)
   )];
 
   // Фильтрация организаций
   const filteredOrganizations = data.partner_organizations?.filter(org => {
-    const matchesSearch = org.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                         org.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesSpecialization = selectedSpecialization === 'all' || 
-                                 org.specializations?.some(spec => spec.name === selectedSpecialization);
+    const matchesSearch = org.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      org.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSpecialization = selectedSpecialization === 'all' ||
+      org.specializations?.some(spec => spec.name === selectedSpecialization);
     return matchesSearch && matchesSpecialization;
   });
 
@@ -169,38 +169,35 @@ const Internships = () => {
             <nav className="flex flex-wrap justify-center gap-2">
               <button
                 onClick={() => setActiveTab('partners')}
-                className={`py-3 px-6 rounded-xl font-medium text-sm transition-all duration-300 flex items-center ${
-                  activeTab === 'partners'
+                className={`py-3 px-6 rounded-xl font-medium text-sm transition-all duration-300 flex items-center ${activeTab === 'partners'
                     ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md'
                     : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
-                }`}
+                  }`}
               >
                 <MapPinIcon className="w-5 h-5 mr-2" />
                 {t('studentLife.internships.tabs.partners')}
               </button>
               <button
                 onClick={() => setActiveTab('requirements')}
-                className={`py-3 px-6 rounded-xl font-medium text-sm transition-all duration-300 flex items-center ${
-                  activeTab === 'requirements'
+                className={`py-3 px-6 rounded-xl font-medium text-sm transition-all duration-300 flex items-center ${activeTab === 'requirements'
                     ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md'
                     : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
-                }`}
+                  }`}
               >
                 <CheckCircleIcon className="w-5 h-5 mr-2" />
                 {t('studentLife.internships.tabs.requirements')}
               </button>
               <button
                 onClick={() => setActiveTab('templates')}
-                className={`py-3 px-6 rounded-xl font-medium text-sm transition-all duration-300 flex items-center ${
-                  activeTab === 'templates'
+                className={`py-3 px-6 rounded-xl font-medium text-sm transition-all duration-300 flex items-center ${activeTab === 'templates'
                     ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md'
                     : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
-                }`}
+                  }`}
               >
                 <DocumentArrowDownIcon className="w-5 h-5 mr-2" />
                 {t('studentLife.internships.tabs.documents')}
               </button>
-             
+
             </nav>
           </div>
         </div>
@@ -212,14 +209,14 @@ const Internships = () => {
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {filteredOrganizations?.map((org, index) => (
-                  <div 
-                    key={org.id} 
+                  <div
+                    key={org.id}
                     className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 group"
                     style={{ animationDelay: `${index * 0.1}s` }}
                   >
                     <div className="relative h-48 overflow-hidden">
-                      <img 
-                        src={org.logo_url || `https://source.unsplash.com/random/600x400?company,office,${index}`} 
+                      <img
+                        src={org.logo_url || `https://source.unsplash.com/random/600x400?company,office,${index}`}
                         alt={org.name}
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                       />
@@ -237,14 +234,14 @@ const Internships = () => {
                         </span>
                       </div>
                     </div>
-                    
+
                     <div className="p-6">
                       <div className="mb-4">
                         <h4 className="font-medium text-gray-900 mb-2">{t('studentLife.internships.specializations')}:</h4>
                         <div className="flex flex-wrap gap-2">
                           {org.specializations?.map((spec, index) => (
-                            <span 
-                              key={index} 
+                            <span
+                              key={index}
                               className="bg-gradient-to-r from-blue-100 to-indigo-100 text-blue-800 text-xs px-3 py-1.5 rounded-full"
                             >
                               {spec.name}
@@ -264,13 +261,13 @@ const Internships = () => {
                           )}
                         </div>
                       </div>
-                      
-                   
+
+
                     </div>
                   </div>
                 ))}
               </div>
-              
+
               {filteredOrganizations?.length === 0 && (
                 <div className="text-center py-16 bg-white rounded-2xl shadow-lg">
                   <div className="w-24 h-24 mx-auto mb-6 bg-gray-100 rounded-full flex items-center justify-center">
@@ -286,8 +283,8 @@ const Internships = () => {
           {activeTab === 'requirements' && (
             <div className="space-y-6 animate-fade-in">
               {Object.entries(data.requirements || {}).map(([category, requirements], index) => (
-                <div 
-                  key={category} 
+                <div
+                  key={category}
                   className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-all duration-500 transform hover:-translate-y-1"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
@@ -375,8 +372,8 @@ const Internships = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {data.report_templates?.map((template, index) => (
-                  <div 
-                    key={index} 
+                  <div
+                    key={index}
                     className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-all duration-500 transform hover:-translate-y-1 group"
                     style={{ animationDelay: `${index * 0.1}s` }}
                   >
@@ -437,15 +434,6 @@ const Internships = () => {
         </div>
       </div>
 
-      <style jsx>{`
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fade-in {
-          animation: fadeIn 0.7s ease forwards;
-        }
-      `}</style>
     </div>
   );
 };

@@ -14,52 +14,55 @@ import {
 const FacultyCard = ({ faculty, language }) => {
   const { t } = useTranslation();
 
+  // Helper function to get localized value from API data
+  const getLocalizedField = (item, fieldName) => {
+    if (!item) return '';
+
+    if (language === 'en' && item[`${fieldName}_en`]) {
+      return item[`${fieldName}_en`];
+    } else if (language === 'ky' && item[`${fieldName}_kg`]) {
+      return item[`${fieldName}_kg`];
+    }
+    return item[fieldName] || '';
+  };
+
   const getName = () => {
+    // Try to get full_name first, then construct from parts
+    if (faculty.full_name) {
+      return getLocalizedField(faculty, 'full_name');
+    }
+
     switch (language) {
-      case 'kg':
-        return `${faculty.last_name_kg || faculty.last_name || ''} ${faculty.first_name_kg || faculty.first_name || ''} ${faculty.middle_name_kg || faculty.middle_name || ''}`.trim();
+      case 'ky':
+        return `${getLocalizedField(faculty, 'last_name')} ${getLocalizedField(faculty, 'first_name')} ${getLocalizedField(faculty, 'middle_name')}`.trim();
       case 'en':
-        return `${faculty.first_name_en || faculty.first_name || ''} ${faculty.last_name_en || faculty.last_name || ''}`.trim();
+        return `${getLocalizedField(faculty, 'first_name')} ${getLocalizedField(faculty, 'last_name')}`.trim();
       default:
-        return faculty.full_name || `${faculty.last_name || ''} ${faculty.first_name || ''} ${faculty.middle_name || ''}`.trim();
+        return `${getLocalizedField(faculty, 'last_name')} ${getLocalizedField(faculty, 'first_name')} ${getLocalizedField(faculty, 'middle_name')}`.trim();
     }
   };
 
   const getPosition = () => {
-    switch (language) {
-      case 'kg':
-        return faculty.position_kg || faculty.position_display || faculty.position;
-      case 'en':
-        return faculty.position_en || faculty.position_display || faculty.position;
-      default:
-        return faculty.position_display || faculty.position;
-    }
+    return getLocalizedField(faculty, 'position') || faculty.position_display;
   };
 
   const getAcademicDegree = () => {
-    switch (language) {
-      case 'kg':
-        return faculty.academic_degree_kg || faculty.academic_degree_display || faculty.academic_degree;
-      case 'en':
-        return faculty.academic_degree_en || faculty.academic_degree_display || faculty.academic_degree;
-      default:
-        return faculty.academic_degree_display || faculty.academic_degree;
-    }
+    return getLocalizedField(faculty, 'academic_degree') || faculty.academic_degree_display;
   };
 
   return (
     <div className="bg-gradient-to-br from-white to-blue-50 rounded-xl shadow-md overflow-hidden border border-blue-100 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
       <div className="p-6">
         <div className="flex items-center mb-4">
-          <SafeImage 
-            src={faculty.photo_url || faculty.photo} 
-            alt={getName()} 
+          <SafeImage
+            src={faculty.photo_url || faculty.photo}
+            alt={getName()}
             className="w-16 h-16 rounded-full object-cover mr-4"
             fallback={
               <div className="w-16 h-16 bg-blue-200 rounded-full flex items-center justify-center text-blue-700 font-bold text-xl mr-4">
                 <UserGroupIcon className="w-8 h-8 text-blue-500" />
               </div>
-            } 
+            }
           />
           <div>
             <h3 className="font-bold text-lg text-gray-900">
@@ -70,7 +73,7 @@ const FacultyCard = ({ faculty, language }) => {
             </p>
           </div>
         </div>
-        
+
         {getAcademicDegree() && (
           <div className="mb-3">
             <span className="text-xs font-medium bg-purple-100 text-purple-800 px-2 py-1 rounded-full flex items-center w-fit">
@@ -98,6 +101,19 @@ const HSMAcademicStuff = () => {
   const [search, setSearch] = useState('');
   const [activePosition, setActivePosition] = useState('all');
 
+  // Helper function to get localized value from API data
+  const getLocalizedField = (item, fieldName) => {
+    if (!item) return '';
+
+    const currentLang = i18n.language;
+    if (currentLang === 'en' && item[`${fieldName}_en`]) {
+      return item[`${fieldName}_en`];
+    } else if (currentLang === 'ky' && item[`${fieldName}_kg`]) {
+      return item[`${fieldName}_kg`];
+    }
+    return item[fieldName] || '';
+  };
+
   // Animation on mount
   useEffect(() => {
     setIsVisible(true);
@@ -107,15 +123,56 @@ const HSMAcademicStuff = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const [byPosition, list] = await Promise.all([
-          hsmService.getFacultyByPosition(), 
-          hsmService.getFaculty()
-        ]);
-        setFacultyByPosition(byPosition || {});
-        setAllFaculty(list || []);
+        console.log('Fetching faculty data...');
+
+        // First get all faculty data
+        const facultyResponse = await hsmService.getFaculty();
+        console.log('Faculty response:', facultyResponse);
+
+        // Handle response structure - it might be paginated
+        let facultyList = [];
+        if (Array.isArray(facultyResponse)) {
+          facultyList = facultyResponse;
+        } else if (facultyResponse && facultyResponse.results) {
+          facultyList = facultyResponse.results;
+        } else if (facultyResponse && typeof facultyResponse === 'object') {
+          facultyList = [facultyResponse];
+        }
+
+        console.log('Processed faculty list:', facultyList);
+        setAllFaculty(facultyList);
+
+        // Try to get faculty by position, but if it fails, group manually
+        try {
+          const byPositionResponse = await hsmService.getFacultyByPosition();
+          console.log('Faculty by position response:', byPositionResponse);
+          setFacultyByPosition(byPositionResponse || {});
+        } catch (positionError) {
+          console.log('Faculty by position endpoint failed, grouping manually:', positionError);
+          // Group faculty by position manually
+          const grouped = facultyList.reduce((acc, faculty) => {
+            const position = faculty.position || 'other';
+            if (!acc[position]) {
+              acc[position] = {
+                name: faculty.position_display || faculty.position || 'Другие',
+                name_en: faculty.position_en || faculty.position_display || faculty.position || 'Others',
+                name_kg: faculty.position_kg || faculty.position_display || faculty.position || 'Башкалар',
+                faculty: []
+              };
+            }
+            acc[position].faculty.push(faculty);
+            return acc;
+          }, {});
+          setFacultyByPosition(grouped);
+        }
+
+        setError(null);
       } catch (err) {
         console.error('Error fetching faculty:', err);
         setError(err.message || String(err));
+        // Set empty data on error
+        setAllFaculty([]);
+        setFacultyByPosition({});
       } finally {
         setLoading(false);
       }
@@ -126,23 +183,14 @@ const HSMAcademicStuff = () => {
   // Get positions list for navigation
   const positionsList = Object.keys(facultyByPosition).map(code => {
     const group = facultyByPosition[code];
-    const getName = () => {
-      switch (i18n.language) {
-        case 'kg':
-          return group.name_kg || group.name;
-        case 'en':
-          return group.name_en || group.name;
-        default:
-          return group.name;
-      }
-    };
+    if (!group) return null;
 
     return {
       id: code,
-      name: getName(),
-      count: group.faculty?.length || 0
+      name: getLocalizedField(group, 'name'),
+      count: Array.isArray(group.faculty) ? group.faculty.length : 0
     };
-  });
+  }).filter(Boolean); // Remove null entries
 
   // Add "All" option
   const allPositionsList = [
@@ -156,28 +204,17 @@ const HSMAcademicStuff = () => {
       return {
         title: t('hsm.all_faculty', 'Весь преподавательский состав'),
         description: t('hsm.all_faculty_description', 'Все преподаватели Высшей медицинской школы'),
-        faculty: allFaculty
+        faculty: Array.isArray(allFaculty) ? allFaculty : []
       };
     }
-    
+
     const group = facultyByPosition[activePosition];
     if (!group) return { title: '', description: '', faculty: [] };
 
-    const getTitle = () => {
-      switch (i18n.language) {
-        case 'kg':
-          return group.name_kg || group.name;
-        case 'en':
-          return group.name_en || group.name;
-        default:
-          return group.name;
-      }
-    };
-
     return {
-      title: getTitle(),
+      title: getLocalizedField(group, 'name'),
       description: t('hsm.position_description', 'Преподаватели данной категории'),
-      faculty: group.faculty || []
+      faculty: Array.isArray(group.faculty) ? group.faculty : []
     };
   };
 
@@ -187,20 +224,27 @@ const HSMAcademicStuff = () => {
   const filteredFaculty = currentPositionData.faculty.filter(faculty => {
     if (!search) return true;
 
-    const getName = () => {
-      switch (i18n.language) {
-        case 'kg':
-          return `${faculty.last_name_kg || faculty.last_name || ''} ${faculty.first_name_kg || faculty.first_name || ''} ${faculty.middle_name_kg || faculty.middle_name || ''}`.trim();
+    // Helper to get faculty name for search
+    const getFacultyName = (faculty) => {
+      // Try to get full_name first, then construct from parts
+      if (faculty.full_name) {
+        return getLocalizedField(faculty, 'full_name');
+      }
+
+      const currentLang = i18n.language;
+      switch (currentLang) {
+        case 'ky':
+          return `${getLocalizedField(faculty, 'last_name')} ${getLocalizedField(faculty, 'first_name')} ${getLocalizedField(faculty, 'middle_name')}`.trim();
         case 'en':
-          return `${faculty.first_name_en || faculty.first_name || ''} ${faculty.last_name_en || faculty.last_name || ''}`.trim();
+          return `${getLocalizedField(faculty, 'first_name')} ${getLocalizedField(faculty, 'last_name')}`.trim();
         default:
-          return faculty.full_name || `${faculty.last_name || ''} ${faculty.first_name || ''} ${faculty.middle_name || ''}`.trim();
+          return `${getLocalizedField(faculty, 'last_name')} ${getLocalizedField(faculty, 'first_name')} ${getLocalizedField(faculty, 'middle_name')}`.trim();
       }
     };
 
-    const name = getName().toLowerCase();
+    const name = getFacultyName(faculty).toLowerCase();
     const query = search.toLowerCase();
-    
+
     return name.includes(query);
   });
 
@@ -208,9 +252,8 @@ const HSMAcademicStuff = () => {
   if (loading) {
     return (
       <div
-        className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${
-          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-        }`}
+        className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}
       >
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-center items-center min-h-[400px]">
@@ -225,9 +268,8 @@ const HSMAcademicStuff = () => {
   if (error) {
     return (
       <div
-        className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${
-          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-        }`}
+        className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}
       >
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-center items-center min-h-[400px]">
@@ -266,9 +308,8 @@ const HSMAcademicStuff = () => {
 
   return (
     <div
-      className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-      }`}
+      className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+        }`}
     >
       <div className="max-w-7xl mx-auto">
         {/* Заголовок */}
@@ -293,11 +334,10 @@ const HSMAcademicStuff = () => {
                   {allPositionsList.map((position) => (
                     <li key={position.id}>
                       <button
-                        className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 flex justify-between items-center ${
-                          activePosition === position.id
+                        className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 flex justify-between items-center ${activePosition === position.id
                             ? "bg-blue-100 text-blue-700 font-medium shadow-sm"
                             : "text-gray-700 hover:bg-gray-100"
-                        }`}
+                          }`}
                         onClick={() => {
                           setActivePosition(position.id);
                           setSearch('');
@@ -334,15 +374,15 @@ const HSMAcademicStuff = () => {
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" />
                   </div>
-                  <input 
-                    type="text" 
-                    value={search} 
-                    onChange={(e) => setSearch(e.target.value)} 
-                    placeholder={t('hsm.search_faculty', 'Поиск преподавателей...')} 
+                  <input
+                    type="text"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    placeholder={t('hsm.search_faculty', 'Поиск преподавателей...')}
                     className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
                   {search && (
-                    <button 
+                    <button
                       onClick={() => setSearch('')}
                       className="absolute inset-y-0 right-0 pr-3 flex items-center"
                     >
@@ -374,9 +414,9 @@ const HSMAcademicStuff = () => {
                           exit={{ opacity: 0, y: -20 }}
                           transition={{ duration: 0.3, delay: index * 0.1 }}
                         >
-                          <FacultyCard 
-                            faculty={faculty} 
-                            language={i18n.language} 
+                          <FacultyCard
+                            faculty={faculty}
+                            language={i18n.language}
                           />
                         </motion.div>
                       ))}
@@ -401,7 +441,7 @@ const HSMAcademicStuff = () => {
                       {t("hsm.no_faculty_found", "Преподаватели не найдены")}
                     </h3>
                     <p className="mt-2 text-gray-500">
-                      {search 
+                      {search
                         ? t("hsm.try_different_search", "Попробуйте изменить поисковый запрос")
                         : t("hsm.no_faculty_in_category", "В этой категории пока нет преподавателей")
                       }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { researchAPI } from '../../services/researchService';
 
 const Conferences = () => {
   const { t, i18n } = useTranslation();
@@ -29,23 +30,26 @@ const Conferences = () => {
   const fetchConferences = async (status = 'upcoming') => {
     try {
       setLoading(true);
-      let endpoint = 'conferences';
-      
+      let data;
+
       if (status === 'upcoming') {
-        endpoint = 'conferences/upcoming';
+        data = await researchAPI.getUpcomingConferences();
       } else if (status === 'archive') {
-        endpoint = 'conferences/past';
+        // For archive, get all conferences and filter past ones
+        const allConferences = await researchAPI.getConferences();
+        const now = new Date();
+        data = allConferences.filter(conf => new Date(conf.end_date) < now);
+      } else if (status === 'international') {
+        const allConferences = await researchAPI.getConferences();
+        data = allConferences.filter(conf => conf.conference_type === 'international');
+      } else if (status === 'national') {
+        const allConferences = await researchAPI.getConferences();
+        data = allConferences.filter(conf => conf.conference_type === 'national');
+      } else {
+        data = await researchAPI.getConferences();
       }
-      
-      const response = await fetch(`https://su-med-backend-35d3d951c74b.herokuapp.com/research/api/${endpoint}/`);
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      
-      const data = await response.json();
-      const conferencesData = data.results || data;
-      setConferences(conferencesData);
+
+      setConferences(Array.isArray(data) ? data : []);
       setError(null);
     } catch (err) {
       console.error('Error fetching conferences:', err);
@@ -76,6 +80,34 @@ const Conferences = () => {
     return conference[`location_${currentLang}`] || conference.location_ru;
   };
 
+  // Helper function for consistent multilingual field access
+  const getFieldByLanguage = (obj, field) => {
+    if (!obj) return '';
+
+    const currentLang = i18n.language;
+
+    // Handle different language codes
+    let langSuffix = '';
+    if (currentLang === 'en') {
+      langSuffix = '_en';
+    } else if (currentLang === 'ky' || currentLang === 'kg') {
+      langSuffix = '_kg';
+    } else {
+      langSuffix = '_ru';
+    }
+
+    // Try to get localized field
+    const localizedField = obj[`${field}${langSuffix}`];
+    if (localizedField) return localizedField;
+
+    // Fallback to Russian field
+    const russianField = obj[`${field}_ru`];
+    if (russianField) return russianField;
+
+    // Fallback to base field
+    return obj[field] || '';
+  };
+
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const currentLang = i18n.language;
@@ -84,17 +116,17 @@ const Conferences = () => {
 
   const getStatusBadge = (status) => {
     const statusConfig = {
-      'registration-open': { 
-        text: t('research.conferences.statusLabels.registrationOpen') || 'Регистрация открыта', 
-        color: 'bg-green-100 text-green-800' 
+      'registration-open': {
+        text: t('research.conferences.statusLabels.registrationOpen') || 'Регистрация открыта',
+        color: 'bg-green-100 text-green-800'
       },
-      'early-bird': { 
-        text: t('research.conferences.statusLabels.earlyBird') || 'Early Bird', 
-        color: 'bg-blue-100 text-blue-800' 
+      'early-bird': {
+        text: t('research.conferences.statusLabels.earlyBird') || 'Early Bird',
+        color: 'bg-blue-100 text-blue-800'
       },
-      'call-for-papers': { 
-        text: t('research.conferences.statusLabels.callForPapers') || 'Прием тезисов', 
-        color: 'bg-orange-100 text-orange-800' 
+      'call-for-papers': {
+        text: t('research.conferences.statusLabels.callForPapers') || 'Прием тезисов',
+        color: 'bg-orange-100 text-orange-800'
       },
       'upcoming': {
         text: t('research.conferences.statusLabels.upcoming') || 'Предстоящая',
@@ -126,18 +158,18 @@ const Conferences = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {conferences.map((conference) => {
           const statusBadge = getStatusBadge(conference.status);
-          
+
           return (
-            <div 
+            <div
               key={conference.id}
               className="bg-white rounded-xl p-6 border border-blue-100 hover:shadow-lg transition-all duration-300"
             >
               <div className="flex justify-between items-start mb-4">
                 <div className="text-4xl">
-                  {conference.conference_type === 'international' ? '🌍' : 
-                   conference.conference_type === 'national' ? '🏛️' :
-                   conference.conference_type === 'workshop' ? '🛠️' :
-                   conference.conference_type === 'symposium' ? '🎯' : '📚'}
+                  {conference.conference_type === 'international' ? '🌍' :
+                    conference.conference_type === 'national' ? '🏛️' :
+                      conference.conference_type === 'workshop' ? '🛠️' :
+                        conference.conference_type === 'symposium' ? '🎯' : '📚'}
                 </div>
                 <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${statusBadge.color}`}>
                   {statusBadge.text}
@@ -145,7 +177,7 @@ const Conferences = () => {
               </div>
 
               <h3 className="text-xl font-semibold text-gray-800 mb-3">
-                {getConferenceTitle(conference)}
+                {getFieldByLanguage(conference, 'title')}
               </h3>
 
               <div className="space-y-2 mb-4">
@@ -155,7 +187,7 @@ const Conferences = () => {
                 </div>
                 <div className="flex items-center text-sm text-gray-600">
                   <span className="font-medium mr-2">Место:</span>
-                  <span>{getConferenceLocation(conference)}</span>
+                  <span>{getFieldByLanguage(conference, 'location')}</span>
                 </div>
                 {conference.registration_deadline && (
                   <div className="flex items-center text-sm text-gray-600">
@@ -166,7 +198,7 @@ const Conferences = () => {
               </div>
 
               <p className="text-gray-600 text-sm mb-4 leading-relaxed">
-                {getConferenceDescription(conference)?.substring(0, 120)}...
+                {getFieldByLanguage(conference, 'description')?.substring(0, 120)}...
               </p>
 
               <div className="flex space-x-2">
@@ -205,14 +237,14 @@ const Conferences = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {conferences.map((conference) => (
-          <div 
+          <div
             key={conference.id}
             className="bg-gradient-to-br from-gray-50 to-slate-50 rounded-xl p-6 border border-gray-100 hover:shadow-lg transition-all duration-300"
           >
             <div className="flex justify-between items-start mb-4">
               <div className="text-4xl">
-                {conference.conference_type === 'international' ? '🌍' : 
-                 conference.conference_type === 'national' ? '🏛️' : '📚'}
+                {conference.conference_type === 'international' ? '🌍' :
+                  conference.conference_type === 'national' ? '🏛️' : '📚'}
               </div>
               <span className="text-gray-500 text-sm">
                 {new Date(conference.start_date).getFullYear()}
@@ -220,7 +252,7 @@ const Conferences = () => {
             </div>
 
             <h3 className="text-xl font-semibold text-gray-800 mb-3">
-              {getConferenceTitle(conference)}
+              {getFieldByLanguage(conference, 'title')}
             </h3>
 
             <div className="space-y-2 mb-4">
@@ -230,7 +262,7 @@ const Conferences = () => {
               </div>
               <div className="flex items-center text-sm text-gray-600">
                 <span className="font-medium mr-2">Место:</span>
-                <span>{getConferenceLocation(conference)}</span>
+                <span>{getFieldByLanguage(conference, 'location')}</span>
               </div>
               {conference.participants_count && (
                 <div className="flex items-center text-sm text-gray-600">
@@ -275,7 +307,7 @@ const Conferences = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {conferences.filter(conf => conf.conference_type === 'international').map((conference) => (
-          <div 
+          <div
             key={conference.id}
             className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100 hover:shadow-lg transition-all duration-300"
           >
@@ -287,7 +319,7 @@ const Conferences = () => {
             </div>
 
             <h3 className="text-xl font-semibold text-gray-800 mb-3">
-              {getConferenceTitle(conference)}
+              {getFieldByLanguage(conference, 'title')}
             </h3>
 
             <div className="space-y-2 mb-4">
@@ -297,7 +329,7 @@ const Conferences = () => {
               </div>
               <div className="flex items-center text-sm text-gray-600">
                 <span className="font-medium mr-2">Место:</span>
-                <span>{getConferenceLocation(conference)}</span>
+                <span>{getFieldByLanguage(conference, 'location')}</span>
               </div>
             </div>
 
@@ -326,7 +358,7 @@ const Conferences = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {conferences.filter(conf => conf.conference_type === 'national').map((conference) => (
-          <div 
+          <div
             key={conference.id}
             className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6 border border-green-100 hover:shadow-lg transition-all duration-300"
           >
@@ -338,7 +370,7 @@ const Conferences = () => {
             </div>
 
             <h3 className="text-xl font-semibold text-gray-800 mb-3">
-              {getConferenceTitle(conference)}
+              {getFieldByLanguage(conference, 'title')}
             </h3>
 
             <div className="space-y-2 mb-4">
@@ -348,7 +380,7 @@ const Conferences = () => {
               </div>
               <div className="flex items-center text-sm text-gray-600">
                 <span className="font-medium mr-2">Место:</span>
-                <span>{getConferenceLocation(conference)}</span>
+                <span>{getFieldByLanguage(conference, 'location')}</span>
               </div>
             </div>
 
@@ -370,12 +402,12 @@ const Conferences = () => {
         <div className="flex items-center">
           <div className="p-3 bg-blue-100 rounded-xl mr-4">
             <span className="text-2xl">
-              {conference.conference_type === 'international' ? '🌍' : 
-               conference.conference_type === 'national' ? '🏛️' : '📚'}
+              {conference.conference_type === 'international' ? '🌍' :
+                conference.conference_type === 'national' ? '🏛️' : '📚'}
             </span>
           </div>
           <h2 className="text-3xl font-bold text-gray-900">
-            {getConferenceTitle(conference)}
+            {getFieldByLanguage(conference, 'title')}
           </h2>
         </div>
         <button
@@ -388,7 +420,7 @@ const Conferences = () => {
 
       <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100">
         <p className="text-gray-700 leading-relaxed">
-          {getConferenceDescription(conference)}
+          {getFieldByLanguage(conference, 'description')}
         </p>
       </div>
 
@@ -400,7 +432,7 @@ const Conferences = () => {
 
         <div className="bg-white rounded-xl p-4 border border-blue-100">
           <h3 className="font-semibold text-gray-800 mb-2">Место проведения</h3>
-          <p className="text-gray-600">{getConferenceLocation(conference)}</p>
+          <p className="text-gray-600">{getFieldByLanguage(conference, 'location')}</p>
         </div>
 
         {conference.registration_deadline && (
@@ -455,9 +487,8 @@ const Conferences = () => {
   if (loading) {
     return (
       <div
-        className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${
-          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-        }`}
+        className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}
       >
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-center items-center min-h-[400px]">
@@ -471,9 +502,8 @@ const Conferences = () => {
   if (error) {
     return (
       <div
-        className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${
-          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-        }`}
+        className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}
       >
         <div className="max-w-7xl mx-auto">
           <div className="text-center py-12">
@@ -488,9 +518,8 @@ const Conferences = () => {
 
   return (
     <div
-      className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-      }`}
+      className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+        }`}
     >
       <div className="max-w-7xl mx-auto">
         {/* Заголовок */}
@@ -512,21 +541,40 @@ const Conferences = () => {
               </div>
               <nav className="p-2">
                 <ul className="space-y-1">
-                  {sections.map((section) => (
-                    <li key={section.id}>
-                      <button
-                        className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 flex items-center ${
-                          activeSection === section.id
-                            ? "bg-blue-100 text-blue-700 font-medium shadow-sm"
-                            : "text-gray-700 hover:bg-gray-100"
-                        }`}
-                        onClick={() => changeActiveSection(section.id)}
-                      >
-                        <span className="text-lg mr-3">{section.icon}</span>
-                        {section.name}
-                      </button>
-                    </li>
-                  ))}
+                  {sections.map((section) => {
+                    let sectionCount = 0;
+                    const now = new Date();
+
+                    if (section.id === 'upcoming') {
+                      sectionCount = conferences.filter(conf => new Date(conf.start_date) >= now).length;
+                    } else if (section.id === 'archive') {
+                      sectionCount = conferences.filter(conf => new Date(conf.end_date) < now).length;
+                    } else if (section.id === 'international') {
+                      sectionCount = conferences.filter(conf => conf.conference_type === 'international').length;
+                    } else if (section.id === 'national') {
+                      sectionCount = conferences.filter(conf => conf.conference_type === 'national').length;
+                    }
+
+                    return (
+                      <li key={section.id}>
+                        <button
+                          className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 flex items-center justify-between ${activeSection === section.id
+                              ? "bg-blue-100 text-blue-700 font-medium shadow-sm"
+                              : "text-gray-700 hover:bg-gray-100"
+                            }`}
+                          onClick={() => changeActiveSection(section.id)}
+                        >
+                          <div className="flex items-center">
+                            <span className="text-lg mr-3">{section.icon}</span>
+                            {section.name}
+                          </div>
+                          <span className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded-full">
+                            {sectionCount}
+                          </span>
+                        </button>
+                      </li>
+                    );
+                  })}
                 </ul>
               </nav>
             </div>

@@ -83,7 +83,7 @@ const MedicalUniversityReviews = () => {
 
     const interval = setInterval(() => {
       setDirection('next');
-      setCurrentIndex((prevIndex) => 
+      setCurrentIndex((prevIndex) =>
         prevIndex === reviews.length - 1 ? 0 : prevIndex + 1
       );
     }, 4000);
@@ -109,8 +109,8 @@ const MedicalUniversityReviews = () => {
   // Анимация появления
   const getSlideAnimation = (index) => {
     if (index === currentIndex) {
-      return direction === 'next' 
-        ? 'animate-fade-in-right' 
+      return direction === 'next'
+        ? 'animate-fade-in-right'
         : 'animate-fade-in-left';
     }
     return 'opacity-0 absolute';
@@ -122,21 +122,21 @@ const MedicalUniversityReviews = () => {
       <div className="absolute top-0 left-0 w-32 h-32 bg-blue-100 rounded-full -translate-x-16 -translate-y-16 opacity-50"></div>
       <div className="absolute bottom-0 right-0 w-40 h-40 bg-blue-200 rounded-full translate-x-20 translate-y-20 opacity-30"></div>
       <div className="absolute top-1/2 left-1/4 w-24 h-24 bg-blue-100 rounded-full opacity-20"></div>
-      
+
       <div className="container mx-auto px-4 relative z-10">
         <h2 className="text-4xl font-bold text-center text-blue-900 mb-4">{t('reviews.title')}</h2>
         <p className="text-lg text-center text-blue-700 mb-12 max-w-2xl mx-auto">
           {t('reviews.subtitle')}
         </p>
-        
-        <div 
+
+        <div
           className="relative max-w-6xl mx-auto"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
           <div className="relative h-96 overflow-visible">
             {reviews.map((review, index) => (
-              <div 
+              <div
                 key={review.id}
                 className={`transition-all duration-700 ease-in-out ${getSlideAnimation(index)}`}
                 style={{
@@ -147,8 +147,8 @@ const MedicalUniversityReviews = () => {
                 <div className="bg-white rounded-2xl shadow-xl p-8 flex flex-col md:flex-row items-center h-full mx-4 transform transition-transform duration-300 hover:scale-105">
                   <div className="md:w-1/3 flex flex-col items-center mb-6 md:mb-0">
                     <div className="relative">
-                      <img 
-                        src={review.image} 
+                      <img
+                        src={review.image}
                         alt={t(review.nameKey)}
                         className="w-32 h-32 rounded-full object-cover border-4 border-blue-100 shadow-md"
                       />
@@ -159,12 +159,12 @@ const MedicalUniversityReviews = () => {
                     <h3 className="font-bold text-blue-900 mt-4 text-xl">{t(review.nameKey)}</h3>
                     <p className="text-blue-700 text-center">{t(review.facultyKey)}</p>
                   </div>
-                  
+
                   <div className="md:w-2/3 md:pl-8 flex flex-col justify-center">
                     <div className="flex justify-center md:justify-start mb-4">
                       {renderStars(review.rating)}
                     </div>
-                    
+
                     <div className="relative">
                       <svg className="w-8 h-8 text-blue-100 absolute -left-4 -top-2" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
@@ -178,9 +178,9 @@ const MedicalUniversityReviews = () => {
               </div>
             ))}
           </div>
-          
+
           {/* Кнопки навигации */}
-          <button 
+          <button
             onClick={goToPrevious}
             className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-4 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition-all duration-300 hover:scale-110"
             aria-label={t('reviews.previousButton')}
@@ -189,8 +189,8 @@ const MedicalUniversityReviews = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </button>
-          
-          <button 
+
+          <button
             onClick={goToNext}
             className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-4 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition-all duration-300 hover:scale-110"
             aria-label={t('reviews.nextButton')}
@@ -200,7 +200,7 @@ const MedicalUniversityReviews = () => {
             </svg>
           </button>
         </div>
-        
+
         {/* Индикаторы */}
         <div className="flex justify-center mt-10">
           {reviews.map((_, index) => (
@@ -217,47 +217,15 @@ const MedicalUniversityReviews = () => {
       {/* Медицинские иконки */}
       <div className="absolute bottom-10 left-10 opacity-10">
         <svg className="w-24 h-24 text-blue-400" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M19.649 5.286l-7.65-3.428-7.65 3.428c-.641.287-.641 1.497 0 1.784l7.65 3.428 7.65-3.428c.641-.287.641-1.497 0-1.784zm-7.65 11.428l-7.65-3.428v6.856c0 .947.756 1.714 1.688 1.714h11.924c.932 0 1.688-.767 1.688-1.714v-6.856l-7.65 3.428z"/>
-        </svg>
-      </div>
-      
-      <div className="absolute top-10 right-10 opacity-10">
-        <svg className="w-20 h-20 text-blue-400" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <path d="M19.649 5.286l-7.65-3.428-7.65 3.428c-.641.287-.641 1.497 0 1.784l7.65 3.428 7.65-3.428c.641-.287.641-1.497 0-1.784zm-7.65 11.428l-7.65-3.428v6.856c0 .947.756 1.714 1.688 1.714h11.924c.932 0 1.688-.767 1.688-1.714v-6.856l-7.65 3.428z" />
         </svg>
       </div>
 
-      <style jsx>{`
-        @keyframes fade-in-right {
-          from {
-            opacity: 0;
-            transform: translateX(50px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-        
-        @keyframes fade-in-left {
-          from {
-            opacity: 0;
-            transform: translateX(-50px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-        
-        .animate-fade-in-right {
-          animation: fade-in-right 0.7s ease-out forwards;
-        }
-        
-        .animate-fade-in-left {
-          animation: fade-in-left 0.7s ease-out forwards;
-        }
-      `}</style>
+      <div className="absolute top-10 right-10 opacity-10">
+        <svg className="w-20 h-20 text-blue-400" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        </svg>
+      </div>
     </section>
   );
 };

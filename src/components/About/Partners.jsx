@@ -22,7 +22,7 @@ const createCustomMarker = (type) => {
     organization: '#16a34a', // green
     business: '#9333ea' // purple
   };
-  
+
   return new L.DivIcon({
     className: 'custom-marker',
     html: `<div style="
@@ -84,8 +84,8 @@ const Partners = () => {
             },
             established: partner.established_year || '',
             cooperation_since: partner.cooperation_since || '',
-            cooperation: partner.partnership_areas ? 
-              partner.partnership_areas.split(',').map(area => area.trim()) : 
+            cooperation: partner.partnership_areas ?
+              partner.partnership_areas.split(',').map(area => area.trim()) :
               [],
             contact: {
               email: partner.email || '',
@@ -142,15 +142,15 @@ const Partners = () => {
   const filteredPartners = partners.filter(partner =>
     (filterType === 'all' || partner.type === filterType) &&
     (partner.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-     partner.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-     partner.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
-     partner.country.toLowerCase().includes(searchTerm.toLowerCase()))
+      partner.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      partner.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      partner.country.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
   const getTypeLabel = (type) => {
     const typeLabels = {
       'clinical': 'Клиническая база',
-      'university': 'Университет', 
+      'university': 'Университет',
       'organization': 'Организация',
       'business': 'Бизнес-партнер',
       'academic': 'Академический партнер'
@@ -286,8 +286,8 @@ const Partners = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center">
           <div className="text-red-600 text-xl mb-4">⚠️ {error}</div>
-          <button 
-            onClick={() => window.location.reload()} 
+          <button
+            onClick={() => window.location.reload()}
             className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
           >
             {t('partners.retry', 'Повторить попытку')}
@@ -299,305 +299,266 @@ const Partners = () => {
 
   return (
     <>
-      <style jsx>{`
-        .custom-marker {
-          background: transparent !important;
-          border: none !important;
-        }
-        
-        .leaflet-popup-content-wrapper {
-          border-radius: 8px !important;
-          box-shadow: 0 10px 25px rgba(0,0,0,0.15) !important;
-        }
-        
-        .leaflet-popup-content {
-          margin: 0 !important;
-        }
-        
-        .leaflet-popup-tip {
-          box-shadow: none !important;
-        }
-        
-        .line-clamp-2 {
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-        }
-        
-        .line-clamp-3 {
-          display: -webkit-box;
-          -webkit-line-clamp: 3;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-        }
-        
-        .z-0 {
-          z-index: 0;
-        }
-      `}</style>
-      
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      {/* Header */}
-      <div className="bg-blue-50 rounded-lg p-3 mb-6">
-        <nav className="flex items-center text-sm text-gray-600">
-          <a href="/" className="hover:text-blue-600">{t('breadcrumbs.home')}</a>
-          <span className="mx-2">→</span>
-          <a href="/about" className="hover:text-blue-600">{t('breadcrumbs.about')}</a>
-          <span className="mx-2">→</span>
-          <span className="text-blue-600">{t('breadcrumbs.partners')}</span>
-        </nav>
-      </div>
-
-      {/* Header */}
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">
-          {t('partners.title')}
-        </h1>
-        <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-          {t('partners.subtitle')}
-        </p>
-      </div>
-
-      {/* Filter and Search */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          <div className="flex flex-wrap gap-3">
-            {partnerTypes.map(type => (
-              <button
-                key={type.value}
-                onClick={() => setFilterType(type.value)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors flex items-center space-x-2 ${
-                  filterType === type.value
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                }`}
-              >
-                <span>{type.icon}</span>
-                <span>{type.label}</span>
-              </button>
-            ))}
-          </div>
-          <input
-            type="text"
-            placeholder={t('partners.search')}
-            className="w-full md:w-auto px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
+        {/* Header */}
+        <div className="bg-blue-50 rounded-lg p-3 mb-6">
+          <nav className="flex items-center text-sm text-gray-600">
+            <a href="/" className="hover:text-blue-600">{t('breadcrumbs.home')}</a>
+            <span className="mx-2">→</span>
+            <a href="/about" className="hover:text-blue-600">{t('breadcrumbs.about')}</a>
+            <span className="mx-2">→</span>
+            <span className="text-blue-600">{t('breadcrumbs.partners')}</span>
+          </nav>
         </div>
-        <div className="mt-4 text-sm text-gray-600">
-          {t('partners.showing')} <span className="font-semibold">{filteredPartners.length}</span>
+
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            {t('partners.title')}
+          </h1>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            {t('partners.subtitle')}
+          </p>
         </div>
-      </div>
 
-      {/* Partners Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-        {filteredPartners.map(partner => (
-          <div
-            key={partner.id}
-            className="bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow p-6"
-          >
-            {/* Partner Header */}
-            <div className="flex items-center mb-4">
-              <img
-                src={partner.logo}
-                className="w-12 h-12 object-contain mr-4"
-              />
-              <div className="flex-1">
-                <h3 className="text-lg font-semibold text-gray-900 mb-1">
-                  {partner.name}
-                </h3>
-                <div className="flex items-center space-x-2">
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${getTypeBadgeColor(partner.type)}`}>
-                    {getTypeLabel(partner.type)}
-                  </span>
-                </div>
-              </div>
+        {/* Filter and Search */}
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div className="flex flex-wrap gap-3">
+              {partnerTypes.map(type => (
+                <button
+                  key={type.value}
+                  onClick={() => setFilterType(type.value)}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors flex items-center space-x-2 ${filterType === type.value
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
+                >
+                  <span>{type.icon}</span>
+                  <span>{type.label}</span>
+                </button>
+              ))}
             </div>
-
-            {/* Location */}
-            <div className="flex items-center text-sm text-gray-600 mb-3">
-              <span className="mr-2">📍</span>
-              <span>{partner.city}, {partner.country}</span>
-            </div>
-
-            {/* Description */}
-            <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-              {partner.description}
-            </p>
-
-            {/* Partnership areas */}
-            {partner.cooperation && partner.cooperation.length > 0 && (
-              <div className="mb-4">
-                <h4 className="text-sm font-medium text-gray-900 mb-2">Направления сотрудничества:</h4>
-                <div className="flex flex-wrap gap-1">
-                  {partner.cooperation.map((area, index) => (
-                    <span 
-                      key={index}
-                      className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full"
-                    >
-                      {area}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Actions */}
-            <div className="flex space-x-3">
-              <button
-                onClick={() => setSelectedPartner(partner)}
-                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
-              >
-                {t('partners.details')}
-              </button>
-              <a
-                href={partner.website}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
-              >
-                {t('partners.website')}
-              </a>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Interactive Map Section */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-12">
-        <div className="text-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">{t('partners.map.title')}</h2>
-          <p className="text-gray-600">{t('partners.map.subtitle')}</p>
-        </div>
-        
-        <div className="rounded-lg overflow-hidden shadow-lg">
-          <MapContainer
-            center={[42.8742887, 74.5972753]} // Bishkek coordinates
-            zoom={2}
-            style={{ height: '500px', width: '100%' }}
-            className="z-0"
-          >
-            <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            <input
+              type="text"
+              placeholder={t('partners.search')}
+              className="w-full md:w-auto px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
-            
-            {filteredPartners.map(partner => (
-              <Marker
-                key={partner.id}
-                position={partner.coordinates}
-                icon={createCustomMarker(partner.type)}
-              >
-                <Popup className="custom-popup">
-                  <div className="p-2 min-w-[250px]">
-                    {/* Partner Header in Popup */}
-                    <div className="flex items-center mb-3">
-                      <img
-                        src={partner.logo}
-                        alt={partner.name}
-                        className="w-8 h-8 object-contain mr-2"
-                      />
-                      <div>
-                        <h3 className="font-semibold text-gray-900 text-sm">
-                          {partner.name}
-                        </h3>
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${getTypeBadgeColor(partner.type)}`}>
-                          {getTypeLabel(partner.type)}
-                        </span>
-                      </div>
-                    </div>
-                    
-                    {/* Location */}
-                    <div className="flex items-center text-sm text-gray-600 mb-2">
-                      <span className="mr-2">📍</span>
-                      <span>{partner.city}, {partner.country}</span>
-                    </div>
-                    
-                    {/* Short Description */}
-                    <p className="text-gray-600 text-xs mb-3 line-clamp-2">
-                      {partner.description}
-                    </p>
-                    
-                    {/* Partnership areas */}
-                    {partner.cooperation && partner.cooperation.length > 0 && (
-                      <div className="mb-3">
-                        <div className="text-xs font-medium text-gray-900 mb-1">Сотрудничество:</div>
-                        <div className="flex flex-wrap gap-1">
-                          {partner.cooperation.slice(0, 2).map((area, index) => (
-                            <span 
-                              key={index}
-                              className="px-1 py-0.5 bg-gray-100 text-gray-600 text-xs rounded"
-                            >
-                              {area}
-                            </span>
-                          ))}
-                          {partner.cooperation.length > 2 && (
-                            <span className="text-xs text-gray-500">+{partner.cooperation.length - 2}</span>
-                          )}
-                        </div>
-                      </div>
-                    )}
-                    
-                    {/* Actions */}
-                    <div className="flex space-x-2">
-                      <button
-                        onClick={() => setSelectedPartner(partner)}
-                        className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-xs font-medium transition-colors"
-                      >
-                        {t('partners.details')}
-                      </button>
-                      <a
-                        href={partner.website}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-3 py-1 border border-gray-300 rounded text-xs font-medium text-gray-700 hover:bg-gray-50 transition-colors"
-                      >
-                        {t('partners.website')}
-                      </a>
-                    </div>
-                  </div>
-                </Popup>
-              </Marker>
-            ))}
-          </MapContainer>
+          </div>
+          <div className="mt-4 text-sm text-gray-600">
+            {t('partners.showing')} <span className="font-semibold">{filteredPartners.length}</span>
+          </div>
         </div>
-        
-        {/* Map Legend */}
-        <div className="mt-4 flex flex-wrap justify-center gap-4 text-sm">
-          {partnerTypes.slice(1).map(type => (
-            <div key={type.value} className="flex items-center space-x-2">
-              <div 
-                className="w-4 h-4 rounded-full border-2 border-white shadow flex items-center justify-center text-xs"
-                style={{ 
-                  backgroundColor: type.value === 'clinical' ? '#dc2626' : 
-                                 type.value === 'university' ? '#2563eb' : 
-                                 type.value === 'organization' ? '#16a34a' : '#9333ea'
-                }}
-              >
-                {type.icon}
+
+        {/* Partners Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+          {filteredPartners.map(partner => (
+            <div
+              key={partner.id}
+              className="bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow p-6"
+            >
+              {/* Partner Header */}
+              <div className="flex items-center mb-4">
+                <img
+                  src={partner.logo}
+                  className="w-12 h-12 object-contain mr-4"
+                />
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-1">
+                    {partner.name}
+                  </h3>
+                  <div className="flex items-center space-x-2">
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${getTypeBadgeColor(partner.type)}`}>
+                      {getTypeLabel(partner.type)}
+                    </span>
+                  </div>
+                </div>
               </div>
-              <span className="text-gray-600">{type.label}</span>
+
+              {/* Location */}
+              <div className="flex items-center text-sm text-gray-600 mb-3">
+                <span className="mr-2">📍</span>
+                <span>{partner.city}, {partner.country}</span>
+              </div>
+
+              {/* Description */}
+              <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+                {partner.description}
+              </p>
+
+              {/* Partnership areas */}
+              {partner.cooperation && partner.cooperation.length > 0 && (
+                <div className="mb-4">
+                  <h4 className="text-sm font-medium text-gray-900 mb-2">Направления сотрудничества:</h4>
+                  <div className="flex flex-wrap gap-1">
+                    {partner.cooperation.map((area, index) => (
+                      <span
+                        key={index}
+                        className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full"
+                      >
+                        {area}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Actions */}
+              <div className="flex space-x-3">
+                <button
+                  onClick={() => setSelectedPartner(partner)}
+                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
+                >
+                  {t('partners.details')}
+                </button>
+                <a
+                  href={partner.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+                >
+                  {t('partners.website')}
+                </a>
+              </div>
             </div>
           ))}
         </div>
-      </div>
 
-      {/* Simple Partners Count */}
-      <div className="text-center mt-12">
-        <div className="bg-white rounded-lg shadow-lg p-6 inline-block">
-          <div className="text-3xl font-bold text-blue-600 mb-2">
-            {partners.length}
+        {/* Interactive Map Section */}
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-12">
+          <div className="text-center mb-6">
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">{t('partners.map.title')}</h2>
+            <p className="text-gray-600">{t('partners.map.subtitle')}</p>
           </div>
-          <div className="text-gray-600">Активных партнеров</div>
-        </div>
-      </div>
 
-      {/* Partner Details Modal */}
-      <PartnerModal 
-        partner={selectedPartner} 
-        onClose={() => setSelectedPartner(null)} 
-      />
+          <div className="rounded-lg overflow-hidden shadow-lg">
+            <MapContainer
+              center={[42.8742887, 74.5972753]} // Bishkek coordinates
+              zoom={2}
+              style={{ height: '500px', width: '100%' }}
+              className="z-0"
+            >
+              <TileLayer
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
+
+              {filteredPartners.map(partner => (
+                <Marker
+                  key={partner.id}
+                  position={partner.coordinates}
+                  icon={createCustomMarker(partner.type)}
+                >
+                  <Popup className="custom-popup">
+                    <div className="p-2 min-w-[250px]">
+                      {/* Partner Header in Popup */}
+                      <div className="flex items-center mb-3">
+                        <img
+                          src={partner.logo}
+                          alt={partner.name}
+                          className="w-8 h-8 object-contain mr-2"
+                        />
+                        <div>
+                          <h3 className="font-semibold text-gray-900 text-sm">
+                            {partner.name}
+                          </h3>
+                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${getTypeBadgeColor(partner.type)}`}>
+                            {getTypeLabel(partner.type)}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Location */}
+                      <div className="flex items-center text-sm text-gray-600 mb-2">
+                        <span className="mr-2">📍</span>
+                        <span>{partner.city}, {partner.country}</span>
+                      </div>
+
+                      {/* Short Description */}
+                      <p className="text-gray-600 text-xs mb-3 line-clamp-2">
+                        {partner.description}
+                      </p>
+
+                      {/* Partnership areas */}
+                      {partner.cooperation && partner.cooperation.length > 0 && (
+                        <div className="mb-3">
+                          <div className="text-xs font-medium text-gray-900 mb-1">Сотрудничество:</div>
+                          <div className="flex flex-wrap gap-1">
+                            {partner.cooperation.slice(0, 2).map((area, index) => (
+                              <span
+                                key={index}
+                                className="px-1 py-0.5 bg-gray-100 text-gray-600 text-xs rounded"
+                              >
+                                {area}
+                              </span>
+                            ))}
+                            {partner.cooperation.length > 2 && (
+                              <span className="text-xs text-gray-500">+{partner.cooperation.length - 2}</span>
+                            )}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Actions */}
+                      <div className="flex space-x-2">
+                        <button
+                          onClick={() => setSelectedPartner(partner)}
+                          className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-xs font-medium transition-colors"
+                        >
+                          {t('partners.details')}
+                        </button>
+                        <a
+                          href={partner.website}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-3 py-1 border border-gray-300 rounded text-xs font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+                        >
+                          {t('partners.website')}
+                        </a>
+                      </div>
+                    </div>
+                  </Popup>
+                </Marker>
+              ))}
+            </MapContainer>
+          </div>
+
+          {/* Map Legend */}
+          <div className="mt-4 flex flex-wrap justify-center gap-4 text-sm">
+            {partnerTypes.slice(1).map(type => (
+              <div key={type.value} className="flex items-center space-x-2">
+                <div
+                  className="w-4 h-4 rounded-full border-2 border-white shadow flex items-center justify-center text-xs"
+                  style={{
+                    backgroundColor: type.value === 'clinical' ? '#dc2626' :
+                      type.value === 'university' ? '#2563eb' :
+                        type.value === 'organization' ? '#16a34a' : '#9333ea'
+                  }}
+                >
+                  {type.icon}
+                </div>
+                <span className="text-gray-600">{type.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Simple Partners Count */}
+        <div className="text-center mt-12">
+          <div className="bg-white rounded-lg shadow-lg p-6 inline-block">
+            <div className="text-3xl font-bold text-blue-600 mb-2">
+              {partners.length}
+            </div>
+            <div className="text-gray-600">Активных партнеров</div>
+          </div>
+        </div>
+
+        {/* Partner Details Modal */}
+        <PartnerModal
+          partner={selectedPartner}
+          onClose={() => setSelectedPartner(null)}
+        />
       </div>
     </>
   );

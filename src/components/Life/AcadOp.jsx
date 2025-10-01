@@ -1,36 +1,106 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { studentLifeAPI } from "../../services/studentLifeService";
 
 const AcadOp = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
   const [activeCategory, setActiveCategory] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [academicMobilityData, setAcademicMobilityData] = useState({
+    partner_universities: [],
+    exchange_opportunities: [],
+    participation_requirements: []
+  });
+
+  // Helper function to get localized value from API data
+  const getLocalizedField = (item, fieldName) => {
+    if (!item) return '';
+
+    const currentLang = i18n.language;
+    if (currentLang === 'en' && item[`${fieldName}_en`]) {
+      return item[`${fieldName}_en`];
+    } else if (currentLang === 'ky' && item[`${fieldName}_kg`]) {
+      return item[`${fieldName}_kg`];
+    }
+    return item[`${fieldName}_ru`] || item[fieldName] || '';
+  };
 
   // Animation on mount
   useEffect(() => {
     setIsVisible(true);
   }, []);
 
-  // Получение данных из переводов с проверкой
-  const getOpportunitiesData = () => {
-    const data = t("acadop.opportunities.list", { returnObjects: true });
-    return Array.isArray(data) ? data : [];
-  };
+  // Fetch academic mobility data
+  useEffect(() => {
+    const fetchAcademicData = async () => {
+      try {
+        setLoading(true);
+        const response = await studentLifeAPI.getAcademicMobilityData();
+        console.log('Academic mobility data:', response.data);
 
-  const getCategoriesData = () => {
-    const data = t("acadop.categories.list", { returnObjects: true });
-    return Array.isArray(data) ? data : [];
-  };
+        if (response.data) {
+          setAcademicMobilityData({
+            partner_universities: response.data.partner_universities || [],
+            exchange_opportunities: response.data.exchange_opportunities || [],
+            participation_requirements: response.data.participation_requirements || []
+          });
+        }
+        setError(null);
+      } catch (err) {
+        console.error('Error fetching academic mobility data:', err);
+        setError('Failed to load academic opportunities data');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const getSuccessStoriesData = () => {
-    const data = t("acadop.successStories.list", { returnObjects: true });
-    return Array.isArray(data) ? data : [];
-  };
+    fetchAcademicData();
+  }, []);
 
-  const opportunitiesData = getOpportunitiesData();
-  const categories = getCategoriesData();
-  const successStories = getSuccessStoriesData();
+  // Process exchange opportunities as "opportunities"
+  const opportunitiesData = academicMobilityData.exchange_opportunities.map(opportunity => ({
+    id: opportunity.id,
+    title: getLocalizedField(opportunity, 'title'),
+    description: getLocalizedField(opportunity, 'description'),
+    category: opportunity.type === 'semester' ? 'semester' : 'annual',
+    status: 'available',
+    popular: opportunity.id === 1, // Mark first as popular for demo
+    students: opportunity.type === 'semester' ? '25+' : '15+',
+    icon: opportunity.type === 'semester' ? '🌍' : '🎓',
+    color: opportunity.type === 'semester' ? 'from-green-500 to-emerald-500' : 'from-blue-500 to-cyan-500',
+    features: opportunity.benefits?.map(benefit => getLocalizedField(benefit, 'text')) || []
+  }));
+
+  // Create categories based on exchange opportunities
+  const categories = [
+    {
+      id: 'semester',
+      name: t("acadop.categories.semester", "Семестровый обмен"),
+      count: academicMobilityData.exchange_opportunities.filter(op => op.type === 'semester').length
+    },
+    {
+      id: 'annual',
+      name: t("acadop.categories.annual", "Годовой обмен"),
+      count: academicMobilityData.exchange_opportunities.filter(op => op.type === 'year').length
+    },
+    {
+      id: 'universities',
+      name: t("acadop.categories.universities", "Университеты-партнеры"),
+      count: academicMobilityData.partner_universities.length
+    }
+  ];
+
+  // Create success stories from partner universities
+  const successStories = academicMobilityData.partner_universities.slice(0, 3).map((university, index) => ({
+    name: ['Айгуль Сапар', 'Марат Жуманов', 'Диана Калиева'][index] || `Student ${index + 1}`,
+    program: getLocalizedField(university, 'name'),
+    achievement: t("acadop.successStories.achievement", "Академическая мобильность"),
+    quote: t("acadop.successStories.quote", "Программа обмена открыла новые горизонты в моей карьере"),
+    image: ['👩‍🔬', '👨‍⚕️', '👩‍🎓'][index] || '👨‍🎓'
+  }));
 
   // Фильтрация данных
   const filteredData = opportunitiesData.filter((opportunity) => {
@@ -86,141 +156,40 @@ const AcadOp = () => {
     })),
   ];
 
-  // Данные по умолчанию, если нет перевода
-  const defaultOpportunities = [
-    {
-      id: 1,
-      title: "Исследовательские гранты",
-      description: "Финансирование для научных исследований и проектов",
-      category: "research",
-      status: "available",
-      popular: true,
-      students: "50+",
-      icon: "🔬",
-      color: "from-purple-500 to-pink-500",
-      features: ["Финансирование до 500,000 ₸", "Наставничество", "Публикации"]
-    },
-    {
-      id: 2,
-      title: "Стажировки",
-      description: "Практика в ведущих медицинских учреждениях",
-      category: "internship",
-      status: "available",
-      popular: false,
-      students: "100+",
-      icon: "💼",
-      color: "from-blue-500 to-cyan-500",
-      features: ["Оплачиваемая практика", "Опыт работы", "Трудоустройство"]
-    },
-    {
-      id: 3,
-      title: "Международные программы",
-      description: "Обменные программы и стажировки за рубежом",
-      category: "international",
-      status: "comingSoon",
-      popular: true,
-      students: "25+",
-      icon: "🌍",
-      color: "from-green-500 to-emerald-500",
-      features: ["Обучение за рубежом", "Культурный обмен", "Международный опыт"]
-    }
-  ];
+  // Добавляем состояния загрузки и ошибки
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">{t("common.loading", "Загрузка...")}</p>
+        </div>
+      </div>
+    );
+  }
 
-  const defaultCategories = [
-    { id: "research", name: "Исследования", count: 1 },
-    { id: "internship", name: "Стажировки", count: 1 },
-    { id: "international", name: "Международные", count: 1 },
-    { id: "scholarship", name: "Стипендии", count: 0 },
-    { id: "competition", name: "Конкурсы", count: 0 }
-  ];
-
-  const defaultStories = [
-    {
-      name: "Айгуль Сапар",
-      program: "Медицинская биотехнология",
-      achievement: "Грант на исследование",
-      quote: "Благодаря программе грантов смогла реализовать свой исследовательский проект",
-      image: "👩‍🔬"
-    },
-    {
-      name: "Марат Жуманов",
-      program: "Общая медицина",
-      achievement: "Стажировка в Германии",
-      quote: "Международная программа открыла новые горизонты в моей карьере",
-      image: "👨‍⚕️"
-    },
-    {
-      name: "Диана Калиева",
-      program: "Фармация",
-      achievement: "Победа в конкурсе",
-      quote: "Участие в академических конкурсах помогло развить профессиональные навыки",
-      image: "👩‍🎓"
-    }
-  ];
-
-  // Используем данные по умолчанию, если нет переводов
-  const displayOpportunities = opportunitiesData.length > 0 ? opportunitiesData : defaultOpportunities;
-  const displayCategories = categories.length > 0 ? categories : defaultCategories;
-  const displayStories = successStories.length > 0 ? successStories : defaultStories;
-
-  // Обновляем filteredData с правильными данными
-  const finalFilteredData = displayOpportunities.filter((opportunity) => {
-    const matchesCategory =
-      activeCategory === "all" || opportunity.category === activeCategory;
-    const matchesSearch =
-      opportunity.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      opportunity.description?.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesCategory && matchesSearch;
-  });
-
-  // Обновляем статистику
-  const finalStats = {
-    total: displayOpportunities.length,
-    available: displayOpportunities.filter((r) => r.status === "available").length,
-    students: displayOpportunities.reduce((sum, r) => {
-      const students = parseInt(r.students?.replace("+", "") || "0");
-      return sum + students;
-    }, 0),
-    popular: displayOpportunities.filter((r) => r.popular).length,
-  };
-
-  const finalStatistics = [
-    {
-      label: t("acadop.statistics.total", "Всего возможностей"),
-      value: finalStats.total,
-      color: "from-purple-500 to-purple-600",
-    },
-    {
-      label: t("acadop.statistics.available", "Доступно сейчас"),
-      value: finalStats.available,
-      color: "from-green-500 to-green-600",
-    },
-    {
-      label: t("acadop.statistics.students", "Студентов участвует"),
-      value: `${finalStats.students}+`,
-      color: "from-blue-500 to-blue-600",
-    },
-    {
-      label: t("acadop.statistics.popular", "Популярные"),
-      value: finalStats.popular,
-      color: "from-orange-500 to-orange-600",
-    },
-  ];
-
-  const finalCategoriesList = [
-    { id: "all", name: t("acadop.categories.all", "Все категории"), count: displayOpportunities.length },
-    ...displayCategories.map((cat) => ({
-      id: cat.id,
-      name: cat.name,
-      count: cat.count,
-    })),
-  ];
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-red-500 text-6xl mb-4">⚠️</div>
+          <h2 className="text-2xl font-bold text-gray-800 mb-2">{t("common.error", "Ошибка")}</h2>
+          <p className="text-gray-600 mb-4">{error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            {t("common.retry", "Попробовать снова")}
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
-      className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-      }`}
+      className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+        }`}
     >
       <div className="max-w-7xl mx-auto">
         {/* Заголовок */}
@@ -238,7 +207,7 @@ const AcadOp = () => {
 
         {/* Статистика */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {finalStatistics.map((stat, index) => (
+          {statistics.map((stat, index) => (
             <div
               key={index}
               className={`bg-gradient-to-br ${stat.color} rounded-2xl p-6 text-white shadow-lg transform transition-all duration-500 text-center`}
@@ -261,14 +230,13 @@ const AcadOp = () => {
               </div>
               <nav className="p-2">
                 <ul className="space-y-1">
-                  {finalCategoriesList.map((category) => (
+                  {categoriesList.map((category) => (
                     <li key={category.id}>
                       <button
-                        className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 flex justify-between items-center ${
-                          activeCategory === category.id
+                        className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 flex justify-between items-center ${activeCategory === category.id
                             ? "bg-blue-100 text-blue-700 font-medium shadow-sm"
                             : "text-gray-700 hover:bg-gray-100"
-                        }`}
+                          }`}
                         onClick={() => setActiveCategory(category.id)}
                       >
                         <span>{category.name}</span>
@@ -319,7 +287,7 @@ const AcadOp = () => {
                     <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
                       {activeCategory === "all"
                         ? t("acadop.opportunities.all", "Все возможности")
-                        : displayCategories.find((cat) => cat.id === activeCategory)?.name || activeCategory}
+                        : categories.find((cat) => cat.id === activeCategory)?.name || activeCategory}
                     </h2>
                     <p className="text-gray-600 mt-2">
                       {t("acadop.opportunities.description", "Академические возможности для студентов")}
@@ -327,7 +295,7 @@ const AcadOp = () => {
                   </div>
                   <span className="text-sm text-gray-600 bg-gray-100 px-3 py-1 rounded-full">
                     {t("acadop.results_count", "Найдено {{count}}", {
-                      count: finalFilteredData.length,
+                      count: filteredData.length,
                     })}
                   </span>
                 </div>
@@ -335,9 +303,9 @@ const AcadOp = () => {
 
               {/* Сетка возможностей */}
               <div className="space-y-6">
-                {finalFilteredData.length > 0 ? (
+                {filteredData.length > 0 ? (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {finalFilteredData.map((opportunity, index) => (
+                    {filteredData.map((opportunity, index) => (
                       <div
                         key={opportunity.id}
                         className="bg-gradient-to-br from-white to-blue-50 rounded-xl shadow-md overflow-hidden border border-blue-100 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
@@ -381,11 +349,10 @@ const AcadOp = () => {
                           {/* Статус */}
                           <div className="flex items-center">
                             <div
-                              className={`w-2 h-2 rounded-full mr-2 ${
-                                opportunity.status === "available"
+                              className={`w-2 h-2 rounded-full mr-2 ${opportunity.status === "available"
                                   ? "bg-green-400"
                                   : "bg-yellow-400"
-                              }`}
+                                }`}
                             ></div>
                             <span className="text-xs text-white/80 font-medium">
                               {opportunity.status === "available"
@@ -473,7 +440,7 @@ const AcadOp = () => {
               </div>
 
               {/* Истории успеха */}
-              {activeCategory === "all" && finalFilteredData.length > 0 && (
+              {activeCategory === "all" && filteredData.length > 0 && (
                 <div className="mt-12 pt-8 border-t border-gray-200">
                   <div className="text-center mb-8">
                     <h2 className="text-2xl font-bold text-gray-800 mb-2">
@@ -488,7 +455,7 @@ const AcadOp = () => {
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {displayStories.map((story, index) => (
+                    {successStories.map((story, index) => (
                       <div
                         key={index}
                         className="bg-gradient-to-br from-white to-purple-50 rounded-xl shadow-md border border-purple-100 p-6 text-center transition-all duration-300 transform hover:-translate-y-1"

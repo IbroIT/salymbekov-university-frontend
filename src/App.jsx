@@ -12,6 +12,7 @@ import Careers from "./components/About/Careers";
 import VacancyDetail from "./components/About/VacancyDetail";
 import Partners from "./components/About/Partners";
 import Mission from "./components/About/Mission";
+import MissionDebug from "./components/About/MissionDebug";
 import Regulations from "./components/About/Regulations";
 import Status from "./components/About/Status";
 import Advices from "./components/About/Advices";
@@ -121,6 +122,7 @@ function App() {
             <Route path="/about/careers/:id" element={<VacancyDetail />} />
             <Route path="/about/partners" element={<Partners />} />
             <Route path="/about/mission" element={<Mission />} />
+            <Route path="/about/mission-debug" element={<MissionDebug />} />
             <Route path="/about/advices" element={<Advices />} />
             <Route path="/about/status" element={<Status />} />
             <Route path="/about/founders" element={<Founders />} />

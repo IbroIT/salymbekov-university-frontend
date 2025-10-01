@@ -1,92 +1,86 @@
 {
-"nav": {
-  "advices": "Councils",
-  "status": "Status",
-  "home": "Home",
-  "about": "University",
-  "HSM": "Higher School of Medicine",
-  "founders": "Founders",
-  "structure": "Structure",
-  "cmk": "QMS",
-  "eresources": "E-Resources",
-  "acadop": "Academic Opportunities",
-  "socop": "Social Opportunities",
-  "committee": "Admission Committee",
-  "courses": "Programs of Study",
-  "procedure": "Admission Procedure",
-  "payments": "Payments",
-  "audience": "Lecture Rooms",
-  "startups": "Startups",
-  "achievements": "Achievements",
-  
-  "admission": "For Applicants",
-  "research": "Research",
-  "campus_life": "Students",
-  "news": "News",
-  "contacts": "Contacts",
-  "apply": "Apply",
-  "faq": "FAQ",
-  "about_university": "About the University",
-  "management": "Management",
-  "documents": "Documents",
-  "vacancies": "Vacancies",
-  "partners": "Partners",
-  "programs": "Programs",
-  "eduprograms": "Educational Programs",
-  "faculties": "Faculties",
-  "academic_stuff": "Academic Staff",
-  "departments": "Departments",
-  "calendar": "Academic Calendar",
-  "resources": "Resources",
-  "admission_process": "Admission Process",
-  "requirements": "Requirements",
-  "tuition": "Tuition Fees",
-  "scholarships": "Scholarships",
-  "apply_online": "Online Application",
-  "research_areas": "Research Areas",
-  "research_centers": "Research Centers",
-  "publications": "Publications",
-  "conferences": "Conferences",
-  "grants": "Grants",
-  "student_life": "Student Life",
-  "events": "Events",
-  "clubs": "Student Clubs",
-  "gallery": "Gallery",
-  "international": "For International Students",
-  "all_news": "All News",
-  "announcements": "Announcements",
-  "articles": "Articles",
-  "admission_office": "Admission Office",
-  "map": "Campus Map",
-  "feedback": "Feedback",
-  "mission": "History & Mission",
-  "regulations": "Regulations",
-  
-  "about_HSM": "About HSM",
-  "faculty": "Faculty",
-  "accreditation": "Accreditation",
-  "learning_goals": "Learning Goals",
-  "for_applicants": "For Applicants",
-  "for_citizens_kg": "For Citizens of the Kyrgyz Republic",
-  "for_foreign_citizens": "For Foreign Citizens",
-  
-  "infrastructure": "Infrastructure",
-  "hospitals": "Hospitals",
-  "laboratories": "Laboratories",
-  "academic_buildings": "Academic Buildings",
-  "dormitories": "Dormitories",
-  
-  "management_body": "Governing Body",
-  "scientific_journals": "Scientific Journals",
-  
-  "student": "For Students",
-  "internships": "Internships",
-  "academic_mobility": "Academic Mobility",
-  "instructions": "Instructions & Regulations",
-  "appeal_form": "Appeal Form",
-  "media": "Media about us"
-},
-
+  "nav": {
+    "advices": "Councils",
+    "status": "Status",
+    "home": "Home",
+    "about": "University",
+    "HSM": "Higher School of Medicine",
+    "founders": "Founders",
+    "structure": "Structure",
+    "cmk": "QMS",
+    "eresources": "E-Resources",
+    "acadop": "Academic Opportunities",
+    "socop": "Social Opportunities",
+    "committee": "Admission Committee",
+    "courses": "Programs of Study",
+    "procedure": "Admission Procedure",
+    "payments": "Payments",
+    "audience": "Lecture Rooms",
+    "startups": "Startups",
+    "achievements": "Achievements",
+    "admission": "For Applicants",
+    "research": "Research",
+    "campus_life": "Students",
+    "news": "News",
+    "contacts": "Contacts",
+    "apply": "Apply",
+    "faq": "FAQ",
+    "about_university": "About the University",
+    "management": "Management",
+    "documents": "Documents",
+    "vacancies": "Vacancies",
+    "partners": "Partners",
+    "programs": "Programs",
+    "eduprograms": "Educational Programs",
+    "faculties": "Faculties",
+    "academic_stuff": "Academic Staff",
+    "departments": "Departments",
+    "calendar": "Academic Calendar",
+    "resources": "Resources",
+    "admission_process": "Admission Process",
+    "requirements": "Requirements",
+    "tuition": "Tuition Fees",
+    "scholarships": "Scholarships",
+    "apply_online": "Online Application",
+    "research_areas": "Research Areas",
+    "research_centers": "Research Centers",
+    "publications": "Publications",
+    "conferences": "Conferences",
+    "grants": "Grants",
+    "student_life": "Student Life",
+    "events": "Events",
+    "clubs": "Student Clubs",
+    "gallery": "Gallery",
+    "international": "For International Students",
+    "all_news": "All News",
+    "announcements": "Announcements",
+    "articles": "Articles",
+    "admission_office": "Admission Office",
+    "map": "Campus Map",
+    "feedback": "Feedback",
+    "mission": "History & Mission",
+    "regulations": "Regulations",
+    "about_HSM": "About HSM",
+    "faculty": "Faculty",
+    "accreditation": "Accreditation",
+    "learning_goals": "Learning Goals",
+    "for_applicants": "For Applicants",
+    "for_citizens_kg": "For Citizens of the Kyrgyz Republic",
+    "for_foreign_citizens": "For Foreign Citizens",
+    "infrastructure": "Infrastructure",
+    "hospitals": "Hospitals",
+    "laboratories": "Laboratories",
+    "academic_buildings": "Academic Buildings",
+    "dormitories": "Dormitories",
+    "management_body": "Governing Body",
+    "scientific_journals": "Scientific Journals",
+    "student": "For Students",
+    "internships": "Internships",
+    "academic_mobility": "Academic Mobility",
+    "instructions": "Instructions & Regulations",
+    "appeal_form": "Appeal Form",
+    "media": "Media about us"
+  },
   "infrastructure": {
     "title": "University Infrastructure",
     "subtitle": "Modern educational environment for quality medical professionals training",
@@ -1157,105 +1151,210 @@
     "albums": {
       "orientation2023": {
         "title": "Orientation 2023",
-        "tags": ["students", "event", "acquaintance"]
+        "tags": [
+          "students",
+          "event",
+          "acquaintance"
+        ]
       },
       "graduation2023": {
         "title": "Graduation 2023",
-        "tags": ["graduation", "celebration", "graduates"]
+        "tags": [
+          "graduation",
+          "celebration",
+          "graduates"
+        ]
       },
       "symposium": {
         "title": "Scientific Symposium",
-        "tags": ["science", "conference", "reports"]
+        "tags": [
+          "science",
+          "conference",
+          "reports"
+        ]
       },
       "album1": {
         "title": "New Students Orientation 2023",
-        "tags": ["orientation", "students", "university", "acquaintance"]
+        "tags": [
+          "orientation",
+          "students",
+          "university",
+          "acquaintance"
+        ]
       },
       "album2": {
         "title": "Graduation 2023",
-        "tags": ["graduation", "diploma", "ceremony", "graduates"]
+        "tags": [
+          "graduation",
+          "diploma",
+          "ceremony",
+          "graduates"
+        ]
       },
       "album3": {
         "title": "Young Scientists Symposium",
-        "tags": ["science", "research", "conference", "young scientists"]
+        "tags": [
+          "science",
+          "research",
+          "conference",
+          "young scientists"
+        ]
       },
       "album4": {
         "title": "Sports Events",
-        "tags": ["sports", "competitions", "health", "activity"]
+        "tags": [
+          "sports",
+          "competitions",
+          "health",
+          "activity"
+        ]
       },
       "album5": {
         "title": "Cultural Events",
-        "tags": ["culture", "concert", "creativity", "arts"]
+        "tags": [
+          "culture",
+          "concert",
+          "creativity",
+          "arts"
+        ]
       }
     },
     "photos": {
       "orientation101": {
         "title": "Introduction to the university",
-        "tags": ["students", "event", "acquaintance"]
+        "tags": [
+          "students",
+          "event",
+          "acquaintance"
+        ]
       },
       "orientation102": {
         "title": "Campus tour",
-        "tags": ["campus", "excursion", "students"]
+        "tags": [
+          "campus",
+          "excursion",
+          "students"
+        ]
       },
       "orientation103": {
         "title": "Meeting with teachers",
-        "tags": ["teachers", "acquaintance", "communication"]
+        "tags": [
+          "teachers",
+          "acquaintance",
+          "communication"
+        ]
       },
       "graduation201": {
         "title": "Diploma awarding",
-        "tags": ["graduation", "diplomas", "ceremony"]
+        "tags": [
+          "graduation",
+          "diplomas",
+          "ceremony"
+        ]
       },
       "graduation202": {
         "title": "Graduation ball",
-        "tags": ["celebration", "ball", "graduates"]
+        "tags": [
+          "celebration",
+          "ball",
+          "graduates"
+        ]
       },
       "graduation203": {
         "title": "Photo with classmates",
-        "tags": ["friends", "group", "memory"]
+        "tags": [
+          "friends",
+          "group",
+          "memory"
+        ]
       },
       "symposium301": {
         "title": "Report at the symposium",
-        "tags": ["science", "report", "conference"]
+        "tags": [
+          "science",
+          "report",
+          "conference"
+        ]
       },
       "symposium302": {
         "title": "Discussion of research",
-        "tags": ["discussion", "science", "research"]
+        "tags": [
+          "discussion",
+          "science",
+          "research"
+        ]
       },
       "symposium303": {
         "title": "Poster session",
-        "tags": ["posters", "research", "session"]
+        "tags": [
+          "posters",
+          "research",
+          "session"
+        ]
       },
       "photo1": {
         "title": "Rector's welcome",
-        "tags": ["rector", "welcome", "speech"]
+        "tags": [
+          "rector",
+          "welcome",
+          "speech"
+        ]
       },
       "photo2": {
         "title": "Meeting the faculties",
-        "tags": ["faculties", "acquaintance", "students"]
+        "tags": [
+          "faculties",
+          "acquaintance",
+          "students"
+        ]
       },
       "photo3": {
         "title": "University tour",
-        "tags": ["tour", "university", "buildings"]
+        "tags": [
+          "tour",
+          "university",
+          "buildings"
+        ]
       },
       "photo4": {
         "title": "Ceremonial procession",
-        "tags": ["procession", "graduates", "gowns"]
+        "tags": [
+          "procession",
+          "graduates",
+          "gowns"
+        ]
       },
       "photo5": {
         "title": "Diploma presentation",
-        "tags": ["diploma", "presentation", "award"]
+        "tags": [
+          "diploma",
+          "presentation",
+          "award"
+        ]
       },
       "photo6": {
         "title": "Family photos",
-        "tags": ["family", "graduates", "joy"]
+        "tags": [
+          "family",
+          "graduates",
+          "joy"
+        ]
       },
       "photo7": {
         "title": "Research presentations",
-        "tags": ["research", "presentation", "science"]
+        "tags": [
+          "research",
+          "presentation",
+          "science"
+        ]
       },
       "photo8": {
         "title": "Poster session",
-        "tags": ["posters", "research", "discussion"]
+        "tags": [
+          "posters",
+          "research",
+          "discussion"
+        ]
       }
     }
   },
@@ -2239,7 +2338,6 @@
     }
   },
   "programs": {
-    
     "title": "Key Programs",
     "subtitle": "Choose the program that matches your professional goals",
     "learnMore": "Learn More",
@@ -2483,7 +2581,12 @@
         "databases": {
           "title": "Scientific Databases",
           "description": "Access to international scientific databases for research and academic work.",
-          "features": ["PubMed", "Scopus", "Web of Science", "Google Scholar"]
+          "features": [
+            "PubMed",
+            "Scopus",
+            "Web of Science",
+            "Google Scholar"
+          ]
         },
         "materials": {
           "title": "Methodological Materials",
@@ -2863,7 +2966,12 @@
       "databases": {
         "title": "Scientific Databases",
         "description": "Access to international scientific databases for research and academic work.",
-        "features": ["PubMed", "Scopus", "Web of Science", "Google Scholar"]
+        "features": [
+          "PubMed",
+          "Scopus",
+          "Web of Science",
+          "Google Scholar"
+        ]
       },
       "materials": {
         "title": "Methodological Materials",
@@ -3806,9 +3914,10 @@
     "years_of_success": "Years of successful work",
     "teachers": "Teachers",
     "all": "All",
-    "government": "Government",
-    "regional": "Regional",
-    "professional": "Professional",
+    "national": "National",
+    "international": "International",
+    "institutional": "Institutional",
+    "programmatic": "Programmatic",
     "benefits": "Benefits:",
     "validity_period": "Validity period",
     "level": "Level",
@@ -3817,7 +3926,15 @@
     "accreditations": "Accreditations",
     "loading_error": "Data loading error",
     "refresh_page": "Refresh page",
-
+    "filter_by_type": "Filter by type",
+    "statistics": "Statistics",
+    "total_accreditations": "Total accreditations",
+    "active": "Active",
+    "expired": "Expired",
+    "years_of_work": "Years of work",
+    "certificate": "Certificate",
+    "not_specified": "Not specified",
+    "indefinite": "Indefinite",
     "councils": {
       "title": "Public Management Bodies",
       "subtitle": "Collegial bodies managing the university, ensuring the development of educational, scientific and educational activities.",
@@ -3887,42 +4004,41 @@
   },
   "mission": {
     "historyTitle": "Our History",
-"achievementsTitle": "Our Achievements",
-"achievementsSubtitle": "Over the years, we have achieved significant results",
-"achievements": {
-  "programs": "Educational Programs",
-  "students": "Graduates",
-  "projects": "Research Projects",
-  "partners": "Partner Organizations"
-},
-"history": {
-  "milestone1": {
-    "title": "University Foundation",
-    "description": "Establishment of an educational institution to train highly qualified specialists",
-    "year": "2000"
-  },
-  "milestone2": {
-    "title": "Faculty Expansion",
-    "description": "Opening new academic directions and increasing the number of students",
-    "year": "2005"
-  },
-  "milestone3": {
-    "title": "Scientific Breakthrough",
-    "description": "Launching major research projects and establishing international cooperation",
-    "year": "2010"
-  },
-  "milestone4": {
-    "title": "Modern Campus",
-    "description": "Construction of a new campus with advanced infrastructure and laboratories",
-    "year": "2015"
-  },
-  "milestone5": {
-    "title": "Digital Transformation",
-    "description": "Introducing innovative technologies into education and scientific research",
-    "year": "2020"
-  }
-}
-,
+    "achievementsTitle": "Our Achievements",
+    "achievementsSubtitle": "Over the years, we have achieved significant results",
+    "achievements": {
+      "programs": "Educational Programs",
+      "students": "Graduates",
+      "projects": "Research Projects",
+      "partners": "Partner Organizations"
+    },
+    "history": {
+      "milestone1": {
+        "title": "University Foundation",
+        "description": "Establishment of an educational institution to train highly qualified specialists",
+        "year": "2000"
+      },
+      "milestone2": {
+        "title": "Faculty Expansion",
+        "description": "Opening new academic directions and increasing the number of students",
+        "year": "2005"
+      },
+      "milestone3": {
+        "title": "Scientific Breakthrough",
+        "description": "Launching major research projects and establishing international cooperation",
+        "year": "2010"
+      },
+      "milestone4": {
+        "title": "Modern Campus",
+        "description": "Construction of a new campus with advanced infrastructure and laboratories",
+        "year": "2015"
+      },
+      "milestone5": {
+        "title": "Digital Transformation",
+        "description": "Introducing innovative technologies into education and scientific research",
+        "year": "2020"
+      }
+    },
     "title": "University Mission and Vision",
     "pageTitle": "Mission",
     "subtitle": "Our purpose and values",
@@ -4367,197 +4483,188 @@
   },
   "locale": "en",
   "mededu": {
-  "title": "Bachelor of Medicine and Surgery",
-  "code": "(N/MED/6/0007) (08/29) (MQA/PA 17411)",
-  "duration": "Duration",
-  "fullTime": "Full-time: 6 years",
-  "partTime": "Part-time: 8 years",
-  "intakes": "Intakes",
-  "intakeMonths": "September, January",
-  "brochure": "Brochure",
-  "download": "Download",
-  "online": "Online",
-  "application": "Apply Now",
-  "overview": "Program Overview",
-  "overviewText": "The program prepares students for a career in medicine and healthcare. Key areas include: fundamental medical sciences, clinical practice, medical ethics and communication. The curriculum covers anatomy, physiology, pathology, pharmacology, clinical disciplines, and research work. Students may choose specializations in senior years (therapy, surgery, pediatrics, etc.). Mandatory clinical practice is provided in leading medical institutions. Upon graduation: eligibility for a medical license and employment in hospitals, clinics, and research institutes.",
-  "details": "Program Details",
-  "subjectHighlights": "Key Subjects",
-  "entryRequirements": "Entry Requirements",
-  "careerOpportunities": "Career Opportunities",
-  "programAim": "Program Aims",
-  "faq": "Frequently Asked Questions",
-  "structure": "Program Structure",
-  "clinicalTraining": "Clinical Training",
-  "internationalOpportunities": "International Opportunities",
-
-  "subjects": {
-    "firstSecondYear": "Basic Disciplines (Years 1-2):",
-    "thirdFourthYear": "Clinical Disciplines (Years 3-4):",
-    "fifthSixthYear": "Specialized Modules (Years 5-6):",
-    "subjectsList": {
-      "anatomy": "Human Anatomy with Topographic Anatomy",
-      "histology": "Histology, Embryology, Cytology",
-      "biochemistry": "Biochemistry and Molecular Biology",
-      "physiology": "Physiology with Basics of Pathophysiology",
-      "microbiology": "Microbiology, Virology and Immunology",
-      "latin": "Latin Language and Medical Terminology",
-      "pharmacology": "Pharmacology and Clinical Pharmacology",
-      "internalDiseases": "Propaedeutics of Internal Medicine",
-      "surgery": "General Surgery with Topographic Anatomy",
-      "pediatrics": "Pediatrics with Childhood Infections",
-      "obstetrics": "Obstetrics and Gynecology",
-      "neurology": "Neurology and Medical Genetics",
-      "infectious": "Infectious Diseases and Epidemiology",
-      "oncology": "Oncology and Radiology",
-      "emergency": "Emergency Medicine and Disaster Medicine",
-      "dermatology": "Dermatology and Venereology",
-      "psychiatry": "Psychiatry and Narcology",
-      "forensic": "Forensic Medicine"
+    "title": "Bachelor of Medicine and Surgery",
+    "code": "(N/MED/6/0007) (08/29) (MQA/PA 17411)",
+    "duration": "Duration",
+    "fullTime": "Full-time: 6 years",
+    "partTime": "Part-time: 8 years",
+    "intakes": "Intakes",
+    "intakeMonths": "September, January",
+    "brochure": "Brochure",
+    "download": "Download",
+    "online": "Online",
+    "application": "Apply Now",
+    "overview": "Program Overview",
+    "overviewText": "The program prepares students for a career in medicine and healthcare. Key areas include: fundamental medical sciences, clinical practice, medical ethics and communication. The curriculum covers anatomy, physiology, pathology, pharmacology, clinical disciplines, and research work. Students may choose specializations in senior years (therapy, surgery, pediatrics, etc.). Mandatory clinical practice is provided in leading medical institutions. Upon graduation: eligibility for a medical license and employment in hospitals, clinics, and research institutes.",
+    "details": "Program Details",
+    "subjectHighlights": "Key Subjects",
+    "entryRequirements": "Entry Requirements",
+    "careerOpportunities": "Career Opportunities",
+    "programAim": "Program Aims",
+    "faq": "Frequently Asked Questions",
+    "structure": "Program Structure",
+    "clinicalTraining": "Clinical Training",
+    "internationalOpportunities": "International Opportunities",
+    "subjects": {
+      "firstSecondYear": "Basic Disciplines (Years 1-2):",
+      "thirdFourthYear": "Clinical Disciplines (Years 3-4):",
+      "fifthSixthYear": "Specialized Modules (Years 5-6):",
+      "subjectsList": {
+        "anatomy": "Human Anatomy with Topographic Anatomy",
+        "histology": "Histology, Embryology, Cytology",
+        "biochemistry": "Biochemistry and Molecular Biology",
+        "physiology": "Physiology with Basics of Pathophysiology",
+        "microbiology": "Microbiology, Virology and Immunology",
+        "latin": "Latin Language and Medical Terminology",
+        "pharmacology": "Pharmacology and Clinical Pharmacology",
+        "internalDiseases": "Propaedeutics of Internal Medicine",
+        "surgery": "General Surgery with Topographic Anatomy",
+        "pediatrics": "Pediatrics with Childhood Infections",
+        "obstetrics": "Obstetrics and Gynecology",
+        "neurology": "Neurology and Medical Genetics",
+        "infectious": "Infectious Diseases and Epidemiology",
+        "oncology": "Oncology and Radiology",
+        "emergency": "Emergency Medicine and Disaster Medicine",
+        "dermatology": "Dermatology and Venereology",
+        "psychiatry": "Psychiatry and Narcology",
+        "forensic": "Forensic Medicine"
+      }
+    },
+    "requirements": {
+      "academic": "Academic Requirements:",
+      "language": "Language Requirements:",
+      "additional": "Additional Requirements:",
+      "academicList": {
+        "diploma": "High school diploma with GPA not less than 4.5",
+        "grades": "High grades in Biology, Chemistry, Physics and Mathematics",
+        "exams": "Results of national/university entrance exams in core subjects",
+        "foreign": "For international students - recognition of foreign education documents"
+      },
+      "languageList": {
+        "russian": "Russian language: B2 level for international students",
+        "english": "English language: IELTS 6.0 or equivalent",
+        "latin": "Latin: basic knowledge recommended"
+      },
+      "additionalList": {
+        "motivation": "Motivation letter (500–700 words)",
+        "interview": "Interview with the admission committee",
+        "medical": "Medical certificate of health condition",
+        "criminal": "Certificate of no criminal record"
+      }
+    },
+    "careers": {
+      "clinical": "Clinical Practice:",
+      "research": "Research Activity:",
+      "public": "Public Health:",
+      "clinicalList": {
+        "therapist": "General Practitioner (Therapist) in hospitals and clinics",
+        "pediatrician": "Pediatrician in children’s medical institutions",
+        "surgeon": "Surgeon (general or specialized)",
+        "gynecologist": "Obstetrician-Gynecologist in maternity hospitals",
+        "emergencyDoctor": "Emergency Medicine Doctor",
+        "familyDoctor": "Family Doctor / General Practitioner"
+      },
+      "researchList": {
+        "researcher": "Junior Researcher in medical research institutes",
+        "labResearcher": "Laboratory Researcher in medical labs",
+        "clinicalResearcher": "Clinical Researcher in pharmaceutical companies",
+        "medicalWriter": "Medical Writer and Editor"
+      },
+      "publicList": {
+        "healthOfficial": "Health Administration Specialist",
+        "epidemiologist": "Epidemiologist in public health centers",
+        "methodist": "Medical Methodologist in information centers",
+        "pharmaRep": "Pharmaceutical Representative"
+      }
+    },
+    "aims": {
+      "mainGoals": "Main Goals of the Program:",
+      "learningObjectives": "Learning Objectives:",
+      "goalsList": {
+        "quality": "Train highly qualified doctors capable of providing quality healthcare",
+        "standards": "Form professional competencies in accordance with international standards",
+        "thinking": "Develop clinical thinking and medical decision-making skills",
+        "ethics": "Instill ethical principles and humanistic values in medicine"
+      },
+      "objectivesList": {
+        "knowledge": "Acquire fundamental medical knowledge and clinical skills",
+        "communication": "Develop communication skills for effective patient interaction",
+        "research": "Form research competencies for scientific activity",
+        "continuous": "Prepare for lifelong medical education throughout career"
+      }
+    },
+    "structureDetails": {
+      "stages": "Stages of Study:",
+      "controls": "Forms of Assessment:",
+      "stagesList": {
+        "first": "Years 1-2: Preclinical training – fundamental medical sciences",
+        "second": "Years 3-4: Initial clinical training – propaedeutics and basics of diagnostics",
+        "third": "Year 5: Advanced clinical training – specialized disciplines",
+        "fourth": "Year 6: Subinternship – practical preparation before internship"
+      },
+      "controlsList": {
+        "exams": "Semester exams and credits",
+        "tests": "Interim module tests",
+        "practical": "Practical skills exams (OSCE)",
+        "coursework": "Course projects and research work",
+        "final": "State final certification"
+      }
+    },
+    "clinical": {
+      "bases": "Clinical Training Bases:",
+      "stages": "Internship Stages:",
+      "basesList": {
+        "hospital": "City Clinical Hospital No.1 – 500 beds, all main departments",
+        "children": "Regional Children’s Hospital – specialized pediatric care",
+        "cardiology": "Research Institute of Cardiology",
+        "maternity": "Perinatal Center and Maternity Hospital",
+        "ambulance": "Emergency Medical Services Station"
+      },
+      "practiceStages": {
+        "thirdYear": "Year 3: Patient care – 4 weeks",
+        "fourthYear": "Year 4: Therapeutic and surgical practice – 8 weeks",
+        "fifthYear": "Year 5: Specialized departments – 12 weeks",
+        "sixthYear": "Year 6: Subinternship – 24 weeks"
+      }
+    },
+    "international": {
+      "exchange": "Exchange Programs:",
+      "recognition": "International Recognition:",
+      "exchangeList": {
+        "erasmus": "Erasmus+ with European medical universities",
+        "mobility": "Academic mobility with universities in the USA and Canada",
+        "internships": "Clinical internships in leading medical centers worldwide",
+        "summer": "Summer schools and research internships abroad"
+      },
+      "recognitionList": {
+        "wfme": "WFME Accreditation (World Federation for Medical Education)",
+        "diploma": "Diploma recognition in EU and CIS countries",
+        "exams": "Eligibility for international exams (USMLE, PLAB)",
+        "projects": "Participation in international research projects"
+      }
+    },
+    "faqContent": {
+      "general": "General Questions:",
+      "admission": "Admission Questions:",
+      "questions": {
+        "duration": "What is the duration of the program?",
+        "internship": "Is there an opportunity for internships abroad?",
+        "specializations": "What specializations are available?",
+        "exams": "What exams are required?",
+        "budget": "Are there state-funded (budget) places?"
+      },
+      "answers": {
+        "duration": "6 years full-time, including clinical practice.",
+        "internship": "Yes, the program includes international exchanges and clinical internships.",
+        "specializations": "In years 5–6 students may choose specialization: therapy, surgery, pediatrics, obstetrics-gynecology, etc.",
+        "exams": "Biology, Chemistry, Russian language, plus professional test and interview.",
+        "budget": "Yes, 50 state-funded places are allocated annually based on competition."
+      }
     }
   },
-
-  "requirements": {
-    "academic": "Academic Requirements:",
-    "language": "Language Requirements:",
-    "additional": "Additional Requirements:",
-    "academicList": {
-      "diploma": "High school diploma with GPA not less than 4.5",
-      "grades": "High grades in Biology, Chemistry, Physics and Mathematics",
-      "exams": "Results of national/university entrance exams in core subjects",
-      "foreign": "For international students - recognition of foreign education documents"
-    },
-    "languageList": {
-      "russian": "Russian language: B2 level for international students",
-      "english": "English language: IELTS 6.0 or equivalent",
-      "latin": "Latin: basic knowledge recommended"
-    },
-    "additionalList": {
-      "motivation": "Motivation letter (500–700 words)",
-      "interview": "Interview with the admission committee",
-      "medical": "Medical certificate of health condition",
-      "criminal": "Certificate of no criminal record"
-    }
-  },
-
-  "careers": {
-    "clinical": "Clinical Practice:",
-    "research": "Research Activity:",
-    "public": "Public Health:",
-    "clinicalList": {
-      "therapist": "General Practitioner (Therapist) in hospitals and clinics",
-      "pediatrician": "Pediatrician in children’s medical institutions",
-      "surgeon": "Surgeon (general or specialized)",
-      "gynecologist": "Obstetrician-Gynecologist in maternity hospitals",
-      "emergencyDoctor": "Emergency Medicine Doctor",
-      "familyDoctor": "Family Doctor / General Practitioner"
-    },
-    "researchList": {
-      "researcher": "Junior Researcher in medical research institutes",
-      "labResearcher": "Laboratory Researcher in medical labs",
-      "clinicalResearcher": "Clinical Researcher in pharmaceutical companies",
-      "medicalWriter": "Medical Writer and Editor"
-    },
-    "publicList": {
-      "healthOfficial": "Health Administration Specialist",
-      "epidemiologist": "Epidemiologist in public health centers",
-      "methodist": "Medical Methodologist in information centers",
-      "pharmaRep": "Pharmaceutical Representative"
-    }
-  },
-
-  "aims": {
-    "mainGoals": "Main Goals of the Program:",
-    "learningObjectives": "Learning Objectives:",
-    "goalsList": {
-      "quality": "Train highly qualified doctors capable of providing quality healthcare",
-      "standards": "Form professional competencies in accordance with international standards",
-      "thinking": "Develop clinical thinking and medical decision-making skills",
-      "ethics": "Instill ethical principles and humanistic values in medicine"
-    },
-    "objectivesList": {
-      "knowledge": "Acquire fundamental medical knowledge and clinical skills",
-      "communication": "Develop communication skills for effective patient interaction",
-      "research": "Form research competencies for scientific activity",
-      "continuous": "Prepare for lifelong medical education throughout career"
-    }
-  },
-
-  "structureDetails": {
-    "stages": "Stages of Study:",
-    "controls": "Forms of Assessment:",
-    "stagesList": {
-      "first": "Years 1-2: Preclinical training – fundamental medical sciences",
-      "second": "Years 3-4: Initial clinical training – propaedeutics and basics of diagnostics",
-      "third": "Year 5: Advanced clinical training – specialized disciplines",
-      "fourth": "Year 6: Subinternship – practical preparation before internship"
-    },
-    "controlsList": {
-      "exams": "Semester exams and credits",
-      "tests": "Interim module tests",
-      "practical": "Practical skills exams (OSCE)",
-      "coursework": "Course projects and research work",
-      "final": "State final certification"
-    }
-  },
-
-  "clinical": {
-    "bases": "Clinical Training Bases:",
-    "stages": "Internship Stages:",
-    "basesList": {
-      "hospital": "City Clinical Hospital No.1 – 500 beds, all main departments",
-      "children": "Regional Children’s Hospital – specialized pediatric care",
-      "cardiology": "Research Institute of Cardiology",
-      "maternity": "Perinatal Center and Maternity Hospital",
-      "ambulance": "Emergency Medical Services Station"
-    },
-    "practiceStages": {
-      "thirdYear": "Year 3: Patient care – 4 weeks",
-      "fourthYear": "Year 4: Therapeutic and surgical practice – 8 weeks",
-      "fifthYear": "Year 5: Specialized departments – 12 weeks",
-      "sixthYear": "Year 6: Subinternship – 24 weeks"
-    }
-  },
-
-  "international": {
-    "exchange": "Exchange Programs:",
-    "recognition": "International Recognition:",
-    "exchangeList": {
-      "erasmus": "Erasmus+ with European medical universities",
-      "mobility": "Academic mobility with universities in the USA and Canada",
-      "internships": "Clinical internships in leading medical centers worldwide",
-      "summer": "Summer schools and research internships abroad"
-    },
-    "recognitionList": {
-      "wfme": "WFME Accreditation (World Federation for Medical Education)",
-      "diploma": "Diploma recognition in EU and CIS countries",
-      "exams": "Eligibility for international exams (USMLE, PLAB)",
-      "projects": "Participation in international research projects"
-    }
-  },
-
-  "faqContent": {
-    "general": "General Questions:",
-    "admission": "Admission Questions:",
-    "questions": {
-      "duration": "What is the duration of the program?",
-      "internship": "Is there an opportunity for internships abroad?",
-      "specializations": "What specializations are available?",
-      "exams": "What exams are required?",
-      "budget": "Are there state-funded (budget) places?"
-    },
-    "answers": {
-      "duration": "6 years full-time, including clinical practice.",
-      "internship": "Yes, the program includes international exchanges and clinical internships.",
-      "specializations": "In years 5–6 students may choose specialization: therapy, surgery, pediatrics, obstetrics-gynecology, etc.",
-      "exams": "Biology, Chemistry, Russian language, plus professional test and interview.",
-      "budget": "Yes, 50 state-funded places are allocated annually based on competition."
-    }
-  }
-},
-"achievement": {
+  "achievement": {
     "title": "University Achievements",
     "subtitle": "We are proud of our successes in medical education, scientific research and innovative developments that are changing the future of medicine",
-    
     "filters": {
       "all": "All Achievements",
       "education": "Education",
@@ -4565,53 +4672,44 @@
       "international": "International",
       "infrastructure": "Infrastructure"
     },
-    
     "categories": {
       "education": "education",
       "science": "science",
       "international": "international",
       "infrastructure": "infrastructure"
     },
-    
     "stats": {
       "publications": "Scientific Publications",
       "partners": "International Partners",
       "employment": "Employment Rate",
       "clinicalBases": "Clinical Bases"
     },
-    
     "achievements": {
       "achievement1": {
         "title": "First Place in Medical University Rankings",
         "description": "Our university took first place in the national ranking of medical educational institutions"
       },
-      
       "achievement2": {
         "title": "Breakthrough in Cardiac Surgery",
         "description": "Development of an innovative technique for minimally invasive heart surgery"
       },
-      
       "achievement3": {
         "title": "International Recognition",
         "description": "Accreditation of educational programs according to European standards"
       },
-      
       "achievement4": {
         "title": "Best Scientific Publication",
         "description": "Our researchers' article was recognized as the best in an international medical journal"
       },
-      
       "achievement5": {
         "title": "Innovative Training Center",
         "description": "Opening of a modern simulation center with VR technologies"
       },
-      
       "achievement6": {
         "title": "Research Grant",
         "description": "Received a major government grant for research in oncology"
       }
     },
-    
     "cta": {
       "title": "Become Part of Our Achievements",
       "description": "Join our university and contribute to the development of medicine",
@@ -4620,293 +4718,293 @@
     }
   },
   "founders": {
-  "title": "University Founders",
-  "subtitle": "Outstanding scientists and doctors whose names are forever written in the history of medical education",
-  "achievementsTitle": "Key Achievements:",
-  "previousButton": "Previous",
-  "nextButton": "Next",
-  "quote": {
-    "text": "Medicine is not just a profession, it is a calling that requires full dedication and continuous improvement. A true doctor must combine the knowledge of a scientist, the hands of a surgeon, and the heart of a humanist.",
-    "author": "— Professor Ivan Petrov, University Founder"
+    "title": "University Founders",
+    "subtitle": "Outstanding scientists and doctors whose names are forever written in the history of medical education",
+    "achievementsTitle": "Key Achievements:",
+    "previousButton": "Previous",
+    "nextButton": "Next",
+    "quote": {
+      "text": "Medicine is not just a profession, it is a calling that requires full dedication and continuous improvement. A true doctor must combine the knowledge of a scientist, the hands of a surgeon, and the heart of a humanist.",
+      "author": "— Professor Ivan Petrov, University Founder"
+    },
+    "founder1": {
+      "name": "Professor Ivan Petrov",
+      "position": "Founder and First Rector",
+      "years": "1920-1985",
+      "description": "An outstanding medical scientist, Doctor of Medical Sciences, Academician of the RAMS. Founded the university in 1955 to train highly qualified medical personnel.",
+      "achievements": [
+        "Author of 15 monographs on cardiology",
+        "Recipient of the State Prize",
+        "Founder of the School of Cardiology",
+        "Corresponding member of 5 international academies"
+      ]
+    },
+    "founder2": {
+      "name": "Academician Maria Sidorova",
+      "position": "Co-founder, Dean of the Faculty of Medicine",
+      "years": "1925-1998",
+      "description": "The first female academician in the field of surgery, a pioneer in the development of cardiovascular surgery in our country.",
+      "achievements": [
+        "Developer of unique surgical techniques",
+        "Author of the first textbook on cardiac surgery",
+        "Awarded the Order 'For Merit to the Fatherland'",
+        "Trained 35 doctors of science"
+      ]
+    },
+    "founder3": {
+      "name": "Professor Alexander Kozlov",
+      "position": "Co-founder, Head of Department",
+      "years": "1918-2001",
+      "description": "An outstanding organizer of medical education, creator of the modern system of training doctors.",
+      "achievements": [
+        "Developed the concept of continuous medical education",
+        "Founder of the university’s clinical base",
+        "Initiator of international cooperation",
+        "Author of educational standards"
+      ]
+    },
+    "founder4": {
+      "name": "Professor Elena Vasnetsova",
+      "position": "Co-founder, Scientific Director",
+      "years": "1930-2005",
+      "description": "An outstanding scientist in medical biochemistry, founder of the research institute at the university.",
+      "achievements": [
+        "Discovery of new biochemical disease markers",
+        "Creation of a unique laboratory base",
+        "Author of 200 scientific works",
+        "Founder of the journal 'Medical Biochemistry'"
+      ]
+    }
   },
-  "founder1": {
-    "name": "Professor Ivan Petrov",
-    "position": "Founder and First Rector",
-    "years": "1920-1985",
-    "description": "An outstanding medical scientist, Doctor of Medical Sciences, Academician of the RAMS. Founded the university in 1955 to train highly qualified medical personnel.",
-    "achievements": [
-      "Author of 15 monographs on cardiology",
-      "Recipient of the State Prize",
-      "Founder of the School of Cardiology",
-      "Corresponding member of 5 international academies"
-    ]
+  "structure": {
+    "title": "University Structure",
+    "description": "Learn about the organizational structure of our medical university, including leadership, faculties, and administrative departments",
+    "head": "Head:",
+    "phone": "Phone:",
+    "expand": "Expand",
+    "collapse": "Collapse",
+    "facultyDepartments": "Faculty Departments:",
+    "leadership": {
+      "title": "University Leadership",
+      "items": {
+        "rector": {
+          "name": "Rector",
+          "head": "Ivanov I.I.",
+          "phone": "+7 (XXX) XXX-XX-XX"
+        },
+        "academicViceRector": {
+          "name": "Vice Rector for Academic Affairs",
+          "head": "Petrova A.S.",
+          "phone": "+7 (XXX) XXX-XX-XX"
+        },
+        "researchViceRector": {
+          "name": "Vice Rector for Research",
+          "head": "Sidorov V.P.",
+          "phone": "+7 (XXX) XXX-XX-XX"
+        },
+        "clinicalViceRector": {
+          "name": "Vice Rector for Clinical Affairs",
+          "head": "Kozlova E.V.",
+          "phone": "+7 (XXX) XXX-XX-XX"
+        }
+      }
+    },
+    "faculties": {
+      "title": "Faculties",
+      "items": {
+        "medical": {
+          "name": "Faculty of Medicine",
+          "head": "Doctor of Medical Sciences, Professor Smirnov A.V.",
+          "departments": {
+            "therapy": "Department of Therapy",
+            "surgery": "Department of Surgery",
+            "pediatrics": "Department of Pediatrics",
+            "obstetrics": "Department of Obstetrics and Gynecology"
+          }
+        },
+        "pediatric": {
+          "name": "Faculty of Pediatrics",
+          "head": "Doctor of Medical Sciences, Professor Nikolaeva T.M.",
+          "departments": {
+            "childrenDiseases": "Department of Children's Diseases",
+            "neonatology": "Department of Neonatology",
+            "childrenSurgery": "Department of Pediatric Surgery"
+          }
+        },
+        "dental": {
+          "name": "Faculty of Dentistry",
+          "head": "Doctor of Medical Sciences, Professor Orlova L.P.",
+          "departments": {
+            "therapeuticDentistry": "Department of Therapeutic Dentistry",
+            "orthopedicDentistry": "Department of Orthopedic Dentistry",
+            "surgicalDentistry": "Department of Surgical Dentistry"
+          }
+        },
+        "pharmaceutical": {
+          "name": "Faculty of Pharmacy",
+          "head": "Doctor of Pharmaceutical Sciences, Professor Belov S.K.",
+          "departments": {
+            "pharmaceuticalChemistry": "Department of Pharmaceutical Chemistry",
+            "pharmacognosy": "Department of Pharmacognosy",
+            "drugTechnology": "Department of Drug Technology"
+          }
+        }
+      }
+    },
+    "administrative": {
+      "title": "Administrative Departments",
+      "items": {
+        "academicOffice": {
+          "name": "Academic Office",
+          "head": "Vasilieva O.I.",
+          "phone": "+7 (XXX) XXX-XX-XX"
+        },
+        "researchOffice": {
+          "name": "Research Office",
+          "head": "Grigoriev P.S.",
+          "phone": "+7 (XXX) XXX-XX-XX"
+        },
+        "hrDepartment": {
+          "name": "Human Resources Department",
+          "head": "Fedorova M.K.",
+          "phone": "+7 (XXX) XXX-XX-XX"
+        },
+        "accounting": {
+          "name": "Accounting Department",
+          "head": "Andreeva S.V.",
+          "phone": "+7 (XXX) XXX-XX-XX"
+        }
+      }
+    }
   },
-  "founder2": {
-    "name": "Academician Maria Sidorova",
-    "position": "Co-founder, Dean of the Faculty of Medicine",
-    "years": "1925-1998",
-    "description": "The first female academician in the field of surgery, a pioneer in the development of cardiovascular surgery in our country.",
-    "achievements": [
-      "Developer of unique surgical techniques",
-      "Author of the first textbook on cardiac surgery",
-      "Awarded the Order 'For Merit to the Fatherland'",
-      "Trained 35 doctors of science"
-    ]
-  },
-  "founder3": {
-    "name": "Professor Alexander Kozlov",
-    "position": "Co-founder, Head of Department",
-    "years": "1918-2001",
-    "description": "An outstanding organizer of medical education, creator of the modern system of training doctors.",
-    "achievements": [
-      "Developed the concept of continuous medical education",
-      "Founder of the university’s clinical base",
-      "Initiator of international cooperation",
-      "Author of educational standards"
-    ]
-  },
-  "founder4": {
-    "name": "Professor Elena Vasnetsova",
-    "position": "Co-founder, Scientific Director",
-    "years": "1930-2005",
-    "description": "An outstanding scientist in medical biochemistry, founder of the research institute at the university.",
-    "achievements": [
-      "Discovery of new biochemical disease markers",
-      "Creation of a unique laboratory base",
-      "Author of 200 scientific works",
-      "Founder of the journal 'Medical Biochemistry'"
-    ]
-  }
-},
-"structure": {
-  "title": "University Structure",
-  "description": "Learn about the organizational structure of our medical university, including leadership, faculties, and administrative departments",
-  "head": "Head:",
-  "phone": "Phone:",
-  "expand": "Expand",
-  "collapse": "Collapse",
-  "facultyDepartments": "Faculty Departments:",
   "leadership": {
-    "title": "University Leadership",
-    "items": {
-      "rector": {
-        "name": "Rector",
-        "head": "Ivanov I.I.",
-        "phone": "+7 (XXX) XXX-XX-XX"
-      },
-      "academicViceRector": {
-        "name": "Vice Rector for Academic Affairs",
-        "head": "Petrova A.S.",
-        "phone": "+7 (XXX) XXX-XX-XX"
-      },
-      "researchViceRector": {
-        "name": "Vice Rector for Research",
-        "head": "Sidorov V.P.",
-        "phone": "+7 (XXX) XXX-XX-XX"
-      },
-      "clinicalViceRector": {
-        "name": "Vice Rector for Clinical Affairs",
-        "head": "Kozlova E.V.",
-        "phone": "+7 (XXX) XXX-XX-XX"
-      }
+    "title": "Medical University Leadership",
+    "subtitle": "A professional team of leaders ensuring high quality medical education and scientific research",
+    "directorate": "University Directorate",
+    "departmentHeads": "Heads of Departments",
+    "experience": "Experience",
+    "achievements": "Key Achievements",
+    "specialization": "Specialization",
+    "ivanov": {
+      "name": "Ivanov Ivan Ivanovich",
+      "position": "Director of the Medical University",
+      "degree": "Doctor of Medical Sciences, Professor",
+      "experience": "25 years",
+      "bio": "An outstanding cardiology scientist, author of over 200 scientific works. Under his leadership, the university achieved significant advances in medical science and education.",
+      "achievements": [
+        "Honored Doctor of the Russian Federation",
+        "Corresponding Member of the Russian Academy of Sciences",
+        "Government of the Russian Federation Awardee",
+        "Author of 15 monographs",
+        "Supervisor of 30 dissertations"
+      ]
+    },
+    "petrova": {
+      "name": "Petrova Anna Sergeevna",
+      "position": "Deputy Director for Academic Affairs",
+      "degree": "Doctor of Medical Sciences, Professor",
+      "experience": "20 years",
+      "bio": "Specialist in medical education organization. Under her leadership, modern educational technologies and digital learning platforms were implemented.",
+      "achievements": [
+        "Honored Worker of Higher Education of the Russian Federation",
+        "Expert of the Ministry of Health of the Russian Federation",
+        "Author of educational standards"
+      ]
+    },
+    "sidorov": {
+      "name": "Sidorov Alexey Vladimirovich",
+      "position": "Deputy Director for Scientific Work",
+      "degree": "Doctor of Medical Sciences, Professor",
+      "experience": "22 years",
+      "bio": "Leading scientist in molecular medicine. Organizer of international scientific conferences and research projects.",
+      "achievements": [
+        "State Prize winner in science",
+        "Member of the European Academy of Sciences",
+        "Head of Russian Science Foundation grants"
+      ]
+    },
+    "kozlova": {
+      "name": "Kozlova Maria Dmitrievna",
+      "position": "Head of the Department of Therapy",
+      "degree": "Doctor of Medical Sciences, Professor",
+      "experience": "18 years",
+      "bio": "Specialist in cardiology and internal medicine. Under her leadership, the department became a leading educational center.",
+      "achievements": [
+        "Chief therapist of the region",
+        "Author of clinical recommendations",
+        "Mentor of young scientists"
+      ],
+      "staff": "15 lecturers",
+      "specialization": "Cardiology, Gastroenterology, Pulmonology"
+    },
+    "nikolaev": {
+      "name": "Nikolaev Dmitry Petrovich",
+      "position": "Head of the Department of Surgery",
+      "degree": "Doctor of Medical Sciences, Professor",
+      "experience": "24 years",
+      "bio": "Top-level surgeon specializing in abdominal surgery. Has performed over 5,000 complex operations.",
+      "achievements": [
+        "Honored Doctor of the Russian Federation",
+        "Board member of the Russian Society of Surgeons",
+        "Developer of new surgical methods"
+      ],
+      "staff": "18 lecturers",
+      "specialization": "General Surgery, Oncosurgery, Traumatology"
+    },
+    "orlova": {
+      "name": "Orlova Elena Viktorovna",
+      "position": "Head of the Department of Pediatrics",
+      "degree": "Doctor of Medical Sciences, Professor",
+      "experience": "19 years",
+      "bio": "Specialist in pediatric cardiology and neonatology. Author of unique treatment methods for congenital heart defects in children.",
+      "achievements": [
+        "Chief pediatrician of the city",
+        "WHO expert in child health",
+        "Founder of the School of Pediatric Cardiology"
+      ],
+      "staff": "12 lecturers",
+      "specialization": "Neonatology, Pediatric Infections, Cardiology"
+    },
+    "vasiliev": {
+      "name": "Vasiliev Sergey Igorevich",
+      "position": "Head of the Department of Neurology",
+      "degree": "Doctor of Medical Sciences, Professor",
+      "experience": "21 years",
+      "bio": "Leading neurologist in the country, specialist in cerebrovascular diseases and neurorehabilitation.",
+      "achievements": [
+        "President of the Association of Neurologists",
+        "Developer of national stroke treatment standards",
+        "Scientific Director of the Clinic"
+      ],
+      "staff": "10 lecturers",
+      "specialization": "Neurology, Neurosurgery, Rehabilitation"
+    },
+    "smirnova": {
+      "name": "Smirnova Olga Vasilievna",
+      "position": "Head of the Department of Dentistry",
+      "degree": "Doctor of Medical Sciences, Professor",
+      "experience": "17 years",
+      "bio": "Specialist in orthodontics and aesthetic dentistry. Developer of innovative prosthetic methods.",
+      "achievements": [
+        "Member of the International Association of Dentists",
+        "Holder of patents for dental structures",
+        "Chief dentist of the region"
+      ],
+      "staff": "14 lecturers",
+      "specialization": "Therapeutic Dentistry, Orthodontics, Surgery"
+    },
+    "departments": {
+      "directorate": "Directorate",
+      "studyDepartment": "Academic Office",
+      "scienceDepartment": "Research Office",
+      "therapy": "Department of Therapy",
+      "surgery": "Department of Surgery",
+      "pediatrics": "Department of Pediatrics",
+      "neurology": "Department of Neurology",
+      "dentistry": "Department of Dentistry"
     }
   },
-  "faculties": {
-    "title": "Faculties",
-    "items": {
-      "medical": {
-        "name": "Faculty of Medicine",
-        "head": "Doctor of Medical Sciences, Professor Smirnov A.V.",
-        "departments": {
-          "therapy": "Department of Therapy",
-          "surgery": "Department of Surgery",
-          "pediatrics": "Department of Pediatrics",
-          "obstetrics": "Department of Obstetrics and Gynecology"
-        }
-      },
-      "pediatric": {
-        "name": "Faculty of Pediatrics",
-        "head": "Doctor of Medical Sciences, Professor Nikolaeva T.M.",
-        "departments": {
-          "childrenDiseases": "Department of Children's Diseases",
-          "neonatology": "Department of Neonatology",
-          "childrenSurgery": "Department of Pediatric Surgery"
-        }
-      },
-      "dental": {
-        "name": "Faculty of Dentistry",
-        "head": "Doctor of Medical Sciences, Professor Orlova L.P.",
-        "departments": {
-          "therapeuticDentistry": "Department of Therapeutic Dentistry",
-          "orthopedicDentistry": "Department of Orthopedic Dentistry",
-          "surgicalDentistry": "Department of Surgical Dentistry"
-        }
-      },
-      "pharmaceutical": {
-        "name": "Faculty of Pharmacy",
-        "head": "Doctor of Pharmaceutical Sciences, Professor Belov S.K.",
-        "departments": {
-          "pharmaceuticalChemistry": "Department of Pharmaceutical Chemistry",
-          "pharmacognosy": "Department of Pharmacognosy",
-          "drugTechnology": "Department of Drug Technology"
-        }
-      }
-    }
-  },
-  "administrative": {
-    "title": "Administrative Departments",
-    "items": {
-      "academicOffice": {
-        "name": "Academic Office",
-        "head": "Vasilieva O.I.",
-        "phone": "+7 (XXX) XXX-XX-XX"
-      },
-      "researchOffice": {
-        "name": "Research Office",
-        "head": "Grigoriev P.S.",
-        "phone": "+7 (XXX) XXX-XX-XX"
-      },
-      "hrDepartment": {
-        "name": "Human Resources Department",
-        "head": "Fedorova M.K.",
-        "phone": "+7 (XXX) XXX-XX-XX"
-      },
-      "accounting": {
-        "name": "Accounting Department",
-        "head": "Andreeva S.V.",
-        "phone": "+7 (XXX) XXX-XX-XX"
-      }
-    }
-  }
-},
-"leadership": {
-  "title": "Medical University Leadership",
-  "subtitle": "A professional team of leaders ensuring high quality medical education and scientific research",
-  "directorate": "University Directorate",
-  "departmentHeads": "Heads of Departments",
-  "experience": "Experience",
-  "achievements": "Key Achievements",
-  "specialization": "Specialization",
-  "ivanov": {
-    "name": "Ivanov Ivan Ivanovich",
-    "position": "Director of the Medical University",
-    "degree": "Doctor of Medical Sciences, Professor",
-    "experience": "25 years",
-    "bio": "An outstanding cardiology scientist, author of over 200 scientific works. Under his leadership, the university achieved significant advances in medical science and education.",
-    "achievements": [
-      "Honored Doctor of the Russian Federation",
-      "Corresponding Member of the Russian Academy of Sciences",
-      "Government of the Russian Federation Awardee",
-      "Author of 15 monographs",
-      "Supervisor of 30 dissertations"
-    ]
-  },
-  "petrova": {
-    "name": "Petrova Anna Sergeevna",
-    "position": "Deputy Director for Academic Affairs",
-    "degree": "Doctor of Medical Sciences, Professor",
-    "experience": "20 years",
-    "bio": "Specialist in medical education organization. Under her leadership, modern educational technologies and digital learning platforms were implemented.",
-    "achievements": [
-      "Honored Worker of Higher Education of the Russian Federation",
-      "Expert of the Ministry of Health of the Russian Federation",
-      "Author of educational standards"
-    ]
-  },
-  "sidorov": {
-    "name": "Sidorov Alexey Vladimirovich",
-    "position": "Deputy Director for Scientific Work",
-    "degree": "Doctor of Medical Sciences, Professor",
-    "experience": "22 years",
-    "bio": "Leading scientist in molecular medicine. Organizer of international scientific conferences and research projects.",
-    "achievements": [
-      "State Prize winner in science",
-      "Member of the European Academy of Sciences",
-      "Head of Russian Science Foundation grants"
-    ]
-  },
-  "kozlova": {
-    "name": "Kozlova Maria Dmitrievna",
-    "position": "Head of the Department of Therapy",
-    "degree": "Doctor of Medical Sciences, Professor",
-    "experience": "18 years",
-    "bio": "Specialist in cardiology and internal medicine. Under her leadership, the department became a leading educational center.",
-    "achievements": [
-      "Chief therapist of the region",
-      "Author of clinical recommendations",
-      "Mentor of young scientists"
-    ],
-    "staff": "15 lecturers",
-    "specialization": "Cardiology, Gastroenterology, Pulmonology"
-  },
-  "nikolaev": {
-    "name": "Nikolaev Dmitry Petrovich",
-    "position": "Head of the Department of Surgery",
-    "degree": "Doctor of Medical Sciences, Professor",
-    "experience": "24 years",
-    "bio": "Top-level surgeon specializing in abdominal surgery. Has performed over 5,000 complex operations.",
-    "achievements": [
-      "Honored Doctor of the Russian Federation",
-      "Board member of the Russian Society of Surgeons",
-      "Developer of new surgical methods"
-    ],
-    "staff": "18 lecturers",
-    "specialization": "General Surgery, Oncosurgery, Traumatology"
-  },
-  "orlova": {
-    "name": "Orlova Elena Viktorovna",
-    "position": "Head of the Department of Pediatrics",
-    "degree": "Doctor of Medical Sciences, Professor",
-    "experience": "19 years",
-    "bio": "Specialist in pediatric cardiology and neonatology. Author of unique treatment methods for congenital heart defects in children.",
-    "achievements": [
-      "Chief pediatrician of the city",
-      "WHO expert in child health",
-      "Founder of the School of Pediatric Cardiology"
-    ],
-    "staff": "12 lecturers",
-    "specialization": "Neonatology, Pediatric Infections, Cardiology"
-  },
-  "vasiliev": {
-    "name": "Vasiliev Sergey Igorevich",
-    "position": "Head of the Department of Neurology",
-    "degree": "Doctor of Medical Sciences, Professor",
-    "experience": "21 years",
-    "bio": "Leading neurologist in the country, specialist in cerebrovascular diseases and neurorehabilitation.",
-    "achievements": [
-      "President of the Association of Neurologists",
-      "Developer of national stroke treatment standards",
-      "Scientific Director of the Clinic"
-    ],
-    "staff": "10 lecturers",
-    "specialization": "Neurology, Neurosurgery, Rehabilitation"
-  },
-  "smirnova": {
-    "name": "Smirnova Olga Vasilievna",
-    "position": "Head of the Department of Dentistry",
-    "degree": "Doctor of Medical Sciences, Professor",
-    "experience": "17 years",
-    "bio": "Specialist in orthodontics and aesthetic dentistry. Developer of innovative prosthetic methods.",
-    "achievements": [
-      "Member of the International Association of Dentists",
-      "Holder of patents for dental structures",
-      "Chief dentist of the region"
-    ],
-    "staff": "14 lecturers",
-    "specialization": "Therapeutic Dentistry, Orthodontics, Surgery"
-  },
-  "departments": {
-    "directorate": "Directorate",
-    "studyDepartment": "Academic Office",
-    "scienceDepartment": "Research Office",
-    "therapy": "Department of Therapy",
-    "surgery": "Department of Surgery",
-    "pediatrics": "Department of Pediatrics",
-    "neurology": "Department of Neurology",
-    "dentistry": "Department of Dentistry"
-  }
-},
-"admission": {
+  "admission": {
     "title": "Admission Committee",
     "heroTitle": "Start Your Medical Career With Us",
     "heroSubtitle": "Join the best medical university in the region",
@@ -5040,7 +5138,7 @@
     "footerText": "We are here to help you through every step of the admission process",
     "medicalUniversity": "Medical University"
   },
-   "classrooms": {
+  "classrooms": {
     "title": "Classrooms",
     "heroTitle": "Modern Learning Spaces",
     "heroSubtitle": "State-of-the-art classrooms and laboratories for medical education",
@@ -5235,533 +5333,695 @@
     "story2Quote": "Access to advanced laboratories and expert guidance transformed our research project into a viable medical device company."
   },
   "smk": {
-  "hero": {
-    "certified": "Certified Quality System",
-    "title": "Quality Management System",
-    "description": "An innovative management system ensuring high quality of educational services and continuous improvement of the university’s activities"
-  },
-  "statistics": {
-    "documents": "QMS Documents",
-    "processes": "Management Processes",
-    "principles": "Quality Principles",
-    "certificates": "Certificates"
-  },
-  "tabs": {
-    "about": "About the System",
-    "principles": "Principles",
-    "documents": "Documents",
-    "processes": "Processes"
-  },
-  "about": {
-    "title": "About the Quality Management System",
-    "description1": "Our quality management system is an integrated approach to university management based on international standard ISO 9001:2015.",
-    "description2": "The QMS covers all aspects of the university’s activities — from the educational process to research and international cooperation.",
-    "description3": "We strive to create an environment where quality becomes an integral part of corporate culture.",
-    "standard": "International Standard",
-    "compliance": "Compliance with Requirements",
-    "advantages": "Our Advantages"
-  },
-  "advantages": {
-    "studentSatisfaction": "Increased student satisfaction",
-    "processOptimization": "Optimization of management processes",
-    "academicResults": "Improved academic results",
-    "internationalRecognition": "Strengthened international recognition",
-    "resourceEfficiency": "Efficient use of resources"
-  },
-  "principles": {
-    "title": "Principles of the Quality Management System",
-    "customerOrientation": {
-      "title": "Customer Orientation",
-      "description": "Understanding current and future needs of students, employers, and society"
+    "hero": {
+      "certified": "Certified Quality System",
+      "title": "Quality Management System",
+      "description": "An innovative management system ensuring high quality of educational services and continuous improvement of the university’s activities"
     },
-    "leadership": {
-      "title": "Leadership of Management",
-      "description": "Unity of goals and creating an environment for full employee involvement"
+    "statistics": {
+      "documents": "QMS Documents",
+      "processes": "Management Processes",
+      "principles": "Quality Principles",
+      "certificates": "Certificates"
     },
-    "engagement": {
-      "title": "Staff Engagement",
-      "description": "Full use of the abilities and potential of all university employees"
+    "tabs": {
+      "about": "About the System",
+      "principles": "Principles",
+      "documents": "Documents",
+      "processes": "Processes"
     },
-    "processApproach": {
-      "title": "Process Approach",
-      "description": "Managing activities and related resources as a process"
+    "about": {
+      "title": "About the Quality Management System",
+      "description1": "Our quality management system is an integrated approach to university management based on international standard ISO 9001:2015.",
+      "description2": "The QMS covers all aspects of the university’s activities — from the educational process to research and international cooperation.",
+      "description3": "We strive to create an environment where quality becomes an integral part of corporate culture.",
+      "standard": "International Standard",
+      "compliance": "Compliance with Requirements",
+      "advantages": "Our Advantages"
     },
-    "systemApproach": {
-      "title": "System Approach",
-      "description": "Identifying, understanding, and managing interrelated processes as a system"
+    "advantages": {
+      "studentSatisfaction": "Increased student satisfaction",
+      "processOptimization": "Optimization of management processes",
+      "academicResults": "Improved academic results",
+      "internationalRecognition": "Strengthened international recognition",
+      "resourceEfficiency": "Efficient use of resources"
     },
-    "continuousImprovement": {
-      "title": "Continuous Improvement",
-      "description": "Ongoing improvement of the university’s overall performance"
-    }
-  },
-  "documents": {
-    "title": "QMS Documentation",
-    "structure": {
-      "title": "Documentation Structure",
-      "qualityPolicy": "Quality Policy",
-      "strategicDirections": "Strategic Directions",
-      "qualityManual": "Quality Manual",
-      "foundationalDocument": "Foundational Document",
-      "procedures": "Procedures and Regulations",
-      "keyProcesses": "Description of Key Processes",
-      "workInstructions": "Work Instructions",
-      "detailedGuidance": "Detailed Guidelines",
-      "records": "Records and Reports",
-      "resultsDocumentation": "Results Documentation"
-    },
-    "downloads": "Documents for Download",
-    "download": "Download",
-    "list": [
-      {
-        "title": "Quality Policy",
-        "date": "15.03.2023",
-        "size": "2.1 MB",
-        "type": "pdf",
-        "category": "Core Documents"
+    "principles": {
+      "title": "Principles of the Quality Management System",
+      "customerOrientation": {
+        "title": "Customer Orientation",
+        "description": "Understanding current and future needs of students, employers, and society"
       },
-      {
-        "title": "Quality Manual",
-        "date": "20.03.2023",
-        "size": "3.4 MB",
-        "type": "pdf",
-        "category": "Core Documents"
+      "leadership": {
+        "title": "Leadership of Management",
+        "description": "Unity of goals and creating an environment for full employee involvement"
+      },
+      "engagement": {
+        "title": "Staff Engagement",
+        "description": "Full use of the abilities and potential of all university employees"
+      },
+      "processApproach": {
+        "title": "Process Approach",
+        "description": "Managing activities and related resources as a process"
+      },
+      "systemApproach": {
+        "title": "System Approach",
+        "description": "Identifying, understanding, and managing interrelated processes as a system"
+      },
+      "continuousImprovement": {
+        "title": "Continuous Improvement",
+        "description": "Ongoing improvement of the university’s overall performance"
       }
-    ]
-  },
-  "processes": {
-    "title": "Processes of the Quality Management System",
-    "main": {
-      "title": "Core Processes",
-      "educational": "Educational Activities",
-      "research": "Research Work",
-      "educationalWork": "Educational and Social Activities",
-      "international": "International Cooperation"
     },
-    "support": {
-      "title": "Supporting Processes",
-      "hr": "Human Resources Management",
-      "technical": "Material and Technical Support",
-      "information": "Information Support",
-      "financial": "Financial Management"
+    "documents": {
+      "title": "QMS Documentation",
+      "structure": {
+        "title": "Documentation Structure",
+        "qualityPolicy": "Quality Policy",
+        "strategicDirections": "Strategic Directions",
+        "qualityManual": "Quality Manual",
+        "foundationalDocument": "Foundational Document",
+        "procedures": "Procedures and Regulations",
+        "keyProcesses": "Description of Key Processes",
+        "workInstructions": "Work Instructions",
+        "detailedGuidance": "Detailed Guidelines",
+        "records": "Records and Reports",
+        "resultsDocumentation": "Results Documentation"
+      },
+      "downloads": "Documents for Download",
+      "download": "Download",
+      "list": [
+        {
+          "title": "Quality Policy",
+          "date": "15.03.2023",
+          "size": "2.1 MB",
+          "type": "pdf",
+          "category": "Core Documents"
+        },
+        {
+          "title": "Quality Manual",
+          "date": "20.03.2023",
+          "size": "3.4 MB",
+          "type": "pdf",
+          "category": "Core Documents"
+        }
+      ]
     },
-    "management": {
-      "title": "Management Processes",
-      "strategic": "Strategic Planning",
-      "monitoring": "Monitoring and Measurement",
-      "audits": "Internal Audits",
-      "managementReview": "Management Review"
-    },
-    "improvement": {
-      "title": "Improvement Processes",
-      "nonConformity": "Nonconformity Management",
-      "corrective": "Corrective Actions",
-      "preventive": "Preventive Actions",
-      "continuous": "Continuous Improvement"
+    "processes": {
+      "title": "Processes of the Quality Management System",
+      "main": {
+        "title": "Core Processes",
+        "educational": "Educational Activities",
+        "research": "Research Work",
+        "educationalWork": "Educational and Social Activities",
+        "international": "International Cooperation"
+      },
+      "support": {
+        "title": "Supporting Processes",
+        "hr": "Human Resources Management",
+        "technical": "Material and Technical Support",
+        "information": "Information Support",
+        "financial": "Financial Management"
+      },
+      "management": {
+        "title": "Management Processes",
+        "strategic": "Strategic Planning",
+        "monitoring": "Monitoring and Measurement",
+        "audits": "Internal Audits",
+        "managementReview": "Management Review"
+      },
+      "improvement": {
+        "title": "Improvement Processes",
+        "nonConformity": "Nonconformity Management",
+        "corrective": "Corrective Actions",
+        "preventive": "Preventive Actions",
+        "continuous": "Continuous Improvement"
+      }
     }
-  }
-},
-"eresources": {
-  "hero": {
-    "badge": "DYNAMIC RESOURCES",
-    "title": "Electronic",
-    "highlight": "Resources",
-    "description": "A modern digital ecosystem for effective learning, research, and academic development"
   },
-  "statistics": {
-    "total": "Total Resources",
-    "online": "Online",
-    "users": "Active Users",
-    "popular": "Popular"
+  "eresources": {
+    "hero": {
+      "badge": "DYNAMIC RESOURCES",
+      "title": "Electronic",
+      "highlight": "Resources",
+      "description": "A modern digital ecosystem for effective learning, research, and academic development"
+    },
+    "statistics": {
+      "total": "Total Resources",
+      "online": "Online",
+      "users": "Active Users",
+      "popular": "Popular"
+    },
+    "search": {
+      "placeholder": "Search resources..."
+    },
+    "categories": {
+      "list": [
+        {
+          "id": "all",
+          "name": "All Resources",
+          "count": 8,
+          "icon": "🔄"
+        },
+        {
+          "id": "library",
+          "name": "Library",
+          "count": 1,
+          "icon": "📚"
+        },
+        {
+          "id": "education",
+          "name": "Education",
+          "count": 1,
+          "icon": "🎓"
+        },
+        {
+          "id": "research",
+          "name": "Research",
+          "count": 1,
+          "icon": "🔬"
+        },
+        {
+          "id": "labs",
+          "name": "Labs",
+          "count": 1,
+          "icon": "🧪"
+        },
+        {
+          "id": "mobile",
+          "name": "Mobile",
+          "count": 1,
+          "icon": "📱"
+        }
+      ]
+    },
+    "resources": {
+      "popularBadge": "POPULAR",
+      "status": {
+        "online": "ONLINE",
+        "maintenance": "MAINTENANCE"
+      },
+      "users": "users",
+      "featuresTitle": "Key Features:",
+      "accessButton": "Go to Resource",
+      "list": [
+        {
+          "id": 1,
+          "title": "Electronic Library",
+          "description": "Access to more than 50,000 scientific publications, textbooks, and journals",
+          "category": "library",
+          "icon": "📚",
+          "color": "from-purple-500 to-purple-600",
+          "status": "online",
+          "users": "2,500+",
+          "features": [
+            "Catalog Search",
+            "Electronic Order",
+            "Remote Access",
+            "Mobile App"
+          ],
+          "link": "#",
+          "popular": true
+        },
+        {
+          "id": 2,
+          "title": "Distance Learning System",
+          "description": "Platform for online courses, webinars, and virtual classrooms",
+          "category": "education",
+          "icon": "🎓",
+          "color": "from-blue-500 to-blue-600",
+          "status": "online",
+          "users": "3,200+",
+          "features": [
+            "Video Lectures",
+            "Interactive Tests",
+            "Discussion Forum",
+            "Learning Progress"
+          ],
+          "link": "#",
+          "popular": true
+        },
+        {
+          "id": 3,
+          "title": "Scientific Database",
+          "description": "Access to international scientific databases and journals",
+          "category": "research",
+          "icon": "🔬",
+          "color": "from-green-500 to-green-600",
+          "status": "online",
+          "users": "1,800+",
+          "features": [
+            "PubMed",
+            "Scopus",
+            "Web of Science",
+            "Google Scholar"
+          ],
+          "link": "#",
+          "popular": false
+        },
+        {
+          "id": 4,
+          "title": "Virtual Labs",
+          "description": "3D simulators of medical procedures and diagnostics",
+          "category": "labs",
+          "icon": "🧪",
+          "color": "from-orange-500 to-orange-600",
+          "status": "online",
+          "users": "900+",
+          "features": [
+            "Anatomical Atlases",
+            "Surgical Simulators",
+            "Diagnostic Cases",
+            "VR Trainers"
+          ],
+          "link": "#",
+          "popular": true
+        },
+        {
+          "id": 5,
+          "title": "Testing System",
+          "description": "Platform for conducting exams and knowledge testing",
+          "category": "testing",
+          "icon": "📝",
+          "color": "from-red-500 to-red-600",
+          "status": "maintenance",
+          "users": "2,100+",
+          "features": [
+            "Automatic Checking",
+            "Exam Timing",
+            "Result Analytics",
+            "Cheating Protection"
+          ],
+          "link": "#",
+          "popular": false
+        },
+        {
+          "id": 6,
+          "title": "Mobile App",
+          "description": "Access all university resources from mobile devices",
+          "category": "mobile",
+          "icon": "📱",
+          "color": "from-indigo-500 to-indigo-600",
+          "status": "online",
+          "users": "4,500+",
+          "features": [
+            "Push Notifications",
+            "Offline Access",
+            "Personal Account",
+            "Schedule"
+          ],
+          "link": "#",
+          "popular": true
+        },
+        {
+          "id": 7,
+          "title": "Cloud Storage",
+          "description": "Secure storage and sharing of learning materials",
+          "category": "storage",
+          "icon": "☁️",
+          "color": "from-teal-500 to-teal-600",
+          "status": "online",
+          "users": "3,800+",
+          "features": [
+            "1 TB Storage",
+            "Collaboration",
+            "Version Control",
+            "Encryption"
+          ],
+          "link": "#",
+          "popular": false
+        },
+        {
+          "id": 8,
+          "title": "Video Conferences",
+          "description": "Platform for online classes and meetings",
+          "category": "conference",
+          "icon": "🎥",
+          "color": "from-pink-500 to-pink-600",
+          "status": "online",
+          "users": "2,700+",
+          "features": [
+            "HD Video",
+            "Session Recording",
+            "Interactive Whiteboard",
+            "Up to 100 Participants"
+          ],
+          "link": "#",
+          "popular": true
+        }
+      ]
+    },
+    "noResults": {
+      "title": "No Resources Found",
+      "description": "Try changing the search parameters or choose another category"
+    }
   },
-  "search": {
-    "placeholder": "Search resources..."
+  "acadop": {
+    "hero": {
+      "badge": "ACADEMIC PROSPECTS",
+      "title": "Academic",
+      "highlight": "opportunities",
+      "description": "Discover a world of unique opportunities for your academic growth, professional development, and international recognition"
+    },
+    "statistics": {
+      "total": "Total programs",
+      "available": "Available now",
+      "students": "Participants",
+      "popular": "Popular"
+    },
+    "search": {
+      "placeholder": "Search opportunities..."
+    },
+    "categories": {
+      "list": [
+        {
+          "id": "all",
+          "name": "All opportunities",
+          "count": 9,
+          "icon": "🔄"
+        },
+        {
+          "id": "education",
+          "name": "Education",
+          "count": 2,
+          "icon": "🎓"
+        },
+        {
+          "id": "international",
+          "name": "International",
+          "count": 2,
+          "icon": "🌍"
+        },
+        {
+          "id": "research",
+          "name": "Research",
+          "count": 2,
+          "icon": "🔬"
+        },
+        {
+          "id": "career",
+          "name": "Career",
+          "count": 1,
+          "icon": "💼"
+        },
+        {
+          "id": "innovation",
+          "name": "Innovation",
+          "count": 2,
+          "icon": "🚀"
+        }
+      ]
+    },
+    "opportunities": {
+      "popularBadge": "POPULAR",
+      "status": {
+        "available": "AVAILABLE",
+        "comingSoon": "COMING SOON"
+      },
+      "students": "students",
+      "featuresTitle": "Key benefits:",
+      "detailsButton": "Learn more",
+      "list": [
+        {
+          "id": 1,
+          "title": "Dual Degrees",
+          "description": "Earn diplomas from two universities simultaneously with international partners",
+          "category": "education",
+          "icon": "🎓",
+          "color": "from-purple-500 to-purple-600",
+          "status": "available",
+          "students": "350+",
+          "features": [
+            "International recognition",
+            "Two diplomas",
+            "Global experience",
+            "Career advantages"
+          ],
+          "link": "#",
+          "popular": true
+        },
+        {
+          "id": 2,
+          "title": "Internships Abroad",
+          "description": "Gain practical experience in leading international companies and research centers",
+          "category": "international",
+          "icon": "✈️",
+          "color": "from-blue-500 to-blue-600",
+          "status": "available",
+          "students": "280+",
+          "features": [
+            "Work experience",
+            "International networking",
+            "Language practice",
+            "Professional growth"
+          ],
+          "link": "#",
+          "popular": true
+        },
+        {
+          "id": 3,
+          "title": "Research Grants",
+          "description": "Funding for student research projects and scientific initiatives",
+          "category": "research",
+          "icon": "💰",
+          "color": "from-green-500 to-green-600",
+          "status": "available",
+          "students": "150+",
+          "features": [
+            "Financial support",
+            "Publications",
+            "Equipment",
+            "Conferences"
+          ],
+          "link": "#",
+          "popular": false
+        },
+        {
+          "id": 4,
+          "title": "Career Center",
+          "description": "Comprehensive support in employment and career building",
+          "category": "career",
+          "icon": "🎯",
+          "color": "from-orange-500 to-orange-600",
+          "status": "available",
+          "students": "1,200+",
+          "features": [
+            "Employment",
+            "Career counseling",
+            "Job fairs",
+            "Partner companies"
+          ],
+          "link": "#",
+          "popular": true
+        },
+        {
+          "id": 5,
+          "title": "Modern Laboratories",
+          "description": "Access to cutting-edge research equipment and technologies",
+          "category": "innovation",
+          "icon": "🔬",
+          "color": "from-cyan-500 to-cyan-600",
+          "status": "available",
+          "students": "900+",
+          "features": [
+            "High-tech equipment",
+            "Research",
+            "Experiments",
+            "Innovative projects"
+          ],
+          "link": "#",
+          "popular": true
+        },
+        {
+          "id": 6,
+          "title": "Online Courses",
+          "description": "Distance learning with modern programs and methods",
+          "category": "education",
+          "icon": "💻",
+          "color": "from-indigo-500 to-indigo-600",
+          "status": "available",
+          "students": "2,500+",
+          "features": [
+            "Flexible schedule",
+            "Accessibility",
+            "Modern technologies",
+            "Interactivity"
+          ],
+          "link": "#",
+          "popular": false
+        },
+        {
+          "id": 7,
+          "title": "International Conferences",
+          "description": "Participation in world-class scientific events and symposiums",
+          "category": "research",
+          "icon": "🎤",
+          "color": "from-pink-500 to-pink-600",
+          "status": "available",
+          "students": "180+",
+          "features": [
+            "Global experience",
+            "Research networking",
+            "Publications",
+            "Professional community"
+          ],
+          "link": "#",
+          "popular": false
+        },
+        {
+          "id": 8,
+          "title": "Startup Incubator",
+          "description": "Support for student business projects and innovative initiatives",
+          "category": "innovation",
+          "icon": "💡",
+          "color": "from-teal-500 to-teal-600",
+          "status": "available",
+          "students": "75+",
+          "features": [
+            "Funding",
+            "Mentorship",
+            "Business angels",
+            "Pitch sessions"
+          ],
+          "link": "#",
+          "popular": true
+        },
+        {
+          "id": 9,
+          "title": "Language Programs",
+          "description": "Learn foreign languages at a professional level with native speakers",
+          "category": "international",
+          "icon": "🗣️",
+          "color": "from-amber-500 to-amber-600",
+          "status": "available",
+          "students": "1,800+",
+          "features": [
+            "International certificates",
+            "Native speakers",
+            "Practice",
+            "Cultural exchange"
+          ],
+          "link": "#",
+          "popular": false
+        }
+      ]
+    },
+    "noResults": {
+      "title": "No opportunities found",
+      "description": "Try adjusting your search or choose another category"
+    },
+    "successStories": {
+      "title": "Success",
+      "highlight": "stories",
+      "description": "Our students achieve outstanding results thanks to the university’s academic opportunities",
+      "list": [
+        {
+          "name": "Anna Petrova",
+          "program": "International Business",
+          "achievement": "Internship at Google, USA",
+          "image": "👩‍💼",
+          "quote": "The dual degree program gave me unique international experience"
+        },
+        {
+          "name": "Maxim Ivanov",
+          "program": "Computer Science",
+          "achievement": "Founder of IT Startup",
+          "image": "👨‍💻",
+          "quote": "The university’s startup incubator helped turn an idea into a successful business"
+        },
+        {
+          "name": "Elena Sidorova",
+          "program": "Biotechnology",
+          "achievement": "Research work in Germany",
+          "image": "👩‍🔬",
+          "quote": "Research grants enabled me to conduct world-class research"
+        }
+      ]
+    }
   },
-  "categories": {
-    "list": [
-      { "id": "all", "name": "All Resources", "count": 8, "icon": "🔄" },
-      { "id": "library", "name": "Library", "count": 1, "icon": "📚" },
-      { "id": "education", "name": "Education", "count": 1, "icon": "🎓" },
-      { "id": "research", "name": "Research", "count": 1, "icon": "🔬" },
-      { "id": "labs", "name": "Labs", "count": 1, "icon": "🧪" },
-      { "id": "mobile", "name": "Mobile", "count": 1, "icon": "📱" }
-    ]
-  },
-  "resources": {
-    "popularBadge": "POPULAR",
+  "socop": {
+    "hero": {
+      "badge": "SOCIAL ACTIVITY",
+      "title": "Social",
+      "highlight": "opportunities",
+      "description": "Discover the world beyond the classroom — join events, clubs, and create your own projects with us"
+    },
+    "statistics": {
+      "members": "Active members",
+      "projects": "Ongoing projects",
+      "events": "Upcoming events",
+      "clubs": "Clubs and communities"
+    },
+    "search": {
+      "placeholder": "Search opportunities..."
+    },
+    "categories": {
+      "list": [
+        {
+          "id": "all",
+          "name": "All opportunities",
+          "icon": "🔄",
+          "count": 9
+        },
+        {
+          "id": "events",
+          "name": "Events",
+          "icon": "📅",
+          "count": 3
+        },
+        {
+          "id": "clubs",
+          "name": "Clubs",
+          "icon": "👥",
+          "count": 3
+        },
+        {
+          "id": "projects",
+          "name": "Projects",
+          "icon": "🚀",
+          "count": 3
+        }
+      ]
+    },
+    "featuredEvents": {
+      "title": "Featured events"
+    },
+    "events": {
+      "types": {
+        "forum": "Forum",
+        "conference": "Conference",
+        "career": "Career"
+      },
+      "registration": {
+        "open": "Registration open",
+        "closed": "Registration closed"
+      }
+    },
     "status": {
-      "online": "ONLINE",
-      "maintenance": "MAINTENANCE"
+      "upcoming": "UPCOMING",
+      "active": "ACTIVE",
+      "paused": "PAUSED"
     },
-    "users": "users",
-    "featuresTitle": "Key Features:",
-    "accessButton": "Go to Resource",
-    "list": [
-      {
-        "id": 1,
-        "title": "Electronic Library",
-        "description": "Access to more than 50,000 scientific publications, textbooks, and journals",
-        "category": "library",
-        "icon": "📚",
-        "color": "from-purple-500 to-purple-600",
-        "status": "online",
-        "users": "2,500+",
-        "features": ["Catalog Search", "Electronic Order", "Remote Access", "Mobile App"],
-        "link": "#",
-        "popular": true
-      },
-      {
-        "id": 2,
-        "title": "Distance Learning System",
-        "description": "Platform for online courses, webinars, and virtual classrooms",
-        "category": "education",
-        "icon": "🎓",
-        "color": "from-blue-500 to-blue-600",
-        "status": "online",
-        "users": "3,200+",
-        "features": ["Video Lectures", "Interactive Tests", "Discussion Forum", "Learning Progress"],
-        "link": "#",
-        "popular": true
-      },
-      {
-        "id": 3,
-        "title": "Scientific Database",
-        "description": "Access to international scientific databases and journals",
-        "category": "research",
-        "icon": "🔬",
-        "color": "from-green-500 to-green-600",
-        "status": "online",
-        "users": "1,800+",
-        "features": ["PubMed", "Scopus", "Web of Science", "Google Scholar"],
-        "link": "#",
-        "popular": false
-      },
-      {
-        "id": 4,
-        "title": "Virtual Labs",
-        "description": "3D simulators of medical procedures and diagnostics",
-        "category": "labs",
-        "icon": "🧪",
-        "color": "from-orange-500 to-orange-600",
-        "status": "online",
-        "users": "900+",
-        "features": ["Anatomical Atlases", "Surgical Simulators", "Diagnostic Cases", "VR Trainers"],
-        "link": "#",
-        "popular": true
-      },
-      {
-        "id": 5,
-        "title": "Testing System",
-        "description": "Platform for conducting exams and knowledge testing",
-        "category": "testing",
-        "icon": "📝",
-        "color": "from-red-500 to-red-600",
-        "status": "maintenance",
-        "users": "2,100+",
-        "features": ["Automatic Checking", "Exam Timing", "Result Analytics", "Cheating Protection"],
-        "link": "#",
-        "popular": false
-      },
-      {
-        "id": 6,
-        "title": "Mobile App",
-        "description": "Access all university resources from mobile devices",
-        "category": "mobile",
-        "icon": "📱",
-        "color": "from-indigo-500 to-indigo-600",
-        "status": "online",
-        "users": "4,500+",
-        "features": ["Push Notifications", "Offline Access", "Personal Account", "Schedule"],
-        "link": "#",
-        "popular": true
-      },
-      {
-        "id": 7,
-        "title": "Cloud Storage",
-        "description": "Secure storage and sharing of learning materials",
-        "category": "storage",
-        "icon": "☁️",
-        "color": "from-teal-500 to-teal-600",
-        "status": "online",
-        "users": "3,800+",
-        "features": ["1 TB Storage", "Collaboration", "Version Control", "Encryption"],
-        "link": "#",
-        "popular": false
-      },
-      {
-        "id": 8,
-        "title": "Video Conferences",
-        "description": "Platform for online classes and meetings",
-        "category": "conference",
-        "icon": "🎥",
-        "color": "from-pink-500 to-pink-600",
-        "status": "online",
-        "users": "2,700+",
-        "features": ["HD Video", "Session Recording", "Interactive Whiteboard", "Up to 100 Participants"],
-        "link": "#",
-        "popular": true
-      }
-    ]
-  },
-  "noResults": {
-    "title": "No Resources Found",
-    "description": "Try changing the search parameters or choose another category"
-  }
-},
-"acadop": {
-  "hero": {
-    "badge": "ACADEMIC PROSPECTS",
-    "title": "Academic",
-    "highlight": "opportunities",
-    "description": "Discover a world of unique opportunities for your academic growth, professional development, and international recognition"
-  },
-  "statistics": {
-    "total": "Total programs",
-    "available": "Available now",
-    "students": "Participants",
-    "popular": "Popular"
-  },
-  "search": {
-    "placeholder": "Search opportunities..."
-  },
-  "categories": {
-    "list": [
-      { "id": "all", "name": "All opportunities", "count": 9, "icon": "🔄" },
-      { "id": "education", "name": "Education", "count": 2, "icon": "🎓" },
-      { "id": "international", "name": "International", "count": 2, "icon": "🌍" },
-      { "id": "research", "name": "Research", "count": 2, "icon": "🔬" },
-      { "id": "career", "name": "Career", "count": 1, "icon": "💼" },
-      { "id": "innovation", "name": "Innovation", "count": 2, "icon": "🚀" }
-    ]
-  },
-  "opportunities": {
     "popularBadge": "POPULAR",
-    "status": {
-      "available": "AVAILABLE",
-      "comingSoon": "COMING SOON"
+    "membersCount": "{{count}} members",
+    "teamSize": "Team: {{size}}",
+    "participantsCount": "{{count}} participants",
+    "duration": "Duration",
+    "leader": "Leader",
+    "organizer": "Organizer",
+    "achievements": "Achievements:",
+    "requirements": "Requirements:",
+    "progress": {
+      "title": "Project progress"
     },
-    "students": "students",
-    "featuresTitle": "Key benefits:",
-    "detailsButton": "Learn more",
-    "list": [
-      {
-        "id": 1,
-        "title": "Dual Degrees",
-        "description": "Earn diplomas from two universities simultaneously with international partners",
-        "category": "education",
-        "icon": "🎓",
-        "color": "from-purple-500 to-purple-600",
-        "status": "available",
-        "students": "350+",
-        "features": ["International recognition", "Two diplomas", "Global experience", "Career advantages"],
-        "link": "#",
-        "popular": true
-      },
-      {
-        "id": 2,
-        "title": "Internships Abroad",
-        "description": "Gain practical experience in leading international companies and research centers",
-        "category": "international",
-        "icon": "✈️",
-        "color": "from-blue-500 to-blue-600",
-        "status": "available",
-        "students": "280+",
-        "features": ["Work experience", "International networking", "Language practice", "Professional growth"],
-        "link": "#",
-        "popular": true
-      },
-      {
-        "id": 3,
-        "title": "Research Grants",
-        "description": "Funding for student research projects and scientific initiatives",
-        "category": "research",
-        "icon": "💰",
-        "color": "from-green-500 to-green-600",
-        "status": "available",
-        "students": "150+",
-        "features": ["Financial support", "Publications", "Equipment", "Conferences"],
-        "link": "#",
-        "popular": false
-      },
-      {
-        "id": 4,
-        "title": "Career Center",
-        "description": "Comprehensive support in employment and career building",
-        "category": "career",
-        "icon": "🎯",
-        "color": "from-orange-500 to-orange-600",
-        "status": "available",
-        "students": "1,200+",
-        "features": ["Employment", "Career counseling", "Job fairs", "Partner companies"],
-        "link": "#",
-        "popular": true
-      },
-      {
-        "id": 5,
-        "title": "Modern Laboratories",
-        "description": "Access to cutting-edge research equipment and technologies",
-        "category": "innovation",
-        "icon": "🔬",
-        "color": "from-cyan-500 to-cyan-600",
-        "status": "available",
-        "students": "900+",
-        "features": ["High-tech equipment", "Research", "Experiments", "Innovative projects"],
-        "link": "#",
-        "popular": true
-      },
-      {
-        "id": 6,
-        "title": "Online Courses",
-        "description": "Distance learning with modern programs and methods",
-        "category": "education",
-        "icon": "💻",
-        "color": "from-indigo-500 to-indigo-600",
-        "status": "available",
-        "students": "2,500+",
-        "features": ["Flexible schedule", "Accessibility", "Modern technologies", "Interactivity"],
-        "link": "#",
-        "popular": false
-      },
-      {
-        "id": 7,
-        "title": "International Conferences",
-        "description": "Participation in world-class scientific events and symposiums",
-        "category": "research",
-        "icon": "🎤",
-        "color": "from-pink-500 to-pink-600",
-        "status": "available",
-        "students": "180+",
-        "features": ["Global experience", "Research networking", "Publications", "Professional community"],
-        "link": "#",
-        "popular": false
-      },
-      {
-        "id": 8,
-        "title": "Startup Incubator",
-        "description": "Support for student business projects and innovative initiatives",
-        "category": "innovation",
-        "icon": "💡",
-        "color": "from-teal-500 to-teal-600",
-        "status": "available",
-        "students": "75+",
-        "features": ["Funding", "Mentorship", "Business angels", "Pitch sessions"],
-        "link": "#",
-        "popular": true
-      },
-      {
-        "id": 9,
-        "title": "Language Programs",
-        "description": "Learn foreign languages at a professional level with native speakers",
-        "category": "international",
-        "icon": "🗣️",
-        "color": "from-amber-500 to-amber-600",
-        "status": "available",
-        "students": "1,800+",
-        "features": ["International certificates", "Native speakers", "Practice", "Cultural exchange"],
-        "link": "#",
-        "popular": false
-      }
-    ]
-  },
-  "noResults": {
-    "title": "No opportunities found",
-    "description": "Try adjusting your search or choose another category"
-  },
-  "successStories": {
-    "title": "Success",
-    "highlight": "stories",
-    "description": "Our students achieve outstanding results thanks to the university’s academic opportunities",
-    "list": [
-      {
-        "name": "Anna Petrova",
-        "program": "International Business",
-        "achievement": "Internship at Google, USA",
-        "image": "👩‍💼",
-        "quote": "The dual degree program gave me unique international experience"
-      },
-      {
-        "name": "Maxim Ivanov",
-        "program": "Computer Science",
-        "achievement": "Founder of IT Startup",
-        "image": "👨‍💻",
-        "quote": "The university’s startup incubator helped turn an idea into a successful business"
-      },
-      {
-        "name": "Elena Sidorova",
-        "program": "Biotechnology",
-        "achievement": "Research work in Germany",
-        "image": "👩‍🔬",
-        "quote": "Research grants enabled me to conduct world-class research"
-      }
-    ]
-  }
-},"socop": {
-  "hero": {
-    "badge": "SOCIAL ACTIVITY",
-    "title": "Social",
-    "highlight": "opportunities",
-    "description": "Discover the world beyond the classroom — join events, clubs, and create your own projects with us"
-  },
-  "statistics": {
-    "members": "Active members",
-    "projects": "Ongoing projects",
-    "events": "Upcoming events",
-    "clubs": "Clubs and communities"
-  },
-  "search": {
-    "placeholder": "Search opportunities..."
-  },
-  "categories": {
-    "list": [
-      { "id": "all", "name": "All opportunities", "icon": "🔄", "count": 9 },
-      { "id": "events", "name": "Events", "icon": "📅", "count": 3 },
-      { "id": "clubs", "name": "Clubs", "icon": "👥", "count": 3 },
-      { "id": "projects", "name": "Projects", "icon": "🚀", "count": 3 }
-    ]
-  },
-  "featuredEvents": {
-    "title": "Featured events"
-  },
-  "events": {
-    "types": {
-      "forum": "Forum",
-      "conference": "Conference",
-      "career": "Career"
+    "actions": {
+      "participate": "Participate",
+      "joinClub": "Join club",
+      "joinProject": "Join project"
     },
-    "registration": {
-      "open": "Registration open",
-      "closed": "Registration closed"
+    "noResults": {
+      "title": "No opportunities found",
+      "description": "Try changing your search parameters or select another category"
     }
-  },
-  "status": {
-    "upcoming": "UPCOMING",
-    "active": "ACTIVE",
-    "paused": "PAUSED"
-  },
-  "popularBadge": "POPULAR",
-  "membersCount": "{{count}} members",
-  "teamSize": "Team: {{size}}",
-  "participantsCount": "{{count}} participants",
-  "duration": "Duration",
-  "leader": "Leader",
-  "organizer": "Organizer",
-  "achievements": "Achievements:",
-  "requirements": "Requirements:",
-  "progress": {
-    "title": "Project progress"
-  },
-  "actions": {
-    "participate": "Participate",
-    "joinClub": "Join club",
-    "joinProject": "Join project"
-  },
-  "noResults": {
-    "title": "No opportunities found",
-    "description": "Try changing your search parameters or select another category"
   }
-}
-
-
-
-
 }

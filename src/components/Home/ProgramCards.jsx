@@ -5,7 +5,7 @@ const ProgramCards = () => {
   const { t, i18n } = useTranslation();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(null);
-  
+
   // Данные программ с использованием переводов
   const programs = [
     {
@@ -54,24 +54,24 @@ const ProgramCards = () => {
   useEffect(() => {
     if (window.innerWidth < 768) { // Только для мобильных
       const interval = setInterval(() => {
-        setActiveIndex((prevIndex) => 
+        setActiveIndex((prevIndex) =>
           prevIndex === programs.length - 1 ? 0 : prevIndex + 1
         );
       }, 4000);
-      
+
       return () => clearInterval(interval);
     }
   }, [programs.length]);
 
   // Функции для карусели
   const nextSlide = () => {
-    setActiveIndex((prevIndex) => 
+    setActiveIndex((prevIndex) =>
       prevIndex === programs.length - 1 ? 0 : prevIndex + 1
     );
   };
 
   const prevSlide = () => {
-    setActiveIndex((prevIndex) => 
+    setActiveIndex((prevIndex) =>
       prevIndex === 0 ? programs.length - 1 : prevIndex - 1
     );
   };
@@ -82,7 +82,7 @@ const ProgramCards = () => {
       <div className="absolute top-0 left-0 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
       <div className="absolute top-0 right-0 w-72 h-72 bg-cyan-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
       <div className="absolute -bottom-8 left-20 w-72 h-72 bg-indigo-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
-      
+
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-14">
           <h2 className="text-4xl md:text-5xl font-bold text-blue-900 mb-4">
@@ -93,12 +93,12 @@ const ProgramCards = () => {
             {t('programs.subtitle')}
           </p>
         </div>
-        
+
         {/* Десктопная версия - сетка 2x2 с анимациями */}
         <div className="hidden md:grid md:grid-cols-2 gap-8">
           {programs.map((program) => (
-            <div 
-              key={program.id} 
+            <div
+              key={program.id}
               className={`rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2 shadow-lg ${program.bgColor} border border-white`}
               onMouseEnter={() => setIsHovered(program.id)}
               onMouseLeave={() => setIsHovered(null)}
@@ -106,17 +106,17 @@ const ProgramCards = () => {
               <div className="p-8 relative">
                 {/* Анимированный фон */}
                 <div className={`absolute inset-0 opacity-0 transition-opacity duration-500 ${isHovered === program.id ? 'opacity-10' : ''} ${program.bgColor}`}></div>
-                
+
                 {/* Иконка с анимацией */}
                 <div className={`text-5xl mb-6 transform transition-all duration-500 ${isHovered === program.id ? 'scale-110 rotate-6' : ''}`}>
                   {program.icon}
                 </div>
-                
+
                 <h3 className="text-2xl font-bold text-gray-800 mb-3 relative">
                   {t(program.titleKey)}
                   <span className={`absolute -bottom-2 left-0 h-1 w-12 ${isHovered === program.id ? 'w-20' : ''} bg-gradient-to-r ${program.color} transition-all duration-500`}></span>
                 </h3>
-                
+
                 <div className="flex justify-between items-center mt-6 mb-7">
                   <span className={`bg-gradient-to-r ${program.color} text-white text-xs font-semibold px-3 py-1.5 rounded-full`}>
                     {t(program.levelKey)}
@@ -128,9 +128,9 @@ const ProgramCards = () => {
                     {t(program.durationKey)}
                   </span>
                 </div>
-                
-                <a 
-                  href={program.link} 
+
+                <a
+                  href={program.link}
                   className={`block w-full bg-gradient-to-r ${program.color} hover:shadow-lg text-white text-center font-medium py-3 px-6 rounded-xl transition-all duration-300 transform hover:-translate-y-0.5 relative overflow-hidden group`}
                 >
                   <span className="relative z-10">{t('programs.learnMore')}</span>
@@ -140,25 +140,25 @@ const ProgramCards = () => {
             </div>
           ))}
         </div>
-        
+
         {/* Мобильная версия - улучшенная карусель */}
         <div className="md:hidden relative">
           <div className="overflow-hidden rounded-2xl">
-            <div 
+            <div
               className="flex transition-transform duration-500 ease-out"
               style={{ transform: `translateX(-${activeIndex * 100}%)` }}
             >
               {programs.map((program) => (
                 <div key={program.id} className="w-full flex-shrink-0 px-4">
                   <div className={`rounded-2xl overflow-hidden shadow-xl p-6 ${program.bgColor} border border-white`}>
-                    <div className="text-5xl mb-6 text-center transform transition-transform duration-500" style={{ transform: `scale(${activeIndex === program.id-1 ? 1.1 : 1})` }}>
+                    <div className="text-5xl mb-6 text-center transform transition-transform duration-500" style={{ transform: `scale(${activeIndex === program.id - 1 ? 1.1 : 1})` }}>
                       {program.icon}
                     </div>
-                    
+
                     <h3 className="text-xl font-bold text-gray-800 mb-3 text-center">
                       {t(program.titleKey)}
                     </h3>
-                    
+
                     <div className="flex justify-between items-center mt-6 mb-7">
                       <span className={`bg-gradient-to-r ${program.color} text-white text-xs font-semibold px-3 py-1.5 rounded-full`}>
                         {t(program.levelKey)}
@@ -170,9 +170,9 @@ const ProgramCards = () => {
                         {t(program.durationKey)}
                       </span>
                     </div>
-                    
-                    <a 
-                      href={program.link} 
+
+                    <a
+                      href={program.link}
                       className={`block w-full bg-gradient-to-r ${program.color} text-white text-center font-medium py-3 px-6 rounded-xl transition-colors duration-300`}
                     >
                       {t('programs.learnMore')}
@@ -182,9 +182,9 @@ const ProgramCards = () => {
               ))}
             </div>
           </div>
-          
+
           {/* Навигационные кнопки для карусели */}
-          <button 
+          <button
             onClick={prevSlide}
             className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-blue-600 p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-sm"
             aria-label={t('programs.previousProgram')}
@@ -193,8 +193,8 @@ const ProgramCards = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </button>
-          
-          <button 
+
+          <button
             onClick={nextSlide}
             className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-blue-600 p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-sm"
             aria-label={t('programs.nextProgram')}
@@ -203,7 +203,7 @@ const ProgramCards = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </button>
-          
+
           {/* Индикаторы карусели */}
           <div className="flex justify-center mt-6 space-x-3">
             {programs.map((_, index) => (
@@ -216,7 +216,7 @@ const ProgramCards = () => {
             ))}
           </div>
         </div>
-        
+
         {/* Декоративный элемент внизу */}
         <div className="text-center mt-16">
           <div className="inline-flex items-center justify-center px-6 py-3 bg-white rounded-full shadow-md text-blue-600 font-medium group cursor-pointer">
@@ -227,25 +227,6 @@ const ProgramCards = () => {
           </div>
         </div>
       </div>
-      
-      {/* Добавляем стили для анимаций */}
-      <style jsx>{`
-        @keyframes blob {
-          0% { transform: translate(0px, 0px) scale(1); }
-          33% { transform: translate(30px, -50px) scale(1.1); }
-          66% { transform: translate(-20px, 20px) scale(0.9); }
-          100% { transform: translate(0px, 0px) scale(1); }
-        }
-        .animate-blob {
-          animation: blob 7s infinite;
-        }
-        .animation-delay-2000 {
-          animation-delay: 2s;
-        }
-        .animation-delay-4000 {
-          animation-delay: 4s;
-        }
-      `}</style>
     </section>
   );
 };

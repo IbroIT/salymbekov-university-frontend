@@ -1,92 +1,102 @@
 import React, { useState, useEffect } from 'react';
-import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { newAboutAPI } from '../../services/newAboutAPI';
 
 const Founders = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
   const [activeFounder, setActiveFounder] = useState(0);
+  const [foundersData, setFoundersData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch founders data from API
+  useEffect(() => {
+    const fetchFounders = async () => {
+      try {
+        setLoading(true);
+        const response = await newAboutAPI.getUniversityFounders();
+
+        if (response.data && response.data.results) {
+          setFoundersData(response.data.results);
+        }
+        setError(null);
+      } catch (err) {
+        console.error('Error fetching founders:', err);
+        setError(err.message || 'Failed to load founders data');
+        // Fallback to empty array if API fails
+        setFoundersData([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFounders();
+  }, [i18n.language]); // Re-fetch when language changes
 
   // Animation on mount
   useEffect(() => {
     setIsVisible(true);
   }, []);
 
-  const foundersData = [
-    {
-      id: 1,
-      name: t('founders.founder1.name'),
-      position: t('founders.founder1.position'),
-      years: t('founders.founder1.years'),
-      image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&h=400&fit=crop&crop=face",
-      description: t('founders.founder1.description'),
-      achievements: [
-        t('founders.founder1.achievements.0'),
-        t('founders.founder1.achievements.1'),
-        t('founders.founder1.achievements.2'),
-        t('founders.founder1.achievements.3')
-      ]
-    },
-    {
-      id: 2,
-      name: t('founders.founder2.name'),
-      position: t('founders.founder2.position'),
-      years: t('founders.founder2.years'),
-      image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&h=400&fit=crop&crop=face",
-      description: t('founders.founder2.description'),
-      achievements: [
-        t('founders.founder2.achievements.0'),
-        t('founders.founder2.achievements.1'),
-        t('founders.founder2.achievements.2'),
-        t('founders.founder2.achievements.3')
-      ]
-    },
-    {
-      id: 3,
-      name: t('founders.founder3.name'),
-      position: t('founders.founder3.position'),
-      years: t('founders.founder3.years'),
-      image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&h=400&fit=crop&crop=face",
-      description: t('founders.founder3.description'),
-      achievements: [
-        t('founders.founder3.achievements.0'),
-        t('founders.founder3.achievements.1'),
-        t('founders.founder3.achievements.2'),
-        t('founders.founder3.achievements.3')
-      ]
-    },
-    {
-      id: 4,
-      name: t('founders.founder4.name'),
-      position: t('founders.founder4.position'),
-      years: t('founders.founder4.years'),
-      image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&h=400&fit=crop&crop=face",
-      description: t('founders.founder4.description'),
-      achievements: [
-        t('founders.founder4.achievements.0'),
-        t('founders.founder4.achievements.1'),
-        t('founders.founder4.achievements.2'),
-        t('founders.founder4.achievements.3')
-      ]
+  // Reset active founder when founders data changes
+  useEffect(() => {
+    if (foundersData.length > 0) {
+      setActiveFounder(0);
     }
-  ];
+  }, [foundersData]);
 
   const changeActiveFounder = (index) => {
     setActiveFounder(index);
   };
 
   const getCurrentFounderData = () => {
-    return foundersData[activeFounder];
+    return foundersData[activeFounder] || {};
   };
+
+  // Loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-white to-blue-50 py-8 px-4 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">{t('common.loading', 'Loading...')}</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-white to-blue-50 py-8 px-4 flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-red-500 text-2xl mb-4">⚠️</div>
+          <p className="text-gray-600 mb-4">{t('common.error', 'Error loading data')}</p>
+          <p className="text-sm text-gray-500">{error}</p>
+        </div>
+      </div>
+    );
+  }
+
+  // No data state
+  if (!foundersData.length) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-white to-blue-50 py-8 px-4 flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-gray-400 text-2xl mb-4">📋</div>
+          <p className="text-gray-600">{t('founders.noData', 'No founders data available')}</p>
+        </div>
+      </div>
+    );
+  }
 
   const currentFounder = getCurrentFounderData();
 
   return (
     <div
-      className={`min-h-screen bg-gradient-to-br from-white to-blue-50 py-8 px-4 transition-all duration-700 ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-      }`}
+      className={`min-h-screen bg-gradient-to-br from-white to-blue-50 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+        }`}
     >
       <div className="max-w-7xl mx-auto">
         {/* Заголовок */}
@@ -111,25 +121,24 @@ const Founders = () => {
                   {foundersData.map((founder, index) => (
                     <li key={founder.id}>
                       <button
-                        className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 ${
-                          activeFounder === index
+                        className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 ${activeFounder === index
                             ? "bg-blue-100 text-blue-700 font-medium shadow-sm"
                             : "text-gray-700 hover:bg-gray-100"
-                        }`}
+                          }`}
                         onClick={() => changeActiveFounder(index)}
                       >
                         <div className="flex items-center">
-                          <img 
-                            src={founder.image} 
+                          <img
+                            src={founder.image || "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&h=400&fit=crop&crop=face"}
                             alt={founder.name}
                             className="w-10 h-10 rounded-full object-cover mr-3 border-2 border-gray-200"
                           />
                           <div className="text-left">
                             <div className="font-medium text-sm">
-                              {founder.name.split(' ')[0]}
+                              {founder.name ? founder.name.split(' ')[0] : ''}
                             </div>
                             <div className="text-xs text-gray-500">
-                              {founder.position.split(',')[0]}
+                              {founder.position ? founder.position.split(',')[0] : ''}
                             </div>
                           </div>
                         </div>
@@ -148,9 +157,9 @@ const Founders = () => {
               <div className="flex flex-col md:flex-row items-start mb-6 pb-6 border-b border-gray-200">
                 <div className="flex-shrink-0 mb-4 md:mb-0 md:mr-6">
                   <div className="relative">
-                    <img 
-                      src={currentFounder.image} 
-                      alt={currentFounder.name}
+                    <img
+                      src={currentFounder.image || "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&h=400&fit=crop&crop=face"}
+                      alt={currentFounder.name || ''}
                       className="w-32 h-32 rounded-full object-cover border-4 border-blue-100 shadow-lg"
                     />
                     <div className="absolute -bottom-2 -right-2 bg-blue-500 text-white rounded-full w-8 h-8 flex items-center justify-center shadow-lg">
@@ -160,16 +169,16 @@ const Founders = () => {
                 </div>
                 <div className="flex-1">
                   <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
-                    {currentFounder.name}
+                    {currentFounder.name || ''}
                   </h2>
                   <p className="text-blue-600 font-semibold text-lg mt-1">
-                    {currentFounder.position}
+                    {currentFounder.position || ''}
                   </p>
                   <p className="text-gray-500 mt-1">
-                    {currentFounder.years}
+                    {currentFounder.years || ''}
                   </p>
                   <p className="text-gray-700 mt-4 leading-relaxed">
-                    {currentFounder.description}
+                    {currentFounder.description || ''}
                   </p>
                 </div>
               </div>
@@ -182,7 +191,7 @@ const Founders = () => {
                 </h3>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {currentFounder.achievements.map((achievement, index) => (
+                  {(currentFounder.achievements || []).map((achievement, index) => (
                     <div
                       key={index}
                       className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-4 border border-blue-100 hover:shadow-md transition-all duration-300"
