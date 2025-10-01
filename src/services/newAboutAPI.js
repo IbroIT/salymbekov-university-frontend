@@ -92,16 +92,6 @@ api.interceptors.response.use(
  */
 export const newAboutAPI = {
     /**
-     * Get founders data
-     * @param {string} language - Language code (ru, kg, en)
-     * @returns {Promise} Axios response with founders data
-     */
-    getFounders: (language = null) => {
-        const endpoint = `/founders/frontend/`;
-        return api.get(endpoint);
-    },
-
-    /**
      * Get university structure
      * @param {string} language - Language code (ru, kg, en)
      * @param {string} type - Department type filter
@@ -150,6 +140,28 @@ export const newAboutAPI = {
      */
     getStatistics: (language = null) => {
         const endpoint = `/statistics/frontend/`;
+        return api.get(endpoint);
+    },
+
+    /**
+     * Get list of university founders
+     * Returns founders with localized content based on current language
+     * @param {string} language - Language code (optional)
+     * @returns {Promise} Axios response with founders data
+     */
+    getUniversityFounders: (language = null) => {
+        const endpoint = `/university-founders/`;
+        return api.get(endpoint);
+    },
+
+    /**
+     * Get specific university founder by ID
+     * @param {number} id - Founder ID
+     * @param {string} language - Language code (optional)
+     * @returns {Promise} Axios response with founder data
+     */
+    getUniversityFounder: (id, language = null) => {
+        const endpoint = `/university-founders/${id}/`;
         return api.get(endpoint);
     },
 };

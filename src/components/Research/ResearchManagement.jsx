@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { researchAPI } from '../../services/researchService';
 
 const ResearchManagement = () => {
   const { t, i18n } = useTranslation();
@@ -29,27 +30,51 @@ const ResearchManagement = () => {
   const fetchData = async () => {
     try {
       setLoading(true);
+      console.log('Fetching research management data...');
+
       const [managementResponse, councilsResponse, commissionsResponse] = await Promise.all([
-        fetch('https://su-med-backend-35d3d951c74b.herokuapp.com/research/api/management/by_type/'),
-        fetch('https://su-med-backend-35d3d951c74b.herokuapp.com/research/api/councils/'),
-        fetch('https://su-med-backend-35d3d951c74b.herokuapp.com/research/api/commissions/by_type/')
+        researchAPI.getManagementByType(),
+        researchAPI.getScientificCouncils(),
+        researchAPI.getCommissionsByType()
       ]);
 
-      if (!managementResponse.ok || !councilsResponse.ok || !commissionsResponse.ok) {
-        throw new Error('Failed to fetch data');
+      console.log('Management response:', managementResponse.data);
+      console.log('Councils response:', councilsResponse.data);
+      console.log('Commissions response:', commissionsResponse.data);
+
+      // Handle response structure
+      let managementData = managementResponse.data;
+      if (managementData && managementData.results) {
+        managementData = managementData.results;
+      } else if (!Array.isArray(managementData)) {
+        managementData = managementData ? [managementData] : [];
       }
 
-      const managementData = await managementResponse.json();
-      const councilsData = await councilsResponse.json();
-      const commissionsData = await commissionsResponse.json();
+      let councilsData = councilsResponse.data;
+      if (councilsData && councilsData.results) {
+        councilsData = councilsData.results;
+      } else if (!Array.isArray(councilsData)) {
+        councilsData = councilsData ? [councilsData] : [];
+      }
+
+      let commissionsData = commissionsResponse.data;
+      if (commissionsData && commissionsData.results) {
+        commissionsData = commissionsData.results;
+      } else if (!Array.isArray(commissionsData)) {
+        commissionsData = commissionsData ? [commissionsData] : [];
+      }
 
       setManagementData(managementData);
-      setCouncilsData(councilsData.results || councilsData);
+      setCouncilsData(councilsData);
       setCommissionsData(commissionsData);
       setError(null);
     } catch (err) {
       console.error('Error fetching management data:', err);
-      setError(t('research.management.noData'));
+      setError(t('research.management.loadingError', 'Ошибка загрузки данных'));
+      // Set empty data on error
+      setManagementData([]);
+      setCouncilsData([]);
+      setCommissionsData([]);
     } finally {
       setLoading(false);
     }
@@ -60,8 +85,30 @@ const ResearchManagement = () => {
   };
 
   const getFieldByLanguage = (obj, field) => {
+    if (!obj) return '';
+
     const currentLang = i18n.language;
-    return obj[`${field}_${currentLang}`] || obj[`${field}_ru`] || obj[field] || '';
+
+    // Handle different language codes
+    let langSuffix = '';
+    if (currentLang === 'en') {
+      langSuffix = '_en';
+    } else if (currentLang === 'ky' || currentLang === 'kg') {
+      langSuffix = '_kg';
+    } else {
+      langSuffix = '_ru';
+    }
+
+    // Try to get localized field
+    const localizedField = obj[`${field}${langSuffix}`];
+    if (localizedField) return localizedField;
+
+    // Fallback to Russian field
+    const russianField = obj[`${field}_ru`];
+    if (russianField) return russianField;
+
+    // Fallback to base field
+    return obj[field] || '';
   };
 
   const renderManagementContent = () => (
@@ -88,7 +135,7 @@ const ResearchManagement = () => {
                   {positionType.type_display}
                 </h3>
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {positionType.positions.map((person) => (
                   <div key={person.id} className="bg-white rounded-xl p-6 border border-blue-100 hover:shadow-lg transition-all duration-300">
@@ -135,7 +182,7 @@ const ResearchManagement = () => {
 
                     <div className="flex flex-wrap gap-2 mt-4">
                       {person.contact_email && (
-                        <a 
+                        <a
                           href={`mailto:${person.contact_email}`}
                           className="text-blue-600 hover:text-blue-800 text-sm"
                         >
@@ -143,7 +190,7 @@ const ResearchManagement = () => {
                         </a>
                       )}
                       {person.contact_phone && (
-                        <a 
+                        <a
                           href={`tel:${person.contact_phone}`}
                           className="text-blue-600 hover:text-blue-800 text-sm"
                         >
@@ -219,7 +266,7 @@ const ResearchManagement = () => {
 
               <div className="flex flex-wrap gap-2">
                 {council.contact_email && (
-                  <a 
+                  <a
                     href={`mailto:${council.contact_email}`}
                     className="text-blue-600 hover:text-blue-800 text-sm"
                   >
@@ -227,7 +274,7 @@ const ResearchManagement = () => {
                   </a>
                 )}
                 {council.contact_phone && (
-                  <a 
+                  <a
                     href={`tel:${council.contact_phone}`}
                     className="text-blue-600 hover:text-blue-800 text-sm"
                   >
@@ -266,7 +313,7 @@ const ResearchManagement = () => {
                   {commissionType.type_display}
                 </h3>
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {commissionType.commissions.map((commission) => (
                   <div key={commission.id} className="bg-white rounded-xl p-6 border border-blue-100 hover:shadow-lg transition-all duration-300">
@@ -295,7 +342,7 @@ const ResearchManagement = () => {
 
                     <div className="flex flex-wrap gap-2">
                       {commission.contact_email && (
-                        <a 
+                        <a
                           href={`mailto:${commission.contact_email}`}
                           className="text-blue-600 hover:text-blue-800 text-sm"
                         >
@@ -303,7 +350,7 @@ const ResearchManagement = () => {
                         </a>
                       )}
                       {commission.contact_phone && (
-                        <a 
+                        <a
                           href={`tel:${commission.contact_phone}`}
                           className="text-blue-600 hover:text-blue-800 text-sm"
                         >
@@ -337,9 +384,8 @@ const ResearchManagement = () => {
   if (loading) {
     return (
       <div
-        className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${
-          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-        }`}
+        className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}
       >
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-center items-center min-h-[400px]">
@@ -353,9 +399,8 @@ const ResearchManagement = () => {
   if (error) {
     return (
       <div
-        className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${
-          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-        }`}
+        className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}
       >
         <div className="max-w-7xl mx-auto">
           <div className="text-center py-12">
@@ -370,9 +415,8 @@ const ResearchManagement = () => {
 
   return (
     <div
-      className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-      }`}
+      className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+        }`}
     >
       <div className="max-w-7xl mx-auto">
         {/* Заголовок */}
@@ -394,21 +438,36 @@ const ResearchManagement = () => {
               </div>
               <nav className="p-2">
                 <ul className="space-y-1">
-                  {sections.map((section) => (
-                    <li key={section.id}>
-                      <button
-                        className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 flex items-center ${
-                          activeSection === section.id
-                            ? "bg-blue-100 text-blue-700 font-medium shadow-sm"
-                            : "text-gray-700 hover:bg-gray-100"
-                        }`}
-                        onClick={() => changeActiveSection(section.id)}
-                      >
-                        <span className="text-lg mr-3">{section.icon}</span>
-                        {section.name}
-                      </button>
-                    </li>
-                  ))}
+                  {sections.map((section) => {
+                    let sectionCount = 0;
+                    if (section.id === 'management') {
+                      sectionCount = Array.isArray(managementData) ? managementData.reduce((total, type) => total + (type.positions?.length || 0), 0) : 0;
+                    } else if (section.id === 'councils') {
+                      sectionCount = Array.isArray(councilsData) ? councilsData.length : 0;
+                    } else if (section.id === 'commissions') {
+                      sectionCount = Array.isArray(commissionsData) ? commissionsData.reduce((total, type) => total + (type.commissions?.length || 0), 0) : 0;
+                    }
+
+                    return (
+                      <li key={section.id}>
+                        <button
+                          className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 flex items-center justify-between ${activeSection === section.id
+                              ? "bg-blue-100 text-blue-700 font-medium shadow-sm"
+                              : "text-gray-700 hover:bg-gray-100"
+                            }`}
+                          onClick={() => changeActiveSection(section.id)}
+                        >
+                          <div className="flex items-center">
+                            <span className="text-lg mr-3">{section.icon}</span>
+                            {section.name}
+                          </div>
+                          <span className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded-full">
+                            {sectionCount}
+                          </span>
+                        </button>
+                      </li>
+                    );
+                  })}
                 </ul>
               </nav>
             </div>

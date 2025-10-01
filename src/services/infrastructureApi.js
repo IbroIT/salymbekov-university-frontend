@@ -3,7 +3,7 @@ import axios from 'axios';
 // Base configuration for infrastructure API calls
 const baseURL = 'http://localhost:8000/api/infrastructure';
 
-const infrastructureAPI = axios.create({
+export const infrastructureAPI = axios.create({
     baseURL,
     timeout: 10000,
     headers: {
