@@ -20,8 +20,8 @@ const Resources = () => {
   // Resources data organized by sections
   const sectionsData = {
     all: {
-      title: t('resources.all_resources', 'Все образовательные ресурсы'),
-      description: t('resources.all_description', 'Полный доступ ко всем доступным образовательным ресурсам'),
+      title: t('resources.allTitle', 'Все образовательные ресурсы'),
+      description: t('resources.allDesc', 'Полный доступ ко всем доступным образовательным ресурсам'),
       resources: [
         {
           id: 1,
@@ -32,27 +32,51 @@ const Resources = () => {
           section: 'library',
           color: 'from-blue-500 to-cyan-500',
           bgColor: 'bg-blue-50 border-blue-200',
-          title: t('resources.library.title', 'Электронная библиотека'),
-          description: t('resources.library.description', 'Доступ к учебной литературе и научным публикациям'),
-          features: ['10,000+ электронных книг', 'Научные журналы', 'Учебные пособия'],
-          linkText: t('resources.library.linkText', 'Перейти в библиотеку')
+          title: t('resources.libTitle', 'Электронная библиотека'),
+          description: t('resources.libDesc', 'Доступ к учебной литературе и научным публикациям'),
+          features: [
+            t('resources.libFeature1', '10,000+ электронных книг'),
+            t('resources.libFeature2', 'Научные журналы'),
+            t('resources.libFeature3', 'Учебные пособия')
+          ],
+          linkText: t('resources.libLink', 'Перейти в библиотеку')
         },
         {
           id: 2,
           icon: '🔬',
           key: 'databases',
           links: [
-            { name: 'pubmed', url: 'https://pubmed.ncbi.nlm.nih.gov/', external: true },
-            { name: 'scopus', url: 'https://www.scopus.com/', external: true },
-            { name: 'web_of_science', url: 'https://www.webofscience.com/', external: true }
+            { 
+              name: 'pubmed', 
+              url: 'https://pubmed.ncbi.nlm.nih.gov/', 
+              external: true,
+              displayName: t('resources.dbPubMed', 'PubMed')
+            },
+            { 
+              name: 'scopus', 
+              url: 'https://www.scopus.com/', 
+              external: true,
+              displayName: t('resources.dbScopus', 'Scopus')
+            },
+            { 
+              name: 'web_of_science', 
+              url: 'https://www.webofscience.com/', 
+              external: true,
+              displayName: t('resources.dbWebScience', 'Web of Science')
+            }
           ],
           status: 'external',
           section: 'databases',
           color: 'from-purple-500 to-pink-500',
           bgColor: 'bg-purple-50 border-purple-200',
-          title: t('resources.databases.title', 'Научные базы данных'),
-          description: t('resources.databases.description', 'Доступ к международным научным базам данных'),
-          features: ['PubMed', 'Scopus', 'Web of Science']
+          title: t('resources.dbTitle', 'Научные базы данных'),
+          description: t('resources.dbDesc', 'Доступ к международным научным базам данных'),
+          features: [
+            t('resources.dbFeature1', 'PubMed'),
+            t('resources.dbFeature2', 'Scopus'),
+            t('resources.dbFeature3', 'Web of Science')
+          ],
+          linkText: t('resources.dbLink', 'Открыть базу данных')
         },
         {
           id: 3,
@@ -62,22 +86,32 @@ const Resources = () => {
           section: 'materials',
           color: 'from-orange-500 to-red-500',
           bgColor: 'bg-orange-50 border-orange-200',
-          title: t('resources.materials.title', 'Учебные материалы'),
-          description: t('resources.materials.description', 'Методические пособия и учебные материалы'),
-          features: ['Лекции', 'Презентации', 'Лабораторные работы']
+          title: t('resources.materialsTitle', 'Учебные материалы'),
+          description: t('resources.materialsDesc', 'Методические пособия и учебные материалы'),
+          features: [
+            t('resources.materialsFeature1', 'Лекции'),
+            t('resources.materialsFeature2', 'Презентации'),
+            t('resources.materialsFeature3', 'Лабораторные работы')
+          ],
+          linkText: t('resources.materialsLink', 'Скачать материалы')
         },
         {
           id: 4,
           icon: '🎥',
           key: 'video',
+          link: '#video-resources',
           status: 'online',
           section: 'multimedia',
           color: 'from-green-500 to-emerald-500',
           bgColor: 'bg-green-50 border-green-200',
-          title: t('resources.video.title', 'Видеоресурсы'),
-          description: t('resources.video.description', 'Обучающие видео и видеолекции'),
-          features: ['Видеолекции', 'Вебинары', 'Обучающие курсы'],
-          linkText: t('resources.video.linkText', 'Смотреть видео')
+          title: t('resources.videoTitle', 'Видеоресурсы'),
+          description: t('resources.videoDesc', 'Обучающие видео и видеолекции'),
+          features: [
+            t('resources.videoFeature1', 'Видеолекции'),
+            t('resources.videoFeature2', 'Вебинары'),
+            t('resources.videoFeature3', 'Обучающие курсы')
+          ],
+          linkText: t('resources.videoLink', 'Смотреть видео')
         },
         {
           id: 5,
@@ -87,54 +121,64 @@ const Resources = () => {
           section: 'platforms',
           color: 'from-indigo-500 to-blue-500',
           bgColor: 'bg-indigo-50 border-indigo-200',
-          title: t('resources.moodle.title', 'Moodle система'),
-          description: t('resources.moodle.description', 'Система дистанционного обучения'),
-          features: ['Онлайн-курсы', 'Тесты и задания', 'Общение с преподавателями']
+          title: t('resources.moodleTitle', 'Moodle система'),
+          description: t('resources.moodleDesc', 'Система дистанционного обучения'),
+          features: [
+            t('resources.moodleFeature1', 'Онлайн-курсы'),
+            t('resources.moodleFeature2', 'Тесты и задания'),
+            t('resources.moodleFeature3', 'Общение с преподавателями')
+          ],
+          linkText: t('resources.moodleLink', 'Войти в систему')
         },
         {
           id: 6,
           icon: '📖',
           key: 'research',
+          link: '#research-portal',
           status: 'online',
           section: 'research',
           color: 'from-teal-500 to-cyan-500',
           bgColor: 'bg-teal-50 border-teal-200',
-          title: t('resources.research.title', 'Научные ресурсы'),
-          description: t('resources.research.description', 'Ресурсы для научной работы и исследований'),
-          features: ['Научные журналы', 'Исследовательские данные', 'Библиографические менеджеры'],
-          linkText: t('resources.research.linkText', 'Научные ресурсы')
+          title: t('resources.researchTitle', 'Научные ресурсы'),
+          description: t('resources.researchDesc', 'Ресурсы для научной работы и исследований'),
+          features: [
+            t('resources.researchFeature1', 'Научные журналы'),
+            t('resources.researchFeature2', 'Исследовательские данные'),
+            t('resources.researchFeature3', 'Библиографические менеджеры')
+          ],
+          linkText: t('resources.researchLink', 'Научные ресурсы')
         }
       ]
     },
     library: {
-      title: t('resources.library_section', 'Электронная библиотека'),
-      description: t('resources.library_section_desc', 'Электронные книги, учебники и научные публикации'),
-      resources: [] // Will be filtered
+      title: t('resources.sectionLib', 'Электронная библиотека'),
+      description: t('resources.sectionLibDesc', 'Электронные книги, учебники и научные публикации'),
+      resources: []
     },
     databases: {
-      title: t('resources.databases_section', 'Научные базы данных'),
-      description: t('resources.databases_section_desc', 'Международные индексы и научные публикации'),
-      resources: [] // Will be filtered
+      title: t('resources.sectionDb', 'Научные базы данных'),
+      description: t('resources.sectionDbDesc', 'Международные индексы и научные публикации'),
+      resources: []
     },
     platforms: {
-      title: t('resources.platforms_section', 'Образовательные платформы'),
-      description: t('resources.platforms_section_desc', 'Системы дистанционного обучения и онлайн-курсы'),
-      resources: [] // Will be filtered
+      title: t('resources.sectionPlatforms', 'Образовательные платформы'),
+      description: t('resources.sectionPlatformsDesc', 'Системы дистанционного обучения и онлайн-курсы'),
+      resources: []
     },
     multimedia: {
-      title: t('resources.multimedia_section', 'Мультимедийные ресурсы'),
-      description: t('resources.multimedia_section_desc', 'Видео, аудио и интерактивные материалы'),
-      resources: [] // Will be filtered
+      title: t('resources.sectionMedia', 'Мультимедийные ресурсы'),
+      description: t('resources.sectionMediaDesc', 'Видео, аудио и интерактивные материалы'),
+      resources: []
     },
     research: {
-      title: t('resources.research_section', 'Научные ресурсы'),
-      description: t('resources.research_section_desc', 'Ресурсы для исследовательской работы'),
-      resources: [] // Will be filtered
+      title: t('resources.sectionResearch', 'Научные ресурсы'),
+      description: t('resources.sectionResearchDesc', 'Ресурсы для исследовательской работы'),
+      resources: []
     },
     materials: {
-      title: t('resources.materials_section', 'Учебные материалы'),
-      description: t('resources.materials_section_desc', 'Методические пособия и учебные материалы'),
-      resources: [] // Will be filtered
+      title: t('resources.sectionMaterials', 'Учебные материалы'),
+      description: t('resources.sectionMaterialsDesc', 'Методические пособия и учебные материалы'),
+      resources: []
     }
   };
 
@@ -149,13 +193,13 @@ const Resources = () => {
 
   // Sections list for navigation
   const sectionsList = [
-    { id: 'all', name: t('resources.all', 'Все ресурсы'), count: sectionsData.all.resources.length },
-    { id: 'library', name: t('resources.library', 'Библиотека'), count: sectionsData.library.resources.length },
-    { id: 'databases', name: t('resources.databases', 'Базы данных'), count: sectionsData.databases.resources.length },
-    { id: 'platforms', name: t('resources.platforms', 'Платформы'), count: sectionsData.platforms.resources.length },
-    { id: 'multimedia', name: t('resources.multimedia', 'Мультимедиа'), count: sectionsData.multimedia.resources.length },
-    { id: 'research', name: t('resources.research', 'Наука'), count: sectionsData.research.resources.length },
-    { id: 'materials', name: t('resources.materials', 'Материалы'), count: sectionsData.materials.resources.length }
+    { id: 'all', name: t('resources.navAll', 'Все ресурсы'), count: sectionsData.all.resources.length },
+    { id: 'library', name: t('resources.navLibrary', 'Библиотека'), count: sectionsData.library.resources.length },
+    { id: 'databases', name: t('resources.navDatabases', 'Базы данных'), count: sectionsData.databases.resources.length },
+    { id: 'platforms', name: t('resources.navPlatforms', 'Платформы'), count: sectionsData.platforms.resources.length },
+    { id: 'multimedia', name: t('resources.navMultimedia', 'Мультимедиа'), count: sectionsData.multimedia.resources.length },
+    { id: 'research', name: t('resources.navResearch', 'Наука'), count: sectionsData.research.resources.length },
+    { id: 'materials', name: t('resources.navMaterials', 'Материалы'), count: sectionsData.materials.resources.length }
   ];
 
   // Get current section data
@@ -171,12 +215,12 @@ const Resources = () => {
     
     try {
       await new Promise(resolve => setTimeout(resolve, 2000));
-      alert(t('resources.login_success', 'Вход выполнен успешно!'));
+      alert(t('resources.loginSuccess', 'Вход выполнен успешно!'));
       setMoodleCredentials({ username: '', password: '' });
       setActiveResource(null);
     } catch (error) {
       console.error('Login error:', error);
-      alert(t('resources.login_error', 'Ошибка входа. Проверьте данные.'));
+      alert(t('resources.loginError', 'Ошибка входа. Проверьте данные.'));
     } finally {
       setIsLoading(false);
     }
@@ -191,7 +235,7 @@ const Resources = () => {
   };
 
   // Loading state
-  if (false) { // Replace with actual loading condition if needed
+  if (false) {
     return (
       <div
         className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${
@@ -317,7 +361,7 @@ const Resources = () => {
                                 <svg className="w-4 h-4 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                                 </svg>
-                                <span className="truncate">{resource.linkText || t('resources.go_to_resource', 'Перейти к ресурсу')}</span>
+                                <span className="truncate">{resource.linkText}</span>
                               </a>
                             )}
 
@@ -327,7 +371,7 @@ const Resources = () => {
                                   onClick={() => setActiveResource(activeResource === resource.id ? null : resource.id)}
                                   className="w-full bg-gradient-to-r from-indigo-500 to-blue-500 text-white py-2 px-4 rounded-lg hover:shadow-lg transition-all duration-300 font-medium text-sm mb-3"
                                 >
-                                  {t('resources.login', 'Войти в систему')}
+                                  {resource.linkText}
                                 </button>
                                 
                                 {activeResource === resource.id && (
@@ -340,7 +384,7 @@ const Resources = () => {
                                         onChange={handleInputChange}
                                         required
                                         className="w-full p-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                        placeholder={t('resources.username_placeholder', 'Имя пользователя')}
+                                        placeholder={t('resources.usernamePlaceholder', 'Имя пользователя')}
                                       />
                                     </div>
                                     <div>
@@ -351,7 +395,7 @@ const Resources = () => {
                                         onChange={handleInputChange}
                                         required
                                         className="w-full p-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                        placeholder={t('resources.password_placeholder', 'Пароль')}
+                                        placeholder={t('resources.passwordPlaceholder', 'Пароль')}
                                       />
                                     </div>
                                     <button
@@ -360,8 +404,8 @@ const Resources = () => {
                                       className="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white py-2 px-4 rounded-lg hover:shadow-lg disabled:opacity-50 transition-all duration-300 font-medium text-sm"
                                     >
                                       {isLoading ? 
-                                        t('resources.logging_in', 'Вход...') : 
-                                        t('resources.login', 'Войти')
+                                        t('resources.loggingIn', 'Вход...') : 
+                                        t('resources.loginBtn', 'Войти')
                                       }
                                     </button>
                                   </form>
@@ -379,7 +423,7 @@ const Resources = () => {
                                     rel="noopener noreferrer"
                                     className="block w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-2 px-4 rounded-lg hover:shadow-lg transition-all duration-300 text-center font-medium text-sm"
                                   >
-                                    {t('resources.go_to', 'Перейти в')} {t(`resources.${link.name}`, link.name)}
+                                    {t('resources.goTo', 'Перейти в')} {link.displayName}
                                   </a>
                                 ))}
                               </div>
@@ -390,7 +434,7 @@ const Resources = () => {
                                 <svg className="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                                 </svg>
-                                {t('resources.download', 'Скачать')}
+                                {resource.linkText}
                               </button>
                             )}
                           </div>
@@ -414,10 +458,10 @@ const Resources = () => {
                       />
                     </svg>
                     <h3 className="mt-4 text-lg font-medium text-gray-900">
-                      {t("resources.no_resources", "Ресурсы не найдены")}
+                      {t("resources.noResources", "Ресурсы не найдены")}
                     </h3>
                     <p className="mt-2 text-gray-500">
-                      {t("resources.no_resources_desc", "В этой категории пока нет доступных ресурсов")}
+                      {t("resources.noResourcesDesc", "В этой категории пока нет доступных ресурсов")}
                     </p>
                   </div>
                 )}

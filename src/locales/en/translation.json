@@ -1087,6 +1087,14 @@
     "members": "members",
     "detailsButton": "Details",
     "allClubsButton": "All campus clubs",
+    "categories": {
+        "title": "Categories",
+        "all": "All Clubs",
+        "academic": "Academic",
+        "sports": "Sports",
+        "cultural": "Cultural",
+        "social": "Social"
+      },
     "medical": {
       "name": "Medical Volunteer Corps",
       "description": "Assisting medical institutions and conducting health-check events"
@@ -1808,6 +1816,9 @@
     }
   },
   "departments": {
+    "studyDepartment": "Academic Department",
+
+    "scienceDepartment": "Scientific Department",
     "internationalDepartment": "International Department",
     "title": "Faculties & Departments",
     "subtitle": "Explore the university structure and learn more about each faculty",
@@ -2078,6 +2089,8 @@
       "subtitle": "International conferences to discuss the latest achievements in medical science",
       "viewDetails": "View Details",
       "tabs": {
+                "archive": "Conference Archive"
+,
         "upcoming": "Upcoming",
         "past": "Past"
       },
@@ -2085,7 +2098,13 @@
         "registrationOpen": "Registration Open",
         "registrationClosed": "Registration Closed",
         "callForPapers": "Call for Papers"
-      }
+      },
+      "types": {
+        "international": "International",
+        "national": "National"
+      },
+      "noConferences": "No conferences found",
+      "categories": "Conference Categories"
     },
     "grants": {
       "title": "Research Grants",
@@ -2108,7 +2127,7 @@
         "details": "Details",
         "apply": "Apply"
       },
-      "categories": {
+      "categoriese": {
         "all": "All Grants",
         "youth": "Youth",
         "international": "International",
@@ -2235,8 +2254,10 @@
     "management": {
       "title": "Research Management",
       "subtitle": "University research management structure and leadership",
+      "sections": "Research Management Sections",
       "tabs": {
-        "positions": "Management Positions",
+        "positions": "Management Structure",
+  "management": "Management Structure",
         "councils": "Scientific Councils",
         "commissions": "Commissions"
       },
@@ -2263,6 +2284,14 @@
       }
     },
     "journals": {
+      "navigation": "Navigation",
+  "navJournals": "All Journals",
+  "archiveDescription": "All issues of the scientific journal",
+  "error": "Loading error",
+  "retry": "Retry",
+  "noDataDescription": "There are currently no available scientific journals",
+  "backToJournals": "Back to Journals",
+  "noIssues": "No issues found",
       "title": "Scientific Journals",
       "subtitle": "University's scientific publications and research journals",
       "loading": "Loading journals...",
@@ -2953,7 +2982,7 @@
       "error": "Error submitting application. Please try again."
     }
   },
-  "resources": {
+
     "breadcrumbs": {
       "home": "Home",
       "academics": "Academics",
@@ -2967,49 +2996,93 @@
       "access": "Resource Access",
       "databases": "Scientific Databases"
     },
-    "resources": {
-      "library": {
-        "title": "E-Library",
-        "description": "Access to textbooks, scientific articles, and electronic editions. More than 10,000 materials on medicine and related disciplines.",
-        "linkText": "Go to Library",
-        "features": [
-          "Catalog Search",
-          "E-Textbooks",
-          "Scientific Articles",
-          "Audiobooks"
-        ]
-      },
-      "databases": {
-        "title": "Scientific Databases",
-        "description": "Access to international scientific databases for research and academic work.",
-        "features": [
-          "PubMed",
-          "Scopus",
-          "Web of Science",
-          "Google Scholar"
-        ]
-      },
-      "materials": {
-        "title": "Methodological Materials",
-        "description": "Guidelines, manuals, handbooks, and syllabi for all disciplines.",
-        "features": [
-          "Methodological Guides",
-          "Syllabi",
-          "Practical Workbooks",
-          "Lab Work"
-        ]
-      },
-      "video": {
-        "title": "Video Library",
-        "description": "Video lectures, surgical recordings, demonstrations, and educational videos.",
-        "features": [
-          "Lecture Recordings",
-          "Surgical Operations",
-          "Anatomical Atlases",
-          "Demonstrations"
-        ]
-      }
-    },
+  "resources": {
+    "title": "Educational Resources",
+    "subtitle": "Access to electronic resources, scientific databases, and learning materials",
+    "categories": "Categories",
+    
+    "allTitle": "All Educational Resources",
+    "allDesc": "Full access to all available educational resources",
+    
+    "navAll": "All Resources",
+    "navLibrary": "Library",
+    "navDatabases": "Databases",
+    "navPlatforms": "Platforms",
+    "navMultimedia": "Multimedia",
+    "navResearch": "Research",
+    "navMaterials": "Materials",
+    
+    "sectionLib": "Electronic Library",
+    "sectionLibDesc": "E-books, textbooks, and scientific publications",
+    "sectionDb": "Scientific Databases",
+    "sectionDbDesc": "International indexes and scientific publications",
+    "sectionPlatforms": "Educational Platforms",
+    "sectionPlatformsDesc": "Distance learning systems and online courses",
+    "sectionMedia": "Multimedia Resources",
+    "sectionMediaDesc": "Video, audio, and interactive materials",
+    "sectionResearch": "Research Resources",
+    "sectionResearchDesc": "Resources for research work",
+    "sectionMaterials": "Learning Materials",
+    "sectionMaterialsDesc": "Methodological guides and study materials",
+    
+    "libTitle": "Electronic Library",
+    "libDesc": "Access to educational literature and scientific publications",
+    "libFeature1": "10,000+ e-books",
+    "libFeature2": "Scientific journals",
+    "libFeature3": "Study guides",
+    "libLink": "Go to library",
+    
+    "dbTitle": "Scientific Databases",
+    "dbDesc": "Access to international scientific databases",
+    "dbFeature1": "PubMed",
+    "dbFeature2": "Scopus",
+    "dbFeature3": "Web of Science",
+    "dbLink": "Open database",
+    "dbPubMed": "PubMed",
+    "dbScopus": "Scopus",
+    "dbWebScience": "Web of Science",
+    
+    "materialsTitle": "Learning Materials",
+    "materialsDesc": "Methodological guides and study materials",
+    "materialsFeature1": "Lectures",
+    "materialsFeature2": "Presentations",
+    "materialsFeature3": "Laboratory work",
+    "materialsLink": "Download materials",
+    
+    "videoTitle": "Video Resources",
+    "videoDesc": "Educational videos and video lectures",
+    "videoFeature1": "Video lectures",
+    "videoFeature2": "Webinars",
+    "videoFeature3": "Training courses",
+    "videoLink": "Watch video",
+    
+    "moodleTitle": "Moodle System",
+    "moodleDesc": "Distance learning system",
+    "moodleFeature1": "Online courses",
+    "moodleFeature2": "Tests and assignments",
+    "moodleFeature3": "Communication with teachers",
+    "moodleLink": "Log in to system",
+    
+    "researchTitle": "Research Resources",
+    "researchDesc": "Resources for scientific work and research",
+    "researchFeature1": "Scientific journals",
+    "researchFeature2": "Research data",
+    "researchFeature3": "Bibliographic managers",
+    "researchLink": "Research resources",
+    
+    "goTo": "Go to",
+    "loginBtn": "Login",
+    "loggingIn": "Logging in...",
+    
+    "usernamePlaceholder": "Username",
+    "passwordPlaceholder": "Password",
+    
+    "loginSuccess": "Login successful!",
+    "loginError": "Login error. Please check your credentials.",
+    
+    "noResources": "No resources found",
+    "noResourcesDesc": "There are no available resources in this category yet"
+  },
     "external_links": {
       "pubmed": "PubMed",
       "scopus": "Scopus",
@@ -3029,8 +3102,7 @@
     "tooltip": {
       "title": "💡 Tip",
       "text": "Some resources may require authentication via your university account"
-    }
-  },
+    },
   "requirementsCitizensKG": {
     "title": "Requirements for KR Citizens",
     "subtitle": "Academic and documentation requirements for admission",
@@ -4144,6 +4216,14 @@
   },
   "studentLife": {
     "instructions": {
+       "categories": "Сategories",
+       "allInstructions": "All Instructions",
+      "academic": "Academic",
+      "administrative": "Administrative",
+      "documents": "Documents",
+      "financial": "Financial",
+      "appeals": "Appeals",
+      "savedInstructions": "Saved Instructions",
       "title": "Student Instructions",
       "subtitle": "Step-by-step guides for important procedures",
       "loading": "Loading instructions...",
@@ -5082,6 +5162,21 @@
     "medicalUniversity": "Medical University"
   },
   "admissionProcess": {
+    
+    "navigation": "Navigation",
+    
+    "processNav": "Process",
+    "documentsNav": "Documents",
+    "deadlinesNav": "Deadlines",
+    "contactNav": "Contacts",
+    
+    "processDescription": "Step-by-step guide to applying to the Medical School",
+    
+    "documentsDescription": "Complete list of documents for application",
+    
+    "deadlinesDescription": "Schedule of the admission campaign and key dates",
+    "contactDescription": "Contact information of the admissions committee",
+    
     "title": "Admission Process",
     "heroTitle": "Admission Procedure",
     "heroSubtitle": "Step-by-step guide to joining our medical university",
@@ -5370,6 +5465,7 @@
       "description": "An innovative management system ensuring high quality of educational services and continuous improvement of the university’s activities"
     },
     "statistics": {
+      "title": "Statistic",
       "documents": "QMS Documents",
       "processes": "Management Processes",
       "principles": "Quality Principles",
@@ -5707,268 +5803,54 @@
       "description": "Try changing the search parameters or choose another category"
     }
   },
-  "acadop": {
+"acadop": {
     "hero": {
-      "badge": "ACADEMIC PROSPECTS",
-      "title": "Academic",
-      "highlight": "opportunities",
-      "description": "Discover a world of unique opportunities for your academic growth, professional development, and international recognition"
+      "title": "Academic Opportunities",
+      "highlight": "for students",
+      "description": "Discover unique opportunities for academic and professional growth"
+    },
+    "categories": {
+      "title": "Categories",
+      "all": "All Categories",
+      "semester": "Semester Exchange",
+      "annual": "Annual Exchange",
+      "universities": "Partner Universities"
     },
     "statistics": {
-      "total": "Total programs",
-      "available": "Available now",
-      "students": "Participants",
+      "total": "Total Opportunities",
+      "available": "Available Now",
+      "students": "Students Participating",
       "popular": "Popular"
     },
     "search": {
       "placeholder": "Search opportunities..."
     },
-    "categories": {
-      "list": [
-        {
-          "id": "all",
-          "name": "All opportunities",
-          "count": 9,
-          "icon": "🔄"
-        },
-        {
-          "id": "education",
-          "name": "Education",
-          "count": 2,
-          "icon": "🎓"
-        },
-        {
-          "id": "international",
-          "name": "International",
-          "count": 2,
-          "icon": "🌍"
-        },
-        {
-          "id": "research",
-          "name": "Research",
-          "count": 2,
-          "icon": "🔬"
-        },
-        {
-          "id": "career",
-          "name": "Career",
-          "count": 1,
-          "icon": "💼"
-        },
-        {
-          "id": "innovation",
-          "name": "Innovation",
-          "count": 2,
-          "icon": "🚀"
-        }
-      ]
-    },
     "opportunities": {
-      "popularBadge": "POPULAR",
-      "status": {
-        "available": "AVAILABLE",
-        "comingSoon": "COMING SOON"
-      },
+      "all": "All Opportunities",
+      "description": "Academic opportunities for students",
+      "popularBadge": "Popular",
       "students": "students",
-      "featuresTitle": "Key benefits:",
-      "detailsButton": "Learn more",
-      "list": [
-        {
-          "id": 1,
-          "title": "Dual Degrees",
-          "description": "Earn diplomas from two universities simultaneously with international partners",
-          "category": "education",
-          "icon": "🎓",
-          "color": "from-purple-500 to-purple-600",
-          "status": "available",
-          "students": "350+",
-          "features": [
-            "International recognition",
-            "Two diplomas",
-            "Global experience",
-            "Career advantages"
-          ],
-          "link": "#",
-          "popular": true
-        },
-        {
-          "id": 2,
-          "title": "Internships Abroad",
-          "description": "Gain practical experience in leading international companies and research centers",
-          "category": "international",
-          "icon": "✈️",
-          "color": "from-blue-500 to-blue-600",
-          "status": "available",
-          "students": "280+",
-          "features": [
-            "Work experience",
-            "International networking",
-            "Language practice",
-            "Professional growth"
-          ],
-          "link": "#",
-          "popular": true
-        },
-        {
-          "id": 3,
-          "title": "Research Grants",
-          "description": "Funding for student research projects and scientific initiatives",
-          "category": "research",
-          "icon": "💰",
-          "color": "from-green-500 to-green-600",
-          "status": "available",
-          "students": "150+",
-          "features": [
-            "Financial support",
-            "Publications",
-            "Equipment",
-            "Conferences"
-          ],
-          "link": "#",
-          "popular": false
-        },
-        {
-          "id": 4,
-          "title": "Career Center",
-          "description": "Comprehensive support in employment and career building",
-          "category": "career",
-          "icon": "🎯",
-          "color": "from-orange-500 to-orange-600",
-          "status": "available",
-          "students": "1,200+",
-          "features": [
-            "Employment",
-            "Career counseling",
-            "Job fairs",
-            "Partner companies"
-          ],
-          "link": "#",
-          "popular": true
-        },
-        {
-          "id": 5,
-          "title": "Modern Laboratories",
-          "description": "Access to cutting-edge research equipment and technologies",
-          "category": "innovation",
-          "icon": "🔬",
-          "color": "from-cyan-500 to-cyan-600",
-          "status": "available",
-          "students": "900+",
-          "features": [
-            "High-tech equipment",
-            "Research",
-            "Experiments",
-            "Innovative projects"
-          ],
-          "link": "#",
-          "popular": true
-        },
-        {
-          "id": 6,
-          "title": "Online Courses",
-          "description": "Distance learning with modern programs and methods",
-          "category": "education",
-          "icon": "💻",
-          "color": "from-indigo-500 to-indigo-600",
-          "status": "available",
-          "students": "2,500+",
-          "features": [
-            "Flexible schedule",
-            "Accessibility",
-            "Modern technologies",
-            "Interactivity"
-          ],
-          "link": "#",
-          "popular": false
-        },
-        {
-          "id": 7,
-          "title": "International Conferences",
-          "description": "Participation in world-class scientific events and symposiums",
-          "category": "research",
-          "icon": "🎤",
-          "color": "from-pink-500 to-pink-600",
-          "status": "available",
-          "students": "180+",
-          "features": [
-            "Global experience",
-            "Research networking",
-            "Publications",
-            "Professional community"
-          ],
-          "link": "#",
-          "popular": false
-        },
-        {
-          "id": 8,
-          "title": "Startup Incubator",
-          "description": "Support for student business projects and innovative initiatives",
-          "category": "innovation",
-          "icon": "💡",
-          "color": "from-teal-500 to-teal-600",
-          "status": "available",
-          "students": "75+",
-          "features": [
-            "Funding",
-            "Mentorship",
-            "Business angels",
-            "Pitch sessions"
-          ],
-          "link": "#",
-          "popular": true
-        },
-        {
-          "id": 9,
-          "title": "Language Programs",
-          "description": "Learn foreign languages at a professional level with native speakers",
-          "category": "international",
-          "icon": "🗣️",
-          "color": "from-amber-500 to-amber-600",
-          "status": "available",
-          "students": "1,800+",
-          "features": [
-            "International certificates",
-            "Native speakers",
-            "Practice",
-            "Cultural exchange"
-          ],
-          "link": "#",
-          "popular": false
-        }
-      ]
+      "status": {
+        "available": "Available",
+        "comingSoon": "Coming Soon"
+      },
+      "featuresTitle": "Features",
+      "detailsButton": "Learn More"
+    },
+    "results_count": "{{count}} found",
+    "successStories": {
+      "achievement": "Academic Mobility",
+      "quote": "The exchange program opened new horizons in my career"
     },
     "noResults": {
-      "title": "No opportunities found",
-      "description": "Try adjusting your search or choose another category"
-    },
-    "successStories": {
-      "title": "Success",
-      "highlight": "stories",
-      "description": "Our students achieve outstanding results thanks to the university’s academic opportunities",
-      "list": [
-        {
-          "name": "Anna Petrova",
-          "program": "International Business",
-          "achievement": "Internship at Google, USA",
-          "image": "👩‍💼",
-          "quote": "The dual degree program gave me unique international experience"
-        },
-        {
-          "name": "Maxim Ivanov",
-          "program": "Computer Science",
-          "achievement": "Founder of IT Startup",
-          "image": "👨‍💻",
-          "quote": "The university’s startup incubator helped turn an idea into a successful business"
-        },
-        {
-          "name": "Elena Sidorova",
-          "program": "Biotechnology",
-          "achievement": "Research work in Germany",
-          "image": "👩‍🔬",
-          "quote": "Research grants enabled me to conduct world-class research"
-        }
-      ]
+      "title": "No Opportunities Found",
+      "description": "Try adjusting your search or selecting another category"
     }
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "retry": "Retry"
   },
   "socop": {
     "hero": {
@@ -5987,6 +5869,11 @@
       "placeholder": "Search opportunities..."
     },
     "categories": {
+      "title": "Categories",
+      "all": "All",
+      "events": "Events",
+      "clubs": "Clubs",
+      "projects": "Projects",
       "list": [
         {
           "id": "all",
@@ -6051,6 +5938,8 @@
       "joinProject": "Join project"
     },
     "noResults": {
+            "clearFilters": "Clear filters"
+,
       "title": "No opportunities found",
       "description": "Try changing your search parameters or select another category"
     }

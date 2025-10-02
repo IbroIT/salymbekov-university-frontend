@@ -100,9 +100,6 @@ const Mission = () => {
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-lg text-gray-600">Загрузка данных миссии...</p>
-          <p className="mt-2 text-sm text-gray-500">API URL: {import.meta.env.VITE_API_URL || 'http://localhost:8000'}</p>
-          <p className="mt-1 text-sm text-gray-500">Loading: {loading.toString()}, Error: {error || 'none'}, Data: {missionData ? 'loaded' : 'null'}</p>
         </div>
       </div>
     );

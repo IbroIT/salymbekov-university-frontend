@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 const ProgramCards = () => {
   const { t, i18n } = useTranslation();
@@ -75,6 +76,9 @@ const ProgramCards = () => {
       prevIndex === 0 ? programs.length - 1 : prevIndex - 1
     );
   };
+
+  const navigate = useNavigate();
+
 
   return (
     <section className="py-16 bg-gradient-to-b from-white to-blue-50 relative overflow-hidden">
@@ -219,12 +223,15 @@ const ProgramCards = () => {
 
         {/* Декоративный элемент внизу */}
         <div className="text-center mt-16">
-          <div className="inline-flex items-center justify-center px-6 py-3 bg-white rounded-full shadow-md text-blue-600 font-medium group cursor-pointer">
+          <button 
+            onClick={() => navigate('/HSM/programs')} // замените на ваш путь
+            className="inline-flex items-center justify-center px-6 py-3 bg-white rounded-full shadow-md text-blue-600 font-medium group cursor-pointer hover:bg-blue-50 transition-all duration-300"
+          >
             <span>{t('programs.allPrograms')}</span>
             <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
-          </div>
+          </button>
         </div>
       </div>
     </section>

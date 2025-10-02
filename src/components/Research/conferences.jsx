@@ -27,29 +27,73 @@ const Conferences = () => {
     fetchConferences(activeSection);
   }, []);
 
+  // Helper function to safely extract array from API response
+  const extractConferencesArray = (data) => {
+    if (!data) return [];
+    
+    // If data is already an array, return it
+    if (Array.isArray(data)) return data;
+    
+    // If data has a results property (common in paginated APIs)
+    if (data.results && Array.isArray(data.results)) return data.results;
+    
+    // If data has a data property
+    if (data.data && Array.isArray(data.data)) return data.data;
+    
+    // If data has a conferences property
+    if (data.conferences && Array.isArray(data.conferences)) return data.conferences;
+    
+    console.warn('Unexpected API response structure:', data);
+    return [];
+  };
+
   const fetchConferences = async (status = 'upcoming') => {
     try {
       setLoading(true);
-      let data;
+      let response;
 
       if (status === 'upcoming') {
-        data = await researchAPI.getUpcomingConferences();
+        response = await researchAPI.getUpcomingConferences();
       } else if (status === 'archive') {
         // For archive, get all conferences and filter past ones
-        const allConferences = await researchAPI.getConferences();
-        const now = new Date();
-        data = allConferences.filter(conf => new Date(conf.end_date) < now);
+        response = await researchAPI.getConferences();
       } else if (status === 'international') {
-        const allConferences = await researchAPI.getConferences();
-        data = allConferences.filter(conf => conf.conference_type === 'international');
+        response = await researchAPI.getConferences();
       } else if (status === 'national') {
-        const allConferences = await researchAPI.getConferences();
-        data = allConferences.filter(conf => conf.conference_type === 'national');
+        response = await researchAPI.getConferences();
       } else {
-        data = await researchAPI.getConferences();
+        response = await researchAPI.getConferences();
       }
 
-      setConferences(Array.isArray(data) ? data : []);
+      // Extract the conferences array from the response
+      const allConferences = extractConferencesArray(response);
+      
+      let filteredConferences = [];
+
+      // Apply filters based on section
+      if (status === 'upcoming') {
+        const now = new Date();
+        filteredConferences = allConferences.filter(conf => 
+          conf.start_date && new Date(conf.start_date) >= now
+        );
+      } else if (status === 'archive') {
+        const now = new Date();
+        filteredConferences = allConferences.filter(conf => 
+          conf.end_date && new Date(conf.end_date) < now
+        );
+      } else if (status === 'international') {
+        filteredConferences = allConferences.filter(conf => 
+          conf.conference_type === 'international'
+        );
+      } else if (status === 'national') {
+        filteredConferences = allConferences.filter(conf => 
+          conf.conference_type === 'national'
+        );
+      } else {
+        filteredConferences = allConferences;
+      }
+
+      setConferences(filteredConferences);
       setError(null);
     } catch (err) {
       console.error('Error fetching conferences:', err);
@@ -63,21 +107,6 @@ const Conferences = () => {
   const changeActiveSection = (sectionId) => {
     setActiveSection(sectionId);
     fetchConferences(sectionId);
-  };
-
-  const getConferenceTitle = (conference) => {
-    const currentLang = i18n.language;
-    return conference[`title_${currentLang}`] || conference.title_ru;
-  };
-
-  const getConferenceDescription = (conference) => {
-    const currentLang = i18n.language;
-    return conference[`description_${currentLang}`] || conference.description_ru;
-  };
-
-  const getConferenceLocation = (conference) => {
-    const currentLang = i18n.language;
-    return conference[`location_${currentLang}`] || conference.location_ru;
   };
 
   // Helper function for consistent multilingual field access
@@ -109,12 +138,41 @@ const Conferences = () => {
   };
 
   const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    const currentLang = i18n.language;
-    return date.toLocaleDateString(currentLang === 'ru' ? 'ru-RU' : currentLang === 'kg' ? 'ky-KG' : 'en-US');
+    if (!dateString) return 'Дата не указана';
+    
+    try {
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) return 'Неверная дата';
+      
+      const currentLang = i18n.language;
+      return date.toLocaleDateString(
+        currentLang === 'ru' ? 'ru-RU' : 
+        currentLang === 'kg' ? 'ky-KG' : 'en-US'
+      );
+    } catch (error) {
+      console.error('Error formatting date:', error);
+      return 'Ошибка даты';
+    }
   };
 
-  const getStatusBadge = (status) => {
+  const getStatusBadge = (conference) => {
+    const now = new Date();
+    const startDate = conference.start_date ? new Date(conference.start_date) : null;
+    const endDate = conference.end_date ? new Date(conference.end_date) : null;
+    
+    // Determine status based on dates if no explicit status is provided
+    let status = conference.status;
+    
+    if (!status && startDate && endDate) {
+      if (endDate < now) {
+        status = 'completed';
+      } else if (startDate <= now && endDate >= now) {
+        status = 'ongoing';
+      } else {
+        status = 'upcoming';
+      }
+    }
+
     const statusConfig = {
       'registration-open': {
         text: t('research.conferences.statusLabels.registrationOpen') || 'Регистрация открыта',
@@ -141,7 +199,11 @@ const Conferences = () => {
         color: 'bg-gray-100 text-gray-800'
       }
     };
-    return statusConfig[status] || { text: status, color: 'bg-gray-100 text-gray-800' };
+    
+    return statusConfig[status] || { 
+      text: status || 'Не указан', 
+      color: 'bg-gray-100 text-gray-800' 
+    };
   };
 
   const renderUpcomingContent = () => (
@@ -157,7 +219,7 @@ const Conferences = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {conferences.map((conference) => {
-          const statusBadge = getStatusBadge(conference.status);
+          const statusBadge = getStatusBadge(conference);
 
           return (
             <div
@@ -546,9 +608,13 @@ const Conferences = () => {
                     const now = new Date();
 
                     if (section.id === 'upcoming') {
-                      sectionCount = conferences.filter(conf => new Date(conf.start_date) >= now).length;
+                      sectionCount = conferences.filter(conf => 
+                        conf.start_date && new Date(conf.start_date) >= now
+                      ).length;
                     } else if (section.id === 'archive') {
-                      sectionCount = conferences.filter(conf => new Date(conf.end_date) < now).length;
+                      sectionCount = conferences.filter(conf => 
+                        conf.end_date && new Date(conf.end_date) < now
+                      ).length;
                     } else if (section.id === 'international') {
                       sectionCount = conferences.filter(conf => conf.conference_type === 'international').length;
                     } else if (section.id === 'national') {

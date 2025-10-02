@@ -329,12 +329,6 @@ const VacancyDetail = () => {
                       }
                     </span>
                   </div>
-                  {vacancy.applications_count !== undefined && (
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">{t('careers.applications')}</span>
-                      <span className="font-medium">{vacancy.applications_count}</span>
-                    </div>
-                  )}
                 </div>
               </div>
             </div>

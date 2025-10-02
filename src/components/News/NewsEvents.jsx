@@ -150,7 +150,6 @@ const NewsEvents = () => {
         {loading ? (
           <div className="text-center py-12">
             <div className="text-gray-500 text-lg">
-              {t('newsanon.loading', 'Загрузка...')}
             </div>
           </div>
         ) : !error && (

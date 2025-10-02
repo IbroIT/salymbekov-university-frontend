@@ -438,47 +438,6 @@ const AcadOp = () => {
                   </div>
                 )}
               </div>
-
-              {/* Истории успеха */}
-              {activeCategory === "all" && filteredData.length > 0 && (
-                <div className="mt-12 pt-8 border-t border-gray-200">
-                  <div className="text-center mb-8">
-                    <h2 className="text-2xl font-bold text-gray-800 mb-2">
-                      {t("acadop.successStories.title", "Истории успеха")}
-                    </h2>
-                    <p className="text-gray-600">
-                      {t(
-                        "acadop.successStories.description",
-                        "Наши студенты достигают выдающихся результатов"
-                      )}
-                    </p>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {successStories.map((story, index) => (
-                      <div
-                        key={index}
-                        className="bg-gradient-to-br from-white to-purple-50 rounded-xl shadow-md border border-purple-100 p-6 text-center transition-all duration-300 transform hover:-translate-y-1"
-                        style={{ animationDelay: `${index * 100}ms` }}
-                      >
-                        <div className="text-4xl mb-4">{story.image}</div>
-                        <h3 className="text-lg font-bold text-gray-800 mb-2">
-                          {story.name}
-                        </h3>
-                        <p className="text-blue-600 font-medium mb-2 text-sm">
-                          {story.program}
-                        </p>
-                        <p className="text-green-600 text-sm font-medium mb-4">
-                          {story.achievement}
-                        </p>
-                        <p className="text-gray-600 italic text-sm">
-                          "{story.quote}"
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
             </div>
           </div>
         </div>
