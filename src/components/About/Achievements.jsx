@@ -278,24 +278,6 @@ const AchievementsPage = () => {
             ))}
           </div>
         </section>
-
-        {/* Призыв к действию */}
-        <section className="text-center bg-white rounded-2xl shadow-xl p-12 max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold text-gray-800 mb-4">
-            {t('achievement.cta.title')}
-          </h2>
-          <p className="text-gray-600 mb-8 text-lg">
-            {t('achievement.cta.description')}
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full font-medium transition-all duration-300 transform hover:scale-105 shadow-lg">
-              {t('achievement.cta.applyButton')}
-            </button>
-            <button className="border-2 border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-3 rounded-full font-medium transition-all duration-300 transform hover:scale-105">
-              {t('achievement.cta.learnMoreButton')}
-            </button>
-          </div>
-        </section>
       </div>
     </div>
   );
