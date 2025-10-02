@@ -314,27 +314,6 @@ const Startups = () => {
             </div>
           )}
 
-          {/* Success Stories */}
-          <section className="py-16 bg-white">
-            <div className="container mx-auto px-4">
-              <h2 className="text-3xl font-bold text-blue-800 mb-12 text-center">
-                {t('startups.successStories')}
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {successStories.map((story, index) => (
-                  <div key={index} className="bg-blue-50 rounded-2xl p-8">
-                    <div className="text-4xl mb-4">🌟</div>
-                    <p className="text-gray-700 text-lg italic mb-4">"{story.quote}"</p>
-                    <div className="text-right">
-                      <div className="font-bold text-blue-800">{story.name}</div>
-                      <div className="text-blue-600">{story.role}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-
           {/* Support Programs */}
           <section className="py-16 bg-gradient-to-r from-blue-600 to-blue-800 text-white">
             <div className="container mx-auto px-4">
@@ -366,27 +345,6 @@ const Startups = () => {
               </div>
             </div>
           </section>
-
-          {/* CTA Section */}
-          <section className="py-16 bg-white">
-            <div className="container mx-auto px-4 text-center">
-              <h2 className="text-3xl font-bold text-blue-800 mb-6">
-                {t('startups.ctaTitle')}
-              </h2>
-              <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-                {t('startups.ctaDescription')}
-              </p>
-              <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-                <button className="bg-blue-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-blue-700 transition-all duration-300">
-                  {t('startups.submitProject')}
-                </button>
-                <button className="border-2 border-blue-600 text-blue-600 px-8 py-4 rounded-full font-bold text-lg hover:bg-blue-50 transition-all duration-300">
-                  {t('startups.contactUs')}
-                </button>
-              </div>
-            </div>
-          </section>
-
         </>
       )}
     </div>

@@ -17,6 +17,29 @@ const INFRASTRUCTURE_ENDPOINTS = {
   },
 };
 
+export const getHospitals = async (language = 'ru') => {
+    try {
+        const response = await infrastructureAPI.get('/hospitals/', {
+            params: { lang: language }
+        });
+        return response;
+    } catch (error) {
+        console.error('Error fetching hospitals:', error);
+        return { data: { success: false, data: [] } };
+    }
+};
+
+export const getHospitalById = async (id, language = 'ru') => {
+    try {
+        const response = await infrastructureAPI.get(`/hospitals/${id}/`, {
+            params: { lang: language }
+        });
+        return response;
+    } catch (error) {
+        console.error('Error fetching hospital details:', error);
+        return { data: { success: false, data: null } };
+    }
+};
 // Classrooms API
 export const classroomsAPI = {
   // Get all data for frontend (optimized endpoint)
@@ -194,5 +217,7 @@ export default {
   classroomsAPI,
   startupsAPI,
   infrastructureHelpers,
-  INFRASTRUCTURE_ENDPOINTS
+  INFRASTRUCTURE_ENDPOINTS,
+  getHospitals,
+  getHospitalById,
 };

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { infrastructureAPI } from '../../services/infrastructureApi';
 
+
 const Hospitals = () => {
   const { t, i18n } = useTranslation();
   const [hospitals, setHospitals] = useState([]);
@@ -16,21 +17,25 @@ const Hospitals = () => {
     fetchHospitals();
   }, []);
 
-  const fetchHospitals = async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      const response = await infrastructureApi.getHospitals();
-      setHospitals(response.data.results || response.data);
-    } catch (err) {
-      console.error('Error fetching hospitals:', err);
-      setError(err.message || 'Failed to load hospitals');
-      // Fallback to mock data if API fails
-      setHospitals(getMockHospitals());
-    } finally {
-      setLoading(false);
-    }
-  };
+const fetchHospitals = async () => {
+  try {
+    setLoading(true);
+    setError(null);
+
+    // Use the axios instance directly
+    const response = await infrastructureAPI.get('/hospitals/');
+    setHospitals(response.data.results || response.data);
+  } catch (err) {
+    console.error('Error fetching hospitals:', err);
+    setError(err.message || 'Failed to load hospitals');
+    setHospitals([]);
+  } finally {
+    setLoading(false);
+  }
+};
+
+
+
 
  
 

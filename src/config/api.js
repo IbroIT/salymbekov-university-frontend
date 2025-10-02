@@ -1,7 +1,7 @@
 // API Configuration
 const API_CONFIG = {
   // Base URL for the Django backend
-  BASE_URL: import.meta.env.VITE_API_BASE_URL || 'https://su-med-backend-35d3d951c74b.herokuapp.com',
+  BASE_URL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000',
 
   // API endpoints
   ENDPOINTS: {
