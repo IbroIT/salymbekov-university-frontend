@@ -810,6 +810,21 @@
   },
   "management": {
     "title": "Management Structure",
+      "loadingStructure": "Loading structure...",
+
+  "teachersTitle": "Teachers",
+  "teachersSubtitle": "Our qualified teachers",
+
+  "statistics": "Statistics",
+  "statisticsSubtitle": "Key university indicators",
+
+  "aboutUniversityTitle": "About the University",
+  "aboutUniversityText": "Our university trains world-class specialists.",
+
+  "missionTitle": "Our Mission",
+  "missionText": "Training highly qualified specialists in medicine and healthcare",
+
+  "sections": "Sections",
     "description": "The organizational structure of Salymbekov University includes governing bodies, faculties, departments, and administrative services ensuring effective operation of the educational institution",
     "organizationTitle": "University Management",
     "organizationSubtitle": "Pyramidal hierarchy of the university",
@@ -1793,6 +1808,7 @@
     }
   },
   "departments": {
+    "internationalDepartment": "International Department",
     "title": "Faculties & Departments",
     "subtitle": "Explore the university structure and learn more about each faculty",
     "teachers": "Teachers",
@@ -4778,7 +4794,15 @@
     }
   },
   "structure": {
+    "labels": {
+      "leader": "Leader",
+      "dean": "Dean",
+      "departments": "Faculty Departments",
+      "phone": "Phone"
+}
+,
     "title": "University Structure",
+    "sections": "Structures",
     "description": "Learn about the organizational structure of our medical university, including leadership, faculties, and administrative departments",
     "head": "Head:",
     "phone": "Phone:",
@@ -4786,6 +4810,7 @@
     "collapse": "Collapse",
     "facultyDepartments": "Faculty Departments:",
     "leadership": {
+      
       "title": "University Leadership",
       "items": {
         "rector": {
@@ -4879,6 +4904,11 @@
     }
   },
   "leadership": {
+    "sections": "Sections",
+  "administration": "Administration",
+  "administrativeStaff": "Administrative Staff",
+  "administrativeDescription": "Description of the administrative staff",
+  "employees": "Employees",
     "title": "Medical University Leadership",
     "subtitle": "A professional team of leaders ensuring high quality medical education and scientific research",
     "directorate": "University Directorate",

@@ -174,7 +174,6 @@ const AchievementsPage = () => {
       <section className="py-16 bg-gradient-to-br from-white to-blue-50">
         <div className="container mx-auto px-4 text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
-          <p className="mt-4 text-gray-600">{t('common.loading', 'Загрузка...')}</p>
         </div>
       </section>
     );
@@ -186,7 +185,6 @@ const AchievementsPage = () => {
       <section className="py-16 bg-gradient-to-br from-white to-blue-50">
         <div className="container mx-auto px-4 text-center">
           <div className="text-red-500 mb-4">❌</div>
-          <p className="text-gray-600">{t('common.error', 'Произошла ошибка при загрузке данных')}</p>
         </div>
       </section>
     );
