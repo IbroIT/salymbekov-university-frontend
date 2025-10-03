@@ -12,7 +12,6 @@ const Publications = () => {
   const currentLang = i18n.language; // 'ru', 'en', или 'kg'
   
   const [publicationsData, setPublicationsData] = useState([]);
-  const [researchCenters, setResearchCenters] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -21,8 +20,7 @@ const Publications = () => {
     yearRange: [2018, 2024],
     author: '',
     journal: '',
-    minCitations: 0,
-    center: ''
+    minCitations: 0
   });
 
   const [sortConfig, setSortConfig] = useState({ key: 'year', direction: 'desc' });
@@ -43,42 +41,39 @@ const Publications = () => {
 
   // Функции для получения данных на текущем языке
   const getPublicationTitle = (publication) => {
-    return publication[`title_${currentLang}`] || publication.title_ru || publication.title;
+    return publication[`title_${currentLang}`] || publication.title_ru || publication.title || 'Название недоступно';
+  };
+
+  const getPublicationAuthors = (publication) => {
+    return publication[`authors_${currentLang}`] || publication.authors_ru || publication.authors || 'Авторы не указаны';
+  };
+
+  const getPublicationJournal = (publication) => {
+    return publication[`journal_${currentLang}`] || publication.journal_ru || publication.journal || 'Журнал не указан';
   };
 
   const getPublicationAbstract = (publication) => {
-    return publication[`abstract_${currentLang}`] || publication.abstract_ru || publication.abstract;
-  };
-
-  const getCenterName = (center) => {
-    if (typeof center === 'string') return center;
-    return center?.[`name_${currentLang}`] || center?.name_ru || center?.name;
+    return publication[`abstract_${currentLang}`] || publication.abstract_ru || publication.abstract || 'Аннотация недоступна';
   };
 
   // Функция для получения данных из API
   const fetchData = async () => {
     try {
       setLoading(true);
-      const [publicationsResponse, centersResponse] = await Promise.all([
-        fetch('https://su-med-backend-35d3d951c74b.herokuapp.com/research/api/publications/'),
-        fetch('https://su-med-backend-35d3d951c74b.herokuapp.com/research/api/centers/')
-      ]);
+      const publicationsResponse = await fetch('http://localhost:8000/research/api/publications/');
       
-      if (!publicationsResponse.ok || !centersResponse.ok) {
+      if (!publicationsResponse.ok) {
         throw new Error('Failed to fetch data');
       }
       
       const publicationsData = await publicationsResponse.json();
-      const centersData = await centersResponse.json();
       
       setPublicationsData(publicationsData.results || publicationsData);
-      setResearchCenters(centersData.results || centersData);
       setError(null);
     } catch (err) {
       setError(t('research.publications.errorLoading') || 'Ошибка загрузки данных');
       console.error('Error fetching data:', err);
       setPublicationsData([]);
-      setResearchCenters([]);
     } finally {
       setLoading(false);
     }
@@ -95,11 +90,10 @@ const Publications = () => {
         ordering: sortConfig.direction === 'asc' ? sortConfig.key : `-${sortConfig.key}`
       });
 
-      if (filters.author) params.append('authors__icontains', filters.author);
-      if (filters.journal) params.append('journal__icontains', filters.journal);
-      if (filters.center) params.append('research_center__name__icontains', filters.center);
+      if (filters.author) params.append('authors_ru__icontains', filters.author);
+      if (filters.journal) params.append('journal_ru__icontains', filters.journal);
 
-      const response = await fetch(`https://su-med-backend-35d3d951c74b.herokuapp.com/research/api/publications/?${params}`);
+      const response = await fetch(`http://localhost:8000/research/api/publications/?${params}`);
       
       if (!response.ok) {
         throw new Error('Failed to fetch filtered data');
@@ -130,15 +124,15 @@ const Publications = () => {
 
   // Уникальные значения для фильтров
   const uniqueValues = useMemo(() => ({
-    authors: [...new Set(publicationsData.flatMap(pub => 
-      (pub.authors || '').split(',').map(author => author.trim()).filter(Boolean)
-    ))],
-    journals: [...new Set(publicationsData.map(pub => pub.journal).filter(Boolean))],
-    centers: [...new Set(researchCenters.map(center => getCenterName(center)).filter(Boolean))],
+    authors: [...new Set(publicationsData.flatMap(pub => {
+      const authors = getPublicationAuthors(pub);
+      return authors.split(',').map(author => author.trim()).filter(Boolean);
+    }))],
+    journals: [...new Set(publicationsData.map(pub => getPublicationJournal(pub)).filter(Boolean))],
     years: publicationsData.length > 0 
       ? [...new Set(publicationsData.map(pub => pub.publication_date ? new Date(pub.publication_date).getFullYear() : pub.publication_year || pub.year).filter(Boolean))].sort()
       : [2018, 2019, 2020, 2021, 2022, 2023, 2024]
-  }), [publicationsData, researchCenters, currentLang]);
+  }), [publicationsData, currentLang]);
 
   // Статистика для графиков
   const chartData = useMemo(() => {
@@ -157,29 +151,6 @@ const Publications = () => {
       publications: count
     })).sort((a, b) => a.year - b.year);
   }, [publicationsData]);
-
-  const centerData = useMemo(() => {
-    if (publicationsData.length === 0) return [];
-    
-    const centerCounts = publicationsData.reduce((acc, pub) => {
-      // Get center name from multiple possible fields
-      const centerName = getCenterName(pub.research_center) || 
-                         pub.research_center_name || 
-                         pub.center_name || 
-                         'Не указано';
-      
-      acc[centerName] = (acc[centerName] || 0) + 1;
-      return acc;
-    }, {});
-
-    return Object.entries(centerCounts)
-      .map(([center, count]) => ({
-        name: center,
-        value: count,
-        center: center.length > 20 ? center.substring(0, 20) + '...' : center
-      }))
-      .sort((a, b) => b.value - a.value); // Sort by count descending
-  }, [publicationsData, currentLang]);
 
   const handleSort = (key) => {
     setSortConfig(prev => ({
@@ -256,15 +227,17 @@ const Publications = () => {
       </h3>
 
       <div className="text-xs text-gray-600 mb-2">
-        <strong>{t('research.publications.authors') || 'Авторы'}:</strong> {pub.authors || t('research.publications.noAuthors') || 'Не указано'}
+        <strong>{t('research.publications.authors') || 'Авторы'}:</strong> {getPublicationAuthors(pub)}
       </div>
 
       <div className="text-xs text-gray-600 mb-2">
-        <strong>{t('research.publications.journal') || 'Журнал'}:</strong> {pub.journal}
+        <strong>{t('research.publications.journal') || 'Журнал'}:</strong> {getPublicationJournal(pub)}
       </div>
 
       <div className="flex justify-between items-center">
-        <span className="text-xs text-gray-600">{pub.publication_date ? new Date(pub.publication_date).getFullYear() : pub.publication_year || pub.year}</span>
+        <span className="text-xs text-gray-600">
+          {pub.publication_date ? new Date(pub.publication_date).getFullYear() : pub.publication_year || pub.year}
+        </span>
         <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-full">
           {pub.citations_count || pub.citation_count || 0} {t('research.publications.citations') || 'цитат'}
         </span>
@@ -273,12 +246,11 @@ const Publications = () => {
       {expandedPublication === pub.id && (
         <div className="mt-3 pt-3 border-t">
           <div className="text-xs text-gray-600 mb-2">
-            <strong>{t('research.publications.center') || 'Центр'}:</strong> {getCenterName(pub.research_center) || pub.research_center_name || pub.center_name || t('research.publications.noCenter') || 'Не указано'}
-          </div>
-          <div className="text-xs text-gray-600 mb-2">
             <strong>DOI:</strong> {pub.doi || t('research.publications.noDoi') || 'Не указано'}
           </div>
-          <p className="text-xs text-gray-600 italic mb-3">{getPublicationAbstract(pub) || t('research.publications.noAbstract') || 'Аннотация недоступна'}</p>
+          <p className="text-xs text-gray-600 italic mb-3">
+            {getPublicationAbstract(pub)}
+          </p>
           
           {/* Download button for mobile */}
           <button
@@ -350,7 +322,7 @@ const Publications = () => {
             {t('research.publications.filters.title') || 'Фильтры публикаций'}
           </h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {/* Год публикации */}
             <div>
               <label className="block text-xs md:text-sm font-medium text-gray-700 mb-2">
@@ -406,23 +378,6 @@ const Publications = () => {
                 ))}
               </select>
             </div>
-
-            {/* Центр */}
-            <div>
-              <label className="block text-xs md:text-sm font-medium text-gray-700 mb-2">
-                {t('research.publications.filters.center') || 'Научный центр'}
-              </label>
-              <select
-                value={filters.center}
-                onChange={(e) => setFilters(prev => ({ ...prev, center: e.target.value }))}
-                className="w-full px-3 py-2 text-sm md:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              >
-                <option value="">{t('research.publications.filters.allCenters') || 'Все центры'}</option>
-                {uniqueValues.centers.map(center => (
-                  <option key={center} value={center}>{center}</option>
-                ))}
-              </select>
-            </div>
           </div>
 
           {/* Цитатный индекс */}
@@ -474,14 +429,6 @@ const Publications = () => {
               >
                 {t('research.publications.charts.line') || 'Линейная'}
               </button>
-              <button
-                onClick={() => setSelectedChart('pie')}
-                className={`px-3 py-1.5 md:px-4 md:py-2 rounded-lg text-xs md:text-sm whitespace-nowrap ${
-                  selectedChart === 'pie' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'
-                }`}
-              >
-                {t('research.publications.charts.pie') || 'Круговая'}
-              </button>
             </div>
           </div>
 
@@ -495,7 +442,7 @@ const Publications = () => {
                   <Tooltip />
                   <Bar dataKey="publications" fill="#3B82F6" />
                 </BarChart>
-              ) : selectedChart === 'line' ? (
+              ) : (
                 <LineChart data={chartData}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="year" fontSize={12} />
@@ -503,37 +450,6 @@ const Publications = () => {
                   <Tooltip />
                   <Line type="monotone" dataKey="publications" stroke="#10B981" strokeWidth={2} />
                 </LineChart>
-              ) : centerData.length > 0 ? (
-                <PieChart>
-                  <Pie
-                    data={centerData}
-                    cx="50%"
-                    cy="50%"
-                    labelLine={false}
-                    label={({ name, value, percent }) => 
-                      `${name.length > 15 ? name.substring(0, 15) + '...' : name}: ${value} (${(percent * 100).toFixed(0)}%)`
-                    }
-                    outerRadius={isMobile ? 80 : 120}
-                    fill="#8884d8"
-                    dataKey="value"
-                  >
-                    {centerData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                    ))}
-                  </Pie>
-                  <Tooltip formatter={(value, name) => [value, name]} />
-                </PieChart>
-              ) : (
-                <div className="flex items-center justify-center h-full">
-                  <div className="text-center text-gray-500">
-                    <p className="text-sm md:text-base">
-                      {t('research.publications.noCenterData') || 'Нет данных для отображения круговой диаграммы'}
-                    </p>
-                    <p className="text-xs md:text-sm mt-2">
-                      {t('research.publications.tryFiltering') || 'Попробуйте изменить фильтры'}
-                    </p>
-                  </div>
-                </div>
               )}
             </ResponsiveContainer>
           </div>
@@ -614,15 +530,18 @@ const Publications = () => {
                     </td>
                     <td className="px-4 py-3">
                       <div className="text-sm font-medium text-gray-900">{getPublicationTitle(pub)}</div>
-                      <div className="text-sm text-gray-500">{getCenterName(pub.research_center) || pub.research_center_name || pub.center_name || 'Не указано'}</div>
                     </td>
                     <td className="px-4 py-3">
                       <div className="text-sm text-gray-900">
-                        {pub.authors}
+                        {getPublicationAuthors(pub)}
                       </div>
                     </td>
-                    <td className="px-4 py-3 text-sm text-gray-900">{pub.journal}</td>
-                    <td className="px-4 py-3 text-sm text-gray-900">{pub.publication_date ? new Date(pub.publication_date).getFullYear() : pub.publication_year || pub.year}</td>
+                    <td className="px-4 py-3 text-sm text-gray-900">
+                      {getPublicationJournal(pub)}
+                    </td>
+                    <td className="px-4 py-3 text-sm text-gray-900">
+                      {pub.publication_date ? new Date(pub.publication_date).getFullYear() : pub.publication_year || pub.year}
+                    </td>
                     <td className="px-4 py-3">
                       <span className="px-2 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-full">
                         {pub.citations_count || pub.citation_count || pub.citation_index || 0}

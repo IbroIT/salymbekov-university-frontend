@@ -23,8 +23,8 @@ const Research = () => {
   };
 
   const getPublicationAuthors = (publication) => {
-    return publication[`authors_${currentLang}`] || publication.authors_ru || publication.authors;
-  };
+  return publication[`authors_${currentLang}`] || publication.authors_ru || publication.authors || 'Авторы не указаны';
+};
 
   const getResearchCenterName = (center) => {
     if (!center) return null;
@@ -38,6 +38,11 @@ const Research = () => {
   const getConferenceDescription = (conference) => {
     return conference[`description_${currentLang}`] || conference.description_ru || conference.description;
   };
+
+  const getPublicationJournal = (publication) => {
+  return publication[`journal_${currentLang}`] || publication.journal_ru || publication.journal || 'Журнал не указан';
+};
+
 
   const getAreaName = (area) => {
     return area[`title_${currentLang}`] || area.title_ru || area.title;

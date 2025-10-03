@@ -338,7 +338,7 @@ const FacultyDetailModal = ({ faculty, language, isOpen, onClose }) => {
               {getEducation() && (
                 <div>
                   <h5 className="text-lg font-semibold text-gray-900 mb-3">
-                    {t('hsm.education', 'Образование')}
+                    {t('hsm.education')}
                   </h5>
                   <div className="text-gray-700 whitespace-pre-line">
                     {getEducation()}
@@ -376,7 +376,7 @@ const FacultyDetailModal = ({ faculty, language, isOpen, onClose }) => {
               onClick={onClose}
               className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors"
             >
-              {t('common.close', 'Закрыть')}
+              {t('common.close')}
             </button>
           </div>
         </div>

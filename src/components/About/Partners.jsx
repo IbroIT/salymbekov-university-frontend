@@ -71,7 +71,7 @@ const Partners = () => {
             website: partner.website || '',
             email: partner.email || '',
             phone: partner.phone || '',
-            address: partner.address || `${partner.city || 'Бишкек'}, ${partner.country || 'Кыргызстан'}`,
+            address: partner.address || `${partner.city}, ${partner.country}`,
             logo: partner.logo ? `https://su-med-backend-35d3d951c74b.herokuapp.com/${partner.logo}` : '/api/placeholder/100/100',
             coordinates: [
               partner.latitude || 42.8746,
@@ -299,16 +299,6 @@ const Partners = () => {
   return (
     <>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Header */}
-        <div className="bg-blue-50 rounded-lg p-3 mb-6">
-          <nav className="flex items-center text-sm text-gray-600">
-            <a href="/" className="hover:text-blue-600">{t('breadcrumbs.home')}</a>
-            <span className="mx-2">→</span>
-            <a href="/about" className="hover:text-blue-600">{t('breadcrumbs.about')}</a>
-            <span className="mx-2">→</span>
-            <span className="text-blue-600">{t('breadcrumbs.partners')}</span>
-          </nav>
-        </div>
 
         {/* Header */}
         <div className="text-center mb-12">
@@ -318,36 +308,6 @@ const Partners = () => {
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             {t('partners.subtitle')}
           </p>
-        </div>
-
-        {/* Filter and Search */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <div className="flex flex-wrap gap-3">
-              {partnerTypes.map(type => (
-                <button
-                  key={type.value}
-                  onClick={() => setFilterType(type.value)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors flex items-center space-x-2 ${filterType === type.value
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                    }`}
-                >
-                  <span>{type.icon}</span>
-                  <span>{type.label}</span>
-                </button>
-              ))}
-            </div>
-            <input
-              type="text"
-              placeholder={t('partners.search')}
-              className="w-full md:w-auto px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-          <div className="mt-4 text-sm text-gray-600">
-            {t('partners.showing')} <span className="font-semibold">{filteredPartners.length}</span>
-          </div>
         </div>
 
         {/* Partners Grid */}

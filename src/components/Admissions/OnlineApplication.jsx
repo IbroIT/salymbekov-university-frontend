@@ -1102,8 +1102,8 @@ ${data.firstName} ${data.lastName}
         transition-all transform hover:-translate-y-0.5 flex-1 sm:flex-none min-w-[100px] sm:min-w-[120px]"
     >
       <span className="text-lg mr-2">🗑️</span>
-      <span className="hidden sm:inline">Очистить</span>
-      <span className="sm:hidden">Очистить</span>
+      <span className="hidden sm:inline">{t("clear")}</span>
+      <span className="sm:hidden">{t("clear")}</span>
     </button>
   </div>
   

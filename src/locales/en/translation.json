@@ -1948,7 +1948,9 @@
       "aug": "AUG"
     },
     "show_more": "Show more",
-    "show_less": "Show less"
+    "show_less": "Show less",
+      "close": "Close"
+
   },
   "research": {
     "title": "Research",
@@ -2328,6 +2330,7 @@
       "yearLabel": "year"
     },
     "common": {
+        "close": "Close",
       "currency": "USD",
       "showMore": "Show More",
       "showLess": "Show Less",
@@ -3939,6 +3942,19 @@
     }
   },
   "hsm": {
+  "view_details": "View Details",
+  "faculty_details": "Faculty Information",
+  "biography": "Biography",
+  "education": "Education",
+  "experience": "Work Experience",
+  "publications": "Publications",
+  "all_faculty": "All Faculty",
+  "all_faculty_description": "All faculty members of the Higher Medical School",
+  "position_description": "Faculty members in this category",
+  "faculty_members": "Faculty",
+  "no_faculty_found": "No faculty found",
+  "no_faculty_in_category": "No faculty members in this category yet",
+  "positions": "Positions",
     "students": "Students",
     "success_rate": "Success Rate",
     "patients": "Patients per Year",
@@ -4003,7 +4019,6 @@
     "teachers": "Teachers",
     "all": "All",
     "national": "National",
-    "international": "International",
     "institutional": "Institutional",
     "programmatic": "Programmatic",
     "benefits": "Benefits:",
@@ -4018,7 +4033,6 @@
     "statistics": "Statistics",
     "total_accreditations": "Total accreditations",
     "active": "Active",
-    "expired": "Expired",
     "years_of_work": "Years of work",
     "certificate": "Certificate",
     "not_specified": "Not specified",
@@ -5850,11 +5864,6 @@
       "description": "Try adjusting your search or selecting another category"
     }
   },
-  "common": {
-    "loading": "Loading...",
-    "error": "Error",
-    "retry": "Retry"
-  },
   "socop": {
     "hero": {
       "badge": "SOCIAL ACTIVITY",
@@ -5946,5 +5955,7 @@
       "title": "No opportunities found",
       "description": "Try changing your search parameters or select another category"
     }
-  }
+  },
+        "clear": "Clear"
+
 }
