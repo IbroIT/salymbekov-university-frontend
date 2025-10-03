@@ -1,10 +1,12 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet-async";
 import Navbar from './components/Navbar';
 import './App.css';
 import Footer from "./components/Footer";
 import Hero from "./components/Home/hero";
+
 
 import About from "./components/About/About";
 import Management from "./components/About/Management";
@@ -96,7 +98,7 @@ import MainRoutes from "./routes";
 const Page = ({ title }) => <div className="min-h-screen pt-20"><h1 className="text-2xl font-bold p-8">{title}</h1></div>;
 
 function App() {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
 
   useEffect(() => {
     const savedLanguage = localStorage.getItem('i18nextLng');
@@ -105,9 +107,63 @@ function App() {
     }
   }, [i18n]);
 
+  // Функция для получения мета-данных в зависимости от языка
+  const getSeoData = () => {
+    const baseUrl = "https://salymbekov-university.kg";
+    
+    const seoData = {
+      ru: {
+        title: "Salymbekov University - Медицинский Факультет",
+        description: "Ведущий медицинский факультет в Кыргызстане. Качественное медицинское образование, современные исследования и подготовка врачей международного уровня.",
+        keywords: "медицинское образование, медицинский факультет, Кыргызстан, Salymbekov University, врачи, здравоохранение, медицинские науки",
+        canonical: baseUrl
+      },
+      kg: {
+        title: "Salymbekov University - Медицина Факультети",
+        description: "Кыргызстандагы жетекчи медицина факультети. Сапаттуу медициналык билим берүү, заманбап иликтөөлөр жана эл аралык деңгээлдеги дарыгерлерди даярдоо.",
+        keywords: "медициналык билим, медицина факультети, Кыргызстан, Salymbekov University, дарыгерлер, саламаттык сактоо, медицина илимдери",
+        canonical: baseUrl
+      },
+      en: {
+        title: "Salymbekov University - Medical Faculty",
+        description: "Leading medical faculty in Kyrgyzstan. Quality medical education, modern research and training of international level doctors.",
+        keywords: "medical education, medical faculty, Kyrgyzstan, Salymbekov University, doctors, healthcare, medical sciences",
+        canonical: baseUrl
+      }
+    };
+
+    return seoData[i18n.language] || seoData.ru;
+  };
+
+  const seo = getSeoData();
+
   return (
     <Router>
       <div className="App min-h-screen flex flex-col">
+        {/* SEO мета-теги */}
+        <Helmet>
+          <html lang={i18n.language} />
+          <title>{seo.title}</title>
+          <meta name="description" content={seo.description} />
+          <meta name="keywords" content={seo.keywords} />
+          <link rel="canonical" href={seo.canonical} />
+          
+          {/* Open Graph */}
+          <meta property="og:title" content={seo.title} />
+          <meta property="og:description" content={seo.description} />
+          <meta property="og:locale" content={i18n.language === 'kg' ? 'ky_KG' : i18n.language + '_KG'} />
+          
+          {/* Twitter */}
+          <meta name="twitter:title" content={seo.title} />
+          <meta name="twitter:description" content={seo.description} />
+          
+          {/* Дополнительные мета-теги для медицинского учреждения */}
+          <meta name="medical.specialty" content="Medical Education, Healthcare, Medical Sciences" />
+          <meta name="educational.institution" content="Salymbekov University" />
+          <meta name="educational.institution.type" content="University" />
+          <meta name="educational.institution.level" content="Higher Education" />
+        </Helmet>
+
         <Navbar />
         <main className="flex-1 pt-16">
           <Routes>
@@ -115,7 +171,6 @@ function App() {
             <Route path="/" element={<Hero />} />
 
             {/* About */}
-            {/* <Route path="/about" element={<About />} /> */}
             <Route path="/about/management" element={<Management />} />
             <Route path="/about/vacancies" element={<Careers />} />
             <Route path="/about/careers" element={<Careers />} />
@@ -128,6 +183,7 @@ function App() {
             <Route path="/about/founders" element={<Founders />} />
             <Route path="/about/structure" element={<Structure />} />
             <Route path="/about/achievements" element={<Achievements />} />
+
 
             {/* HSM */}
             <Route path="/hsm/programs" element={<HSM />} />
