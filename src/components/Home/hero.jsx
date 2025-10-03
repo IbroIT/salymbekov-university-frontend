@@ -39,7 +39,7 @@ const Hero = () => {
     "@type": "MedicalOrganization",
     "name": "Salymbekov University Medical Faculty",
     "description": currentSeo.description,
-    "url": "https://salymbekov-university.kg",
+    "url": "https://www.su-medical-school.com",
     "telephone": "+996-312-000000",
     "address": {
       "@type": "PostalAddress",

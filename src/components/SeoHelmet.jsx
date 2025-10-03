@@ -12,7 +12,7 @@ const SeoHelmet = ({
 }) => {
   const { i18n } = useTranslation();
   
-  const baseUrl = "https://salymbekov-university.kg";
+  const baseUrl = "https://www.su-medical-school.com";
   const defaultImage = "/cropped-2.png";
 
   return (
