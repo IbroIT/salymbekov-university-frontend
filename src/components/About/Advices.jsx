@@ -19,13 +19,15 @@ const Advices = () => {
     sectionHasDocuments,
   } = useCouncils();
 
-  // Get current section data with fallbacks
-  const currentSectionData = getCurrentSectionData() || {
-    title: t("hsm.councils.no_data") || "No data available",
-    description: "",
-    members: [],
-    documents: []
-  };
+  // Get current section data
+  const currentSectionData = getCurrentSectionData();
+
+  // If we have sections but no current section data, and there's an active section set
+  useEffect(() => {
+    if (!loading && !error && sectionsList.length > 0 && !activeSection) {
+      changeActiveSection(sectionsList[0].id);
+    }
+  }, [loading, error, sectionsList, activeSection, changeActiveSection]);
 
   // Animation on mount
   useEffect(() => {
@@ -83,9 +85,8 @@ const Advices = () => {
   if (loading) {
     return (
       <div
-        className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${
-          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-        }`}
+        className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}
       >
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-center items-center min-h-[400px]">
@@ -102,9 +103,8 @@ const Advices = () => {
   if (error) {
     return (
       <div
-        className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${
-          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-        }`}
+        className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}
       >
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-center items-center min-h-[400px]">
@@ -141,51 +141,13 @@ const Advices = () => {
     );
   }
 
-  // No data state
-  if (!sectionsList || sectionsList.length === 0) {
-    return (
-      <div
-        className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${
-          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-        }`}
-      >
-        <div className="max-w-7xl mx-auto">
-          <div className="flex justify-center items-center min-h-[400px]">
-            <div className="text-center">
-              <svg
-                className="mx-auto h-16 w-16 text-gray-400 mb-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-              <h3 className="text-lg font-medium text-gray-900 mb-2">
-                {t("hsm.councils.no_councils") || "No Councils Available"}
-              </h3>
-              <p className="text-gray-600">
-                {t("hsm.councils.no_councils_description") || "There are no councils to display at the moment."}
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div
-      className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-      }`}
+      className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+        }`}
     >
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
+        {/* Заголовок */}
         <div className="text-center mb-8">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             {t("hsm.councils.title") || "Councils"}
@@ -203,22 +165,27 @@ const Advices = () => {
                 {t("hsm.councils.sections") || "Sections"}
               </div>
               <nav className="p-2">
-                <ul className="space-y-1">
-                  {sectionsList.map((section, index) => (
-                    <li key={section?.id || `section-${index}`}>
-                      <button
-                        className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 ${
-                          activeSection === section.id
-                            ? "bg-blue-100 text-blue-700 font-medium shadow-sm"
-                            : "text-gray-700 hover:bg-gray-100"
-                        }`}
-                        onClick={() => section?.id && changeActiveSection(section.id)}
-                      >
-                        {section?.name || t("hsm.councils.unnamed_section") || "Unnamed Section"}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
+                {sectionsList && sectionsList.length > 0 ? (
+                  <ul className="space-y-1">
+                    {sectionsList.map((section) => (
+                      <li key={section.id}>
+                        <button
+                          className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 ${activeSection === section.id
+                              ? "bg-blue-100 text-blue-700 font-medium shadow-sm"
+                              : "text-gray-700 hover:bg-gray-100"
+                            }`}
+                          onClick={() => changeActiveSection(section.id)}
+                        >
+                          {section.name}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <div className="p-4 text-center text-gray-500">
+                    {t("hsm.councils.no_sections")}
+                  </div>
+                )}
               </nav>
             </div>
           </div>
@@ -226,20 +193,22 @@ const Advices = () => {
           {/* Main Content */}
           <div className="lg:w-3/4">
             <div className="bg-white rounded-xl shadow-xl p-6 transition-all duration-500">
-              {/* Section Header */}
-              <div className="mb-6 pb-4 border-b border-gray-200">
-                <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
-                  {currentSectionData.title}
-                </h2>
-                {currentSectionData.description && (
-                  <p className="text-gray-600 mt-2">
-                    {currentSectionData.description}
-                  </p>
-                )}
-              </div>
+              {/* Заголовок раздела */}
+              {currentSectionData && (
+                <div className="mb-6 pb-4 border-b border-gray-200">
+                  <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-3">
+                    {currentSectionData.title}
+                  </h2>
+                  {currentSectionData.description && (
+                    <p className="text-gray-600 text-base leading-relaxed">
+                      {currentSectionData.description}
+                    </p>
+                  )}
+                </div>
+              )}
 
-              {/* Members Content */}
-              {hasMembers && (
+              {/* Контент раздела - члены */}
+              {currentSectionData && sectionHasMembers() && (
                 <div className="space-y-6">
                   <h3 className="text-xl font-bold text-gray-800">
                     {t("hsm.councils.composition") || "Composition"}
@@ -329,9 +298,9 @@ const Advices = () => {
                 </div>
               )}
 
-              {/* Documents Content */}
-              {hasDocuments && (
-                <div className="space-y-6 mt-8">
+              {/* Контент раздела - документы */}
+              {currentSectionData && sectionHasDocuments() && (
+                <div className="space-y-6">
                   <h3 className="text-xl font-bold text-gray-800">
                     {t("hsm.councils.documents") || "Documents"}
                   </h3>
@@ -401,8 +370,33 @@ const Advices = () => {
                 </div>
               )}
 
-              {/* Empty section message */}
-              {!hasMembers && !hasDocuments && (
+              {/* Сообщение, если в разделе нет контента */}
+              {!currentSectionData && (
+                <div className="text-center py-10">
+                  <svg
+                    className="mx-auto h-16 w-16 text-gray-300"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                    />
+                  </svg>
+                  <h3 className="mt-4 text-lg font-medium text-gray-900">
+                    {t("hsm.councils.no_data")}
+                  </h3>
+                  <p className="mt-2 text-gray-500">
+                    {t("hsm.councils.no_section_selected")}
+                  </p>
+                </div>
+              )}
+
+              {/* Сообщение, если раздел выбран но нет контента */}
+              {currentSectionData && !sectionHasMembers() && !sectionHasDocuments() && (
                 <div className="text-center py-10">
                   <svg
                     className="mx-auto h-16 w-16 text-gray-300"

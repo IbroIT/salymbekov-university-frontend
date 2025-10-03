@@ -8,10 +8,15 @@ import {
   UserGroupIcon,
   BookOpenIcon,
   MagnifyingGlassIcon,
-  XMarkIcon
+  XMarkIcon,
+  EnvelopeIcon,
+  PhoneIcon,
+  BuildingOfficeIcon,
+  EyeIcon,
+  XCircleIcon
 } from '@heroicons/react/24/outline';
 
-const FacultyCard = ({ faculty, language }) => {
+const FacultyCard = ({ faculty, language, onViewDetails }) => {
   const { t } = useTranslation();
 
   // Helper function to get localized value from API data
@@ -20,7 +25,7 @@ const FacultyCard = ({ faculty, language }) => {
 
     if (language === 'en' && item[`${fieldName}_en`]) {
       return item[`${fieldName}_en`];
-    } else if (language === 'ky' && item[`${fieldName}_kg`]) {
+    } else if (language === 'kg' && item[`${fieldName}_kg`]) {
       return item[`${fieldName}_kg`];
     }
     return item[fieldName] || '';
@@ -33,7 +38,7 @@ const FacultyCard = ({ faculty, language }) => {
     }
 
     switch (language) {
-      case 'ky':
+      case 'kg':
         return `${getLocalizedField(faculty, 'last_name')} ${getLocalizedField(faculty, 'first_name')} ${getLocalizedField(faculty, 'middle_name')}`.trim();
       case 'en':
         return `${getLocalizedField(faculty, 'first_name')} ${getLocalizedField(faculty, 'last_name')}`.trim();
@@ -50,6 +55,14 @@ const FacultyCard = ({ faculty, language }) => {
     return getLocalizedField(faculty, 'academic_degree') || faculty.academic_degree_display;
   };
 
+  const getAcademicTitle = () => {
+    return getLocalizedField(faculty, 'academic_title');
+  };
+
+  const getSpecialization = () => {
+    return getLocalizedField(faculty, 'specialization');
+  };
+
   return (
     <div className="bg-gradient-to-br from-white to-blue-50 rounded-xl shadow-md overflow-hidden border border-blue-100 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
       <div className="p-6">
@@ -64,13 +77,18 @@ const FacultyCard = ({ faculty, language }) => {
               </div>
             }
           />
-          <div>
-            <h3 className="font-bold text-lg text-gray-900">
+          <div className="flex-1">
+            <h3 className="font-bold text-lg text-gray-900 mb-1">
               {getName()}
             </h3>
-            <p className="text-blue-600 text-sm">
+            <p className="text-blue-600 text-sm font-medium">
               {getPosition()}
             </p>
+            {getAcademicTitle() && (
+              <p className="text-purple-600 text-xs">
+                {getAcademicTitle()}
+              </p>
+            )}
           </div>
         </div>
 
@@ -83,9 +101,285 @@ const FacultyCard = ({ faculty, language }) => {
           </div>
         )}
 
-        {faculty.interests && (
-          <p className="text-gray-700 text-sm">{faculty.interests}</p>
+        {getSpecialization() && (
+          <div className="mb-3">
+            <p className="text-gray-700 text-sm line-clamp-2">{getSpecialization()}</p>
+          </div>
         )}
+
+        {/* Контактная информация */}
+        <div className="space-y-2 mb-4">
+          {faculty.email && (
+            <div className="flex items-center text-sm text-gray-600">
+              <EnvelopeIcon className="w-4 h-4 mr-2 text-blue-500" />
+              <span className="truncate">{faculty.email}</span>
+            </div>
+          )}
+
+          {faculty.phone && (
+            <div className="flex items-center text-sm text-gray-600">
+              <PhoneIcon className="w-4 h-4 mr-2 text-green-500" />
+              <span>{faculty.phone}</span>
+            </div>
+          )}
+
+          {faculty.office && (
+            <div className="flex items-center text-sm text-gray-600">
+              <BuildingOfficeIcon className="w-4 h-4 mr-2 text-orange-500" />
+              <span>{faculty.office}</span>
+            </div>
+          )}
+        </div>
+
+        {/* Кнопка подробнее */}
+        <button
+          onClick={() => onViewDetails && onViewDetails(faculty)}
+          className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-2 px-4 rounded-lg hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 flex items-center justify-center font-medium"
+        >
+          <EyeIcon className="w-4 h-4 mr-2" />
+          {t('hsm.view_details', 'Подробнее')}
+        </button>
+      </div>
+    </div>
+  );
+};
+
+const FacultyDetailModal = ({ faculty, language, isOpen, onClose }) => {
+  const { t } = useTranslation();
+
+  if (!isOpen || !faculty) return null;
+
+  // Helper function to get localized value from API data
+  const getLocalizedField = (item, fieldName) => {
+    if (!item) return '';
+
+    if (language === 'en' && item[`${fieldName}_en`]) {
+      return item[`${fieldName}_en`];
+    } else if (language === 'kg' && item[`${fieldName}_kg`]) {
+      return item[`${fieldName}_kg`];
+    }
+    return item[fieldName] || '';
+  };
+
+  const getName = () => {
+    if (faculty.full_name) {
+      return getLocalizedField(faculty, 'full_name');
+    }
+
+    switch (language) {
+      case 'kg':
+        return `${getLocalizedField(faculty, 'last_name')} ${getLocalizedField(faculty, 'first_name')} ${getLocalizedField(faculty, 'middle_name')}`.trim();
+      case 'en':
+        return `${getLocalizedField(faculty, 'first_name')} ${getLocalizedField(faculty, 'last_name')}`.trim();
+      default:
+        return `${getLocalizedField(faculty, 'last_name')} ${getLocalizedField(faculty, 'first_name')} ${getLocalizedField(faculty, 'middle_name')}`.trim();
+    }
+  };
+
+  const getPosition = () => {
+    return getLocalizedField(faculty, 'position') || faculty.position_display;
+  };
+
+  const getAcademicDegree = () => {
+    return getLocalizedField(faculty, 'academic_degree') || faculty.academic_degree_display;
+  };
+
+  const getAcademicTitle = () => {
+    return getLocalizedField(faculty, 'academic_title');
+  };
+
+  const getBio = () => {
+    return getLocalizedField(faculty, 'bio');
+  };
+
+  const getSpecialization = () => {
+    return getLocalizedField(faculty, 'specialization');
+  };
+
+  const getEducation = () => {
+    return getLocalizedField(faculty, 'education');
+  };
+
+  const getExperience = () => {
+    return getLocalizedField(faculty, 'experience');
+  };
+
+  const getPublications = () => {
+    return getLocalizedField(faculty, 'publications');
+  };
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-white/30 backdrop-blur-sm"
+      style={{ zIndex: 9999 }}
+      onClick={onClose}
+    >
+
+      {/* Modal wrapper */}
+      <div
+        className="relative bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-hidden"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Modal */}
+        <div
+          className="relative bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-hidden"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Header */}
+          <div className="bg-gradient-to-r from-blue-600 to-indigo-700 px-6 py-4 flex items-center justify-between">
+            <h3 className="text-lg font-bold text-white">
+              {t('hsm.faculty_details', 'Информация о преподавателе')}
+            </h3>
+            <button
+              onClick={onClose}
+              className="text-white hover:text-gray-200 transition-colors p-1"
+            >
+              <XCircleIcon className="w-6 h-6" />
+            </button>
+          </div>
+
+          {/* Content */}
+          <div className="px-6 py-6 max-h-[70vh] overflow-y-auto">
+            {/* Faculty info header */}
+            <div className="flex flex-col md:flex-row items-start mb-6 pb-6 border-b border-gray-200">
+              <div className="flex-shrink-0 mb-4 md:mb-0 md:mr-6">
+                <SafeImage
+                  src={faculty.photo_url || faculty.photo}
+                  alt={getName()}
+                  className="w-32 h-32 rounded-lg object-cover"
+                  fallback={
+                    <div className="w-32 h-32 bg-blue-200 rounded-lg flex items-center justify-center text-blue-700">
+                      <UserGroupIcon className="w-16 h-16 text-blue-500" />
+                    </div>
+                  }
+                />
+              </div>
+
+              <div className="flex-1">
+                <h4 className="text-2xl font-bold text-gray-900 mb-2">
+                  {getName()}
+                </h4>
+
+                <div className="space-y-2">
+                  <p className="text-blue-600 font-medium text-lg">
+                    {getPosition()}
+                  </p>
+
+                  {getAcademicDegree() && (
+                    <div>
+                      <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-800">
+                        <AcademicCapIcon className="w-4 h-4 mr-1" />
+                        {getAcademicDegree()}
+                      </span>
+                    </div>
+                  )}
+
+                  {getAcademicTitle() && (
+                    <p className="text-purple-600 font-medium">
+                      {getAcademicTitle()}
+                    </p>
+                  )}
+                </div>
+
+                {/* Contact info */}
+                <div className="mt-4 space-y-2">
+                  {faculty.email && (
+                    <div className="flex items-center text-sm text-gray-600">
+                      <EnvelopeIcon className="w-4 h-4 mr-2 text-blue-500" />
+                      <a href={`mailto:${faculty.email}`} className="hover:text-blue-600 transition-colors">
+                        {faculty.email}
+                      </a>
+                    </div>
+                  )}
+
+                  {faculty.phone && (
+                    <div className="flex items-center text-sm text-gray-600">
+                      <PhoneIcon className="w-4 h-4 mr-2 text-green-500" />
+                      <a href={`tel:${faculty.phone}`} className="hover:text-green-600 transition-colors">
+                        {faculty.phone}
+                      </a>
+                    </div>
+                  )}
+
+                  {faculty.office && (
+                    <div className="flex items-center text-sm text-gray-600">
+                      <BuildingOfficeIcon className="w-4 h-4 mr-2 text-orange-500" />
+                      <span>{faculty.office}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Details sections */}
+            <div className="space-y-6">
+              {getBio() && (
+                <div>
+                  <h5 className="text-lg font-semibold text-gray-900 mb-3">
+                    {t('hsm.biography', 'Биография')}
+                  </h5>
+                  <div className="text-gray-700 whitespace-pre-line">
+                    {getBio()}
+                  </div>
+                </div>
+              )}
+
+              {getSpecialization() && (
+                <div>
+                  <h5 className="text-lg font-semibold text-gray-900 mb-3">
+                    {t('hsm.specialization', 'Специализация')}
+                  </h5>
+                  <div className="text-gray-700 whitespace-pre-line">
+                    {getSpecialization()}
+                  </div>
+                </div>
+              )}
+
+              {getEducation() && (
+                <div>
+                  <h5 className="text-lg font-semibold text-gray-900 mb-3">
+                    {t('hsm.education', 'Образование')}
+                  </h5>
+                  <div className="text-gray-700 whitespace-pre-line">
+                    {getEducation()}
+                  </div>
+                </div>
+              )}
+
+              {getExperience() && (
+                <div>
+                  <h5 className="text-lg font-semibold text-gray-900 mb-3">
+                    {t('hsm.experience', 'Опыт работы')}
+                  </h5>
+                  <div className="text-gray-700 whitespace-pre-line">
+                    {getExperience()}
+                  </div>
+                </div>
+              )}
+
+              {getPublications() && (
+                <div>
+                  <h5 className="text-lg font-semibold text-gray-900 mb-3">
+                    {t('hsm.publications', 'Публикации')}
+                  </h5>
+                  <div className="text-gray-700 whitespace-pre-line">
+                    {getPublications()}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Footer */}
+          <div className="bg-gray-50 px-6 py-4 flex justify-end">
+            <button
+              onClick={onClose}
+              className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors"
+            >
+              {t('common.close', 'Закрыть')}
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -100,6 +394,8 @@ const HSMAcademicStuff = () => {
   const [error, setError] = useState(null);
   const [search, setSearch] = useState('');
   const [activePosition, setActivePosition] = useState('all');
+  const [selectedFaculty, setSelectedFaculty] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Helper function to get localized value from API data
   const getLocalizedField = (item, fieldName) => {
@@ -108,7 +404,7 @@ const HSMAcademicStuff = () => {
     const currentLang = i18n.language;
     if (currentLang === 'en' && item[`${fieldName}_en`]) {
       return item[`${fieldName}_en`];
-    } else if (currentLang === 'ky' && item[`${fieldName}_kg`]) {
+    } else if (currentLang === 'kg' && item[`${fieldName}_kg`]) {
       return item[`${fieldName}_kg`];
     }
     return item[fieldName] || '';
@@ -233,7 +529,7 @@ const HSMAcademicStuff = () => {
 
       const currentLang = i18n.language;
       switch (currentLang) {
-        case 'ky':
+        case 'kg':
           return `${getLocalizedField(faculty, 'last_name')} ${getLocalizedField(faculty, 'first_name')} ${getLocalizedField(faculty, 'middle_name')}`.trim();
         case 'en':
           return `${getLocalizedField(faculty, 'first_name')} ${getLocalizedField(faculty, 'last_name')}`.trim();
@@ -247,6 +543,17 @@ const HSMAcademicStuff = () => {
 
     return name.includes(query);
   });
+
+  // Функции для модального окна
+  const handleViewDetails = (faculty) => {
+    setSelectedFaculty(faculty);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedFaculty(null);
+  };
 
   // Loading state
   if (loading) {
@@ -335,8 +642,8 @@ const HSMAcademicStuff = () => {
                     <li key={position.id}>
                       <button
                         className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 flex justify-between items-center ${activePosition === position.id
-                            ? "bg-blue-100 text-blue-700 font-medium shadow-sm"
-                            : "text-gray-700 hover:bg-gray-100"
+                          ? "bg-blue-100 text-blue-700 font-medium shadow-sm"
+                          : "text-gray-700 hover:bg-gray-100"
                           }`}
                         onClick={() => {
                           setActivePosition(position.id);
@@ -417,6 +724,7 @@ const HSMAcademicStuff = () => {
                           <FacultyCard
                             faculty={faculty}
                             language={i18n.language}
+                            onViewDetails={handleViewDetails}
                           />
                         </motion.div>
                       ))}
@@ -453,6 +761,14 @@ const HSMAcademicStuff = () => {
           </div>
         </div>
       </div>
+
+      {/* Модальное окно с детальной информацией */}
+      <FacultyDetailModal
+        faculty={selectedFaculty}
+        language={i18n.language}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+      />
     </div>
   );
 };

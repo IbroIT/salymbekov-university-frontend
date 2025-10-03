@@ -4,7 +4,8 @@ export const getLocalizedValue = (obj, field, language = 'ru') => {
 
     const languageMap = {
         'ru': '',
-        'kg': '_kg',
+        'ky': '_kg',  // Изменено с 'kg' на 'ky' для консистентности с бэкендом
+        'kg': '_kg',  // Оставляем для обратной совместимости
         'en': '_en'
     };
 
@@ -20,7 +21,8 @@ export const getLocalizedArray = (obj, field, language = 'ru') => {
 
     const languageMap = {
         'ru': '',
-        'kg': '_kg',
+        'ky': '_kg',  // Изменено с 'kg' на 'ky' для консистентности с бэкендом  
+        'kg': '_kg',  // Оставляем для обратной совместимости
         'en': '_en'
     };
 

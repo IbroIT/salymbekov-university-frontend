@@ -24,8 +24,6 @@ const Mission = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  console.log('Mission component state:', { loading, error, missionData: !!missionData });
-
   // Icon mapping for values
   const valueIcons = {
     education: AcademicCapIcon,
@@ -55,11 +53,8 @@ const Mission = () => {
   useEffect(() => {
     const loadMissionData = async () => {
       try {
-        console.log('Starting to load mission data...');
         setLoading(true);
-
         const data = await fetchMissionData();
-        console.log('Mission data loaded successfully:', data);
         setMissionData(data);
         setError(null);
       } catch (err) {
@@ -132,10 +127,13 @@ const Mission = () => {
           <div className="text-gray-400 text-6xl mb-4">📭</div>
           <h2 className="text-2xl font-bold text-gray-800 mb-2">Нет данных</h2>
           <p className="text-gray-600">Данные миссии недоступны</p>
+          <p className="text-sm text-gray-500 mt-2">Debug: missionData = {String(missionData)}</p>
         </div>
       </div>
     );
   }
+
+  // Main render with animation
 
   const { mission, history, values, priorities, achievements } = missionData;
 
@@ -151,46 +149,54 @@ const Mission = () => {
     setActiveSection(sectionId);
   };
 
-  const renderMissionContent = () => (
-    <div className="space-y-6">
-      <div className="flex items-center mb-6">
-        <div className="p-3 bg-blue-100 rounded-xl mr-4">
-          <RocketLaunchIcon className="h-8 w-8 text-blue-600" />
+  const renderMissionContent = () => {
+    console.log('renderMissionContent called with mission:', mission);
+    console.log('Mission display_title:', mission?.display_title);
+    console.log('Mission title:', mission?.title);
+    console.log('Mission display_mission_text:', mission?.display_mission_text);
+    console.log('Mission mission_text:', mission?.mission_text);
+
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center mb-6">
+          <div className="p-3 bg-blue-100 rounded-xl mr-4">
+            <RocketLaunchIcon className="h-8 w-8 text-blue-600" />
+          </div>
+          <h2 className="text-3xl font-bold text-gray-900">
+            {mission?.display_title || mission?.title || 'Миссия'}
+          </h2>
         </div>
-        <h2 className="text-3xl font-bold text-gray-900">
-          {mission?.title || 'Миссия'}
-        </h2>
-      </div>
 
-      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100">
-        <p className="text-lg text-gray-700 leading-relaxed">
-          {mission?.mission_text || 'Описание миссии недоступно'}
-        </p>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-        <div className="bg-white rounded-lg p-6 border border-blue-100 shadow-sm">
-          <h3 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
-            <AcademicCapIcon className="h-6 w-6 text-blue-600 mr-2" />
-            {mission?.vision_title || 'Наше видение'}
-          </h3>
-          <p className="text-gray-600">
-            {mission?.vision_text || 'Описание видения недоступно'}
+        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100">
+          <p className="text-lg text-gray-700 leading-relaxed">
+            {mission?.display_mission_text || mission?.mission_text || 'Описание миссии недоступно'}
           </p>
         </div>
 
-        <div className="bg-white rounded-lg p-6 border border-blue-100 shadow-sm">
-          <h3 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
-            <UsersIcon className="h-6 w-6 text-blue-600 mr-2" />
-            {mission?.approach_title || 'Наш подход'}
-          </h3>
-          <p className="text-gray-600">
-            {mission?.approach_text || 'Описание подхода недоступно'}
-          </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+          <div className="bg-white rounded-lg p-6 border border-blue-100 shadow-sm">
+            <h3 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+              <AcademicCapIcon className="h-6 w-6 text-blue-600 mr-2" />
+              {mission?.display_vision_title || mission?.vision_title || 'Наше видение'}
+            </h3>
+            <p className="text-gray-600">
+              {mission?.display_vision_text || mission?.vision_text || 'Описание видения недоступно'}
+            </p>
+          </div>
+
+          <div className="bg-white rounded-lg p-6 border border-blue-100 shadow-sm">
+            <h3 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+              <UsersIcon className="h-6 w-6 text-blue-600 mr-2" />
+              {mission?.display_approach_title || mission?.approach_title || 'Наш подход'}
+            </h3>
+            <p className="text-gray-600">
+              {mission?.display_approach_text || mission?.approach_text || 'Описание подхода недоступно'}
+            </p>
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  };
   const renderHistoryContent = () => (
     <div className="space-y-6">
       <div className="flex items-center mb-6">
@@ -216,14 +222,14 @@ const Mission = () => {
               <div className="flex-1">
                 <div className="flex items-center justify-between mb-2">
                   <h3 className="text-xl font-semibold text-gray-800">
-                    {milestone.title}
+                    {milestone.display_title || milestone.title}
                   </h3>
                   <span className="text-sm text-blue-600 bg-blue-100 px-3 py-1 rounded-full">
                     {milestone.year}
                   </span>
                 </div>
                 <p className="text-gray-600 leading-relaxed">
-                  {milestone.description}
+                  {milestone.display_description || milestone.description}
                 </p>
               </div>
             </div>
@@ -259,11 +265,11 @@ const Mission = () => {
                   <IconComponent className="h-6 w-6 text-blue-600" />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-800">
-                  {value.title}
+                  {value.display_title || value.title}
                 </h3>
               </div>
               <p className="text-gray-600 leading-relaxed">
-                {value.description}
+                {value.display_description || value.description}
               </p>
             </div>
           );
@@ -297,7 +303,7 @@ const Mission = () => {
                 <IconComponent className="h-6 w-6 text-blue-600" />
               </div>
               <p className="text-gray-700 leading-relaxed text-lg">
-                {priority.text}
+                {priority.display_text || priority.text}
               </p>
             </div>
           );
@@ -321,7 +327,7 @@ const Mission = () => {
 
       <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-xl p-8 text-white">
         <p className="text-center text-blue-100 text-lg mb-8 max-w-2xl mx-auto">
-          {mission?.achievements_subtitle || 'За годы работы мы достигли значительных результатов'}
+          {mission?.display_achievements_subtitle || mission?.achievements_subtitle || 'За годы работы мы достигли значительных результатов'}
         </p>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -331,7 +337,7 @@ const Mission = () => {
                 {achievement.number}
               </div>
               <div className="text-blue-100 text-sm md:text-base">
-                {achievement.label}
+                {achievement.display_label || achievement.label}
               </div>
             </div>
           )) : (
@@ -345,19 +351,19 @@ const Mission = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
         <div className="bg-white rounded-xl p-6 border border-blue-100">
           <h3 className="text-xl font-semibold text-gray-800 mb-4">
-            {mission?.impact_title || 'Наш вклад'}
+            {mission?.display_impact_title || mission?.impact_title || 'Наш вклад'}
           </h3>
           <p className="text-gray-600">
-            {mission?.impact_text || 'Мы активно участвуем в развитии медицинской науки и образования'}
+            {mission?.display_impact_text || mission?.impact_text || 'Мы активно участвуем в развитии медицинской науки и образования'}
           </p>
         </div>
 
         <div className="bg-white rounded-xl p-6 border border-blue-100">
           <h3 className="text-xl font-semibold text-gray-800 mb-4">
-            {mission?.future_title || 'Перспективы развития'}
+            {mission?.display_future_title || mission?.future_title || 'Перспективы развития'}
           </h3>
           <p className="text-gray-600">
-            {mission?.future_text || 'Планируем расширять международное сотрудничество и внедрять инновации'}
+            {mission?.display_future_text || mission?.future_text || 'Планируем расширять международное сотрудничество и внедрять инновации'}
           </p>
         </div>
       </div>
@@ -390,10 +396,10 @@ const Mission = () => {
         {/* Заголовок */}
         <div className="text-center mb-8">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            {mission?.title || 'О нашей миссии'}
+            {mission?.display_title || mission?.title || 'О нашей миссии'}
           </h1>
           <p className="text-lg text-gray-700 max-w-3xl mx-auto">
-            {mission?.subtitle || 'Стремимся к совершенству в медицинском образовании и научных исследованиях'}
+            {mission?.display_subtitle || mission?.subtitle || 'Стремимся к совершенству в медицинском образовании и научных исследованиях'}
           </p>
         </div>
 
@@ -412,8 +418,8 @@ const Mission = () => {
                       <li key={section.id}>
                         <button
                           className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 flex items-center ${activeSection === section.id
-                              ? "bg-blue-100 text-blue-700 font-medium shadow-sm"
-                              : "text-gray-700 hover:bg-gray-100"
+                            ? "bg-blue-100 text-blue-700 font-medium shadow-sm"
+                            : "text-gray-700 hover:bg-gray-100"
                             }`}
                           onClick={() => changeActiveSection(section.id)}
                         >

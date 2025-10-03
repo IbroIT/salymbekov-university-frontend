@@ -4037,7 +4037,10 @@
       "content_in_progress": "The content of this section is in the process of being filled.",
       "email": "Email",
       "phone": "Phone",
-      "department": "Department"
+      "department": "Department",
+      "no_data": "No data available",
+      "no_section_selected": "No section selected or data unavailable",
+      "no_sections": "No sections available"
     },
     "faculty_title": "Faculty Members",
     "faculty_description": "Highly qualified teachers and researchers of the High School of Medicine",

@@ -9,25 +9,33 @@ export const getCurrentLanguage = () => {
     if (typeof window !== 'undefined') {
         // Try to get from localStorage (where i18next stores the language)
         const savedLanguage = localStorage.getItem('i18nextLng');
-        if (savedLanguage && ['ru', 'ky', 'en'].includes(savedLanguage)) {
+
+        if (savedLanguage && ['ru', 'kg', 'en'].includes(savedLanguage)) {
             return savedLanguage;
         }
 
         // Fallback to browser language
         const browserLang = navigator.language || navigator.languages[0];
-        if (browserLang.startsWith('ky')) return 'ky';
-        if (browserLang.startsWith('en')) return 'en';
+        if (browserLang.startsWith('ky') || browserLang.startsWith('kg')) {
+            return 'kg';
+        }
+        if (browserLang.startsWith('en')) {
+            return 'en';
+        }
     }
 
     return 'ru'; // Default language
 };
 
 /**
- * Make API request with proper headers
+ * Make API request with proper headers and language parameter
  */
 const apiRequest = async (endpoint, options = {}) => {
     const currentLang = getCurrentLanguage();
-    console.log('Making API request to:', `${API_BASE_URL}${endpoint}`, 'with language:', currentLang);
+
+    // Add language parameter to URL
+    const separator = endpoint.includes('?') ? '&' : '?';
+    const urlWithLang = `${endpoint}${separator}lang=${currentLang}`;
 
     const defaultHeaders = {
         'Content-Type': 'application/json',
@@ -43,7 +51,8 @@ const apiRequest = async (endpoint, options = {}) => {
 
     try {
         console.log('Request config:', config);
-        const response = await fetch(`${API_BASE_URL}${endpoint}`, config);
+        console.log('Final URL:', `${API_BASE_URL}${urlWithLang}`);
+        const response = await fetch(`${API_BASE_URL}${urlWithLang}`, config);
         console.log('Response status:', response.status, response.statusText);
 
         if (!response.ok) {

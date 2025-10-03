@@ -11,17 +11,6 @@ const LeadershipPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Helper function to get localized value from API data
-  const getLocalizedField = (item, fieldName) => {
-    const currentLang = i18n.language;
-    if (currentLang === 'en' && item[`${fieldName}_en`]) {
-      return item[`${fieldName}_en`];
-    } else if (currentLang === 'ky' && item[`${fieldName}_kg`]) {
-      return item[`${fieldName}_kg`];
-    }
-    return item[fieldName] || '';
-  };
-
   // Animation on mount
   useEffect(() => {
     setIsVisible(true);
@@ -60,7 +49,7 @@ const LeadershipPage = () => {
     };
 
     fetchLeadershipData();
-  }, []);
+  }, [i18n.language]); // Добавляем зависимость от языка
 
   const sections = [
     { id: 'directorate', name: t('leadership.directorate'), icon: '👑' },
@@ -114,25 +103,25 @@ const LeadershipPage = () => {
                 <div className="w-24 h-24 rounded-full overflow-hidden mx-auto mb-4 border-4 border-white shadow-md">
                   <img
                     src={director.image_url || "/api/placeholder/300/300"}
-                    alt={getLocalizedField(director, 'name')}
+                    alt={getLocalizedValue(director, 'name', i18n.language)}
                     className="w-full h-full object-cover"
                   />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-2">
-                  {getLocalizedField(director, 'name')}
+                  {getLocalizedValue(director, 'name', i18n.language)}
                 </h3>
                 <p className="text-blue-600 font-semibold mb-2">
-                  {getLocalizedField(director, 'position')}
+                  {getLocalizedValue(director, 'position', i18n.language)}
                 </p>
                 <p className="text-gray-600 text-sm mb-3">
-                  {getLocalizedField(director, 'degree')}
+                  {getLocalizedValue(director, 'degree', i18n.language)}
                 </p>
               </div>
 
               <div className="space-y-3">
                 <div className="flex items-center text-sm text-gray-600">
                   <span className="mr-2">📅</span>
-                  <span>{t('leadership.experience')}: {getLocalizedField(director, 'experience')}</span>
+                  <span>{t('leadership.experience')}: {getLocalizedValue(director, 'experience', i18n.language)}</span>
                 </div>
                 <div className="flex items-center text-sm text-gray-600">
                   <span className="mr-2">📧</span>
@@ -149,21 +138,12 @@ const LeadershipPage = () => {
                   {t('leadership.achievements')}:
                 </h4>
                 <ul className="space-y-2">
-                  {(() => {
-                    const currentLang = i18n.language;
-                    let achievements = director.achievements;
-                    if (currentLang === 'en' && director.achievements_en) {
-                      achievements = director.achievements_en;
-                    } else if (currentLang === 'ky' && director.achievements_kg) {
-                      achievements = director.achievements_kg;
-                    }
-                    return achievements?.slice(0, 3).map((achievement, index) => (
-                      <li key={index} className="flex items-start text-sm text-gray-600">
-                        <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-1.5 mr-2 flex-shrink-0"></span>
-                        <span>{achievement}</span>
-                      </li>
-                    ));
-                  })()}
+                  {getLocalizedArray(director, 'achievements', i18n.language)?.slice(0, 3).map((achievement, index) => (
+                    <li key={index} className="flex items-start text-sm text-gray-600">
+                      <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-1.5 mr-2 flex-shrink-0"></span>
+                      <span>{achievement}</span>
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>
@@ -211,19 +191,19 @@ const LeadershipPage = () => {
                 <div className="w-16 h-16 rounded-full overflow-hidden mr-4 border-2 border-blue-200">
                   <img
                     src={head.image_url || "/api/placeholder/300/300"}
-                    alt={getLocalizedField(head, 'name')}
+                    alt={getLocalizedValue(head, 'name', i18n.language)}
                     className="w-full h-full object-cover"
                   />
                 </div>
                 <div className="flex-1">
                   <h3 className="text-lg font-bold text-gray-900 mb-1">
-                    {getLocalizedField(head, 'name')}
+                    {getLocalizedValue(head, 'name', i18n.language)}
                   </h3>
                   <p className="text-blue-600 font-semibold text-sm mb-1">
-                    {getLocalizedField(head, 'position')}
+                    {getLocalizedValue(head, 'position', i18n.language)}
                   </p>
                   <p className="text-gray-600 text-xs">
-                    {getLocalizedField(head, 'department')}
+                    {getLocalizedValue(head, 'department', i18n.language)}
                   </p>
                 </div>
               </div>
@@ -231,27 +211,27 @@ const LeadershipPage = () => {
               <div className="space-y-2 mb-4">
                 <div className="flex items-center text-xs text-gray-600">
                   <span className="mr-2">🎓</span>
-                  <span>{getLocalizedField(head, 'degree')}</span>
+                  <span>{getLocalizedValue(head, 'degree', i18n.language)}</span>
                 </div>
                 <div className="flex items-center text-xs text-gray-600">
                   <span className="mr-2">📅</span>
-                  <span>{t('leadership.experience')}: {getLocalizedField(head, 'experience')}</span>
+                  <span>{t('leadership.experience')}: {getLocalizedValue(head, 'experience', i18n.language)}</span>
                 </div>
-                {head.staff_count && getLocalizedField(head, 'staff_count') && (
+                {head.staff_count && getLocalizedValue(head, 'staff_count', i18n.language) && (
                   <div className="flex items-center text-xs text-gray-600">
                     <span className="mr-2">👥</span>
-                    <span>{getLocalizedField(head, 'staff_count')}</span>
+                    <span>{getLocalizedValue(head, 'staff_count', i18n.language)}</span>
                   </div>
                 )}
               </div>
 
-              {head.specialization && getLocalizedField(head, 'specialization') && (
+              {head.specialization && getLocalizedValue(head, 'specialization', i18n.language) && (
                 <div className="mb-4">
                   <p className="text-xs text-gray-700 font-semibold mb-1">
                     {t('leadership.specialization')}:
                   </p>
                   <p className="text-xs text-gray-600 leading-relaxed">
-                    {getLocalizedField(head, 'specialization')}
+                    {getLocalizedValue(head, 'specialization', i18n.language)}
                   </p>
                 </div>
               )}
@@ -370,8 +350,8 @@ const LeadershipPage = () => {
                     <li key={section.id}>
                       <button
                         className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 flex items-center ${activeSection === section.id
-                            ? "bg-blue-100 text-blue-700 font-medium shadow-sm"
-                            : "text-gray-700 hover:bg-gray-100"
+                          ? "bg-blue-100 text-blue-700 font-medium shadow-sm"
+                          : "text-gray-700 hover:bg-gray-100"
                           }`}
                         onClick={() => changeActiveSection(section.id)}
                       >
