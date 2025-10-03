@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE_URL = "http://localhost:8000/api/about-section";
+const API_BASE_URL = "https://su-med-backend-35d3d951c74b.herokuapp.com/api/about-section";
 
 // Create axios instance with default config - Updated 2025-09-29
 const api = axios.create({
@@ -14,7 +14,7 @@ const api = axios.create({
 
 // Create a separate instance for research API
 const researchAPI = axios.create({
-  baseURL: "http://localhost:8000/research/api",
+  baseURL: "https://su-med-backend-35d3d951c74b.herokuapp.com/research/api",
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",

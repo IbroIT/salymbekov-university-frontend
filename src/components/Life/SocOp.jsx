@@ -27,7 +27,7 @@ const SocOp = () => {
         setLoading(true);
         setError(null);
 
-        const baseURL = 'http://localhost:8000/api/social-opportunities';
+        const baseURL = 'https://su-med-backend-35d3d951c74b.herokuapp.com/api/social-opportunities';
 
         const [eventsResponse, clubsResponse, projectsResponse] = await Promise.all([
           axios.get(`${baseURL}/events/`),

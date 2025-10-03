@@ -22,7 +22,7 @@ const ClubsSection = () => {
         setLoading(true);
         setError(null);
 
-        const response = await axios.get('http://localhost:8000/api/social-opportunities/clubs/');
+        const response = await axios.get('https://su-med-backend-35d3d951c74b.herokuapp.com/api/social-opportunities/clubs/');
         setClubs(response.data.results || response.data);
       } catch (err) {
         console.error('Error fetching clubs:', err);

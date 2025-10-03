@@ -12,7 +12,7 @@ const MissionDebug = () => {
         const testFetch = async () => {
             try {
                 console.log('About to fetch...');
-                const response = await fetch('http://localhost:8000/api/mission/api/complete/');
+                const response = await fetch('https://su-med-backend-35d3d951c74b.herokuapp.com/api/mission/api/complete/');
                 console.log('Fetch response:', response.status);
 
                 if (response.ok) {
