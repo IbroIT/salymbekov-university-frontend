@@ -66,7 +66,7 @@ export const hsmAPI = {
     // Get all accreditations
     getAccreditations: async (params = {}) => {
         try {
-            const response = await api.get("/api/hsm/accreditations/", { params });
+            const response = await api.get("/hsm/accreditations/", { params });
             return response.data;
         } catch (error) {
             console.error("Error fetching accreditations:", error);

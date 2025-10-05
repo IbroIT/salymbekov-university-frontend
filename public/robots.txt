@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+
+Sitemap: https://www.su-medical-school.com/sitemap.xml
+
+# SEO директивы
+Clean-param: ref /
