@@ -14,6 +14,7 @@ export default defineConfig({
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg,gif,webp,woff2}'],
+        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024, // 5MB вместо 2MB
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
@@ -22,7 +23,7 @@ export default defineConfig({
               cacheName: 'google-fonts-cache',
               expiration: {
                 maxEntries: 10,
-                maxAgeSeconds: 60 * 60 * 24 * 365 // 365 days
+                maxAgeSeconds: 60 * 60 * 24 * 365
               },
               cacheableResponse: {
                 statuses: [0, 200]
@@ -37,16 +38,11 @@ export default defineConfig({
         description: "Ведущий медицинский факультет в Кыргызстане. Качественное медицинское образование по международным стандартам.",
         theme_color: "#1e40af",
         background_color: "#ffffff",
-        display: "standalone",
+        display: "minimal-ui",
         orientation: "portrait",
         scope: "/",
         start_url: "/",
         icons: [
-          {
-            src: "pwa-64x64.png",
-            sizes: "64x64",
-            type: "image/png"
-          },
           {
             src: "pwa-192x192.png",
             sizes: "192x192",
@@ -55,33 +51,11 @@ export default defineConfig({
           {
             src: "pwa-512x512.png",
             sizes: "512x512",
-            type: "image/png",
-            purpose: "any"
-          },
-          {
-            src: "maskable-icon-512x512.png",
-            sizes: "512x512",
-            type: "image/png",
-            purpose: "maskable"
-          }
-        ],
-        screenshots: [
-          {
-            src: "screenshot-wide.png",
-            sizes: "1280x720",
-            type: "image/png",
-            form_factor: "wide"
-          },
-          {
-            src: "screenshot-narrow.png",
-            sizes: "375x667",
-            type: "image/png",
-            form_factor: "narrow"
+            type: "image/png"
           }
         ]
       }
     }),
-    // Визуализатор бандла (только для разработки)
     process.env.NODE_ENV === 'analyze' && visualizer({
       filename: './dist/stats.html',
       open: true,
@@ -90,15 +64,16 @@ export default defineConfig({
     })
   ].filter(Boolean),
   
-  // Оптимизации сборки
+  // Оптимизации сборки для уменьшения размера файлов
   build: {
     rollupOptions: {
       output: {
         manualChunks: {
-          // Разделяем вендорные библиотеки
-          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          'ui-vendor': ['framer-motion', 'lucide-react'],
-          'utils-vendor': ['axios', 'react-helmet-async']
+          // Более агрессивное разделение чанков
+          'react-vendor': ['react', 'react-dom'],
+          'router-vendor': ['react-router-dom'],
+          'utils-vendor': ['react-helmet-async'],
+          'ui-vendor': ['lucide-react']
         },
         // Оптимизация имен файлов
         chunkFileNames: 'js/[name]-[hash].js',
@@ -114,27 +89,25 @@ export default defineConfig({
         }
       }
     },
-    // Минификация и оптимизация
     minify: 'esbuild',
-    sourcemap: false, // Отключаем для продакшена
-    // Чанкинг для лучшего кэширования
-    chunkSizeWarningLimit: 1000,
-    // Оптимизация assets
-    assetsInlineLimit: 4096
+    sourcemap: false,
+    // Увеличиваем лимит предупреждений о размере чанков
+    chunkSizeWarningLimit: 1500,
+    assetsInlineLimit: 4096,
+    
+    // Оптимизация для уменьшения размера бандла
+    target: 'es2015',
+    cssCodeSplit: true
   },
   
-  // Оптимизации для разработки
   server: {
-    port: 3000,
-    open: true // Автоматически открывать браузер
+    port: 3000
   },
   
-  // Префетчинг и предзагрузка
   preview: {
     port: 4173
   },
   
-  // Оптимизация разрешения зависимостей
   resolve: {
     alias: {
       '@': '/src',
@@ -144,13 +117,7 @@ export default defineConfig({
     }
   },
   
-  // CSS оптимизации
   css: {
-    devSourcemap: false, // Отключаем sourcemaps для CSS в продакшене
-    preprocessorOptions: {
-      scss: {
-        additionalData: `@import "@/styles/variables.scss";`
-      }
-    }
+    devSourcemap: false
   }
 })
