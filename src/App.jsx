@@ -226,7 +226,7 @@ function App() {
         <Footer />
         
         {/* SEO мониторинг (только в dev режиме) */}
-        <SEODashboard />
+        {/* <SEODashboard /> */}
       </div>
     </Router>
   );
