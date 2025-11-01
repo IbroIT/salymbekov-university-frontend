@@ -5,6 +5,29 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import './About.css';
 import PartnersService from '../../services/partnersService';
+import API_CONFIG from '../../config/api';
+import SEOComponent from '../SEO/SEOComponent';
+
+// Add custom styles for logo markers
+const logoMarkerStyles = `
+  .custom-logo-marker {
+    background: transparent !important;
+    border: none !important;
+  }
+  .custom-logo-marker div {
+    transition: transform 0.2s ease-in-out;
+  }
+  .custom-logo-marker:hover div {
+    transform: scale(1.1);
+  }
+`;
+
+// Inject styles
+if (typeof document !== 'undefined') {
+  const styleSheet = document.createElement('style');
+  styleSheet.textContent = logoMarkerStyles;
+  document.head.appendChild(styleSheet);
+}
 
 // Fix for default markers in react-leaflet
 delete L.Icon.Default.prototype._getIconUrl;
@@ -45,6 +68,39 @@ const createCustomMarker = (type) => {
   });
 };
 
+// Custom markers with partner logos
+const createLogoMarker = (logoUrl) => {
+  return new L.DivIcon({
+    className: 'custom-logo-marker',
+    html: `<div style="
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 3px solid white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    ">
+      <img 
+        src="${logoUrl}" 
+        style="
+          width: 32px;
+          height: 32px;
+          object-fit: contain;
+          border-radius: 50%;
+        "
+        onerror="this.style.display='none'; this.parentNode.innerHTML='🏢';"
+      />
+    </div>`,
+    iconSize: [40, 40],
+    iconAnchor: [20, 20],
+    popupAnchor: [0, -20]
+  });
+};
+
 const Partners = () => {
   const { t, i18n } = useTranslation();
   const [selectedPartner, setSelectedPartner] = useState(null);
@@ -53,6 +109,13 @@ const Partners = () => {
   const [partners, setPartners] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // Helper function to create proper image URL
+  const getImageUrl = (imagePath) => {
+    if (!imagePath) return '/api/placeholder/100/100';
+    if (imagePath.startsWith('http')) return imagePath;
+    return `${API_CONFIG.BASE_URL}${imagePath.startsWith('/') ? imagePath : `/${imagePath}`}`;
+  };
 
   // Fetch partners data from API
   useEffect(() => {
@@ -72,7 +135,7 @@ const Partners = () => {
             email: partner.email || '',
             phone: partner.phone || '',
             address: partner.address || `${partner.city}, ${partner.country}`,
-            logo: partner.logo ? `https://su-med-backend-35d3d951c74b.herokuapp.com/${partner.logo}` : '/api/placeholder/100/100',
+            logo: getImageUrl(partner.logo),
             coordinates: [
               partner.latitude || 42.8746,
               partner.longitude || 74.5698
@@ -95,7 +158,7 @@ const Partners = () => {
         });
         setPartners(formattedPartners);
       } catch (err) {
-        setError('Failed to load partners data');
+        setError(t('partners.loadingError'));
         console.error('Error fetching partners:', err);
       } finally {
         setLoading(false);
@@ -131,12 +194,12 @@ const Partners = () => {
   ];
 
   const partnerTypes = [
-    { value: 'all', label: 'Все партнеры', icon: '🤝' },
-    { value: 'clinical', label: 'Клинические базы', icon: '🏥' },
-    { value: 'university', label: 'Университеты', icon: '🎓' },
-    { value: 'organization', label: 'Организации', icon: '🔬' },
-    { value: 'business', label: 'Бизнес-партнеры', icon: '💼' },
-    { value: 'academic', label: 'Академические', icon: '�' }
+    { value: 'all', label: t('partners.filterTypes.all'), icon: '🤝' },
+    { value: 'clinical', label: t('partners.filterTypes.clinical'), icon: '🏥' },
+    { value: 'university', label: t('partners.filterTypes.university'), icon: '🎓' },
+    { value: 'organization', label: t('partners.filterTypes.organization'), icon: '🔬' },
+    { value: 'business', label: t('partners.filterTypes.business'), icon: '💼' },
+    { value: 'academic', label: t('partners.filterTypes.academic'), icon: '📚' }
   ];
 
   const filteredPartners = partners.filter(partner =>
@@ -148,14 +211,7 @@ const Partners = () => {
   );
 
   const getTypeLabel = (type) => {
-    const typeLabels = {
-      'clinical': 'Клиническая база',
-      'university': 'Университет',
-      'organization': 'Организация',
-      'business': 'Бизнес-партнер',
-      'academic': 'Академический партнер'
-    };
-    return typeLabels[type] || 'Партнер';
+    return t(`partners.typeLabels.${type}`, t('partners.typeLabels.academic'));
   };
 
   const getTypeBadgeColor = (type) => {
@@ -182,17 +238,15 @@ const Partners = () => {
                   src={partner.logo}
                   alt={partner.name}
                   className="w-16 h-16 object-contain mr-4"
+                  onError={(e) => {
+                    e.target.src = '/api/placeholder/100/100';
+                  }}
                 />
                 <div>
                   <h2 className="text-2xl font-bold text-gray-900 mb-2">
                     {partner.name}
                   </h2>
                   <div className="flex items-center space-x-3">
-                    <span className={`px-3 py-1 rounded-full text-sm font-medium ${getTypeBadgeColor(partner.type)}`}>
-                      {getTypeLabel(partner.type)}
-                    </span>
-                    <span className="text-gray-500">{partner.city}, {partner.country}</span>
-                    <span className="text-gray-500">{t('partners.established')} {partner.established}</span>
                   </div>
                 </div>
               </div>
@@ -209,34 +263,6 @@ const Partners = () => {
               <h3 className="text-lg font-semibold text-gray-900 mb-3">{t('partners.about')}</h3>
               <p className="text-gray-600 leading-relaxed">{partner.description}</p>
             </div>
-
-            {/* Cooperation */}
-            <div className="mb-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-3">{t('partners.cooperation')}</h3>
-              <ul className="space-y-2">
-                {partner.cooperation.map((item, index) => (
-                  <li key={index} className="flex items-start">
-                    <span className="text-blue-600 mr-3 mt-1">•</span>
-                    <span className="text-gray-600">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Achievements */}
-            {partner.achievements && (
-              <div className="mb-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">{t('partners.achievements')}</h3>
-                <ul className="space-y-2">
-                  {partner.achievements.map((achievement, index) => (
-                    <li key={index} className="flex items-start">
-                      <span className="text-green-600 mr-3 mt-1">✓</span>
-                      <span className="text-gray-600">{achievement}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
 
             {/* Contact */}
             <div className="border-t border-gray-200 pt-4">
@@ -289,7 +315,7 @@ const Partners = () => {
             onClick={() => window.location.reload()}
             className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
           >
-            {t('partners.retry', 'Повторить попытку')}
+            {t('partners.retry')}
           </button>
         </div>
       </div>
@@ -298,6 +324,7 @@ const Partners = () => {
 
   return (
     <>
+      <SEOComponent />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
         {/* Header */}
@@ -321,24 +348,19 @@ const Partners = () => {
               <div className="flex items-center mb-4">
                 <img
                   src={partner.logo}
+                  alt={partner.name}
                   className="w-12 h-12 object-contain mr-4"
+                  onError={(e) => {
+                    e.target.src = '/api/placeholder/100/100';
+                  }}
                 />
                 <div className="flex-1">
                   <h3 className="text-lg font-semibold text-gray-900 mb-1">
                     {partner.name}
                   </h3>
                   <div className="flex items-center space-x-2">
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${getTypeBadgeColor(partner.type)}`}>
-                      {getTypeLabel(partner.type)}
-                    </span>
                   </div>
                 </div>
-              </div>
-
-              {/* Location */}
-              <div className="flex items-center text-sm text-gray-600 mb-3">
-                <span className="mr-2">📍</span>
-                <span>{partner.city}, {partner.country}</span>
               </div>
 
               {/* Description */}
@@ -349,7 +371,7 @@ const Partners = () => {
               {/* Partnership areas */}
               {partner.cooperation && partner.cooperation.length > 0 && (
                 <div className="mb-4">
-                  <h4 className="text-sm font-medium text-gray-900 mb-2">Направления сотрудничества:</h4>
+                  <h4 className="text-sm font-medium text-gray-900 mb-2">{t('partners.partnershipAreas')}</h4>
                   <div className="flex flex-wrap gap-1">
                     {partner.cooperation.map((area, index) => (
                       <span
@@ -407,7 +429,7 @@ const Partners = () => {
                 <Marker
                   key={partner.id}
                   position={partner.coordinates}
-                  icon={createCustomMarker(partner.type)}
+                  icon={createLogoMarker(partner.logo)}
                 >
                   <Popup className="custom-popup">
                     <div className="p-2 min-w-[250px]">
@@ -417,21 +439,15 @@ const Partners = () => {
                           src={partner.logo}
                           alt={partner.name}
                           className="w-8 h-8 object-contain mr-2"
+                          onError={(e) => {
+                            e.target.src = '/api/placeholder/100/100';
+                          }}
                         />
                         <div>
                           <h3 className="font-semibold text-gray-900 text-sm">
                             {partner.name}
                           </h3>
-                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${getTypeBadgeColor(partner.type)}`}>
-                            {getTypeLabel(partner.type)}
-                          </span>
                         </div>
-                      </div>
-
-                      {/* Location */}
-                      <div className="flex items-center text-sm text-gray-600 mb-2">
-                        <span className="mr-2">📍</span>
-                        <span>{partner.city}, {partner.country}</span>
                       </div>
 
                       {/* Short Description */}
@@ -442,7 +458,7 @@ const Partners = () => {
                       {/* Partnership areas */}
                       {partner.cooperation && partner.cooperation.length > 0 && (
                         <div className="mb-3">
-                          <div className="text-xs font-medium text-gray-900 mb-1">Сотрудничество:</div>
+                          <div className="text-xs font-medium text-gray-900 mb-1">{t('partners.cooperation')}:</div>
                           <div className="flex flex-wrap gap-1">
                             {partner.cooperation.slice(0, 2).map((area, index) => (
                               <span
@@ -481,35 +497,6 @@ const Partners = () => {
                 </Marker>
               ))}
             </MapContainer>
-          </div>
-
-          {/* Map Legend */}
-          <div className="mt-4 flex flex-wrap justify-center gap-4 text-sm">
-            {partnerTypes.slice(1).map(type => (
-              <div key={type.value} className="flex items-center space-x-2">
-                <div
-                  className="w-4 h-4 rounded-full border-2 border-white shadow flex items-center justify-center text-xs"
-                  style={{
-                    backgroundColor: type.value === 'clinical' ? '#dc2626' :
-                      type.value === 'university' ? '#2563eb' :
-                        type.value === 'organization' ? '#16a34a' : '#9333ea'
-                  }}
-                >
-                  {type.icon}
-                </div>
-                <span className="text-gray-600">{type.label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Simple Partners Count */}
-        <div className="text-center mt-12">
-          <div className="bg-white rounded-lg shadow-lg p-6 inline-block">
-            <div className="text-3xl font-bold text-blue-600 mb-2">
-              {partners.length}
-            </div>
-            <div className="text-gray-600">Активных партнеров</div>
           </div>
         </div>
 

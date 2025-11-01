@@ -281,14 +281,6 @@ END:VCALENDAR`;
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50">
       <div className="container mx-auto px-4 py-8">
-        {/* Хлебные крошки */}
-        <nav className="text-sm text-gray-600 mb-8 flex items-center">
-          <Link to="/" className="hover:text-blue-600 transition-colors">{t('breadcrumbs.home')}</Link>
-          <span className="mx-2">→</span>
-          <Link to="/academics" className="hover:text-blue-600 transition-colors">{t('breadcrumbs.academics')}</Link>
-          <span className="mx-2">→</span>
-          <span className="text-gray-800 font-medium">{t('breadcrumbs.calendar')}</span>
-        </nav>
 
         <div className="text-center mb-10">
           <h1 className="text-4xl font-bold text-gray-800 mb-3">{t('calendar.title')}</h1>

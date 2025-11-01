@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import SEOComponent from '../SEO/SEOComponent';
 
 const MedicalProgramPage = () => {
   const [activeAccordion, setActiveAccordion] = useState(null);
@@ -270,6 +271,9 @@ const MedicalProgramPage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white py-8 px-4">
+      {/* SEO Component */}
+      <SEOComponent pageType="hsm" />
+      
       <div className="max-w-6xl mx-auto">
         {/* Заголовок блока */}
         <div className="bg-white rounded-2xl shadow-lg p-8 mb-8 border-l-4 border-blue-600">

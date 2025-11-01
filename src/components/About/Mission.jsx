@@ -14,6 +14,7 @@ import {
   UsersIcon,
   BuildingLibraryIcon
 } from '@heroicons/react/24/outline';
+import SEOComponent from '../SEO/SEOComponent';
 import { fetchMissionData } from '../../utils/missionApi';
 
 const Mission = () => {
@@ -388,10 +389,12 @@ const Mission = () => {
   };
 
   return (
-    <div
-      className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-        }`}
-    >
+    <>
+      <SEOComponent />
+      <div
+        className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}
+      >
       <div className="max-w-7xl mx-auto">
         {/* Заголовок */}
         <div className="text-center mb-8">
@@ -443,6 +446,7 @@ const Mission = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import SEOComponent from '../SEO/SEOComponent';
 import './About.css';
 
 const About = () => {
@@ -101,6 +102,9 @@ const About = () => {
 
   return (
     <div className="bg-gradient-to-b from-gray-50 via-white to-blue-50 min-h-screen">
+      {/* SEO Component */}
+      <SEOComponent />
+      
       {/* Breadcrumbs */}
       <div className="bg-white border-b border-gray-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">

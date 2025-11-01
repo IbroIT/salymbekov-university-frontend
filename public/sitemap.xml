@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" 
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  
+  <!-- Главная страница -->
+  <url>
+    <loc>https://www.su-medical-school.com/</loc>
+    <lastmod>2024-11-01</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://www.su-medical-school.com/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.su-medical-school.com/" />
+    <xhtml:link rel="alternate" hreflang="ky" href="https://www.su-medical-school.com/" />
+  </url>
+
+  <!-- О университете -->
+  <url>
+    <loc>https://www.su-medical-school.com/about</loc>
+    <lastmod>2024-11-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://www.su-medical-school.com/about" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.su-medical-school.com/about" />
+    <xhtml:link rel="alternate" hreflang="ky" href="https://www.su-medical-school.com/about" />
+  </url>
+
+  <url>
+    <loc>https://www.su-medical-school.com/about/management</loc>
+    <lastmod>2024-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://www.su-medical-school.com/about/management" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.su-medical-school.com/about/management" />
+    <xhtml:link rel="alternate" hreflang="ky" href="https://www.su-medical-school.com/about/management" />
+  </url>
+
+  <url>
+    <loc>https://www.su-medical-school.com/about/careers</loc>
+    <lastmod>2024-11-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://www.su-medical-school.com/about/careers" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.su-medical-school.com/about/careers" />
+    <xhtml:link rel="alternate" hreflang="ky" href="https://www.su-medical-school.com/about/careers" />
+  </url>
+
+  <url>
+    <loc>https://www.su-medical-school.com/about/partners</loc>
+    <lastmod>2024-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://www.su-medical-school.com/about/partners" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.su-medical-school.com/about/partners" />
+    <xhtml:link rel="alternate" hreflang="ky" href="https://www.su-medical-school.com/about/partners" />
+  </url>
+
+  <url>
+    <loc>https://www.su-medical-school.com/about/mission</loc>
+    <lastmod>2024-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://www.su-medical-school.com/about/mission" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.su-medical-school.com/about/mission" />
+    <xhtml:link rel="alternate" hreflang="ky" href="https://www.su-medical-school.com/about/mission" />
+  </url>
+
+  <!-- Высшая школа медицины -->
+  <url>
+    <loc>https://www.su-medical-school.com/hsm</loc>
+    <lastmod>2024-11-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://www.su-medical-school.com/hsm" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.su-medical-school.com/hsm" />
+    <xhtml:link rel="alternate" hreflang="ky" href="https://www.su-medical-school.com/hsm" />
+  </url>
+
+  <url>
+    <loc>https://www.su-medical-school.com/hsm/programs</loc>
+    <lastmod>2024-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://www.su-medical-school.com/hsm/programs" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.su-medical-school.com/hsm/programs" />
+    <xhtml:link rel="alternate" hreflang="ky" href="https://www.su-medical-school.com/hsm/programs" />
+  </url>
+
+  <!-- Поступление -->
+  <url>
+    <loc>https://www.su-medical-school.com/admissions</loc>
+    <lastmod>2024-11-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://www.su-medical-school.com/admissions" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.su-medical-school.com/admissions" />
+    <xhtml:link rel="alternate" hreflang="ky" href="https://www.su-medical-school.com/admissions" />
+  </url>
+
+  <url>
+    <loc>https://www.su-medical-school.com/admissions/requirements</loc>
+    <lastmod>2024-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://www.su-medical-school.com/admissions/requirements" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.su-medical-school.com/admissions/requirements" />
+    <xhtml:link rel="alternate" hreflang="ky" href="https://www.su-medical-school.com/admissions/requirements" />
+  </url>
+
+  <!-- Научная деятельность -->
+  <url>
+    <loc>https://www.su-medical-school.com/research</loc>
+    <lastmod>2024-11-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://www.su-medical-school.com/research" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.su-medical-school.com/research" />
+    <xhtml:link rel="alternate" hreflang="ky" href="https://www.su-medical-school.com/research" />
+  </url>
+
+  <!-- Новости -->
+  <url>
+    <loc>https://www.su-medical-school.com/news</loc>
+    <lastmod>2024-11-01</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://www.su-medical-school.com/news" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.su-medical-school.com/news" />
+    <xhtml:link rel="alternate" hreflang="ky" href="https://www.su-medical-school.com/news" />
+  </url>
+
+  <!-- Контакты -->
+  <url>
+    <loc>https://www.su-medical-school.com/contacts</loc>
+    <lastmod>2024-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://www.su-medical-school.com/contacts" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.su-medical-school.com/contacts" />
+    <xhtml:link rel="alternate" hreflang="ky" href="https://www.su-medical-school.com/contacts" />
+  </url>
+
+</urlset>

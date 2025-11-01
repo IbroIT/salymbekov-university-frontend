@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { emailConfig, openGmailCompose, createMailtoLink } from '../../config/emailConfig';
+import SEOComponent from '../SEO/SEOComponent';
 import './Admissions.css';
 
 const AdmissionsOverview = () => {
@@ -174,6 +175,9 @@ Email: [Ваш email]
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* SEO Component */}
+      <SEOComponent />
+      
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-20">
         <div className="container mx-auto px-4">

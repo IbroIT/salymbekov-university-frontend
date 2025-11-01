@@ -8,7 +8,6 @@ import {
   UserGroupIcon,
   BookmarkIcon,
   BookmarkSlashIcon,
-  ShareIcon,
   ClockIcon,
   PhoneIcon,
   CheckCircleIcon,
@@ -333,9 +332,6 @@ const Instructions = () => {
             ) : (
               <BookmarkIcon className="w-5 h-5 text-blue-600" />
             )}
-          </button>
-          <button className="p-2 rounded-lg bg-blue-100 hover:bg-blue-200 transition-colors">
-            <ShareIcon className="w-5 h-5 text-blue-600" />
           </button>
         </div>
       </div>

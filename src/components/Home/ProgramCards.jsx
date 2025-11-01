@@ -81,7 +81,7 @@ const ProgramCards = () => {
 
 
   return (
-    <section className="py-16 bg-gradient-to-b from-white to-blue-50 relative overflow-hidden">
+    <section className="py-16 bg-white relative overflow-hidden">
       {/* Декоративные элементы */}
       <div className="absolute top-0 left-0 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
       <div className="absolute top-0 right-0 w-72 h-72 bg-cyan-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>

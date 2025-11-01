@@ -1,8 +1,28 @@
 User-agent: *
 Allow: /
 Disallow: /admin/
+Disallow: /private/
+Disallow: /_*
+Disallow: /test*
 
+# Allow access to static resources
+Allow: /images/
+Allow: /css/
+Allow: /js/
+Allow: /assets/
+
+# Sitemap location
 Sitemap: https://www.su-medical-school.com/sitemap.xml
 
 # SEO директивы
 Clean-param: ref /
+Clean-param: utm_source /
+Clean-param: utm_medium /
+Clean-param: utm_campaign /
+Clean-param: fbclid /
+
+# Crawl delay for bots (1 second)
+Crawl-delay: 1
+
+# Host directive
+Host: https://www.su-medical-school.com

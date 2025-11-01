@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { ArrowLeft, Calendar, Tag, Share2 } from "lucide-react";
+import SEOComponent from '../SEO/SEOComponent';
 
 const API_BASE_URL = 'https://su-med-backend-35d3d951c74b.herokuapp.com/api';
 
@@ -214,6 +215,14 @@ const NewsDetail = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* SEO Component for News Detail */}
+      <SEOComponent 
+        isNewsDetail={true}
+        newsTitle={article?.title}
+        newsDescription={article?.description || article?.content?.substring(0, 160)}
+        customImage={article?.image}
+      />
+      
       {/* Back Button */}
       <div className="bg-white border-b">
         <div className="container mx-auto px-4 py-4">

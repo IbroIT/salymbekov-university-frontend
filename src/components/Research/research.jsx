@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Calendar, FileText, Users, Award, ArrowRight, Clock, MapPin, ChevronRight, ExternalLink, BookOpen, Mic2 } from 'lucide-react';
+import SEOComponent from '../SEO/SEOComponent';
 
 const Research = () => {
   const { t, i18n } = useTranslation();
@@ -321,6 +322,9 @@ const Research = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50/30">
+      {/* SEO Component */}
+      <SEOComponent />
+      
       {/* Анимированный фон с частицами */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-200 rounded-full blur-3xl opacity-30 animate-pulse"></div>

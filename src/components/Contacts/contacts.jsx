@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from "framer-motion";
 import { FaPaperPlane, FaUser, FaEnvelope, FaComment, FaArrowRight, FaMapMarkerAlt, FaPhone, FaClock, FaGlobe, FaBuilding, FaIdCard } from "react-icons/fa";
 import { useTranslation } from 'react-i18next';
+import SEOComponent from '../SEO/SEOComponent';
 
 const Contacts = () => {
   const { t } = useTranslation();
@@ -62,6 +63,9 @@ const Contacts = () => {
 
   return (
     <div className="bg-gradient-to-br from-gray-900 to-blue-900 py-8 px-4">
+      {/* SEO Component */}
+      <SEOComponent />
+      
       <div className="max-w-7xl mx-auto">
         {/* Заголовок */}
         <div className="text-center mb-12">

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { newAboutAPI } from '../../services/newAboutAPI';
+import SEOComponent from '../SEO/SEOComponent';
 
 const Founders = () => {
   const { t, i18n } = useTranslation();
@@ -94,10 +95,12 @@ const Founders = () => {
   const currentFounder = getCurrentFounderData();
 
   return (
-    <div
-      className={`min-h-screen bg-gradient-to-br from-white to-blue-50 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-        }`}
-    >
+    <>
+      <SEOComponent />
+      <div
+        className={`min-h-screen bg-gradient-to-br from-white to-blue-50 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}
+      >
       <div className="max-w-7xl mx-auto">
         {/* Заголовок */}
         <div className="text-center mb-8">
@@ -209,6 +212,7 @@ const Founders = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

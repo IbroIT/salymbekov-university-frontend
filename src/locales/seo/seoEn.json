@@ -1,0 +1,113 @@
+{
+  "seo": {
+    "baseTitle": "Salymbekov University",
+    "titleSeparator": " | ",
+    "baseDescription": "Leading medical university in Kyrgyzstan. Quality medical education, modern research and training of international level doctors.",
+    "baseKeywords": "medical education, medical university, Kyrgyzstan, Salymbekov University, doctors, healthcare, medical sciences, higher education",
+    "siteName": "Salymbekov University",
+    "organization": "Salymbekov University",
+    "organizationType": "EducationalOrganization",
+    "pages": {
+      "home": {
+        "title": "Home",
+        "description": "Salymbekov University - leading higher medical educational institution in Kyrgyzstan. Modern educational programs, qualified teachers and advanced technologies.",
+        "keywords": "home, medical university Kyrgyzstan, higher medical education, Salymbekov University, medical admission"
+      },
+      "about": {
+        "title": "About University",
+        "description": "History, mission and values of Salymbekov University. Learn about our leadership, achievements and partners in medical education.",
+        "keywords": "about university, Salymbekov University history, mission, leadership, partners, medical university achievements"
+      },
+      "management": {
+        "title": "University Management",
+        "description": "Leadership team of Salymbekov University. Rector, vice-rectors and administrative team of the medical university.",
+        "keywords": "management, rector, administration, vice-rectors, university governance"
+      },
+      "careers": {
+        "title": "Careers and Vacancies",
+        "description": "Open positions at Salymbekov University. Join our team of faculty and staff at the medical university.",
+        "keywords": "vacancies, career, university jobs, faculty, staff, medical personnel"
+      },
+      "partners": {
+        "title": "University Partners",
+        "description": "International and national partners of Salymbekov University. Cooperation in medical education and scientific research.",
+        "keywords": "partners, cooperation, international relations, medical institutions, educational partners"
+      },
+      "mission": {
+        "title": "Mission and Goals",
+        "description": "Mission, vision and strategic goals of Salymbekov University in medical education and healthcare.",
+        "keywords": "mission, goals, vision, strategy, medical education, education quality"
+      },
+      "founders": {
+        "title": "Founders",
+        "description": "Founders and founders of Salymbekov University. History of creating a medical university in Kyrgyzstan.",
+        "keywords": "founders, establishment history, medical university Kyrgyzstan"
+      },
+      "structure": {
+        "title": "Organizational Structure",
+        "description": "Organizational structure of Salymbekov University. Faculties, departments and divisions of the medical university.",
+        "keywords": "structure, organization, faculties, departments, divisions"
+      },
+      "achievements": {
+        "title": "Achievements",
+        "description": "Achievements and awards of Salymbekov University in medical education, science and international cooperation.",
+        "keywords": "achievements, awards, success, rankings, accreditation, medical education"
+      },
+      "hsm": {
+        "title": "Higher School of Medicine",
+        "description": "Higher School of Medicine at Salymbekov University. Modern educational programs for training doctors and medical specialists.",
+        "keywords": "higher school of medicine, medical programs, doctor training, medical education"
+      },
+      "programs": {
+        "title": "Educational Programs",
+        "description": "Educational programs of the Higher School of Medicine. Bachelor's, Master's and Doctoral degrees in medical specialties.",
+        "keywords": "educational programs, medical specialties, bachelor, master, doctoral"
+      },
+      "departments": {
+        "title": "Departments",
+        "description": "Departments of the Higher School of Medicine at Salymbekov University. Faculty and scientific activities.",
+        "keywords": "departments, faculty, professors, scientific activity, medical disciplines"
+      },
+      "admissions": {
+        "title": "Admissions",
+        "description": "Admission to Salymbekov University. Requirements, application procedure, tuition fees and admission deadlines.",
+        "keywords": "admissions, application, requirements, tuition fees, applicants, medical university"
+      },
+      "requirements": {
+        "title": "Admission Requirements",
+        "description": "Admission requirements for Salymbekov University. Required documents and qualifications for applicants.",
+        "keywords": "admission requirements, entrance exams, documents, applicant qualifications"
+      },
+      "tuition": {
+        "title": "Tuition Fees",
+        "description": "Tuition fees at Salymbekov University. Payment per semester, academic year and additional services.",
+        "keywords": "tuition fees, payment, semester, academic year, educational services"
+      },
+      "research": {
+        "title": "Research Activities",
+        "description": "Scientific research at Salymbekov University. Research centers, publications and grants in medicine.",
+        "keywords": "scientific research, research centers, medical science, publications, grants"
+      },
+      "infrastructure": {
+        "title": "Infrastructure",
+        "description": "Infrastructure of Salymbekov University. Academic buildings, laboratories, hospitals and dormitories for students.",
+        "keywords": "infrastructure, academic buildings, laboratories, hospitals, dormitories, facilities"
+      },
+      "student_life": {
+        "title": "Student Life",
+        "description": "Student life at Salymbekov University. Clubs, events, sports and social opportunities for students.",
+        "keywords": "student life, clubs, events, sports, social activities, student organizations"
+      },
+      "news": {
+        "title": "News",
+        "description": "Latest news from Salymbekov University. Events, achievements and announcements from the medical university.",
+        "keywords": "university news, events, announcements, achievements, medical news"
+      },
+      "contacts": {
+        "title": "Contacts",
+        "description": "Contact information for Salymbekov University. Address, phones, email and directions to the university.",
+        "keywords": "contacts, university address, phones, email, directions"
+      }
+    }
+  }
+}

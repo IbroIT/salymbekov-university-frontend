@@ -711,19 +711,26 @@
       }
     }
   },
-  "footer": {
-    "aboutTitle": "About University",
-    "aboutDescription": "Salymbekov University is a leading medical education institution in Kyrgyzstan, providing quality education and training future healthcare professionals",
-    "contactsTitle": "Contacts",
-    "address": "Bishkek, Kyrgyzstan",
-    "phone": "Phone",
-    "socialTitle": "Follow Us",
-    "subscriptionTitle": "Newsletter",
-    "emailPlaceholder": "Your email address",
-    "subscribeButton": "Subscribe",
-    "copyright": "© 2025 Salymbekov University. All rights reserved.",
-    "subscriptionAlert": "Thank you for subscribing with email: {email}"
-  },
+ "footer": {
+  "aboutTitle": "About the University",
+  "aboutDescription": "Salymbekov University is a leading medical educational institution in Kyrgyzstan, providing high-quality education and training future healthcare professionals.",
+  "contactsTitle": "Contacts",
+  "address": "Bishkek, Kyrgyzstan",
+  "phone": "Phone",
+  "socialTitle": "Follow Us",
+  "subscriptionTitle": "Newsletter",
+  "emailPlaceholder": "Your email address",
+  "subscribeButton": "Subscribe",
+  "copyright": "© 2025 Salymbekov University. All rights reserved.",
+  "subscriptionAlert": "Thank you for subscribing with email: {email}",
+  "subscribe": "Subscribe",
+  "quickLinks": "Quick Links",
+  "followUs": "Follow us on social media",
+  "privacy": "Privacy Policy",
+  "terms": "Terms of Service",
+  "sitemap": "Sitemap"
+}
+  ,
   "tuition": {
     "title": "Tuition Fees",
     "subtitle": "Learn about tuition costs and available discounts",
@@ -1464,7 +1471,30 @@
     },
     "map": {
       "title": "Geography of partnership",
-      "subtitle": "Interactive map of our partners around the world"
+      "subtitle": "Interactive map of our partners around the world",
+      "logoInfo": "Partner logos are displayed on the map"
+    },
+    "retry": "Retry",
+    "loadingError": "Error loading partners",
+    "noPartners": "No partners found",
+    "activePartners": "Active partners",
+    "partnersCount": "partners",
+    "partnershipAreas": "Partnership areas:",
+    "academic": "Academic partner",
+    "typeLabels": {
+      "clinical": "Clinical base",
+      "university": "University",
+      "organization": "Organization",
+      "business": "Business partner",
+      "academic": "Academic partner"
+    },
+    "filterTypes": {
+      "all": "All partners",
+      "clinical": "Clinical bases",
+      "university": "Universities",
+      "organization": "Organizations",
+      "business": "Business partners",
+      "academic": "Academic"
     },
     "list": {
       "1": {
@@ -4775,61 +4805,65 @@
       }
     }
   },
-  "achievement": {
-    "title": "University Achievements",
-    "subtitle": "We are proud of our successes in medical education, scientific research and innovative developments that are changing the future of medicine",
-    "filters": {
-      "all": "All Achievements",
-      "education": "Education",
-      "science": "Science",
-      "international": "International",
-      "infrastructure": "Infrastructure"
+"achievement": {
+  "learnMore": "Learn more",
+  "close": "Close",
+  "title": "University Achievements",
+  "subtitle": "We take pride in our success in medical education, scientific research, and innovative developments that are shaping the future of medicine.",
+  "filters": {
+    "all": "All achievements",
+    "education": "Education",
+    "science": "Science",
+    "international": "International",
+    "infrastructure": "Infrastructure"
+  },
+  "categories": {
+    "awards": "awards",
+    "education": "education",
+    "science": "science",
+    "international": "international",
+    "infrastructure": "infrastructure"
+  },
+  "stats": {
+    "publications": "Scientific Publications",
+    "partners": "International Partners",
+    "employment": "Employment Rate",
+    "clinicalBases": "Clinical Bases"
+  },
+  "achievements": {
+    "achievement1": {
+      "title": "First Place in Medical University Ranking",
+      "description": "Our university ranked first in the national rating of medical educational institutions."
     },
-    "categories": {
-      "education": "education",
-      "science": "science",
-      "international": "international",
-      "infrastructure": "infrastructure"
+    "achievement2": {
+      "title": "Breakthrough in Cardiac Surgery",
+      "description": "Development of an innovative method for minimally invasive heart surgery."
     },
-    "stats": {
-      "publications": "Scientific Publications",
-      "partners": "International Partners",
-      "employment": "Employment Rate",
-      "clinicalBases": "Clinical Bases"
+    "achievement3": {
+      "title": "International Recognition",
+      "description": "Accreditation of educational programs according to European standards."
     },
-    "achievements": {
-      "achievement1": {
-        "title": "First Place in Medical University Rankings",
-        "description": "Our university took first place in the national ranking of medical educational institutions"
-      },
-      "achievement2": {
-        "title": "Breakthrough in Cardiac Surgery",
-        "description": "Development of an innovative technique for minimally invasive heart surgery"
-      },
-      "achievement3": {
-        "title": "International Recognition",
-        "description": "Accreditation of educational programs according to European standards"
-      },
-      "achievement4": {
-        "title": "Best Scientific Publication",
-        "description": "Our researchers' article was recognized as the best in an international medical journal"
-      },
-      "achievement5": {
-        "title": "Innovative Training Center",
-        "description": "Opening of a modern simulation center with VR technologies"
-      },
-      "achievement6": {
-        "title": "Research Grant",
-        "description": "Received a major government grant for research in oncology"
-      }
+    "achievement4": {
+      "title": "Best Scientific Publication",
+      "description": "Our researchers’ article was recognized as the best in an international medical journal."
     },
-    "cta": {
-      "title": "Become Part of Our Achievements",
-      "description": "Join our university and contribute to the development of medicine",
-      "applyButton": "Apply Now",
-      "learnMoreButton": "Learn More"
+    "achievement5": {
+      "title": "Innovative Learning Center",
+      "description": "Opening of a modern simulation center equipped with VR technologies."
+    },
+    "achievement6": {
+      "title": "Research Grant",
+      "description": "Received a major state grant for oncology research."
     }
   },
+  "cta": {
+    "title": "Become Part of Our Achievements",
+    "description": "Join our university and contribute to the advancement of medicine.",
+    "applyButton": "Apply Now",
+    "learnMoreButton": "Learn More"
+  }
+}
+,
   "founders": {
     "title": "University Founders",
     "our_founders": "Our Founders",
@@ -5476,6 +5510,7 @@
     "story2Quote": "Access to advanced laboratories and expert guidance transformed our research project into a viable medical device company."
   },
   "smk": {
+    "sections": "Sections",
     "hero": {
       "certified": "Certified Quality System",
       "title": "Quality Management System",
@@ -5620,6 +5655,7 @@
       "placeholder": "Search resources..."
     },
     "categories": {
+      "all": "All",
       "list": [
         {
           "id": "all",

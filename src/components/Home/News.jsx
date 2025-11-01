@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { localizeItems } from '../../utils/i18nHelpers';
 
@@ -7,6 +7,7 @@ const API_BASE_URL = 'https://su-med-backend-35d3d951c74b.herokuapp.com/api';
 
 const NewsPreview = ({ maxItems = 3 }) => {
   const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
   const [newsData, setNewsData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -61,10 +62,36 @@ const NewsPreview = ({ maxItems = 3 }) => {
     }
   };
 
+  // Функция для перехода на страницу новостей с прокруткой вверх
+  const handleViewAllNews = () => {
+    // Сначала переходим на страницу
+    navigate('/news');
+    
+    // Затем прокручиваем вверх после небольшой задержки, чтобы страница успела загрузиться
+    setTimeout(() => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }, 100);
+  };
+
+  // Функция для перехода к конкретной новости с прокруткой вверх
+  const handleNewsClick = (slug, id) => {
+    navigate(`/news/detail/${slug || id}`);
+    
+    setTimeout(() => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }, 100);
+  };
+
   // Формируем полный URL картинки
   const getImageUrl = (imagePath) => {
     if (!imagePath) return null;
-    if (imagePath.startsWith('http')) return imagePath; // уже полный URL
+    if (imagePath.startsWith('http')) return imagePath;
     return `https://su-med-backend-35d3d951c74b.herokuapp.com${imagePath.startsWith('/') ? '' : '/'}${imagePath}`;
   };
 
@@ -84,70 +111,69 @@ const NewsPreview = ({ maxItems = 3 }) => {
 
   if (loading) {
     return (
-      <div className="py-12 bg-gray-50">
+      <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-8">{t('news.latestNews')}</h2>
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-blue-800 mb-6 relative inline-block">
+              {t('news.latestNews')}
+              <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full"></div>
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[...Array(maxItems)].map((_, index) => (
-              <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden animate-pulse">
-                <div className="h-48 bg-gray-300"></div>
-                <div className="p-4">
-                  <div className="h-4 bg-gray-300 rounded mb-2"></div>
-                  <div className="h-6 bg-gray-300 rounded mb-3"></div>
-                  <div className="h-4 bg-gray-300 rounded mb-1"></div>
-                  <div className="h-4 bg-gray-300 rounded w-2/3"></div>
-                </div>
+              <div key={index} className="text-center p-8 bg-white rounded-2xl shadow-xl animate-pulse">
+                <div className="h-48 bg-gray-300 rounded-xl mb-6"></div>
+                <div className="h-4 bg-gray-300 rounded mb-4 w-20 mx-auto"></div>
+                <div className="h-6 bg-gray-300 rounded mb-4"></div>
+                <div className="h-4 bg-gray-300 rounded mb-2"></div>
+                <div className="h-4 bg-gray-300 rounded w-2/3 mx-auto"></div>
               </div>
             ))}
           </div>
         </div>
-      </div>
+      </section>
     );
   }
 
   if (error && newsData.length === 0) {
     return (
-      <div className="py-12 bg-gray-50">
+      <section className="py-20 bg-white">
         <div className="container mx-auto px-4 text-center">
           <p className="text-red-600 mb-4">{t('news.error')}</p>
         </div>
-      </div>
+      </section>
     );
   }
 
   return (
-    <section className="py-12 bg-gray-50">
+    <section className="py-20 bg-white">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold text-blue-800 mb-6 relative inline-block">
             {t('news.latestNews')}
+            <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full"></div>
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             {t('news.previewSubtitle')}
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
-          {newsData.map((item) => (
-            <Link 
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+          {newsData.map((item, index) => (
+            <div 
               key={item.id} 
-              to={`/news/detail/${item.slug || item.id}`}
-              className="group block"
+              className="group cursor-pointer"
+              onClick={() => handleNewsClick(item.slug, item.id)}
             >
-              <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 h-full">
-                <div className="aspect-w-16 aspect-h-9">
+              <div className="text-center p-8 bg-white rounded-2xl shadow-xl transform transition-all duration-700 hover:shadow-2xl hover:-translate-y-2 h-full flex flex-col">
+                <div className="relative overflow-hidden rounded-xl mb-6 flex-shrink-0">
                   <img 
                     src={getImageUrl(item.image_url || item.image)} 
                     alt={item.title}
                     className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                   />
-                </div>
-                <div className="p-6">
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm text-gray-500">
-                      {formatDate(item.published_at || item.date)}
-                    </span>
-                    <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                  <div className="absolute top-4 right-4">
+                    <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
                       (item.category?.name || item.category) === 'news' ? 'bg-blue-100 text-blue-800' :
                       (item.category?.name || item.category) === 'events' ? 'bg-green-100 text-green-800' :
                       'bg-yellow-100 text-yellow-800'
@@ -155,28 +181,45 @@ const NewsPreview = ({ maxItems = 3 }) => {
                       {getCategoryName(item.category?.name || item.category)}
                     </span>
                   </div>
-                  <h3 className="text-lg font-bold text-gray-800 mb-3 group-hover:text-blue-600 transition-colors line-clamp-2">
+                </div>
+                
+                <div className="flex-1 flex flex-col">
+                  <div className="text-sm text-gray-500 mb-3 font-medium">
+                    {formatDate(item.published_at || item.date)}
+                  </div>
+                  
+                  <h3 className="text-xl font-bold text-gray-800 mb-4 group-hover:text-blue-600 transition-colors line-clamp-2 flex-1">
                     {item.title}
                   </h3>
-                  <p className="text-gray-600 text-sm line-clamp-3">
+                  
+                  <p className="text-gray-600 text-sm line-clamp-3 mb-6">
                     {item.summary}
                   </p>
+                  
+                  <div className="mt-auto">
+                    <div className="inline-flex items-center text-blue-600 font-semibold group-hover:text-blue-700 transition-colors">
+                      {t('news.readMore')}
+                      <svg className="ml-2 w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
 
         <div className="text-center">
-          <Link 
-            to="/news"
-            className="inline-flex items-center bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+          <button
+            onClick={handleViewAllNews}
+            className="inline-flex items-center bg-blue-600 text-white px-8 py-4 rounded-xl font-semibold hover:bg-blue-700 transition-colors transform hover:-translate-y-1 shadow-lg hover:shadow-xl"
           >
             {t('news.viewAllNews')}
-            <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="ml-3 w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
-          </Link>
+          </button>
         </div>
       </div>
     </section>
