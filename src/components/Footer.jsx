@@ -51,7 +51,7 @@ const Footer = () => {
   ];
 
   const quickLinks = [
-    { title: t('nav.about'), link: '/about' },
+    { title: t('nav.about'), link: '/hsm/about' },
     { title: t('nav.HSM'), link: '/hsm/about' },
     { title: t('nav.admission'), link: '/admissions/procedure' },
     { title: t('nav.news'), link: '/news' },
