@@ -636,7 +636,7 @@ const HSM = () => {
                 </div>
                 
                 <div className="mt-6 md:mt-8 flex justify-center">
-                  <a href="/admissions/apply">
+                  <a href="/admissions/apply" target="_blank" rel="noopener noreferrer">
                   <button className="px-4 py-2 md:px-6 md:py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm md:text-base">
                     {t('academics.programDetails.applyButton')}
                   </button>
