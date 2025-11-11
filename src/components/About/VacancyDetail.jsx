@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Briefcase, Check, DollarSign, MapPin } from 'lucide-react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import careersAPI from '../../services/careersAPI';
@@ -63,10 +64,10 @@ const VacancyDetail = () => {
     }
     switch (category) {
       case 'academic': return '🏫';
-      case 'administrative': return '💼';
-      case 'technical': return '🖥️';
-      case 'service': return '📚';
-      default: return '💼';
+      case 'administrative': return '<Briefcase className="w-5 h-5" />';
+      case 'technical': return '<Monitor className="w-5 h-5" />';
+      case 'service': return '<BookOpen className="w-5 h-5" />';
+      default: return '<Briefcase className="w-5 h-5" />';
     }
   };
 
@@ -190,7 +191,7 @@ const VacancyDetail = () => {
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {vacancy.salary_display && (
                 <div className="text-center">
-                  <div className="text-2xl mb-2">💰</div>
+                  <DollarSign className="w-6 h-6" />
                   <div className="text-sm text-gray-500">{t('careers.salary')}</div>
                   <div className="font-semibold">{vacancy.salary_display}</div>
                 </div>
@@ -198,7 +199,7 @@ const VacancyDetail = () => {
               
               {vacancy.location && (
                 <div className="text-center">
-                  <div className="text-2xl mb-2">📍</div>
+                  <MapPin className="w-6 h-6" />
                   <div className="text-sm text-gray-500">{t('careers.location')}</div>
                   <div className="font-semibold">{vacancy.location}</div>
                 </div>
@@ -206,7 +207,7 @@ const VacancyDetail = () => {
 
               {vacancy.employment_type && (
                 <div className="text-center">
-                  <div className="text-2xl mb-2">⏰</div>
+                  <div className="text-2xl mb-2"><Clock className="w-5 h-5" /></div>
                   <div className="text-sm text-gray-500">{t('careers.employment_type')}</div>
                   <div className="font-semibold">{t(`careers.employment_types.${vacancy.employment_type}`)}</div>
                 </div>
@@ -214,7 +215,7 @@ const VacancyDetail = () => {
 
               {vacancy.experience_years && (
                 <div className="text-center">
-                  <div className="text-2xl mb-2">💼</div>
+                  <Briefcase className="w-6 h-6" />
                   <div className="text-sm text-gray-500">{t('careers.experience')}</div>
                   <div className="font-semibold">{vacancy.experience_years}</div>
                 </div>
@@ -261,7 +262,7 @@ const VacancyDetail = () => {
                   <div className="space-y-2">
                     {vacancy.requirements_list.map((requirement, index) => (
                       <div key={index} className="flex items-start">
-                        <span className="text-green-600 mr-2 mt-1">✓</span>
+                        <Check className="w-4 h-4" />
                         <span className="text-gray-700">{requirement}</span>
                       </div>
                     ))}

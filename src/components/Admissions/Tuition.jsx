@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Lightbulb, Phone } from 'lucide-react';
 
 const Tuition = () => {
   const { t, i18n } = useTranslation();
@@ -300,7 +301,7 @@ const Tuition = () => {
         <div className="mt-12 grid md:grid-cols-2 gap-8">
           <div className="bg-blue-50 p-6 rounded-lg">
             <h4 className="text-lg font-semibold mb-3 text-blue-800">
-              💡 {t('tuition.tips.title')}
+              <Lightbulb className="w-5 h-5" /> {t('tuition.tips.title')}
             </h4>
             <ul className="space-y-2 text-sm text-blue-700">
               <li>• {t('tuition.tips.earlyPayment')}</li>
@@ -312,7 +313,7 @@ const Tuition = () => {
           
           <div className="bg-green-50 p-6 rounded-lg">
             <h4 className="text-lg font-semibold mb-3 text-green-800">
-              📞 {t('tuition.contact.title')}
+              <Phone className="w-5 h-5" /> {t('tuition.contact.title')}
             </h4>
             <p className="text-sm text-green-700 mb-3">
               {t('tuition.contact.description')}

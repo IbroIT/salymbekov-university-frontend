@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Check } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 const Requirements = () => {
@@ -180,23 +181,23 @@ const Requirements = () => {
                 </h4>
                 <ul className="space-y-3">
                   <li className="flex items-start">
-                    <span className="text-green-600 mr-2">✓</span>
+                    <Check className="w-4 h-4" />
                     <span>{t('requirements.documents.fullList.diploma')}</span>
                   </li>
                   <li className="flex items-start">
-                    <span className="text-green-600 mr-2">✓</span>
+                    <Check className="w-4 h-4" />
                     <span>{t('requirements.documents.fullList.passport')}</span>
                   </li>
                   <li className="flex items-start">
-                    <span className="text-green-600 mr-2">✓</span>
+                    <Check className="w-4 h-4" />
                     <span>{t('requirements.documents.fullList.medicalCertificate')}</span>
                   </li>
                   <li className="flex items-start">
-                    <span className="text-green-600 mr-2">✓</span>
+                    <Check className="w-4 h-4" />
                     <span>{t('requirements.documents.fullList.photos')}</span>
                   </li>
                   <li className="flex items-start">
-                    <span className="text-green-600 mr-2">✓</span>
+                    <Check className="w-4 h-4" />
                     <span>{t('requirements.documents.fullList.ortCertificate')}</span>
                   </li>
                 </ul>
@@ -233,7 +234,7 @@ const Requirements = () => {
         <div className="mt-12 grid md:grid-cols-2 gap-8">
           <div className="bg-blue-50 p-6 rounded-lg">
             <h4 className="text-lg font-semibold mb-3 text-blue-800">
-              📋 {t('requirements.importantInfo.title')}
+              <ClipboardList className="w-5 h-5" /> {t('requirements.importantInfo.title')}
             </h4>
             <ul className="space-y-2 text-sm text-blue-700">
               <li>• {t('requirements.importantInfo.translation')}</li>
@@ -244,7 +245,7 @@ const Requirements = () => {
           
           <div className="bg-green-50 p-6 rounded-lg">
             <h4 className="text-lg font-semibold mb-3 text-green-800">
-              📞 {t('requirements.help.title')}
+              <Phone className="w-5 h-5" /> {t('requirements.help.title')}
             </h4>
             <p className="text-sm text-green-700 mb-3">
               {t('requirements.help.description')}

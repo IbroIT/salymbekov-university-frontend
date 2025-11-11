@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { DollarSign, File, FileEdit, Mail, Phone, Search } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 const FAQ = () => {
@@ -13,9 +14,9 @@ const FAQ = () => {
 
   const categories = [
     { id: 'general', name: t('admissions.faq.categories.general'), icon: '❓', count: 8 },
-    { id: 'documents', name: t('admissions.faq.categories.documents'), icon: '📄', count: 6 },
+    { id: 'documents', name: t('admissions.faq.categories.documents'), icon: "File", count: 6 },
     { id: 'exams', name: t('admissions.faq.categories.exams'), icon: '✍️', count: 7 },
-    { id: 'payment', name: t('admissions.faq.categories.payment'), icon: '💰', count: 5 },
+    { id: 'payment', name: t('admissions.faq.categories.payment'), icon: "DollarSign", count: 5 },
     { id: 'hostel', name: t('admissions.faq.categories.hostel'), icon: '🏠', count: 4 }
   ];
 
@@ -251,9 +252,7 @@ const FAQ = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full p-4 pl-12 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
               />
-              <div className="absolute left-4 top-4 text-gray-400">
-                🔍
-              </div>
+              <Search className="w-6 h-6" />
               {searchTerm && (
                 <button
                   onClick={() => setSearchTerm('')}
@@ -290,7 +289,8 @@ const FAQ = () => {
                     }`}
                   >
                     <div className="flex items-center">
-                      <span className="mr-3">{category.icon}</span>
+                      <span className="mr-3">
+              </span>
                       {category.name}
                     </div>
                     <span className="text-xs bg-gray-200 text-gray-600 px-2 py-1 rounded-full">
@@ -316,13 +316,13 @@ const FAQ = () => {
                 <div className="text-center py-8 text-gray-500">
                   {searchTerm ? (
                     <>
-                      <div className="text-4xl mb-4">🔍</div>
+                      <Search className="w-6 h-6" />
                       <p className="text-lg mb-2">{t('faq.search.noResults')}</p>
                       <p className="text-sm">{t('faq.search.tryDifferent')}</p>
                     </>
                   ) : (
                     <>
-                      <div className="text-4xl mb-4">📝</div>
+                      <FileEdit className="w-6 h-6" />
                       <p>{t('admissions.faq.noQuestionsInCategory')}</p>
                     </>
                   )}
@@ -480,7 +480,7 @@ const FAQ = () => {
           }`}>
             <div className="flex items-center">
               <div className="mr-2">
-                {submitStatus === 'success' ? '✅' : '❌'}
+                {submitStatus === 'success' ? '<CheckCircle className="w-5 h-5" />' : '<XCircle className="w-5 h-5" />'}
               </div>
               <div>
                 {submitStatus === 'success' 
@@ -500,7 +500,7 @@ const FAQ = () => {
           
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="text-4xl mb-3">📞</div>
+              <Phone className="w-6 h-6" />
               <h4 className="font-semibold text-gray-800 mb-2">{t('admissions.faq.admissionsOffice')}</h4>
               <p className="text-indigo-600 font-medium text-lg">+996 312 123 456</p>
               <p className="text-gray-600 mt-1">{t('admissions.faq.schedule')}</p>
@@ -508,7 +508,7 @@ const FAQ = () => {
             </div>
             
             <div className="text-center">
-              <div className="text-4xl mb-3">✉️</div>
+              <Mail className="w-6 h-6" />
               <h4 className="font-semibold text-gray-800 mb-2">{t('admissions.faq.email')}</h4>
               <p className="text-indigo-600 font-medium">admission@salymbekov.edu.kg</p>
               <p className="text-gray-600 mt-1">{t('admissions.faq.responseTime24')}</p>

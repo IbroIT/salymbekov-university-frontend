@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { CheckCircle, FileText, Lightbulb } from 'lucide-react';
 
 const ApplicationForm = ({ vacancy, onClose }) => {
   const [formData, setFormData] = useState({
@@ -115,7 +116,7 @@ const ApplicationForm = ({ vacancy, onClose }) => {
             {/* Personal Information */}
             <div className="bg-gray-50 rounded-lg p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                📝 Личная информация
+                <FileText className="w-5 h-5" /> Личная информация
               </h3>
               
               <div className="grid md:grid-cols-2 gap-6">
@@ -192,14 +193,14 @@ const ApplicationForm = ({ vacancy, onClose }) => {
                   }`}
                 />
                 <p className="text-sm text-gray-500 mt-2">
-                  💡 Принимаются файлы форматов: PDF, DOC, DOCX (до 5 МБ)
+                  <Lightbulb className="w-5 h-5" /> Принимаются файлы форматов: PDF, DOC, DOCX (до 5 МБ)
                 </p>
                 {errors.cv && <p className="text-red-500 text-sm mt-1">{errors.cv}</p>}
                 
                 {formData.cv && (
                   <div className="mt-3 p-3 bg-green-50 rounded-lg border border-green-200">
                     <p className="text-sm text-green-700">
-                      ✅ Файл загружен: <strong>{formData.cv.name}</strong> ({Math.round(formData.cv.size / 1024)} КБ)
+                      <CheckCircle className="w-5 h-5" /> Файл загружен: <strong>{formData.cv.name}</strong> ({Math.round(formData.cv.size / 1024)} КБ)
                     </p>
                   </div>
                 )}

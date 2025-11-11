@@ -171,7 +171,7 @@ export const managementConfig = {
     types: {
       success: { color: '#10B981', icon: '✅' },
       error: { color: '#EF4444', icon: '❌' },
-      warning: { color: '#F59E0B', icon: '⚠️' },
+      warning: { color: '#F59E0B', icon: "AlertTriangle" },
       info: { color: '#3B82F6', icon: 'ℹ️' }
     }
   },

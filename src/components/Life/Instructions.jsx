@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Building, DollarSign, File, FileEdit, FileText, GraduationCap, Star } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { studentLifeAPI } from '../../services/studentLifeService';
 import {
@@ -89,13 +90,13 @@ const Instructions = () => {
   }, [savedGuides]);
 
   const sections = [
-    { id: 'all', name: t('studentLife.instructions.allInstructions'), icon: '📋' },
-    { id: 'academic', name: t('studentLife.instructions.academic'), icon: '🎓' },
-    { id: 'administrative', name: t('studentLife.instructions.administrative'), icon: '🏢' },
-    { id: 'documents', name: t('studentLife.instructions.documents'), icon: '📄' },
-    { id: 'financial', name: t('studentLife.instructions.financial'), icon: '💰' },
-    { id: 'appeals', name: t('studentLife.instructions.appeals'), icon: '📝' },
-    { id: 'saved', name: t('studentLife.instructions.savedInstructions'), icon: '⭐' }
+    { id: 'all', name: t('studentLife.instructions.allInstructions'), Icon: FileText },
+    { id: 'academic', name: t('studentLife.instructions.academic'), Icon: GraduationCap },
+    { id: 'administrative', name: t('studentLife.instructions.administrative'), Icon: Building },
+    { id: 'documents', name: t('studentLife.instructions.documents'), Icon: File },
+    { id: 'financial', name: t('studentLife.instructions.financial'), Icon: DollarSign },
+    { id: 'appeals', name: t('studentLife.instructions.appeals'), Icon: FileEdit },
+    { id: 'saved', name: t('studentLife.instructions.savedInstructions'), Icon: Star }
   ];
 
   const changeActiveSection = (sectionId) => {
@@ -119,14 +120,21 @@ const Instructions = () => {
 
   const getIconComponent = (iconName) => {
     const iconMap = {
-      'CalendarDaysIcon': CalendarDaysIcon,
-      'UserGroupIcon': UserGroupIcon,
-      'ClipboardDocumentListIcon': ClipboardDocumentListIcon,
-      'DocumentTextIcon': DocumentTextIcon,
-      'AcademicCapIcon': DocumentTextIcon,
-      'BuildingOfficeIcon': DocumentTextIcon
+      'FileText': FileText,
+      'GraduationCap': GraduationCap,
+      'Building': Building,
+      'File': File,
+      'DollarSign': DollarSign,
+      'FileEdit': FileEdit,
+      'Star': Star,
+      'CalendarDaysIcon': FileText,
+      'UserGroupIcon': FileText,
+      'ClipboardDocumentListIcon': FileText,
+      'DocumentTextIcon': FileText,
+      'AcademicCapIcon': GraduationCap,
+      'BuildingOfficeIcon': Building
     };
-    return iconMap[iconName] || DocumentTextIcon;
+    return iconMap[iconName] || FileText;
   };
 
   const filteredInstructions = activeSection === 'saved'
@@ -191,7 +199,7 @@ const Instructions = () => {
       <div className="space-y-6">
         <div className="flex items-center mb-6">
           <div className="p-3 bg-blue-100 rounded-xl mr-4">
-            <span className="text-2xl">📋</span>
+            <FileText className="w-4 h-4" />
           </div>
           <h2 className="text-3xl font-bold text-gray-900">
             {activeSection === 'all'
@@ -483,49 +491,9 @@ const Instructions = () => {
           </p>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-6">
-          {/* Боковая навигация */}
-          <div className="lg:w-1/4">
-            <div className="bg-white rounded-xl shadow-lg overflow-hidden sticky top-6">
-              <div className="bg-gradient-to-r from-blue-600 to-indigo-700 p-4 text-white font-bold text-lg">
-                {t('studentLife.instructions.categories')}
-              </div>
-              <nav className="p-2">
-                <ul className="space-y-1">
-                  {sections.map((section) => {
-                    const sectionCount = section.id === 'saved'
-                      ? savedGuides.length
-                      : section.id === 'all'
-                        ? instructionsData.length
-                        : instructionsData.filter(guide => guide.category === section.id).length;
-
-                    return (
-                      <li key={section.id}>
-                        <button
-                          className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 flex items-center justify-between ${activeSection === section.id
-                              ? "bg-blue-100 text-blue-700 font-medium shadow-sm"
-                              : "text-gray-700 hover:bg-gray-100"
-                            }`}
-                          onClick={() => changeActiveSection(section.id)}
-                        >
-                          <div className="flex items-center">
-                            <span className="text-lg mr-3">{section.icon}</span>
-                            {section.name}
-                          </div>
-                          <span className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded-full">
-                            {sectionCount}
-                          </span>
-                        </button>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </nav>
-            </div>
-          </div>
-
+        <div>
           {/* Основной контент */}
-          <div className="lg:w-3/4">
+          <div className="w-full">
             <div className="bg-white rounded-xl shadow-xl p-6 transition-all duration-500">
               {renderContent()}
             </div>

@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { newAboutAPI } from '../../services/newAboutAPI';
+import { XCircle } from 'lucide-react';
 
 // Компонент модального окна для полного описания
 const AchievementModal = ({ achievement, isOpen, onClose, getBorderColor, t }) => {
@@ -16,7 +17,9 @@ const AchievementModal = ({ achievement, isOpen, onClose, getBorderColor, t }) =
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center">
                 <div className={`p-3 rounded-full ${achievement.iconColor} text-white mr-4`}>
-                  <span className="text-xl">{achievement.icon}</span>
+                  <span className="text-xl">
+                {achievement.icon}
+              </span>
                 </div>
                 <h2 className="text-2xl font-bold text-gray-800">{achievement.title}</h2>
               </div>
@@ -90,7 +93,9 @@ const AchievementCard = ({ achievement, index, getBorderColor, t, onLearnMore })
         {/* Заголовок и иконка */}
         <div className="flex items-start mb-4">
           <div className={`p-3 rounded-full ${achievement.iconColor} text-white mr-4 flex-shrink-0`}>
-            <span className="text-xl">{achievement.icon}</span>
+            <span className="text-xl">
+                {achievement.icon}
+              </span>
           </div>
           <h3 className="text-lg font-bold text-gray-800 leading-tight">
             {achievement.title}
@@ -301,7 +306,7 @@ const AchievementsPage = () => {
     return (
       <section className="py-16 bg-gradient-to-br from-white to-blue-50">
         <div className="container mx-auto px-4 text-center">
-          <div className="text-red-500 mb-4">❌</div>
+          <div className="text-red-500 mb-4"><XCircle className="w-5 h-5" /></div>
         </div>
       </section>
     );

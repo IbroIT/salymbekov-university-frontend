@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { emailConfig } from '../config/emailConfig';
+import { CheckCircle, ClipboardList, Lightbulb, Mail, Settings, Wrench } from 'lucide-react';
 
 const EmailSettings = () => {
   const [emails, setEmails] = useState({
@@ -29,13 +30,13 @@ const EmailSettings = () => {
   return (
     <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-lg">
       <h2 className="text-2xl font-bold mb-6 text-gray-800">
-        ⚙️ Настройки Email адресов
+        <Settings className="w-5 h-5" /> Настройки Email адресов
       </h2>
       
       <div className="space-y-6">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            📧 Email для заявок на поступление
+            <Mail className="w-5 h-5" /> Email для заявок на поступление
           </label>
           <input
             type="email"
@@ -67,7 +68,7 @@ const EmailSettings = () => {
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            🔧 Email для технической поддержки
+            <Wrench className="w-5 h-5" /> Email для технической поддержки
           </label>
           <input
             type="email"
@@ -92,13 +93,13 @@ const EmailSettings = () => {
 
         {saved && (
           <div className="p-3 bg-green-100 border border-green-400 text-green-700 rounded">
-            ✅ Настройки успешно сохранены!
+            <CheckCircle className="w-5 h-5" /> Настройки успешно сохранены!
           </div>
         )}
       </div>
 
       <div className="mt-8 p-4 bg-gray-50 rounded-lg">
-        <h3 className="font-bold text-gray-800 mb-2">📋 Текущие адреса:</h3>
+        <h3 className="font-bold text-gray-800 mb-2"><ClipboardList className="w-5 h-5" /> Текущие адреса:</h3>
         <ul className="text-sm text-gray-600 space-y-1">
           <li><strong>Заявки:</strong> {emails.admissions}</li>
           <li><strong>Вопросы:</strong> {emails.info}</li>
@@ -107,7 +108,7 @@ const EmailSettings = () => {
       </div>
 
       <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-        <h3 className="font-bold text-blue-800 mb-2">💡 Рекомендации:</h3>
+        <h3 className="font-bold text-blue-800 mb-2"><Lightbulb className="w-5 h-5" /> Рекомендации:</h3>
         <ul className="text-sm text-blue-700 space-y-1">
           <li>• Используйте Gmail адреса для лучшей совместимости</li>
           <li>• Создайте отдельные адреса для разных типов писем</li>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { AlertTriangle } from 'lucide-react';
 
 const Grants = () => {
   const { t, i18n } = useTranslation();
@@ -298,7 +299,7 @@ const Grants = () => {
                 <p className="text-gray-600 text-sm mb-4">
                   <span className="font-medium">{t('research.grants.deadline')}:</span> {formatDate(grant.deadline)}
                   {grant.is_deadline_soon && (
-                    <span className="ml-2 text-red-600 text-xs">⚠️ {t('research.grants.deadlineSoon')}</span>
+                    <span className="ml-2 text-red-600 text-xs"><AlertTriangle className="w-5 h-5" /> {t('research.grants.deadlineSoon')}</span>
                   )}
                 </p>
 

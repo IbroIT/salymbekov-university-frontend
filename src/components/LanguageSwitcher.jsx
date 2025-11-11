@@ -15,9 +15,9 @@ const LanguageSwitcher = ({
 
   // Языки с флагами и названиями
   const languages = [
-    { code: 'en', name: 'English', icon: EnIcon },
-    { code: 'ru', name: 'Русский', icon: RuIcon },
-    { code: 'kg', name: 'Кыргызча', icon: KgIcon }
+    { code: 'en', name: 'English', icon: "EnIcon" },
+    { code: 'ru', name: 'Русский', icon: "RuIcon" },
+    { code: 'kg', name: 'Кыргызча', icon: "KgIcon" }
   ];
 
   // Получение текущего языка

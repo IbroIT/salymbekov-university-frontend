@@ -190,46 +190,6 @@ const CareersMain = () => {
           </div>
         )}
 
-        {/* Why Join Us Section */}
-        <div className="bg-white rounded-lg shadow-lg p-8">
-          <h2 className="text-3xl font-bold text-center text-blue-900 mb-8">
-            {t('careers.benefits.title')}
-          </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">🎓</span>
-              </div>
-              <h3 className="text-xl font-semibold text-blue-900 mb-2">{t('careers.benefits.development.title')}</h3>
-              <p className="text-gray-600">{t('careers.benefits.development.description')}</p>
-            </div>
-            
-            <div className="text-center">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">🤝</span>
-              </div>
-              <h3 className="text-xl font-semibold text-blue-900 mb-2">{t('careers.benefits.team.title')}</h3>
-              <p className="text-gray-600">{t('careers.benefits.team.description')}</p>
-            </div>
-            
-            <div className="text-center">
-              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">💰</span>
-              </div>
-              <h3 className="text-xl font-semibold text-blue-900 mb-2">{t('careers.benefits.stability.title')}</h3>
-              <p className="text-gray-600">{t('careers.benefits.stability.description')}</p>
-            </div>
-            
-            <div className="text-center">
-              <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">🏆</span>
-              </div>
-              <h3 className="text-xl font-semibold text-blue-900 mb-2">{t('careers.benefits.prestige.title')}</h3>
-              <p className="text-gray-600">{t('careers.benefits.prestige.description')}</p>
-            </div>
-          </div>
-        </div>
-
         {/* Contact Section */}
         <div className="bg-blue-900 text-white rounded-lg p-8 mt-8">
           <div className="text-center">

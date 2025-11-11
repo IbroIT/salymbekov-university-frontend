@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { DollarSign, GraduationCap, Handshake, Trophy } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import VacancyCard from './VacancyCard';
@@ -169,7 +170,7 @@ const CareersMain = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
               <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">🎓</span>
+                <GraduationCap className="w-4 h-4" />
               </div>
               <h3 className="text-xl font-semibold text-blue-900 mb-2">{t('careers.benefits.development.title')}</h3>
               <p className="text-gray-600">{t('careers.benefits.development.description')}</p>
@@ -177,7 +178,7 @@ const CareersMain = () => {
             
             <div className="text-center">
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">🤝</span>
+                <Handshake className="w-4 h-4" />
               </div>
               <h3 className="text-xl font-semibold text-blue-900 mb-2">{t('careers.benefits.team.title')}</h3>
               <p className="text-gray-600">{t('careers.benefits.team.description')}</p>
@@ -185,7 +186,7 @@ const CareersMain = () => {
             
             <div className="text-center">
               <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">💰</span>
+                <DollarSign className="w-4 h-4" />
               </div>
               <h3 className="text-xl font-semibold text-blue-900 mb-2">{t('careers.benefits.stability.title')}</h3>
               <p className="text-gray-600">{t('careers.benefits.stability.description')}</p>
@@ -193,7 +194,7 @@ const CareersMain = () => {
             
             <div className="text-center">
               <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">🏆</span>
+                <Trophy className="w-4 h-4" />
               </div>
               <h3 className="text-xl font-semibold text-blue-900 mb-2">{t('careers.benefits.prestige.title')}</h3>
               <p className="text-gray-600">{t('careers.benefits.prestige.description')}</p>

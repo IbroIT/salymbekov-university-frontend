@@ -1,4 +1,5 @@
 import React from 'react';
+import { DollarSign, File, FileText, Globe, GraduationCap, Handshake, Trophy } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
@@ -18,7 +19,7 @@ const ForForeignCitizens = () => {
         t('forForeignCitizens.steps.step1.doc4', 'Языковой сертификат (при наличии)')
       ],
       timing: t('forForeignCitizens.steps.step1.timing', '2-4 недели'),
-      icon: '📄'
+      icon: "File"
     },
     {
       step: 2,
@@ -54,7 +55,7 @@ const ForForeignCitizens = () => {
         t('forForeignCitizens.steps.step4.doc3', 'Получение студенческого билета'),
       ],
       timing: t('forForeignCitizens.steps.step4.timing', '1 неделя'),
-      icon: '🎓'
+      icon: "GraduationCap"
     }
   ];
 
@@ -64,7 +65,7 @@ const ForForeignCitizens = () => {
       title: t('forForeignCitizens.links.requirements.title', 'Требования'),
       description: t('forForeignCitizens.links.requirements.desc', 'Документы, языковые и визовые требования'),
       link: '/admissions/requirements/foreign-citizens',
-      icon: '📋',
+      icon: "FileText",
       color: 'green'
     },
     {
@@ -78,7 +79,7 @@ const ForForeignCitizens = () => {
       title: t('forForeignCitizens.links.tuition.title', 'Стоимость'),
       description: t('forForeignCitizens.links.tuition.desc', 'Стоимость обучения и дополнительные расходы'),
       link: '/admissions/tuition/foreign-citizens',
-      icon: '💰',
+      icon: "DollarSign",
       color: 'purple'
     }
   ];
@@ -88,22 +89,22 @@ const ForForeignCitizens = () => {
     {
       title: t('forForeignCitizens.advantages.quality.title', 'Качественное образование'),
       description: t('forForeignCitizens.advantages.quality.desc', 'Аккредитованные программы международного уровня'),
-      icon: '🏆'
+      icon: "Trophy"
     },
     {
       title: t('forForeignCitizens.advantages.cost.title', 'Доступная стоимость'),
       description: t('forForeignCitizens.advantages.cost.desc', 'Конкурентные цены на обучение и проживание'),
-      icon: '💰'
+      icon: "DollarSign"
     },
     {
       title: t('forForeignCitizens.advantages.recognition.title', 'Признание диплома'),
       description: t('forForeignCitizens.advantages.recognition.desc', 'Дипломы признаются в странах СНГ и ЕС'),
-      icon: '🌍'
+      icon: "Globe"
     },
     {
       title: t('forForeignCitizens.advantages.support.title', 'Полная поддержка'),
       description: t('forForeignCitizens.advantages.support.desc', 'Помощь с визой, жильем и адаптацией'),
-      icon: '🤝'
+      icon: "Handshake"
     },
     {
       title: t('forForeignCitizens.advantages.language.title', 'Языки обучения'),
@@ -126,7 +127,7 @@ const ForForeignCitizens = () => {
     { name: t('forForeignCitizens.countries.india', 'Индия'), count: '35+', flag: '🇮🇳' },
     { name: t('forForeignCitizens.countries.turkey', 'Турция'), count: '20+', flag: '🇹🇷' },
     { name: t('forForeignCitizens.countries.pakistan', 'Пакистан'), count: '15+', flag: '🇵🇰' },
-    { name: t('forForeignCitizens.countries.other', 'Другие'), count: '30+', flag: '🌍' }
+    { name: t('forForeignCitizens.countries.other', 'Другие'), count: '30+', flag: '<Globe className="w-5 h-5" />' }
   ];
 
   const getColorClasses = (color) => {
@@ -166,7 +167,8 @@ const ForForeignCitizens = () => {
                 className={`block border-2 rounded-lg p-6 transition-all transform hover:scale-105 ${getColorClasses(link.color)}`}
               >
                 <div className="text-center">
-                  <span className="text-4xl mb-3 block">{link.icon}</span>
+                  <span className="text-4xl mb-3 block">
+              </span>
                   <h3 className="text-xl font-semibold mb-2">{link.title}</h3>
                   <p className="text-sm opacity-80">{link.description}</p>
                 </div>
@@ -199,7 +201,8 @@ const ForForeignCitizens = () => {
                   <div className="flex-1">
                     <div className="bg-gray-50 rounded-lg p-6">
                       <div className="flex items-center mb-3">
-                        <span className="text-2xl mr-3">{step.icon}</span>
+                        <span className="text-2xl mr-3">
+              </span>
                         <h3 className="text-xl font-semibold text-gray-800">{step.title}</h3>
                         <span className="ml-auto bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
                           {step.timing}
@@ -240,7 +243,8 @@ const ForForeignCitizens = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {advantages.map((advantage, index) => (
               <div key={index} className="border border-gray-200 rounded-lg p-6 text-center hover:shadow-md transition-shadow">
-                <span className="text-4xl mb-3 block">{advantage.icon}</span>
+                <span className="text-4xl mb-3 block">
+              </span>
                 <h3 className="text-lg font-semibold text-gray-800 mb-2">{advantage.title}</h3>
                 <p className="text-gray-600 text-sm">{advantage.description}</p>
               </div>
@@ -424,7 +428,7 @@ const ForForeignCitizens = () => {
 
           <div className="text-center">
             <div className="inline-flex items-center bg-green-100 text-green-800 px-6 py-3 rounded-full">
-              <span className="text-2xl mr-2">🌍</span>
+              <Globe className="w-4 h-4" />
               <span className="font-semibold">
                 {t('forForeignCitizens.totalStudents', 'Более 450 международных студентов из 25+ стран')}
               </span>

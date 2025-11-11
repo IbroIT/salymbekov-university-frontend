@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { newAboutAPI } from '../../services/newAboutAPI';
 import SEOComponent from '../SEO/SEOComponent';
+import { AlertTriangle, ClipboardList } from 'lucide-react';
 
 const Founders = () => {
   const { t, i18n } = useTranslation();
@@ -72,7 +73,7 @@ const Founders = () => {
     return (
       <div className="min-h-screen bg-gradient-to-br from-white to-blue-50 py-8 px-4 flex items-center justify-center">
         <div className="text-center">
-          <div className="text-red-500 text-2xl mb-4">⚠️</div>
+          <div className="text-red-500 text-2xl mb-4"><AlertTriangle className="w-5 h-5" /></div>
           <p className="text-gray-600 mb-4">{t('common.error', 'Error loading data')}</p>
           <p className="text-sm text-gray-500">{error}</p>
         </div>
@@ -85,7 +86,7 @@ const Founders = () => {
     return (
       <div className="min-h-screen bg-gradient-to-br from-white to-blue-50 py-8 px-4 flex items-center justify-center">
         <div className="text-center">
-          <div className="text-gray-400 text-2xl mb-4">📋</div>
+          <div className="text-gray-400 text-2xl mb-4"><ClipboardList className="w-5 h-5" /></div>
           <p className="text-gray-600">{t('founders.noData', 'No founders data available')}</p>
         </div>
       </div>
@@ -107,9 +108,6 @@ const Founders = () => {
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             {t('founders.title')}
           </h1>
-          <p className="text-lg text-gray-700 max-w-3xl mx-auto">
-            {t('founders.subtitle')}
-          </p>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-6">

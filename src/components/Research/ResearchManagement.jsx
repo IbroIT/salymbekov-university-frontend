@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Building2, Crown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { researchAPI } from '../../services/researchService';
 
@@ -22,9 +23,9 @@ const ResearchManagement = () => {
   }, []);
 
   const sections = [
-    { id: 'management', name: t('research.management.tabs.management'), icon: '👑' },
-    { id: 'councils', name: t('research.management.tabs.councils'), icon: '🏛️' },
-    { id: 'commissions', name: t('research.management.tabs.commissions'), icon: '⚖️' }
+    { id: 'management', name: t('research.management.tabs.management'), icon: "Crown" },
+    { id: 'councils', name: t('research.management.tabs.councils'), icon: Building2 },
+    { id: 'commissions', name: t('research.management.tabs.commissions'), icon: '<Scale className="w-5 h-5" />' }
   ];
 
   const fetchData = async () => {
@@ -115,7 +116,7 @@ const ResearchManagement = () => {
     <div className="space-y-6">
       <div className="flex items-center mb-6">
         <div className="p-3 bg-blue-100 rounded-xl mr-4">
-          <span className="text-2xl">👑</span>
+          <Crown className="w-4 h-4" />
         </div>
         <h2 className="text-3xl font-bold text-gray-900">
           {t('research.management.tabs.management')}
@@ -186,7 +187,7 @@ const ResearchManagement = () => {
                           href={`mailto:${person.contact_email}`}
                           className="text-blue-600 hover:text-blue-800 text-sm"
                         >
-                          📧 {person.contact_email}
+                          <Mail className="w-5 h-5" /> {person.contact_email}
                         </a>
                       )}
                       {person.contact_phone && (
@@ -194,7 +195,7 @@ const ResearchManagement = () => {
                           href={`tel:${person.contact_phone}`}
                           className="text-blue-600 hover:text-blue-800 text-sm"
                         >
-                          📞 {person.contact_phone}
+                          <Phone className="w-5 h-5" /> {person.contact_phone}
                         </a>
                       )}
                     </div>
@@ -212,7 +213,7 @@ const ResearchManagement = () => {
     <div className="space-y-6">
       <div className="flex items-center mb-6">
         <div className="p-3 bg-blue-100 rounded-xl mr-4">
-          <span className="text-2xl">🏛️</span>
+          <Building2 className="w-4 h-4" />
         </div>
         <h2 className="text-3xl font-bold text-gray-900">
           {t('research.management.tabs.councils')}
@@ -270,7 +271,7 @@ const ResearchManagement = () => {
                     href={`mailto:${council.contact_email}`}
                     className="text-blue-600 hover:text-blue-800 text-sm"
                   >
-                    📧 {council.contact_email}
+                    <Mail className="w-5 h-5" /> {council.contact_email}
                   </a>
                 )}
                 {council.contact_phone && (
@@ -278,7 +279,7 @@ const ResearchManagement = () => {
                     href={`tel:${council.contact_phone}`}
                     className="text-blue-600 hover:text-blue-800 text-sm"
                   >
-                    📞 {council.contact_phone}
+                    <Phone className="w-5 h-5" /> {council.contact_phone}
                   </a>
                 )}
               </div>
@@ -293,7 +294,7 @@ const ResearchManagement = () => {
     <div className="space-y-6">
       <div className="flex items-center mb-6">
         <div className="p-3 bg-blue-100 rounded-xl mr-4">
-          <span className="text-2xl">⚖️</span>
+          <span className="text-2xl"><Scale className="w-5 h-5" /></span>
         </div>
         <h2 className="text-3xl font-bold text-gray-900">
           {t('research.management.tabs.commissions')}
@@ -346,7 +347,7 @@ const ResearchManagement = () => {
                           href={`mailto:${commission.contact_email}`}
                           className="text-blue-600 hover:text-blue-800 text-sm"
                         >
-                          📧 {commission.contact_email}
+                          <Mail className="w-5 h-5" /> {commission.contact_email}
                         </a>
                       )}
                       {commission.contact_phone && (
@@ -354,7 +355,7 @@ const ResearchManagement = () => {
                           href={`tel:${commission.contact_phone}`}
                           className="text-blue-600 hover:text-blue-800 text-sm"
                         >
-                          📞 {commission.contact_phone}
+                          <Phone className="w-5 h-5" /> {commission.contact_phone}
                         </a>
                       )}
                     </div>
@@ -458,7 +459,8 @@ const ResearchManagement = () => {
                           onClick={() => changeActiveSection(section.id)}
                         >
                           <div className="flex items-center">
-                            <span className="text-lg mr-3">{section.icon}</span>
+                            <span className="text-lg mr-3">
+              </span>
                             {section.name}
                           </div>
                           <span className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded-full">

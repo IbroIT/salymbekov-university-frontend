@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { BookOpen, FileEdit, FileText, GraduationCap, Hospital, Lightbulb, PartyPopper } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 const ApplyCitizensKG = () => {
@@ -12,21 +13,21 @@ const ApplyCitizensKG = () => {
       title: t('applyCitizens.step1.title', 'Подача документов'),
       description: t('applyCitizens.step1.desc', 'Сбор и подача необходимых документов'),
       duration: t('applyCitizens.step1.duration', '1-2 недели'),
-      icon: '📋'
+      Icon: FileText
     },
     {
       id: 2,
       title: t('applyCitizens.step2.title', 'Сдача экзаменов'),
       description: t('applyCitizens.step2.desc', 'Прохождение вступительных испытаний'),
       duration: t('applyCitizens.step2.duration', '1 день'),
-      icon: '📝'
+      Icon: FileEdit
     },
     {
       id: 3,
       title: t('applyCitizens.step3.title', 'Зачисление'),
       description: t('applyCitizens.step3.desc', 'Получение результатов и зачисление'),
       duration: t('applyCitizens.step3.duration', '1-2 недели'),
-      icon: '🎓'
+      Icon: GraduationCap
     }
   ];
 
@@ -45,7 +46,7 @@ const ApplyCitizensKG = () => {
     {
       name: t('applyCitizens.docs.medical', 'Медицинская справка'),
       description: t('applyCitizens.docs.medicalDesc', 'Форма 086/у с флюорографией'),
-      icon: '🏥'
+      Icon: Hospital
     },
     {
       name: t('applyCitizens.docs.photos', 'Фотографии'),
@@ -110,7 +111,7 @@ const ApplyCitizensKG = () => {
                     }`}
                     onClick={() => setActiveStep(step.id)}
                   >
-                    {step.icon}
+                    <step.Icon className="w-6 h-6" />
                   </div>
                   <h3 className={`mt-2 text-center font-semibold ${
                     activeStep === step.id ? 'text-blue-600' : 'text-gray-700'
@@ -162,11 +163,11 @@ const ApplyCitizensKG = () => {
                   </h4>
                   <ul className="space-y-2 text-gray-700">
                     <li className="flex items-start">
-                      <span className="text-green-600 mr-2">💡</span>
+                      <Lightbulb className="w-4 h-4" />
                       {t('applyCitizens.step1.tip1', 'Подавайте документы как можно раньше')}
                     </li>
                     <li className="flex items-start">
-                      <span className="text-green-600 mr-2">💡</span>
+                      <Lightbulb className="w-4 h-4" />
                       {t('applyCitizens.step1.tip2', 'Проверьте все документы заранее')}
                     </li>
                   </ul>
@@ -197,11 +198,11 @@ const ApplyCitizensKG = () => {
                   </h4>
                   <ul className="space-y-2 text-gray-700">
                     <li className="flex items-start">
-                      <span className="text-green-600 mr-2">📚</span>
+                      <BookOpen className="w-4 h-4" />
                       {t('applyCitizens.step2.prep1', 'Изучите программу ОРТ')}
                     </li>
                     <li className="flex items-start">
-                      <span className="text-green-600 mr-2">📚</span>
+                      <BookOpen className="w-4 h-4" />
                       {t('applyCitizens.step2.prep2', 'Пройдите пробные тесты')}
                     </li>
                   </ul>
@@ -236,11 +237,11 @@ const ApplyCitizensKG = () => {
                   </h4>
                   <ul className="space-y-2 text-gray-700">
                     <li className="flex items-start">
-                      <span className="text-green-600 mr-2">🎉</span>
+                      <PartyPopper className="w-4 h-4" />
                       {t('applyCitizens.step3.next1', 'Оплата обучения (для контракта)')}
                     </li>
                     <li className="flex items-start">
-                      <span className="text-green-600 mr-2">🎉</span>
+                      <PartyPopper className="w-4 h-4" />
                       {t('applyCitizens.step3.next2', 'Получение студенческого билета')}
                     </li>
                   </ul>
@@ -268,7 +269,9 @@ const ApplyCitizensKG = () => {
               {requiredDocuments.map((doc, index) => (
                 <div key={index} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
                   <div className="flex items-start">
-                    <span className="text-2xl mr-3">{doc.icon}</span>
+                    <span className="text-2xl mr-3">
+                <doc.Icon className="w-6 h-6" />
+              </span>
                     <div>
                       <h3 className="font-semibold text-gray-800 mb-1">{doc.name}</h3>
                       <p className="text-gray-600 text-sm">{doc.description}</p>

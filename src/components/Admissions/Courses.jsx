@@ -4,22 +4,11 @@ import { useTranslation } from 'react-i18next';
 const HSM = () => {
   const { t } = useTranslation();
   
-  // Состояния для фильтров
-  const [filters, setFilters] = useState({
-    educationLevels: [],
-    faculty: '',
-    language: '',
-    searchQuery: ''
-  });
-
   // Состояния для программ и пагинации
   const [programs, setPrograms] = useState([]);
-  const [filteredPrograms, setFilteredPrograms] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [sortBy, setSortBy] = useState('popularity');
   const [isLoading, setIsLoading] = useState(true);
   const [selectedProgram, setSelectedProgram] = useState(null);
-  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const programsPerPage = 6;
 
   // Моковые данные
@@ -31,7 +20,6 @@ const HSM = () => {
       educationLevel: t('academics.educationLevels.bachelor'),
       language: t('academics.languages.russian'),
       duration: t('academics.durations.fiveSixYears'),
-      popularity: 95,
       image: 'https://лазуркин.бел/wp-content/uploads/2020/05/Spetsialnost-79-01-01---Lechebnoe-delo--.jpg',
       description: t('academics.programs.medicine.description'),
       requirements: t('academics.requirements.basic'),
@@ -46,7 +34,6 @@ const HSM = () => {
       educationLevel: t('academics.educationLevels.specialist'),
       language: t('academics.languages.kyrgyz'),
       duration: t('academics.durations.fiveYears'),
-      popularity: 88,
       image: 'https://dostoma.ru/upload/iblock/b30/vneuu4lpzryi60ejfrq08191tlhrul0v.png',
       description: t('academics.programs.dentistry.description'),
       requirements: t('academics.requirements.basic'),
@@ -61,7 +48,6 @@ const HSM = () => {
       educationLevel: t('academics.educationLevels.bachelor'),
       language: t('academics.languages.russian'),
       duration: t('academics.durations.fiveYears'),
-      popularity: 76,
       image: 'https://gomel.1prof.by/kcfinder/upload/images/135791-3776.jpg',
       description: t('academics.programs.pharmacy.description'),
       requirements: t('academics.requirements.basic'),
@@ -76,7 +62,6 @@ const HSM = () => {
       educationLevel: t('academics.educationLevels.master'),
       language: t('academics.languages.english'),
       duration: t('academics.durations.twoYears'),
-      popularity: 65,
       image: 'https://mbf.msk.ru/images/info_img.jpg',
       description: t('academics.programs.biochemistry.description'),
       requirements: t('academics.requirements.master'),
@@ -91,7 +76,6 @@ const HSM = () => {
       educationLevel: t('academics.educationLevels.bachelor'),
       language: t('academics.languages.kyrgyz'),
       duration: t('academics.durations.fourYears'),
-      popularity: 82,
       image: 'https://mfk1.kg/wp-content/uploads/2022/07/n-bg-1.jpg',
       description: t('academics.programs.nursing.description'),
       requirements: t('academics.requirements.ortOnly'),
@@ -106,7 +90,6 @@ const HSM = () => {
       educationLevel: t('academics.educationLevels.master'),
       language: t('academics.languages.russian'),
       duration: t('academics.durations.twoYears'),
-      popularity: 59,
       image: 'https://niioz.ru/upload/iblock/1c9/1c9f6777ca6fe42541563d5bd24b6cec.jpg',
       description: t('academics.programs.publicHealth.description'),
       requirements: t('academics.requirements.master'),
@@ -121,7 +104,6 @@ const HSM = () => {
       educationLevel: t('academics.educationLevels.bachelor'),
       language: t('academics.languages.russian'),
       duration: t('academics.durations.fourYears'),
-      popularity: 71,
       image: 'https://rsmu.ru/fileadmin/templates/img/cardimg/undergraduate/med-info.jpg',
       description: t('academics.programs.cybernetics.description'),
       requirements: t('academics.requirements.basic'),
@@ -136,7 +118,6 @@ const HSM = () => {
       educationLevel: t('academics.educationLevels.specialist'),
       language: t('academics.languages.russian'),
       duration: t('academics.durations.fiveYears'),
-      popularity: 68,
       image: 'https://mmamos.ru/wp-content/themes/yootheme/cache/71/klin_psy02-71b7a3e4.jpeg',
       description: t('academics.programs.psychology.description'),
       requirements: t('academics.requirements.basic'),
@@ -146,23 +127,6 @@ const HSM = () => {
     }
   ];
 
-  const faculties = [
-    t('academics.faculties.medical'),
-    t('academics.faculties.dental'),
-    t('academics.faculties.pharmaceutical'),
-    t('academics.faculties.biological'),
-    t('academics.faculties.publicHealth'),
-    t('academics.faculties.it'),
-    t('academics.faculties.psychological')
-  ];
-
-  const educationLevels = [
-    t('academics.educationLevels.bachelor'),
-    t('academics.educationLevels.specialist'),
-    t('academics.educationLevels.master'),
-    t('academics.educationLevels.postgraduate')
-  ];
-
   // Имитация загрузки данных
   useEffect(() => {
     const loadData = async () => {
@@ -170,87 +134,17 @@ const HSM = () => {
       // Имитация задержки сети
       await new Promise(resolve => setTimeout(resolve, 1000));
       setPrograms(mockPrograms);
-      setFilteredPrograms(mockPrograms);
       setIsLoading(false);
     };
     
     loadData();
   }, [t]);
 
-  // Фильтрация и сортировка программ
-  useEffect(() => {
-    let result = [...programs];
-
-    // Поиск по запросу
-    if (filters.searchQuery) {
-      const query = filters.searchQuery.toLowerCase();
-      result = result.filter(program => 
-        program.title.toLowerCase().includes(query) ||
-        program.faculty.toLowerCase().includes(query) ||
-        program.description.toLowerCase().includes(query)
-      );
-    }
-
-    // Фильтрация по уровню образования
-    if (filters.educationLevels.length > 0) {
-      result = result.filter(program => 
-        filters.educationLevels.includes(program.educationLevel)
-      );
-    }
-
-    // Фильтрация по факультету
-    if (filters.faculty) {
-      result = result.filter(program => program.faculty === filters.faculty);
-    }
-
-    // Фильтрация по языку обучения
-    if (filters.language) {
-      result = result.filter(program => program.language === filters.language);
-    }
-
-    // Сортировка
-    if (sortBy === 'popularity') {
-      result.sort((a, b) => b.popularity - a.popularity);
-    } else if (sortBy === 'title') {
-      result.sort((a, b) => a.title.localeCompare(b.title));
-    } else if (sortBy === 'duration') {
-      result.sort((a, b) => a.duration.localeCompare(b.duration));
-    }
-
-    setFilteredPrograms(result);
-    setCurrentPage(1);
-  }, [filters, sortBy, programs]);
-
   // Пагинация
   const indexOfLastProgram = currentPage * programsPerPage;
   const indexOfFirstProgram = indexOfLastProgram - programsPerPage;
-  const currentPrograms = filteredPrograms.slice(indexOfFirstProgram, indexOfLastProgram);
-  const totalPages = Math.ceil(filteredPrograms.length / programsPerPage);
-
-  const handleEducationLevelChange = (level) => {
-    setFilters(prev => ({
-      ...prev,
-      educationLevels: prev.educationLevels.includes(level)
-        ? prev.educationLevels.filter(l => l !== level)
-        : [...prev.educationLevels, level]
-    }));
-  };
-
-  const handleFilterChange = (filterName, value) => {
-    setFilters(prev => ({
-      ...prev,
-      [filterName]: value
-    }));
-  };
-
-  const resetFilters = () => {
-    setFilters({
-      educationLevels: [],
-      faculty: '',
-      language: '',
-      searchQuery: ''
-    });
-  };
+  const currentPrograms = programs.slice(indexOfFirstProgram, indexOfLastProgram);
+  const totalPages = Math.ceil(programs.length / programsPerPage);
 
   // Функция для отображения скелетона загрузки
   const renderSkeletons = () => {
@@ -279,170 +173,21 @@ const HSM = () => {
           </p>
         </div>
         
-        {/* Кнопка для открытия фильтров на мобильных устройствах */}
-        <div className="lg:hidden mb-4">
-          <button
-            onClick={() => setIsFiltersOpen(!isFiltersOpen)}
-            className="w-full p-3 bg-white rounded-xl shadow-md flex items-center justify-between"
-          >
-            <span className="font-medium text-gray-700">{t('academics.filters.title')}</span>
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              className={`h-5 w-5 text-gray-500 transition-transform ${isFiltersOpen ? 'rotate-180' : ''}`} 
-              fill="none" 
-              viewBox="0 0 24 24" 
-              stroke="currentColor"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
-        </div>
-
         <div className="flex flex-col lg:flex-row gap-6 md:gap-8">
-          {/* Сайдбар с фильтрами */}
-          <aside className={`w-full lg:w-1/4 bg-white p-4 md:p-6 rounded-xl shadow-lg lg:sticky lg:top-6 h-fit transition-all duration-300 ${isFiltersOpen ? 'block' : 'hidden lg:block'}`}>
-            <div className="flex justify-between items-center mb-4 md:mb-6">
-              <h2 className="text-lg md:text-xl font-semibold text-gray-700">{t('academics.filters.title')}</h2>
-              <button
-                onClick={resetFilters}
-                className="text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                </svg>
-                {t('academics.filters.resetAll')}
-              </button>
-            </div>
-
-            {/* Поиск */}
-            <div className="mb-4 md:mb-6">
-              <h3 className="font-medium text-gray-700 mb-2 md:mb-3">{t('academics.filters.searchPrograms')}</h3>
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder={t('academics.filters.searchPlaceholder')}
-                  value={filters.searchQuery}
-                  onChange={(e) => handleFilterChange('searchQuery', e.target.value)}
-                  className="w-full p-2 md:p-3 pl-9 md:pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm md:text-base"
-                />
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 md:h-5 md:w-5 text-gray-400 absolute left-2.5 md:left-3 top-2.5 md:top-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-              </div>
-            </div>
-
-            {/* Уровень образования */}
-            <div className="mb-4 md:mb-6">
-              <h3 className="font-medium text-gray-700 mb-2 md:mb-3">{t('academics.filters.educationLevel')}</h3>
-              <div className="space-y-1 md:space-y-2">
-                {educationLevels.map(level => (
-                  <label key={level} className="flex items-center p-1.5 md:p-2 rounded-lg hover:bg-blue-50 cursor-pointer transition-colors">
-                    <input
-                      type="checkbox"
-                      checked={filters.educationLevels.includes(level)}
-                      onChange={() => handleEducationLevelChange(level)}
-                      className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
-                    />
-                    <span className="ml-2 md:ml-3 text-gray-700 text-sm md:text-base">{level}</span>
-                  </label>
-                ))}
-              </div>
-            </div>
-
-            {/* Факультет */}
-            <div className="mb-4 md:mb-6">
-              <h3 className="font-medium text-gray-700 mb-2 md:mb-3">{t('academics.filters.faculty')}</h3>
-              <select
-                value={filters.faculty}
-                onChange={(e) => handleFilterChange('faculty', e.target.value)}
-                className="w-full p-2 md:p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm md:text-base"
-              >
-                <option value="">{t('academics.filters.allFaculties')}</option>
-                {faculties.map(faculty => (
-                  <option key={faculty} value={faculty}>{faculty}</option>
-                ))}
-              </select>
-            </div>
-
-            {/* Язык обучения */}
-            <div className="mb-4 md:mb-6">
-              <h3 className="font-medium text-gray-700 mb-2 md:mb-3">{t('academics.filters.language')}</h3>
-              <div className="grid grid-cols-2 gap-2">
-                {[
-                  t('academics.languages.russian'),
-                  t('academics.languages.kyrgyz'),
-                  t('academics.languages.english'),
-                  t('academics.filters.allLanguages')
-                ].map(lang => (
-                  <button
-                    key={lang}
-                    onClick={() => handleFilterChange('language', lang === t('academics.filters.allLanguages') ? '' : lang)}
-                    className={`p-1.5 md:p-2 rounded-lg text-xs md:text-sm transition-colors ${
-                      filters.language === (lang === t('academics.filters.allLanguages') ? '' : lang) 
-                        ? 'bg-blue-600 text-white' 
-                        : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
-                    }`}
-                  >
-                    {lang}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Кнопка применения фильтров для мобильных */}
-            <div className="lg:hidden mt-4">
-              <button
-                onClick={() => setIsFiltersOpen(false)}
-                className="w-full p-3 bg-blue-600 text-white rounded-lg font-medium"
-              >
-                {t('academics.filters.applyFilters')}
-              </button>
-            </div>
-          </aside>
-
           {/* Основной контент */}
-          <main className="w-full lg:w-3/4">
-            {/* Сортировка и информация */}
-            <div className="bg-white rounded-xl shadow-md p-3 md:p-4 mb-4 md:mb-6 flex flex-col sm:flex-row justify-between items-center">
-              <p className="text-gray-600 text-sm md:text-base mb-2 sm:mb-0">
-                {t('academics.foundPrograms', { count: filteredPrograms.length })}
-                {filters.searchQuery && (
-                  <span> {t('academics.forQuery')} "<span className="font-semibold">{filters.searchQuery}</span>"</span>
-                )}
-              </p>
-              
-              <div className="flex items-center">
-                <span className="text-gray-600 text-sm md:text-base mr-2">{t('academics.sorting')}:</span>
-                <select
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value)}
-                  className="p-1.5 md:p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm md:text-base"
-                >
-                  <option value="popularity">{t('academics.sortOptions.popularity')}</option>
-                  <option value="title">{t('academics.sortOptions.title')}</option>
-                  <option value="duration">{t('academics.sortOptions.duration')}</option>
-                </select>
-              </div>
-            </div>
-
+          <main className="w-full">
             {/* Сетка программ */}
             {isLoading ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-6 md:mb-8">
                 {renderSkeletons()}
               </div>
-            ) : filteredPrograms.length === 0 ? (
+            ) : programs.length === 0 ? (
               <div className="bg-white rounded-xl shadow-md p-6 md:p-8 text-center">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-12 md:h-16 w-12 md:w-16 mx-auto text-gray-400 mb-3 md:mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 <h3 className="text-lg md:text-xl font-semibold text-gray-700 mb-2">{t('academics.noProgramsFound')}</h3>
                 <p className="text-gray-500 text-sm md:text-base mb-4">{t('academics.tryChangingFilters')}</p>
-                <button 
-                  onClick={resetFilters}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm md:text-base"
-                >
-                  {t('academics.filters.resetAll')}
-                </button>
               </div>
             ) : (
               <>
@@ -466,9 +211,6 @@ const HSM = () => {
                             e.target.className = "w-full h-full object-cover bg-gray-200";
                           }}
                         />
-                        <div className="absolute top-2 md:top-4 right-2 md:right-4 bg-blue-600 text-white text-xs px-1.5 py-0.5 md:px-2 md:py-1 rounded-full">
-                          {program.popularity}%
-                        </div>
                       </div>
                       <div className="p-3 md:p-4">
                         <h3 className="font-bold text-base md:text-lg text-gray-800 mb-1 md:mb-2 line-clamp-1">{program.title}</h3>
@@ -610,16 +352,6 @@ const HSM = () => {
                       <div className="flex justify-between">
                         <span className="text-gray-600">{t('academics.programDetails.cost')}:</span>
                         <span className="font-medium text-blue-600">{selectedProgram.price}</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-gray-600">{t('academics.programDetails.popularity')}:</span>
-                        <div className="w-16 md:w-24 bg-gray-200 rounded-full h-2">
-                          <div 
-                            className="bg-blue-600 h-2 rounded-full" 
-                            style={{ width: `${selectedProgram.popularity}%` }}
-                          ></div>
-                        </div>
-                        <span className="font-medium text-xs md:text-sm">{selectedProgram.popularity}%</span>
                       </div>
                     </div>
                   </div>

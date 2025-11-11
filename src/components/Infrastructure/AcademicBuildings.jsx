@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { BookOpen, Camera, GraduationCap, Monitor } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 const AcademicBuildings = () => {
@@ -62,25 +63,24 @@ const AcademicBuildings = () => {
             name: { ru: "Лекционные залы", kg: "Лекциялык залдар", en: "Lecture halls" },
             count: 12,
             capacity: "50-200 человек",
-            icon: "🎓"
+            Icon: GraduationCap
           },
           {
             name: { ru: "Аудитории", kg: "Аудиториялар", en: "Classrooms" },
             count: 25,
             capacity: "20-40 человек",
-            icon: "📚"
+            Icon: BookOpen
           },
           {
             name: { ru: "Компьютерные классы", kg: "Компьютердик класстар", en: "Computer labs" },
             count: 4,
             capacity: "20-30 человек",
-            icon: "💻"
+            Icon: Monitor
           },
           {
             name: { ru: "Библиотека", kg: "Китепкана", en: "Library" },
             count: 1,
             capacity: "100 мест для чтения",
-            icon: "📖"
           }
         ],
         photos: [
@@ -445,7 +445,7 @@ const AcademicBuildings = () => {
                                     e.target.parentElement.classList.add('bg-white');
                                   }}
                                   onError={(e) => {
-                                    console.error('❌ Gallery image failed:', photo.photo_url);
+                                    console.error('<XCircle className="w-5 h-5" /> Gallery image failed:', photo.photo_url);
                                     e.target.parentElement.classList.remove('bg-gray-100');
                                     e.target.parentElement.classList.add('bg-red-50');
                                     // Create a simple error placeholder
@@ -473,7 +473,7 @@ const AcademicBuildings = () => {
                         </div>
                       ) : (
                         <div className="text-center py-8 text-gray-500 border-2 border-dashed border-gray-300 rounded-lg">
-                          <div className="text-4xl mb-2">📸</div>
+                          <Camera className="w-6 h-6" />
                           <p>{t('academicBuildings.noPhotos', 'Фотографии пока недоступны')}</p>
                           <p className="text-sm text-gray-400 mt-2">
                             {building.photos ? `Found ${building.photos.length} photos` : 'No photos array found'}

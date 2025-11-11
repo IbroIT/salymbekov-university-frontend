@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import { Eye, Pill, Smile, Syringe } from 'lucide-react';
 
 const ProgramCards = () => {
   const { t, i18n } = useTranslation();
@@ -11,7 +12,7 @@ const ProgramCards = () => {
   const programs = [
     {
       id: 1,
-      icon: '💉',
+      icon: '<Syringe className="w-5 h-5" />',
       titleKey: 'programs.generalMedicine.title',
       levelKey: 'programs.levels.bachelor',
       durationKey: 'programs.durations.fourYears',
@@ -21,7 +22,7 @@ const ProgramCards = () => {
     },
     {
       id: 2,
-      icon: '🦷',
+      icon: '<Smile className="w-5 h-5" />',
       titleKey: 'programs.dentistry.title',
       levelKey: 'programs.levels.bachelor',
       durationKey: 'programs.durations.fiveYears',
@@ -31,7 +32,7 @@ const ProgramCards = () => {
     },
     {
       id: 3,
-      icon: '💊',
+      icon: '<Pill className="w-5 h-5" />',
       titleKey: 'programs.pharmacy.title',
       levelKey: 'programs.levels.bachelor',
       durationKey: 'programs.durations.fourYears',
@@ -41,7 +42,7 @@ const ProgramCards = () => {
     },
     {
       id: 4,
-      icon: '👁️',
+      icon: '<Eye className="w-5 h-5" />',
       titleKey: 'programs.medicalOptics.title',
       levelKey: 'programs.levels.master',
       durationKey: 'programs.durations.twoYears',
@@ -113,8 +114,8 @@ const ProgramCards = () => {
 
                 {/* Иконка с анимацией */}
                 <div className={`text-5xl mb-6 transform transition-all duration-500 ${isHovered === program.id ? 'scale-110 rotate-6' : ''}`}>
-                  {program.icon}
-                </div>
+                {program.icon}
+              </div>
 
                 <h3 className="text-2xl font-bold text-gray-800 mb-3 relative">
                   {t(program.titleKey)}
@@ -156,8 +157,8 @@ const ProgramCards = () => {
                 <div key={program.id} className="w-full flex-shrink-0 px-4">
                   <div className={`rounded-2xl overflow-hidden shadow-xl p-6 ${program.bgColor} border border-white`}>
                     <div className="text-5xl mb-6 text-center transform transition-transform duration-500" style={{ transform: `scale(${activeIndex === program.id - 1 ? 1.1 : 1})` }}>
-                      {program.icon}
-                    </div>
+                {program.icon}
+              </div>
 
                     <h3 className="text-xl font-bold text-gray-800 mb-3 text-center">
                       {t(program.titleKey)}

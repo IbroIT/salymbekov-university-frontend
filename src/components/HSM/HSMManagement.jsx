@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { leadershipAPI } from '../../services/leadershipService';
 import { getLocalizedValue, getLocalizedArray, getCurrentLanguage } from '../../utils/localization';
+import { GraduationCap } from 'lucide-react';
 
 const LeadershipPage = () => {
   const { t, i18n } = useTranslation();
@@ -53,8 +54,7 @@ const LeadershipPage = () => {
 
   const sections = [
     { id: 'directorate', name: t('leadership.directorate'), icon: '👑' },
-    { id: 'departmentHeads', name: t('leadership.departmentHeads'), icon: '🎓' },
-    { id: 'administration', name: t('leadership.administration'), icon: '🏢' }
+    { id: 'departmentHeads', name: t('leadership.departmentHeads'), Icon: GraduationCap }
   ];
 
   // Filter directors and department heads from API data
@@ -118,34 +118,7 @@ const LeadershipPage = () => {
                 </p>
               </div>
 
-              <div className="space-y-3">
-                <div className="flex items-center text-sm text-gray-600">
-                  <span className="mr-2">📅</span>
-                  <span>{t('leadership.experience')}: {getLocalizedValue(director, 'experience', i18n.language)}</span>
-                </div>
-                <div className="flex items-center text-sm text-gray-600">
-                  <span className="mr-2">📧</span>
-                  <span>{director.email}</span>
-                </div>
-                <div className="flex items-center text-sm text-gray-600">
-                  <span className="mr-2">📞</span>
-                  <span>{director.phone}</span>
-                </div>
-              </div>
 
-              <div className="mt-4 pt-4 border-t border-blue-200">
-                <h4 className="font-semibold text-gray-800 mb-3 text-sm">
-                  {t('leadership.achievements')}:
-                </h4>
-                <ul className="space-y-2">
-                  {getLocalizedArray(director, 'achievements', i18n.language)?.slice(0, 3).map((achievement, index) => (
-                    <li key={index} className="flex items-start text-sm text-gray-600">
-                      <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-1.5 mr-2 flex-shrink-0"></span>
-                      <span>{achievement}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
             </div>
           ))}
         </div>
@@ -174,7 +147,7 @@ const LeadershipPage = () => {
       <div className="space-y-6">
         <div className="flex items-center mb-6">
           <div className="p-3 bg-blue-100 rounded-xl mr-4">
-            <span className="text-2xl">🎓</span>
+            <span className="text-2xl"><GraduationCap className="w-5 h-5" /></span>
           </div>
           <h2 className="text-3xl font-bold text-gray-900">
             {t('leadership.departmentHeads')}
@@ -210,12 +183,8 @@ const LeadershipPage = () => {
 
               <div className="space-y-2 mb-4">
                 <div className="flex items-center text-xs text-gray-600">
-                  <span className="mr-2">🎓</span>
+                  <span className="mr-2"><GraduationCap className="w-5 h-5" /></span>
                   <span>{getLocalizedValue(head, 'degree', i18n.language)}</span>
-                </div>
-                <div className="flex items-center text-xs text-gray-600">
-                  <span className="mr-2">📅</span>
-                  <span>{t('leadership.experience')}: {getLocalizedValue(head, 'experience', i18n.language)}</span>
                 </div>
                 {head.staff_count && getLocalizedValue(head, 'staff_count', i18n.language) && (
                   <div className="flex items-center text-xs text-gray-600">
@@ -236,12 +205,7 @@ const LeadershipPage = () => {
                 </div>
               )}
 
-              <div className="border-t border-gray-200 pt-3">
-                <div className="flex items-center text-xs text-gray-600">
-                  <span className="mr-2">📧</span>
-                  <span className="truncate">{head.email}</span>
-                </div>
-              </div>
+
             </div>
           ))}
         </div>
@@ -249,64 +213,7 @@ const LeadershipPage = () => {
     );
   };
 
-  const renderAdministrationContent = () => {
-    if (loading) {
-      return (
-        <div className="flex justify-center items-center py-12">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-        </div>
-      );
-    }
 
-    if (error) {
-      return (
-        <div className="text-center py-12">
-          <p className="text-red-600">{error}</p>
-        </div>
-      );
-    }
-
-    return (
-      <div className="space-y-6">
-        <div className="flex items-center mb-6">
-          <div className="p-3 bg-blue-100 rounded-xl mr-4">
-            <span className="text-2xl">🏢</span>
-          </div>
-          <h2 className="text-3xl font-bold text-gray-900">
-            {t('leadership.administration')}
-          </h2>
-        </div>
-
-        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-4">
-                {t('leadership.administrativeStaff')}
-              </h3>
-              <p className="text-gray-600 mb-4">
-                {t('leadership.administrativeDescription')}
-              </p>
-            </div>
-
-            <div className="space-y-4">
-              <div className="flex items-center justify-between p-3 bg-white rounded-lg border border-blue-100">
-                <span className="text-gray-700">{t('departments.studyDepartment')}</span>
-                <span className="text-blue-600 font-semibold">8 {t('leadership.employees')}</span>
-              </div>
-              <div className="flex items-center justify-between p-3 bg-white rounded-lg border border-blue-100">
-                <span className="text-gray-700">{t('departments.scienceDepartment')}</span>
-                <span className="text-blue-600 font-semibold">6 {t('leadership.employees')}</span>
-              </div>
-              <div className="flex items-center justify-between p-3 bg-white rounded-lg border border-blue-100">
-                <span className="text-gray-700">{t('departments.internationalDepartment')}</span>
-                <span className="text-blue-600 font-semibold">4 {t('leadership.employees')}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  };
 
   const renderContent = () => {
     switch (activeSection) {
@@ -314,8 +221,6 @@ const LeadershipPage = () => {
         return renderDirectorateContent();
       case 'departmentHeads':
         return renderDepartmentHeadsContent();
-      case 'administration':
-        return renderAdministrationContent();
       default:
         return renderDirectorateContent();
     }
@@ -355,7 +260,9 @@ const LeadershipPage = () => {
                           }`}
                         onClick={() => changeActiveSection(section.id)}
                       >
-                        <span className="text-lg mr-3">{section.icon}</span>
+                        <span className="text-lg mr-3">
+                <section.Icon className="w-6 h-6" />
+              </span>
                         {section.name}
                       </button>
                     </li>

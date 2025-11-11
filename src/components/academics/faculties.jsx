@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
+import { BarChart, Hospital, Microscope, Stethoscope } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
@@ -24,12 +25,12 @@ const Faculties = () => {
 
     
     careers: [
-      { icon: '🏥', key: 'therapist' },
+      { icon: "Hospital", key: 'therapist' },
       { icon: '🚑', key: 'emergency' },
-      { icon: '🔬', key: 'researcher' },
-      { icon: '👨‍⚕️', key: 'surgeon' },
-      { icon: '🌡️', key: 'family_doctor' },
-      { icon: '📊', key: 'medical_manager' }
+      { icon: "Microscope", key: 'researcher' },
+      { icon: "Stethoscope", key: 'surgeon' },
+      { icon: '<Thermometer className="w-5 h-5" />', key: 'family_doctor' },
+      { icon: "BarChart", key: 'medical_manager' }
     ],
     
     stats: [
@@ -275,7 +276,8 @@ const Faculties = () => {
         key={career.key}
         className="text-center p-4 md:p-6 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg md:rounded-xl hover:shadow-md transition-all duration-300 transform hover:-translate-y-1"
       >
-        <div className="text-3xl md:text-4xl mb-2 md:mb-4">{career.icon}</div>
+        <div className="text-3xl md:text-4xl mb-2 md:mb-4">
+              </div>
 
         {/* Название профессии */}
         <h4 className="font-semibold text-gray-800 mb-1 md:mb-2 text-sm md:text-base">

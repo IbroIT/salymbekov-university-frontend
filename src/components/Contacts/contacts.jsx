@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BookOpen, FileEdit, FileText, GraduationCap, Mail, Map, Phone, Tv } from 'lucide-react';
 import { motion } from "framer-motion";
 import { FaPaperPlane, FaUser, FaEnvelope, FaComment, FaArrowRight, FaMapMarkerAlt, FaPhone, FaClock, FaGlobe, FaBuilding, FaIdCard } from "react-icons/fa";
 import { useTranslation } from 'react-i18next';
@@ -28,7 +29,7 @@ const Contacts = () => {
       email: "admission@salymbekov-med.kg",
       hours: t('contacts.departments.admission.hours'),
       head: t('contacts.departments.admission.head'),
-      icon: "🎓"
+      Icon: GraduationCap
     },
     {
       name: t('contacts.departments.academic.name'),
@@ -36,23 +37,7 @@ const Contacts = () => {
       email: "academic@salymbekov-med.kg",
       hours: t('contacts.departments.academic.hours'),
       head: t('contacts.departments.academic.head'),
-      icon: "📚"
-    },
-    {
-      name: t('contacts.departments.research.name'),
-      phone: "+996 (312) 123-403",
-      email: "research@salymbekov-med.kg",
-      hours: t('contacts.departments.research.hours'),
-      head: t('contacts.departments.research.head'),
-      icon: "🔬"
-    },
-    {
-      name: t('contacts.departments.international.name'),
-      phone: "+996 (312) 123-404",
-      email: "international@salymbekov-med.kg",
-      hours: t('contacts.departments.international.hours'),
-      head: t('contacts.departments.international.head'),
-      icon: "🌐"
+      Icon: BookOpen
     }
   ];
 
@@ -74,7 +59,7 @@ const Contacts = () => {
             animate={{ opacity: 1, y: 0 }}
             className="text-4xl font-bold text-white mb-4"
           >
-            📞 {t('contacts.title')}
+            <Phone className="w-5 h-5" /> {t('contacts.title')}
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0 }}
@@ -202,11 +187,13 @@ const Contacts = () => {
                     className="bg-blue-900/30 rounded-lg p-4 hover:bg-blue-800/30 transition-colors border border-blue-400/10"
                   >
                     <div className="flex items-start gap-3">
-                      <span className="text-2xl">{dept.icon}</span>
+                      <span className="text-2xl">
+                <dept.Icon className="w-6 h-6" />
+              </span>
                       <div className="flex-1">
                         <h4 className="font-semibold text-white mb-2">{dept.name}</h4>
-                        <p className="text-sm text-blue-200 mb-1">📞 {dept.phone}</p>
-                        <p className="text-sm text-blue-200 mb-1">📧 {dept.email}</p>
+                        <p className="text-sm text-blue-200 mb-1"><Phone className="w-5 h-5" /> {dept.phone}</p>
+                        <p className="text-sm text-blue-200 mb-1"><Mail className="w-5 h-5" /> {dept.email}</p>
                         <p className="text-sm text-blue-200 mb-1">🕒 {dept.hours}</p>
                         <p className="text-xs text-blue-300">{t('contacts.departments.head')}: {dept.head}</p>
                       </div>
@@ -232,7 +219,7 @@ const Contacts = () => {
             {!isMapLoaded ? (
               <div className="h-140 bg-blue-900/30 rounded-xl animate-pulse flex items-center justify-center">
                 <div className="text-center">
-                  <div className="text-4xl mb-2 text-blue-400">🗺️</div>
+                  <Map className="w-6 h-6" />
                   <p className="text-blue-300">{t('contacts.map.loading')}</p>
                 </div>
               </div>
@@ -292,7 +279,7 @@ const Contacts = () => {
               href="tel:+996312123456"
               className="bg-green-600/20 hover:bg-green-600/30 text-white p-4 rounded-xl text-center transition-all border border-green-400/20"
             >
-              <div className="text-2xl mb-2">📞</div>
+              <Phone className="w-6 h-6" />
               <p className="font-semibold">{t('contacts.quickActions.call')}</p>
               <p className="text-sm opacity-90">{t('contacts.phones.reception')}</p>
             </motion.a>
@@ -302,7 +289,7 @@ const Contacts = () => {
               href="mailto:info@salymbekov-med.kg"
               className="bg-blue-600/20 hover:bg-blue-600/30 text-white p-4 rounded-xl text-center transition-all border border-blue-400/20"
             >
-              <div className="text-2xl mb-2">📧</div>
+              <Mail className="w-6 h-6" />
               <p className="font-semibold">{t('contacts.quickActions.write')}</p>
               <p className="text-sm opacity-90">Email</p>
             </motion.a>
@@ -312,7 +299,7 @@ const Contacts = () => {
               onClick={() => copyToClipboard(t('contacts.address.value'))}
               className="bg-purple-600/20 hover:bg-purple-600/30 text-white p-4 rounded-xl text-center transition-all border border-purple-400/20"
             >
-              <div className="text-2xl mb-2">📋</div>
+              <FileText className="w-6 h-6" />
               <p className="font-semibold">{t('contacts.quickActions.copy')}</p>
               <p className="text-sm opacity-90">{t('contacts.address.title')}</p>
             </motion.button>
@@ -322,7 +309,7 @@ const Contacts = () => {
               onClick={() => setShowContactForm(true)}
               className="bg-orange-600/20 hover:bg-orange-600/30 text-white p-4 rounded-xl text-center transition-all border border-orange-400/20"
             >
-              <div className="text-2xl mb-2">📝</div>
+              <FileEdit className="w-6 h-6" />
               <p className="font-semibold">{t('contacts.quickActions.application')}</p>
               <p className="text-sm opacity-90">{t('contacts.quickActions.onlineForm')}</p>
             </motion.button>
@@ -346,7 +333,7 @@ const Contacts = () => {
               { name: "Facebook", icon: "📘", color: "bg-blue-600/20", border: "border-blue-400/20", URL: 'https://www.facebook.com/salymbekov.kg' },
               { name: "Instagram", icon: "📷", color: "bg-pink-600/20", border: "border-pink-400/20", URL: 'https://www.instagram.com/salymbekovuniversity/' },
               { name: "Twitter", icon: "🐦", color: "bg-sky-600/20", border: "border-sky-400/20", URL: 'https://x.com/SalymbekovO' },
-              { name: "YouTube", icon: "📺", color: "bg-red-600/20", border: "border-red-400/20", URL: 'https://www.youtube.com/@salymbekovuniversity8213' }
+              { name: "YouTube", icon: "Tv", color: "bg-red-600/20", border: "border-red-400/20", URL: 'https://www.youtube.com/@salymbekovuniversity8213' }
             ].map((social, index) => (
               <motion.a
                 key={index}
@@ -354,7 +341,9 @@ const Contacts = () => {
                 href={social.URL || '#'}
                 className={`${social.color} hover:${social.color.replace('20', '30')} text-white p-4 rounded-xl text-center transition-all border ${social.border}`}
               >
-                <div className="text-2xl mb-2">{social.icon}</div>
+                <div className="text-2xl mb-2">
+                <social.Icon className="w-6 h-6" />
+              </div>
                 <p className="font-semibold">{social.name}</p>
                 <p className="text-sm opacity-90">{social.handle}</p>
               </motion.a>

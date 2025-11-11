@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { BookOpen, FileEdit, GraduationCap, Microscope, PartyPopper, Stethoscope, Target } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -40,7 +41,7 @@ const Calendar = () => {
       color: '#3B82F6',
       type: t('calendar.eventTypes.studyPeriod'),
       description: t('calendar.events.fallSemester.description'),
-      icon: '📚'
+      icon: "BookOpen"
     },
     {
       id: 2,
@@ -50,7 +51,7 @@ const Calendar = () => {
       color: '#EF4444',
       type: t('calendar.eventTypes.examSession'),
       description: t('calendar.events.fallSession.description'),
-      icon: '📝'
+      icon: "FileEdit"
     },
     {
       id: 3,
@@ -60,7 +61,7 @@ const Calendar = () => {
       color: '#10B981',
       type: t('calendar.eventTypes.vacation'),
       description: t('calendar.events.winterVacation.description'),
-      icon: '⛷️'
+      icon: '<Snowflake className="w-5 h-5" />'
     },
     {
       id: 4,
@@ -70,7 +71,7 @@ const Calendar = () => {
       color: '#3B82F6',
       type: t('calendar.eventTypes.studyPeriod'),
       description: t('calendar.events.springSemester.description'),
-      icon: '🌱'
+      icon: '<Sprout className="w-5 h-5" />'
     },
     {
       id: 5,
@@ -80,7 +81,7 @@ const Calendar = () => {
       color: '#8B5CF6',
       type: t('calendar.eventTypes.scientificEvent'),
       description: t('calendar.events.scienceConference.description'),
-      icon: '🔬'
+      icon: "Microscope"
     },
     {
       id: 6,
@@ -90,7 +91,7 @@ const Calendar = () => {
       color: '#EF4444',
       type: t('calendar.eventTypes.examSession'),
       description: t('calendar.events.springSession.description'),
-      icon: '📖'
+      icon: '<Book className="w-5 h-5" />'
     },
     {
       id: 7,
@@ -110,7 +111,7 @@ const Calendar = () => {
       color: '#F59E0B',
       type: t('calendar.eventTypes.event'),
       description: t('calendar.events.openDay.description'),
-      icon: '🎓'
+      icon: "GraduationCap"
     },
     {
       id: 9,
@@ -120,7 +121,7 @@ const Calendar = () => {
       color: '#EC4899',
       type: t('calendar.eventTypes.certification'),
       description: t('calendar.events.thesisDefense.description'),
-      icon: '🎯'
+      icon: "Target"
     },
     {
       id: 10,
@@ -129,18 +130,18 @@ const Calendar = () => {
       color: '#6366F1',
       type: t('calendar.eventTypes.event'),
       description: t('calendar.events.doctorDay.description'),
-      icon: '👨‍⚕️'
+      icon: "Stethoscope"
     }
   ];
 
   // Легенда событий
   const eventTypes = [
-    { color: '#3B82F6', label: t('calendar.legend.studyPeriods'), icon: '📚', type: t('calendar.eventTypes.studyPeriod') },
-    { color: '#EF4444', label: t('calendar.legend.examSessions'), icon: '📝', type: t('calendar.eventTypes.examSession') },
-    { color: '#10B981', label: t('calendar.legend.vacations'), icon: '🎉', type: t('calendar.eventTypes.vacation') },
-    { color: '#8B5CF6', label: t('calendar.legend.scientificEvents'), icon: '🔬', type: t('calendar.eventTypes.scientificEvent') },
-    { color: '#F59E0B', label: t('calendar.legend.generalEvents'), icon: '🎓', type: t('calendar.eventTypes.event') },
-    { color: '#EC4899', label: t('calendar.legend.certification'), icon: '🎯', type: t('calendar.eventTypes.certification') }
+    { color: '#3B82F6', label: t('calendar.legend.studyPeriods'), icon: "BookOpen", type: t('calendar.eventTypes.studyPeriod') },
+    { color: '#EF4444', label: t('calendar.legend.examSessions'), icon: "FileEdit", type: t('calendar.eventTypes.examSession') },
+    { color: '#10B981', label: t('calendar.legend.vacations'), icon: "PartyPopper", type: t('calendar.eventTypes.vacation') },
+    { color: '#8B5CF6', label: t('calendar.legend.scientificEvents'), icon: "Microscope", type: t('calendar.eventTypes.scientificEvent') },
+    { color: '#F59E0B', label: t('calendar.legend.generalEvents'), icon: "GraduationCap", type: t('calendar.eventTypes.event') },
+    { color: '#EC4899', label: t('calendar.legend.certification'), icon: "Target", type: t('calendar.eventTypes.certification') }
   ];
 
   // Фильтрация событий по выбранным типам
@@ -304,7 +305,8 @@ END:VCALENDAR`;
                 }`}
                 style={{ backgroundColor: filteredTypes.includes(type.type) ? type.color : '#f3f4f6' }}
               >
-                <span className="text-lg mr-2">{type.icon}</span>
+                <span className="text-lg mr-2">
+              </span>
                 <span className="text-sm font-medium">{type.label}</span>
                 <div className="w-3 h-3 rounded-full ml-2" style={{ backgroundColor: type.color }}></div>
               </button>
@@ -415,7 +417,8 @@ END:VCALENDAR`;
                     <h3 className="font-semibold text-gray-900">{event.title}</h3>
                     <p className="text-sm text-gray-600 mt-1">{event.description}</p>
                   </div>
-                  <span className="text-lg">{event.icon}</span>
+                  <span className="text-lg">
+              </span>
                 </div>
                 <div className="flex items-center mt-3 text-sm text-gray-500">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">

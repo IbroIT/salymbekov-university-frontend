@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
+import { Globe, Hospital, Microscope, Stethoscope } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getHSMInfo, getLocalizedText } from '../../data/hsmData';
@@ -109,22 +110,22 @@ const HSMInfo = () => {
 
   const medicalFeatures = [
     {
-      icon: "🏥",
+      icon: "Hospital",
       title: t('hsm.modern_equipment', 'Современное оборудование'),
       description: t('hsm.modern_equipment_desc', 'Оснащение последними медицинскими технологиями')
     },
     {
-      icon: "👨‍⚕️",
+      icon: "Stethoscope",
       title: t('hsm.practice', 'Практическая подготовка'),
       description: t('hsm.practice_desc', 'Реальная практика в лучших клиниках')
     },
     {
-      icon: "🌍",
+      icon: "Globe",
       title: t('hsm.international', 'Международные стандарты'),
       description: t('hsm.international_desc', 'Обучение по мировым стандартам медицины')
     },
     {
-      icon: "🔬",
+      icon: "Microscope",
       title: t('hsm.research', 'Научные исследования'),
       description: t('hsm.research_desc', 'Участие в передовых медицинских исследованиях')
     }
@@ -297,21 +298,21 @@ const HSMInfo = () => {
           animate={{ y: [0, -20, 0] }}
           transition={{ duration: 4, repeat: Infinity }}
         >
-          🏥
+          <Hospital className="w-5 h-5" />
         </motion.div>
         <motion.div
           className="absolute top-20 right-20 text-3xl opacity-20"
           animate={{ y: [0, 20, 0] }}
           transition={{ duration: 5, repeat: Infinity, delay: 1 }}
         >
-          ❤️
+          <Heart className="w-5 h-5" />
         </motion.div>
         <motion.div
           className="absolute bottom-10 left-20 text-2xl opacity-20"
           animate={{ y: [0, -15, 0] }}
           transition={{ duration: 6, repeat: Infinity, delay: 2 }}
         >
-          ⚕️
+          <Stethoscope className="w-5 h-5" />
         </motion.div>
       </motion.section>
 
@@ -335,8 +336,8 @@ const HSMInfo = () => {
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 <div className="text-blue-600 mb-3 flex justify-center">
-                  {stat.icon}
-                </div>
+                {stat.icon}
+              </div>
                 <div className="text-3xl font-bold text-gray-900 mb-1">{stat.value}</div>
                 <div className="text-gray-600 text-sm">{stat.label}</div>
               </motion.div>
@@ -377,8 +378,8 @@ const HSMInfo = () => {
                 whileHover={{ y: -5 }}
               >
                 <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">
-                  {feature.icon}
-                </div>
+                {feature.icon}
+              </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-3">{feature.title}</h3>
                 <p className="text-gray-600 text-sm leading-relaxed">{feature.description}</p>
               </motion.div>
@@ -482,8 +483,8 @@ const HSMInfo = () => {
                 <div className={`absolute inset-0 bg-gradient-to-br ${link.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}></div>
                 <div className="relative p-6 z-10">
                   <div className={`w-12 h-12 bg-gradient-to-r ${link.gradient} rounded-xl flex items-center justify-center mb-4 text-white`}>
-                    {link.icon}
-                  </div>
+                {link.icon}
+              </div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-2 flex items-center">
                     {link.title}
                     <ArrowTopRightOnSquareIcon className="w-4 h-4 ml-2 opacity-0 group-hover:opacity-100 transition-opacity" />

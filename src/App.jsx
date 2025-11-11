@@ -45,6 +45,7 @@ import StudentRegulations from "./components/Life/StudentRegulations";
 import Instructions from "./components/Life/Instructions";
 import AppealForm from "./components/Life/AppealForm";
 import StudentCalendar from "./components/academics/calendar";
+import AcademicCalendar from "./components/Life/AcademicCalendar";
 import StudentEResources from "./components/Life/EResources";
 import AcadOp from "./components/Life/AcadOp";
 import SocOp from "./components/Life/SocOp";
@@ -81,6 +82,7 @@ import Conferences from "./components/Research/conferences";
 import Grants from "./components/Research/grants";
 import ResearchManagement from "./components/Research/ResearchManagement";
 import ScientificJournals from "./components/Research/ScientificJournals";
+import PermitDocuments from "./components/Research/PermitDocuments";
 
 import Infrastructure from "./components/Infrastructure/Infrastructure";
 import Hospitals from "./components/Infrastructure/Hospitals";
@@ -182,6 +184,7 @@ function App() {
             <Route path="/research/grants" element={<Grants />} />
             <Route path="/research/management" element={<ResearchManagement />} />
             <Route path="/research/journals" element={<ScientificJournals />} />
+            <Route path="/research/permit-documents" element={<PermitDocuments />} />
 
             {/* Student Life */}
             {/* <Route path="/student/gallery" element={<Gallery />} /> */}
@@ -193,6 +196,7 @@ function App() {
             <Route path="/student/appeal" element={<AppealForm />} />
             <Route path="/student/clubs" element={<ClubsSection />} />
             <Route path="/student/calendar" element={<StudentCalendar />} />
+            <Route path="/student/academic-calendar" element={<AcademicCalendar />} />
             <Route path="/student/eresources" element={<StudentEResources />} />
             <Route path="/student/acadop" element={<AcadOp />} />
             <Route path="/student/socop" element={<SocOp />} />

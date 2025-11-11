@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import L from 'leaflet';
+
 import 'leaflet/dist/leaflet.css';
 import './About.css';
 import PartnersService from '../../services/partnersService';
 import API_CONFIG from '../../config/api';
 import SEOComponent from '../SEO/SEOComponent';
+import { AlertTriangle, BookOpen, Briefcase, Building, GraduationCap, Hospital, Microscope } from 'lucide-react';
 
 // Add custom styles for logo markers
 const logoMarkerStyles = `
@@ -61,7 +62,7 @@ const createCustomMarker = (type) => {
       color: white;
       font-weight: bold;
       font-size: 12px;
-    ">${type === 'clinical' ? '🏥' : type === 'university' ? '🎓' : type === 'organization' ? '🔬' : '💼'}</div>`,
+    ">${type === 'clinical' ? '<Hospital className="w-5 h-5" />' : type === 'university' ? '<GraduationCap className="w-5 h-5" />' : type === 'organization' ? '<Microscope className="w-5 h-5" />' : '<Briefcase className="w-5 h-5" />'}</div>`,
     iconSize: [25, 25],
     iconAnchor: [12, 12],
     popupAnchor: [0, -12]
@@ -92,7 +93,7 @@ const createLogoMarker = (logoUrl) => {
           object-fit: contain;
           border-radius: 50%;
         "
-        onerror="this.style.display='none'; this.parentNode.innerHTML='🏢';"
+        onerror="this.style.display='none'; this.parentNode.innerHTML='<Building className="w-5 h-5" />';"
       />
     </div>`,
     iconSize: [40, 40],
@@ -195,11 +196,11 @@ const Partners = () => {
 
   const partnerTypes = [
     { value: 'all', label: t('partners.filterTypes.all'), icon: '🤝' },
-    { value: 'clinical', label: t('partners.filterTypes.clinical'), icon: '🏥' },
-    { value: 'university', label: t('partners.filterTypes.university'), icon: '🎓' },
-    { value: 'organization', label: t('partners.filterTypes.organization'), icon: '🔬' },
-    { value: 'business', label: t('partners.filterTypes.business'), icon: '💼' },
-    { value: 'academic', label: t('partners.filterTypes.academic'), icon: '📚' }
+    { value: 'clinical', label: t('partners.filterTypes.clinical'), Icon: Hospital },
+    { value: 'university', label: t('partners.filterTypes.university'), Icon: GraduationCap },
+    { value: 'organization', label: t('partners.filterTypes.organization'), Icon: Microscope },
+    { value: 'business', label: t('partners.filterTypes.business'), Icon: Briefcase },
+    { value: 'academic', label: t('partners.filterTypes.academic'), icon: '<BookOpen className="w-5 h-5" />' }
   ];
 
   const filteredPartners = partners.filter(partner =>
@@ -265,21 +266,9 @@ const Partners = () => {
             </div>
 
             {/* Contact */}
-            <div className="border-t border-gray-200 pt-4">
-              <h3 className="text-lg font-semibold text-gray-900 mb-3">{t('partners.contact')}</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="flex items-center">
-                  <span className="text-gray-500 mr-3">📧</span>
-                  <a href={`mailto:${partner.contact.email}`} className="text-blue-600 hover:underline">
-                    {partner.contact.email}
-                  </a>
-                </div>
-                <div className="flex items-center">
-                  <span className="text-gray-500 mr-3">📞</span>
-                  <a href={`tel:${partner.contact.phone}`} className="text-blue-600 hover:underline">
-                    {partner.contact.phone}
-                  </a>
-                </div>
+            {partner.website && (
+              <div className="border-t border-gray-200 pt-4">
+                <h3 className="text-lg font-semibold text-gray-900 mb-3">{t('partners.contact')}</h3>
                 <div className="flex items-center">
                   <span className="text-gray-500 mr-3">🌐</span>
                   <a href={partner.website} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
@@ -287,7 +276,7 @@ const Partners = () => {
                   </a>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
@@ -310,7 +299,7 @@ const Partners = () => {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center">
-          <div className="text-red-600 text-xl mb-4">⚠️ {error}</div>
+          <div className="text-red-600 text-xl mb-4"><AlertTriangle className="w-5 h-5" /> {error}</div>
           <button
             onClick={() => window.location.reload()}
             className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
@@ -332,9 +321,6 @@ const Partners = () => {
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
             {t('partners.title')}
           </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            {t('partners.subtitle')}
-          </p>
         </div>
 
         {/* Partners Grid */}

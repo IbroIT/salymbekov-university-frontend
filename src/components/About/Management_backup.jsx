@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { GraduationCap, Microscope, Trophy } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import './About.css';
 import { getManagement } from '../../services/teachers';
@@ -93,15 +94,15 @@ const Management = () => {
               className="w-20 h-20 rounded-full mx-auto border-4 border-white/20 shadow-lg object-cover"
             />
             <div className="absolute -bottom-2 -right-2 bg-yellow-400 text-yellow-900 px-2 py-1 rounded-full text-xs font-bold shadow-lg">
-              {member.type === 'administration' ? '👑' : member.type === 'faculty' ? '🎓' : '📚'}
+              {member.type === 'administration' ? '👑' : member.type === 'faculty' ? '<GraduationCap className="w-5 h-5" />' : '<BookOpen className="w-5 h-5" />'}
             </div>
           </div>
           <h3 className="text-lg font-bold mb-2">{member.head}</h3>
           <p className="text-sm opacity-90 mb-3">{member.position}</p>
           <div className="text-xs space-y-1 opacity-75">
-            <p>📧 {member.email}</p>
-            <p>📞 {member.phone}</p>
-            <p>⏰ {member.experience}</p>
+            <p><Mail className="w-5 h-5" /> {member.email}</p>
+            <p><Phone className="w-5 h-5" /> {member.phone}</p>
+            <p><Clock className="w-5 h-5" /> {member.experience}</p>
           </div>
           
           {/* Дополнительная информация для деканов и заведующих */}
@@ -110,12 +111,12 @@ const Management = () => {
               <div className="flex justify-center space-x-4 text-xs">
                 {member.studentCount && (
                   <span className="flex items-center">
-                    👨‍🎓 {member.studentCount}
+                    👨‍<GraduationCap className="w-5 h-5" /> {member.studentCount}
                   </span>
                 )}
                 {member.teacherCount && (
                   <span className="flex items-center">
-                    👨‍🏫 {member.teacherCount}
+                    <UserCircle className="w-5 h-5" /> {member.teacherCount}
                   </span>
                 )}
               </div>
@@ -497,8 +498,8 @@ const Management = () => {
   const getTypeIcon = (type) => {
     switch(type) {
       case 'administration': return '👔';
-      case 'faculty': return '🎓';
-      case 'department': return '📚';
+      case 'faculty': return '<GraduationCap className="w-5 h-5" />';
+      case 'department': return '<BookOpen className="w-5 h-5" />';
       default: return '👤';
     }
   };
@@ -593,7 +594,7 @@ const Management = () => {
                           className="p-2 bg-blue-100 hover:bg-blue-200 rounded-full transition-colors"
                           title="Email"
                         >
-                          📧
+                          <Mail className="w-5 h-5" />
                         </a>
                       )}
                       {person.phone && (
@@ -602,7 +603,7 @@ const Management = () => {
                           className="p-2 bg-green-100 hover:bg-green-200 rounded-full transition-colors"
                           title="Телефон"
                         >
-                          📞
+                          <Phone className="w-5 h-5" />
                         </a>
                       )}
                       <button
@@ -840,7 +841,7 @@ const Management = () => {
                 <div className="space-y-3">
                   {person.education && (
                     <div className="flex items-start space-x-3">
-                      <span className="text-2xl">🎓</span>
+                      <GraduationCap className="w-4 h-4" />
                       <div>
                         <p className="font-medium text-gray-900">{t('management.contactInfo.education')}</p>
                         <p className="text-gray-700">{person.education}</p>
@@ -850,7 +851,7 @@ const Management = () => {
                   
                   {person.experience && (
                     <div className="flex items-start space-x-3">
-                      <span className="text-2xl">⏱️</span>
+                      <span className="text-2xl"><Clock className="w-5 h-5" /></span>
                       <div>
                         <p className="font-medium text-gray-900">{t('management.contactInfo.experience')}</p>
                         <p className="text-gray-700">{person.experience}</p>
@@ -860,7 +861,7 @@ const Management = () => {
                   
                   {person.specialization && (
                     <div className="flex items-start space-x-3">
-                      <span className="text-2xl">🔬</span>
+                      <Microscope className="w-4 h-4" />
                       <div>
                         <p className="font-medium text-gray-900">{t('management.contactInfo.specialization')}</p>
                         <p className="text-gray-700">{person.specialization}</p>
@@ -901,13 +902,13 @@ const Management = () => {
                     <div className="space-y-2">
                       {person.studentCount && (
                         <div className="flex items-center space-x-2">
-                          <span className="text-green-600">👨‍🎓</span>
+                          <GraduationCap className="w-4 h-4" />
                           <span className="text-gray-700">{t('management.studentsCount')}: {person.studentCount}</span>
                         </div>
                       )}
                       {person.teacherCount && (
                         <div className="flex items-center space-x-2">
-                          <span className="text-blue-600">👨‍🏫</span>
+                          <span className="text-blue-600"><UserCircle className="w-5 h-5" /></span>
                           <span className="text-gray-700">{t('management.teachersCount')}: {person.teacherCount}</span>
                         </div>
                       )}
@@ -923,7 +924,7 @@ const Management = () => {
                 <div className="space-y-2">
                   {person.achievements.map((achievement, index) => (
                     <div key={index} className="flex items-start space-x-3">
-                      <span className="text-xl">🏆</span>
+                      <Trophy className="w-4 h-4" />
                       <p className="text-gray-700">{achievement}</p>
                     </div>
                   ))}

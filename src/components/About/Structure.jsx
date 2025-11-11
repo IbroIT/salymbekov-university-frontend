@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Building, Crown, GraduationCap } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { newAboutAPI } from '../../services/newAboutAPI';
 import { getManagement } from '../../services/teachers';
@@ -35,9 +36,9 @@ const StructurePage = () => {
   }, []);
 
   const sections = [
-    { id: 'leadership', name: t('structure.leadership.title'), icon: '👑' },
-    { id: 'faculties', name: t('structure.faculties.title'), icon: '🎓' },
-    { id: 'administrative', name: t('structure.administrative.title'), icon: '🏢' }
+    { id: 'leadership', name: t('structure.leadership.title'), icon: "Crown" },
+    { id: 'faculties', name: t('structure.faculties.title'), icon: "GraduationCap" },
+    { id: 'administrative', name: t('structure.administrative.title'), icon: "Building" }
   ];
 
   // Функция для получения локализованного текста
@@ -50,7 +51,7 @@ const StructurePage = () => {
   const structureData = {
     leadership: {
       title: t('structure.leadership.title'),
-      icon: "👑",
+      icon: "Crown",
       items: [
         {
           name: t('structure.leadership.items.rector.name'),
@@ -72,7 +73,7 @@ const StructurePage = () => {
     },
     faculties: {
       title: t('structure.faculties.title'),
-      icon: "🎓",
+      icon: "GraduationCap",
       items: [
         {
           name: t('structure.faculties.items.medical.name'),
@@ -115,7 +116,7 @@ const StructurePage = () => {
     },
     administrative: {
       title: t('structure.administrative.title'),
-      icon: "🏢",
+      icon: "Building",
       items: [
         {
           name: t('structure.administrative.items.academicOffice.name'),
@@ -188,7 +189,7 @@ const StructurePage = () => {
       <div className="space-y-6">
         <div className="flex items-center mb-6">
           <div className="p-3 bg-blue-100 rounded-xl mr-4">
-            <span className="text-2xl">👑</span>
+            <Crown className="w-4 h-4" />
           </div>
           <h2 className="text-3xl font-bold text-gray-900">
             {t('structure.leadership.title')}
@@ -232,7 +233,7 @@ const StructurePage = () => {
       <div className="space-y-6">
         <div className="flex items-center mb-6">
           <div className="p-3 bg-blue-100 rounded-xl mr-4">
-            <span className="text-2xl">🎓</span>
+            <GraduationCap className="w-4 h-4" />
           </div>
           <h2 className="text-3xl font-bold text-gray-900">
             {currentData.title}
@@ -315,7 +316,7 @@ const StructurePage = () => {
       <div className="space-y-6">
         <div className="flex items-center mb-6">
           <div className="p-3 bg-blue-100 rounded-xl mr-4">
-            <span className="text-2xl">🏢</span>
+            <Building className="w-4 h-4" />
           </div>
           <h2 className="text-3xl font-bold text-gray-900">
             {currentData.title}
@@ -402,7 +403,8 @@ const StructurePage = () => {
                           }`}
                         onClick={() => changeActiveSection(section.id)}
                       >
-                        <span className="text-lg mr-3">{section.icon}</span>
+                        <span className="text-lg mr-3">
+              </span>
                         {section.name}
                       </button>
                     </li>

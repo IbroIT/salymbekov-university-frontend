@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Check, Microscope, School } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { classroomsAPI, infrastructureHelpers } from '../../services/infrastructureService.js';
 
@@ -33,7 +34,7 @@ const Classrooms = () => {
         const allCategory = {
           id: 'all',
           name: t('classrooms.allRooms'),
-          icon: '🏫',
+          icon: "School",
           count: transformedData.classrooms.length
         }; setClassroomCategories([allCategory, ...transformedData.categories]);
         setClassrooms(transformedData.classrooms);
@@ -217,7 +218,7 @@ const Classrooms = () => {
                             key={index}
                             className="bg-blue-50 text-blue-800 px-3 py-2 rounded-lg flex items-center"
                           >
-                            <span className="text-green-500 mr-2">✓</span>
+                            <Check className="w-4 h-4" />
                             {t(feature)}
                           </div>
                         ))}
@@ -280,7 +281,7 @@ const Classrooms = () => {
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div className="text-center p-6">
-                  <div className="text-4xl mb-4">🖥️</div>
+                  <div className="text-4xl mb-4"><Monitor className="w-5 h-5" /></div>
                   <h3 className="text-xl font-bold text-blue-800 mb-3">
                     {t('classrooms.digitalClassrooms')}
                   </h3>
@@ -289,7 +290,7 @@ const Classrooms = () => {
                   </p>
                 </div>
                 <div className="text-center p-6">
-                  <div className="text-4xl mb-4">🔬</div>
+                  <Microscope className="w-6 h-6" />
                   <h3 className="text-xl font-bold text-blue-800 mb-3">
                     {t('classrooms.laboratoryEquipment')}
                   </h3>
@@ -298,7 +299,7 @@ const Classrooms = () => {
                   </p>
                 </div>
                 <div className="text-center p-6">
-                  <div className="text-4xl mb-4">🩺</div>
+                  <div className="text-4xl mb-4"><Stethoscope className="w-5 h-5" /></div>
                   <h3 className="text-xl font-bold text-blue-800 mb-3">
                     {t('classrooms.simulationEquipment')}
                   </h3>

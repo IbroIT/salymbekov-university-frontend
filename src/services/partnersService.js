@@ -1,4 +1,5 @@
 import { buildApiUrl, apiRequest } from '../config/api';
+import { Globe, Hospital, Microscope } from 'lucide-react';
 import API_CONFIG from '../config/api';
 
 /**
@@ -101,7 +102,7 @@ class PartnersService {
         id: 1, 
         nameKey: 'partners.nationalHospital', 
         name: 'National Hospital',
-        icon: '🏥', 
+        icon: "Hospital", 
         color: 'from-blue-500 to-indigo-600',
         glow: 'hover:shadow-blue-500/50',
         order: 1,
@@ -131,7 +132,7 @@ class PartnersService {
         id: 4, 
         nameKey: 'partners.who', 
         name: 'World Health Organization',
-        icon: '🌐', 
+        icon: "Globe", 
         color: 'from-amber-500 to-orange-600',
         glow: 'hover:shadow-amber-500/50',
         order: 4,
@@ -161,7 +162,7 @@ class PartnersService {
         id: 7, 
         nameKey: 'partners.healthInstitute', 
         name: 'Health Institute',
-        icon: '🔬', 
+        icon: "Microscope", 
         color: 'from-pink-500 to-rose-600',
         glow: 'hover:shadow-pink-500/50',
         order: 7,

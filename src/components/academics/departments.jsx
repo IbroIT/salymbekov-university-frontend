@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, ChevronDown, X, Users, BookOpen, MapPin, Phone, Mail, Calendar, GraduationCap, Filter } from 'lucide-react';
+import { BookOpen, Calendar, ChevronDown, Filter, GraduationCap, Hospital, Mail, MapPin, Phone, Search, Users, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 const Departments = () => {
@@ -33,7 +33,7 @@ const Departments = () => {
       email: 'dean@med.salymbekov.kg',
       phone: '+996 312 123 456',
       color: 'bg-blue-500',
-      icon: '🏥',
+      icon: "Hospital",
       departments: [
         {
           id: 101,
@@ -456,7 +456,8 @@ const Departments = () => {
                         onClick={() => toggleNode(`faculty-${faculty.id}`)}
                       >
                         <div className="flex items-center">
-                          <span className="text-xl sm:text-2xl mr-2 sm:mr-3">{faculty.icon}</span>
+                          <span className="text-xl sm:text-2xl mr-2 sm:mr-3">
+              </span>
                           <div>
                             <h3 className="font-semibold text-gray-800 text-sm sm:text-base">{faculty.name}</h3>
                             <p className="text-xs sm:text-sm text-gray-600">{faculty.departments.length} {t('departments.departmentsCount')}</p>

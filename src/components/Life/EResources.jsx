@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { AlertTriangle, BookOpen, Search } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import {
   fetchEResourcesStatistics,
@@ -46,7 +47,7 @@ const EResources = () => {
         const allCategory = {
           id: 'all',
           name: t('eresources.categories.all') || 'Все',
-          icon: '📚',
+          icon: "BookOpen",
           count: resourcesData.length
         };
 
@@ -168,7 +169,7 @@ const EResources = () => {
       <section className="relative py-20 overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900">
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center py-16">
-            <div className="text-6xl mb-4">⚠️</div>
+            <AlertTriangle className="w-6 h-6" />
             <h3 className="text-2xl font-bold text-white mb-2">{t('common.error') || 'Ошибка'}</h3>
             <p className="text-gray-400">{error}</p>
           </div>
@@ -240,7 +241,8 @@ const EResources = () => {
                   : 'bg-white/10 backdrop-blur-lg text-gray-300 hover:bg-white/20 border border-white/20'
                   }`}
               >
-                <span className="mr-2">{category.icon}</span>
+                <span className="mr-2">
+              </span>
                 <span className="font-medium">{category.name}</span>
                 <span className={`ml-2 px-2 py-1 rounded-full text-xs ${activeCategory === category.id ? 'bg-white/20' : 'bg-black/20'
                   }`}>
@@ -287,8 +289,8 @@ const EResources = () => {
                 <div className="relative z-10">
                   <div className="flex items-center mb-4">
                     <div className="text-3xl mr-4 bg-white/20 rounded-2xl w-16 h-16 flex items-center justify-center shadow-lg">
-                      {resource.icon}
-                    </div>
+               
+              </div>
                     <div className="flex-1">
                       <h3 className="text-xl font-bold mb-1">{getLocalizedField(resource, 'title', currentLanguage)}</h3>
                       <div className="flex items-center text-white/80">
@@ -351,7 +353,7 @@ const EResources = () => {
         {/* Сообщение если нет результатов */}
         {filteredData.length === 0 && (
           <div className="text-center py-16 bg-white/5 rounded-2xl backdrop-blur-lg border border-white/20">
-            <div className="text-6xl mb-4">🔍</div>
+            <Search className="w-6 h-6" />
             <h3 className="text-2xl font-bold text-white mb-2">{t('eresources.noResults.title') || 'Ничего не найдено'}</h3>
             <p className="text-gray-400">{t('eresources.noResults.description') || 'Попробуйте изменить критерии поиска'}</p>
           </div>

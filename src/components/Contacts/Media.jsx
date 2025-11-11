@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { AlertTriangle, Tv } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 const Media = () => {
@@ -55,7 +56,7 @@ const Media = () => {
         name_ru: 'Все',
         name_kg: 'Баары',
         name_en: 'All',
-        icon: '📺'
+        icon: "Tv"
       };
       
       return [allCategory, ...data.results];
@@ -191,9 +192,9 @@ const Media = () => {
     switch (category) {
       case 'tv': return '📺';
       case 'newspaper': return '📰';
-      case 'online': return '💻';
+      case 'online': return '<Laptop className="w-5 h-5" />';
       case 'radio': return '📻';
-      default: return '📄';
+      default: return '<File className="w-5 h-5" />';
     }
   };
 
@@ -218,7 +219,7 @@ const Media = () => {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="text-red-500 text-6xl mb-4">⚠️</div>
+          <AlertTriangle className="w-6 h-6" />
           <h2 className="text-2xl font-bold text-gray-800 mb-2">
             {getLocalizedContent({
               ru: 'Ошибка загрузки',
@@ -297,49 +298,6 @@ const Media = () => {
           ))}
         </div>
 
-        {/* Статистика */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
-          <div className="bg-white rounded-xl p-6 text-center shadow-md">
-            <div className="text-3xl font-bold text-blue-600 mb-2">{getStatsData().tv}+</div>
-            <div className="text-gray-600">
-              {getLocalizedContent({
-                ru: 'ТВ сюжетов',
-                en: 'TV reports',
-                kg: 'ТВ репортаждар'
-              })}
-            </div>
-          </div>
-          <div className="bg-white rounded-xl p-6 text-center shadow-md">
-            <div className="text-3xl font-bold text-green-600 mb-2">{getStatsData().newspaper}+</div>
-            <div className="text-gray-600">
-              {getLocalizedContent({
-                ru: 'Статей в прессе',
-                en: 'Press articles',
-                kg: 'Басма сөздөгү макалалар'
-              })}
-            </div>
-          </div>
-          <div className="bg-white rounded-xl p-6 text-center shadow-md">
-            <div className="text-3xl font-bold text-purple-600 mb-2">{getStatsData().online}+</div>
-            <div className="text-gray-600">
-              {getLocalizedContent({
-                ru: 'Онлайн публикаций',
-                en: 'Online publications',
-                kg: 'Онлайн жарыялоолор'
-              })}
-            </div>
-          </div>
-          <div className="bg-white rounded-xl p-6 text-center shadow-md">
-            <div className="text-3xl font-bold text-orange-600 mb-2">{getStatsData().radio}+</div>
-            <div className="text-gray-600">
-              {getLocalizedContent({
-                ru: 'Радио интервью',
-                en: 'Radio interviews',
-                kg: 'Радио маектер'
-              })}
-            </div>
-          </div>
-        </div>
 
         {/* Список медиа-материалов */}
         {/* Статьи */}
@@ -359,7 +317,7 @@ const Media = () => {
                     <div className="text-4xl mb-2">
                       {article.outlet?.outlet_type === 'tv' && '📺'}
                       {article.outlet?.outlet_type === 'newspaper' && '📰'}
-                      {article.outlet?.outlet_type === 'online' && '💻'}
+                      {article.outlet?.outlet_type === 'online' && '<Laptop className="w-5 h-5" />'}
                       {article.outlet?.outlet_type === 'radio' && '📻'}
                       {!article.outlet?.outlet_type && '📰'}
                     </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Briefcase, DollarSign, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
@@ -34,10 +35,10 @@ const VacancyCard = ({ vacancy }) => {
     }
     switch (category) {
       case 'academic': return '🏫';
-      case 'administrative': return '💼';
-      case 'technical': return '🖥️';
-      case 'service': return '📚';
-      default: return '💼';
+      case 'administrative': return '<Briefcase className="w-5 h-5" />';
+      case 'technical': return '<Monitor className="w-5 h-5" />';
+      case 'service': return '<BookOpen className="w-5 h-5" />';
+      default: return '<Briefcase className="w-5 h-5" />';
     }
   };
 
@@ -108,28 +109,28 @@ const VacancyCard = ({ vacancy }) => {
         <div className="space-y-2 mb-6">
           {vacancy.salary_display && (
             <div className="flex items-center text-sm text-gray-600">
-              <span className="text-green-600 mr-2">💰</span>
+              <DollarSign className="w-4 h-4" />
               <span className="font-medium">{vacancy.salary_display}</span>
             </div>
           )}
           
           {vacancy.location && (
             <div className="flex items-center text-sm text-gray-600">
-              <span className="text-blue-600 mr-2">📍</span>
+              <MapPin className="w-4 h-4" />
               <span>{vacancy.location}</span>
             </div>
           )}
 
           {vacancy.employment_type && (
             <div className="flex items-center text-sm text-gray-600">
-              <span className="text-purple-600 mr-2">⏰</span>
+              <span className="text-purple-600 mr-2"><Clock className="w-5 h-5" /></span>
               <span>{t(`careers.employment_types.${vacancy.employment_type}`)}</span>
             </div>
           )}
 
           {vacancy.experience_years && (
             <div className="flex items-center text-sm text-gray-600">
-              <span className="text-orange-600 mr-2">💼</span>
+              <Briefcase className="w-4 h-4" />
               <span>{t('careers.experience')}: {vacancy.experience_years}</span>
             </div>
           )}

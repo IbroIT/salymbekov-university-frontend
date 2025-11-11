@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Rocket, Star, Tent, Users } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 
@@ -77,10 +78,10 @@ const SocOp = () => {
   };
 
   const sections = [
-    { id: 'all', name: t('socop.categories.all'), icon: '🌟' },
-    { id: 'events', name: t('socop.categories.events'), icon: '🎪' },
-    { id: 'clubs', name: t('socop.categories.clubs'), icon: '👥' },
-    { id: 'projects', name: t('socop.categories.projects'), icon: '🚀' }
+    { id: 'all', name: t('socop.categories.all'), icon: "Star" },
+    { id: 'events', name: t('socop.categories.events'), icon: "Tent" },
+    { id: 'clubs', name: t('socop.categories.clubs'), icon: "Users" },
+    { id: 'projects', name: t('socop.categories.projects'), icon: "Rocket" }
   ];
 
   // Получение данных в зависимости от языка
@@ -179,7 +180,7 @@ const SocOp = () => {
     <div className="space-y-6">
       <div className="flex items-center mb-6">
         <div className="p-3 bg-blue-100 rounded-xl mr-4">
-          <span className="text-2xl">🌟</span>
+          <Star className="w-4 h-4" />
         </div>
         <h2 className="text-3xl font-bold text-gray-900">
           {t('socop.categories.all')}
@@ -338,7 +339,7 @@ const SocOp = () => {
     <div className="space-y-6">
       <div className="flex items-center mb-6">
         <div className="p-3 bg-blue-100 rounded-xl mr-4">
-          <span className="text-2xl">🎪</span>
+          <Tent className="w-4 h-4" />
         </div>
         <h2 className="text-3xl font-bold text-gray-900">
           {t('socop.categories.events')}
@@ -420,7 +421,7 @@ const SocOp = () => {
     <div className="space-y-6">
       <div className="flex items-center mb-6">
         <div className="p-3 bg-blue-100 rounded-xl mr-4">
-          <span className="text-2xl">👥</span>
+          <Users className="w-4 h-4" />
         </div>
         <h2 className="text-3xl font-bold text-gray-900">
           {t('socop.categories.clubs')}
@@ -506,7 +507,7 @@ const SocOp = () => {
     <div className="space-y-6">
       <div className="flex items-center mb-6">
         <div className="p-3 bg-blue-100 rounded-xl mr-4">
-          <span className="text-2xl">🚀</span>
+          <Rocket className="w-4 h-4" />
         </div>
         <h2 className="text-3xl font-bold text-gray-900">
           {t('socop.categories.projects')}
@@ -693,7 +694,8 @@ const SocOp = () => {
                               }`}
                             onClick={() => changeActiveSection(section.id)}
                           >
-                            <span className="text-lg mr-3">{section.icon}</span>
+                            <span className="text-lg mr-3">
+              </span>
                             {section.name}
                           </button>
                         </li>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Globe, Hospital, Microscope } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 const Partners = () => {
@@ -11,7 +12,7 @@ const Partners = () => {
     { 
       id: 1, 
       nameKey: 'partners.nationalHospital', 
-      icon: '🏥', 
+      icon: "Hospital", 
       color: 'from-blue-500 to-indigo-600',
       glow: 'hover:shadow-blue-500/50'
     },
@@ -25,14 +26,14 @@ const Partners = () => {
     { 
       id: 3, 
       nameKey: 'partners.medicalCenters', 
-      icon: '⛑️', 
+      icon: '<HardHat className="w-5 h-5" />', 
       color: 'from-green-500 to-teal-600',
       glow: 'hover:shadow-green-500/50'
     },
     { 
       id: 4, 
       nameKey: 'partners.who', 
-      icon: '🌐', 
+      icon: "Globe", 
       color: 'from-amber-500 to-orange-600',
       glow: 'hover:shadow-amber-500/50'
     },
@@ -46,21 +47,21 @@ const Partners = () => {
     { 
       id: 6, 
       nameKey: 'partners.medicalAssociation', 
-      icon: '⚕️', 
+      icon: '<Stethoscope className="w-5 h-5" />', 
       color: 'from-indigo-500 to-blue-600',
       glow: 'hover:shadow-indigo-500/50'
     },
     { 
       id: 7, 
       nameKey: 'partners.healthInstitute', 
-      icon: '🔬', 
+      icon: "Microscope", 
       color: 'from-pink-500 to-rose-600',
       glow: 'hover:shadow-pink-500/50'
     },
     { 
       id: 8, 
       nameKey: 'partners.researchFoundation', 
-      icon: '💉', 
+      icon: '<Syringe className="w-5 h-5" />', 
       color: 'from-teal-500 to-emerald-600',
       glow: 'hover:shadow-teal-500/50'
     },
@@ -138,8 +139,8 @@ const Partners = () => {
                 onMouseLeave={() => setHoveredPartner(null)}
               >
                 <span className={`text-5xl mb-3 transition-transform duration-700 ${hoveredPartner === partner.id ? 'scale-125 rotate-12' : ''}`}>
-                  {partner.icon}
-                </span>
+               
+              </span>
                 <span className="text-lg font-medium text-center bg-white/10 px-4 py-2 rounded-full backdrop-blur-sm">
                   {t(partner.nameKey)}
                 </span>

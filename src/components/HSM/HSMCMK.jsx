@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { AlertTriangle, BarChart, ClipboardList, Star } from 'lucide-react';
 import {
   getQualityManagementSystem,
   incrementDocumentDownload,
@@ -53,11 +54,8 @@ const HSMCMK = () => {
   };
 
   const sections = [
-    { id: 'about', name: t('smk.tabs.about'), icon: '📋' },
-    { id: 'principles', name: t('smk.tabs.principles'), icon: '🌟' },
-    { id: 'documents', name: t('smk.tabs.documents'), icon: '📁' },
-    { id: 'processes', name: t('smk.tabs.processes'), icon: '🔄' },
-    { id: 'statistics', name: t('smk.statistics.title'), icon: '📊' }
+    { id: 'about', name: t('smk.tabs.about'), icon: '<ClipboardList className="w-5 h-5" />' },
+    { id: 'documents', name: t('smk.tabs.documents'), icon: '📁' }
   ];
 
   const changeActiveSection = (sectionId) => {
@@ -91,7 +89,7 @@ const HSMCMK = () => {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 flex items-center justify-center">
         <div className="text-center">
-          <div className="text-6xl text-red-500 mb-4">⚠️</div>
+          <div className="text-6xl text-red-500 mb-4"><AlertTriangle className="w-5 h-5" /></div>
           <p className="text-lg text-red-600">{error}</p>
           <button
             onClick={() => window.location.reload()}
@@ -113,7 +111,7 @@ const HSMCMK = () => {
       <div className="space-y-6">
         <div className="flex items-center mb-6">
           <div className="p-3 bg-blue-100 rounded-xl mr-4">
-            <span className="text-2xl">📋</span>
+            <span className="text-2xl"><ClipboardList className="w-5 h-5" /></span>
           </div>
           <h2 className="text-3xl font-bold text-gray-900">
             {t('smk.about.title')}
@@ -166,7 +164,7 @@ const HSMCMK = () => {
       <div className="space-y-6">
         <div className="flex items-center mb-6">
           <div className="p-3 bg-blue-100 rounded-xl mr-4">
-            <span className="text-2xl">🌟</span>
+            <span className="text-2xl"><Star className="w-5 h-5" /></span>
           </div>
           <h2 className="text-3xl font-bold text-gray-900">
             {t('smk.principles.title')}
@@ -181,7 +179,7 @@ const HSMCMK = () => {
             >
               <div className="flex items-center mb-4">
                 <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-2xl mr-4">
-                  {principle.icon}
+                
                 </div>
                 <h3 className="text-xl font-semibold text-gray-800">
                   {getLocalizedField(principle, 'title', currentLang)}
@@ -276,7 +274,6 @@ const HSMCMK = () => {
               className="bg-white rounded-xl p-6 border border-blue-100 hover:shadow-md transition-all duration-300"
             >
               <div className="flex items-center gap-4 mb-6">
-                <div className="text-2xl">{group.icon}</div>
                 <h3 className="text-xl font-semibold text-gray-800">
                   {getLocalizedField(group, 'title', currentLang)}
                 </h3>
@@ -306,7 +303,7 @@ const HSMCMK = () => {
       <div className="space-y-6">
         <div className="flex items-center mb-6">
           <div className="p-3 bg-blue-100 rounded-xl mr-4">
-            <span className="text-2xl">📊</span>
+            <span className="text-2xl"><BarChart className="w-5 h-5" /></span>
           </div>
           <h2 className="text-3xl font-bold text-gray-900">
             {t('smk.statistics.title')}
@@ -365,12 +362,6 @@ const HSMCMK = () => {
               t('smk.hero.title')
             }
           </h1>
-          <p className="text-lg text-gray-700 max-w-3xl mx-auto">
-            {settings ?
-              getLocalizedField(settings, 'description', getCurrentLanguage()) :
-              t('smk.hero.description')
-            }
-          </p>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-6">
@@ -391,7 +382,7 @@ const HSMCMK = () => {
                           }`}
                         onClick={() => changeActiveSection(section.id)}
                       >
-                        <span className="text-lg mr-3">{section.icon}</span>
+                         <span className="text-lg mr-3"></span>
                         {section.name}
                       </button>
                     </li>

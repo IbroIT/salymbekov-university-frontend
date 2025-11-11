@@ -16,6 +16,7 @@ import {
 } from '@heroicons/react/24/outline';
 import SEOComponent from '../SEO/SEOComponent';
 import { fetchMissionData } from '../../utils/missionApi';
+import { AlertTriangle } from 'lucide-react';
 
 const Mission = () => {
   const { t, i18n } = useTranslation();
@@ -106,7 +107,7 @@ const Mission = () => {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
         <div className="text-center">
-          <div className="text-red-500 text-6xl mb-4">⚠️</div>
+          <div className="text-red-500 text-6xl mb-4"><AlertTriangle className="w-5 h-5" /></div>
           <h2 className="text-2xl font-bold text-gray-800 mb-2">Ошибка загрузки</h2>
           <p className="text-gray-600">{error}</p>
           <button
@@ -139,11 +140,10 @@ const Mission = () => {
   const { mission, history, values, priorities, achievements } = missionData;
 
   const sections = [
-    { id: 'mission', name: 'Миссия', icon: RocketLaunchIcon },
-    { id: 'history', name: 'Наша история', icon: BuildingLibraryIcon },
-    { id: 'values', name: 'Ценности', icon: HeartIcon },
-    { id: 'priorities', name: 'Приоритеты', icon: LightBulbIcon },
-    { id: 'achievements', name: 'Достижения', icon: ChartBarIcon }
+    { id: 'mission', name: 'Миссия', icon: "RocketLaunchIcon" },
+    { id: 'history', name: 'Наша история', icon: "BuildingLibraryIcon" },
+    { id: 'values', name: 'Ценности', icon: "HeartIcon" },
+    { id: 'achievements', name: 'Достижения', icon: "ChartBarIcon" }
   ];
 
   const changeActiveSection = (sectionId) => {

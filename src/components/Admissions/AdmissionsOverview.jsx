@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BookOpen, Calendar, File, FileEdit, FileText, GraduationCap, Hospital, Stethoscope, Target, Trophy } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { emailConfig, openGmailCompose, createMailtoLink } from '../../config/emailConfig';
 import SEOComponent from '../SEO/SEOComponent';
@@ -92,7 +93,7 @@ Email: [Ваш email]
   const timelineSteps = [
     {
       id: 1,
-      icon: '📋',
+      Icon: FileText,
       titleKey: 'admissions.timeline.step1.title',
       descriptionKey: 'admissions.timeline.step1.description',
       detailsKey: 'admissions.timeline.step1.details',
@@ -100,7 +101,7 @@ Email: [Ваш email]
     },
     {
       id: 2,
-      icon: '📄',
+      Icon: File,
       titleKey: 'admissions.timeline.step2.title',
       descriptionKey: 'admissions.timeline.step2.description',
       detailsKey: 'admissions.timeline.step2.details',
@@ -116,7 +117,7 @@ Email: [Ваш email]
     },
     {
       id: 4,
-      icon: '✅',
+      icon: '<CheckCircle className="w-5 h-5" />',
       titleKey: 'admissions.timeline.step4.title',
       descriptionKey: 'admissions.timeline.step4.description',
       detailsKey: 'admissions.timeline.step4.details',
@@ -124,7 +125,7 @@ Email: [Ваш email]
     },
     {
       id: 5,
-      icon: '🎓',
+      Icon: GraduationCap,
       titleKey: 'admissions.timeline.step5.title',
       descriptionKey: 'admissions.timeline.step5.description',
       detailsKey: 'admissions.timeline.step5.details',
@@ -139,7 +140,7 @@ Email: [Ваш email]
       dateNum: '01',
       monthKey: 'common.months.jun',
       highlight: true,
-      icon: '📅',
+      icon: "Calendar",
       color: 'bg-gradient-to-br from-green-400 to-green-600'
     },
     {
@@ -148,7 +149,7 @@ Email: [Ваш email]
       dateNum: '15',
       monthKey: 'common.months.aug',
       highlight: true,
-      icon: '⏰',
+      icon: '<Clock className="w-5 h-5" />',
       color: 'bg-gradient-to-br from-red-400 to-red-600'
     },
     {
@@ -157,7 +158,7 @@ Email: [Ваш email]
       dateNum: '20-25',
       monthKey: 'common.months.aug',
       highlight: true,
-      icon: '📝',
+      Icon: FileEdit,
       color: 'bg-gradient-to-br from-purple-400 to-purple-600'
     }
   ];
@@ -264,7 +265,7 @@ Email: [Ваш email]
                         ? `bg-gradient-to-br ${step.color} text-white shadow-lg` 
                         : 'bg-gray-200 text-gray-500'
                     }`}>
-                      {step.icon}
+                      <step.Icon className="w-6 h-6" />
                       {index <= activeStep && (
                         <div className="absolute inset-0 rounded-full bg-white opacity-20 animate-pulse"></div>
                       )}
@@ -303,8 +304,8 @@ Email: [Ваш email]
                     ? `bg-gradient-to-br ${step.color} text-white` 
                     : 'bg-gray-200 text-gray-500'
                 }`}>
-                  {step.icon}
-                </div>
+                <step.Icon className="w-6 h-6" />
+              </div>
                 <div className="flex-1">
                   <h3 className="text-lg font-bold text-gray-800 mb-2">
                     {t(step.titleKey)}
@@ -330,7 +331,7 @@ Email: [Ваш email]
         <div className="bg-white rounded-2xl shadow-xl p-8 mb-16">
           <div className="text-center mb-8">
             <div className="inline-block bg-red-100 text-red-800 px-4 py-2 rounded-full text-sm font-medium mb-4">
-              📅 {t('admissions.dates.title')}
+              <Calendar className="w-5 h-5" /> {t('admissions.dates.title')}
             </div>
             <h2 className="text-3xl font-bold text-gray-800 mb-2">
               {t('admissions.dates.heading')}
@@ -350,8 +351,8 @@ Email: [Ваш email]
                 <div className="relative p-8 text-gray-700 text-center">
                   {/* Date Icon */}
                   <div className="text-4xl mb-4">
-                    {item.icon}
-                  </div>
+                <item.Icon className="w-6 h-6" />
+              </div>
                   
                   {/* Calendar Style Date */}
                   <div className="bg-white bg-opacity-20 rounded-lg p-4 mb-4 backdrop-blur-sm">
@@ -394,7 +395,7 @@ Email: [Ваш email]
             </div>
             
             <div className="relative z-10">
-              <div className="text-6xl mb-6">🏥</div>
+              <Hospital className="w-6 h-6" />
               <h3 className="text-3xl font-bold mb-4">
                 {t('admissions.cta.title')}
               </h3>
@@ -419,7 +420,7 @@ Email: [Ваш email]
                   title="Отправить заявку через Gmail"
                 >
                   <span className="flex items-center justify-center">
-                    📧 {t('admissions.cta.sendEmail')}
+                    <Mail className="w-5 h-5" /> {t('admissions.cta.sendEmail')}
                   </span>
                 </button>
                 <a 
@@ -427,7 +428,7 @@ Email: [Ваш email]
                   className="group border-2 border-white text-white px-6 py-4 rounded-xl font-bold hover:bg-white hover:text-blue-600 transition-all duration-300 transform hover:scale-105"
                 >
                   <span className="flex items-center justify-center">
-                    📞 {t('admissions.cta.contactUs')}
+                    <Phone className="w-5 h-5" /> {t('admissions.cta.contactUs')}
                   </span>
                 </a>
                 <button 
@@ -463,22 +464,22 @@ Email: [Ваш email]
         {/* Quick Info Cards */}
         <div className="mt-16 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           <div className="bg-white p-6 rounded-xl shadow-lg text-center hover:shadow-xl transition-shadow">
-            <div className="text-3xl mb-2">📚</div>
+            <BookOpen className="w-6 h-6" />
             <h4 className="font-bold text-gray-800 mb-1">{t('admissions.info.programs')}</h4>
             <p className="text-sm text-gray-600">{t('admissions.info.programsDesc')}</p>
           </div>
           <div className="bg-white p-6 rounded-xl shadow-lg text-center hover:shadow-xl transition-shadow">
-            <div className="text-3xl mb-2">🏆</div>
+            <Trophy className="w-6 h-6" />
             <h4 className="font-bold text-gray-800 mb-1">{t('admissions.info.quality')}</h4>
             <p className="text-sm text-gray-600">{t('admissions.info.qualityDesc')}</p>
           </div>
           <div className="bg-white p-6 rounded-xl shadow-lg text-center hover:shadow-xl transition-shadow">
-            <div className="text-3xl mb-2">👨‍⚕️</div>
+            <Stethoscope className="w-6 h-6" />
             <h4 className="font-bold text-gray-800 mb-1">{t('admissions.info.teachers')}</h4>
             <p className="text-sm text-gray-600">{t('admissions.info.teachersDesc')}</p>
           </div>
           <div className="bg-white p-6 rounded-xl shadow-lg text-center hover:shadow-xl transition-shadow">
-            <div className="text-3xl mb-2">🎯</div>
+            <Target className="w-6 h-6" />
             <h4 className="font-bold text-gray-800 mb-1">{t('admissions.info.practice')}</h4>
             <p className="text-sm text-gray-600">{t('admissions.info.practiceDesc')}</p>
           </div>

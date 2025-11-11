@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Clock, File, FileEdit, Mail, MapPin, Phone, Stethoscope } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 const AdmissionCommittee = () => {
@@ -14,25 +15,25 @@ const AdmissionCommittee = () => {
       id: 1,
       title: t('admission.documents'),
       description: t('admission.documentsDesc'),
-      icon: '📄'
+      icon: "File"
     },
     {
       id: 2,
       title: t('admission.exams'),
       description: t('admission.examsDesc'),
-      icon: '📝'
+      icon: "FileEdit"
     },
     {
       id: 3,
       title: t('admission.deadlines'),
       description: t('admission.deadlinesDesc'),
-      icon: '⏰'
+      icon: '<Clock className="w-5 h-5" />'
     },
     {
       id: 4,
       title: t('admission.consultation'),
       description: t('admission.consultationDesc'),
-      icon: '👨‍⚕️'
+      icon: "Stethoscope"
     }
   ];
 
@@ -41,25 +42,25 @@ const AdmissionCommittee = () => {
       id: 1,
       type: t('admission.phone'),
       value: '+996 (312) 123-456',
-      icon: '📞'
+      icon: "Phone"
     },
     {
       id: 2,
       type: t('admission.email'),
       value: 'admission@medical.edu',
-      icon: '✉️'
+      icon: "Mail"
     },
     {
       id: 3,
       type: t('admission.address'),
       value: t('admission.addressValue'),
-      icon: '📍'
+      icon: "MapPin"
     },
     {
       id: 4,
       type: t('admission.hours'),
       value: t('admission.hoursValue'),
-      icon: '🕒'
+      icon: "Clock"
     }
   ];
 
@@ -93,17 +94,6 @@ const AdmissionCommittee = () => {
 
       {/* Main Content */}
       <div className="container mx-auto px-4 py-12">
-        {/* Introduction */}
-        <section className="mb-16">
-          <div className="bg-white rounded-2xl shadow-xl p-8">
-            <h2 className="text-3xl font-bold text-blue-800 mb-6">
-              {t('admission.welcome')}
-            </h2>
-            <p className="text-gray-700 text-lg leading-relaxed">
-              {t('admission.introduction')}
-            </p>
-          </div>
-        </section>
 
         {/* Requirements Grid */}
         <section className="mb-16">
@@ -116,7 +106,8 @@ const AdmissionCommittee = () => {
                 key={item.id}
                 className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border-l-4 border-blue-500"
               >
-                <div className="text-4xl mb-4">{item.icon}</div>
+                <div className="text-4xl mb-4">
+              </div>
                 <h3 className="text-xl font-bold text-blue-800 mb-3">
                   {item.title}
                 </h3>
@@ -139,7 +130,8 @@ const AdmissionCommittee = () => {
               <div className="space-y-4">
                 {contactInfo.map((item) => (
                   <div key={item.id} className="flex items-center space-x-4">
-                    <div className="text-2xl text-blue-600">{item.icon}</div>
+                    <div className="text-2xl text-blue-600">
+              </div>
                     <div>
                       <p className="font-semibold text-blue-800">{item.type}</p>
                       <p className="text-gray-700">{item.value}</p>

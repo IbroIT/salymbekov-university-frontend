@@ -97,13 +97,13 @@ const Research = () => {
       'Кардиология': '🫀',
       'Неврология': '🧠',
       'Онкология': '🦠',
-      'Генетика': '🧬',
+      'Генетика': '<Dna className="w-5 h-5" />',
       'Иммунология': '🦴',
-      'Фармакология': '💊',
-      'Общая медицина': '⚕️'
+      'Фармакология': '<Pill className="w-5 h-5" />',
+      'Общая медицина': '<Stethoscope className="w-5 h-5" />'
     };
     
-    return icons[areaName] || '🔬';
+    return icons[areaName] || '<Microscope className="w-5 h-5" />';
   };
 
   const getAreaColor = (areaName) => {
@@ -261,10 +261,10 @@ const Research = () => {
 
   // Статистика исследований
   const researchStats = [
-    { value: '65+', label: t('research.stats.projects'), icon: FileText, color: 'text-blue-600', bg: 'bg-blue-100' },
-    { value: '180+', label: t('research.stats.publications'), icon: Award, color: 'text-green-600', bg: 'bg-green-100' },
-    { value: '120+', label: t('research.stats.researchers'), icon: Users, color: 'text-purple-600', bg: 'bg-purple-100' },
-    { value: '15+', label: t('research.stats.collaborations'), icon: Users, color: 'text-orange-600', bg: 'bg-orange-100' }
+    { value: '65+', label: t('research.stats.projects'), icon: "FileText", color: 'text-blue-600', bg: 'bg-blue-100' },
+    { value: '180+', label: t('research.stats.publications'), icon: "Award", color: 'text-green-600', bg: 'bg-green-100' },
+    { value: '120+', label: t('research.stats.researchers'), icon: "Users", color: 'text-purple-600', bg: 'bg-purple-100' },
+    { value: '15+', label: t('research.stats.collaborations'), icon: "Users", color: 'text-orange-600', bg: 'bg-orange-100' }
   ];
 
   const formatDate = (dateString) => {
@@ -385,7 +385,7 @@ const Research = () => {
                 
                 <div className="relative z-10">
                   <div className="flex items-start justify-between mb-4">
-                    <span className="text-4xl transform group-hover:scale-110 transition-transform duration-300">{area.icon || '🔬'}</span>
+                    <span className="text-4xl transform group-hover:scale-110 transition-transform duration-300">{area.icon || '<Microscope className="w-5 h-5" />'}</span>
                     <span className={`px-3 py-1 rounded-full text-sm font-medium ${getColorClasses(area.color)}`}>
                       {area.projects_count || 0} {t('research.researchAreas.projects')}
                     </span>

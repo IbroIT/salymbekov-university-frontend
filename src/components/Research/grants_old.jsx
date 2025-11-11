@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { CheckCircle, ClipboardList, Clock, FileText, GraduationCap } from 'lucide-react';
 
 const Grants = () => {
   const { t } = useTranslation();
@@ -298,7 +299,7 @@ const Grants = () => {
         {/* Заголовок */}
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-800 mb-4">
-            🎓 {t('research.grants.pageTitle')}
+            <GraduationCap className="w-5 h-5" /> {t('research.grants.pageTitle')}
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             {t('research.grants.pageSubtitle')}
@@ -309,9 +310,9 @@ const Grants = () => {
         <div className="flex justify-center mb-8">
           <div className="bg-white rounded-2xl shadow-lg p-1 inline-flex flex-wrap justify-center">
             {[
-              { key: 'all', label: t('research.grants.tabs.all'), emoji: '📋' },
-              { key: 'active', label: t('research.grants.tabs.active'), emoji: '✅' },
-              { key: 'upcoming', label: t('research.grants.tabs.upcoming'), emoji: '⏰' },
+              { key: 'all', label: t('research.grants.tabs.all'), emoji: '<ClipboardList className="w-5 h-5" />' },
+              { key: 'active', label: t('research.grants.tabs.active'), emoji: '<CheckCircle className="w-5 h-5" />' },
+              { key: 'upcoming', label: t('research.grants.tabs.upcoming'), emoji: '<Clock className="w-5 h-5" />' },
               { key: 'closed', label: t('research.grants.tabs.closed'), emoji: '🔒' }
             ].map((tab) => (
               <button
@@ -498,7 +499,7 @@ const Grants = () => {
                       }}
                       className="bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-200 transform hover:scale-105"
                     >
-                      📝 {t('research.grants.modal.applyForGrant')}
+                      <FileText className="w-5 h-5" /> {t('research.grants.modal.applyForGrant')}
                     </button>
                   </div>
                 )}
@@ -513,7 +514,7 @@ const Grants = () => {
             <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
               <div className="bg-gradient-to-r from-green-600 to-blue-600 p-6 text-white">
                 <div className="flex justify-between items-center">
-                  <h2 className="text-2xl font-bold">📝 {t('research.grants.form.applicationTitle')}</h2>
+                  <h2 className="text-2xl font-bold"><FileText className="w-5 h-5" /> {t('research.grants.form.applicationTitle')}</h2>
                   <button
                     onClick={() => setShowApplicationForm(false)}
                     className="text-white hover:text-gray-200 text-2xl"

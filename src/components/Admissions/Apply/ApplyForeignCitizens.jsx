@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Calendar, Check, File, GraduationCap, Lightbulb } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 const ApplyForeignCitizens = () => {
@@ -12,7 +13,7 @@ const ApplyForeignCitizens = () => {
       title: t('applyForeign.step1.title', 'Подготовка документов'),
       description: t('applyForeign.step1.desc', 'Сбор и перевод необходимых документов'),
       duration: t('applyForeign.step1.duration', '2-4 недели'),
-      icon: '📄'
+      Icon: File
     },
     {
       id: 2,
@@ -33,7 +34,7 @@ const ApplyForeignCitizens = () => {
       title: t('applyForeign.step4.title', 'Прибытие и зачисление'),
       description: t('applyForeign.step4.desc', 'Оформление документов в университете'),
       duration: t('applyForeign.step4.duration', '1 неделя'),
-      icon: '🎓'
+      Icon: GraduationCap
     }
   ];
 
@@ -92,7 +93,7 @@ const ApplyForeignCitizens = () => {
         t('applyForeign.support.curator.feature2', 'Помощь в оформлении документов'),
         t('applyForeign.support.curator.feature3', 'Адаптация к учебному процессу')
       ],
-      icon: '👨‍🏫',
+      icon: '<UserCircle className="w-5 h-5" />',
       color: 'green'
     },
     {
@@ -103,7 +104,7 @@ const ApplyForeignCitizens = () => {
         t('applyForeign.support.legal.feature2', 'Оформление студенческого билета'),
         t('applyForeign.support.legal.feature3', 'Консультации по законодательству')
       ],
-      icon: '⚖️',
+      icon: '<Scale className="w-5 h-5" />',
       color: 'purple'
     }
   ];
@@ -175,7 +176,9 @@ const ApplyForeignCitizens = () => {
                 onClick={() => setActiveStep(step.id)}
               >
                 <div className="text-center">
-                  <div className="text-3xl mb-2">{step.icon}</div>
+                  <div className="text-3xl mb-2">
+                <step.Icon className="w-6 h-6" />
+              </div>
                   <h3 className="font-semibold text-gray-800 mb-1">{step.title}</h3>
                   <p className="text-sm text-gray-600 mb-2">{step.description}</p>
                   <span className="text-xs text-green-600 font-medium">{step.duration}</span>
@@ -221,11 +224,11 @@ const ApplyForeignCitizens = () => {
                   </h4>
                   <ul className="space-y-2 text-gray-700">
                     <li className="flex items-start">
-                      <span className="text-blue-600 mr-2">💡</span>
+                      <Lightbulb className="w-4 h-4" />
                       {t('applyForeign.step1.tip1', 'Все переводы должны быть нотариальными')}
                     </li>
                     <li className="flex items-start">
-                      <span className="text-blue-600 mr-2">💡</span>
+                      <Lightbulb className="w-4 h-4" />
                       {t('applyForeign.step1.tip2', 'Документы действительны 6 месяцев')}
                     </li>
                   </ul>
@@ -303,11 +306,11 @@ const ApplyForeignCitizens = () => {
                   </h4>
                   <ul className="space-y-2 text-gray-700">
                     <li className="flex items-start">
-                      <span className="text-blue-600 mr-2">📅</span>
+                      <Calendar className="w-4 h-4" />
                       {t('applyForeign.step3.time1', 'Обычное оформление: 15-20 дней')}
                     </li>
                     <li className="flex items-start">
-                      <span className="text-blue-600 mr-2">📅</span>
+                      <Calendar className="w-4 h-4" />
                       {t('applyForeign.step3.time2', 'Срочное оформление: 5-7 дней')}
                     </li>
                   </ul>
@@ -342,11 +345,11 @@ const ApplyForeignCitizens = () => {
                   </h4>
                   <ul className="space-y-2 text-gray-700">
                     <li className="flex items-start">
-                      <span className="text-blue-600 mr-2">🎓</span>
+                      <GraduationCap className="w-4 h-4" />
                       {t('applyForeign.step4.doc1', 'Студенческий билет')}
                     </li>
                     <li className="flex items-start">
-                      <span className="text-blue-600 mr-2">🎓</span>
+                      <GraduationCap className="w-4 h-4" />
                       {t('applyForeign.step4.doc2', 'Справка для продления визы')}
                     </li>
                   </ul>
@@ -451,14 +454,16 @@ const ApplyForeignCitizens = () => {
             {supportServices.map((service, index) => (
               <div key={index} className={`border-2 rounded-lg p-6 ${getColorClasses(service.color)}`}>
                 <div className="text-center mb-4">
-                  <div className="text-4xl mb-2">{service.icon}</div>
+                  <div className="text-4xl mb-2">
+                <service.Icon className="w-6 h-6" />
+              </div>
                   <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
                   <p className="text-sm opacity-80 mb-4">{service.description}</p>
                 </div>
                 <ul className="space-y-2">
                   {service.features.map((feature, featureIndex) => (
                     <li key={featureIndex} className="flex items-start text-sm">
-                      <span className="mr-2">✓</span>
+                      <Check className="w-4 h-4" />
                       {feature}
                     </li>
                   ))}

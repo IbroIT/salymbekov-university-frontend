@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { BookOpen, GraduationCap, Hospital } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import './Facts.css'
@@ -85,10 +86,10 @@ const AnimatedFactsSection = () => {
   const { t } = useTranslation();
 
   const facts = [
-    { end: 5000, icon: "👨‍🎓", label: t("facts.students"), delay: 0 },
-    { end: 2500, icon: "🎓", label: t("facts.graduates"), delay: 200 },
-    { end: 25, icon: "📚", label: t("facts.programs"), delay: 400 },
-    { end: 50, icon: "🏥", label: t("facts.clinics"), delay: 600 }
+    { end: 5000, Icon: GraduationCap, label: t("facts.students"), delay: 0 },
+    { end: 2500, Icon: GraduationCap, label: t("facts.graduates"), delay: 200 },
+    { end: 25, Icon: BookOpen, label: t("facts.programs"), delay: 400 },
+    { end: 50, Icon: Hospital, label: t("facts.clinics"), delay: 600 }
   ];
 
   return (
@@ -110,7 +111,7 @@ const AnimatedFactsSection = () => {
             <CounterItem
               key={index}
               end={fact.end}
-              icon={fact.icon}
+              icon=<fact.Icon className="w-6 h-6" />
               label={fact.label}
               delay={fact.delay}
             />

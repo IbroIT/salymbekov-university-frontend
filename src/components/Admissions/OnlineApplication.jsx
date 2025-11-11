@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Check, File, FileText, GraduationCap } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { emailConfig, openGmailCompose, createMailtoLink } from '../../config/emailConfig';
 import admissionsAPI from '../../services/admissionsAPI';
@@ -90,11 +91,11 @@ const OnlineApplication = () => {
 
 
   const steps = [
-    { id: 1, title: t('application.steps.program'), icon: '📋' },
+    { id: 1, title: t('application.steps.program'), icon: "FileText" },
     { id: 2, title: t('application.steps.personal'), icon: '👤' },
-    { id: 3, title: t('application.steps.education'), icon: '🎓' },
-    { id: 4, title: t('application.steps.documents'), icon: '📄' },
-    { id: 5, title: t('application.steps.confirmation'), icon: '✅' }
+    { id: 3, title: t('application.steps.education'), icon: "GraduationCap" },
+    { id: 4, title: t('application.steps.documents'), icon: "File" },
+    { id: 5, title: t('application.steps.confirmation'), icon: '<CheckCircle className="w-5 h-5" />' }
   ];
 
   // Auto-save draft
@@ -307,7 +308,7 @@ ${data.firstName} ${data.lastName}
           submittedAt: new Date().toLocaleString('ru-RU')
         });
 
-        alert('✅ Заявка отправлена на почту приемной комиссии' + (hasAnyFile ? ' вместе с документами.' : '.'));
+        alert('<CheckCircle className="w-5 h-5" /> Заявка отправлена на почту приемной комиссии' + (hasAnyFile ? ' вместе с документами.' : '.'));
         // Откроем Gmail как визуальное подтверждение (текст без вложений)
         try { openGmailCompose(emailConfig.mainAdmissions, subject, body); } catch (_) {}
         localStorage.removeItem('applicationDraft');
@@ -321,7 +322,7 @@ ${data.firstName} ${data.lastName}
           const mailtoLink = createMailtoLink(emailConfig.mainAdmissions, subject, body);
           window.location.href = mailtoLink;
         }
-        alert('⚠️ Не удалось отправить через сервер. Открылся ваш почтовый клиент с готовым письмом. Добавьте файлы вручную и отправьте.');
+        alert('<AlertTriangle className="w-5 h-5" /> Не удалось отправить через сервер. Открылся ваш почтовый клиент с готовым письмом. Добавьте файлы вручную и отправьте.');
       } finally {
         setIsSubmitting(false); // Сбрасываем состояние загрузки в любом случае
       }
@@ -425,8 +426,8 @@ ${data.firstName} ${data.lastName}
               </div>
               <p className="text-gray-600 text-sm mb-3">{program.description}</p>
               <div className="flex flex-wrap gap-4 text-sm text-gray-500">
-                <span>💰 {program.cost}</span>
-                <span>📋 {program.requirements}</span>
+                <span><DollarSign className="w-5 h-5" /> {program.cost}</span>
+                <span><ClipboardList className="w-5 h-5" /> {program.requirements}</span>
               </div>
             </div>
           )) : (
@@ -804,7 +805,7 @@ ${data.firstName} ${data.lastName}
       </div>
       
       <div className="bg-blue-50 p-4 rounded-lg">
-        <h4 className="font-semibold text-blue-800 mb-2">📋 {t('application.documents.requirements.title')}</h4>
+        <h4 className="font-semibold text-blue-800 mb-2"><ClipboardList className="w-5 h-5" /> {t('application.documents.requirements.title')}</h4>
         <ul className="text-sm text-blue-700 space-y-1">
           <li>• {t('application.documents.requirements.format')}</li>
           <li>• {t('application.documents.requirements.size')}</li>
@@ -827,7 +828,7 @@ ${data.firstName} ${data.lastName}
         {/* Program Details */}
         <div className="bg-green-50 p-6 rounded-lg border-l-4 border-green-600">
           <div className="flex items-center mb-3">
-            <span className="text-2xl mr-3">📋</span>
+            <FileText className="w-4 h-4" />
             <h4 className="font-semibold text-gray-800 text-lg">{t('application.confirmation.selectedProgram')}</h4>
           </div>
           <div className="grid md:grid-cols-2 gap-4">
@@ -858,7 +859,7 @@ ${data.firstName} ${data.lastName}
               {formData.gender && <p className="text-gray-600 text-sm">{t('application.personalInfo.gender')}: {formData.gender === 'male' ? t('application.personalInfo.male') : t('application.personalInfo.female')}</p>}
             </div>
             <div className="text-sm text-gray-600">
-              <p>📞 {formData.phone}</p>
+              <p><Phone className="w-5 h-5" /> {formData.phone}</p>
               <p>✉️ {formData.email}</p>
               {formData.address && <p>🏠 {formData.address}</p>}
             </div>
@@ -868,7 +869,7 @@ ${data.firstName} ${data.lastName}
         {/* Education */}
         <div className="bg-yellow-50 p-6 rounded-lg border-l-4 border-yellow-600">
           <div className="flex items-center mb-3">
-            <span className="text-2xl mr-3">🎓</span>
+            <GraduationCap className="w-4 h-4" />
             <h4 className="font-semibold text-gray-800 text-lg">{t('application.confirmation.education')}</h4>
           </div>
           <div className="grid md:grid-cols-2 gap-4">
@@ -901,31 +902,31 @@ ${data.firstName} ${data.lastName}
         {/* Documents */}
         <div className="bg-purple-50 p-6 rounded-lg border-l-4 border-purple-600">
           <div className="flex items-center mb-3">
-            <span className="text-2xl mr-3">📄</span>
+            <File className="w-4 h-4" />
             <h4 className="font-semibold text-gray-800 text-lg">{t('application.confirmation.uploadedDocuments')}</h4>
           </div>
           <div className="grid md:grid-cols-2 gap-4 text-sm text-gray-600">
             <div>
               <p className="flex items-center">
-                {formData.documents.certificate ? '✅' : '❌'} 
+                {formData.documents.certificate ? '<CheckCircle className="w-5 h-5" />' : '<XCircle className="w-5 h-5" />'} 
                 <span className="ml-2">{t('application.documents.certificate')}</span>
               </p>
               <p className="flex items-center">
-                {formData.documents.passport ? '✅' : '❌'} 
+                {formData.documents.passport ? '<CheckCircle className="w-5 h-5" />' : '<XCircle className="w-5 h-5" />'} 
                 <span className="ml-2">{t('application.documents.passport')}</span>
               </p>
               <p className="flex items-center">
-                {formData.documents.medical ? '✅' : '❌'} 
+                {formData.documents.medical ? '<CheckCircle className="w-5 h-5" />' : '<XCircle className="w-5 h-5" />'} 
                 <span className="ml-2">{t('application.documents.medical')}</span>
               </p>
             </div>
             <div>
               <p className="flex items-center">
-                {formData.documents.photos?.length > 0 ? '✅' : '⚪'} 
+                {formData.documents.photos?.length > 0 ? '<CheckCircle className="w-5 h-5" />' : '⚪'} 
                 <span className="ml-2">{t('application.documents.photos')} (необязательно)</span>
               </p>
               <p className="flex items-center">
-                {formData.documents.ortCertificate ? '✅' : '⚪'} 
+                {formData.documents.ortCertificate ? '<CheckCircle className="w-5 h-5" />' : '⚪'} 
                 <span className="ml-2">{t('application.documents.ortCertificate')} (необязательно)</span>
               </p>
             </div>
@@ -1118,7 +1119,7 @@ ${data.firstName} ${data.lastName}
     )}
     {isDraftSaved && (
       <div className="flex items-center bg-green-100 text-green-700 px-3 py-2 rounded-lg text-sm font-medium">
-        <span className="text-lg mr-2">✓</span>
+        <Check className="w-4 h-4" />
         <span className="hidden sm:inline">{t('application.status.draftSaved')}</span>
         <span className="sm:hidden">Сохранено</span>
       </div>
@@ -1174,7 +1175,7 @@ ${data.firstName} ${data.lastName}
           </h4>
           <div className="grid md:grid-cols-2 gap-4 text-sm text-blue-700">
             <div>
-              <p>📞 {t('application.help.phone')}</p>
+              <p><Phone className="w-5 h-5" /> {t('application.help.phone')}</p>
               <p>✉️ {t('application.help.email')}</p>
             </div>
             <div>

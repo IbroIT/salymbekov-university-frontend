@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Bell, Calendar, Download, ExternalLink, Pin } from 'lucide-react';
+import { Bell, BookOpen, Calendar, DollarSign, Download, ExternalLink, Hospital, Pin, Trophy } from 'lucide-react';
 
 const API_BASE_URL = 'https://su-med-backend-35d3d951c74b.herokuapp.com/api';
 
@@ -130,32 +130,32 @@ const NewsAnnouncements = () => {
       academic: { 
         name: t('news.announcements.types.academic'), 
         color: 'bg-blue-100 text-blue-800', 
-        icon: '📚' 
+        icon: "BookOpen" 
       },
       scholarship: { 
         name: t('news.announcements.types.scholarship'), 
         color: 'bg-green-100 text-green-800', 
-        icon: '💰' 
+        icon: "DollarSign" 
       },
       schedule: { 
         name: t('news.announcements.types.schedule'), 
         color: 'bg-purple-100 text-purple-800', 
-        icon: '📅' 
+        icon: "Calendar" 
       },
       competition: { 
         name: t('news.announcements.types.competition'), 
         color: 'bg-orange-100 text-orange-800', 
-        icon: '🏆' 
+        icon: "Trophy" 
       },
       health: { 
         name: t('news.announcements.types.health'), 
         color: 'bg-red-100 text-red-800', 
-        icon: '🏥' 
+        icon: "Hospital" 
       },
       technical: { 
         name: t('news.announcements.types.technical'), 
         color: 'bg-gray-100 text-gray-800', 
-        icon: '⚙️' 
+        icon: '<Settings className="w-5 h-5" />' 
       }
     };
     return types[type] || types.academic;
@@ -247,7 +247,8 @@ const NewsAnnouncements = () => {
                         <div className="flex flex-wrap items-start justify-between gap-4">
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-3 mb-3">
-                              <span className="text-2xl">{typeInfo.icon}</span>
+                              <span className="text-2xl">
+              </span>
                               <span className={`px-3 py-1 rounded-full text-sm font-semibold ${typeInfo.color}`}>
                                 {typeInfo.name}
                               </span>
@@ -306,51 +307,6 @@ const NewsAnnouncements = () => {
             </div>
           </div>
         )}
-
-        {/* Filter Tabs */}
-        <div className="flex flex-wrap justify-center gap-2 mb-8">
-          <button
-            onClick={() => setFilter('all')}
-            className={`px-6 py-3 rounded-full font-semibold transition-colors ${
-              filter === 'all'
-                ? 'bg-yellow-600 text-white'
-                : 'bg-white text-gray-600 hover:bg-yellow-50'
-            }`}
-          >
-            {t('news.announcements.filters.all')}
-          </button>
-          <button
-            onClick={() => setFilter('academic')}
-            className={`px-6 py-3 rounded-full font-semibold transition-colors ${
-              filter === 'academic'
-                ? 'bg-yellow-600 text-white'
-                : 'bg-white text-gray-600 hover:bg-yellow-50'
-            }`}
-          >
-            {t('news.announcements.filters.academic')}
-          </button>
-          <button
-            onClick={() => setFilter('scholarship')}
-            className={`px-6 py-3 rounded-full font-semibold transition-colors ${
-              filter === 'scholarship'
-                ? 'bg-yellow-600 text-white'
-                : 'bg-white text-gray-600 hover:bg-yellow-50'
-            }`}
-          >
-            {t('news.announcements.filters.scholarship')}
-          </button>
-          <button
-            onClick={() => setFilter('competition')}
-            className={`px-6 py-3 rounded-full font-semibold transition-colors ${
-              filter === 'competition'
-                ? 'bg-yellow-600 text-white'
-                : 'bg-white text-gray-600 hover:bg-yellow-50'
-            }`}
-          >
-            {t('news.announcements.filters.competition')}
-          </button>
-        </div>
-
         {/* Regular Announcements */}
         <div className="space-y-6">
           {regularAnnouncements.map((item) => {
@@ -378,7 +334,8 @@ const NewsAnnouncements = () => {
                     <div className="flex flex-wrap items-start justify-between gap-4">
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-3 mb-3">
-                          <span className="text-lg">{typeInfo.icon}</span>
+                          <span className="text-lg">
+              </span>
                           <span className={`px-2 py-1 rounded-full text-xs font-semibold ${typeInfo.color}`}>
                             {typeInfo.name}
                           </span>
@@ -444,27 +401,6 @@ const NewsAnnouncements = () => {
           </div>
         )}
 
-        {/* Newsletter Subscription */}
-        <div className="mt-16 bg-gradient-to-r from-yellow-500 to-yellow-600 text-white rounded-xl p-8">
-          <div className="text-center">
-            <h2 className="text-2xl font-bold mb-4">
-              {t('news.announcements.newsletter.title')}
-            </h2>
-            <p className="mb-6">
-              {t('news.announcements.newsletter.subtitle')}
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <input 
-                type="email" 
-                placeholder={t('news.announcements.newsletter.placeholder')}
-                className="flex-1 px-4 py-3 rounded-lg text-gray-900 placeholder-gray-500"
-              />
-              <button className="bg-white text-yellow-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
-                {t('news.announcements.newsletter.button')}
-              </button>
-            </div>
-          </div>
-        </div>
           </>
         )}
       </div>

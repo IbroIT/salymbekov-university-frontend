@@ -33,28 +33,28 @@ const AppealForm = () => {
     {
       value: 'complaint',
       label: t('studentLife.appealForm.types.complaint.label'),
-      icon: ExclamationTriangleIcon,
+      icon: "ExclamationTriangleIcon",
       description: t('studentLife.appealForm.types.complaint.description'),
       color: 'red'
     },
     {
       value: 'suggestion',
       label: t('studentLife.appealForm.types.suggestion.label'),
-      icon: LightBulbIcon,
+      icon: "LightBulbIcon",
       description: t('studentLife.appealForm.types.suggestion.description'),
       color: 'yellow'
     },
     {
       value: 'question',
       label: t('studentLife.appealForm.types.question.label'),
-      icon: QuestionMarkCircleIcon,
+      icon: "QuestionMarkCircleIcon",
       description: t('studentLife.appealForm.types.question.description'),
       color: 'blue'
     },
     {
       value: 'request',
       label: t('studentLife.appealForm.types.request.label'),
-      icon: ChatBubbleLeftEllipsisIcon,
+      icon: "ChatBubbleLeftEllipsisIcon",
       description: t('studentLife.appealForm.types.request.description'),
       color: 'green'
     }

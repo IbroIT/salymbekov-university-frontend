@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { AlertTriangle } from 'lucide-react';
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import { studentLifeAPI } from "../../services/studentLifeService";
 
 const AcadOp = () => {
   const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
   const [activeCategory, setActiveCategory] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
@@ -69,7 +72,7 @@ const AcadOp = () => {
     status: 'available',
     popular: opportunity.id === 1, // Mark first as popular for demo
     students: opportunity.type === 'semester' ? '25+' : '15+',
-    icon: opportunity.type === 'semester' ? '🌍' : '🎓',
+    icon: opportunity.type === 'semester' ? '<Globe className="w-5 h-5" />' : '<GraduationCap className="w-5 h-5" />',
     color: opportunity.type === 'semester' ? 'from-green-500 to-emerald-500' : 'from-blue-500 to-cyan-500',
     features: opportunity.benefits?.map(benefit => getLocalizedField(benefit, 'text')) || []
   }));
@@ -99,7 +102,7 @@ const AcadOp = () => {
     program: getLocalizedField(university, 'name'),
     achievement: t("acadop.successStories.achievement", "Академическая мобильность"),
     quote: t("acadop.successStories.quote", "Программа обмена открыла новые горизонты в моей карьере"),
-    image: ['👩‍🔬', '👨‍⚕️', '👩‍🎓'][index] || '👨‍🎓'
+    image: ['👩‍<Microscope className="w-5 h-5" />', '👨‍<Stethoscope className="w-5 h-5" />', '👩‍<GraduationCap className="w-5 h-5" />'][index] || '👨‍<GraduationCap className="w-5 h-5" />'
   }));
 
   // Фильтрация данных
@@ -172,7 +175,7 @@ const AcadOp = () => {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="text-red-500 text-6xl mb-4">⚠️</div>
+          <AlertTriangle className="w-6 h-6" />
           <h2 className="text-2xl font-bold text-gray-800 mb-2">{t("common.error", "Ошибка")}</h2>
           <p className="text-gray-600 mb-4">{error}</p>
           <button
@@ -200,25 +203,6 @@ const AcadOp = () => {
               {t("acadop.hero.highlight", "для студентов")}
             </span>
           </h1>
-          <p className="text-lg text-gray-700 max-w-3xl mx-auto">
-            {t("acadop.hero.description", "Откройте для себя уникальные возможности для академического и профессионального роста")}
-          </p>
-        </div>
-
-        {/* Статистика */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {statistics.map((stat, index) => (
-            <div
-              key={index}
-              className={`bg-gradient-to-br ${stat.color} rounded-2xl p-6 text-white shadow-lg transform transition-all duration-500 text-center`}
-              style={{
-                animationDelay: `${index * 100}ms`,
-              }}
-            >
-              <div className="text-3xl font-bold mb-2">{stat.value}</div>
-              <div className="text-sm opacity-90">{stat.label}</div>
-            </div>
-          ))}
         </div>
 
         <div className="flex flex-col lg:flex-row gap-6">
@@ -237,7 +221,13 @@ const AcadOp = () => {
                             ? "bg-blue-100 text-blue-700 font-medium shadow-sm"
                             : "text-gray-700 hover:bg-gray-100"
                           }`}
-                        onClick={() => setActiveCategory(category.id)}
+                        onClick={() => {
+                          if (category.id === 'universities') {
+                            navigate('/hsm/partners');
+                          } else {
+                            setActiveCategory(category.id);
+                          }
+                        }}
                       >
                         <span>{category.name}</span>
                         <span className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded-full">
@@ -317,8 +307,8 @@ const AcadOp = () => {
                         >
                           <div className="flex items-center mb-4">
                             <div className="text-2xl mr-4 bg-white/20 rounded-xl w-12 h-12 flex items-center justify-center shadow-lg">
-                              {opportunity.icon}
-                            </div>
+                <opportunity.Icon className="w-6 h-6" />
+              </div>
                             <div className="flex-1">
                               <div className="flex items-center justify-between">
                                 <h3 className="text-lg font-bold">

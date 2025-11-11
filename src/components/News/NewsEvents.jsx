@@ -104,40 +104,6 @@ const NewsEvents = () => {
       </div>
 
       <div className="container mx-auto px-4 py-12">
-        {/* Filter Tabs */}
-        <div className="flex flex-wrap justify-center gap-2 mb-8">
-          <button
-            onClick={() => setFilter('upcoming')}
-            className={`px-6 py-3 rounded-full font-semibold transition-colors ${
-              filter === 'upcoming'
-                ? 'bg-green-600 text-white'
-                : 'bg-white text-gray-600 hover:bg-green-50'
-            }`}
-          >
-            {t('newsanon.filters.upcoming')}
-          </button>
-          <button
-            onClick={() => setFilter('past')}
-            className={`px-6 py-3 rounded-full font-semibold transition-colors ${
-              filter === 'past'
-                ? 'bg-green-600 text-white'
-                : 'bg-white text-gray-600 hover:bg-green-50'
-            }`}
-          >
-            {t('newsanon.filters.past')}
-          </button>
-          <button
-            onClick={() => setFilter('all')}
-            className={`px-6 py-3 rounded-full font-semibold transition-colors ${
-              filter === 'all'
-                ? 'bg-green-600 text-white'
-                : 'bg-white text-gray-600 hover:bg-green-50'
-            }`}
-          >
-            {t('newsanon.filters.all')}
-          </button>
-        </div>
-
         {/* Events Grid */}
         {error && (
           <div className="text-center py-8">

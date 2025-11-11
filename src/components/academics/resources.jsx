@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { BookOpen, Microscope } from 'lucide-react';
 import { useTranslation } from "react-i18next";
 
 const Resources = () => {
@@ -25,9 +26,9 @@ const Resources = () => {
       resources: [
         {
           id: 1,
-          icon: '📚',
+          icon: "BookOpen",
           key: 'library',
-          link: 'https://su-e-library.vercel.app/',
+          link: 'https://su-library.com/',
           status: 'online',
           section: 'library',
           color: 'from-blue-500 to-cyan-500',
@@ -35,7 +36,7 @@ const Resources = () => {
           title: t('resources.libTitle', 'Электронная библиотека'),
           description: t('resources.libDesc', 'Доступ к учебной литературе и научным публикациям'),
           features: [
-            t('resources.libFeature1', '10,000+ электронных книг'),
+            t('resources.libFeature1', '100+ электронных книг'),
             t('resources.libFeature2', 'Научные журналы'),
             t('resources.libFeature3', 'Учебные пособия')
           ],
@@ -43,7 +44,7 @@ const Resources = () => {
         },
         {
           id: 2,
-          icon: '🔬',
+          icon: "Microscope",
           key: 'databases',
           links: [
             { 
@@ -78,76 +79,7 @@ const Resources = () => {
           ],
           linkText: t('resources.dbLink', 'Открыть базу данных')
         },
-        {
-          id: 3,
-          icon: '📊',
-          key: 'materials',
-          status: 'download',
-          section: 'materials',
-          color: 'from-orange-500 to-red-500',
-          bgColor: 'bg-orange-50 border-orange-200',
-          title: t('resources.materialsTitle', 'Учебные материалы'),
-          description: t('resources.materialsDesc', 'Методические пособия и учебные материалы'),
-          features: [
-            t('resources.materialsFeature1', 'Лекции'),
-            t('resources.materialsFeature2', 'Презентации'),
-            t('resources.materialsFeature3', 'Лабораторные работы')
-          ],
-          linkText: t('resources.materialsLink', 'Скачать материалы')
-        },
-        {
-          id: 4,
-          icon: '🎥',
-          key: 'video',
-          link: '#video-resources',
-          status: 'online',
-          section: 'multimedia',
-          color: 'from-green-500 to-emerald-500',
-          bgColor: 'bg-green-50 border-green-200',
-          title: t('resources.videoTitle', 'Видеоресурсы'),
-          description: t('resources.videoDesc', 'Обучающие видео и видеолекции'),
-          features: [
-            t('resources.videoFeature1', 'Видеолекции'),
-            t('resources.videoFeature2', 'Вебинары'),
-            t('resources.videoFeature3', 'Обучающие курсы')
-          ],
-          linkText: t('resources.videoLink', 'Смотреть видео')
-        },
-        {
-          id: 5,
-          icon: '💻',
-          key: 'moodle',
-          status: 'login',
-          section: 'platforms',
-          color: 'from-indigo-500 to-blue-500',
-          bgColor: 'bg-indigo-50 border-indigo-200',
-          title: t('resources.moodleTitle', 'Moodle система'),
-          description: t('resources.moodleDesc', 'Система дистанционного обучения'),
-          features: [
-            t('resources.moodleFeature1', 'Онлайн-курсы'),
-            t('resources.moodleFeature2', 'Тесты и задания'),
-            t('resources.moodleFeature3', 'Общение с преподавателями')
-          ],
-          linkText: t('resources.moodleLink', 'Войти в систему')
-        },
-        {
-          id: 6,
-          icon: '📖',
-          key: 'research',
-          link: '#research-portal',
-          status: 'online',
-          section: 'research',
-          color: 'from-teal-500 to-cyan-500',
-          bgColor: 'bg-teal-50 border-teal-200',
-          title: t('resources.researchTitle', 'Научные ресурсы'),
-          description: t('resources.researchDesc', 'Ресурсы для научной работы и исследований'),
-          features: [
-            t('resources.researchFeature1', 'Научные журналы'),
-            t('resources.researchFeature2', 'Исследовательские данные'),
-            t('resources.researchFeature3', 'Библиографические менеджеры')
-          ],
-          linkText: t('resources.researchLink', 'Научные ресурсы')
-        }
+       
       ]
     },
     library: {
@@ -268,39 +200,9 @@ const Resources = () => {
           </p>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-6">
-          {/* Боковая навигация */}
-          <div className="lg:w-1/4">
-            <div className="bg-white rounded-xl shadow-lg overflow-hidden sticky top-6">
-              <div className="bg-gradient-to-r from-blue-600 to-indigo-700 p-4 text-white font-bold text-lg">
-                {t("resources.categories", "Категории")}
-              </div>
-              <nav className="p-2">
-                <ul className="space-y-1">
-                  {sectionsList.map((section) => (
-                    <li key={section.id}>
-                      <button
-                        className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 flex justify-between items-center ${
-                          activeSection === section.id
-                            ? "bg-blue-100 text-blue-700 font-medium shadow-sm"
-                            : "text-gray-700 hover:bg-gray-100"
-                        }`}
-                        onClick={() => setActiveSection(section.id)}
-                      >
-                        <span>{section.name}</span>
-                        <span className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded-full">
-                          {section.count}
-                        </span>
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
-            </div>
-          </div>
-
+        <div>
           {/* Основной контент */}
-          <div className="lg:w-3/4">
+          <div className="w-full">
             <div className="bg-white rounded-xl shadow-xl p-6 transition-all duration-500">
               {/* Заголовок раздела */}
               <div className="mb-6 pb-4 border-b border-gray-200">
@@ -325,8 +227,8 @@ const Resources = () => {
                         <div className="p-6">
                           <div className="flex items-center mb-4">
                             <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${resource.color} flex items-center justify-center text-xl mr-4`}>
-                              {resource.icon}
-                            </div>
+              
+              </div>
                             <div>
                               <h3 className="font-bold text-lg text-gray-900">
                                 {resource.title}

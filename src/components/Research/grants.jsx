@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import { Calendar, FileText, Star, Target } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { researchAPI } from '../../services/researchService';
 
 // Константы для переиспользования
 const SECTION_CONFIG = {
-  all: { icon: '🌟', gradient: 'from-blue-50 to-indigo-50' },
-  active: { icon: '🎯', gradient: 'from-green-50 to-emerald-50' },
-  upcoming: { icon: '📅', gradient: 'from-blue-50 to-indigo-50' },
-  closed: { icon: '✅', gradient: 'from-gray-50 to-slate-50' }
+  all: { icon: "Star", gradient: 'from-blue-50 to-indigo-50' },
+  active: { icon: "Target", gradient: 'from-green-50 to-emerald-50' },
+  upcoming: { icon: "Calendar", gradient: 'from-blue-50 to-indigo-50' },
+  closed: { icon: '<CheckCircle className="w-5 h-5" />', gradient: 'from-gray-50 to-slate-50' }
 };
 
 const STATUS_CONFIG = {
@@ -32,10 +33,10 @@ const Grants = () => {
 
   // Мемоизированные секции
   const sections = useMemo(() => [
-    { id: 'all', name: t('research.grants.tabs.all'), icon: '🌟' },
-    { id: 'active', name: t('research.grants.tabs.active'), icon: '🎯' },
-    { id: 'upcoming', name: t('research.grants.tabs.upcoming'), icon: '📅' },
-    { id: 'closed', name: t('research.grants.tabs.closed'), icon: '✅' }
+    { id: 'all', name: t('research.grants.tabs.all'), icon: "Star" },
+    { id: 'active', name: t('research.grants.tabs.active'), icon: "Target" },
+    { id: 'upcoming', name: t('research.grants.tabs.upcoming'), icon: "Calendar" },
+    { id: 'closed', name: t('research.grants.tabs.closed'), icon: '<CheckCircle className="w-5 h-5" />' }
   ], [t]);
 
   // Получение данных
@@ -239,7 +240,7 @@ const Grants = () => {
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center">
           <div className="p-3 bg-blue-100 rounded-xl mr-4">
-            <span className="text-2xl">📋</span>
+            <FileText className="w-4 h-4" />
           </div>
           <h2 className="text-3xl font-bold text-gray-900">
             {getFieldByLanguage(grant, 'title')}
@@ -387,7 +388,8 @@ const Grants = () => {
                         onClick={() => changeActiveSection(section.id)}
                       >
                         <div className="flex items-center">
-                          <span className="text-lg mr-3">{section.icon}</span>
+                          <span className="text-lg mr-3">
+              </span>
                           {section.name}
                         </div>
                         <span className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded-full">

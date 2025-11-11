@@ -1,184 +1,24 @@
 import React, { useState } from 'react';
+import { BookOpen, Calendar, File, Handshake, Hospital, Monitor, Target } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import SEOComponent from '../SEO/SEOComponent';
 
 const MedicalProgramPage = () => {
   const [activeAccordion, setActiveAccordion] = useState(null);
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const toggleAccordion = (index) => {
     setActiveAccordion(activeAccordion === index ? null : index);
   };
 
   const accordionItems = [
-    {
-      title: t('mededu.subjectHighlights'),
-      icon: "📚",
-      content: (
-        <div className="space-y-4">
-          <div>
-            <h4 className="font-semibold text-blue-700 mb-2">{t('mededu.subjects.firstSecondYear')}</h4>
-            <ul className="list-disc list-inside space-y-1 ml-4">
-              <li>{t('mededu.subjects.subjectsList.anatomy')}</li>
-              <li>{t('mededu.subjects.subjectsList.histology')}</li>
-              <li>{t('mededu.subjects.subjectsList.biochemistry')}</li>
-              <li>{t('mededu.subjects.subjectsList.physiology')}</li>
-              <li>{t('mededu.subjects.subjectsList.microbiology')}</li>
-              <li>{t('mededu.subjects.subjectsList.latin')}</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold text-blue-700 mb-2">{t('mededu.subjects.thirdFourthYear')}</h4>
-            <ul className="list-disc list-inside space-y-1 ml-4">
-              <li>{t('mededu.subjects.subjectsList.pharmacology')}</li>
-              <li>{t('mededu.subjects.subjectsList.internalDiseases')}</li>
-              <li>{t('mededu.subjects.subjectsList.surgery')}</li>
-              <li>{t('mededu.subjects.subjectsList.pediatrics')}</li>
-              <li>{t('mededu.subjects.subjectsList.obstetrics')}</li>
-              <li>{t('mededu.subjects.subjectsList.neurology')}</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold text-blue-700 mb-2">{t('mededu.subjects.fifthSixthYear')}</h4>
-            <ul className="list-disc list-inside space-y-1 ml-4">
-              <li>{t('mededu.subjects.subjectsList.infectious')}</li>
-              <li>{t('mededu.subjects.subjectsList.oncology')}</li>
-              <li>{t('mededu.subjects.subjectsList.emergency')}</li>
-              <li>{t('mededu.subjects.subjectsList.dermatology')}</li>
-              <li>{t('mededu.subjects.subjectsList.psychiatry')}</li>
-              <li>{t('mededu.subjects.subjectsList.forensic')}</li>
-            </ul>
-          </div>
-        </div>
-      )
-    },
-    {
-      title: t('mededu.entryRequirements'),
-      icon: "📋",
-      content: (
-        <div className="space-y-6">
-          <div>
-            <h4 className="font-semibold text-blue-700 mb-3">{t('mededu.requirements.academic')}</h4>
-            <ul className="list-disc list-inside space-y-2 ml-4">
-              <li>{t('mededu.requirements.academicList.diploma')}</li>
-              <li>{t('mededu.requirements.academicList.grades')}</li>
-              <li>{t('mededu.requirements.academicList.exams')}</li>
-              <li>{t('mededu.requirements.academicList.foreign')}</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold text-blue-700 mb-3">{t('mededu.requirements.language')}</h4>
-            <ul className="list-disc list-inside space-y-2 ml-4">
-              <li>{t('mededu.requirements.languageList.russian')}</li>
-              <li>{t('mededu.requirements.languageList.english')}</li>
-              <li>{t('mededu.requirements.languageList.latin')}</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold text-blue-700 mb-3">{t('mededu.requirements.additional')}</h4>
-            <ul className="list-disc list-inside space-y-2 ml-4">
-              <li>{t('mededu.requirements.additionalList.motivation')}</li>
-              <li>{t('mededu.requirements.additionalList.interview')}</li>
-              <li>{t('mededu.requirements.additionalList.medical')}</li>
-              <li>{t('mededu.requirements.additionalList.criminal')}</li>
-            </ul>
-          </div>
-        </div>
-      )
-    },
-    {
-      title: t('mededu.careerOpportunities'),
-      icon: "💼",
-      content: (
-        <div className="space-y-6">
-          <div>
-            <h4 className="font-semibold text-blue-700 mb-3">{t('mededu.careers.clinical')}</h4>
-            <ul className="list-disc list-inside space-y-2 ml-4">
-              <li>{t('mededu.careers.clinicalList.therapist')}</li>
-              <li>{t('mededu.careers.clinicalList.pediatrician')}</li>
-              <li>{t('mededu.careers.clinicalList.surgeon')}</li>
-              <li>{t('mededu.careers.clinicalList.gynecologist')}</li>
-              <li>{t('mededu.careers.clinicalList.emergencyDoctor')}</li>
-              <li>{t('mededu.careers.clinicalList.familyDoctor')}</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold text-blue-700 mb-3">{t('mededu.careers.research')}</h4>
-            <ul className="list-disc list-inside space-y-2 ml-4">
-              <li>{t('mededu.careers.researchList.researcher')}</li>
-              <li>{t('mededu.careers.researchList.labResearcher')}</li>
-              <li>{t('mededu.careers.researchList.clinicalResearcher')}</li>
-              <li>{t('mededu.careers.researchList.medicalWriter')}</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold text-blue-700 mb-3">{t('mededu.careers.public')}</h4>
-            <ul className="list-disc list-inside space-y-2 ml-4">
-              <li>{t('mededu.careers.publicList.healthOfficial')}</li>
-              <li>{t('mededu.careers.publicList.epidemiologist')}</li>
-              <li>{t('mededu.careers.publicList.methodist')}</li>
-              <li>{t('mededu.careers.publicList.pharmaRep')}</li>
-            </ul>
-          </div>
-        </div>
-      )
-    },
-    {
-      title: t('mededu.programAim'),
-      icon: "⚙️",
-      content: (
-        <div className="space-y-6">
-          <div>
-            <h4 className="font-semibold text-blue-700 mb-3">{t('mededu.aims.mainGoals')}</h4>
-            <ul className="list-disc list-inside space-y-2 ml-4">
-              <li>{t('mededu.aims.goalsList.quality')}</li>
-              <li>{t('mededu.aims.goalsList.standards')}</li>
-              <li>{t('mededu.aims.goalsList.thinking')}</li>
-              <li>{t('mededu.aims.goalsList.ethics')}</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold text-blue-700 mb-3">{t('mededu.aims.learningObjectives')}</h4>
-            <ul className="list-disc list-inside space-y-2 ml-4">
-              <li>{t('mededu.aims.objectivesList.knowledge')}</li>
-              <li>{t('mededu.aims.objectivesList.communication')}</li>
-              <li>{t('mededu.aims.objectivesList.research')}</li>
-              <li>{t('mededu.aims.objectivesList.continuous')}</li>
-            </ul>
-          </div>
-        </div>
-      )
-    },
-    {
-      title: t('mededu.structure'),
-      icon: "🏛️",
-      content: (
-        <div className="space-y-6">
-          <div>
-            <h4 className="font-semibold text-blue-700 mb-3">{t('mededu.structureDetails.stages')}</h4>
-            <ul className="list-disc list-inside space-y-2 ml-4">
-              <li><strong>{t('mededu.structureDetails.stagesList.first')}</strong></li>
-              <li><strong>{t('mededu.structureDetails.stagesList.second')}</strong></li>
-              <li><strong>{t('mededu.structureDetails.stagesList.third')}</strong></li>
-              <li><strong>{t('mededu.structureDetails.stagesList.fourth')}</strong></li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold text-blue-700 mb-3">{t('mededu.structureDetails.controls')}</h4>
-            <ul className="list-disc list-inside space-y-2 ml-4">
-              <li>{t('mededu.structureDetails.controlsList.exams')}</li>
-              <li>{t('mededu.structureDetails.controlsList.tests')}</li>
-              <li>{t('mededu.structureDetails.controlsList.practical')}</li>
-              <li>{t('mededu.structureDetails.controlsList.coursework')}</li>
-              <li>{t('mededu.structureDetails.controlsList.final')}</li>
-            </ul>
-          </div>
-        </div>
-      )
-    },
+
+    
     {
       title: t('mededu.clinicalTraining'),
-      icon: "🏥",
+      icon: "Hospital",
       content: (
         <div className="space-y-6">
           <div>
@@ -204,28 +44,18 @@ const MedicalProgramPage = () => {
       )
     },
     {
-      title: t('mededu.internationalOpportunities'),
-      icon: "🌍",
+      title: t('partnerships.title'),
+      icon: "Handshake",
       content: (
-        <div className="space-y-6">
-          <div>
-            <h4 className="font-semibold text-blue-700 mb-3">{t('mededu.international.exchange')}</h4>
-            <ul className="list-disc list-inside space-y-2 ml-4">
-              <li>{t('mededu.international.exchangeList.erasmus')}</li>
-              <li>{t('mededu.international.exchangeList.mobility')}</li>
-              <li>{t('mededu.international.exchangeList.internships')}</li>
-              <li>{t('mededu.international.exchangeList.summer')}</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold text-blue-700 mb-3">{t('mededu.international.recognition')}</h4>
-            <ul className="list-disc list-inside space-y-2 ml-4">
-              <li>{t('mededu.international.recognitionList.wfme')}</li>
-              <li>{t('mededu.international.recognitionList.diploma')}</li>
-              <li>{t('mededu.international.recognitionList.exams')}</li>
-              <li>{t('mededu.international.recognitionList.projects')}</li>
-            </ul>
-          </div>
+        <div className="text-center py-8">
+          <button
+            onClick={() => navigate('/hsm/partners')}
+            className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:from-blue-700 hover:to-blue-800 transform hover:scale-105 transition-all duration-300 shadow-lg flex items-center mx-auto"
+          >
+            <Handshake className="w-4 h-4" />
+            {t('partnerships.viewPartners')}
+            <span className="ml-3">→</span>
+          </button>
         </div>
       )
     },
@@ -285,7 +115,7 @@ const MedicalProgramPage = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl shadow-lg p-6 transform transition-transform hover:scale-105">
             <div className="flex items-center mb-3">
-              <span className="text-2xl mr-3">⏱️</span>
+              <span className="text-2xl mr-3"><Clock className="w-5 h-5" /></span>
               <h3 className="text-xl font-semibold">{t('mededu.duration')}</h3>
             </div>
             <p className="text-lg">{t('mededu.fullTime')}</p>
@@ -294,7 +124,7 @@ const MedicalProgramPage = () => {
 
           <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl shadow-lg p-6 transform transition-transform hover:scale-105">
             <div className="flex items-center mb-3">
-              <span className="text-2xl mr-3">📅</span>
+              <Calendar className="w-4 h-4" />
               <h3 className="text-xl font-semibold">{t('mededu.intakes')}</h3>
             </div>
             <p className="text-lg">{t('mededu.intakeMonths')}</p>
@@ -302,7 +132,7 @@ const MedicalProgramPage = () => {
 
           <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl shadow-lg p-6 transform transition-transform hover:scale-105">
             <div className="flex items-center mb-3">
-              <span className="text-2xl mr-3">📄</span>
+              <File className="w-4 h-4" />
               <h3 className="text-xl font-semibold">{t('mededu.brochure')}</h3>
             </div>
             <button className="bg-white text-blue-700 px-4 py-2 rounded-lg font-medium hover:bg-blue-50 transition-colors">
@@ -312,7 +142,7 @@ const MedicalProgramPage = () => {
 
           <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl shadow-lg p-6 transform transition-transform hover:scale-105">
             <div className="flex items-center mb-3">
-              <span className="text-2xl mr-3">💻</span>
+              <Monitor className="w-4 h-4" />
               <h3 className="text-xl font-semibold">{t('mededu.online')}</h3>
             </div>
             <button className="bg-white text-blue-700 px-4 py-2 rounded-lg font-medium hover:bg-blue-50 transition-colors">
@@ -324,8 +154,41 @@ const MedicalProgramPage = () => {
         {/* Описание программы */}
         <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
           <h2 className="text-3xl font-bold text-blue-800 mb-6">{t('mededu.overview')}</h2>
-          <div className="space-y-4 text-gray-700 text-lg leading-relaxed">
+          <div className="space-y-6 text-gray-700 text-lg leading-relaxed">
             <p>{t('mededu.overviewText')}</p>
+            
+            {/* Цели программы */}
+            <div className="mt-8">
+              <h3 className="text-2xl font-bold text-blue-700 mb-4">{t('mededu.programAim')}</h3>
+              
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <h4 className="font-semibold text-blue-600 mb-3 flex items-center">
+                    <Target className="w-4 h-4" />
+                    {t('mededu.aims.mainGoals')}
+                  </h4>
+                  <ul className="list-disc list-inside space-y-2 ml-6">
+                    <li>{t('mededu.aims.goalsList.quality')}</li>
+                    <li>{t('mededu.aims.goalsList.standards')}</li>
+                    <li>{t('mededu.aims.goalsList.thinking')}</li>
+                    <li>{t('mededu.aims.goalsList.ethics')}</li>
+                  </ul>
+                </div>
+                
+                <div>
+                  <h4 className="font-semibold text-blue-600 mb-3 flex items-center">
+                    <BookOpen className="w-4 h-4" />
+                    {t('mededu.aims.learningObjectives')}
+                  </h4>
+                  <ul className="list-disc list-inside space-y-2 ml-6">
+                    <li>{t('mededu.aims.objectivesList.knowledge')}</li>
+                    <li>{t('mededu.aims.objectivesList.communication')}</li>
+                    <li>{t('mededu.aims.objectivesList.research')}</li>
+                    <li>{t('mededu.aims.objectivesList.continuous')}</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -340,7 +203,8 @@ const MedicalProgramPage = () => {
                   onClick={() => toggleAccordion(index)}
                 >
                   <div className="flex items-center">
-                    <span className="text-2xl mr-4">{item.icon}</span>
+                    <span className="text-2xl mr-4">
+              </span>
                     <span className="text-xl font-semibold text-blue-800">{item.title}</span>
                   </div>
                   <span className={`transform transition-transform text-blue-600 ${activeAccordion === index ? 'rotate-180' : ''}`}>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { GraduationCap, Mail, Phone, Star, Trophy, Users } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import './About.css';
 import { getManagement } from '../../services/teachers';
@@ -93,15 +94,15 @@ const Management = () => {
               className="w-20 h-20 rounded-full mx-auto border-4 border-white/20 shadow-lg object-cover"
             />
             <div className="absolute -bottom-2 -right-2 bg-yellow-400 text-yellow-900 px-2 py-1 rounded-full text-xs font-bold shadow-lg">
-              {member.type === 'administration' ? '👑' : member.type === 'faculty' ? '🎓' : '📚'}
+              {member.type === 'administration' ? '👑' : member.type === 'faculty' ? '<GraduationCap className="w-5 h-5" />' : '<BookOpen className="w-5 h-5" />'}
             </div>
           </div>
           <h3 className="text-lg font-bold mb-2">{member.head}</h3>
           <p className="text-sm opacity-90 mb-3">{member.position}</p>
           <div className="text-xs space-y-1 opacity-75">
-            <p>📧 {member.email}</p>
-            <p>📞 {member.phone}</p>
-            <p>⏰ {member.experience}</p>
+            <p><Mail className="w-5 h-5" /> {member.email}</p>
+            <p><Phone className="w-5 h-5" /> {member.phone}</p>
+            <p><Clock className="w-5 h-5" /> {member.experience}</p>
           </div>
 
           {/* Дополнительная информация для деканов и заведующих */}
@@ -110,12 +111,12 @@ const Management = () => {
               <div className="flex justify-center space-x-4 text-xs">
                 {member.studentCount && (
                   <span className="flex items-center">
-                    👨‍🎓 {member.studentCount}
+                    👨‍<GraduationCap className="w-5 h-5" /> {member.studentCount}
                   </span>
                 )}
                 {member.teacherCount && (
                   <span className="flex items-center">
-                    👨‍🏫 {member.teacherCount}
+                    <UserCircle className="w-5 h-5" /> {member.teacherCount}
                   </span>
                 )}
               </div>
@@ -219,24 +220,24 @@ const Management = () => {
           {/* Контактная информация */}
           <div className="bg-white rounded-xl shadow-lg p-6">
             <h4 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
-              <span className="mr-2">📞</span>
+              <Phone className="w-4 h-4" />
               {t('management.contactInfo')}
             </h4>
             <div className="space-y-3">
               <div className="flex items-center text-gray-600">
-                <span className="w-6 text-center mr-3">📧</span>
+                <Mail className="w-4 h-4" />
                 <a href={`mailto:${member.email}`} className="text-blue-600 hover:underline">
                   {member.email}
                 </a>
               </div>
               <div className="flex items-center text-gray-600">
-                <span className="w-6 text-center mr-3">📞</span>
+                <Phone className="w-4 h-4" />
                 <a href={`tel:${member.phone}`} className="text-blue-600 hover:underline">
                   {member.phone}
                 </a>
               </div>
               <div className="flex items-center text-gray-600">
-                <span className="w-6 text-center mr-3">⏰</span>
+                <span className="w-6 text-center mr-3"><Clock className="w-5 h-5" /></span>
                 <span>{member.experience}</span>
               </div>
             </div>
@@ -245,7 +246,7 @@ const Management = () => {
           {/* Дополнительная информация */}
           <div className="bg-white rounded-xl shadow-lg p-6">
             <h4 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
-              <span className="mr-2">🎓</span>
+              <GraduationCap className="w-4 h-4" />
               {t('management.additionalInfo')}
             </h4>
             <div className="space-y-3">
@@ -273,7 +274,7 @@ const Management = () => {
         {member.bio && (
           <div className="bg-white rounded-xl shadow-lg p-6">
             <h4 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
-              <span className="mr-2">📖</span>
+              <span className="mr-2"><Book className="w-5 h-5" /></span>
               {t('management.biography')}
             </h4>
             <p className="text-gray-600 leading-relaxed">{member.bio}</p>
@@ -284,13 +285,13 @@ const Management = () => {
         {member.achievements && member.achievements.length > 0 && (
           <div className="bg-white rounded-xl shadow-lg p-6">
             <h4 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
-              <span className="mr-2">🏆</span>
+              <Trophy className="w-4 h-4" />
               {t('management.achievements')}
             </h4>
             <ul className="space-y-2">
               {member.achievements.map((achievement, index) => (
                 <li key={index} className="flex items-start">
-                  <span className="text-yellow-500 mr-2 mt-1">⭐</span>
+                  <Star className="w-4 h-4" />
                   <span className="text-gray-600">{achievement}</span>
                 </li>
               ))}
@@ -302,7 +303,7 @@ const Management = () => {
         {member.staff && member.staff.length > 0 && (
           <div className="bg-white rounded-xl shadow-lg p-6">
             <h4 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
-              <span className="mr-2">👥</span>
+              <Users className="w-4 h-4" />
               {t('management.staff')}
             </h4>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -312,9 +313,9 @@ const Management = () => {
                   <p className="text-sm text-blue-600 mb-1">{staffMember.position}</p>
                   <p className="text-sm text-gray-600 mb-2">{staffMember.specialization}</p>
                   <div className="text-xs text-gray-500">
-                    <p>⏰ {staffMember.experience}</p>
-                    <p>🎓 {staffMember.education}</p>
-                    <p>📧 <a href={`mailto:${staffMember.email}`} className="text-blue-600 hover:underline">{staffMember.email}</a></p>
+                    <p><Clock className="w-5 h-5" /> {staffMember.experience}</p>
+                    <p><GraduationCap className="w-5 h-5" /> {staffMember.education}</p>
+                    <p><Mail className="w-5 h-5" /> <a href={`mailto:${staffMember.email}`} className="text-blue-600 hover:underline">{staffMember.email}</a></p>
                   </div>
                 </div>
               ))}

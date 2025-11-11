@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Handshake, Trophy } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 const TuitionCitizensKG = () => {
@@ -97,7 +98,7 @@ const TuitionCitizensKG = () => {
         t('tuitionCitizens.payment.scho2'),
         t('tuitionCitizens.payment.scho3')
       ],
-      icon: '🏆'
+      icon: "Trophy"
     },
     {
       type: t('tuitionCitizens.payment.social'),
@@ -107,7 +108,7 @@ const TuitionCitizensKG = () => {
         t('tuitionCitizens.payment.soc2'),
         t('tuitionCitizens.payment.soc3')
       ],
-      icon: '🤝'
+      icon: "Handshake"
     }
   ];
 
@@ -220,7 +221,8 @@ const TuitionCitizensKG = () => {
             {paymentOptions.map((option, index) => (
               <div key={index} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
                 <div className="text-center mb-4">
-                  <span className="text-4xl mb-2 block">{option.icon}</span>
+                  <span className="text-4xl mb-2 block">
+              </span>
                   <h3 className="text-xl font-semibold text-gray-800 mb-2">{option.type}</h3>
                   <p className="text-gray-600 text-sm">{option.description}</p>
                 </div>

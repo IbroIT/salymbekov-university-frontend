@@ -9,6 +9,7 @@ import {
   MapPinIcon
 } from '@heroicons/react/24/outline';
 import { getMultilingualText } from '../../utils/multilingualUtils';
+import { Calendar } from 'lucide-react';
 
 const AcademicMobility = () => {
   const { t, i18n } = useTranslation();
@@ -307,7 +308,7 @@ const AcademicMobility = () => {
                                       {getMultilingualText(program, 'name', program.name)}
                                     </span>
                                     <div className="flex gap-4 text-blue-700">
-                                      <span>📅 {program.duration}</span>
+                                      <span><Calendar className="w-5 h-5" /> {program.duration}</span>
                                       <span>🌐 {program.language}</span>
                                     </div>
                                   </div>

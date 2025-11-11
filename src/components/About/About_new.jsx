@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { BookOpen, Briefcase, Building, Building2, Calendar, FileText, Globe, GraduationCap, Hospital, Lightbulb, Microscope, Star, Target, Users } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import './About.css';
 
@@ -11,52 +12,52 @@ const About = () => {
       year: 1636, 
       event: t('about.timeline_1636'),
       description: t('about.timeline_1636_desc'),
-      icon: "🏛️"
+      icon: Building2
     },
     { 
       year: 1782, 
       event: t('about.timeline_1782'),
       description: t('about.timeline_1782_desc'),
-      icon: "🏥"
+      Icon: Hospital
     },
     { 
       year: 1869, 
       event: t('about.timeline_1869'),
       description: t('about.timeline_1869_desc'),
-      icon: "⚕️"
+      Icon: Stethoscope
     },
     { 
       year: 1999, 
       event: t('about.timeline_1999'),
       description: t('about.timeline_1999_desc'),
-      icon: "🌍"
+      icon: "Globe"
     },
     { 
       year: 2020, 
       event: t('about.timeline_2020'),
       description: t('about.timeline_2020_desc'),
-      icon: "🔬"
+      icon: "Microscope"
     }
   ];
 
   const values = [
     { 
-      icon: "🎯", 
+      Icon: Target, 
       title: t('about.value_1_title'), 
       description: t('about.value_1_desc')
     },
     { 
-      icon: "👁️", 
+      Icon: Eye, 
       title: t('about.value_2_title'), 
       description: t('about.value_2_desc')
     },
     { 
-      icon: "💡", 
+      Icon: Lightbulb, 
       title: t('about.value_3_title'), 
       description: t('about.value_3_desc')
     },
     { 
-      icon: "🌟", 
+      Icon: Star, 
       title: t('about.value_4_title'), 
       description: t('about.value_4_desc')
     }
@@ -72,37 +73,37 @@ const About = () => {
     { 
       number: "13", 
       label: t('about.schools_count'),
-      icon: "🏢",
+      Icon: Building,
       color: "blue"
     },
     { 
       number: "23,000", 
       label: t('about.students_count'),
-      icon: "🎓",
+      Icon: GraduationCap,
       color: "blue"
     },
     { 
       number: "371", 
       label: t('about.years_count'),
-      icon: "📅",
+      icon: "Calendar",
       color: "blue"
     }
   ];
 
   const schools = [
-    { name: t('about.medical_school'), established: "1782", icon: "🏥" },
-    { name: t('about.business_school'), established: "1908", icon: "💼" },
-    { name: t('about.engineering_school'), established: "1847", icon: "⚙️" },
-    { name: t('about.law_school'), established: "1817", icon: "⚖️" },
-    { name: t('about.education_school'), established: "1920", icon: "📚" },
-    { name: t('about.public_health_school'), established: "1913", icon: "🌍" }
+    { name: t('about.medical_school'), established: "1782", Icon: Hospital },
+    { name: t('about.business_school'), established: "1908", icon: "Briefcase" },
+    { name: t('about.engineering_school'), established: "1847", Icon: Settings },
+    { name: t('about.law_school'), established: "1817", Icon: Scale },
+    { name: t('about.education_school'), established: "1920", Icon: BookOpen },
+    { name: t('about.public_health_school'), established: "1913", icon: "Globe" }
   ];
 
   const researchCenters = [
-    { name: t('about.wyss_institute'), focus: t('about.bioengineering'), icon: "🔬" },
-    { name: t('about.broad_institute'), focus: t('about.genomics'), icon: "🧬" },
-    { name: t('about.radcliffe_institute'), focus: t('about.advanced_study'), icon: "🎓" },
-    { name: t('about.berkman_center'), focus: t('about.internet_society'), icon: "🌐" }
+    { name: t('about.wyss_institute'), focus: t('about.bioengineering'), icon: "Microscope" },
+    { name: t('about.broad_institute'), focus: t('about.genomics'), Icon: Dna },
+    { name: t('about.radcliffe_institute'), focus: t('about.advanced_study'), Icon: GraduationCap },
+    { name: t('about.berkman_center'), focus: t('about.internet_society'), icon: "Globe" }
   ];
 
   return (
@@ -150,8 +151,8 @@ const About = () => {
             {achievements.map((achievement, index) => (
               <div key={index} className="group bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 text-center transform hover:-translate-y-2 border border-blue-100 hover:border-blue-300">
                 <div className="text-5xl mb-4 transform group-hover:scale-125 transition-transform duration-300">
-                  {achievement.icon}
-                </div>
+                <achievement.Icon className="w-6 h-6" />
+              </div>
                 <div className="text-3xl font-bold text-blue-700 mb-2 group-hover:text-blue-900 transition-colors duration-300">
                   {achievement.number}
                 </div>
@@ -173,8 +174,8 @@ const About = () => {
             {values.map((value, index) => (
               <div key={index} className="group bg-gradient-to-br from-white to-blue-50 p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 text-center transform hover:-translate-y-4 border border-blue-100 hover:border-blue-300">
                 <div className="text-6xl mb-6 transform group-hover:scale-125 group-hover:rotate-12 transition-all duration-500">
-                  {value.icon}
-                </div>
+                <value.Icon className="w-6 h-6" />
+              </div>
                 <h3 className="text-xl font-semibold text-blue-900 group-hover:text-blue-700 transition-colors duration-300 mb-3">
                   {value.title}
                 </h3>
@@ -200,7 +201,9 @@ const About = () => {
                 <div className={`w-1/2 ${index % 2 === 0 ? 'pr-8 text-right' : 'pl-8'}`}>
                   <div className="group bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-blue-100 hover:border-blue-300">
                     <div className="flex items-center mb-4">
-                      <span className="text-3xl mr-3">{item.icon}</span>
+                      <span className="text-3xl mr-3">
+                <item.Icon className="w-6 h-6" />
+              </span>
                       <span className="text-2xl font-bold text-blue-700 group-hover:text-blue-900 transition-colors duration-300">
                         {item.year}
                       </span>
@@ -228,9 +231,7 @@ const About = () => {
           <div className="max-w-4xl mx-auto">
             <div className="group bg-gradient-to-br from-white to-blue-50 p-12 rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:-translate-y-2 border border-blue-100 hover:border-blue-300">
               <div className="flex flex-col md:flex-row items-center gap-8">
-                <div className="w-40 h-40 bg-gradient-to-br from-blue-600 to-blue-800 rounded-full flex items-center justify-center text-6xl text-white group-hover:scale-110 transition-transform duration-500 shadow-xl">
-                  👩‍🎓
-                </div>
+                <GraduationCap className="w-6 h-6" />
                 <div className="flex-1 text-center md:text-left">
                   <h3 className="text-3xl font-bold text-blue-900 group-hover:text-blue-700 transition-colors duration-300 mb-2">
                     {t('about.rector_name')}
@@ -260,8 +261,8 @@ const About = () => {
             {schools.map((school, index) => (
               <div key={index} className="group bg-white p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-blue-100 hover:border-blue-300">
                 <div className="text-4xl mb-4 transform group-hover:scale-125 transition-transform duration-300">
-                  {school.icon}
-                </div>
+                <school.Icon className="w-6 h-6" />
+              </div>
                 <h3 className="text-lg font-semibold text-blue-900 group-hover:text-blue-700 transition-colors duration-300 mb-2">
                   {school.name}
                 </h3>
@@ -284,8 +285,8 @@ const About = () => {
             {researchCenters.map((center, index) => (
               <div key={index} className="group bg-gradient-to-br from-white to-blue-50 p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-blue-100 hover:border-blue-300">
                 <div className="text-5xl mb-4 transform group-hover:scale-125 transition-transform duration-300">
-                  {center.icon}
-                </div>
+                <center.Icon className="w-6 h-6" />
+              </div>
                 <h3 className="text-xl font-semibold text-blue-900 group-hover:text-blue-700 transition-colors duration-300 mb-2">
                   {center.name}
                 </h3>
@@ -356,7 +357,7 @@ const About = () => {
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="group bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-blue-100 hover:border-blue-300">
-              <div className="text-5xl mb-4 transform group-hover:scale-125 transition-transform duration-300">📚</div>
+              <BookOpen className="w-6 h-6" />
               <h3 className="text-xl font-semibold text-blue-900 group-hover:text-blue-700 transition-colors duration-300 mb-3">
                 {t('about.library_system')}
               </h3>
@@ -398,9 +399,7 @@ const About = () => {
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             <a href="/about/management" className="group bg-gradient-to-br from-white to-blue-50 p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 text-center transform hover:-translate-y-4 border border-blue-100 hover:border-blue-200">
-              <div className="text-6xl mb-6 transform group-hover:scale-125 group-hover:rotate-12 transition-all duration-500">
-                👥
-              </div>
+              <Users className="w-6 h-6" />
               <h3 className="text-xl font-semibold text-blue-900 group-hover:text-blue-700 transition-colors duration-300 mb-3">
                 {t('about.management')}
               </h3>
@@ -408,9 +407,7 @@ const About = () => {
             </a>
             
             <a href="/about/documents" className="group bg-gradient-to-br from-white to-blue-50 p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 text-center transform hover:-translate-y-4 border border-blue-100 hover:border-blue-200">
-              <div className="text-6xl mb-6 transform group-hover:scale-125 group-hover:rotate-12 transition-all duration-500">
-                📋
-              </div>
+              <FileText className="w-6 h-6" />
               <h3 className="text-xl font-semibold text-blue-900 group-hover:text-blue-700 transition-colors duration-300 mb-3">
                 {t('about.charter_documents')}
               </h3>
@@ -418,9 +415,7 @@ const About = () => {
             </a>
             
             <a href="/about/careers" className="group bg-gradient-to-br from-white to-blue-50 p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 text-center transform hover:-translate-y-4 border border-blue-100 hover:border-blue-200">
-              <div className="text-6xl mb-6 transform group-hover:scale-125 group-hover:rotate-12 transition-all duration-500">
-                💼
-              </div>
+              <Briefcase className="w-6 h-6" />
               <h3 className="text-xl font-semibold text-blue-900 group-hover:text-blue-700 transition-colors duration-300 mb-3">
                 {t('about.careers')}
               </h3>

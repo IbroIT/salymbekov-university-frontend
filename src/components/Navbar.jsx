@@ -98,9 +98,10 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
         // { title: t('nav.student_life'), link: '/student' },
         { title: t('nav.clubs'), link: '/student/clubs' },
         { title: t('nav.calendar'), link: '/student/calendar' },
-        { title: t('nav.eresources'), link: '/student/eresources' },
+        { title: t('nav.academic_calendar'), link: '/student/academic-calendar' },
+        // { title: t('nav.eresources'), link: '/student/eresources' },
         { title: t('nav.acadop'), link: '/student/acadop' },
-        { title: t('nav.socop'), link: '/student/socop' },
+        // { title: t('nav.socop'), link: '/student/socop' },
         // { title: t('nav.gallery'), link: '/student/gallery' },
         // { title: t('nav.international'), link: '/student/international' },
         // { title: t('nav.internships'), link: '/student/internships' },
@@ -154,22 +155,23 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
     research: {
       title: t('nav.research'),
       submenu: [
-        { title: t('nav.management_body'), link: '/research/management' },
+        // { title: t('nav.management_body'), link: '/research/management' },
         { title: t('nav.scientific_journals'), link: '/research/journals' },
-        { title: t('nav.publications'), link: '/research/publications' },
-        { title: t('nav.grants'), link: '/research/grants' },
+        { title: t('nav.permit_documents'), link: '/research/permit-documents' },
+        // { title: t('nav.publications'), link: '/research/publications' },
+        // { title: t('nav.grants'), link: '/research/grants' },
         // { title: t('nav.research_areas'), link: '/research' },
         // { title: t('nav.research_centers'), link: '/research/centers' },
-        { title: t('nav.conferences'), link: '/research/conferences' },
+        // { title: t('nav.conferences'), link: '/research/conferences' },
       ]
     },
     infrastructure: {
       title: t('nav.infrastructure'),
       submenu: [
         { title: t('nav.hospitals'), link: '/infrastructure/hospitals' },
-        { title: t('nav.laboratories'), link: '/infrastructure/laboratories' },
-        { title: t('nav.audience'), link: '/infrastructure/audience' },
-        { title: t('nav.startups'), link: '/infrastructure/startups' },
+        // { title: t('nav.laboratories'), link: '/infrastructure/laboratories' },
+        // { title: t('nav.audience'), link: '/infrastructure/audience' },
+        // { title: t('nav.startups'), link: '/infrastructure/startups' },
         // { title: t('nav.academic_buildings'), link: '/infrastructure/academic-buildings' },
         // { title: t('nav.dormitories'), link: '/infrastructure/dormitories' },
       ]
@@ -181,7 +183,7 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
       submenu: [
         { title: t('nav.all_news'), link: '/news' },
         { title: t('nav.events'), link: '/news/events' },
-        { title: t('nav.announcements'), link: '/news/announcements' },
+        // { title: t('nav.announcements'), link: '/news/announcements' },
       ]
     },
     contacts: {

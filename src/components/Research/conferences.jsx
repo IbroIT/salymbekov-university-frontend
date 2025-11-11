@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BookOpen, Building2, Calendar, Globe } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { researchAPI } from '../../services/researchService';
 
@@ -17,10 +18,10 @@ const Conferences = () => {
   }, []);
 
   const sections = [
-    { id: 'upcoming', name: t('research.conferences.tabs.upcoming'), icon: '📅' },
-    { id: 'archive', name: t('research.conferences.tabs.archive'), icon: '📚' },
-    { id: 'international', name: t('research.conferences.types.international'), icon: '🌍' },
-    { id: 'national', name: t('research.conferences.types.national'), icon: '🏛️' }
+    { id: 'upcoming', name: t('research.conferences.tabs.upcoming'), icon: "Calendar" },
+    { id: 'archive', name: t('research.conferences.tabs.archive'), icon: "BookOpen" },
+    { id: 'international', name: t('research.conferences.types.international'), icon: "Globe" },
+    { id: 'national', name: t('research.conferences.types.national'), icon: Building2 }
   ];
 
   useEffect(() => {
@@ -210,7 +211,7 @@ const Conferences = () => {
     <div className="space-y-6">
       <div className="flex items-center mb-6">
         <div className="p-3 bg-blue-100 rounded-xl mr-4">
-          <span className="text-2xl">📅</span>
+          <Calendar className="w-4 h-4" />
         </div>
         <h2 className="text-3xl font-bold text-gray-900">
           {t('research.conferences.tabs.upcoming')}
@@ -228,10 +229,10 @@ const Conferences = () => {
             >
               <div className="flex justify-between items-start mb-4">
                 <div className="text-4xl">
-                  {conference.conference_type === 'international' ? '🌍' :
-                    conference.conference_type === 'national' ? '🏛️' :
-                      conference.conference_type === 'workshop' ? '🛠️' :
-                        conference.conference_type === 'symposium' ? '🎯' : '📚'}
+                  {conference.conference_type === 'international' ? '<Globe className="w-5 h-5" />' :
+                    conference.conference_type === 'national' ? '<Building2 className="w-5 h-5" />' :
+                      conference.conference_type === 'workshop' ? '<Wrench className="w-5 h-5" />' :
+                        conference.conference_type === 'symposium' ? '<Target className="w-5 h-5" />' : '<BookOpen className="w-5 h-5" />'}
                 </div>
                 <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${statusBadge.color}`}>
                   {statusBadge.text}
@@ -290,7 +291,7 @@ const Conferences = () => {
     <div className="space-y-6">
       <div className="flex items-center mb-6">
         <div className="p-3 bg-blue-100 rounded-xl mr-4">
-          <span className="text-2xl">📚</span>
+          <BookOpen className="w-4 h-4" />
         </div>
         <h2 className="text-3xl font-bold text-gray-900">
           {t('research.conferences.tabs.archive')}
@@ -305,8 +306,8 @@ const Conferences = () => {
           >
             <div className="flex justify-between items-start mb-4">
               <div className="text-4xl">
-                {conference.conference_type === 'international' ? '🌍' :
-                  conference.conference_type === 'national' ? '🏛️' : '📚'}
+                {conference.conference_type === 'international' ? '<Globe className="w-5 h-5" />' :
+                  conference.conference_type === 'national' ? '<Building2 className="w-5 h-5" />' : '<BookOpen className="w-5 h-5" />'}
               </div>
               <span className="text-gray-500 text-sm">
                 {new Date(conference.start_date).getFullYear()}
@@ -360,7 +361,7 @@ const Conferences = () => {
     <div className="space-y-6">
       <div className="flex items-center mb-6">
         <div className="p-3 bg-blue-100 rounded-xl mr-4">
-          <span className="text-2xl">🌍</span>
+          <Globe className="w-4 h-4" />
         </div>
         <h2 className="text-3xl font-bold text-gray-900">
           {t('research.conferences.types.international')}
@@ -374,7 +375,7 @@ const Conferences = () => {
             className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100 hover:shadow-lg transition-all duration-300"
           >
             <div className="flex justify-between items-start mb-4">
-              <div className="text-4xl">🌍</div>
+              <Globe className="w-6 h-6" />
               <span className="text-blue-600 text-sm font-medium">
                 Международная
               </span>
@@ -411,7 +412,7 @@ const Conferences = () => {
     <div className="space-y-6">
       <div className="flex items-center mb-6">
         <div className="p-3 bg-blue-100 rounded-xl mr-4">
-          <span className="text-2xl">🏛️</span>
+          <Building2 className="w-4 h-4" />
         </div>
         <h2 className="text-3xl font-bold text-gray-900">
           {t('research.conferences.types.national')}
@@ -425,7 +426,7 @@ const Conferences = () => {
             className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6 border border-green-100 hover:shadow-lg transition-all duration-300"
           >
             <div className="flex justify-between items-start mb-4">
-              <div className="text-4xl">🏛️</div>
+              <Building2 className="w-6 h-6" />
               <span className="text-green-600 text-sm font-medium">
                 Национальная
               </span>
@@ -464,8 +465,8 @@ const Conferences = () => {
         <div className="flex items-center">
           <div className="p-3 bg-blue-100 rounded-xl mr-4">
             <span className="text-2xl">
-              {conference.conference_type === 'international' ? '🌍' :
-                conference.conference_type === 'national' ? '🏛️' : '📚'}
+              {conference.conference_type === 'international' ? '<Globe className="w-5 h-5" />' :
+                conference.conference_type === 'national' ? '<Building2 className="w-5 h-5" />' : '<BookOpen className="w-5 h-5" />'}
             </span>
           </div>
           <h2 className="text-3xl font-bold text-gray-900">
@@ -631,7 +632,8 @@ const Conferences = () => {
                           onClick={() => changeActiveSection(section.id)}
                         >
                           <div className="flex items-center">
-                            <span className="text-lg mr-3">{section.icon}</span>
+                            <span className="text-lg mr-3">
+              </span>
                             {section.name}
                           </div>
                           <span className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded-full">

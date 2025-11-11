@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Building, Clock, FileEdit, FileText, GraduationCap, Mail, PartyPopper, Phone } from 'lucide-react';
 import { useTranslation } from "react-i18next";
 
 const AdmissionProcess = () => {
@@ -56,7 +57,7 @@ const AdmissionProcess = () => {
       id: 1,
       title: t("admissionProcess.step1Title", "Подача документов"),
       description: t("admissionProcess.step1Desc", "Подготовка и подача необходимых документов"),
-      icon: "📝",
+      Icon: FileEdit,
       details: t("admissionProcess.step1Details", "Заполнение заявления и предоставление всех необходимых документов в установленные сроки"),
       documents: [
         t("admissionProcess.passport", "Паспорт или удостоверение личности"),
@@ -69,7 +70,7 @@ const AdmissionProcess = () => {
       id: 2,
       title: t("admissionProcess.step2Title", "Вступительные экзамены"),
       description: t("admissionProcess.step2Desc", "Сдача вступительных испытаний"),
-      icon: "🎓",
+      Icon: GraduationCap,
       details: t("admissionProcess.step2Details", "Тестирование по основным предметам и специализированным дисциплинам"),
       subjects: [
         t("admissionProcess.biology", "Биология"),
@@ -93,7 +94,7 @@ const AdmissionProcess = () => {
       id: 4,
       title: t("admissionProcess.step4Title", "Рассмотрение заявления"),
       description: t("admissionProcess.step4Desc", "Окончательное рассмотрение документов"),
-      icon: "📋",
+      Icon: FileText,
       details: t("admissionProcess.step4Details", "Проверка всех документов и результатов испытаний"),
       checks: [
         t("admissionProcess.documentsCheck", "Проверка документов"),
@@ -105,7 +106,7 @@ const AdmissionProcess = () => {
       id: 5,
       title: t("admissionProcess.step5Title", "Зачисление"),
       description: t("admissionProcess.step5Desc", "Оформление и зачисление"),
-      icon: "🎉",
+      icon: "PartyPopper",
       details: t("admissionProcess.step5Details", "Окончательное оформление документов и зачисление в учебное заведение"),
       actions: [
         t("admissionProcess.payment", "Оплата обучения"),
@@ -179,7 +180,7 @@ const AdmissionProcess = () => {
   // Contact information
   const contactInfo = [
     {
-      icon: "📞",
+      icon: "Phone",
       title: t("admissionProcess.phone", "Телефон"),
       details: [
         "+996 (312) 123-456",
@@ -187,7 +188,7 @@ const AdmissionProcess = () => {
       ]
     },
     {
-      icon: "✉️",
+      icon: "Mail",
       title: t("admissionProcess.email", "Email"),
       details: [
         "admission@medical.edu",
@@ -195,14 +196,14 @@ const AdmissionProcess = () => {
       ]
     },
     {
-      icon: "🏢",
+      Icon: Building,
       title: t("admissionProcess.address", "Адрес"),
       details: [
         t("admissionProcess.addressValue", "г. Бишкек, ул. Ахунбаева 92")
       ]
     },
     {
-      icon: "🕒",
+      icon: "Clock",
       title: t("admissionProcess.hours", "Часы работы"),
       details: [
         t("admissionProcess.hoursValue", "Пн-Пт: 9:00-18:00")
@@ -242,29 +243,6 @@ const AdmissionProcess = () => {
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             {t("admissionProcess.heroTitle", "Поступление в ВМШ")}
           </h1>
-          <p className="text-lg text-gray-700 max-w-3xl mx-auto">
-            {t("admissionProcess.heroSubtitle", "Станьте частью ведущей медицинской школы Кыргызстана")}
-          </p>
-        </div>
-
-        {/* Статистика */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <div className="bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl p-6 text-white shadow-lg text-center">
-            <div className="text-3xl font-bold mb-2">5</div>
-            <div className="text-sm">{t("admissionProcess.steps", "Этапов")}</div>
-          </div>
-          <div className="bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl p-6 text-white shadow-lg text-center">
-            <div className="text-3xl font-bold mb-2">3</div>
-            <div className="text-sm">{t("admissionProcess.months", "Месяца")}</div>
-          </div>
-          <div className="bg-gradient-to-br from-green-500 to-emerald-500 rounded-2xl p-6 text-white shadow-lg text-center">
-            <div className="text-3xl font-bold mb-2">100%</div>
-            <div className="text-sm">{t("admissionProcess.transparent", "Прозрачность")}</div>
-          </div>
-          <div className="bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl p-6 text-white shadow-lg text-center">
-            <div className="text-3xl font-bold mb-2">24/7</div>
-            <div className="text-sm">{t("admissionProcess.support", "Поддержка")}</div>
-          </div>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-6">
@@ -320,7 +298,9 @@ const AdmissionProcess = () => {
                       >
                         <div className="p-6">
                           <div className="flex items-center mb-4">
-                            <div className="text-3xl mr-4">{step.icon}</div>
+                            <div className="text-3xl mr-4">
+                <step.Icon className="w-6 h-6" />
+              </div>
                             <div>
                               <h3 className="font-bold text-lg text-gray-900">
                                 {step.title}
@@ -454,7 +434,9 @@ const AdmissionProcess = () => {
                         style={{ animationDelay: `${index * 100}ms` }}
                       >
                         <div className="flex items-center mb-4">
-                          <div className="text-2xl mr-4">{contact.icon}</div>
+                          <div className="text-2xl mr-4">
+                <contact.Icon className="w-6 h-6" />
+              </div>
                           <h3 className="text-lg font-bold text-gray-800">
                             {contact.title}
                           </h3>

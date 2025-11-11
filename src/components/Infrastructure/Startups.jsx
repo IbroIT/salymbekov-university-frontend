@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Check, DollarSign, Microscope, Rocket } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { startupsAPI, infrastructureHelpers } from '../../services/infrastructureService';
 
@@ -34,7 +35,7 @@ const Startups = () => {
         const allCategory = {
           id: 'all',
           name: t('startups.allStartups'),
-          icon: '🚀',
+          icon: "Rocket",
           count: transformedData.startups.length
         }; setStartupCategories([allCategory, ...transformedData.categories]);
         setStartups(transformedData.startups);
@@ -234,7 +235,7 @@ const Startups = () => {
                       <ul className="space-y-2 mb-6">
                         {selectedStartup.achievements && selectedStartup.achievements.map((achievement, index) => (
                           <li key={index} className="flex items-start">
-                            <span className="text-green-500 mr-2 mt-1">✓</span>
+                            <Check className="w-4 h-4" />
                             <span className="text-gray-700">{achievement}</span>
                           </li>
                         ))}
@@ -322,21 +323,21 @@ const Startups = () => {
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div className="text-center p-6">
-                  <div className="text-4xl mb-4">💰</div>
+                  <DollarSign className="w-6 h-6" />
                   <h3 className="text-xl font-bold mb-3">{t('startups.fundingSupport')}</h3>
                   <p className="opacity-90">
                     {t('startups.fundingSupportDesc')}
                   </p>
                 </div>
                 <div className="text-center p-6">
-                  <div className="text-4xl mb-4">👨‍🏫</div>
+                  <div className="text-4xl mb-4"><UserCircle className="w-5 h-5" /></div>
                   <h3 className="text-xl font-bold mb-3">{t('startups.mentorship')}</h3>
                   <p className="opacity-90">
                     {t('startups.mentorshipDesc')}
                   </p>
                 </div>
                 <div className="text-center p-6">
-                  <div className="text-4xl mb-4">🔬</div>
+                  <Microscope className="w-6 h-6" />
                   <h3 className="text-xl font-bold mb-3">{t('startups.labAccess')}</h3>
                   <p className="opacity-90">
                     {t('startups.labAccessDesc')}

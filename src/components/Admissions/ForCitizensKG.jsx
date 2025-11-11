@@ -1,4 +1,5 @@
 import React from 'react';
+import { AlertTriangle, Calendar, DollarSign, FileEdit, FileText, GraduationCap, Trophy } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
@@ -18,7 +19,7 @@ const ForCitizensKG = () => {
         t('forCitizensKG.steps.step1.doc4', 'Фотографии 3x4 см (6 штук)')
       ],
       timing: t('forCitizensKG.steps.step1.timing', 'Июнь - Июль'),
-      icon: '📋'
+      icon: "FileText"
     },
     {
       step: 2,
@@ -30,7 +31,7 @@ const ForCitizensKG = () => {
         t('forCitizensKG.steps.step2.doc3', 'Медицинский осмотр'),
       ],
       timing: t('forCitizensKG.steps.step2.timing', 'Июль - Август'),
-      icon: '📝'
+      icon: "FileEdit"
     },
     {
       step: 3,
@@ -42,7 +43,7 @@ const ForCitizensKG = () => {
         t('forCitizensKG.steps.step3.doc3', 'Оплата обучения (для контракта)'),
       ],
       timing: t('forCitizensKG.steps.step3.timing', 'Август - Сентябрь'),
-      icon: '🎓'
+      icon: "GraduationCap"
     }
   ];
 
@@ -52,7 +53,7 @@ const ForCitizensKG = () => {
       title: t('forCitizensKG.links.requirements.title', 'Требования'),
       description: t('forCitizensKG.links.requirements.desc', 'Академические и медицинские требования'),
       link: '/admissions/requirements/citizens-kg',
-      icon: '📋',
+      icon: "FileText",
       color: 'blue'
     },
     {
@@ -66,7 +67,7 @@ const ForCitizensKG = () => {
       title: t('forCitizensKG.links.tuition.title', 'Стоимость'),
       description: t('forCitizensKG.links.tuition.desc', 'Стоимость обучения и способы оплаты'),
       link: '/admissions/tuition/citizens-kg',
-      icon: '💰',
+      icon: "DollarSign",
       color: 'purple'
     }
   ];
@@ -76,17 +77,17 @@ const ForCitizensKG = () => {
     {
       title: t('forCitizensKG.info.ort.title', 'ОРТ - обязательно'),
       description: t('forCitizensKG.info.ort.desc', 'Все абитуриенты должны сдать Общереспубликанское тестирование'),
-      icon: '⚠️'
+      icon: "AlertTriangle"
     },
     {
       title: t('forCitizensKG.info.budget.title', 'Бюджетные места'),
       description: t('forCitizensKG.info.budget.desc', 'Доступны бюджетные места по конкурсу'),
-      icon: '🏆'
+      icon: "Trophy"
     },
     {
       title: t('forCitizensKG.info.deadline.title', 'Сроки подачи'),
       description: t('forCitizensKG.info.deadline.desc', 'Не пропустите сроки подачи документов'),
-      icon: '⏰'
+      icon: '<Clock className="w-5 h-5" />'
     }
   ];
 
@@ -127,7 +128,8 @@ const ForCitizensKG = () => {
                 className={`block border-2 rounded-lg p-6 transition-all transform hover:scale-105 ${getColorClasses(link.color)}`}
               >
                 <div className="text-center">
-                  <span className="text-4xl mb-3 block">{link.icon}</span>
+                  <span className="text-4xl mb-3 block">
+              </span>
                   <h3 className="text-xl font-semibold mb-2">{link.title}</h3>
                   <p className="text-sm opacity-80">{link.description}</p>
                 </div>
@@ -160,7 +162,8 @@ const ForCitizensKG = () => {
                   <div className="flex-1">
                     <div className="bg-gray-50 rounded-lg p-6">
                       <div className="flex items-center mb-3">
-                        <span className="text-2xl mr-3">{step.icon}</span>
+                        <span className="text-2xl mr-3">
+              </span>
                         <h3 className="text-xl font-semibold text-gray-800">{step.title}</h3>
                         <span className="ml-auto bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
                           {step.timing}
@@ -201,7 +204,8 @@ const ForCitizensKG = () => {
           <div className="grid md:grid-cols-3 gap-6">
             {importantInfo.map((info, index) => (
               <div key={index} className="border border-gray-200 rounded-lg p-6 text-center hover:shadow-md transition-shadow">
-                <span className="text-4xl mb-3 block">{info.icon}</span>
+                <span className="text-4xl mb-3 block">
+              </span>
                 <h3 className="text-lg font-semibold text-gray-800 mb-2">{info.title}</h3>
                 <p className="text-gray-600 text-sm">{info.description}</p>
               </div>
@@ -311,7 +315,7 @@ const ForCitizensKG = () => {
           <div className="grid md:grid-cols-3 gap-6">
             <div className="border-2 border-green-200 rounded-lg p-4 bg-green-50">
               <div className="text-center mb-3">
-                <span className="text-3xl">📅</span>
+                <Calendar className="w-4 h-4" />
                 <h3 className="text-lg font-semibold text-green-800 mt-2">
                   {t('forCitizensKG.calendar.phase1', 'Подача документов')}
                 </h3>
@@ -330,7 +334,7 @@ const ForCitizensKG = () => {
 
             <div className="border-2 border-blue-200 rounded-lg p-4 bg-blue-50">
               <div className="text-center mb-3">
-                <span className="text-3xl">📝</span>
+                <FileEdit className="w-4 h-4" />
                 <h3 className="text-lg font-semibold text-blue-800 mt-2">
                   {t('forCitizensKG.calendar.phase2', 'ОРТ и экзамены')}
                 </h3>
@@ -349,7 +353,7 @@ const ForCitizensKG = () => {
 
             <div className="border-2 border-purple-200 rounded-lg p-4 bg-purple-50">
               <div className="text-center mb-3">
-                <span className="text-3xl">🎓</span>
+                <GraduationCap className="w-4 h-4" />
                 <h3 className="text-lg font-semibold text-purple-800 mt-2">
                   {t('forCitizensKG.calendar.phase3', 'Зачисление')}
                 </h3>
