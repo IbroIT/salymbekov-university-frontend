@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
+
 
 const HSM = () => {
   const { t } = useTranslation();
@@ -636,12 +638,11 @@ const HSM = () => {
                 </div>
                 
                 <div className="mt-6 md:mt-8 flex justify-center">
-                  <a href="/admission/apply">
-                  <button className="px-4 py-2 md:px-6 md:py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm md:text-base">
-                    {t('academics.programDetails.applyButton')}
-                  </button>
-                  </a>
-                  
+                  <Link to="/admissions/apply">
+                    <button className="px-4 py-2 md:px-6 md:py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm md:text-base">
+                      {t('academics.programDetails.applyButton')}
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>
