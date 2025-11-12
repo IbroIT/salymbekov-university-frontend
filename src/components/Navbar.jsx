@@ -188,6 +188,7 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
       submenu: [
         { title: t('nav.contacts'), link: '/contacts' },
         { title: t('nav.vacancies'), link: '/about/vacancies' },
+        { title: 'FAQ', link: '/admissions/faq' },
       ]
     }
   };

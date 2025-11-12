@@ -53,7 +53,7 @@ import SocOp from "./components/Life/SocOp";
 import AdmissionsOverview from "./components/Admissions/AdmissionsOverview";
 import Requirements from "./components/Admissions/Requirements";
 import Tuition from "./components/Admissions/Tuition";
-import FAQ from "./components/Admissions/FAQ";
+import FAQ from "./components/FAQ";
 import OnlineApplication from "./components/Admissions/OnlineApplication";
 import AdmissionProcess from "./components/Admissions/AdmissionProcess";
 import ForApplicants from "./components/Admissions/ForApplicants";
