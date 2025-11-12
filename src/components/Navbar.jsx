@@ -64,17 +64,8 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
   const menuData = {
     about: {
       title: t('nav.about'),
-      submenu: [
-        // { title: t('nav.about_university'), link: '/about' },
-        { title: t('nav.founders'), link: '/about/founders' },
-        { title: t('nav.mission'), link: '/about/mission' },
-        { title: t('nav.management'), link: '/about/management' },
-        { title: t('nav.structure'), link: '/about/structure' },
-        { title: t('nav.status'), link: '/about/status' },
-        { title: t('nav.regulations'), link: 'https://salymbekov.com/npa/' },
-        { title: t('nav.advices'), link: '/about/advices' },
-        { title: t('nav.achievements'), link: '/about/achievements' },
-      ]
+      link: 'https://salymbekov.com',
+      submenu: [],
     },
     HSM: {
       title: t('nav.HSM'),
@@ -85,7 +76,6 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
         // { title: t('nav.eduprograms'), link: '/hsm/eduprograms' },
         { title: t('nav.academic_stuff'), link: '/hsm/AS' },
         { title: t('nav.partners'), link: '/hsm/partners' },
-        { title: t('nav.resources'), link: '/hsm/resources' },
         { title: t('nav.cmk'), link: '/hsm/cmk' },
         // { title: t('nav.learning_goals'), link: '/hsm/learning-goals' },
         // { title: t('nav.departments'), link: '/hsm/departments' },
@@ -94,13 +84,18 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
     student: {
       title: t('nav.student'),
       submenu: [
-        { title: t('nav.instructions'), link: '/student/instructions' },
-        // { title: t('nav.student_life'), link: '/student' },
-        { title: t('nav.clubs'), link: '/student/clubs' },
+        { title: t('nav.schedule'), link: '/student/schedule' },
         { title: t('nav.calendar'), link: '/student/calendar' },
         { title: t('nav.academic_calendar'), link: '/student/academic-calendar' },
         // { title: t('nav.eresources'), link: '/student/eresources' },
         { title: t('nav.acadop'), link: '/student/acadop' },
+        // { title: t('nav.student_life'), link: '/student' },
+        { title: t('nav.clubs'), link: '/student/clubs' },
+        
+        { title: t('nav.resources'), link: '/hsm/resources' },
+        { title: t('nav.instructions'), link: '/student/instructions' },
+
+
         // { title: t('nav.socop'), link: '/student/socop' },
         // { title: t('nav.gallery'), link: '/student/gallery' },
         // { title: t('nav.international'), link: '/student/international' },
@@ -113,8 +108,8 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
       title: t('nav.admission'),
       submenu: [
         { title: t('nav.committee'), link: '/admissions/committee' },
-        { title: t('nav.courses'), link: '/admissions/courses' },
-        { title: t('nav.procedure'), link: '/admissions/procedure' },
+        // { title: t('nav.courses'), link: '/admissions/courses' },
+        // { title: t('nav.procedure'), link: '/admissions/procedure' },
         // { title: t('nav.payments'), link: '/admissions/payments' },
         {
           title: t('nav.tuition'),
@@ -124,7 +119,7 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
             { title: t('nav.for_foreign_citizens'), link: '/admissions/tuition/foreign-citizens' },
           ]
         },
-        { title: t('nav.partners'), link: '/hsm/partners' },
+        // { title: t('nav.partners'), link: '/hsm/partners' },
         // { 
         //   title: t('nav.for_applicants'), 
         //   hasNested: true,
@@ -165,17 +160,17 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
         // { title: t('nav.conferences'), link: '/research/conferences' },
       ]
     },
-    infrastructure: {
-      title: t('nav.infrastructure'),
-      submenu: [
-        { title: t('nav.hospitals'), link: '/infrastructure/hospitals' },
-        // { title: t('nav.laboratories'), link: '/infrastructure/laboratories' },
-        // { title: t('nav.audience'), link: '/infrastructure/audience' },
-        // { title: t('nav.startups'), link: '/infrastructure/startups' },
-        // { title: t('nav.academic_buildings'), link: '/infrastructure/academic-buildings' },
-        // { title: t('nav.dormitories'), link: '/infrastructure/dormitories' },
-      ]
-    },
+    // infrastructure: {
+    //   title: t('nav.infrastructure'),
+    //   submenu: [
+    //     { title: t('nav.hospitals'), link: '/infrastructure/hospitals' },
+    //     // { title: t('nav.laboratories'), link: '/infrastructure/laboratories' },
+    //     // { title: t('nav.audience'), link: '/infrastructure/audience' },
+    //     // { title: t('nav.startups'), link: '/infrastructure/startups' },
+    //     // { title: t('nav.academic_buildings'), link: '/infrastructure/academic-buildings' },
+    //     // { title: t('nav.dormitories'), link: '/infrastructure/dormitories' },
+    //   ]
+    // },
 
 
     news: {
@@ -183,6 +178,8 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
       submenu: [
         { title: t('nav.all_news'), link: '/news' },
         { title: t('nav.events'), link: '/news/events' },
+        { title: t('nav.media'), link: '/media' },
+
         // { title: t('nav.announcements'), link: '/news/announcements' },
       ]
     },
@@ -191,7 +188,6 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
       submenu: [
         { title: t('nav.contacts'), link: '/contacts' },
         { title: t('nav.vacancies'), link: '/about/vacancies' },
-        { title: t('nav.media'), link: '/media' },
       ]
     }
   };
@@ -230,8 +226,10 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
                   key={key}
                   className="relative"
                   onMouseEnter={() => {
-                    setActiveMenu(key);
-                    setHoveredMenu(key);
+                    if (item.submenu && item.submenu.length > 0) {
+                      setActiveMenu(key);
+                      setHoveredMenu(key);
+                    }
                   }}
                   onMouseLeave={() => {
                     setHoveredMenu(null);
@@ -243,25 +241,46 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
                     }, 200);
                   }}
                 >
-                  <button
-                    className={`relative px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-300 group ${activeMenu === key
+                  {item.link ? (
+                    <a
+                      href={item.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`relative px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-300 group ${activeMenu === key
                         ? 'text-white bg-blue-600 shadow-lg'
                         : isScrolled
                           ? 'text-blue-800 hover:text-blue-600 hover:bg-blue-50'
                           : 'text-blue-100 hover:text-white hover:bg-blue-700/50'
-                      }`}
-                  >
-                    <span className="relative z-10">{item.title}</span>
-                    <div className={`absolute inset-0 bg-gradient-to-r from-blue-600 to-blue-500 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${isScrolled ? '' : 'group-hover:opacity-100'
-                      }`}></div>
-
-                    {/* Индикатор при наведении */}
-                    <div className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-blue-400 transition-all duration-300 group-hover:w-3/4 ${activeMenu === key ? 'w-3/4' : ''
-                      }`}></div>
-                  </button>
+                        }`}
+                      style={{ display: 'inline-block' }}
+                    >
+                      <span className="relative z-10">{item.title}</span>
+                      <div className={`absolute inset-0 bg-gradient-to-r from-blue-600 to-blue-500 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${isScrolled ? '' : 'group-hover:opacity-100'
+                        }`}></div>
+                      {/* Индикатор при наведении */}
+                      <div className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-blue-400 transition-all duration-300 group-hover:w-3/4 ${activeMenu === key ? 'w-3/4' : ''
+                        }`}></div>
+                    </a>
+                  ) : (
+                    <button
+                      className={`relative px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-300 group ${activeMenu === key
+                        ? 'text-white bg-blue-600 shadow-lg'
+                        : isScrolled
+                          ? 'text-blue-800 hover:text-blue-600 hover:bg-blue-50'
+                          : 'text-blue-100 hover:text-white hover:bg-blue-700/50'
+                        }`}
+                    >
+                      <span className="relative z-10">{item.title}</span>
+                      <div className={`absolute inset-0 bg-gradient-to-r from-blue-600 to-blue-500 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${isScrolled ? '' : 'group-hover:opacity-100'
+                        }`}></div>
+                      {/* Индикатор при наведении */}
+                      <div className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-blue-400 transition-all duration-300 group-hover:w-3/4 ${activeMenu === key ? 'w-3/4' : ''
+                        }`}></div>
+                    </button>
+                  )}
 
                   {/* Выпадающее меню с анимацией */}
-                  {activeMenu === key && (
+                  {item.submenu && item.submenu.length > 0 && activeMenu === key && (
                     <div
                       className="absolute left-1/2 transform -translate-x-1/2 mt-2 min-w-[16rem] rounded-xl shadow-2xl bg-white/95 backdrop-blur-md ring-1 ring-black/5 overflow-visible z-50 transition-all duration-300"
                       style={{ transformOrigin: 'top center' }}

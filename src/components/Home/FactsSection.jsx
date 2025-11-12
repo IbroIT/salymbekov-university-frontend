@@ -86,10 +86,10 @@ const AnimatedFactsSection = () => {
   const { t } = useTranslation();
 
   const facts = [
-    { end: 5000, Icon: GraduationCap, label: t("facts.students"), delay: 0 },
-    { end: 2500, Icon: GraduationCap, label: t("facts.graduates"), delay: 200 },
-    { end: 25, Icon: BookOpen, label: t("facts.programs"), delay: 400 },
-    { end: 50, Icon: Hospital, label: t("facts.clinics"), delay: 600 }
+    { end: 200, Icon: GraduationCap, label: t("facts.students"), delay: 0 },
+    { end: 100, Icon: GraduationCap, label: t("facts.graduates"), delay: 200 },
+    { end: 20, Icon: BookOpen, label: t("facts.programs"), delay: 400 },
+    { end: 30, Icon: Hospital, label: t("facts.clinics"), delay: 600 }
   ];
 
   return (

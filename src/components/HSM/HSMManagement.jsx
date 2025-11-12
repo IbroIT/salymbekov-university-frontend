@@ -1,8 +1,9 @@
+// import icons removed
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { leadershipAPI } from '../../services/leadershipService';
 import { getLocalizedValue, getLocalizedArray, getCurrentLanguage } from '../../utils/localization';
-import { GraduationCap } from 'lucide-react';
+import { GraduationCap, Crown } from 'lucide-react';
 
 const LeadershipPage = () => {
   const { t, i18n } = useTranslation();
@@ -53,8 +54,8 @@ const LeadershipPage = () => {
   }, [i18n.language]); // Добавляем зависимость от языка
 
   const sections = [
-    { id: 'directorate', name: t('leadership.directorate'), icon: '👑' },
-    { id: 'departmentHeads', name: t('leadership.departmentHeads'), Icon: GraduationCap }
+  { id: 'directorate', name: t('leadership.directorate') },
+  { id: 'departmentHeads', name: t('leadership.departmentHeads') }
   ];
 
   // Filter directors and department heads from API data
@@ -85,9 +86,7 @@ const LeadershipPage = () => {
     return (
       <div className="space-y-6">
         <div className="flex items-center mb-6">
-          <div className="p-3 bg-blue-100 rounded-xl mr-4">
-            <span className="text-2xl">👑</span>
-          </div>
+          {/* icon removed */}
           <h2 className="text-3xl font-bold text-gray-900">
             {t('leadership.directorate')}
           </h2>
@@ -146,9 +145,7 @@ const LeadershipPage = () => {
     return (
       <div className="space-y-6">
         <div className="flex items-center mb-6">
-          <div className="p-3 bg-blue-100 rounded-xl mr-4">
-            <span className="text-2xl"><GraduationCap className="w-5 h-5" /></span>
-          </div>
+          {/* icon removed */}
           <h2 className="text-3xl font-bold text-gray-900">
             {t('leadership.departmentHeads')}
           </h2>
@@ -183,7 +180,7 @@ const LeadershipPage = () => {
 
               <div className="space-y-2 mb-4">
                 <div className="flex items-center text-xs text-gray-600">
-                  <span className="mr-2"><GraduationCap className="w-5 h-5" /></span>
+                  {/* icon removed */}
                   <span>{getLocalizedValue(head, 'degree', i18n.language)}</span>
                 </div>
                 {head.staff_count && getLocalizedValue(head, 'staff_count', i18n.language) && (
@@ -237,32 +234,23 @@ const LeadershipPage = () => {
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             {t('leadership.title')}
           </h1>
-          <p className="text-lg text-gray-700 max-w-3xl mx-auto">
-            {t('leadership.subtitle')}
-          </p>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Боковая навигация */}
           <div className="lg:w-1/4">
             <div className="bg-white rounded-xl shadow-lg overflow-hidden sticky top-6">
-              <div className="bg-gradient-to-r from-blue-600 to-indigo-700 p-4 text-white font-bold text-lg">
-                {t('leadership.sections')}
-              </div>
               <nav className="p-2">
                 <ul className="space-y-1">
                   {sections.map((section) => (
                     <li key={section.id}>
                       <button
-                        className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 flex items-center ${activeSection === section.id
+                        className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 ${activeSection === section.id
                           ? "bg-blue-100 text-blue-700 font-medium shadow-sm"
                           : "text-gray-700 hover:bg-gray-100"
                           }`}
                         onClick={() => changeActiveSection(section.id)}
                       >
-                        <span className="text-lg mr-3">
-                <section.Icon className="w-6 h-6" />
-              </span>
                         {section.name}
                       </button>
                     </li>

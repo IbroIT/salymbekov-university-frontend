@@ -163,7 +163,8 @@ const Footer = () => {
                   aria-label={social.name}
                 >
                   <div className="text-white">
-              </div>
+                    {social.icon}
+                  </div>
                 </a>
               ))}
             </div>

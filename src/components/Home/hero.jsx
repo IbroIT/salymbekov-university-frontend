@@ -15,10 +15,10 @@ const Hero = () => {
       <div className="hero-wrapper">
         <Home />
         <Facts />
-        <Programs />
+        {/* <Programs /> */}
         <News />
         <Reviews />
-        <Partners />
+        {/* <Partners /> */}
       </div>
     </>
   );

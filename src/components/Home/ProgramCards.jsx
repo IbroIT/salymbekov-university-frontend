@@ -12,7 +12,7 @@ const ProgramCards = () => {
   const programs = [
     {
       id: 1,
-      icon: '<Syringe className="w-5 h-5" />',
+      icon: Syringe,
       titleKey: 'programs.generalMedicine.title',
       levelKey: 'programs.levels.bachelor',
       durationKey: 'programs.durations.fourYears',
@@ -22,7 +22,7 @@ const ProgramCards = () => {
     },
     {
       id: 2,
-      icon: '<Smile className="w-5 h-5" />',
+      icon: Smile,
       titleKey: 'programs.dentistry.title',
       levelKey: 'programs.levels.bachelor',
       durationKey: 'programs.durations.fiveYears',
@@ -32,7 +32,7 @@ const ProgramCards = () => {
     },
     {
       id: 3,
-      icon: '<Pill className="w-5 h-5" />',
+      icon: Pill,
       titleKey: 'programs.pharmacy.title',
       levelKey: 'programs.levels.bachelor',
       durationKey: 'programs.durations.fourYears',
@@ -42,7 +42,7 @@ const ProgramCards = () => {
     },
     {
       id: 4,
-      icon: '<Eye className="w-5 h-5" />',
+      icon: Eye,
       titleKey: 'programs.medicalOptics.title',
       levelKey: 'programs.levels.master',
       durationKey: 'programs.durations.twoYears',
@@ -94,9 +94,6 @@ const ProgramCards = () => {
             {t('programs.title')}
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 mx-auto"></div>
-          <p className="text-blue-700 mt-4 max-w-2xl mx-auto">
-            {t('programs.subtitle')}
-          </p>
         </div>
 
         {/* Десктопная версия - сетка 2x2 с анимациями */}
@@ -114,8 +111,8 @@ const ProgramCards = () => {
 
                 {/* Иконка с анимацией */}
                 <div className={`text-5xl mb-6 transform transition-all duration-500 ${isHovered === program.id ? 'scale-110 rotate-6' : ''}`}>
-                {program.icon}
-              </div>
+                  {program.icon && React.createElement(program.icon, { className: "w-12 h-12" })}
+                </div>
 
                 <h3 className="text-2xl font-bold text-gray-800 mb-3 relative">
                   {t(program.titleKey)}
@@ -157,8 +154,8 @@ const ProgramCards = () => {
                 <div key={program.id} className="w-full flex-shrink-0 px-4">
                   <div className={`rounded-2xl overflow-hidden shadow-xl p-6 ${program.bgColor} border border-white`}>
                     <div className="text-5xl mb-6 text-center transform transition-transform duration-500" style={{ transform: `scale(${activeIndex === program.id - 1 ? 1.1 : 1})` }}>
-                {program.icon}
-              </div>
+                      {program.icon && React.createElement(program.icon, { className: "w-12 h-12 mx-auto" })}
+                    </div>
 
                     <h3 className="text-xl font-bold text-gray-800 mb-3 text-center">
                       {t(program.titleKey)}
@@ -222,18 +219,6 @@ const ProgramCards = () => {
           </div>
         </div>
 
-        {/* Декоративный элемент внизу */}
-        <div className="text-center mt-16">
-          <button 
-            onClick={() => navigate('/HSM/programs')} // замените на ваш путь
-            className="inline-flex items-center justify-center px-6 py-3 bg-white rounded-full shadow-md text-blue-600 font-medium group cursor-pointer hover:bg-blue-50 transition-all duration-300"
-          >
-            <span>{t('programs.allPrograms')}</span>
-            <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </button>
-        </div>
       </div>
     </section>
   );

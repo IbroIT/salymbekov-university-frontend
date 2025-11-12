@@ -147,9 +147,9 @@ const AcademicCalendar = () => {
   };
 
   const tabs = [
-    { id: 'fall', name: t('academicCalendar.tabs.fall', 'Осенний'), Icon: Leaf },
-    { id: 'spring', name: t('academicCalendar.tabs.spring', 'Весенний'), icon: Flower2 },
-    { id: 'summer', name: t('academicCalendar.tabs.summer', 'Летний'), Icon: Sun }
+  { id: 'fall', name: t('academicCalendar.tabs.fall', 'Осенний'), Icon: Leaf },
+  { id: 'spring', name: t('academicCalendar.tabs.spring', 'Весенний'), Icon: Flower2 },
+  { id: 'summer', name: t('academicCalendar.tabs.summer', 'Летний'), Icon: Sun }
   ];
 
   const currentSemester = calendarData[activeTab];

@@ -83,7 +83,7 @@ const PPSCard = () => {
               animate={{ scale: 1 }}
               transition={{ duration: 0.5 }}
             >
-              {t('pps.title', 'Преподавательский состав')}
+              {t('pps.title', 'Профессорско-преподавательский состав')}
             </motion.h1>
             <motion.div 
               className="w-24 h-1 bg-gradient-to-r from-cyan-400 to-blue-400 mx-auto rounded-full mb-6"
@@ -91,14 +91,6 @@ const PPSCard = () => {
               animate={{ width: 96 }}
               transition={{ delay: 0.5, duration: 1 }}
             ></motion.div>
-            <motion.p 
-              className="text-lg text-blue-100 leading-relaxed"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.7 }}
-            >
-              {t('pps.subtitle', 'Качественный состав ППС Высшей школы медицины')}
-            </motion.p>
           </motion.div>
         </div>
       </motion.section>

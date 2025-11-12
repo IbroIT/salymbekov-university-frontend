@@ -192,9 +192,7 @@ const ScientificJournals = () => {
           {/* Боковая навигация */}
           <div className="lg:w-1/4">
             <div className="bg-white rounded-xl shadow-lg overflow-hidden sticky top-6">
-              <div className="bg-gradient-to-r from-blue-600 to-indigo-700 p-4 text-white font-bold text-lg">
-                {t("research.journals.navigation", "Навигация")}
-              </div>
+              
               <nav className="p-2">
                 <ul className="space-y-1">
                   {sectionsList.map((section) => (

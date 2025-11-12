@@ -1,3 +1,4 @@
+// import icons removed
 import React, { useState, useEffect } from "react";
 import { AlertTriangle } from 'lucide-react';
 import { useTranslation } from "react-i18next";
@@ -72,7 +73,7 @@ const AcadOp = () => {
     status: 'available',
     popular: opportunity.id === 1, // Mark first as popular for demo
     students: opportunity.type === 'semester' ? '25+' : '15+',
-    icon: opportunity.type === 'semester' ? '<Globe className="w-5 h-5" />' : '<GraduationCap className="w-5 h-5" />',
+  // icon removed
     color: opportunity.type === 'semester' ? 'from-green-500 to-emerald-500' : 'from-blue-500 to-cyan-500',
     features: opportunity.benefits?.map(benefit => getLocalizedField(benefit, 'text')) || []
   }));
@@ -102,7 +103,7 @@ const AcadOp = () => {
     program: getLocalizedField(university, 'name'),
     achievement: t("acadop.successStories.achievement", "Академическая мобильность"),
     quote: t("acadop.successStories.quote", "Программа обмена открыла новые горизонты в моей карьере"),
-    image: ['👩‍<Microscope className="w-5 h-5" />', '👨‍<Stethoscope className="w-5 h-5" />', '👩‍<GraduationCap className="w-5 h-5" />'][index] || '👨‍<GraduationCap className="w-5 h-5" />'
+  // image icon removed
   }));
 
   // Фильтрация данных
@@ -306,9 +307,7 @@ const AcadOp = () => {
                           className={`bg-gradient-to-r ${opportunity.color} p-6 text-white relative overflow-hidden`}
                         >
                           <div className="flex items-center mb-4">
-                            <div className="text-2xl mr-4 bg-white/20 rounded-xl w-12 h-12 flex items-center justify-center shadow-lg">
-                <opportunity.Icon className="w-6 h-6" />
-              </div>
+                            {/* icon removed */}
                             <div className="flex-1">
                               <div className="flex items-center justify-between">
                                 <h3 className="text-lg font-bold">

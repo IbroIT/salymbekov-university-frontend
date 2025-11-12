@@ -1,8 +1,77 @@
 import { useState, useEffect, useMemo } from 'react';
-import { Globe, Hospital, Microscope, Stethoscope } from 'lucide-react';
+import { useRef } from 'react';
+import { Globe, Hospital, Microscope, Stethoscope, Heart } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getHSMInfo, getLocalizedText } from '../../data/hsmData';
+// Анимированный счетчик
+const CounterItem = ({ end, icon, label, duration = 2000, delay = 0 }) => {
+  const [count, setCount] = useState(0);
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const observer = new window.IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated) {
+          setIsVisible(true);
+          setTimeout(() => {
+            setHasAnimated(true);
+            let startTime = null;
+            const step = (timestamp) => {
+              if (!startTime) startTime = timestamp;
+              const progress = Math.min((timestamp - startTime) / duration, 1);
+              const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+              setCount(Math.floor(easeOutQuart * end));
+              if (progress < 1) {
+                window.requestAnimationFrame(step);
+              }
+            };
+            window.requestAnimationFrame(step);
+          }, delay);
+        }
+      },
+      { threshold: 0.3 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => {
+      if (ref.current) observer.unobserve(ref.current);
+    };
+  }, [end, duration, hasAnimated, delay]);
+
+  return (
+    <div
+      ref={ref}
+      className={`text-center p-8 bg-white rounded-2xl shadow-xl transform transition-all duration-700 ${
+        isVisible
+          ? 'opacity-100 translate-y-0 scale-100 hover:shadow-2xl hover:-translate-y-2'
+          : 'opacity-0 translate-y-10 scale-95'
+      }`}
+    >
+      <div className="relative inline-block mb-4">
+        <div className="text-5xl mb-2">{icon}</div>
+        {hasAnimated && (
+          <div className="absolute -top-2 -right-4">
+            <div className="relative">
+              <div className="animate-ping absolute inline-flex h-5 w-5 rounded-full bg-blue-400 opacity-75"></div>
+              <div className="relative inline-flex rounded-full h-5 w-5 bg-blue-600"></div>
+            </div>
+          </div>
+        )}
+      </div>
+      <div className="text-5xl font-bold text-blue-600 mb-2 transition-all duration-300">
+        {count.toLocaleString()}+
+      </div>
+      <div className="text-lg text-gray-700 font-medium bg-blue-50 py-2 px-4 rounded-full inline-block">
+        {label}
+      </div>
+      {hasAnimated && (
+        <div className="mt-4 h-1 w-20 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full mx-auto"></div>
+      )}
+    </div>
+  );
+};
 import { 
   AcademicCapIcon, 
   UserGroupIcon, 
@@ -71,10 +140,10 @@ const HSMInfo = () => {
   }, []);
 
   const medicalStats = [
-    { icon: <UserGroupIcon className="w-8 h-8" />, value: "500+", label: t('hsm.students', 'Студентов') },
-    { icon: <AcademicCapIcon className="w-8 h-8" />, value: "50+", label: t('hsm.professors', 'Профессоров') },
-    { icon: <ShieldCheckIcon className="w-8 h-8" />, value: "95%", label: t('hsm.success_rate', 'Успеваемость') },
-    { icon: <HeartIcon className="w-8 h-8" />, value: "1000+", label: t('hsm.patients', 'Пациентов в год') }
+  { icon: <UserGroupIcon className="w-8 h-8" />, end: 500, label: t('hsm.students', 'Студентов'), delay: 0 },
+  { icon: <AcademicCapIcon className="w-8 h-8" />, end: 50, label: t('hsm.professors', 'Профессоров'), delay: 200 },
+  { icon: <ShieldCheckIcon className="w-8 h-8" />, end: 95, label: t('hsm.success_rate', 'Успеваемость'), delay: 400 },
+  { icon: <HeartIcon className="w-8 h-8" />, end: 1000, label: t('hsm.patients', 'Пациентов в год'), delay: 600 }
   ];
 
   const quickLinks = [
@@ -281,14 +350,6 @@ const HSMInfo = () => {
               animate={{ width: 128 }}
               transition={{ delay: 0.5, duration: 1 }}
             ></motion.div>
-            <motion.p 
-              className="text-xl text-blue-100 mb-8 leading-relaxed"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.7 }}
-            >
-              {t('hsm.hero_subtitle', 'Готовим будущих лидеров медицины с инновационным подходом к образованию')}
-            </motion.p>
           </motion.div>
         </div>
 
@@ -316,76 +377,25 @@ const HSMInfo = () => {
         </motion.div>
       </motion.section>
 
-      {/* Статистика */}
+      {/* Статистика с анимацией */}
       <section className="relative -mt-10 z-20">
         <div className="container mx-auto px-4">
-          <motion.div 
-            className="grid grid-cols-2 lg:grid-cols-4 gap-6"
-            initial={{ y: 50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.6 }}
-          >
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {medicalStats.map((stat, index) => (
-              <motion.div
+              <CounterItem
                 key={index}
-                className="bg-white rounded-2xl shadow-xl p-6 text-center border border-gray-100"
-                whileHover={{ 
-                  scale: 1.05,
-                  boxShadow: "0 20px 40px rgba(0,0,0,0.1)"
-                }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                <div className="text-blue-600 mb-3 flex justify-center">
-                {stat.icon}
-              </div>
-                <div className="text-3xl font-bold text-gray-900 mb-1">{stat.value}</div>
-                <div className="text-gray-600 text-sm">{stat.label}</div>
-              </motion.div>
+                end={stat.end}
+                icon={stat.icon}
+                label={stat.label}
+                delay={stat.delay}
+              />
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
       <div className="container mx-auto px-4 py-16">
         {/* Особенности медицинского образования */}
-        <motion.section
-          className="mb-20"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-        >
-          <div className="text-center mb-12">
-            <motion.h2 
-              className="text-4xl font-bold text-gray-900 mb-4"
-              initial={{ y: 30, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              viewport={{ once: true }}
-            >
-              {t('hsm.why_choose', 'Почему выбирают нашу медицинскую школу?')}
-            </motion.h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 mx-auto rounded-full"></div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {medicalFeatures.map((feature, index) => (
-              <motion.div
-                key={index}
-                className="bg-white rounded-2xl shadow-lg p-6 text-center group hover:shadow-xl transition-all duration-300 border border-gray-100"
-                initial={{ y: 50, opacity: 0 }}
-                whileInView={{ y: 0, opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ y: -5 }}
-              >
-                <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">
-                {feature.icon}
-              </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">{feature.title}</h3>
-                <p className="text-gray-600 text-sm leading-relaxed">{feature.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </motion.section>
 
         {/* Основной контент с табами */}
         <motion.section
@@ -448,53 +458,6 @@ const HSMInfo = () => {
                 )}
               </motion.div>
             </AnimatePresence>
-          </div>
-        </motion.section>
-
-        {/* Быстрые ссылки */}
-        <motion.section
-          className="mb-16"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
-        >
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              {t('hsm.quick_access', 'Быстрый доступ')}
-            </h2>
-            <p className="text-gray-600 text-lg">
-              {t('hsm.quick_access_desc', 'Вся необходимая информация в одном месте')}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {quickLinks.map((link, index) => (
-              <motion.a
-                key={index}
-                href={link.href}
-                className="group relative overflow-hidden rounded-2xl bg-white shadow-lg hover:shadow-xl transition-all duration-300"
-                whileHover={{ y: -5 }}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <div className={`absolute inset-0 bg-gradient-to-br ${link.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}></div>
-                <div className="relative p-6 z-10">
-                  <div className={`w-12 h-12 bg-gradient-to-r ${link.gradient} rounded-xl flex items-center justify-center mb-4 text-white`}>
-                {link.icon}
-              </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2 flex items-center">
-                    {link.title}
-                    <ArrowTopRightOnSquareIcon className="w-4 h-4 ml-2 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </h3>
-                  <p className="text-gray-600 text-sm leading-relaxed">
-                    {link.description}
-                  </p>
-                </div>
-              </motion.a>
-            ))}
           </div>
         </motion.section>
       </div>

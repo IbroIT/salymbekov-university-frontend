@@ -95,7 +95,8 @@ import Startups from "./components/Infrastructure/Startups";
 import Contacts from "./components/Contacts/contacts";
 import Media from "./components/Contacts/Media";
 import MainRoutes from "./routes";
-
+import Schedule from "./components/Life/Schedule";
+import Vacancies from "./components/About/Careers";
 // Заглушка для временных страниц
 const Page = ({ title }) => <div className="min-h-screen pt-20"><h1 className="text-2xl font-bold p-8">{title}</h1></div>;
 
@@ -118,7 +119,15 @@ function App() {
             {/* Главная */}
             <Route path="/" element={<Hero />} />
 
-            {/* About */}
+            {/* HSM */}
+            <Route path="/hsm/programs" element={<HSM />} />
+            <Route path="/hsm/resources" element={<Resources />} />
+            <Route path="/hsm/about" element={<HSMInfo />} />
+            <Route path="/hsm/AS" element={<HSMAcademicStuff />} />
+            <Route path="/hsm/manage" element={<HSMManagement />} />
+            <Route path="/hsm/partners" element={<Partners />} />
+            <Route path="/hsm/cmk" element={<HSMCMK />} />
+
             <Route path="/about/management" element={<Management />} />
             <Route path="/about/vacancies" element={<Careers />} />
             <Route path="/about/careers" element={<Careers />} />
@@ -131,22 +140,7 @@ function App() {
             <Route path="/about/founders" element={<Founders />} />
             <Route path="/about/structure" element={<Structure />} />
             <Route path="/about/achievements" element={<Achievements />} />
-
-
-            {/* HSM */}
-            <Route path="/hsm/programs" element={<HSM />} />
-            <Route path="/hsm/eduprograms" element={<Programs />} />
-            <Route path="/hsm/departments" element={<Deparments />} />
-            <Route path="/hsm/calendar" element={<Calendar />} />
-            <Route path="/hsm/resources" element={<Resources />} />
-            <Route path="/hsm/accreditation" element={<HSMAccreditation />} />
-            <Route path="/hsm/learning-goals" element={<HSMLearningGoals />} />
-            <Route path="/hsm/about" element={<HSMInfo />} />
-            <Route path="/hsm/AS" element={<HSMAcademicStuff />} />
-            <Route path="/hsm/manage" element={<HSMManagement />} />
-            <Route path="/hsm/partners" element={<Partners />} />
-            <Route path="/hsm/cmk" element={<HSMCMK />} />
-
+            
             {/* Admission */}
             <Route path="/admissions" element={<AdmissionsOverview />} />
             <Route path="/admissions/requirements" element={<Requirements />} />
@@ -200,6 +194,7 @@ function App() {
             <Route path="/student/eresources" element={<StudentEResources />} />
             <Route path="/student/acadop" element={<AcadOp />} />
             <Route path="/student/socop" element={<SocOp />} />
+            <Route path="/student/schedule" element={<Schedule />} />
 
             {/* News */}
             <Route path="/news" element={<News />} />

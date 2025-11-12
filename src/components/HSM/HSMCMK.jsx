@@ -1,3 +1,4 @@
+// import icons removed
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AlertTriangle, BarChart, ClipboardList, Star } from 'lucide-react';
@@ -54,8 +55,8 @@ const HSMCMK = () => {
   };
 
   const sections = [
-    { id: 'about', name: t('smk.tabs.about'), icon: '<ClipboardList className="w-5 h-5" />' },
-    { id: 'documents', name: t('smk.tabs.documents'), icon: '📁' }
+  { id: 'about', name: t('smk.tabs.about') },
+  { id: 'documents', name: t('smk.tabs.documents') }
   ];
 
   const changeActiveSection = (sectionId) => {
@@ -110,9 +111,7 @@ const HSMCMK = () => {
     return (
       <div className="space-y-6">
         <div className="flex items-center mb-6">
-          <div className="p-3 bg-blue-100 rounded-xl mr-4">
-            <span className="text-2xl"><ClipboardList className="w-5 h-5" /></span>
-          </div>
+          {/* icon removed */}
           <h2 className="text-3xl font-bold text-gray-900">
             {t('smk.about.title')}
           </h2>
@@ -136,21 +135,6 @@ const HSMCMK = () => {
               ))}
             </ul>
           </div>
-
-          <div className="space-y-4">
-            <div className="bg-white rounded-xl p-4 border border-blue-100">
-              <div className="text-2xl font-bold text-blue-600 mb-2">
-                {settings?.iso_standard || 'ISO 9001:2015'}
-              </div>
-              <div className="text-sm text-gray-600">{t('smk.about.standard')}</div>
-            </div>
-            <div className="bg-white rounded-xl p-4 border border-green-100">
-              <div className="text-2xl font-bold text-green-600 mb-2">
-                {settings?.compliance_percentage || '100%'}
-              </div>
-              <div className="text-sm text-gray-600">{t('smk.about.compliance')}</div>
-            </div>
-          </div>
         </div>
       </div>
     );
@@ -163,9 +147,7 @@ const HSMCMK = () => {
     return (
       <div className="space-y-6">
         <div className="flex items-center mb-6">
-          <div className="p-3 bg-blue-100 rounded-xl mr-4">
-            <span className="text-2xl"><Star className="w-5 h-5" /></span>
-          </div>
+          {/* icon removed */}
           <h2 className="text-3xl font-bold text-gray-900">
             {t('smk.principles.title')}
           </h2>
@@ -201,52 +183,13 @@ const HSMCMK = () => {
     return (
       <div className="space-y-6">
         <div className="flex items-center mb-6">
-          <div className="p-3 bg-blue-100 rounded-xl mr-4">
-            <span className="text-2xl">📁</span>
-          </div>
+          {/* icon removed */}
           <h2 className="text-3xl font-bold text-gray-900">
             {t('smk.documents.title')}
           </h2>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-1 gap-8">
-          <div>
-            <h3 className="text-xl font-semibold text-gray-800 mb-6">{t('smk.documents.downloads')}</h3>
-            <div className="space-y-4 max-h-96 overflow-y-auto pr-4">
-              {documents.map((doc) => (
-                <div
-                  key={doc.id}
-                  className="flex items-center justify-between p-4 bg-white rounded-xl border border-blue-100 hover:shadow-sm transition-all duration-300"
-                >
-                  <div className="flex items-center gap-4">
-                    <div className={`w-12 h-12 rounded-lg ${doc.document_type === 'pdf' ? 'bg-red-500' : 'bg-blue-500'
-                      } flex items-center justify-center text-white font-bold text-sm`}>
-                      {doc.document_type_display || doc.document_type.toUpperCase()}
-                    </div>
-                    <div>
-                      <h4 className="font-medium text-gray-800">
-                        {getLocalizedField(doc, 'title', currentLang)}
-                      </h4>
-                      <div className="flex items-center gap-4 text-sm text-gray-500 mt-1">
-                        <span>{doc.formatted_date}</span>
-                        <span>{doc.file_size}</span>
-                        <span>v{doc.version}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <button
-                    className="flex items-center gap-2 px-3 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm"
-                    onClick={() => handleDocumentDownload(doc)}
-                  >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
-                    {t('smk.documents.download')}
-                  </button>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
       </div>
     );
@@ -259,9 +202,7 @@ const HSMCMK = () => {
     return (
       <div className="space-y-6">
         <div className="flex items-center mb-6">
-          <div className="p-3 bg-blue-100 rounded-xl mr-4">
-            <span className="text-2xl">🔄</span>
-          </div>
+          {/* icon removed */}
           <h2 className="text-3xl font-bold text-gray-900">
             {t('smk.processes.title')}
           </h2>
@@ -302,9 +243,8 @@ const HSMCMK = () => {
     return (
       <div className="space-y-6">
         <div className="flex items-center mb-6">
-          <div className="p-3 bg-blue-100 rounded-xl mr-4">
-            <span className="text-2xl"><BarChart className="w-5 h-5" /></span>
-          </div>
+          {/* icon removed */}
+          {/* icon removed */}
           <h2 className="text-3xl font-bold text-gray-900">
             {t('smk.statistics.title')}
           </h2>
@@ -368,21 +308,17 @@ const HSMCMK = () => {
           {/* Боковая навигация */}
           <div className="lg:w-1/4">
             <div className="bg-white rounded-xl shadow-lg overflow-hidden sticky top-6">
-              <div className="bg-gradient-to-r from-blue-600 to-indigo-700 p-4 text-white font-bold text-lg">
-                {t('smk.sections')}
-              </div>
               <nav className="p-2">
                 <ul className="space-y-1">
                   {sections.map((section) => (
                     <li key={section.id}>
                       <button
-                        className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 flex items-center ${activeSection === section.id
+                        className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-300 ${activeSection === section.id
                           ? "bg-blue-100 text-blue-700 font-medium shadow-sm"
                           : "text-gray-700 hover:bg-gray-100"
                           }`}
                         onClick={() => changeActiveSection(section.id)}
                       >
-                         <span className="text-lg mr-3"></span>
                         {section.name}
                       </button>
                     </li>

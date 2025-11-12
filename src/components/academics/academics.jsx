@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BookOpen, Calendar, File, Handshake, Hospital, Monitor, Target } from 'lucide-react';
+import { BookOpen, Calendar, File, Handshake, Hospital, Monitor, Target, Clock } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import SEOComponent from '../SEO/SEOComponent';
@@ -14,8 +14,6 @@ const MedicalProgramPage = () => {
   };
 
   const accordionItems = [
-
-    
     {
       title: t('mededu.clinicalTraining'),
       icon: "Hospital",
@@ -42,60 +40,6 @@ const MedicalProgramPage = () => {
           </div>
         </div>
       )
-    },
-    {
-      title: t('partnerships.title'),
-      icon: "Handshake",
-      content: (
-        <div className="text-center py-8">
-          <button
-            onClick={() => navigate('/hsm/partners')}
-            className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:from-blue-700 hover:to-blue-800 transform hover:scale-105 transition-all duration-300 shadow-lg flex items-center mx-auto"
-          >
-            <Handshake className="w-4 h-4" />
-            {t('partnerships.viewPartners')}
-            <span className="ml-3">→</span>
-          </button>
-        </div>
-      )
-    },
-    {
-      title: t('mededu.faq'),
-      icon: "❓",
-      content: (
-        <div className="space-y-6">
-          <div>
-            <h4 className="font-semibold text-blue-700 mb-3">{t('mededu.faqContent.general')}</h4>
-            <div className="space-y-4">
-              <div>
-                <p className="font-medium text-blue-600">{t('mededu.faqContent.questions.duration')}</p>
-                <p className="mt-1">{t('mededu.faqContent.answers.duration')}</p>
-              </div>
-              <div>
-                <p className="font-medium text-blue-600">{t('mededu.faqContent.questions.internship')}</p>
-                <p className="mt-1">{t('mededu.faqContent.answers.internship')}</p>
-              </div>
-              <div>
-                <p className="font-medium text-blue-600">{t('mededu.faqContent.questions.specializations')}</p>
-                <p className="mt-1">{t('mededu.faqContent.answers.specializations')}</p>
-              </div>
-            </div>
-          </div>
-          <div>
-            <h4 className="font-semibold text-blue-700 mb-3">{t('mededu.faqContent.admission')}</h4>
-            <div className="space-y-4">
-              <div>
-                <p className="font-medium text-blue-600">{t('mededu.faqContent.questions.exams')}</p>
-                <p className="mt-1">{t('mededu.faqContent.answers.exams')}</p>
-              </div>
-              <div>
-                <p className="font-medium text-blue-600">{t('mededu.faqContent.questions.budget')}</p>
-                <p className="mt-1">{t('mededu.faqContent.answers.budget')}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      )
     }
   ];
 
@@ -108,7 +52,6 @@ const MedicalProgramPage = () => {
         {/* Заголовок блока */}
         <div className="bg-white rounded-2xl shadow-lg p-8 mb-8 border-l-4 border-blue-600">
           <h1 className="text-4xl font-bold text-blue-800 mb-2">{t('mededu.title')}</h1>
-          <p className="text-blue-600 text-lg">{t('mededu.code')}</p>
         </div>
 
         {/* Основная информация в блоках */}
