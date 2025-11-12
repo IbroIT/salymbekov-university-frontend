@@ -28,12 +28,6 @@ const AdmissionCommittee = () => {
       title: t('admission.deadlines'),
       description: t('admission.deadlinesDesc'),
       icon: '<Clock className="w-5 h-5" />'
-    },
-    {
-      id: 4,
-      title: t('admission.consultation'),
-      description: t('admission.consultationDesc'),
-      icon: "Stethoscope"
     }
   ];
 

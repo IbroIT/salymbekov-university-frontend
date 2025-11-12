@@ -217,7 +217,6 @@ function App() {
             <Route path="/campus-life/clubs" element={<ClubsSection />} />
             <Route path="/campus-life/gallery" element={<Gallery />} />
             <Route path="/campus-life/international" element={<InternationalStudents />} />
-
             {/* 404 */}
             <Route path="*" element={<Page title="Страница не найдена" />} />
           </Routes>

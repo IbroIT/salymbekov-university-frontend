@@ -152,7 +152,7 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
       submenu: [
         // { title: t('nav.management_body'), link: '/research/management' },
         { title: t('nav.scientific_journals'), link: '/research/journals' },
-        { title: t('nav.permit_documents'), link: '/research/permit-documents' },
+        // { title: t('nav.permit_documents'), link: '/research/permit-documents' },
         // { title: t('nav.publications'), link: '/research/publications' },
         // { title: t('nav.grants'), link: '/research/grants' },
         // { title: t('nav.research_areas'), link: '/research' },

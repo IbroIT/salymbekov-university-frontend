@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BookOpen, FileEdit, FileText, GraduationCap, Mail, Map, Phone, Tv } from 'lucide-react';
 import { motion } from "framer-motion";
-import { FaPaperPlane, FaUser, FaEnvelope, FaComment, FaArrowRight, FaMapMarkerAlt, FaPhone, FaClock, FaGlobe, FaBuilding, FaIdCard } from "react-icons/fa";
+import { FaPaperPlane, FaUser, FaEnvelope, FaComment, FaArrowRight, FaMapMarkerAlt, FaPhone, FaClock, FaGlobe, FaBuilding, FaIdCard, FaFacebook, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 import { useTranslation } from 'react-i18next';
 import SEOComponent from '../SEO/SEOComponent';
 
@@ -167,16 +167,6 @@ const Contacts = () => {
                     <p className="text-blue-200">{t('contacts.hours.sunday')}</p>
                   </div>
                 </div>
-
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => setShowContactForm(true)}
-                  className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 flex items-center justify-center gap-2"
-                >
-                  <FaPaperPlane />
-                  {t('contacts.sendMessage')}
-                </motion.button>
               </div>
             ) : (
               <div className="space-y-4">
@@ -330,22 +320,22 @@ const Contacts = () => {
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { name: "Facebook", icon: "📘", color: "bg-blue-600/20", border: "border-blue-400/20", URL: 'https://www.facebook.com/salymbekov.kg' },
-              { name: "Instagram", icon: "📷", color: "bg-pink-600/20", border: "border-pink-400/20", URL: 'https://www.instagram.com/salymbekovuniversity/' },
-              { name: "Twitter", icon: "🐦", color: "bg-sky-600/20", border: "border-sky-400/20", URL: 'https://x.com/SalymbekovO' },
-              { name: "YouTube", icon: "Tv", color: "bg-red-600/20", border: "border-red-400/20", URL: 'https://www.youtube.com/@salymbekovuniversity8213' }
+              { name: "Facebook", Icon: FaFacebook, color: "bg-blue-600/20", border: "border-blue-400/20", URL: 'https://www.facebook.com/salymbekov.kg' },
+              { name: "Instagram", Icon: FaInstagram, color: "bg-pink-600/20", border: "border-pink-400/20", URL: 'https://www.instagram.com/salymbekovuniversity/' },
+              { name: "Twitter", Icon: FaTwitter, color: "bg-sky-600/20", border: "border-sky-400/20", URL: 'https://x.com/SalymbekovO' },
+              { name: "YouTube", Icon: FaYoutube, color: "bg-red-600/20", border: "border-red-400/20", URL: 'https://www.youtube.com/@salymbekovuniversity8213' }
             ].map((social, index) => (
               <motion.a
                 key={index}
                 whileHover={{ scale: 1.05 }}
                 href={social.URL || '#'}
                 className={`${social.color} hover:${social.color.replace('20', '30')} text-white p-4 rounded-xl text-center transition-all border ${social.border}`}
+                target="_blank" rel="noopener noreferrer"
               >
-                <div className="text-2xl mb-2">
-                <social.Icon className="w-6 h-6" />
-              </div>
+                <div className="text-2xl mb-2 flex justify-center">
+                  <social.Icon className="w-8 h-8" />
+                </div>
                 <p className="font-semibold">{social.name}</p>
-                <p className="text-sm opacity-90">{social.handle}</p>
               </motion.a>
             ))}
           </div>

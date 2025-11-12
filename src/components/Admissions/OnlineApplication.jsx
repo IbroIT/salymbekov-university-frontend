@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Check, File, FileText, GraduationCap } from 'lucide-react';
+import { Check, File, FileText, GraduationCap, DollarSign, ClipboardList, Phone } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { emailConfig, openGmailCompose, createMailtoLink } from '../../config/emailConfig';
 import admissionsAPI from '../../services/admissionsAPI';
@@ -36,11 +36,11 @@ const OnlineApplication = () => {
     
     // Step 4: Documents
     documents: {
-      certificate: null,
-      passport: null,
-      medical: null,
-      photos: null,
-      ortCertificate: null
+  certificate: null,
+  passport: null,
+  medical: null,
+  photos: [],
+  ortCertificate: null
     },
     
     // Step 5: Confirmation
@@ -56,7 +56,7 @@ const OnlineApplication = () => {
 
   const programs = [
   {
-    id: 'medicine',
+       photos: [],
     name: t('application.programs.medicine.name'),
     duration: t('application.programs.medicine.duration'),
     cost: t('application.programs.medicine.cost'),
@@ -90,13 +90,7 @@ const OnlineApplication = () => {
 ];
 
 
-  const steps = [
-    { id: 1, title: t('application.steps.program'), icon: "FileText" },
-    { id: 2, title: t('application.steps.personal'), icon: '👤' },
-    { id: 3, title: t('application.steps.education'), icon: "GraduationCap" },
-    { id: 4, title: t('application.steps.documents'), icon: "File" },
-    { id: 5, title: t('application.steps.confirmation'), icon: '<CheckCircle className="w-5 h-5" />' }
-  ];
+  // steps array removed as per user request
 
   // Auto-save draft
   useEffect(() => {
@@ -230,12 +224,21 @@ const OnlineApplication = () => {
   };
 
   const handleFileUpload = (fieldName, file) => {
-    updateFormData({
-      documents: {
-        ...formData.documents,
-        [fieldName]: file
-      }
-    });
+    if (fieldName === 'photos') {
+      updateFormData({
+        documents: {
+          ...formData.documents,
+          photos: Array.from(file || [])
+        }
+      });
+    } else {
+      updateFormData({
+        documents: {
+          ...formData.documents,
+          [fieldName]: file
+        }
+      });
+    }
   };
 
   // Функция для создания тела письма с данными заявки
@@ -847,7 +850,7 @@ ${data.firstName} ${data.lastName}
         {/* Personal Information */}
         <div className="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-600">
           <div className="flex items-center mb-3">
-            <span className="text-2xl mr-3">👤</span>
+            <FileText className="w-4 h-4 mr-2" />
             <h4 className="font-semibold text-gray-800 text-lg">{t('application.confirmation.personalData')}</h4>
           </div>
           <div className="grid md:grid-cols-2 gap-4">
@@ -860,8 +863,8 @@ ${data.firstName} ${data.lastName}
             </div>
             <div className="text-sm text-gray-600">
               <p><Phone className="w-5 h-5" /> {formData.phone}</p>
-              <p>✉️ {formData.email}</p>
-              {formData.address && <p>🏠 {formData.address}</p>}
+              <p><FileText className="w-4 h-4 inline mr-1" />{formData.email}</p>
+              {formData.address && <p><FileText className="w-4 h-4 inline mr-1" />{formData.address}</p>}
             </div>
           </div>
         </div>
@@ -922,11 +925,11 @@ ${data.firstName} ${data.lastName}
             </div>
             <div>
               <p className="flex items-center">
-                {formData.documents.photos?.length > 0 ? '<CheckCircle className="w-5 h-5" />' : '⚪'} 
+                {formData.documents.photos && formData.documents.photos.length > 0 ? '<CheckCircle className="w-5 h-5" />' : ''} 
                 <span className="ml-2">{t('application.documents.photos')} (необязательно)</span>
               </p>
               <p className="flex items-center">
-                {formData.documents.ortCertificate ? '<CheckCircle className="w-5 h-5" />' : '⚪'} 
+                {formData.documents.ortCertificate ? '<CheckCircle className="w-5 h-5" />' : ''} 
                 <span className="ml-2">{t('application.documents.ortCertificate')} (необязательно)</span>
               </p>
             </div>
@@ -942,25 +945,25 @@ ${data.firstName} ${data.lastName}
             onClick={() => setCurrentStep(1)}
             className="px-3 py-1 bg-green-100 text-green-700 rounded text-sm hover:bg-green-200"
           >
-            ✏️ {t('application.confirmation.editProgram')}
+            {t('application.confirmation.editProgram')}
           </button>
           <button 
             onClick={() => setCurrentStep(2)}
             className="px-3 py-1 bg-blue-100 text-blue-700 rounded text-sm hover:bg-blue-200"
           >
-            ✏️ {t('application.confirmation.editPersonal')}
+            {t('application.confirmation.editPersonal')}
           </button>
           <button 
             onClick={() => setCurrentStep(3)}
             className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded text-sm hover:bg-yellow-200"
           >
-            ✏️ {t('application.confirmation.editEducation')}
+            {t('application.confirmation.editEducation')}
           </button>
           <button 
             onClick={() => setCurrentStep(4)}
             className="px-3 py-1 bg-purple-100 text-purple-700 rounded text-sm hover:bg-purple-200"
           >
-            ✏️ {t('application.confirmation.editDocuments')}
+            {t('application.confirmation.editDocuments')}
           </button>
         </div>
       </div>
@@ -1030,48 +1033,6 @@ ${data.firstName} ${data.lastName}
       </div>
 
       <div className="container mx-auto px-4 py-12">
-        {/* Progress Bar */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-          <div className="flex justify-between items-center mb-6">
-            {steps.map((step, index) => (
-              <div
-                key={step.id}
-                className={`flex items-center ${index < steps.length - 1 ? 'flex-1' : ''}`}
-              >
-                <div className={`flex items-center justify-center w-12 h-12 rounded-full text-sm font-medium transition-all ${
-                  currentStep >= step.id
-                    ? 'bg-green-600 text-white shadow-lg'
-                    : currentStep === step.id - 1
-                    ? 'bg-blue-500 text-white'
-                    : 'bg-gray-200 text-gray-600'
-                }`}>
-                  {currentStep > step.id ? '✓' : step.icon}
-                </div>
-                {index < steps.length - 1 && (
-                  <div className={`flex-1 h-2 mx-4 rounded-full transition-all ${
-                    currentStep > step.id ? 'bg-green-600' : 'bg-gray-200'
-                  }`}></div>
-                )}
-              </div>
-            ))}
-          </div>
-          
-          <div className="text-center">
-            <h2 className="text-xl font-semibold text-gray-800 mb-2">
-              {t('application.progress.step')} {currentStep} {t('application.progress.of')} {steps.length}: {steps[currentStep - 1].title}
-            </h2>
-            <div className="w-full bg-gray-200 rounded-full h-2 mt-4">
-              <div 
-                className="bg-green-600 h-2 rounded-full transition-all duration-300" 
-                style={{ width: `${(currentStep / steps.length) * 100}%` }}
-              ></div>
-            </div>
-            <p className="text-sm text-gray-500 mt-2">
-              {t('application.progress.progress')}: {Math.round((currentStep / steps.length) * 100)}%
-            </p>
-          </div>
-        </div>
-
         {/* Form Content */}
         <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
           {renderCurrentStep()}
@@ -1102,7 +1063,7 @@ ${data.firstName} ${data.lastName}
         hover:bg-red-50 shadow-md border border-red-200 hover:border-red-300 hover:shadow-lg 
         transition-all transform hover:-translate-y-0.5 flex-1 sm:flex-none min-w-[100px] sm:min-w-[120px]"
     >
-      <span className="text-lg mr-2">🗑️</span>
+  <span className="text-lg mr-2"></span>
       <span className="hidden sm:inline">{t("clear")}</span>
       <span className="sm:hidden">{t("clear")}</span>
     </button>
@@ -1112,7 +1073,7 @@ ${data.firstName} ${data.lastName}
   <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
     {isDraftLoaded && (
       <div className="flex items-center bg-blue-100 text-blue-700 px-3 py-2 rounded-lg text-sm font-medium">
-        <span className="text-lg mr-2">📂</span>
+        <span className="text-lg mr-2"></span>
         <span className="hidden sm:inline">{t('application.status.draftLoaded')}</span>
         <span className="sm:hidden">Черновик</span>
       </div>
@@ -1152,13 +1113,13 @@ ${data.firstName} ${data.lastName}
       >
         {isSubmitting ? (
           <>
-            <span className="inline-block animate-spin mr-2">⏳</span>
+            <span className="inline-block animate-spin mr-2"></span>
             <span className="hidden sm:inline">Отправка...</span>
             <span className="sm:hidden">Отправка...</span>
           </>
         ) : (
           <>
-            <span className="text-lg mr-2">📤</span>
+            <span className="text-lg mr-2"></span>
             <span className="hidden sm:inline">{t('application.navigation.submit')}</span>
             <span className="sm:hidden">Отправить</span>
           </>
@@ -1171,16 +1132,16 @@ ${data.firstName} ${data.lastName}
         {/* Help Information */}
         <div className="mt-12 bg-blue-50 p-6 rounded-lg">
           <h4 className="font-semibold text-blue-800 mb-3">
-            🆘 {t('application.help.title')}
+            {t('application.help.title')}
           </h4>
           <div className="grid md:grid-cols-2 gap-4 text-sm text-blue-700">
             <div>
               <p><Phone className="w-5 h-5" /> {t('application.help.phone')}</p>
-              <p>✉️ {t('application.help.email')}</p>
+              <p><FileText className="w-4 h-4 inline mr-1" />{t('application.help.email')}</p>
             </div>
             <div>
-              <p>🕐 {t('application.help.hours')}</p>
-              <p>💾 {t('application.help.autosave')}</p>
+              <p>{t('application.help.hours')}</p>
+              <p>{t('application.help.autosave')}</p>
             </div>
           </div>
         </div>

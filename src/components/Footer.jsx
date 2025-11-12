@@ -51,9 +51,9 @@ const Footer = () => {
   ];
 
   const quickLinks = [
-    { title: t('nav.about'), link: '/hsm/about' },
+    { title: t('nav.about'), link: 'https://salymbekov.com/' },
     { title: t('nav.HSM'), link: '/hsm/about' },
-    { title: t('nav.admission'), link: '/admissions/procedure' },
+    { title: t('nav.admission'), link: '/admissions/committee' },
     { title: t('nav.news'), link: '/news' },
     { title: t('nav.contacts'), link: '/contacts' },
     { title: t('nav.apply'), link: '/admissions/apply' }

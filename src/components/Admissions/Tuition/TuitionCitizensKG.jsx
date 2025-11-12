@@ -139,106 +139,31 @@ const TuitionCitizensKG = () => {
       </div>
 
       <div className="container mx-auto px-4 py-12">
-        {/* Переключатель факультетов */}
+        {/* Программы как карточки */}
         <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
           <h2 className="text-2xl font-bold text-gray-800 mb-6">
             {t('tuitionCitizens.faculties.title')}
           </h2>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {faculties.map((faculty) => (
-              <button
-                key={faculty}
-                onClick={() => setSelectedFaculty(faculty)}
-                className={`p-4 rounded-lg border-2 transition-all ${selectedFaculty === faculty
-                    ? 'border-blue-500 bg-blue-50 text-blue-700'
-                    : 'border-gray-200 hover:border-gray-300 text-gray-700'
-                  }`}
-              >
-                <h3 className="font-semibold">{tuitionData[faculty].name}</h3>
-              </button>
-            ))}
-          </div>
-
-          {/* Таблица стоимости */}
-          <div className="overflow-x-auto">
-            <table className="w-full border-collapse">
-              <thead>
-                <tr className="bg-gray-100">
-                  <th className="border border-gray-300 px-4 py-3 text-left font-semibold text-gray-800">
-                    {t('tuitionCitizens.table.program')}
-                  </th>
-                  <th className="border border-gray-300 px-4 py-3 text-center font-semibold text-gray-800">
-                    {t('tuitionCitizens.table.budget')}
-                  </th>
-                  <th className="border border-gray-300 px-4 py-3 text-center font-semibold text-gray-800">
-                    {t('tuitionCitizens.table.contract')}
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {tuitionData[selectedFaculty].programs.map((program, index) => (
-                  <tr key={index} className="hover:bg-gray-50">
-                    <td className="border border-gray-300 px-4 py-3 text-gray-800">
-                      {program.program}
-                    </td>
-                    <td className="border border-gray-300 px-4 py-3 text-center">
-                      <span className={`px-3 py-1 rounded-full text-sm font-semibold ${program.budget === t('tuitionCitizens.budget')
-                          ? 'bg-green-100 text-green-800'
-                          : program.budget === t('tuitionCitizens.limitedBudget')
-                            ? 'bg-yellow-100 text-yellow-800'
-                            : 'bg-red-100 text-red-800'
-                        }`}>
-                        {program.budget}
-                      </span>
-                    </td>
-                    <td className="border border-gray-300 px-4 py-3 text-center">
-                      <span className="text-lg font-bold text-blue-600">
-                        {program.contract} {program.currency}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          <div className="mt-6 p-4 bg-blue-50 border-l-4 border-blue-400">
-            <p className="text-sm text-blue-800">
-              <strong>{t('tuitionCitizens.note')}</strong> {' '}
-              {t('tuitionCitizens.noteText')}
-            </p>
-          </div>
-        </div>
-
-        {/* Варианты оплаты и льготы */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6">
-            {t('tuitionCitizens.paymentOptions.title')}
-          </h2>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {paymentOptions.map((option, index) => (
-              <div key={index} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-                <div className="text-center mb-4">
-                  <span className="text-4xl mb-2 block">
-              </span>
-                  <h3 className="text-xl font-semibold text-gray-800 mb-2">{option.type}</h3>
-                  <p className="text-gray-600 text-sm">{option.description}</p>
+              tuitionData[faculty].programs.map((program, progIndex) => (
+                <div key={faculty + '-' + progIndex} className="border border-gray-200 rounded-lg p-6 bg-white shadow hover:shadow-md transition-shadow flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-xl font-bold text-blue-800 mb-2">{program.program}</h3>
+                    <p className="text-gray-700 mb-4">{tuitionData[faculty].name}</p>
+                  </div>
+                  <div className="flex items-end justify-between mt-auto">
+                    <span className="text-2xl font-bold text-blue-600">
+                      {program.contract} {program.currency}
+                    </span>
+                  </div>
                 </div>
-
-                <div className="space-y-2">
-                  {option.conditions.map((condition, condIndex) => (
-                    <div key={condIndex} className="flex items-start">
-                      <span className="text-green-600 mr-2 mt-1">•</span>
-                      <p className="text-gray-700 text-sm">{condition}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              ))
             ))}
           </div>
         </div>
+
+
 
         {/* Банковские реквизиты */}
         <div className="bg-white rounded-lg shadow-lg p-6">
@@ -313,57 +238,6 @@ const TuitionCitizensKG = () => {
                 </ul>
               </div>
             </div>
-          </div>
-
-          {/* Кнопка скачивания PDF */}
-          <div className="mt-6 text-center">
-            <button
-              onClick={() => {
-                // Функция для скачивания PDF с реквизитами
-                const generatePDF = () => {
-                  const content = `
-БАНКОВСКИЕ РЕКВИЗИТЫ
-для оплаты обучения
-
-Наименование банка: ${bankDetails.bankName}
-Расчетный счет: ${bankDetails.account}
-БИК: ${bankDetails.bik}
-ИНН: ${bankDetails.inn}
-Получатель: ${bankDetails.recipient}
-Назначение платежа: ${bankDetails.purpose}
-
-ВАЖНО:
-• В назначении платежа обязательно укажите ФИО студента и курс
-• Сохраняйте квитанцию об оплате до окончания обучения
-• При оплате через банкомат проверьте правильность реквизитов
-
-Контакты бухгалтерии:
-Телефон: +996 312 545 002
-Email: finance@su.edu.kg
-                  `;
-
-                  const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
-                  const url = URL.createObjectURL(blob);
-                  const link = document.createElement('a');
-                  link.href = url;
-                  link.download = 'bank-details-payment.txt';
-                  document.body.appendChild(link);
-                  link.click();
-                  document.body.removeChild(link);
-                  URL.revokeObjectURL(url);
-                };
-                generatePDF();
-              }}
-              className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors"
-            >
-              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-              {t('tuitionCitizens.bankDetails.downloadPDF')}
-            </button>
-            <p className="text-sm text-gray-600 mt-2">
-              {t('tuitionCitizens.bankDetails.downloadNote')}
-            </p>
           </div>
         </div>
 
