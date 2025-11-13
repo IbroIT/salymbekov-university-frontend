@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { BookOpen, Microscope } from 'lucide-react';
 import { useTranslation } from "react-i18next";
@@ -19,99 +20,61 @@ const Resources = () => {
     setIsVisible(true);
   }, []);
 
-  // Resources data organized by sections
-  const sectionsData = {
-    all: {
-      title: t('resources.allTitle', 'Все образовательные ресурсы'),
-      description: t('resources.allDesc', 'Полный доступ ко всем доступным образовательным ресурсам'),
-      resources: [
-        {
-          id: 1,
-          icon: "BookOpen",
-          key: 'library',
-          link: 'https://su-library.com/',
-          status: 'online',
-          section: 'library',
-          color: 'from-blue-500 to-cyan-500',
-          bgColor: 'bg-blue-50 border-blue-200',
-          title: t('resources.libTitle', 'Электронная библиотека'),
-          description: t('resources.libDesc', 'Доступ к учебной литературе и научным публикациям'),
-          features: [
-            t('resources.libFeature1', '100+ электронных книг'),
-            t('resources.libFeature2', 'Научные журналы'),
-            t('resources.libFeature3', 'Учебные пособия')
-          ],
-          linkText: t('resources.libLink', 'Перейти в библиотеку')
-        },
-       
-      ]
-    },
-    library: {
-      title: t('resources.sectionLib', 'Электронная библиотека'),
-      description: t('resources.sectionLibDesc', 'Электронные книги, учебники и научные публикации'),
-      resources: []
-    },
-    databases: {
-      title: t('resources.sectionDb', 'Научные базы данных'),
-      description: t('resources.sectionDbDesc', 'Международные индексы и научные публикации'),
-      resources: []
-    },
-    platforms: {
-      title: t('resources.sectionPlatforms', 'Образовательные платформы'),
-      description: t('resources.sectionPlatformsDesc', 'Системы дистанционного обучения и онлайн-курсы'),
-      resources: []
-    },
-    multimedia: {
-      title: t('resources.sectionMedia', 'Мультимедийные ресурсы'),
-      description: t('resources.sectionMediaDesc', 'Видео, аудио и интерактивные материалы'),
-      resources: []
-    },
-    research: {
-      title: t('resources.sectionResearch', 'Научные ресурсы'),
-      description: t('resources.sectionResearchDesc', 'Ресурсы для исследовательской работы'),
-      resources: []
-    },
-    materials: {
-      title: t('resources.sectionMaterials', 'Учебные материалы'),
-      description: t('resources.sectionMaterialsDesc', 'Методические пособия и учебные материалы'),
-      resources: []
-    }
-  };
 
-  // Filter resources for each section
-  Object.keys(sectionsData).forEach(section => {
-    if (section !== 'all') {
-      sectionsData[section].resources = sectionsData.all.resources.filter(
-        resource => resource.section === section
-      );
-    }
-  });
+  // --- Backend data state ---
+  const [resources, setResources] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const { i18n } = useTranslation();
 
-  // Sections list for navigation
-  const sectionsList = [
-    { id: 'all', name: t('resources.navAll', 'Все ресурсы'), count: sectionsData.all.resources.length },
-    { id: 'library', name: t('resources.navLibrary', 'Библиотека'), count: sectionsData.library.resources.length },
-    { id: 'databases', name: t('resources.navDatabases', 'Базы данных'), count: sectionsData.databases.resources.length },
-    { id: 'platforms', name: t('resources.navPlatforms', 'Платформы'), count: sectionsData.platforms.resources.length },
-    { id: 'multimedia', name: t('resources.navMultimedia', 'Мультимедиа'), count: sectionsData.multimedia.resources.length },
-    { id: 'research', name: t('resources.navResearch', 'Наука'), count: sectionsData.research.resources.length },
-    { id: 'materials', name: t('resources.navMaterials', 'Материалы'), count: sectionsData.materials.resources.length }
-  ];
+  useEffect(() => {
+    setLoading(true);
+    fetch('http://localhost:8000/api/hsm/e-resources/', {
+      headers: {
+        'Accept-Language': i18n.language === 'kg' ? 'ky' : i18n.language,
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setResources(Array.isArray(data) ? data : (data.results || []));
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError('Ошибка загрузки ресурсов');
+        setLoading(false);
+      });
+  }, [i18n.language]);
 
-  // Get current section data
-  const getCurrentSectionData = () => {
-    return sectionsData[activeSection] || sectionsData.all;
-  };
+  // Мультиязычные поля
+  function getLangField(obj, base) {
+    let lang = i18n.language.toLowerCase();
+    if (lang === 'kg') lang = 'ky';
+    if (lang.startsWith('ru') && obj[base + '_ru']) return obj[base + '_ru'];
+    if (lang.startsWith('en') && obj[base + '_en']) return obj[base + '_en'];
+    if ((lang.startsWith('ky') || lang.startsWith('kgz')) && obj[base + '_kg']) return obj[base + '_kg'];
+    return obj[base + '_ru'] || obj[base + '_en'] || obj[base + '_kg'] || '';
+  }
 
-  const currentSectionData = getCurrentSectionData();
 
-  // Filter resources by search term
-  const filteredResources = currentSectionData.resources.filter(resource => {
+  // Получить features по языку
+  function getLangFeatures(resource) {
+    let lang = i18n.language.toLowerCase();
+    if (lang === 'kg') lang = 'ky';
+    if (lang.startsWith('ru') && resource.features_ru) return resource.features_ru;
+    if (lang.startsWith('en') && resource.features_en) return resource.features_en;
+    if ((lang.startsWith('ky') || lang.startsWith('kgz')) && resource.features_kg) return resource.features_kg;
+    return resource.features_ru || resource.features_en || resource.features_kg || [];
+  }
+
+  // Фильтрация по поиску
+  const filteredResources = resources.filter(resource => {
     const search = searchTerm.trim().toLowerCase();
     if (!search) return true;
-    const title = resource.title?.toLowerCase() || '';
-    const desc = resource.description?.toLowerCase() || '';
-    return title.includes(search) || desc.includes(search);
+    const title = getLangField(resource, 'name')?.toLowerCase() || '';
+    const desc = getLangField(resource, 'description')?.toLowerCase() || '';
+    const features = (getLangFeatures(resource) || []).join(' ').toLowerCase();
+    return title.includes(search) || desc.includes(search) || features.includes(search);
   });
 
   const handleMoodleLogin = async (e) => {
@@ -140,7 +103,7 @@ const Resources = () => {
   };
 
   // Loading state
-  if (false) {
+  if (loading) {
     return (
       <div
         className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${
@@ -198,15 +161,15 @@ const Resources = () => {
                       >
                         <div className="p-6">
                           <div className="flex items-center mb-4">
-                            <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${resource.color} flex items-center justify-center text-xl mr-4`}>
-              
-              </div>
+                            <div className={`w-12 h-12 rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500 flex items-center justify-center text-xl mr-4`}>
+                              <BookOpen className="w-7 h-7 text-blue-700" />
+                            </div>
                             <div>
                               <h3 className="font-bold text-lg text-gray-900">
-                                {resource.title}
+                                {getLangField(resource, 'name')}
                               </h3>
                               <p className="text-blue-600 text-sm">
-                                {resource.description}
+                                {getLangField(resource, 'description')}
                               </p>
                             </div>
                           </div>
@@ -214,7 +177,7 @@ const Resources = () => {
                           {/* Особенности */}
                           <div className="mb-4">
                             <ul className="space-y-2">
-                              {resource.features && resource.features.map((feature, idx) => (
+                              {getLangFeatures(resource).map((feature, idx) => (
                                 <li key={idx} className="flex items-center text-sm text-gray-600">
                                   <span className="w-2 h-2 bg-blue-500 rounded-full mr-3 flex-shrink-0"></span>
                                   <span className="break-words">{feature}</span>
@@ -225,9 +188,9 @@ const Resources = () => {
 
                           {/* Действия */}
                           <div className="mt-4">
-                            {resource.status === 'online' && resource.link && (
+                            {resource.links && resource.links.main && (
                               <a
-                                href={resource.link}
+                                href={resource.links.main}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="inline-flex items-center justify-center bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-4 py-2 rounded-lg hover:shadow-lg transition-all duration-300 w-full font-medium text-sm"
@@ -235,81 +198,8 @@ const Resources = () => {
                                 <svg className="w-4 h-4 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                                 </svg>
-                                <span className="truncate">{resource.linkText}</span>
+                                <span className="truncate">{t('resources.libLink', 'Перейти в библиотеку')}</span>
                               </a>
-                            )}
-
-                            {resource.status === 'login' && (
-                              <div>
-                                <button
-                                  onClick={() => setActiveResource(activeResource === resource.id ? null : resource.id)}
-                                  className="w-full bg-gradient-to-r from-indigo-500 to-blue-500 text-white py-2 px-4 rounded-lg hover:shadow-lg transition-all duration-300 font-medium text-sm mb-3"
-                                >
-                                  {resource.linkText}
-                                </button>
-                                
-                                {activeResource === resource.id && (
-                                  <form onSubmit={handleMoodleLogin} className="space-y-3">
-                                    <div>
-                                      <input
-                                        type="text"
-                                        name="username"
-                                        value={moodleCredentials.username}
-                                        onChange={handleInputChange}
-                                        required
-                                        className="w-full p-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                        placeholder={t('resources.usernamePlaceholder', 'Имя пользователя')}
-                                      />
-                                    </div>
-                                    <div>
-                                      <input
-                                        type="password"
-                                        name="password"
-                                        value={moodleCredentials.password}
-                                        onChange={handleInputChange}
-                                        required
-                                        className="w-full p-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                        placeholder={t('resources.passwordPlaceholder', 'Пароль')}
-                                      />
-                                    </div>
-                                    <button
-                                      type="submit"
-                                      disabled={isLoading}
-                                      className="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white py-2 px-4 rounded-lg hover:shadow-lg disabled:opacity-50 transition-all duration-300 font-medium text-sm"
-                                    >
-                                      {isLoading ? 
-                                        t('resources.loggingIn', 'Вход...') : 
-                                        t('resources.loginBtn', 'Войти')
-                                      }
-                                    </button>
-                                  </form>
-                                )}
-                              </div>
-                            )}
-
-                            {resource.status === 'external' && resource.links && (
-                              <div className="space-y-2">
-                                {resource.links.map((link, idx) => (
-                                  <a
-                                    key={idx}
-                                    href={link.url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="block w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-2 px-4 rounded-lg hover:shadow-lg transition-all duration-300 text-center font-medium text-sm"
-                                  >
-                                    {t('resources.goTo', 'Перейти в')} {link.displayName}
-                                  </a>
-                                ))}
-                              </div>
-                            )}
-
-                            {resource.status === 'download' && (
-                              <button className="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white py-2 px-4 rounded-lg hover:shadow-lg transition-all duration-300 font-medium text-sm">
-                                <svg className="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                                </svg>
-                                {resource.linkText}
-                              </button>
                             )}
                           </div>
                         </div>

@@ -1,20 +1,40 @@
-import React from 'react';
+
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const InstructionsPage = () => {
-  const { t } = useTranslation();
 
-  const documents = [
-    { id: 1, name: t('instructions.userManual'), pdf: '/documents/user-manual.pdf' },
-    { id: 2, name: t('instructions.safetyRegulations'), pdf: '/documents/safety-regulations.pdf' },
-    { id: 3, name: t('instructions.technicalGuide'), pdf: '/documents/technical-guide.pdf' },
-    { id: 4, name: t('instructions.operatingProcedures'), pdf: '/documents/operating-procedures.pdf' },
-    { id: 5, name: t('instructions.maintenanceGuide'), pdf: '/documents/maintenance-guide.pdf' },
-    { id: 6, name: t('instructions.installationManual'), pdf: '/documents/installation-manual.pdf' }
-  ];
+  const { t, i18n } = useTranslation();
+  const [documents, setDocuments] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    setLoading(true);
+    // Явно добавляем lang в URL
+    let lang = i18n.language;
+    if (lang === 'kg') lang = 'ky';
+    const url = `http://localhost:8000/api/student-life/instruction-files/?lang=${lang}`;
+    fetch(url, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setDocuments(Array.isArray(data) ? data : (data.results || []));
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError('Ошибка загрузки инструкций');
+        setLoading(false);
+      });
+  }, [i18n.language]);
+
+
+  // ...existing code...
 
   const handleViewPDF = (pdfUrl) => {
-    // Открываем PDF в новой вкладке для чтения
     window.open(pdfUrl, '_blank', 'noopener,noreferrer');
   };
 
@@ -29,6 +49,14 @@ const InstructionsPage = () => {
     document.body.removeChild(link);
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-white py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
@@ -42,11 +70,16 @@ const InstructionsPage = () => {
         {/* Список документов */}
         <div className="bg-white rounded-lg shadow-md border border-gray-200">
           <div className="divide-y divide-gray-200">
+            {documents.length === 0 && (
+              <div className="px-6 py-8 text-center text-gray-500">
+                {error || t('instructions.noFiles', 'Нет доступных инструкций')}
+              </div>
+            )}
             {documents.map((doc) => (
               <div 
                 key={doc.id} 
                 className="px-6 py-4 hover:bg-gray-50 transition-colors duration-200 cursor-pointer"
-                onClick={() => handleViewPDF(doc.pdf)}
+                onClick={() => handleViewPDF(doc.file_url)}
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-4">
@@ -67,15 +100,13 @@ const InstructionsPage = () => {
                     </div>
                     <div>
                       <span className="text-lg font-medium text-gray-900 block">
-                        {doc.name}
+                        {doc.title}
                       </span>
-                      {/* Текст 'нажмите для просмотра' удалён по запросу */}
                     </div>
                   </div>
-                  
                   <div className="flex space-x-2">
                     <button
-                      onClick={(e) => handleViewPDF(doc.pdf, e)}
+                      onClick={(e) => { e.stopPropagation(); handleViewPDF(doc.file_url); }}
                       className="inline-flex items-center px-4 py-2 border border-blue-600 text-sm font-medium rounded-md text-blue-600 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
                     >
                       <svg 

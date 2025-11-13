@@ -1,75 +1,54 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
+
+const API_URL = 'http://localhost:8000/api/home/testimonials/';
+
 const MedicalUniversityReviews = () => {
   const { t, i18n } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [direction, setDirection] = useState('next');
+  const [reviews, setReviews] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const reviews = [
-    {
-      id: 1,
-      nameKey: 'reviews.student1.name',
-      facultyKey: 'reviews.student1.faculty',
-      courseKey: 'reviews.student1.course',
-      textKey: 'reviews.student1.text',
-      rating: 4.9,
-      image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80"
-    },
-    {
-      id: 2,
-      nameKey: 'reviews.student2.name',
-      facultyKey: 'reviews.student2.faculty',
-      courseKey: 'reviews.student2.course',
-      textKey: 'reviews.student2.text',
-      rating: 4.8,
-      image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80"
-    },
-    {
-      id: 3,
-      nameKey: 'reviews.student3.name',
-      facultyKey: 'reviews.student3.faculty',
-      courseKey: 'reviews.student3.course',
-      textKey: 'reviews.student3.text',
-      rating: 4.7,
-      image: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80"
-    },
-    {
-      id: 4,
-      nameKey: 'reviews.student4.name',
-      facultyKey: 'reviews.student4.faculty',
-      courseKey: 'reviews.student4.course',
-      textKey: 'reviews.student4.text',
-      rating: 4.6,
-      image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80"
-    },
-    {
-      id: 5,
-      nameKey: 'reviews.student5.name',
-      facultyKey: 'reviews.student5.faculty',
-      courseKey: 'reviews.student5.course',
-      textKey: 'reviews.student5.text',
-      rating: 4.9,
-      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80"
-    }
-  ];
-
-
+  useEffect(() => {
+    setLoading(true);
+    setError(null);
+    fetch(API_URL, {
+      headers: {
+        'Accept-Language': i18n.language === 'kg' ? 'ky' : i18n.language,
+        'Content-Type': 'application/json'
+      }
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to fetch');
+        return res.json();
+      })
+      .then((data) => {
+        setReviews(data.results || []);
+        setCurrentIndex(0);
+        setLoading(false);
+      })
+      .catch(() => {
+        setError('Ошибка загрузки отзывов');
+        setLoading(false);
+      });
+  }, [i18n.language]);
 
   // Автопрокрутка
   useEffect(() => {
-    if (isPaused) return;
-
+    if (isPaused || reviews.length === 0) return;
     const interval = setInterval(() => {
       setDirection('next');
       setCurrentIndex((prevIndex) =>
         prevIndex === reviews.length - 1 ? 0 : prevIndex + 1
       );
     }, 4000);
-
     return () => clearInterval(interval);
   }, [isPaused, reviews.length]);
+
 
   const goToNext = () => {
     setDirection('next');
@@ -86,6 +65,7 @@ const MedicalUniversityReviews = () => {
     setCurrentIndex(slideIndex);
   };
 
+
   // Анимация появления
   const getSlideAnimation = (index) => {
     if (index === currentIndex) {
@@ -95,6 +75,30 @@ const MedicalUniversityReviews = () => {
     }
     return 'opacity-0 absolute';
   };
+
+  if (loading) {
+    return (
+      <section className="py-8 md:py-16 relative overflow-hidden">
+        <div className="container mx-auto px-4 text-center">
+          <div className="text-2xl text-blue-700">{t('reviews.loading', 'Загрузка...')}</div>
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className="py-8 md:py-16 relative overflow-hidden">
+        <div className="container mx-auto px-4 text-center">
+          <div className="text-red-600">{error}</div>
+        </div>
+      </section>
+    );
+  }
+
+  if (!reviews.length) {
+    return null;
+  }
 
   return (
     <section className="py-8 md:py-16 relative overflow-hidden">
@@ -115,48 +119,59 @@ const MedicalUniversityReviews = () => {
           onMouseLeave={() => setIsPaused(false)}
         >
           <div className="relative h-auto md:h-96 overflow-visible">
-            {reviews.map((review, index) => (
-              <div
-                key={review.id}
-                className={`transition-all duration-500 ease-in-out ${getSlideAnimation(index)}`}
-                style={{
-                  transform: `translateX(${(index - currentIndex) * 100}%)`,
-                  zIndex: index === currentIndex ? 10 : 0
-                }}
-              >
-                <div className="bg-white rounded-xl md:rounded-2xl shadow-lg md:shadow-xl p-4 md:p-8 flex flex-col md:flex-row items-center h-full mx-2 md:mx-4 transform transition-transform duration-300 hover:scale-105">
-                  <div className="w-full md:w-1/3 flex flex-col items-center mb-4 md:mb-0">
-                    <div className="relative">
-                      <img
-                        src={review.image}
-                        alt={t(review.nameKey)}
-                        className="w-20 h-20 md:w-32 md:h-32 rounded-full object-cover border-4 border-blue-100 shadow-md"
-                      />
-                      <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white text-xs font-bold py-1 px-2 md:px-3 rounded-full whitespace-nowrap">
-                        {t(review.courseKey)}
+            {reviews.map((review, index) => {
+              // Выбор нужного языка
+              let lang = i18n.language.toLowerCase();
+              if (lang === 'kg') lang = 'ky';
+              let name = review.name, testimonial = review.testimonial, faculty = review.faculty;
+              if (lang.startsWith('ru') && review.name_ru) name = review.name_ru;
+              if (lang.startsWith('en') && review.name_en) name = review.name_en;
+              if ((lang.startsWith('ky') || lang.startsWith('kg')) && review.name_kg) name = review.name_kg;
+              if (lang.startsWith('ru') && review.testimonial_ru) testimonial = review.testimonial_ru;
+              if (lang.startsWith('en') && review.testimonial_en) testimonial = review.testimonial_en;
+              if ((lang.startsWith('ky') || lang.startsWith('kg')) && review.testimonial_kg) testimonial = review.testimonial_kg;
+              if (lang.startsWith('ru') && review.faculty_ru) faculty = review.faculty_ru;
+              if (lang.startsWith('en') && review.faculty_en) faculty = review.faculty_en;
+              if ((lang.startsWith('ky') || lang.startsWith('kg')) && review.faculty_kg) faculty = review.faculty_kg;
+              return (
+                <div
+                  key={review.id}
+                  className={`transition-all duration-500 ease-in-out ${getSlideAnimation(index)}`}
+                  style={{
+                    transform: `translateX(${(index - currentIndex) * 100}%)`,
+                    zIndex: index === currentIndex ? 10 : 0
+                  }}
+                >
+                  <div className="bg-white rounded-xl md:rounded-2xl shadow-lg md:shadow-xl p-4 md:p-8 flex flex-col md:flex-row items-center h-full mx-2 md:mx-4 transform transition-transform duration-300 hover:scale-105">
+                    <div className="w-full md:w-1/3 flex flex-col items-center mb-4 md:mb-0">
+                      <div className="relative">
+                        <img
+                          src={review.photo}
+                          alt={name}
+                          className="w-20 h-20 md:w-32 md:h-32 rounded-full object-cover border-4 border-blue-100 shadow-md"
+                        />
+                        <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white text-xs font-bold py-1 px-2 md:px-3 rounded-full whitespace-nowrap">
+                          {review.year}
+                        </div>
                       </div>
+                      <h3 className="font-bold text-blue-900 mt-4 text-lg md:text-xl text-center">{name}</h3>
+                      <p className="text-blue-700 text-center text-sm md:text-base">{faculty}</p>
                     </div>
-                    <h3 className="font-bold text-blue-900 mt-4 text-lg md:text-xl text-center">{t(review.nameKey)}</h3>
-                    <p className="text-blue-700 text-center text-sm md:text-base">{t(review.facultyKey)}</p>
-                  </div>
 
-                  <div className="w-full md:w-2/3 md:pl-8 flex flex-col justify-center">
-                    {/* <div className="flex justify-center md:justify-start mb-3 md:mb-4">
-                      {renderStars(review.rating)}
-                    </div> */}
-
-                    <div className="relative">
-                      <svg className="w-6 h-6 md:w-8 md:h-8 text-blue-100 absolute -left-2 md:-left-4 -top-1 md:-top-2" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                      </svg>
-                      <p className="text-gray-700 text-sm md:text-lg leading-relaxed pl-4 md:pl-6 text-center md:text-left">
-                        {t(review.textKey)}
-                      </p>
+                    <div className="w-full md:w-2/3 md:pl-8 flex flex-col justify-center">
+                      <div className="relative">
+                        <svg className="w-6 h-6 md:w-8 md:h-8 text-blue-100 absolute -left-2 md:-left-4 -top-1 md:-top-2" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                        </svg>
+                        <p className="text-gray-700 text-sm md:text-lg leading-relaxed pl-4 md:pl-6 text-center md:text-left">
+                          {testimonial}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* Кнопки навигации - уменьшены на мобильных */}

@@ -1,79 +1,66 @@
-import { useState } from 'react';
+
+import { useState, useEffect } from 'react';
 import { Camera } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { XMarkIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 
 const StudentLife = () => {
-  const { t } = useTranslation();
+
+  const { t, i18n } = useTranslation();
+  const [galleryImages, setGalleryImages] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const galleryImages = [
-    {
-      id: 1,
-      src: '/images/student-life/1.jpg',
-      alt: 'Студенты на лекции',
-      category: 'Учеба'
-    },
-    {
-      id: 2,
-      src: '/images/student-life/2.jpg',
-      alt: 'Научная конференция',
-      category: 'Наука'
-    },
-    {
-      id: 3,
-      src: '/images/student-life/3.jpg',
-      alt: 'Спортивные мероприятия',
-      category: 'Спорт'
-    },
-    {
-      id: 4,
-      src: '/images/student-life/4.jpg',
-      alt: 'Культурные события',
-      category: 'Культура'
-    },
-    {
-      id: 5,
-      src: '/images/student-life/5.jpg',
-      alt: 'Международные обмены',
-      category: 'Международное'
-    },
-    {
-      id: 6,
-      src: '/images/student-life/6.jpg',
-      alt: 'Волонтерская деятельность',
-      category: 'Волонтерство'
-    },
-    {
-      id: 7,
-      src: '/images/student-life/7.jpg',
-      alt: 'Лабораторные работы',
-      category: 'Практика'
-    },
-    {
-      id: 8,
-      src: '/images/student-life/8.jpg',
-      alt: 'Творческие вечера',
-      category: 'Творчество'
-    }
-  ];
+  useEffect(() => {
+    setLoading(true);
+    fetch('http://localhost:8000/api/student-life/api/photos/', {
+      headers: {
+        'Accept-Language': i18n.language === 'kg' ? 'ky' : i18n.language,
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setGalleryImages(Array.isArray(data) ? data : (data.results || []));
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError('Ошибка загрузки фотогалереи');
+        setLoading(false);
+      });
+  }, [i18n.language]);
+
+  // Функция для мультиязычного поля
+  function getLangField(obj, base) {
+    let lang = i18n.language.toLowerCase();
+    if (lang === 'kg') lang = 'ky';
+    if (lang.startsWith('ru') && obj[base + '_ru']) return obj[base + '_ru'];
+    if (lang.startsWith('en') && obj[base + '_en']) return obj[base + '_en'];
+    if ((lang.startsWith('ky') || lang.startsWith('kgz')) && obj[base + '_kg']) return obj[base + '_kg'];
+    return obj[base + '_ru'] || obj[base + '_en'] || obj[base + '_kg'] || '';
+  }
+
 
   const openLightbox = (image, index) => {
     setSelectedImage(image);
     setCurrentIndex(index);
   };
 
+
   const closeLightbox = () => {
     setSelectedImage(null);
   };
+
 
   const goToPrevious = () => {
     const newIndex = currentIndex === 0 ? galleryImages.length - 1 : currentIndex - 1;
     setCurrentIndex(newIndex);
     setSelectedImage(galleryImages[newIndex]);
   };
+
 
   const goToNext = () => {
     const newIndex = currentIndex === galleryImages.length - 1 ? 0 : currentIndex + 1;
@@ -170,43 +157,50 @@ const StudentLife = () => {
           </div>
 
           {/* Сетка фотографий */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            {galleryImages.map((image, index) => (
-              <motion.div
-                key={image.id}
-                className="group relative overflow-hidden rounded-2xl shadow-lg cursor-pointer"
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ scale: 1.05 }}
-                onClick={() => openLightbox(image, index)}
-              >
-                {/* Заглушка для изображения */}
-                <div className="aspect-square bg-gradient-to-br from-blue-200 to-cyan-200 relative overflow-hidden">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center">
-                      <Camera className="w-6 h-6" />
-                      <div className="text-blue-800 font-semibold">{image.category}</div>
+          {loading ? (
+            <div className="text-center text-gray-400">Loading...</div>
+          ) : error ? (
+            <div className="text-center text-red-500">{error}</div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+              {galleryImages.map((image, index) => (
+                <motion.div
+                  key={image.id}
+                  className="group relative overflow-hidden rounded-2xl shadow-lg cursor-pointer"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  whileHover={{ scale: 1.05 }}
+                  onClick={() => openLightbox(image, index)}
+                >
+                  {/* Фото из backend */}
+                  <div className="aspect-square bg-gradient-to-br from-blue-200 to-cyan-200 relative overflow-hidden">
+                    {image.photo ? (
+                      <img src={image.photo} alt={getLangField(image, 'description') || ''} className="object-cover w-full h-full" />
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="text-center">
+                          <Camera className="w-6 h-6" />
+                        </div>
+                      </div>
+                    )}
+                    {/* Наложение при наведении */}
+                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center">
+                      <div className="text-white opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                        <div className="text-lg font-semibold mb-1">{getLangField(image, 'description')}</div>
+                        <div className="text-sm">{t('studentLife.clickToView', 'Нажмите для просмотра')}</div>
+                      </div>
                     </div>
                   </div>
-                  
-                  {/* Наложение при наведении */}
-                  <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center">
-                    <div className="text-white opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
-                      <div className="text-lg font-semibold mb-1">{image.alt}</div>
-                      <div className="text-sm">Нажмите для просмотра</div>
-                    </div>
+                  {/* Бейдж категории */}
+                  <div className="absolute top-3 left-3 bg-white bg-opacity-90 px-3 py-1 rounded-full text-sm font-medium text-blue-800">
+                    {getLangField(image, 'category')}
                   </div>
-                </div>
-
-                {/* Бейдж категории */}
-                <div className="absolute top-3 left-3 bg-white bg-opacity-90 px-3 py-1 rounded-full text-sm font-medium text-blue-800">
-                  {image.category}
-                </div>
-              </motion.div>
-            ))}
-          </div>
+                </motion.div>
+              ))}
+            </div>
+          )}
         </motion.section>
       </div>
 
@@ -220,11 +214,20 @@ const StudentLife = () => {
             exit={{ opacity: 0 }}
           >
             <motion.div
-              className="relative max-w-6xl max-h-full"
+              className="relative w-full h-full flex items-center justify-center"
+              style={{ maxWidth: '100vw', maxHeight: '100vh' }}
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
             >
+
+              {/* Кнопка "Назад" */}
+              <button
+                onClick={closeLightbox}
+                className="absolute left-4 top-4 bg-white bg-opacity-80 hover:bg-opacity-100 text-blue-900 px-5 py-2 rounded-full font-semibold shadow z-20 transition-all"
+              >
+                {t('studentLife.back', 'Назад')}
+              </button>
               {/* Кнопка закрытия */}
               <button
                 onClick={closeLightbox}
@@ -233,16 +236,32 @@ const StudentLife = () => {
                 <XMarkIcon className="w-8 h-8" />
               </button>
 
+
               {/* Изображение */}
-              <div className="bg-white rounded-2xl overflow-hidden">
-                <div className="aspect-video bg-gradient-to-br from-blue-200 to-cyan-200 flex items-center justify-center">
+              <div className="w-full h-full flex items-center justify-center">
+                {selectedImage.photo ? (
+                  <img
+                    src={selectedImage.photo}
+                    alt={getLangField(selectedImage, 'description') || ''}
+                    style={{
+                      maxWidth: '90vw',
+                      maxHeight: '85vh',
+                      objectFit: 'contain',
+                      borderRadius: '1.5rem',
+                      boxShadow: '0 8px 32px rgba(0,0,0,0.25)'
+                    }}
+                  />
+                ) : (
                   <div className="text-center">
                     <Camera className="w-6 h-6" />
-                    <div className="text-2xl font-semibold text-blue-800 mb-2">
-                      {selectedImage.alt}
-                    </div>
-                    <div className="text-blue-600">{selectedImage.category}</div>
                   </div>
+                )}
+                {/* Подпись и категория */}
+                <div className="absolute left-0 right-0 bottom-0 p-4 bg-gradient-to-t from-black/60 to-transparent text-center">
+                  <div className="text-2xl font-semibold text-white mb-2">
+                    {getLangField(selectedImage, 'description')}
+                  </div>
+                  <div className="text-blue-200">{getLangField(selectedImage, 'category')}</div>
                 </div>
               </div>
 

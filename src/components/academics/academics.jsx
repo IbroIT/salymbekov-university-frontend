@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BookOpen, Calendar, File, GraduationCap, Stethoscope, Users, Award, Clock, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import SEOComponent from '../SEO/SEOComponent';
@@ -7,98 +7,41 @@ const MedicalEducationPage = () => {
   const [selectedProgram, setSelectedProgram] = useState(null);
   const { t } = useTranslation();
 
-  const educationPrograms = [
-    {
-      id: 'therapeutic-5',
-      title: t('mededu.programs.therapeutic5.title'),
-      duration: t('mededu.programs.therapeutic5.duration'),
-      degree: t('mededu.programs.therapeutic5.degree'),
-  icon: "Stethoscope",
-  color: "from-blue-600 to-blue-700",
-      description: t('mededu.programs.therapeutic5.description'),
-      details: {
-        overview: t('mededu.programs.therapeutic5.details.overview'),
-        structure: t('mededu.programs.therapeutic5.details.structure', { returnObjects: true }),
-        requirements: t('mededu.programs.therapeutic5.details.requirements', { returnObjects: true }),
-        career: t('mededu.programs.therapeutic5.details.career', { returnObjects: true })
+
+  // --- Получение программ с backend ---
+  const [educationPrograms, setEducationPrograms] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const { i18n } = useTranslation();
+
+  useEffect(() => {
+    setLoading(true);
+    fetch('http://localhost:8000/api/hsm/programs/', {
+      headers: {
+        'Accept-Language': i18n.language === 'kg' ? 'ky' : i18n.language,
+        'Content-Type': 'application/json'
       }
-    },
-    {
-      id: 'therapeutic-6',
-      title: t('mededu.programs.therapeutic6.title'),
-      duration: t('mededu.programs.therapeutic6.duration'),
-      degree: t('mededu.programs.therapeutic6.degree'),
-  icon: "Stethoscope",
-  color: "from-blue-600 to-blue-700",
-      description: t('mededu.programs.therapeutic6.description'),
-      details: {
-        overview: t('mededu.programs.therapeutic6.details.overview'),
-        structure: t('mededu.programs.therapeutic6.details.structure', { returnObjects: true }),
-        requirements: t('mededu.programs.therapeutic6.details.requirements', { returnObjects: true }),
-        career: t('mededu.programs.therapeutic6.details.career', { returnObjects: true })
-      }
-    },
-    {
-      id: 'residency',
-      title: t('mededu.programs.residency.title'),
-      duration: t('mededu.programs.residency.duration'),
-      degree: t('mededu.programs.residency.degree'),
-      icon: "GraduationCap",
-  color: "from-blue-600 to-blue-700",
-      description: t('mededu.programs.residency.description'),
-      details: {
-        overview: t('mededu.programs.residency.details.overview'),
-        specialties: t('mededu.programs.residency.details.specialties', { returnObjects: true }),
-        requirements: t('mededu.programs.residency.details.requirements', { returnObjects: true }),
-        career: t('mededu.programs.residency.details.career', { returnObjects: true })
-      }
-    },
-    {
-      id: 'phd',
-      title: t('mededu.programs.phd.title'),
-      duration: t('mededu.programs.phd.duration'),
-      degree: t('mededu.programs.phd.degree'),
-      icon: "Award",
-  color: "from-blue-600 to-blue-700",
-      description: t('mededu.programs.phd.description'),
-      details: {
-        overview: t('mededu.programs.phd.details.overview'),
-        research: t('mededu.programs.phd.details.research', { returnObjects: true }),
-        requirements: t('mededu.programs.phd.details.requirements', { returnObjects: true }),
-        career: t('mededu.programs.phd.details.career', { returnObjects: true })
-      }
-    },
-    {
-      id: 'postgraduate',
-      title: t('mededu.programs.postgraduate.title'),
-      duration: t('mededu.programs.postgraduate.duration'),
-      degree: t('mededu.programs.postgraduate.degree'),
-      icon: "BookOpen",
-  color: "from-blue-600 to-blue-700",
-      description: t('mededu.programs.postgraduate.description'),
-      details: {
-        overview: t('mededu.programs.postgraduate.details.overview'),
-        programs: t('mededu.programs.postgraduate.details.programs', { returnObjects: true }),
-        requirements: t('mededu.programs.postgraduate.details.requirements', { returnObjects: true }),
-        career: t('mededu.programs.postgraduate.details.career', { returnObjects: true })
-      }
-    },
-    {
-      id: 'additional',
-      title: t('mededu.programs.additional.title'),
-      duration: t('mededu.programs.additional.duration'),
-      degree: t('mededu.programs.additional.degree'),
-      icon: "Users",
-  color: "from-blue-600 to-blue-700",
-      description: t('mededu.programs.additional.description'),
-      details: {
-        overview: t('mededu.programs.additional.details.overview'),
-        courses: t('mededu.programs.additional.details.courses', { returnObjects: true }),
-        requirements: t('mededu.programs.additional.details.requirements', { returnObjects: true }),
-        certificates: t('mededu.programs.additional.details.certificates', { returnObjects: true })
-      }
-    }
-  ];
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setEducationPrograms(data.results || data || []);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError('Ошибка загрузки программ');
+        setLoading(false);
+      });
+  }, [i18n.language]);
+
+  // Функция для выбора нужного поля по языку
+  function getLangField(obj, base) {
+    let lang = i18n.language.toLowerCase();
+    if (lang === 'kg') lang = 'ky';
+    if (lang.startsWith('ru') && obj[base + '_ru']) return obj[base + '_ru'];
+    if (lang.startsWith('en') && obj[base + '_en']) return obj[base + '_en'];
+    if ((lang.startsWith('ky') || lang.startsWith('kgz')) && obj[base + '_kg']) return obj[base + '_kg'];
+    return obj[base + '_ru'] || obj[base + '_en'] || obj[base + '_kg'] || '';
+  }
 
   const getIconComponent = (iconName) => {
     const icons = {
@@ -123,43 +66,48 @@ const MedicalEducationPage = () => {
 
         {/* Карточки программ */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-          {educationPrograms.map((program) => {
-            const IconComponent = getIconComponent(program.icon);
-            return (
-              <div 
-                key={program.id}
-                className={`bg-gradient-to-r ${program.color} text-white rounded-xl shadow-lg p-6 transform transition-all hover:scale-105 hover:shadow-xl`}
-              >
-                <div className="flex items-center mb-4">
-                  <IconComponent className="w-8 h-8 mr-3" />
-                  <h3 className="text-xl font-bold">{program.title}</h3>
-                </div>
-                
-                <div className="space-y-3 mb-4">
-                  <div className="flex items-center">
-                    <Clock className="w-4 h-4 mr-2" />
-                    <span className="font-semibold">{program.duration}</span>
-                  </div>
-                  <div className="flex items-center">
-                    <Award className="w-4 h-4 mr-2" />
-                    <span>{program.degree}</span>
-                  </div>
-                </div>
-
-                <p className="text-white/90 text-sm mb-6 leading-relaxed">
-                  {program.description}
-                </p>
-
-                <button
-                  onClick={() => setSelectedProgram(program)}
-                  className="w-full bg-white text-gray-800 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-colors flex items-center justify-center"
+          {loading ? (
+            <div className="col-span-3 text-center text-gray-400">Loading...</div>
+          ) : error ? (
+            <div className="col-span-3 text-center text-red-500">{error}</div>
+          ) : (
+            educationPrograms.map((program, idx) => {
+              // Иконки по индексу (можно доработать по профессии)
+              const icons = [Stethoscope, GraduationCap, Award, BookOpen, Users];
+              const IconComponent = icons[idx % icons.length];
+              return (
+                <div
+                  key={program.id}
+                  className={`bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl shadow-lg p-6 transform transition-all hover:scale-105 hover:shadow-xl`}
                 >
-                  {t('mededu.detailsButton')}
-                  <BookOpen className="w-4 h-4 ml-2" />
-                </button>
-              </div>
-            );
-          })}
+                  <div className="flex items-center mb-4">
+                    <IconComponent className="w-8 h-8 mr-3" />
+                    <h3 className="text-xl font-bold">{program.name}</h3>
+                  </div>
+                  <div className="space-y-3 mb-4">
+                    <div className="flex items-center">
+                      <Clock className="w-4 h-4 mr-2" />
+                      <span className="font-semibold">{program.duration}</span>
+                    </div>
+                    <div className="flex items-center">
+                      <Award className="w-4 h-4 mr-2" />
+                      <span>{program.profession}</span>
+                    </div>
+                  </div>
+                  <p className="text-white/90 text-sm mb-6 leading-relaxed">
+                    {program.description}
+                  </p>
+                  <button
+                    onClick={() => setSelectedProgram(program)}
+                    className="w-full bg-white text-gray-800 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-colors flex items-center justify-center"
+                  >
+                    {t('mededu.detailsButton')}
+                    <BookOpen className="w-4 h-4 ml-2" />
+                  </button>
+                </div>
+              );
+            })
+          )}
         </div>
       </div>
 
@@ -167,11 +115,11 @@ const MedicalEducationPage = () => {
       {selectedProgram && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-            <div className={`bg-gradient-to-r ${selectedProgram.color} text-white p-6 rounded-t-2xl`}>
+            <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-6 rounded-t-2xl">
               <div className="flex justify-between items-center">
                 <div className="flex items-center">
-                  {React.createElement(getIconComponent(selectedProgram.icon), { className: "w-8 h-8 mr-3" })}
-                  <h2 className="text-2xl font-bold">{selectedProgram.title}</h2>
+                  <Stethoscope className="w-8 h-8 mr-3" />
+                  <h2 className="text-2xl font-bold">{selectedProgram.name}</h2>
                 </div>
                 <button
                   onClick={() => setSelectedProgram(null)}
@@ -187,43 +135,24 @@ const MedicalEducationPage = () => {
                 </div>
                 <div className="flex items-center">
                   <Award className="w-4 h-4 mr-2" />
-                  <span>{selectedProgram.degree}</span>
+                  <span>{selectedProgram.profession}</span>
                 </div>
               </div>
             </div>
-
             <div className="p-6 space-y-6">
-              {Object.entries(selectedProgram.details)
-                .filter(([key]) => key !== 'structure' && key !== 'requirements' && key !== 'career')
-                .map(([key, value]) => (
-                  <div key={key}>
-                    <h3 className="text-xl font-semibold text-gray-800 mb-3 capitalize">
-                      {key === 'overview' && t('mededu.modal.overview')}
-                      {key === 'specialties' && t('mededu.modal.specialties')}
-                      {key === 'research' && t('mededu.modal.research')}
-                      {key === 'programs' && t('mededu.modal.programs')}
-                      {key === 'courses' && t('mededu.modal.courses')}
-                      {key === 'certificates' && t('mededu.modal.certificates')}
-                    </h3>
-                    <div className="text-gray-700 leading-relaxed">
-                      {typeof value === 'string' ? (
-                        <p>{value}</p>
-                      ) : Array.isArray(value) ? (
-                        <ul className="list-disc list-inside space-y-2 ml-4">
-                          {value.map((item, index) => (
-                            <li key={index}>{item}</li>
-                          ))}
-                        </ul>
-                      ) : (
-                        <ul className="list-disc list-inside space-y-2 ml-4">
-                          <li>{String(value)}</li>
-                        </ul>
-                      )}
-                    </div>
+              <h3 className="text-xl font-semibold text-gray-800 mb-3 capitalize">{t('mededu.modal.overview')}</h3>
+              <div className="text-gray-700 leading-relaxed">
+                {selectedProgram.description}
+              </div>
+              {selectedProgram.review && (
+                <div className="mt-4">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-2">{t('mededu.modal.review', 'Обзор программы')}</h3>
+                  <div className="text-gray-700 leading-relaxed">
+                    {selectedProgram.review}
                   </div>
-                ))}
+                </div>
+              )}
             </div>
-
             <div className="border-t p-6 flex justify-end space-x-4">
               <button
                 onClick={() => setSelectedProgram(null)}

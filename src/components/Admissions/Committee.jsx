@@ -1,35 +1,35 @@
+
 import React, { useState, useEffect } from 'react';
 import { Clock, File, FileEdit, Mail, MapPin, Phone, Stethoscope } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 const AdmissionCommittee = () => {
+
   const { t, i18n } = useTranslation();
-  const [currentLanguage, setCurrentLanguage] = useState(i18n.language);
+  const [requirements, setRequirements] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    setCurrentLanguage(i18n.language);
+    setLoading(true);
+    let lang = i18n.language;
+    if (lang === 'kg') lang = 'ky';
+    const url = `http://localhost:8000/api/admissions/requirements/?lang=${lang}`;
+    fetch(url, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setRequirements(Array.isArray(data) ? data : (data.results || []));
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError('Ошибка загрузки требований');
+        setLoading(false);
+      });
   }, [i18n.language]);
-
-  const admissionRequirements = [
-    {
-      id: 1,
-      title: t('admission.documents'),
-      description: t('admission.documentsDesc'),
-      icon: "File"
-    },
-    {
-      id: 2,
-      title: t('admission.exams'),
-      description: t('admission.examsDesc'),
-      icon: "FileEdit"
-    },
-    {
-      id: 3,
-      title: t('admission.deadlines'),
-      description: t('admission.deadlinesDesc'),
-      icon: '<Clock className="w-5 h-5" />'
-    }
-  ];
 
   const contactInfo = [
     {
@@ -57,6 +57,14 @@ const AdmissionCommittee = () => {
       icon: "Clock"
     }
   ];
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white">
@@ -89,13 +97,17 @@ const AdmissionCommittee = () => {
             {t('admission.requirements')}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {admissionRequirements.map((item) => (
+            {requirements.length === 0 && (
+              <div className="col-span-4 text-center text-gray-500 py-8">
+                {error || t('admission.noRequirements', 'Нет требований для отображения')}
+              </div>
+            )}
+            {requirements.map((item) => (
               <div
                 key={item.id}
                 className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border-l-4 border-blue-500"
               >
-                <div className="text-4xl mb-4">
-              </div>
+                <div className="text-4xl mb-4"></div>
                 <h3 className="text-xl font-bold text-blue-800 mb-3">
                   {item.title}
                 </h3>

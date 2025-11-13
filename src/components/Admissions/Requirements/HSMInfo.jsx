@@ -1,5 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
-import { useRef } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { Globe, Hospital, Microscope, Stethoscope, Heart, BookOpen } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -139,12 +138,34 @@ const HSMInfo = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const medicalStats = [
-  { icon: <AcademicCapIcon className="w-8 h-8" />, end: 200, label: t('hsm.students', 'Студентов'), delay: 0 },
-  { icon: <StarIcon className="w-8 h-8" />, end: 100, label: t('hsm.graduates', 'Выпускников'), delay: 200 },
-  { icon: <BookOpen className="w-8 h-8" />, end: 20, label: t('hsm.programs', 'Программ'), delay: 400 },
-  { icon: <Hospital className="w-8 h-8" />, end: 30, label: t('hsm.clinics', 'Клиник-партнеров'), delay: 600 }
-  ];
+
+  // --- Блок статистики: данные с backend ---
+  const [facts, setFacts] = useState([]);
+  const [factsLoading, setFactsLoading] = useState(true);
+  useEffect(() => {
+    setFactsLoading(true);
+    fetch('http://localhost:8000/api/home/numbers/', {
+      headers: {
+        'Accept-Language': i18n.language === 'kg' ? 'ky' : i18n.language,
+        'Content-Type': 'application/json'
+      }
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setFacts(data.results || data || []);
+        setFactsLoading(false);
+      })
+      .catch(() => setFactsLoading(false));
+  }, [i18n.language]);
+
+  function getDescription(fact) {
+    let lang = i18n.language.toLowerCase();
+    if (lang === 'kg') lang = 'ky';
+    if (lang.startsWith('ru') && fact.description_ru) return fact.description_ru;
+    if (lang.startsWith('en') && fact.description_en) return fact.description_en;
+    if ((lang.startsWith('ky') || lang.startsWith('kgz')) && fact.description_kg) return fact.description_kg;
+    return fact.description || '';
+  }
 
   const quickLinks = [
     {
@@ -377,19 +398,23 @@ const HSMInfo = () => {
         </motion.div>
       </motion.section>
 
-      {/* Статистика с анимацией */}
+      {/* Статистика с анимацией (цифры с backend) */}
       <section className="relative -mt-10 z-20">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {medicalStats.map((stat, index) => (
-              <CounterItem
-                key={index}
-                end={stat.end}
-                icon={stat.icon}
-                label={stat.label}
-                delay={stat.delay}
-              />
-            ))}
+            {factsLoading ? (
+              <div className="col-span-4 text-center text-gray-400">Loading...</div>
+            ) : (
+              facts.map((fact, index) => (
+                <CounterItem
+                  key={fact.id || index}
+                  end={parseInt(fact.number)}
+                  icon={<img src={fact.icon} alt="icon" className="w-12 h-12 mx-auto" />}
+                  label={getDescription(fact)}
+                  delay={index * 200}
+                />
+              ))
+            )}
           </div>
         </div>
       </section>
