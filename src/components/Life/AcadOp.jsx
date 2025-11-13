@@ -89,11 +89,6 @@ const AcadOp = () => {
       id: 'annual',
       name: t("acadop.categories.annual", "Годовой обмен"),
       count: academicMobilityData.exchange_opportunities.filter(op => op.type === 'year').length
-    },
-    {
-      id: 'universities',
-      name: t("acadop.categories.universities", "Университеты-партнеры"),
-      count: academicMobilityData.partner_universities.length
     }
   ];
 
@@ -210,9 +205,6 @@ const AcadOp = () => {
           {/* Боковая навигация */}
           <div className="lg:w-1/4">
             <div className="bg-white rounded-xl shadow-lg overflow-hidden sticky top-6">
-              <div className="bg-gradient-to-r from-blue-600 to-indigo-700 p-4 text-white font-bold text-lg">
-                {t("acadop.categories.title", "Категории")}
-              </div>
               <nav className="p-2">
                 <ul className="space-y-1">
                   {categoriesList.map((category) => (
@@ -223,11 +215,7 @@ const AcadOp = () => {
                             : "text-gray-700 hover:bg-gray-100"
                           }`}
                         onClick={() => {
-                          if (category.id === 'universities') {
-                            navigate('/hsm/partners');
-                          } else {
-                            setActiveCategory(category.id);
-                          }
+                          setActiveCategory(category.id);
                         }}
                       >
                         <span>{category.name}</span>
@@ -239,34 +227,12 @@ const AcadOp = () => {
                   ))}
                 </ul>
               </nav>
-
-              {/* Поиск удалён */}
             </div>
           </div>
 
           {/* Основной контент */}
           <div className="lg:w-3/4">
             <div className="bg-white rounded-xl shadow-xl p-6 transition-all duration-500">
-              {/* Заголовок раздела */}
-              <div className="mb-6 pb-4 border-b border-gray-200">
-                <div className="flex justify-between items-center">
-                  <div>
-                    <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
-                      {activeCategory === "all"
-                        ? t("acadop.opportunities.all", "Все возможности")
-                        : categories.find((cat) => cat.id === activeCategory)?.name || activeCategory}
-                    </h2>
-                    <p className="text-gray-600 mt-2">
-                      {t("acadop.opportunities.description", "Академические возможности для студентов")}
-                    </p>
-                  </div>
-                  <span className="text-sm text-gray-600 bg-gray-100 px-3 py-1 rounded-full">
-                    {t("acadop.results_count", "Найдено {{count}}", {
-                      count: filteredData.length,
-                    })}
-                  </span>
-                </div>
-              </div>
 
               {/* Сетка возможностей */}
               <div className="space-y-6">

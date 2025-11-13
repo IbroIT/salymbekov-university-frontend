@@ -110,12 +110,6 @@ const HSMCMK = () => {
 
     return (
       <div className="space-y-6">
-        <div className="flex items-center mb-6">
-          {/* icon removed */}
-          <h2 className="text-3xl font-bold text-gray-900">
-            {t('smk.about.title')}
-          </h2>
-        </div>
 
         <div className="space-y-4 text-gray-700 leading-relaxed">
           {settings && (
@@ -146,12 +140,6 @@ const HSMCMK = () => {
 
     return (
       <div className="space-y-6">
-        <div className="flex items-center mb-6">
-          {/* icon removed */}
-          <h2 className="text-3xl font-bold text-gray-900">
-            {t('smk.principles.title')}
-          </h2>
-        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {principles.map((principle) => (
@@ -182,12 +170,6 @@ const HSMCMK = () => {
 
     return (
       <div className="space-y-6">
-        <div className="flex items-center mb-6">
-          {/* icon removed */}
-          <h2 className="text-3xl font-bold text-gray-900">
-            {t('smk.documents.title')}
-          </h2>
-        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-1 gap-8">
         </div>
@@ -201,12 +183,6 @@ const HSMCMK = () => {
 
     return (
       <div className="space-y-6">
-        <div className="flex items-center mb-6">
-          {/* icon removed */}
-          <h2 className="text-3xl font-bold text-gray-900">
-            {t('smk.processes.title')}
-          </h2>
-        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {processGroups.map((group) => (
@@ -242,13 +218,6 @@ const HSMCMK = () => {
 
     return (
       <div className="space-y-6">
-        <div className="flex items-center mb-6">
-          {/* icon removed */}
-          {/* icon removed */}
-          <h2 className="text-3xl font-bold text-gray-900">
-            {t('smk.statistics.title')}
-          </h2>
-        </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {statistics.map((stat) => (

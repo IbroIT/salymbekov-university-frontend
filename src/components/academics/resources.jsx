@@ -193,26 +193,14 @@ const Resources = () => {
         {/* Заголовок */}
         <div className="text-center mb-8">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            {t("resources.title", "Образовательные Ресурсы")}
+            {t("resources.title", "Электронная библиотека")}
           </h1>
-          <p className="text-lg text-gray-700 max-w-3xl mx-auto">
-            {t("resources.subtitle", "Доступ к электронным ресурсам, научным базам данных и учебным материалам")}
-          </p>
         </div>
 
         <div>
           {/* Основной контент */}
           <div className="w-full">
             <div className="bg-white rounded-xl shadow-xl p-6 transition-all duration-500">
-              {/* Заголовок раздела */}
-              <div className="mb-6 pb-4 border-b border-gray-200">
-                <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
-                  {currentSectionData.title}
-                </h2>
-                <p className="text-gray-600 mt-2">
-                  {currentSectionData.description}
-                </p>
-              </div>
 
               {/* Ресурсы */}
               <div className="space-y-6">

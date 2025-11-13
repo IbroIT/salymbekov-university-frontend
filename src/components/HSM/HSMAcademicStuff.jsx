@@ -35,13 +35,13 @@ const PPSCard = () => {
     },
     { 
       icon: <ShieldCheckIcon className="w-8 h-8" />, 
-      value: `${statsData.fullTime} (${statsData.fullTimePercentage}%)`, 
+      value: statsData.fullTime, 
       label: t('pps.full_time', 'Штатные'),
       description: t('pps.full_time_desc', 'Основной состав')
     },
     { 
       icon: <AcademicCapIcon className="w-8 h-8" />, 
-      value: `${statsData.advancedDegree} (${statsData.advancedDegreePercentage}%)`, 
+      value: statsData.advancedDegree, 
       label: t('pps.advanced_degree', 'С ученой степенью'),
       description: t('pps.advanced_degree_desc', 'Высшая квалификация')
     },
@@ -121,7 +121,6 @@ const PPSCard = () => {
               </div>
                 <div className="text-3xl font-bold text-gray-900 mb-2">{stat.value}</div>
                 <div className="text-lg font-semibold text-gray-800 mb-2">{stat.label}</div>
-                <div className="text-sm text-gray-600">{stat.description}</div>
               </motion.div>
             ))}
           </div>

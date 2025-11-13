@@ -193,36 +193,35 @@ const MedicalEducationPage = () => {
             </div>
 
             <div className="p-6 space-y-6">
-              {Object.entries(selectedProgram.details).map(([key, value]) => (
-                <div key={key}>
-                  <h3 className="text-xl font-semibold text-gray-800 mb-3 capitalize">
-                    {key === 'overview' && t('mededu.modal.overview')}
-                    {key === 'structure' && t('mededu.modal.structure')}
-                    {key === 'requirements' && t('mededu.modal.requirements')}
-                    {key === 'career' && t('mededu.modal.career')}
-                    {key === 'specialties' && t('mededu.modal.specialties')}
-                    {key === 'research' && t('mededu.modal.research')}
-                    {key === 'programs' && t('mededu.modal.programs')}
-                    {key === 'courses' && t('mededu.modal.courses')}
-                    {key === 'certificates' && t('mededu.modal.certificates')}
-                  </h3>
-                  <div className="text-gray-700 leading-relaxed">
-                    {typeof value === 'string' ? (
-                      <p>{value}</p>
-                    ) : Array.isArray(value) ? (
-                      <ul className="list-disc list-inside space-y-2 ml-4">
-                        {value.map((item, index) => (
-                          <li key={index}>{item}</li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <ul className="list-disc list-inside space-y-2 ml-4">
-                        <li>{String(value)}</li>
-                      </ul>
-                    )}
+              {Object.entries(selectedProgram.details)
+                .filter(([key]) => key !== 'structure' && key !== 'requirements' && key !== 'career')
+                .map(([key, value]) => (
+                  <div key={key}>
+                    <h3 className="text-xl font-semibold text-gray-800 mb-3 capitalize">
+                      {key === 'overview' && t('mededu.modal.overview')}
+                      {key === 'specialties' && t('mededu.modal.specialties')}
+                      {key === 'research' && t('mededu.modal.research')}
+                      {key === 'programs' && t('mededu.modal.programs')}
+                      {key === 'courses' && t('mededu.modal.courses')}
+                      {key === 'certificates' && t('mededu.modal.certificates')}
+                    </h3>
+                    <div className="text-gray-700 leading-relaxed">
+                      {typeof value === 'string' ? (
+                        <p>{value}</p>
+                      ) : Array.isArray(value) ? (
+                        <ul className="list-disc list-inside space-y-2 ml-4">
+                          {value.map((item, index) => (
+                            <li key={index}>{item}</li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <ul className="list-disc list-inside space-y-2 ml-4">
+                          <li>{String(value)}</li>
+                        </ul>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
             </div>
 
             <div className="border-t p-6 flex justify-end space-x-4">
