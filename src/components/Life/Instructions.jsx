@@ -1,501 +1,136 @@
-import React, { useState, useEffect } from 'react';
-import { Building, DollarSign, File, FileEdit, FileText, GraduationCap, Star } from 'lucide-react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { studentLifeAPI } from '../../services/studentLifeService';
-import {
-  DocumentTextIcon,
-  ClipboardDocumentListIcon,
-  CalendarDaysIcon,
-  UserGroupIcon,
-  BookmarkIcon,
-  BookmarkSlashIcon,
-  ClockIcon,
-  PhoneIcon,
-  CheckCircleIcon,
-  ExclamationCircleIcon
-} from '@heroicons/react/24/outline';
 
-const Instructions = () => {
-  const { t, i18n } = useTranslation();
-  const [isVisible, setIsVisible] = useState(false);
-  const [activeSection, setActiveSection] = useState('all');
-  const [savedGuides, setSavedGuides] = useState([]);
-  const [expandedSteps, setExpandedSteps] = useState({});
-  const [instructionsData, setInstructionsData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+const InstructionsPage = () => {
+  const { t } = useTranslation();
 
-  // Helper function to get localized value from API data
-  const getLocalizedField = (item, fieldName) => {
-    if (!item) return '';
-
-    const currentLang = i18n.language;
-    if (currentLang === 'en' && item[`${fieldName}_en`]) {
-      return item[`${fieldName}_en`];
-    } else if (currentLang === 'ky' && item[`${fieldName}_kg`]) {
-      return item[`${fieldName}_kg`];
-    }
-    return item[`${fieldName}_ru`] || item[fieldName] || '';
-  };
-
-  // Animation on mount
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
-
-  // Fetch instructions data
-  useEffect(() => {
-    const fetchInstructions = async () => {
-      try {
-        setLoading(true);
-        console.log('Fetching instructions data...');
-
-        const response = await studentLifeAPI.getInstructions();
-        console.log('Instructions response:', response.data);
-
-        // Handle response structure
-        let data = [];
-        if (response.data && response.data.student_guides) {
-          data = response.data.student_guides;
-        } else if (Array.isArray(response.data)) {
-          data = response.data;
-        }
-
-        console.log('Processed instructions data:', data);
-        setInstructionsData(data);
-        setError(null);
-      } catch (err) {
-        console.error('Error fetching instructions:', err);
-        setError(err.message || String(err));
-        setInstructionsData([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchInstructions();
-  }, []);
-
-  // Загрузка сохраненных инструкций из localStorage
-  useEffect(() => {
-    const saved = localStorage.getItem('savedGuides');
-    if (saved) {
-      setSavedGuides(JSON.parse(saved));
-    }
-  }, []);
-
-  // Сохранение инструкций в localStorage при изменении
-  useEffect(() => {
-    localStorage.setItem('savedGuides', JSON.stringify(savedGuides));
-  }, [savedGuides]);
-
-  const sections = [
-    { id: 'all', name: t('studentLife.instructions.allInstructions'), Icon: FileText },
-    { id: 'academic', name: t('studentLife.instructions.academic'), Icon: GraduationCap },
-    { id: 'administrative', name: t('studentLife.instructions.administrative'), Icon: Building },
-    { id: 'documents', name: t('studentLife.instructions.documents'), Icon: File },
-    { id: 'financial', name: t('studentLife.instructions.financial'), Icon: DollarSign },
-    { id: 'appeals', name: t('studentLife.instructions.appeals'), Icon: FileEdit },
-    { id: 'saved', name: t('studentLife.instructions.savedInstructions'), Icon: Star }
+  const documents = [
+    { id: 1, name: t('instructions.userManual'), pdf: '/documents/user-manual.pdf' },
+    { id: 2, name: t('instructions.safetyRegulations'), pdf: '/documents/safety-regulations.pdf' },
+    { id: 3, name: t('instructions.technicalGuide'), pdf: '/documents/technical-guide.pdf' },
+    { id: 4, name: t('instructions.operatingProcedures'), pdf: '/documents/operating-procedures.pdf' },
+    { id: 5, name: t('instructions.maintenanceGuide'), pdf: '/documents/maintenance-guide.pdf' },
+    { id: 6, name: t('instructions.installationManual'), pdf: '/documents/installation-manual.pdf' }
   ];
 
-  const changeActiveSection = (sectionId) => {
-    setActiveSection(sectionId);
+  const handleViewPDF = (pdfUrl) => {
+    // Открываем PDF в новой вкладке для чтения
+    window.open(pdfUrl, '_blank', 'noopener,noreferrer');
   };
 
-  const toggleSaveGuide = (guideId) => {
-    if (savedGuides.includes(guideId)) {
-      setSavedGuides(savedGuides.filter(id => id !== guideId));
-    } else {
-      setSavedGuides([...savedGuides, guideId]);
-    }
-  };
-
-  const toggleStep = (stepIndex) => {
-    setExpandedSteps(prev => ({
-      ...prev,
-      [stepIndex]: !prev[stepIndex]
-    }));
-  };
-
-  const getIconComponent = (iconName) => {
-    const iconMap = {
-      'FileText': FileText,
-      'GraduationCap': GraduationCap,
-      'Building': Building,
-      'File': File,
-      'DollarSign': DollarSign,
-      'FileEdit': FileEdit,
-      'Star': Star,
-      'CalendarDaysIcon': FileText,
-      'UserGroupIcon': FileText,
-      'ClipboardDocumentListIcon': FileText,
-      'DocumentTextIcon': FileText,
-      'AcademicCapIcon': GraduationCap,
-      'BuildingOfficeIcon': Building
-    };
-    return iconMap[iconName] || FileText;
-  };
-
-  const filteredInstructions = activeSection === 'saved'
-    ? instructionsData.filter(guide => savedGuides.includes(guide.id))
-    : activeSection === 'all'
-      ? instructionsData
-      : instructionsData.filter(guide => guide.category === activeSection);
-
-  const renderAllInstructionsContent = () => {
-    if (loading) {
-      return (
-        <div className="flex justify-center items-center py-12">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-        </div>
-      );
-    }
-
-    if (error) {
-      return (
-        <div className="text-center py-12">
-          <div className="text-red-600 mb-4">
-            <svg className="w-16 h-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </div>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">
-            {t("studentLife.instructions.loadingError", "Ошибка загрузки данных")}
-          </h3>
-          <p className="text-gray-600 mb-4">{error}</p>
-          <button
-            onClick={() => window.location.reload()}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-          >
-            {t("studentLife.instructions.refreshPage", "Обновить страницу")}
-          </button>
-        </div>
-      );
-    }
-
-    if (filteredInstructions.length === 0) {
-      return (
-        <div className="text-center py-12">
-          <div className="text-gray-400 mb-4">
-            <svg className="w-16 h-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
-          </div>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">
-            {t("studentLife.instructions.noInstructionsFound", "Инструкции не найдены")}
-          </h3>
-          <p className="text-gray-600">
-            {activeSection === 'saved'
-              ? t("studentLife.instructions.noSavedInstructions", "У вас нет сохраненных инструкций")
-              : t("studentLife.instructions.noInstructionsInCategory", "В этой категории пока нет инструкций")
-            }
-          </p>
-        </div>
-      );
-    }
-
-    return (
-      <div className="space-y-6">
-        <div className="flex items-center mb-6">
-          <div className="p-3 bg-blue-100 rounded-xl mr-4">
-            <FileText className="w-4 h-4" />
-          </div>
-          <h2 className="text-3xl font-bold text-gray-900">
-            {activeSection === 'all'
-              ? t('studentLife.instructions.allInstructions')
-              : sections.find(s => s.id === activeSection)?.name || t('studentLife.instructions.allInstructions')
-            }
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {filteredInstructions.map((instruction) => {
-            const IconComponent = getIconComponent(instruction.icon);
-            return (
-              <div
-                key={instruction.id}
-                className="bg-white rounded-xl p-6 border border-blue-100 hover:shadow-lg transition-all duration-300"
-              >
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-center">
-                    <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 mr-4">
-                      <IconComponent className="w-6 h-6" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-semibold text-gray-800">
-                        {getLocalizedField(instruction, 'title')}
-                      </h3>
-                      <div className="flex items-center text-sm text-blue-600 mt-1">
-                        <span className="bg-blue-100 px-2 py-1 rounded-full">
-                          {instruction.category}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => toggleSaveGuide(instruction.id)}
-                    className="text-gray-400 hover:text-yellow-500 transition-colors"
-                  >
-                    {savedGuides.includes(instruction.id) ? (
-                      <BookmarkSlashIcon className="w-5 h-5 text-yellow-500" />
-                    ) : (
-                      <BookmarkIcon className="w-5 h-5" />
-                    )}
-                  </button>
-                </div>
-
-                <p className="text-gray-600 mb-4 leading-relaxed">
-                  {getLocalizedField(instruction, 'description')}
-                </p>
-
-                <div className="space-y-3 mb-4">
-                  {getLocalizedField(instruction, 'estimated_time') && (
-                    <div className="flex items-center text-sm text-gray-600">
-                      <ClockIcon className="w-4 h-4 mr-2" />
-                      <span>{t('studentLife.instructions.estimatedTime')}: {getLocalizedField(instruction, 'estimated_time')}</span>
-                    </div>
-                  )}
-                  {getLocalizedField(instruction, 'contact_info') && (
-                    <div className="flex items-center text-sm text-gray-600">
-                      <PhoneIcon className="w-4 h-4 mr-2" />
-                      <span>{getLocalizedField(instruction, 'contact_info')}</span>
-                    </div>
-                  )}
-                </div>
-
-                {instruction.requirements && instruction.requirements.length > 0 && (
-                  <div className="space-y-2">
-                    <h4 className="font-semibold text-gray-800 text-sm">
-                      {t('studentLife.instructions.requirements')}:
-                    </h4>
-                    <ul className="text-sm text-gray-600 space-y-1">
-                      {instruction.requirements.slice(0, 3).map((req, index) => (
-                        <li key={index} className="flex items-start">
-                          <CheckCircleIcon className="w-4 h-4 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                          <span>{getLocalizedField(req, 'text')}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                {instruction.steps && instruction.steps.length > 0 && (
-                  <div className="mt-4 space-y-3">
-                    {instruction.steps.slice(0, 2).map((step, index) => (
-                      <div key={index} className="bg-blue-50 rounded-lg p-3">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center">
-                            <div className="w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-xs font-bold mr-3">
-                              {step.step_number}
-                            </div>
-                            <span className="text-sm font-medium text-gray-800">{getLocalizedField(step, 'title')}</span>
-                          </div>
-                          {getLocalizedField(step, 'timeframe') && (
-                            <span className="text-xs text-blue-600 bg-blue-100 px-2 py-1 rounded-full">
-                              {getLocalizedField(step, 'timeframe')}
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    ))}
-                    {instruction.steps.length > 2 && (
-                      <div className="text-center">
-                        <span className="text-sm text-blue-600">
-                          +{instruction.steps.length - 2} {t('studentLife.instructions.moreSteps', 'больше шагов')}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    );
-  };
-
-  const renderInstructionDetail = (instruction) => (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center">
-          <div className="p-3 bg-blue-100 rounded-xl mr-4">
-            {(() => {
-              const IconComponent = getIconComponent(instruction.icon);
-              return <IconComponent className="w-6 h-6 text-blue-600" />;
-            })()}
-          </div>
-          <h2 className="text-3xl font-bold text-gray-900">
-            {getLocalizedField(instruction, 'title')}
-          </h2>
-        </div>
-        <div className="flex space-x-2">
-          <button
-            onClick={() => toggleSaveGuide(instruction.id)}
-            className="p-2 rounded-lg bg-blue-100 hover:bg-blue-200 transition-colors"
-          >
-            {savedGuides.includes(instruction.id) ? (
-              <BookmarkSlashIcon className="w-5 h-5 text-yellow-500" />
-            ) : (
-              <BookmarkIcon className="w-5 h-5 text-blue-600" />
-            )}
-          </button>
-        </div>
-      </div>
-
-      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100">
-        <p className="text-gray-700 leading-relaxed">
-          {getLocalizedField(instruction, 'description')}
-        </p>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-white rounded-xl p-4 border border-blue-100">
-          <h3 className="font-semibold text-gray-800 mb-3 flex items-center">
-            <CheckCircleIcon className="w-5 h-5 text-green-500 mr-2" />
-            {t('studentLife.instructions.requirements')}
-          </h3>
-          <ul className="text-sm text-gray-600 space-y-2">
-            {instruction.requirements?.map((req, index) => (
-              <li key={index} className="flex items-start">
-                <div className="w-2 h-2 bg-green-500 rounded-full mr-3 mt-1.5 flex-shrink-0"></div>
-                <span>{getLocalizedField(req, 'text')}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="bg-white rounded-xl p-4 border border-blue-100">
-          <h3 className="font-semibold text-gray-800 mb-3 flex items-center">
-            <ClockIcon className="w-5 h-5 text-blue-500 mr-2" />
-            {t('studentLife.instructions.timeframe')}
-          </h3>
-          <p className="text-sm text-gray-600">
-            {getLocalizedField(instruction, 'estimated_time')}
-          </p>
-          {getLocalizedField(instruction, 'max_duration') && (
-            <p className="text-sm text-gray-500 mt-2">
-              <strong>{t('studentLife.instructions.maxDuration')}:</strong> {getLocalizedField(instruction, 'max_duration')}
-            </p>
-          )}
-        </div>
-
-        <div className="bg-white rounded-xl p-4 border border-blue-100">
-          <h3 className="font-semibold text-gray-800 mb-3 flex items-center">
-            <PhoneIcon className="w-5 h-5 text-indigo-500 mr-2" />
-            {t('studentLife.instructions.contacts')}
-          </h3>
-          <p className="text-sm text-gray-600">
-            {getLocalizedField(instruction, 'contact_info')}
-          </p>
-        </div>
-      </div>
-
-      {instruction.steps && instruction.steps.length > 0 && (
-        <div className="space-y-4">
-          <h3 className="text-xl font-bold text-gray-900">
-            {t('studentLife.instructions.steps')}
-          </h3>
-          {instruction.steps.map((step, index) => (
-            <div key={index} className="bg-white rounded-xl p-5 border border-blue-100">
-              <div className="flex items-start justify-between mb-3">
-                <div className="flex items-start">
-                  <div className="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold text-sm mr-4 flex-shrink-0">
-                    {step.step_number}
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-semibold text-gray-800">
-                      {getLocalizedField(step, 'title')}
-                    </h4>
-                    <p className="text-gray-600 text-sm mt-1">
-                      {getLocalizedField(step, 'description')}
-                    </p>
-                  </div>
-                </div>
-                {getLocalizedField(step, 'timeframe') && (
-                  <span className="text-sm text-blue-600 bg-blue-100 px-3 py-1 rounded-full">
-                    {getLocalizedField(step, 'timeframe')}
-                  </span>
-                )}
-              </div>
-
-              {step.details && step.details.length > 0 && (
-                <div className="pl-12">
-                  <ul className="space-y-2">
-                    {step.details.map((detail, detailIndex) => (
-                      <li key={detailIndex} className="text-sm text-gray-600 flex items-start">
-                        <div className="w-2 h-2 bg-blue-500 rounded-full mr-3 mt-1.5 flex-shrink-0"></div>
-                        <span>{getLocalizedField(detail, 'text')}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      )}
-
-      <div className="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded-xl">
-        <div className="flex items-start">
-          <ExclamationCircleIcon className="w-6 h-6 text-yellow-600 mr-3 flex-shrink-0 mt-0.5" />
-          <div>
-            <h3 className="text-lg font-semibold text-yellow-800 mb-2">
-              {t('studentLife.instructions.importantNotes')}
-            </h3>
-            <ul className="text-yellow-700 space-y-2 text-sm">
-              <li>• {t('studentLife.instructions.notes.0')}</li>
-              <li>• {t('studentLife.instructions.notes.1')}</li>
-              <li>• {t('studentLife.instructions.notes.2')}</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
-  const renderContent = () => {
-    // For simplicity, showing first instruction as detail view
-    // In real app, you would manage selected instruction state
-    const selectedInstruction = filteredInstructions[0];
-
-    if (loading) {
-      return (
-        <div className="flex justify-center items-center py-12">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-        </div>
-      );
-    }
-
-    if (selectedInstruction && activeSection !== 'saved' && !error) {
-      return renderInstructionDetail(selectedInstruction);
-    }
-
-    return renderAllInstructionsContent();
+  const handleDownloadPDF = (pdfUrl, event) => {
+    event.stopPropagation();
+    // Эмуляция скачивания
+    const link = document.createElement('a');
+    link.href = pdfUrl;
+    link.download = pdfUrl.split('/').pop();
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
-    <div
-      className={`min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-        }`}
-    >
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-white py-8 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto">
         {/* Заголовок */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            {t('studentLife.instructions.title')}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-blue-600 mb-4">
+            {t('instructions.title')}
           </h1>
-          <p className="text-lg text-gray-700 max-w-3xl mx-auto">
-            {t('studentLife.instructions.subtitle')}
-          </p>
         </div>
 
-        <div>
-          {/* Основной контент */}
-          <div className="w-full">
-            <div className="bg-white rounded-xl shadow-xl p-6 transition-all duration-500">
-              {renderContent()}
+        {/* Список документов */}
+        <div className="bg-white rounded-lg shadow-md border border-gray-200">
+          <div className="divide-y divide-gray-200">
+            {documents.map((doc) => (
+              <div 
+                key={doc.id} 
+                className="px-6 py-4 hover:bg-gray-50 transition-colors duration-200 cursor-pointer"
+                onClick={() => handleViewPDF(doc.pdf)}
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-4">
+                    <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                      <svg 
+                        className="w-6 h-6 text-blue-600" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24"
+                      >
+                        <path 
+                          strokeLinecap="round" 
+                          strokeLinejoin="round" 
+                          strokeWidth={2} 
+                          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" 
+                        />
+                      </svg>
+                    </div>
+                    <div>
+                      <span className="text-lg font-medium text-gray-900 block">
+                        {doc.name}
+                      </span>
+                      {/* Текст 'нажмите для просмотра' удалён по запросу */}
+                    </div>
+                  </div>
+                  
+                  <div className="flex space-x-2">
+                    <button
+                      onClick={(e) => handleViewPDF(doc.pdf, e)}
+                      className="inline-flex items-center px-4 py-2 border border-blue-600 text-sm font-medium rounded-md text-blue-600 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
+                    >
+                      <svg 
+                        className="w-4 h-4 mr-2" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24"
+                      >
+                        <path 
+                          strokeLinecap="round" 
+                          strokeLinejoin="round" 
+                          strokeWidth={2} 
+                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" 
+                        />
+                        <path 
+                          strokeLinecap="round" 
+                          strokeLinejoin="round" 
+                          strokeWidth={2} 
+                          d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" 
+                        />
+                      </svg>
+                      {t('instructions.viewPDF')}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Информационный блок */}
+        <div className="mt-8 bg-blue-50 rounded-lg p-6 border border-blue-200">
+          <div className="flex">
+            <div className="flex-shrink-0">
+              <svg 
+                className="h-5 w-5 text-blue-400" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2} 
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" 
+                />
+              </svg>
+            </div>
+            <div className="ml-3">
+              <h3 className="text-sm font-medium text-blue-800">
+                {t('instructions.infoTitle')}
+              </h3>
+              <p className="text-sm text-blue-700 mt-2">
+                {t('instructions.infoDescription')}
+              </p>
             </div>
           </div>
         </div>
@@ -504,4 +139,4 @@ const Instructions = () => {
   );
 };
 
-export default Instructions;
+export default InstructionsPage;

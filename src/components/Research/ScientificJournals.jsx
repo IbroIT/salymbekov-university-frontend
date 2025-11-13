@@ -239,16 +239,6 @@ const ScientificJournals = () => {
           {/* Основной контент */}
           <div className="lg:w-3/4">
             <div className="bg-white rounded-xl shadow-xl p-6 transition-all duration-500">
-              {/* Заголовок раздела */}
-              <div className="mb-6 pb-4 border-b border-gray-200">
-                <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
-                  {currentSectionData.title}
-                </h2>
-                <p className="text-gray-600 mt-2">
-                  {currentSectionData.description}
-                </p>
-              </div>
-
               {/* Контент раздела - Журналы */}
               {activeSection === "journals" && (
                 <div className="space-y-6">

@@ -27,7 +27,7 @@ import Faculties from './components/academics/faculties';
 import Deparments from './components/academics/departments';
 import Calendar from './components/academics/calendar';
 import Resources from "./components/academics/resources";
-import HSMInfo from "./components/HSM/HSMInfo";
+import HSMInfo from "./components/Admissions/Requirements/HSMInfo";
 import Programs from "./components/HSM/Programs";
 import HSMLearningGoals from "./components/HSM/HSMLearningGoals";
 import HSMAccreditation from "./components/HSM/HSMAccreditation";

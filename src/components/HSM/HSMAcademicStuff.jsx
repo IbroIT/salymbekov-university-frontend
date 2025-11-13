@@ -36,24 +36,19 @@ const PPSCard = () => {
     { 
       icon: <ShieldCheckIcon className="w-8 h-8" />, 
       value: statsData.fullTime, 
-      label: t('pps.full_time', 'Штатные'),
+      label: t('pps.full_time', 'Штатные сотрудники'),
       description: t('pps.full_time_desc', 'Основной состав')
     },
     { 
       icon: <AcademicCapIcon className="w-8 h-8" />, 
       value: statsData.advancedDegree, 
-      label: t('pps.advanced_degree', 'С ученой степенью'),
+      label: t('pps.advanced_degree', 'Качественный состав'),
       description: t('pps.advanced_degree_desc', 'Высшая квалификация')
-    },
-    { 
-      icon: <StarIcon className="w-8 h-8" />, 
-      value: statsData.doctors, 
-      label: t('pps.doctors', 'Докторов наук'),
-      description: t('pps.doctors_desc', 'Высшая научная степень')
     }
   ];
 
   const additionalStats = [
+    { value: statsData.doctors, label: t('pps.doctors', 'Докторов наук') },
     { value: statsData.candidates, label: t('pps.candidates', 'Кандидатов наук') },
     { value: statsData.phd, label: t('pps.phd', 'PhD') },
     { value: statsData.professors, label: t('pps.professors', 'Профессоров') },
@@ -83,7 +78,7 @@ const PPSCard = () => {
               animate={{ scale: 1 }}
               transition={{ duration: 0.5 }}
             >
-              {t('pps.title', 'Профессорско-преподавательский состав')}
+              {t('pps.title', 'Профессорско-преподавательский состав ВШМ')}
             </motion.h1>
             <motion.div 
               className="w-24 h-1 bg-gradient-to-r from-cyan-400 to-blue-400 mx-auto rounded-full mb-6"
@@ -103,11 +98,11 @@ const PPSCard = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="flex flex-wrap justify-center gap-6 mb-8">
             {stats.map((stat, index) => (
               <motion.div
                 key={index}
-                className="bg-white rounded-2xl shadow-lg p-6 text-center border border-gray-100"
+                className="bg-white rounded-2xl shadow-lg p-6 text-center border border-gray-100 min-w-[220px]"
                 whileHover={{ 
                   scale: 1.05,
                   boxShadow: "0 20px 40px rgba(0,0,0,0.1)"
@@ -118,7 +113,7 @@ const PPSCard = () => {
                 viewport={{ once: true }}
               >
                 <div className="text-blue-600 mb-4 flex justify-center">
-              </div>
+                </div>
                 <div className="text-3xl font-bold text-gray-900 mb-2">{stat.value}</div>
                 <div className="text-lg font-semibold text-gray-800 mb-2">{stat.label}</div>
               </motion.div>
@@ -127,27 +122,27 @@ const PPSCard = () => {
 
           {/* Дополнительная статистика */}
           <motion.div
-            className="bg-white rounded-2xl shadow-lg p-6 mb-8"
+            className="bg-white rounded-2xl shadow-lg p-4 mb-8"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
           >
-            <h3 className="text-xl font-semibold text-gray-900 mb-6 text-center">
+            <h3 className="text-xl font-semibold text-gray-900 mb-4 text-center">
               {t('pps.detailed_stats', 'Детальная статистика')}
             </h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="flex flex-row flex-wrap justify-center gap-7">
               {additionalStats.map((stat, index) => (
                 <motion.div
                   key={index}
-                  className="text-center p-4 bg-blue-50 rounded-xl"
-                  whileHover={{ scale: 1.05 }}
+                  className="flex flex-col items-center bg-blue-50 rounded-xl px-7 py-5 min-w-[140px] shadow-md"
+                  whileHover={{ scale: 1.09 }}
                   initial={{ opacity: 0, scale: 0.9 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
                 >
-                  <div className="text-2xl font-bold text-blue-700 mb-1">{stat.value}</div>
-                  <div className="text-sm text-gray-700">{stat.label}</div>
+                  <div className="text-3xl font-extrabold text-blue-700 mb-2">{stat.value}</div>
+                  <div className="text-base text-gray-700 text-center leading-tight font-medium">{stat.label}</div>
                 </motion.div>
               ))}
             </div>
@@ -176,7 +171,7 @@ const PPSCard = () => {
               >
                 {t(
                   'pps.mission_text',
-                  'ставит перед собой три ключевые цели: соответствовать потребностям рынка образовательных услуг, способствовать экспорту знаний и успешно внедрять многоязычное образование в Кыргызстане.'
+                  'ВШМ ставит перед собой три ключевые цели: соответствовать потребностям рынка образовательных услуг, способствовать экспорту знаний и успешно внедрять многоязычное образование в Кыргызстане.'
                 )}
               </p>
                             

@@ -59,7 +59,7 @@ const Contacts = () => {
             animate={{ opacity: 1, y: 0 }}
             className="text-4xl font-bold text-white mb-4"
           >
-            <Phone className="w-5 h-5" /> {t('contacts.title')}
+             {t('contacts.title')}
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0 }}

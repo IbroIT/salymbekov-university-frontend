@@ -317,27 +317,7 @@ const AcadOp = () => {
                             </div>
                           </div>
 
-                          {/* Кнопка доступа */}
-                          <button
-                            className={`w-full bg-gradient-to-r ${opportunity.color} text-white py-3 rounded-lg font-semibold transition-all duration-300 hover:shadow-lg flex items-center justify-center group`}
-                          >
-                            <span className="flex items-center">
-                              {t("acadop.opportunities.detailsButton", "Подробнее")}
-                              <svg
-                                className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M14 5l7 7m0 0l-7 7m7-7H3"
-                                />
-                              </svg>
-                            </span>
-                          </button>
+                          {/* Кнопка "Подробнее" удалена по запросу */}
                         </div>
                       </div>
                     ))}

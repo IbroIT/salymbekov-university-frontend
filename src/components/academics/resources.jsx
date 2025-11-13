@@ -12,6 +12,7 @@ const Resources = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [activeResource, setActiveResource] = useState(null);
   const [activeSection, setActiveSection] = useState('all');
+  const [searchTerm, setSearchTerm] = useState('');
 
   // Animation on mount
   useEffect(() => {
@@ -41,43 +42,6 @@ const Resources = () => {
             t('resources.libFeature3', 'Учебные пособия')
           ],
           linkText: t('resources.libLink', 'Перейти в библиотеку')
-        },
-        {
-          id: 2,
-          icon: "Microscope",
-          key: 'databases',
-          links: [
-            { 
-              name: 'pubmed', 
-              url: 'https://pubmed.ncbi.nlm.nih.gov/', 
-              external: true,
-              displayName: t('resources.dbPubMed', 'PubMed')
-            },
-            { 
-              name: 'scopus', 
-              url: 'https://www.scopus.com/', 
-              external: true,
-              displayName: t('resources.dbScopus', 'Scopus')
-            },
-            { 
-              name: 'web_of_science', 
-              url: 'https://www.webofscience.com/', 
-              external: true,
-              displayName: t('resources.dbWebScience', 'Web of Science')
-            }
-          ],
-          status: 'external',
-          section: 'databases',
-          color: 'from-purple-500 to-pink-500',
-          bgColor: 'bg-purple-50 border-purple-200',
-          title: t('resources.dbTitle', 'Научные базы данных'),
-          description: t('resources.dbDesc', 'Доступ к международным научным базам данных'),
-          features: [
-            t('resources.dbFeature1', 'PubMed'),
-            t('resources.dbFeature2', 'Scopus'),
-            t('resources.dbFeature3', 'Web of Science')
-          ],
-          linkText: t('resources.dbLink', 'Открыть базу данных')
         },
        
       ]
@@ -141,6 +105,15 @@ const Resources = () => {
 
   const currentSectionData = getCurrentSectionData();
 
+  // Filter resources by search term
+  const filteredResources = currentSectionData.resources.filter(resource => {
+    const search = searchTerm.trim().toLowerCase();
+    if (!search) return true;
+    const title = resource.title?.toLowerCase() || '';
+    const desc = resource.description?.toLowerCase() || '';
+    return title.includes(search) || desc.includes(search);
+  });
+
   const handleMoodleLogin = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -202,11 +175,22 @@ const Resources = () => {
           <div className="w-full">
             <div className="bg-white rounded-xl shadow-xl p-6 transition-all duration-500">
 
+              {/* Поиск */}
+              <div className="mb-6 flex justify-end">
+                <input
+                  type="text"
+                  className="w-full md:w-1/2 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                  placeholder={t('resources.searchPlaceholder', 'Поиск по ресурсам...')}
+                  value={searchTerm}
+                  onChange={e => setSearchTerm(e.target.value)}
+                />
+              </div>
+
               {/* Ресурсы */}
               <div className="space-y-6">
-                {currentSectionData.resources.length > 0 ? (
+                {filteredResources.length > 0 ? (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {currentSectionData.resources.map((resource, index) => (
+                    {filteredResources.map((resource, index) => (
                       <div
                         key={resource.id}
                         className="bg-gradient-to-br from-white to-blue-50 rounded-xl shadow-md overflow-hidden border border-blue-100 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
@@ -351,7 +335,7 @@ const Resources = () => {
                       {t("resources.noResources", "Ресурсы не найдены")}
                     </h3>
                     <p className="mt-2 text-gray-500">
-                      {t("resources.noResourcesDesc", "В этой категории пока нет доступных ресурсов")}
+                      {searchTerm.trim() ? t("resources.noSearchResults", "По вашему запросу ничего не найдено") : t("resources.noResourcesDesc", "В этой категории пока нет доступных ресурсов")}
                     </p>
                   </div>
                 )}

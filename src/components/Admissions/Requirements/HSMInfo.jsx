@@ -3,7 +3,7 @@ import { useRef } from 'react';
 import { Globe, Hospital, Microscope, Stethoscope, Heart, BookOpen } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
-import { getHSMInfo, getLocalizedText } from '../../data/hsmData';
+import { getHSMInfo, getLocalizedText } from '../../../data/hsmData';
 // Анимированный счетчик
 const CounterItem = ({ end, icon, label, duration = 2000, delay = 0 }) => {
   const [count, setCount] = useState(0);

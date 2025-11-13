@@ -152,6 +152,9 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
       submenu: [
         // { title: t('nav.management_body'), link: '/research/management' },
         { title: t('nav.scientific_journals'), link: '/research/journals' },
+        { title: "PubMed", link: 'https://pubmed.ncbi.nlm.nih.gov/' },
+        { title: "Scopus", link: 'https://www.scopus.com/pages/home?display=basic#basic' },
+        { title: "Web of Science", link: 'https://access.clarivate.com/login?app=wos&alternative=true&shibShireURL=https:%2F%2Fwww.webofknowledge.com%2F%3Fauth%3DShibboleth&shibReturnURL=https:%2F%2Fwww.webofknowledge.com%2F&roaming=true' },
         // { title: t('nav.permit_documents'), link: '/research/permit-documents' },
         // { title: t('nav.publications'), link: '/research/publications' },
         // { title: t('nav.grants'), link: '/research/grants' },
@@ -307,7 +310,7 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
                           >
                             <a
                               href={subItem.link}
-                              className="flex justify-between items-center px-4 py-3 text-sm text-gray-800 hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200"
+                              className="flex justify-between items-center px-4 py-3 text-sm font-semibold text-gray-800 hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200"
                             >
                               <span>{subItem.title}</span>
                               {subItem.hasNested && (
@@ -334,7 +337,7 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
                                     <a
                                       key={nestedIndex}
                                       href={nestedItem.link}
-                                      className="block px-4 py-3 text-sm text-gray-800 hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200"
+                                      className="block px-4 py-3 text-sm font-semibold text-gray-800 hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200"
                                     >
                                       {nestedItem.title}
                                     </a>
@@ -355,18 +358,7 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
 
           {/* Правая часть: кнопка подачи заявки, язык и мобильное меню */}
           <div className="flex items-center space-x-3">
-            {/* Кнопка подачи заявки - скрыта на мобильных */}
-            <div className="hidden md:block">
-              <a
-                href="/admissions/apply"
-                className={`px-4 py-2 rounded-lg font-semibold transition-all duration-300 hover:shadow-lg hover:scale-105 ${isScrolled
-                    ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800'
-                    : 'bg-white text-blue-800 hover:bg-blue-50'
-                  }`}
-              >
-                {t('nav.apply')}
-              </a>
-            </div>
+            {/* Кнопка подачи заявки удалена по запросу */}
 
             {/* Переключатель языка */}
             <div className="relative" ref={langRef}>
@@ -411,16 +403,7 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
           className="block min-[1475px]:hidden bg-white/95 backdrop-blur-md shadow-xl transform transition-all duration-300 ease-out animate-in slide-in-from-top-2 fade-in"
         >
           <div className="px-4 pt-2 pb-6 space-y-1">
-            {/* Кнопка подачи заявки в мобильном меню */}
-            <div className="md:hidden px-4 py-2">
-              <a
-                href="/admissions/apply"
-                className="block w-full text-center px-4 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold transition-all duration-300 hover:shadow-lg"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {t('nav.apply')}
-              </a>
-            </div>
+            {/* Кнопка подачи заявки в мобильном меню удалена по запросу */}
 
             {Object.entries(menuData).map(([key, item]) => (
               <div key={key} className="relative">
@@ -449,7 +432,7 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
                           <div>
                             <button
                               onClick={() => setNestedMenu(nestedMenu === `${key}-${index}` ? null : `${key}-${index}`)}
-                              className="w-full text-left flex justify-between items-center px-4 py-3 rounded-lg text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200"
+                              className="w-full text-left flex justify-between items-center px-4 py-3 rounded-lg text-sm font-semibold text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200"
                             >
                               {subItem.title}
                               <svg
@@ -468,7 +451,7 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
                                   <a
                                     key={nestedIndex}
                                     href={nestedItem.link}
-                                    className="block px-4 py-3 rounded-lg text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200"
+                                    className="block px-4 py-3 rounded-lg text-sm font-semibold text-gray-600 hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200"
                                     onClick={() => setIsMenuOpen(false)}
                                   >
                                     {nestedItem.title}
@@ -480,7 +463,7 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
                         ) : (
                           <a
                             href={subItem.link}
-                            className="block px-4 py-3 rounded-lg text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200"
+                            className="block px-4 py-3 rounded-lg text-sm font-semibold text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200"
                             onClick={() => setIsMenuOpen(false)}
                           >
                             {subItem.title}

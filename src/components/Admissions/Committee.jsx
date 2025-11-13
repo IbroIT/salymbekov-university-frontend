@@ -77,9 +77,6 @@ const AdmissionCommittee = () => {
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             {t('admission.heroTitle')}
           </h2>
-          <button className="bg-white text-blue-600 px-8 py-4 rounded-full font-bold text-lg hover:bg-blue-50 transition-all duration-300 transform hover:scale-105 shadow-lg">
-            {t('admission.applyNow')}
-          </button>
         </div>
       </section>
 
@@ -152,10 +149,12 @@ const AdmissionCommittee = () => {
                   <p className="text-blue-800 font-semibold">
                     {t('admission.step3')}
                   </p>
-                </div>
+                </div> <a href="/admissions/apply" target="_blank">
                 <button className="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition-all duration-300">
                   {t('admission.startNow')}
                 </button>
+                </a>
+                
               </div>
             </div>
           </div>
