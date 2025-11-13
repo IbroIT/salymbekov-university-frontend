@@ -135,7 +135,7 @@ const HSMInfo = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveSection(prev => (prev + 1) % 3);
-    }, 5000);
+    }, 20000); 
     return () => clearInterval(interval);
   }, []);
 
