@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useRef } from 'react';
-import { Globe, Hospital, Microscope, Stethoscope, Heart } from 'lucide-react';
+import { Globe, Hospital, Microscope, Stethoscope, Heart, BookOpen } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getHSMInfo, getLocalizedText } from '../../data/hsmData';
@@ -140,10 +140,10 @@ const HSMInfo = () => {
   }, []);
 
   const medicalStats = [
-  { icon: <UserGroupIcon className="w-8 h-8" />, end: 500, label: t('hsm.students', 'Студентов'), delay: 0 },
-  { icon: <AcademicCapIcon className="w-8 h-8" />, end: 50, label: t('hsm.professors', 'Профессоров'), delay: 200 },
-  { icon: <ShieldCheckIcon className="w-8 h-8" />, end: 95, label: t('hsm.success_rate', 'Успеваемость'), delay: 400 },
-  { icon: <HeartIcon className="w-8 h-8" />, end: 1000, label: t('hsm.patients', 'Пациентов в год'), delay: 600 }
+  { icon: <AcademicCapIcon className="w-8 h-8" />, end: 200, label: t('hsm.students', 'Студентов'), delay: 0 },
+  { icon: <StarIcon className="w-8 h-8" />, end: 100, label: t('hsm.graduates', 'Выпускников'), delay: 200 },
+  { icon: <BookOpen className="w-8 h-8" />, end: 20, label: t('hsm.programs', 'Программ'), delay: 400 },
+  { icon: <Hospital className="w-8 h-8" />, end: 30, label: t('hsm.clinics', 'Клиник-партнеров'), delay: 600 }
   ];
 
   const quickLinks = [
@@ -453,7 +453,14 @@ const HSMInfo = () => {
                 {activeSection === 2 && (
                   <div>
                     <h3 className="text-2xl font-bold text-gray-900 mb-6">{t('hsm.main_directions', 'Основные направления')}</h3>
-                    {renderFormattedText(localizedData.mainDirections)}
+                    <ul className="space-y-4 text-lg">
+                      <li><span className="font-semibold">{t('hsm.direction.therapeutic5', 'Лечебное дело')}</span> — {t('hsm.direction.5years', '5 лет')}</li>
+                      <li><span className="font-semibold">{t('hsm.direction.therapeutic6', 'Лечебное дело')}</span> — {t('hsm.direction.6years', '6 лет')}</li>
+                      <li><span className="font-semibold">{t('hsm.direction.residency', 'Ординатура')}</span></li>
+                      <li><span className="font-semibold">{t('hsm.direction.phd', 'PhD докторантура')}</span></li>
+                      <li><span className="font-semibold">{t('hsm.direction.postgraduate', 'Аспирантура')}</span></li>
+                      <li><span className="font-semibold">{t('hsm.direction.additional', 'Дополнительное образование')}</span></li>
+                    </ul>
                   </div>
                 )}
               </motion.div>

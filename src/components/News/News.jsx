@@ -188,9 +188,6 @@ const News = () => {
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
               {t('news.title')}
             </h1>
-            <p className="text-xl text-blue-100 max-w-2xl mx-auto">
-              {t('news.subtitle')}
-            </p>
           </div>
         </div>
       </div>

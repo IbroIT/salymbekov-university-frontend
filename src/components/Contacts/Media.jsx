@@ -256,13 +256,6 @@ const Media = () => {
                 kg: 'БМКлар биз жөнүндө'
               })}
             </h1>
-            <p className="text-xl text-blue-100 mb-8">
-              {getLocalizedContent({
-                ru: 'Узнайте, что говорят ведущие медиа-издания о Салымбековском Университете и наших достижениях в медицинском образовании',
-                en: 'Learn what leading media outlets say about Salymbekov University and our achievements in medical education',
-                kg: 'Алдыңкы БМК жарыялоочулар Салымбеков Университети жана медициналык билим берүүдөгү биздин жетишкендиктер жөнүндө эмне дешет'
-              })}
-            </p>
             <div className="flex items-center justify-center text-blue-200">
               <svg className="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>

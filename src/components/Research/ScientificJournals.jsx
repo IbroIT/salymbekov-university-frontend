@@ -183,9 +183,6 @@ const ScientificJournals = () => {
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             {t("research.journals.title", "Научные журналы")}
           </h1>
-          <p className="text-lg text-gray-700 max-w-3xl mx-auto">
-            {t("research.journals.subtitle", "Академические издания Высшей медицинской школы")}
-          </p>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-6">

@@ -77,9 +77,6 @@ const AdmissionCommittee = () => {
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             {t('admission.heroTitle')}
           </h2>
-          <p className="text-xl md:text-2xl mb-8 opacity-90">
-            {t('admission.heroSubtitle')}
-          </p>
           <button className="bg-white text-blue-600 px-8 py-4 rounded-full font-bold text-lg hover:bg-blue-50 transition-all duration-300 transform hover:scale-105 shadow-lg">
             {t('admission.applyNow')}
           </button>
