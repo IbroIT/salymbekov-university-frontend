@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 // API для получения ссылок
-const LINKS_API_URL = 'http://localhost:8000/api/home/navbar-links/';
+const LINKS_API_URL = 'https://su-med-backend-35d3d951c74b.herokuapp.com/api/home/navbar-links/';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from './LanguageSwitcher';
 import DefaultLogo from "../assets/logo-salymbekov-university-site2.png";

@@ -14,7 +14,7 @@ const InstructionsPage = () => {
     // Явно добавляем lang в URL
     let lang = i18n.language;
     if (lang === 'kg') lang = 'ky';
-    const url = `http://localhost:8000/api/student-life/instruction-files/?lang=${lang}`;
+    const url = `https://su-med-backend-35d3d951c74b.herokuapp.com/api/student-life/instruction-files/?lang=${lang}`;
     fetch(url, {
       headers: {
         'Content-Type': 'application/json',

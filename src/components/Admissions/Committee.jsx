@@ -14,7 +14,7 @@ const AdmissionCommittee = () => {
     setLoading(true);
     let lang = i18n.language;
     if (lang === 'kg') lang = 'ky';
-    const url = `http://localhost:8000/api/admissions/requirements/?lang=${lang}`;
+    const url = `https://su-med-backend-35d3d951c74b.herokuapp.com/api/admissions/requirements/?lang=${lang}`;
     fetch(url, {
       headers: {
         'Content-Type': 'application/json',

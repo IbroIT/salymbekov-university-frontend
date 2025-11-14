@@ -29,7 +29,7 @@ const Resources = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch('http://localhost:8000/api/hsm/e-resources/', {
+    fetch('https://su-med-backend-35d3d951c74b.herokuapp.com/api/hsm/e-resources/', {
       headers: {
         'Accept-Language': i18n.language === 'kg' ? 'ky' : i18n.language,
         'Content-Type': 'application/json',
