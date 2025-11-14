@@ -113,20 +113,6 @@ const VacancyCard = ({ vacancy }) => {
               <span className="font-medium">{vacancy.salary_display}</span>
             </div>
           )}
-          
-          {vacancy.location && (
-            <div className="flex items-center text-sm text-gray-600">
-              <MapPin className="w-4 h-4" />
-              <span>{vacancy.location}</span>
-            </div>
-          )}
-
-          {vacancy.employment_type && (
-            <div className="flex items-center text-sm text-gray-600">
-              <span className="text-purple-600 mr-2">⏰</span>
-              <span>{t(`careers.employment_types.${vacancy.employment_type}`)}</span>
-            </div>
-          )}
 
           {vacancy.experience_years && (
             <div className="flex items-center text-sm text-gray-600">
@@ -140,18 +126,6 @@ const VacancyCard = ({ vacancy }) => {
             <span>{t('careers.deadline')}: {formatDate(vacancy.deadline)}</span>
           </div>
         </div>
-
-        {/* Requirements */}
-        {vacancy.tags_list && Array.isArray(vacancy.tags_list) && vacancy.tags_list.length > 0 && (
-          <div className="flex flex-wrap gap-2 mb-6">
-            <span className="text-xs text-gray-500 mb-2">{t('careers.key_requirements')}:</span>
-            {vacancy.tags_list.slice(0, 3).map((tag, index) => (
-              <span key={index} className="inline-flex items-center px-2 py-1 rounded text-xs bg-gray-100 text-gray-700">
-                {tag}
-              </span>
-            ))}
-          </div>
-        )}
 
         {/* Action Button */}
         <div className="flex space-x-3">

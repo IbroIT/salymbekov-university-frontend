@@ -2,10 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { BookOpen, Calendar, File, GraduationCap, Stethoscope, Users, Award, Clock, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import SEOComponent from '../SEO/SEOComponent';
+import SideMenu from '../common/SideMenu';
 
 const MedicalEducationPage = () => {
   const [selectedProgram, setSelectedProgram] = useState(null);
   const { t } = useTranslation();
+
+  const hsmItems = [
+    { title: t('nav.about_HSM'), link: '/hsm/about' },
+    { title: t('nav.management'), link: '/hsm/manage' },
+    { title: t('nav.programs'), link: '/hsm/programs' },
+    { title: t('nav.academic_stuff'), link: '/hsm/AS' },
+    { title: t('nav.partners'), link: '/hsm/partners' },
+    { title: t('nav.cmk'), link: '/hsm/cmk' },
+  ];
 
 
   // --- Получение программ с backend ---
@@ -140,7 +150,7 @@ const MedicalEducationPage = () => {
               </div>
             </div>
             <div className="p-6 space-y-6">
-              <h3 className="text-xl font-semibold text-gray-800 mb-3 capitalize">{t('mededu.modal.overview')}</h3>
+              <h3 className="text-xl font-semibold text-gray-800 mb-3 capitalize">{t('mededu.overview')}</h3>
               <div className="text-gray-700 leading-relaxed">
                 {selectedProgram.description}
               </div>
@@ -164,6 +174,9 @@ const MedicalEducationPage = () => {
           </div>
         </div>
       )}
+
+      {/* Боковое меню для навигации по разделу */}
+      <SideMenu items={hsmItems} currentPath={window.location.pathname} />
     </div>
   );
 };

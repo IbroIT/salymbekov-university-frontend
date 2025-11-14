@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { researchAPI } from '../../services/researchService';
 import { BookOpen, CheckCircle, XCircle } from 'lucide-react';
+import SideMenu from '../common/SideMenu';
 
 const ScientificJournals = () => {
   const { t, i18n } = useTranslation();
@@ -13,6 +14,13 @@ const ScientificJournals = () => {
   const [issuesLoading, setIssuesLoading] = useState(false);
   const [error, setError] = useState(null);
   const [activeSection, setActiveSection] = useState("journals");
+
+  const researchItems = [
+    { title: t('nav.scientific_journals'), link: '/research/journals' },
+    { title: "PubMed", link: 'https://pubmed.ncbi.nlm.nih.gov/' },
+    { title: "Scopus", link: 'https://www.scopus.com/pages/home?display=basic#basic' },
+    { title: "Web of Science", link: 'https://access.clarivate.com/login?app=wos&alternative=true&shibShireURL=https:%2F%2Fwww.webofknowledge.com%2F%3Fauth%3DShibboleth&shibReturnURL=https:%2F%2Fwww.webofknowledge.com%2F&roaming=true' },
+  ];
 
   // Animation on mount
   useEffect(() => {
@@ -498,6 +506,9 @@ const ScientificJournals = () => {
           </div>
         </div>
       </div>
+
+      {/* Боковое меню для навигации по разделу */}
+      <SideMenu items={researchItems} currentPath={window.location.pathname} />
     </div>
   );
 };

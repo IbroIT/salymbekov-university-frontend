@@ -128,73 +128,73 @@ function App() {
             <Route path="/hsm/partners" element={<Partners />} />
             <Route path="/hsm/cmk" element={<HSMCMK />} />
 
-            <Route path="/about/management" element={<Management />} />
+            {/* <Route path="/about/management" element={<Management />} /> */}
             <Route path="/about/vacancies" element={<Careers />} />
-            <Route path="/about/careers" element={<Careers />} />
-            <Route path="/about/careers/:id" element={<VacancyDetail />} />
+            {/* <Route path="/about/careers" element={<Careers />} />
+            <Route path="/about/careers/:id" element={<VacancyDetail />} /> */}
             <Route path="/about/partners" element={<Partners />} />
-            <Route path="/about/mission" element={<Mission />} />
+            {/* <Route path="/about/mission" element={<Mission />} />
             <Route path="/about/mission-debug" element={<MissionDebug />} />
             <Route path="/about/advices" element={<Advices />} />
             <Route path="/about/status" element={<Status />} />
             <Route path="/about/founders" element={<Founders />} />
             <Route path="/about/structure" element={<Structure />} />
-            <Route path="/about/achievements" element={<Achievements />} />
+            <Route path="/about/achievements" element={<Achievements />} /> */}
             
             {/* Admission */}
-            <Route path="/admissions" element={<AdmissionsOverview />} />
+            {/* <Route path="/admissions" element={<AdmissionsOverview />} />
             <Route path="/admissions/requirements" element={<Requirements />} />
-            <Route path="/admissions/tuition" element={<Tuition />} />
+            <Route path="/admissions/tuition" element={<Tuition />} /> */}
             <Route path="/admissions/faq" element={<FAQ />} />
             <Route path="/admissions/apply" element={<OnlineApplication />} />
-            <Route path="/admissions/process" element={<AdmissionProcess />} />
+            {/* <Route path="/admissions/process" element={<AdmissionProcess />} />
             <Route path="/admissions/applicants" element={<ForApplicants />} />
             <Route path="/admissions/applicants/citizens-kg" element={<ForCitizensKG />} />
             <Route path="/admissions/applicants/foreign-citizens" element={<ForForeignCitizens />} />
             <Route path="/admissions/requirements/citizens-kg" element={<RequirementsCitizensKG />} />
             <Route path="/admissions/requirements/foreign-citizens" element={<RequirementsForeignCitizens />} />
             <Route path="/admissions/apply/citizens-kg" element={<ApplyCitizensKG />} />
-            <Route path="/admissions/apply/foreign-citizens" element={<ApplyForeignCitizens />} />
+            <Route path="/admissions/apply/foreign-citizens" element={<ApplyForeignCitizens />} /> */}
             <Route path="/admissions/tuition/citizens-kg" element={<TuitionCitizensKG />} />
             <Route path="/admissions/tuition/foreign-citizens" element={<TuitionForeignCitizens />} />
             <Route path="/admissions/committee" element={<Committee />} />
-            <Route path="/admissions/courses" element={<Courses />} />
+            {/* <Route path="/admissions/courses" element={<Courses />} />
             <Route path="/admissions/procedure" element={<Procedure />} />
-            <Route path="/admissions/payments" element={<Payments />} />
+            <Route path="/admissions/payments" element={<Payments />} /> */}
 
-            {/* Infrastructure */}
+            {/* Infrastructure
             <Route path="/infrastructure" element={<Infrastructure />} />
             <Route path="/infrastructure/hospitals" element={<Hospitals />} />
             <Route path="/infrastructure/laboratories" element={<Laboratories />} />
             <Route path="/infrastructure/dormitories" element={<Dormitories />} />
             <Route path="/infrastructure/audience" element={<Audience />} />
-            <Route path="/infrastructure/startups" element={<Startups />} />
+            <Route path="/infrastructure/startups" element={<Startups />} /> */}
 
             {/* Research */}
-            <Route path="/research" element={<Research />} />
+            {/* <Route path="/research" element={<Research />} />
             <Route path="/research/centers" element={<Centers />} />
             <Route path="/research/publications" element={<Publications />} />
             <Route path="/research/conferences" element={<Conferences />} />
             <Route path="/research/grants" element={<Grants />} />
-            <Route path="/research/management" element={<ResearchManagement />} />
+            {/* <Route path="/research/management" element={<ResearchManagement />} /> */}
             <Route path="/research/journals" element={<ScientificJournals />} />
-            <Route path="/research/permit-documents" element={<PermitDocuments />} />
+            {/* <Route path="/research/permit-documents" element={<PermitDocuments />} /> */}
 
             {/* Student Life */}
             {/* <Route path="/student/gallery" element={<Gallery />} /> */}
-            <Route path="/student/international" element={<InternationalStudents />} />
+            {/* <Route path="/student/international" element={<InternationalStudents />} />
             <Route path="/student/internships" element={<Internships />} />
             <Route path="/student/academic-mobility" element={<AcademicMobility />} />
-            <Route path="/student/regulations" element={<StudentRegulations />} />
+            <Route path="/student/regulations" element={<StudentRegulations />} /> */}
             <Route path="/student/instructions" element={<Instructions />} />
-            <Route path="/student/appeal" element={<AppealForm />} />
+            {/* <Route path="/student/appeal" element={<AppealForm />} /> */}
             <Route path="/student/clubs" element={<ClubsSection />} />
-            <Route path="/student/calendar" element={<StudentCalendar />} />
-            <Route path="/student/academic-calendar" element={<AcademicCalendar />} />
+            {/* <Route path="/student/calendar" element={<StudentCalendar />} />
+            <Route path="/student/academic-calendar" element={<AcademicCalendar />} /> */}
             <Route path="/student/eresources" element={<StudentEResources />} />
             <Route path="/student/acadop" element={<AcadOp />} />
-            <Route path="/student/socop" element={<SocOp />} />
-            <Route path="/student/schedule" element={<Schedule />} />
+            {/* <Route path="/student/socop" element={<SocOp />} /> */}
+            {/* <Route path="/student/schedule" element={<Schedule />} /> */}
 
             {/* News */}
             <Route path="/news" element={<News />} />
@@ -207,7 +207,7 @@ function App() {
             <Route path="/media" element={<Media />} />
 
             {/* Legacy routes */}
-            <Route path="/admission" element={<AdmissionsOverview />} />
+            {/* <Route path="/admission" element={<AdmissionsOverview />} />
             <Route path="/admission/requirements" element={<Requirements />} />
             <Route path="/admission/tuition" element={<Tuition />} />
             <Route path="/admission/scholarships" element={<Page title="Scholarships" />} />
@@ -216,7 +216,7 @@ function App() {
             <Route path="/campus-life/events" element={<Page title="Campus Events" />} />
             <Route path="/campus-life/clubs" element={<ClubsSection />} />
             <Route path="/campus-life/gallery" element={<Gallery />} />
-            <Route path="/campus-life/international" element={<InternationalStudents />} />
+            <Route path="/campus-life/international" element={<InternationalStudents />} /> */}
             {/* 404 */}
             <Route path="*" element={<Page title="Страница не найдена" />} />
           </Routes>

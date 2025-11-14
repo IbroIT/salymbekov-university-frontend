@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { FaPaperPlane, FaUser, FaEnvelope, FaComment, FaArrowRight, FaMapMarkerAlt, FaPhone, FaClock, FaGlobe, FaBuilding, FaIdCard, FaFacebook, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 import { useTranslation } from 'react-i18next';
 import SEOComponent from '../SEO/SEOComponent';
+import SideMenu from '../common/SideMenu';
 
 const Contacts = () => {
   const { t } = useTranslation();
@@ -11,6 +12,12 @@ const Contacts = () => {
   const [activeTab, setActiveTab] = useState('general');
   const [isMapLoaded, setIsMapLoaded] = useState(false);
   const [showContactForm, setShowContactForm] = useState(false);
+
+  const contactsItems = [
+    { title: t('nav.contacts'), link: '/contacts' },
+    { title: t('nav.vacancies'), link: '/about/vacancies' },
+    { title: 'FAQ', link: '/admissions/faq' },
+  ];
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -415,6 +422,9 @@ const Contacts = () => {
           </div>
         )}
       </div>
+
+      {/* Боковое меню для навигации по разделу */}
+      <SideMenu items={contactsItems} currentPath={window.location.pathname} />
     </div>
   );
 };

@@ -3,10 +3,20 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { AcademicCapIcon, UserGroupIcon, ShieldCheckIcon } from '@heroicons/react/24/outline';
+import SideMenu from '../common/SideMenu';
 
 
 const PPSCard = () => {
   const { t, i18n } = useTranslation();
+
+  const hsmItems = [
+    { title: t('nav.about_HSM'), link: '/hsm/about' },
+    { title: t('nav.management'), link: '/hsm/manage' },
+    { title: t('nav.programs'), link: '/hsm/programs' },
+    { title: t('nav.academic_stuff'), link: '/hsm/AS' },
+    { title: t('nav.partners'), link: '/hsm/partners' },
+    { title: t('nav.cmk'), link: '/hsm/cmk' },
+  ];
   const [stats, setStats] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -158,6 +168,9 @@ const PPSCard = () => {
           </motion.section>
         </motion.section>
       </div>
+
+      {/* Боковое меню для навигации по разделу */}
+      <SideMenu items={hsmItems} currentPath={window.location.pathname} />
     </div>
   );
 };

@@ -1,10 +1,49 @@
 
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import SideMenu from '../common/SideMenu';
 
 const InstructionsPage = () => {
 
   const { t, i18n } = useTranslation();
+
+  // Ссылки из backend для student
+  const [studentLinks, setStudentLinks] = useState([]);
+  useEffect(() => {
+    fetch('https://su-med-backend-35d3d951c74b.herokuapp.com/api/home/navbar-links/', {
+      headers: {
+        'Accept-Language': i18n.language === 'kg' ? 'ky' : i18n.language,
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => res.json())
+      .then(data => setStudentLinks(data.results || []))
+      .catch(() => setStudentLinks([]));
+  }, [i18n.language]);
+
+  // Функция для выбора названия ссылки по языку
+  function getLinkName(link) {
+    let lang = i18n.language.toLowerCase();
+    if (lang === 'kg') lang = 'ky';
+    if (lang.startsWith('ru') && link.name_ru) return link.name_ru;
+    if (lang.startsWith('en') && link.name_en) return link.name_en;
+    if ((lang.startsWith('ky') || lang.startsWith('kg')) && link.name_kg) return link.name_kg;
+    return link.name || '';
+  }
+
+  const studentItems = [
+    // Динамические ссылки с backend
+    ...studentLinks.map(link => ({
+      title: getLinkName(link),
+      link: link.url,
+      key: `${link.id || link.url}-${i18n.language}`
+    })),
+    // Статические ссылки
+    { title: t('nav.acadop'), link: '/student/acadop' },
+    { title: t('nav.clubs'), link: '/student/clubs' },
+    { title: t('nav.resources'), link: '/hsm/resources' },
+    { title: t('nav.instructions'), link: '/student/instructions' },
+  ];
   const [documents, setDocuments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -166,6 +205,9 @@ const InstructionsPage = () => {
           </div>
         </div>
       </div>
+
+      {/* Боковое меню для навигации по разделу */}
+      <SideMenu items={studentItems} currentPath={window.location.pathname} />
     </div>
   );
 };

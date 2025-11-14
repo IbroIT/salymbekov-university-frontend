@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import VacancyCard from './VacancyCard';
 import careersAPI from '../../services/careersAPI';
+import SideMenu from '../common/SideMenu';
 import './About.css';
 
 const CareersMain = () => {
@@ -12,6 +13,12 @@ const CareersMain = () => {
   const [filterCategory, setFilterCategory] = useState('all');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const contactsItems = [
+    { title: t('nav.contacts'), link: '/contacts' },
+    { title: t('nav.vacancies'), link: '/about/vacancies' },
+    { title: 'FAQ', link: '/admissions/faq' },
+  ];
 
   useEffect(() => {
     // Добавляем небольшую задержку для обновления языка
@@ -175,6 +182,9 @@ const CareersMain = () => {
           </div>
         )}
       </div>
+
+      {/* Боковое меню для навигации по разделу */}
+      <SideMenu items={contactsItems} currentPath={window.location.pathname} />
     </div>
   );
 };

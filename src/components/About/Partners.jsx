@@ -8,6 +8,7 @@ import PartnersService from '../../services/partnersService';
 import API_CONFIG from '../../config/api';
 import SEOComponent from '../SEO/SEOComponent';
 import { AlertTriangle, BookOpen, Briefcase, Building, GraduationCap, Hospital, Microscope } from 'lucide-react';
+import SideMenu from '../common/SideMenu';
 
 // Add custom styles for logo markers
 const logoMarkerStyles = `
@@ -104,6 +105,15 @@ const createLogoMarker = (logoUrl) => {
 
 const Partners = () => {
   const { t, i18n } = useTranslation();
+
+  const hsmItems = [
+    { title: t('nav.about_HSM'), link: '/hsm/about' },
+    { title: t('nav.management'), link: '/hsm/manage' },
+    { title: t('nav.programs'), link: '/hsm/programs' },
+    { title: t('nav.academic_stuff'), link: '/hsm/AS' },
+    { title: t('nav.partners'), link: '/hsm/partners' },
+    { title: t('nav.cmk'), link: '/hsm/cmk' },
+  ];
   const [selectedPartner, setSelectedPartner] = useState(null);
   const [filterType, setFilterType] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
@@ -492,6 +502,9 @@ const Partners = () => {
           onClose={() => setSelectedPartner(null)}
         />
       </div>
+
+      {/* Боковое меню для навигации по разделу */}
+      <SideMenu items={hsmItems} currentPath={window.location.pathname} />
     </>
   );
 };

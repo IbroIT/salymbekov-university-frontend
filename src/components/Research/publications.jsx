@@ -162,7 +162,7 @@ const Publications = () => {
   const handleFileDownload = async (publicationId, fileName) => {
     try {
       // Fetch the detailed publication data to get the file URL
-      const response = await fetch(`http://127.0.0.1:8000/research/api/publications/${publicationId}/`);
+      const response = await fetch(`https://su-med-backend-35d3d951c74b.herokuapp.com/research/api/publications/${publicationId}/`);
       
       if (!response.ok) {
         throw new Error('Failed to fetch publication details');

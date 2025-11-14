@@ -2,10 +2,17 @@
 import React, { useEffect, useState } from 'react';
 import { Building2, DollarSign, FileText, GraduationCap, Star } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import SideMenu from '../../common/SideMenu';
 
 
 const TuitionForeignCitizens = () => {
   const { t, i18n } = useTranslation();
+
+  const admissionItems = [
+    { title: t('nav.committee'), link: '/admissions/committee' },
+    { title: t('nav.for_citizens_kg'), link: '/admissions/tuition/citizens-kg' },
+    { title: t('nav.for_foreign_citizens'), link: '/admissions/tuition/foreign-citizens' },
+  ];
   const [fees, setFees] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -335,6 +342,9 @@ const TuitionForeignCitizens = () => {
           </div>
         )}
       </div>
+
+      {/* Боковое меню для навигации по разделу */}
+      <SideMenu items={admissionItems} currentPath={window.location.pathname} />
     </div>
   );
 };

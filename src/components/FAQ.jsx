@@ -1,8 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
+import SideMenu from './common/SideMenu';
 
 const FAQ = () => {
   const { t, i18n } = useTranslation();
+  const location = useLocation();
+
+  const faqItems = [
+    { title: t('nav.contacts'), link: '/contacts' },
+    { title: t('nav.vacancies'), link: '/about/vacancies' },
+    { title: t('faq.title', 'FAQ'), link: '/admissions/faq' },
+  ];
   const [openItems, setOpenItems] = useState({});
   const [faqData, setFaqData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -170,6 +179,9 @@ const FAQ = () => {
       {/* Декоративные элементы */}
       <div className="absolute top-0 left-0 w-32 h-32 bg-blue-200 rounded-full -translate-x-16 -translate-y-16 opacity-20"></div>
       <div className="absolute bottom-0 right-0 w-48 h-48 bg-blue-300 rounded-full translate-x-24 translate-y-24 opacity-10"></div>
+
+      {/* Боковое меню для навигации по разделу */}
+      <SideMenu items={faqItems} currentPath={location.pathname} />
     </section>
   );
 };

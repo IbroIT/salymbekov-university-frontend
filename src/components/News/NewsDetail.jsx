@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { ArrowLeft, Calendar, Tag, Share2 } from "lucide-react";
 import SEOComponent from '../SEO/SEOComponent';
+import SideMenu from '../common/SideMenu';
 
 const API_BASE_URL = 'https://su-med-backend-35d3d951c74b.herokuapp.com/api';
 
@@ -12,6 +13,12 @@ const NewsDetail = () => {
   const [article, setArticle] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const newsItems = [
+    { title: t('nav.all_news'), link: '/news' },
+    { title: t('nav.events'), link: '/news/events' },
+    { title: t('nav.media'), link: '/media' },
+  ];
 
   const fetchArticle = async () => {
     try {
@@ -322,6 +329,9 @@ const NewsDetail = () => {
           </div>
         </div>
       </div>
+
+      {/* Боковое меню для навигации по разделу */}
+      <SideMenu items={newsItems} currentPath={window.location.pathname} />
     </div>
   );
 };

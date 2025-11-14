@@ -3,6 +3,7 @@ import { Globe, Hospital, Microscope, Stethoscope, Heart, BookOpen } from 'lucid
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getHSMInfo, getLocalizedText } from '../../../data/hsmData';
+import SideMenu from '../../common/SideMenu';
 // Анимированный счетчик
 const CounterItem = ({ end, icon, label, duration = 2000, delay = 0 }) => {
   const [count, setCount] = useState(0);
@@ -86,6 +87,15 @@ import {
 
 const HSMInfo = () => {
   const { t, i18n } = useTranslation();
+
+  const hsmItems = [
+    { title: t('nav.about_HSM'), link: '/hsm/about' },
+    { title: t('nav.management'), link: '/hsm/manage' },
+    { title: t('nav.programs'), link: '/hsm/programs' },
+    { title: t('nav.academic_stuff'), link: '/hsm/AS' },
+    { title: t('nav.partners'), link: '/hsm/partners' },
+    { title: t('nav.cmk'), link: '/hsm/cmk' },
+  ];
   const [hsmInfo, setHsmInfo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -243,7 +253,7 @@ const HSMInfo = () => {
         return (
           <motion.p 
             key={index} 
-            className="mb-4 font-semibold text-gray-900 text-lg bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent"
+            className="mb-4 font-semibold text-lg bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: index * 0.1 }}
@@ -493,6 +503,9 @@ const HSMInfo = () => {
           </div>
         </motion.section>
       </div>
+
+      {/* Боковое меню для навигации по разделу */}
+      <SideMenu items={hsmItems} currentPath={window.location.pathname} />
 
       {/* Стили для медицинского паттерна */}
       <style jsx>{`

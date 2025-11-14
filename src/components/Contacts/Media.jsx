@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { AlertTriangle, Tv } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import SideMenu from '../common/SideMenu';
 
 const Media = () => {
   const { t, i18n } = useTranslation();
@@ -10,6 +11,12 @@ const Media = () => {
   const [categories, setCategories] = useState([]);
   const [dashboardStats, setDashboardStats] = useState(null);
   const [error, setError] = useState(null);
+
+  const newsItems = [
+    { title: t('nav.all_news'), link: '/news' },
+    { title: t('nav.events'), link: '/news/events' },
+    { title: t('nav.media'), link: '/media' },
+  ];
 
   // API базовый URL
   const API_BASE_URL = 'https://su-med-backend-35d3d951c74b.herokuapp.com/api/media-coverage';
@@ -398,6 +405,9 @@ const Media = () => {
           ))}
         </div>
       </div>
+
+      {/* Боковое меню для навигации по разделу */}
+      <SideMenu items={newsItems} currentPath={window.location.pathname} />
     </div>
   );
 };

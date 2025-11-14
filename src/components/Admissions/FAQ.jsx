@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { DollarSign, File, FileEdit, Mail, Phone, Search } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import SideMenu from '../common/SideMenu';
 
 const FAQ = () => {
   const { t } = useTranslation();
+
+  const contactsItems = [
+    { title: t('nav.contacts'), link: '/contacts' },
+    { title: t('nav.vacancies'), link: '/about/vacancies' },
+    { title: 'FAQ', link: '/admissions/faq' },
+  ];
   const [activeCategory, setActiveCategory] = useState('general');
   const [openQuestion, setOpenQuestion] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
@@ -535,6 +542,9 @@ const FAQ = () => {
           </div>
         </div>
       </div>
+
+      {/* Боковое меню для навигации по разделу */}
+      <SideMenu items={contactsItems} currentPath={window.location.pathname} />
     </div>
   );
 };

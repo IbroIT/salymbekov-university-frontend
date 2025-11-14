@@ -3,6 +3,7 @@ import { Briefcase, Check, DollarSign, MapPin } from 'lucide-react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import careersAPI from '../../services/careersAPI';
+import SideMenu from '../common/SideMenu';
 
 const VacancyDetail = () => {
   const { t, i18n } = useTranslation();
@@ -20,6 +21,12 @@ const VacancyDetail = () => {
     resume: null
   });
   const [submitting, setSubmitting] = useState(false);
+
+  const contactsItems = [
+    { title: t('nav.contacts'), link: '/contacts' },
+    { title: t('nav.vacancies'), link: '/about/vacancies' },
+    { title: 'FAQ', link: '/admissions/faq' },
+  ];
 
   useEffect(() => {
     loadVacancy();
@@ -144,7 +151,8 @@ const VacancyDetail = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <>
+      <div className="min-h-screen bg-gray-50">
       {/* Breadcrumbs */}
       <div className="bg-blue-50 py-4">
         <div className="container mx-auto px-4">
@@ -337,6 +345,9 @@ const VacancyDetail = () => {
         </div>
       </div>
 
+      {/* Боковое меню для навигации по разделу */}
+      <SideMenu items={contactsItems} currentPath={window.location.pathname} />
+
       {/* Application Modal */}
       {showApplication && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
@@ -448,9 +459,8 @@ const VacancyDetail = () => {
             </div>
           </div>
         </div>
-      )}
-    </div>
+        )}
+      </div>
+    </>
   );
-};
-
-export default VacancyDetail;
+};export default VacancyDetail;

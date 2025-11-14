@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { leadershipAPI } from '../../services/leadershipService';
 import { getLocalizedValue, getLocalizedArray, getCurrentLanguage } from '../../utils/localization';
 import { GraduationCap, Crown } from 'lucide-react';
+import SideMenu from '../common/SideMenu';
 
 const LeadershipPage = () => {
   const { t, i18n } = useTranslation();
@@ -199,6 +200,15 @@ const LeadershipPage = () => {
 
 
 
+  const hsmItems = [
+    { title: t('nav.about_HSM'), link: '/hsm/about' },
+    { title: t('nav.management'), link: '/hsm/manage' },
+    { title: t('nav.programs'), link: '/hsm/programs' },
+    { title: t('nav.academic_stuff'), link: '/hsm/AS' },
+    { title: t('nav.partners'), link: '/hsm/partners' },
+    { title: t('nav.cmk'), link: '/hsm/cmk' },
+  ];
+
   const renderContent = () => {
     switch (activeSection) {
       case 'directorate':
@@ -255,6 +265,9 @@ const LeadershipPage = () => {
           </div>
         </div>
       </div>
+
+      {/* Боковое меню для навигации по разделу */}
+      <SideMenu items={hsmItems} currentPath={window.location.pathname} />
     </div>
   );
 };

@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
     proxy: {
-      '/api': 'http://127.0.0.1:8000'
+      '/api': 'https://su-med-backend-35d3d951c74b.herokuapp.com'
     }
   },
   build: {

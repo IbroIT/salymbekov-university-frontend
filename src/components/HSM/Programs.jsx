@@ -1,10 +1,20 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import SideMenu from '../common/SideMenu';
 
 
 const HSM = () => {
   const { t } = useTranslation();
+  
+  const hsmItems = [
+    { title: t('nav.about_HSM'), link: '/hsm/about' },
+    { title: t('nav.management'), link: '/hsm/manage' },
+    { title: t('nav.programs'), link: '/hsm/programs' },
+    { title: t('nav.academic_stuff'), link: '/hsm/AS' },
+    { title: t('nav.partners'), link: '/hsm/partners' },
+    { title: t('nav.cmk'), link: '/hsm/cmk' },
+  ];
   
   // Состояния для фильтров
   const [filters, setFilters] = useState({
@@ -649,6 +659,9 @@ const HSM = () => {
           </div>
         </div>
       )}
+
+      {/* Боковое меню для навигации по разделу */}
+      <SideMenu items={hsmItems} currentPath={window.location.pathname} />
     </div>
   );
 };

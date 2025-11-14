@@ -1,10 +1,17 @@
 
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import SideMenu from '../../common/SideMenu';
 
 
 const TuitionCitizensKG = () => {
   const { t, i18n } = useTranslation();
+
+  const admissionItems = [
+    { title: t('nav.committee'), link: '/admissions/committee' },
+    { title: t('nav.for_citizens_kg'), link: '/admissions/tuition/citizens-kg' },
+    { title: t('nav.for_foreign_citizens'), link: '/admissions/tuition/foreign-citizens' },
+  ];
   const [fees, setFees] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -277,6 +284,9 @@ const TuitionCitizensKG = () => {
           </div>
         )}
       </div>
+
+      {/* Боковое меню для навигации по разделу */}
+      <SideMenu items={admissionItems} currentPath={window.location.pathname} />
     </div>
   );
 };
