@@ -178,62 +178,7 @@ const AdmissionCommittee = () => {
             </div>
           </div>
         </section>
-
-        {/* Important Dates */}
-        <section className="bg-blue-600 text-white rounded-2xl shadow-xl p-8 mb-16">
-          <h2 className="text-3xl font-bold mb-8 text-center">
-            {t('admission.importantDates')}
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="text-center p-4 bg-blue-500 rounded-lg">
-              <div className="text-2xl font-bold mb-2">
-                {t('admission.date1Title')}
-              </div>
-              <div className="text-lg">{t('admission.date1Desc')}</div>
-            </div>
-            <div className="text-center p-4 bg-blue-500 rounded-lg">
-              <div className="text-2xl font-bold mb-2">
-                {t('admission.date2Title')}
-              </div>
-              <div className="text-lg">{t('admission.date2Desc')}</div>
-            </div>
-            <div className="text-center p-4 bg-blue-500 rounded-lg">
-              <div className="text-2xl font-bold mb-2">
-                {t('admission.date3Title')}
-              </div>
-              <div className="text-lg">{t('admission.date3Desc')}</div>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQ Section */}
-        <section className="bg-white rounded-2xl shadow-xl p-8">
-          <h2 className="text-3xl font-bold text-blue-800 mb-8 text-center">
-            {t('admission.faq')}
-          </h2>
-          <div className="space-y-4">
-            <div className="border-b border-gray-200 pb-4">
-              <h3 className="text-xl font-semibold text-blue-700 mb-2">
-                {t('admission.faq1Question')}
-              </h3>
-              <p className="text-gray-600">{t('admission.faq1Answer')}</p>
-            </div>
-            <div className="border-b border-gray-200 pb-4">
-              <h3 className="text-xl font-semibold text-blue-700 mb-2">
-                {t('admission.faq2Question')}
-              </h3>
-              <p className="text-gray-600">{t('admission.faq2Answer')}</p>
-            </div>
-            <div className="border-b border-gray-200 pb-4">
-              <h3 className="text-xl font-semibold text-blue-700 mb-2">
-                {t('admission.faq3Question')}
-              </h3>
-              <p className="text-gray-600">{t('admission.faq3Answer')}</p>
-            </div>
-          </div>
-        </section>
       </div>
-
       {/* Боковое меню для навигации по разделу */}
       <SideMenu items={admissionItems} currentPath={window.location.pathname} />
     </div>
