@@ -475,19 +475,16 @@ const HSMInfo = () => {
               >
                 {activeSection === 0 && (
                   <div>
-                    <h3 className="text-2xl font-bold text-gray-900 mb-6">{t('hsm.about_hsm', 'О Высшей медицинской школе')}</h3>
                     {renderFormattedText(localizedData.description)}
                   </div>
                 )}
                 {activeSection === 1 && (
                   <div>
-                    <h3 className="text-2xl font-bold text-gray-900 mb-6">{t('hsm.history', 'История школы')}</h3>
                     {renderFormattedText(localizedData.history)}
                   </div>
                 )}
                 {activeSection === 2 && (
                   <div>
-                    <h3 className="text-2xl font-bold text-gray-900 mb-6">{t('hsm.main_directions', 'Основные направления')}</h3>
                     <ul className="space-y-4 text-lg">
                       <li><span className="font-semibold">{t('hsm.direction.therapeutic5', 'Лечебное дело')}</span> — {t('hsm.direction.5years', '5 лет')}</li>
                       <li><span className="font-semibold">{t('hsm.direction.therapeutic6', 'Лечебное дело')}</span> — {t('hsm.direction.6years', '6 лет')}</li>
