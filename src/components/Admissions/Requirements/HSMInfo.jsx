@@ -454,7 +454,7 @@ const HSMInfo = () => {
                   }`}
                 >
                   {t(`hsm.${tab}`, 
-                    tab === 'about' ? 'О школе' : 
+                    tab === 'about' ? 'О ВШМ' : 
                     tab === 'history' ? 'История' : 'Направления'
                   )}
                 </button>
