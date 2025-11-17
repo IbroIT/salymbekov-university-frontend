@@ -242,6 +242,7 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
       submenu: [
         // { title: t('nav.management_body'), link: '/research/management' },
         { title: t('nav.scientific_journals'), link: '/research/journals' },
+        { title: t('nav.permit_documents'), link: 'https://salymbekov.com/razreshitelnye-dokumenty/' },
         { title: "PubMed", link: 'https://pubmed.ncbi.nlm.nih.gov/' },
         { title: "Scopus", link: 'https://www.scopus.com/pages/home?display=basic#basic' },
         { title: "Web of Science", link: 'https://access.clarivate.com/login?app=wos&alternative=true&shibShireURL=https:%2F%2Fwww.webofknowledge.com%2F%3Fauth%3DShibboleth&shibReturnURL=https:%2F%2Fwww.webofknowledge.com%2F&roaming=true' },
