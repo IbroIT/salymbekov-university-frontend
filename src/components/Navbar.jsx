@@ -5,6 +5,16 @@ import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from './LanguageSwitcher';
 import DefaultLogo from "../assets/logo-salymbekov-university-site2.png";
 import ScrolledLogo from "../assets/Logo_white3.png";
+import { getScheduleSubsections } from '../services/scheduleApi';
+
+// TODO: Если файл scheduleApi отсутствует, добавьте его с функцией getScheduleSubsections
+// Пример функции:
+// export async function getScheduleSubsections(lang) {
+//   const url = `https://su-med-backend-35d3d951c74b.herokuapp.com/api/schedule/subsections/?lang=${lang}`;
+//   const res = await fetch(url);
+//   if (!res.ok) return [];
+//   return await res.json();
+// }
 const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
   const { t, i18n } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -76,6 +86,14 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
       .catch(() => setStudentLinks([]));
   }, [i18n.language]);
 
+  // Подразделы расписания из backend
+  const [scheduleSubsections, setScheduleSubsections] = useState([]);
+  useEffect(() => {
+    getScheduleSubsections(i18n.language)
+      .then(setScheduleSubsections)
+      .catch(() => setScheduleSubsections([]));
+  }, [i18n.language]);
+
   // Функция для выбора названия ссылки по языку
   function getLinkName(link) {
     let lang = i18n.language.toLowerCase();
@@ -86,12 +104,24 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
     return link.name || '';
   }
 
+  // Функция для выбора названия подраздела по языку
+  function getScheduleTitle(sub) {
+    let lang = i18n.language.toLowerCase();
+    if (lang === 'kg') lang = 'ky';
+    if (lang.startsWith('ru') && sub.title_ru) return sub.title_ru;
+    if (lang.startsWith('en') && sub.title_en) return sub.title_en;
+    if ((lang.startsWith('ky') || lang.startsWith('kg')) && sub.title_kg) return sub.title_kg;
+    return sub.title_ru || sub.title_en || sub.title_kg || '';
+  }
+
   // Данные меню
   // Debug: показать что приходит с backend
   // eslint-disable-next-line
   if (window && window.location && window.location.search.includes('debuglinks')) {
     // eslint-disable-next-line
     console.log('studentLinks:', studentLinks);
+    // eslint-disable-next-line
+    console.log('scheduleSubsections:', scheduleSubsections);
   }
 
   const menuData = {
@@ -117,12 +147,46 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
     student: {
       title: t('nav.student'),
       submenu: [
+        // Расписание с подразделами из backend
+        {
+          title: t('nav.schedule') || 'Расписание',
+          hasNested: true,
+          nestedItems:
+            Array.isArray(scheduleSubsections) && scheduleSubsections.length > 0
+              ? scheduleSubsections.map(sub => ({
+                  title: getScheduleTitle(sub),
+                  link: sub.pdf_url,
+                  key: `schedule-subsection-${sub.id}`,
+                  isPdf: true
+                }))
+              : [{
+                  title: 'Нет расписания',
+                  link: '#',
+                  key: 'schedule-empty',
+                  isPdf: false
+                }],
+          key: `schedule-main-${i18n.language}`
+        },
         // Динамические ссылки с backend с мультиязычностью
-        ...studentLinks.map(link => ({
-          title: getLinkName(link),
-          link: link.url,
-          key: `${link.id || link.url}-${i18n.language}`
-        })),
+        ...studentLinks.flatMap(link => (
+          link.subsections && Array.isArray(link.subsections) && link.subsections.length > 0
+            ? [{
+                title: getLinkName(link),
+                hasNested: true,
+                nestedItems: link.subsections.map(sub => ({
+                  title: getScheduleTitle(sub),
+                  link: sub.pdf_url,
+                  key: `student-subsection-${sub.id}`,
+                  isPdf: true
+                })),
+                key: `${link.id || link.url}-${i18n.language}`
+              }]
+            : [{
+                title: getLinkName(link),
+                link: link.url,
+                key: `${link.id || link.url}-${i18n.language}`
+              }]
+        )),
         // Остальные ссылки (если нужны)
         { title: t('nav.acadop'), link: '/student/acadop' },
         { title: t('nav.clubs'), link: '/student/clubs' },
