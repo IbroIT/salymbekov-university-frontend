@@ -2275,6 +2275,8 @@
       "continuousImprovement": {}
     },
     "documents": {
+      "download": "Жүктөө",
+      "noFile": "Файл жүктөө үчүн жеткиликсиз",
       "structure": {}
     },
     "processes": {

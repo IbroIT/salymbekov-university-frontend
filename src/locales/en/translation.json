@@ -2288,6 +2288,8 @@
       "continuousImprovement": {}
     },
     "documents": {
+      "download": "Download",
+      "noFile": "File not available for download",
       "structure": {}
     },
     "processes": {

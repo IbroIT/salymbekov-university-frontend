@@ -79,9 +79,12 @@ const HSMCMK = () => {
       // Если есть файл или внешняя ссылка, открываем его
       if (document.file_url || document.external_url) {
         window.open(document.file_url || document.external_url, '_blank');
+      } else {
+        alert(t('smk.documents.noFile') || 'Файл недоступен для скачивания');
       }
     } catch (error) {
       console.error('Ошибка при скачивании документа:', error);
+      alert('Ошибка при скачивании документа. Попробуйте позже.');
     }
   };
 
@@ -180,8 +183,31 @@ const HSMCMK = () => {
 
     return (
       <div className="space-y-6">
-
-        <div className="grid grid-cols-1 lg:grid-cols-1 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {documents.map((document) => (
+            <div
+              key={document.id}
+              className="bg-white rounded-xl p-6 border border-blue-100 hover:shadow-md transition-all duration-300"
+            >
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-2xl mr-4">
+                  <ClipboardList className="w-6 h-6 text-blue-600" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-800">
+                  {getLocalizedField(document, 'title', currentLang)}
+                </h3>
+              </div>
+              <p className="text-gray-600 leading-relaxed mb-4">
+                {getLocalizedField(document, 'description', currentLang)}
+              </p>
+              <button
+                onClick={() => handleDocumentDownload(document)}
+                className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-300"
+              >
+                {t('smk.documents.download')}
+              </button>
+            </div>
+          ))}
         </div>
       </div>
     );

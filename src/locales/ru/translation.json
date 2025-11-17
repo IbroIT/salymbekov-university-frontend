@@ -2265,6 +2265,8 @@
       "continuousImprovement": {}
     },
     "documents": {
+      "download": "Скачать",
+      "noFile": "Файл недоступен для скачивания",
       "structure": {}
     },
     "processes": {

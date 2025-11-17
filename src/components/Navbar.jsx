@@ -258,7 +258,6 @@ const Navbar = ({ currentLanguage, languages = [], changeLanguage }) => {
               </a>
             </div>
 
-
             {/* Центральное меню - скрыто на мобильных */}
             <div className="flex items-center space-x-6">
               <div className="hidden min-[1475px]:flex flex-1 justify-center">
