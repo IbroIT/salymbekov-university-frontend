@@ -7,7 +7,7 @@
     "HSM": "Higher School of Medicine",
     "cmk": "QMS",
     "schedule": "Schedule",
-    "acadop": "Academic Opportunities",
+    "acadop": "Academic Mobility",
     "committee": "Admission Committee",
     "courses": "Programs of Study",
     "procedure": "Admission Procedure",
@@ -2171,6 +2171,8 @@
     "departments": {}
   },
   "admission": {
+    "for_citizens_kg": "For Citizens of the Kyrgyz Republic",
+    "for_foreign_citizens": "For Foreign Citizens",
     "title": "Admission Committee",
     "heroTitle": "Start Your Medical Career With Us",
     "requirements": "Admission Requirements",

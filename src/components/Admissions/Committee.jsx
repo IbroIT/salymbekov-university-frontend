@@ -154,26 +154,16 @@ const AdmissionCommittee = () => {
                 {t('admission.startApplication')}
               </h3>
               <div className="space-y-4">
-                <div className="bg-blue-50 p-4 rounded-lg">
-                  <p className="text-blue-800 font-semibold">
-                    {t('admission.step1')}
-                  </p>
-                </div>
-                <div className="bg-blue-50 p-4 rounded-lg">
-                  <p className="text-blue-800 font-semibold">
-                    {t('admission.step2')}
-                  </p>
-                </div>
-                <div className="bg-blue-50 p-4 rounded-lg">
-                  <p className="text-blue-800 font-semibold">
-                    {t('admission.step3')}
-                  </p>
-                </div> <a href="/admissions/apply" target="_blank">
-                <button className="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition-all duration-300">
-                  {t('admission.startNow')}
-                </button>
+                <a href="https://2020.edu.gov.kg/" target="_blank" rel="noopener noreferrer">
+                  <button className="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition-all duration-300 mb-2">
+                    {t('admission.for_citizens_kg')}
+                  </button>
                 </a>
-                
+                <a href="#" target="_blank" rel="noopener noreferrer">
+                  <button className="w-full bg-green-600 text-white py-3 rounded-lg font-bold hover:bg-green-700 transition-all duration-300">
+                    {t('admission.for_foreign_citizens')}
+                  </button>
+                </a>
               </div>
             </div>
           </div>

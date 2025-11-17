@@ -123,25 +123,10 @@ const HSMCMK = () => {
 
     return (
       <div className="space-y-6">
-
         <div className="space-y-4 text-gray-700 leading-relaxed">
           {settings && (
             <p>{getLocalizedField(settings, 'about_text', currentLang)}</p>
           )}
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100">
-            <h3 className="text-xl font-semibold text-gray-800 mb-4">{t('smk.about.advantages')}</h3>
-            <ul className="space-y-3">
-              {advantages.map((advantage) => (
-                <li key={advantage.id} className="flex items-center text-gray-600">
-                  <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
-                  {getLocalizedField(advantage, 'title', currentLang)}
-                </li>
-              ))}
-            </ul>
-          </div>
         </div>
       </div>
     );
