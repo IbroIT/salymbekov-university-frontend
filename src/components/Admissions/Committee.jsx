@@ -159,7 +159,7 @@ const AdmissionCommittee = () => {
                     {t('admission.for_citizens_kg')}
                   </button>
                 </a>
-                <a href="https://ereg.e-gov.kg/" target="_blank" rel="noopener noreferrer">
+                <a href="https://edugate.edu.gov.kg/" target="_blank" rel="noopener noreferrer">
                   <button className="w-full bg-green-600 text-white py-3 rounded-lg font-bold hover:bg-green-700 transition-all duration-300">
                     {t('admission.for_foreign_citizens')}
                   </button>
