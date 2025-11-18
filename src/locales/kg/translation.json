@@ -2278,7 +2278,7 @@
       "continuousImprovement": {}
     },
     "documents": {
-      "download": "Жүктөө",
+      "download": "PDF окуу",
       "noFile": "Файл жүктөө үчүн жеткиликсиз",
       "structure": {}
     },
@@ -2326,7 +2326,7 @@
   "featuresTitle": "Негизги өзгөчөлүктөр:",
   "hero": {
     "title": "Академиялык",
-    "highlight": " Мүмкүнчүлүктөр"
+    "highlight": " мобилдүүлүк"
   }
 }
 ,

@@ -2291,7 +2291,7 @@
       "continuousImprovement": {}
     },
     "documents": {
-      "download": "Download",
+      "download": "Read PDF",
       "noFile": "File not available for download",
       "structure": {}
     },
@@ -2339,7 +2339,7 @@
     "featuresTitle": "Key Features:",
     "hero": {
         "title": "Academic",
-        "highlight": " Opportunities"
+        "highlight": " Mobility"
     }
   },
   "socop": {

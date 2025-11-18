@@ -95,7 +95,7 @@ const AcadOp = () => {
         {/* Заголовок */}
         <div className="text-center mb-8">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            {t("acadop.hero.title", "Академические возможности")}{" "}
+            {t("acadop.hero.title", "Академическая мобильность")}{" "}
             <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               {t("acadop.hero.highlight", "для студентов")}
             </span>
